@@ -1,40 +1,37 @@
-/* eslint-disable unicorn/filename-case */
-import React from "react"
-import useRouter from "use-react-router"
+/* eslint-disable react/prop-types */
+import { useRouter } from "next/router";
+import React from "react";
 
-import appStateReducer, { AppStateReducerAction } from "./reducer"
-import IAppState, { initialAppState } from "./state"
+import appStateReducer, { AppStateReducerAction } from "./reducer";
+import IAppState, { initialAppState } from "./state";
 
-export type AppStateContextType = [IAppState, React.Dispatch<AppStateReducerAction>]
+export type AppStateContextType = [IAppState, React.Dispatch<AppStateReducerAction>];
+
 export const AppStateContext = React.createContext<AppStateContextType>([
     initialAppState,
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     () => {},
-])
+]);
 
 const AppStateProvider: React.FC = ({ children }) => {
-    const { location } = useRouter()
-    const stateAndDispatch = React.useReducer(appStateReducer, initialAppState)
-    const [state, dispatch] = stateAndDispatch
+    const router = useRouter();
+    const stateAndDispatch = React.useReducer(appStateReducer, initialAppState);
+    const [state, dispatch] = stateAndDispatch;
 
     React.useEffect(() => {
-        if (!!state.error) {
+        if (state.error) {
             dispatch({
                 payload: {
                     error: undefined,
                 },
                 type: "displayError",
-            })
+            });
         }
-    }, [location])
+    }, [dispatch, router, state.error]);
 
-    return (
-        <AppStateContext.Provider value={stateAndDispatch}>
-            {children}
-        </AppStateContext.Provider>
-    )
-}
+    return <AppStateContext.Provider value={stateAndDispatch}>{children}</AppStateContext.Provider>;
+};
 
-export const { Consumer } = AppStateContext
+export const { Consumer } = AppStateContext;
 
-export default AppStateProvider
+export default AppStateProvider;

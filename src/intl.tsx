@@ -1,4 +1,5 @@
-import { defineMessages } from "react-intl"
+/* eslint-disable import/prefer-default-export */
+import { defineMessages, IntlShape } from "react-intl";
 
 export const commonMessages = defineMessages({
     availability: {
@@ -28,8 +29,8 @@ export const commonMessages = defineMessages({
     },
     demo: {
         defaultMessage:
-            "Just to let you know... You're in demo mode.You can play around with the dashboard but can't save changes.",
-        id: "bBGmE8",
+            "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes.",
+        id: "i0AcKY",
         description: "notification message after log in",
     },
     description: {
@@ -160,19 +161,23 @@ export const commonMessages = defineMessages({
         id: "u3sYPH",
         description: "independent of any particular day, eg. 11:35",
     },
-})
+    welcome: {
+        defaultMessage: "Welcome to Dashboard, Admin!!!",
+        id: "4OZ8Mj",
+    },
+});
 
 export const errorMessages = defineMessages({
-    imgageUploadErrorTitle: {
+    imageUploadErrorTitle: {
         defaultMessage: "Couldn't process image",
         id: "Yo2kC+",
     },
     imageUploadErrorText: {
         defaultMessage:
-            "There was a poblem with the file you uploaded as an image and it couldn't be used.Please try a different file.",
-        id: "fFhcvG",
+            "There was a problem with the file you uploaded as an image and it couldn't be used. Please try a different file.",
+        id: "JiVwOU",
     },
-})
+});
 
 export const buttonMessages = defineMessages({
     accept: {
@@ -275,7 +280,7 @@ export const buttonMessages = defineMessages({
         id: "vN3qdA",
         description: "button",
     },
-})
+});
 
 export const sectionNames = defineMessages({
     apps: {
@@ -423,4 +428,8 @@ export const sectionNames = defineMessages({
         id: "6nSTuC",
         description: "webhooks section name",
     },
-})
+});
+
+export function translateBoolean(value: boolean, intl: IntlShape): string {
+    return value ? intl.formatMessage(commonMessages.yes) : intl.formatMessage(commonMessages.no);
+}

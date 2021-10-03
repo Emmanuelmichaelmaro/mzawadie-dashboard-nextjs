@@ -1,0 +1,13 @@
+export declare const categoryTranslationFragment: import("@apollo/client").DocumentNode;
+export declare const collectionTranslationFragment: import("@apollo/client").DocumentNode;
+export declare const productTranslationFragment: import("@apollo/client").DocumentNode;
+export declare const productVariantTranslationFragment: import("@apollo/client").DocumentNode;
+export declare const saleTranslationFragment: import("@apollo/client").DocumentNode;
+export declare const voucherTranslationFragment: import("@apollo/client").DocumentNode;
+export declare const shippingMethodTranslationFragment: import("@apollo/client").DocumentNode;
+export declare const pageTranslationFragment: import("@apollo/client").DocumentNode;
+export declare const pageTranslatableFragment: import("@apollo/client").DocumentNode;
+export declare const attributeChoicesTranslationFragment: import("@apollo/client").DocumentNode;
+export declare const attributeTranslationFragment: import("@apollo/client").DocumentNode;
+export declare const attributeTranslationDetailsFragment: import("@apollo/client").DocumentNode;
+export declare const attributeValueTranslatableContentFragment: import("@apollo/client").DocumentNode;

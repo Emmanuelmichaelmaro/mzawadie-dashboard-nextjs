@@ -1,0 +1,14 @@
+dist
+build
+coverage
+
+**/node_modules/*
+**/out/*
+**/.next/*
+**/.storybook/*
+
+.github
+
+generated
+
+*.d.ts

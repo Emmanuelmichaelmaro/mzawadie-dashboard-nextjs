@@ -1,0 +1,10 @@
+{
+    "name": "Mzawadie GraphQL Schema",
+    "schemaPath": "schema.graphql",
+    "includes": ["*"],
+    "extensions": {
+        "endpoints": {
+            
+        }
+    }
+}

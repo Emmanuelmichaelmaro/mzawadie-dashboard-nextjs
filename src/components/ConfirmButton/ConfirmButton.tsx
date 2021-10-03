@@ -1,16 +1,15 @@
-/* eslint-disable unicorn/filename-case */
-import Button, { ButtonProps } from "@material-ui/core/Button"
-import CircularProgress from "@material-ui/core/CircularProgress"
-import { createStyles, Theme, WithStyles, withStyles } from "@material-ui/core/styles"
-import CheckIcon from "@material-ui/icons/Check"
-import classNames from "classnames"
-import React from "react"
-import { FormattedMessage } from "react-intl"
+/* eslint-disable @typescript-eslint/indent */
+import Button, { ButtonProps } from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { createStyles, Theme, WithStyles, withStyles } from "@material-ui/core/styles";
+import CheckIcon from "@material-ui/icons/Check";
+import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@mzawadie/config";
+import { buttonMessages } from "@mzawadie/intl";
+import classNames from "classnames";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import { DEFAULT_NOTIFICATION_SHOW_TIME } from "../../config"
-import { buttonMessages } from "../../intl"
-
-export type ConfirmButtonTransitionState = "loading" | "success" | "error" | "default"
+export type ConfirmButtonTransitionState = "loading" | "success" | "error" | "default";
 
 const styles = (theme: Theme) =>
     createStyles({
@@ -24,7 +23,7 @@ const styles = (theme: Theme) =>
         icon: {
             marginLeft: "0 !important",
             position: "absolute",
-            transitionDuration: theme.transitions.duration.standard + "ms",
+            transitionDuration: `${theme.transitions.duration.standard}ms`,
         },
         invisible: {
             opacity: 0,
@@ -32,7 +31,7 @@ const styles = (theme: Theme) =>
         label: {
             alignItems: "center",
             display: "flex",
-            transitionDuration: theme.transitions.duration.standard + "ms",
+            transitionDuration: `${theme.transitions.duration.standard}ms`,
         },
         progress: {
             "& svg": {
@@ -40,7 +39,7 @@ const styles = (theme: Theme) =>
                 margin: 0,
             },
             position: "absolute",
-            transitionDuration: theme.transitions.duration.standard + "ms",
+            transitionDuration: `${theme.transitions.duration.standard}ms`,
         },
         success: {
             "&:hover": {
@@ -49,17 +48,17 @@ const styles = (theme: Theme) =>
             backgroundColor: theme.palette.primary.main,
             color: theme.palette.primary.contrastText,
         },
-    })
+    });
 
 export interface ConfirmButtonProperties
     extends Omit<ButtonProps, "classes">,
         WithStyles<typeof styles> {
-    transitionState: ConfirmButtonTransitionState
-    onTransitionToDefault?: () => void
+    transitionState: ConfirmButtonTransitionState;
+    onTransitionToDefault?: () => void;
 }
 
 interface ConfirmButtonState {
-    displayCompletedActionState: boolean
+    displayCompletedActionState: boolean;
 }
 
 const ConfirmButton = withStyles(styles, { name: "ConfirmButton" })(
@@ -68,10 +67,12 @@ const ConfirmButton = withStyles(styles, { name: "ConfirmButton" })(
             WithStyles<"error" | "icon" | "invisible" | "label" | "progress" | "success">,
         ConfirmButtonState
     > {
+        // eslint-disable-next-line react/state-in-constructor
         state: ConfirmButtonState = {
             displayCompletedActionState: false,
-        }
-        timeout = null
+        };
+
+        timeout: ReturnType<typeof setTimeout>;
 
         static getDerivedStateFromProps(
             nextProperties: ConfirmButtonProperties,
@@ -80,35 +81,34 @@ const ConfirmButton = withStyles(styles, { name: "ConfirmButton" })(
             if (nextProperties.transitionState === "loading") {
                 return {
                     displayCompletedActionState: true,
-                }
+                };
             }
-            return previousState
+            return previousState;
         }
 
         componentDidUpdate(previousProperties: ConfirmButtonProperties) {
-            const { transitionState, onTransitionToDefault } = this.props
+            const { transitionState, onTransitionToDefault } = this.props;
+
             if (previousProperties.transitionState !== transitionState) {
                 if (
-                    (["error", "success"] as ConfirmButtonTransitionState[]).includes(
-                        transitionState
-                    )
+                    (["error", "success"] as ConfirmButtonTransitionState[]).includes(transitionState)
                 ) {
                     this.timeout = setTimeout(() => {
                         this.setState({
                             displayCompletedActionState: false,
-                        })
+                        });
                         if (onTransitionToDefault) {
-                            onTransitionToDefault()
+                            onTransitionToDefault();
                         }
-                    }, DEFAULT_NOTIFICATION_SHOW_TIME)
+                    }, DEFAULT_NOTIFICATION_SHOW_TIME);
                 } else if (transitionState === "loading") {
-                    clearTimeout(this.timeout)
+                    clearTimeout(this.timeout);
                 }
             }
         }
 
         componentWillUnmount() {
-            clearTimeout(this.timeout)
+            clearTimeout(this.timeout);
         }
 
         render() {
@@ -119,10 +119,12 @@ const ConfirmButton = withStyles(styles, { name: "ConfirmButton" })(
                 disabled,
                 transitionState,
                 onClick,
+                // eslint-disable-next-line @typescript-eslint/naming-convention
                 onTransitionToDefault: _,
                 ...properties
-            } = this.props
-            const { displayCompletedActionState } = this.state
+            } = this.props;
+
+            const { displayCompletedActionState } = this.state;
 
             return (
                 <Button
@@ -130,11 +132,9 @@ const ConfirmButton = withStyles(styles, { name: "ConfirmButton" })(
                     onClick={transitionState === "loading" ? undefined : onClick}
                     color="primary"
                     className={classNames({
-                        [classes.error]:
-                            transitionState === "error" && displayCompletedActionState,
-                        [classes.success]:
-                            transitionState === "success" && displayCompletedActionState,
-                        [className]: true,
+                        [classes.error]: transitionState === "error" && displayCompletedActionState,
+                        [classes.success]: transitionState === "success" && displayCompletedActionState,
+                        // [className]: true,
                     })}
                     disabled={!displayCompletedActionState && disabled}
                     {...properties}
@@ -147,38 +147,36 @@ const ConfirmButton = withStyles(styles, { name: "ConfirmButton" })(
                             [classes.invisible]: transitionState !== "loading",
                         })}
                     />
+
                     <CheckIcon
                         className={classNames({
                             [classes.icon]: true,
                             [classes.invisible]: !(
-                                transitionState === "success" &&
-                                displayCompletedActionState
+                                transitionState === "success" && displayCompletedActionState
                             ),
                         })}
                     />
+
                     <span
                         className={classNames({
                             [classes.label]: true,
                             [classes.invisible]:
-                                (transitionState === "loading" ||
-                                    transitionState === "success") &&
+                                (transitionState === "loading" || transitionState === "success") &&
                                 displayCompletedActionState,
                         })}
                     >
                         {transitionState === "error" && displayCompletedActionState ? (
-                            <FormattedMessage
-                                defaultMessage="Error"
-                                id="Mi4JOd"
-                                description="button"
-                            />
+                            <FormattedMessage defaultMessage="Error" id="Mi4JOd" description="button" />
                         ) : (
                             children || <FormattedMessage {...buttonMessages.confirm} />
                         )}
                     </span>
                 </Button>
-            )
+            );
         }
     }
-)
-ConfirmButton.displayName = "ConfirmButton"
-export default ConfirmButton
+);
+
+ConfirmButton.displayName = "ConfirmButton";
+
+export default ConfirmButton;

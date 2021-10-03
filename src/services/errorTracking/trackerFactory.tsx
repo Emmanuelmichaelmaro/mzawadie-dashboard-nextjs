@@ -1,47 +1,48 @@
-/* eslint-disable unicorn/filename-case */
-import { TrackerMethods, TrackerPermission, UserData } from "./types"
+/* eslint-disable import/prefer-default-export */
+import { TrackerMethods, TrackerPermission, UserData } from "./types";
 
-type ErrorTrackerFactory = (
+type ErrorTrackerFactoryProps = (
     ExtensionFactory: TrackerMethods,
     permissions?: TrackerPermission[]
-) => TrackerMethods
+) => TrackerMethods;
 
-export const ErrorTrackerFactory: ErrorTrackerFactory = (extension, permissions = []) => {
-    let ENABLED = false
+export const ErrorTrackerFactory: ErrorTrackerFactoryProps = (extension, permissions = []) => {
+    let ENABLED = false;
 
     const safelyInvoke = <T extends () => any>(
         function_: T,
         permission?: TrackerPermission
-    ): ReturnType<T> => {
-        const hasPermission =
-            permission !== undefined ? permissions.includes(permission) : true
+    ): ReturnType<T> | undefined => {
+        const hasPermission = permission !== undefined ? permissions.includes(permission) : true;
 
         if (ENABLED && hasPermission) {
             try {
-                return function_()
+                return function_();
             } catch (error) {
-                throw new Error(`Tracking Extension Error: ${error}`)
+                throw new Error(`Tracking Extension Error: ${error}`);
             }
         }
-    }
+
+        return undefined;
+    };
 
     const init: TrackerMethods["init"] = () => {
         if (!ENABLED) {
-            ENABLED = extension.init()
+            ENABLED = extension.init();
         }
 
-        return ENABLED
-    }
+        return ENABLED;
+    };
 
     const setUserData: TrackerMethods["setUserData"] = (userData: UserData) =>
-        safelyInvoke(() => extension.setUserData(userData), TrackerPermission.USER_DATA)
+        safelyInvoke(() => extension.setUserData(userData), TrackerPermission.USER_DATA);
 
     const captureException: TrackerMethods["captureException"] = (e: Error) =>
-        safelyInvoke(() => extension.captureException(e))
+        safelyInvoke(() => extension.captureException(e));
 
     return {
         captureException,
         init,
         setUserData,
-    }
-}
+    };
+};

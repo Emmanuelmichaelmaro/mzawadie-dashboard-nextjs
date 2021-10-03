@@ -1,6 +1,5 @@
-import { GraphQLError } from "graphql"
-
-import { findValueInEnum } from "../misc"
+import { findValueInEnum } from "@mzawadie/misc";
+import { GraphQLError } from "graphql";
 
 export enum JWTError {
     invalid = "InvalidTokenError",
@@ -9,17 +8,16 @@ export enum JWTError {
 }
 
 export function isJwtError(error: GraphQLError): boolean {
-    let jwtError: boolean
-
+    let jwtError: boolean;
     try {
-        jwtError = !!findValueInEnum(error.extensions?.exception.code, JWTError)
-    } catch {
-        jwtError = false
+        jwtError = !!findValueInEnum(error.extensions?.exception.code, JWTError);
+    } catch (e) {
+        jwtError = false;
     }
 
-    return jwtError
+    return jwtError;
 }
 
 export function isTokenExpired(error: GraphQLError): boolean {
-    return error.extensions?.exception.code === JWTError.expired
+    return error.extensions?.exception.code === JWTError.expired;
 }

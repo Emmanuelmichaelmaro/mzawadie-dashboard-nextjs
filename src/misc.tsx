@@ -1,22 +1,52 @@
-import { MutationResult } from "@apollo/client"
-import { ThemeType } from "@saleor/macaw-ui"
+/* eslint-disable import/prefer-default-export */
 
-import { ConfirmButtonTransitionState } from "./components/ConfirmButton"
-import { UserError } from "./types"
+/* eslint-disable @typescript-eslint/ban-types */
 
-export const isDarkTheme = (themeType: ThemeType) => themeType === "dark"
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { MutationFunction, MutationResult } from "@apollo/client";
+import { ConfirmButtonTransitionState } from "@mzawadie/components/ConfirmButton";
 
-export function findValueInEnum<TEnum extends {}>(
-    needle: string,
-    haystack: TEnum
-): TEnum[keyof TEnum] {
-    const match = Object.entries(haystack).find(([_, value]) => value === needle)
+import { MutationResultAdditionalProps, PartialMutationProviderOutput, UserError } from "./types";
+
+export function maybe<T>(exp: () => T): T | undefined;
+export function maybe<T>(exp: () => T, d: T): T;
+export function maybe(exp: any, d?: any) {
+    try {
+        const result = exp();
+        return result === undefined ? d : result;
+    } catch {
+        return d;
+    }
+}
+
+export function only<T>(obj: T, key: keyof T): boolean {
+    return Object.keys(obj).every((objKey) =>
+        objKey === key ? obj[key] !== undefined : obj[key] === undefined
+    );
+}
+
+export function empty(obj: {}): boolean {
+    // @ts-ignore
+    return Object.keys(obj).every((key) => obj[key] === undefined);
+}
+
+export function hasErrors(errorList: UserError[] | null): boolean {
+    return !(errorList === undefined || errorList === null || errorList.length === 0);
+}
+
+export function findValueInEnum<TEnum extends {}>(needle: string, haystack: TEnum): TEnum[keyof TEnum] {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const match = Object.entries(haystack).find(([_, value]) => value === needle);
 
     if (!match) {
-        throw new Error(`Value ${needle} not found in enum`)
+        throw new Error(`Value ${needle} not found in enum`);
     }
 
-    return needle as unknown as TEnum[keyof TEnum]
+    return needle as unknown as TEnum[keyof TEnum];
+}
+
+interface MzawadieMutationResult {
+    errors?: UserError[];
 }
 
 export function getMutationState(
@@ -25,67 +55,48 @@ export function getMutationState(
     ...errorList: any[][]
 ): ConfirmButtonTransitionState {
     if (loading) {
-        return "loading"
+        return "loading";
     }
+
     if (called) {
-        return errorList
-            .map(hasErrors)
-            .reduce((accumulator, current) => accumulator || current, false)
-            ? "error"
-            : "success"
+        return errorList.map(hasErrors).reduce((acc, curr) => acc || curr, false) ? "error" : "success";
     }
-    return "default"
+
+    return "default";
 }
 
-interface SaleorMutationResult {
-    errors?: UserError[]
-}
-export function getMutationErrors<TData extends Record<string, SaleorMutationResult>>(
+export function getMutationErrors<TData extends Record<string, MzawadieMutationResult>>(
     data: TData
 ): UserError[] {
     return Object.values(data).reduce(
-        (accumulator: UserError[], mut) => [
-            ...accumulator,
-            ...maybe(() => mut.errors, []),
-        ],
+        // @ts-ignore
+        (acc: UserError[], mut) => [...acc, ...maybe(() => mut.errors, [])],
         []
-    )
+    );
 }
 
-export function getMutationStatus<
-    TData extends Record<string, SaleorMutationResult | any>
->(options: MutationResult<TData>): ConfirmButtonTransitionState {
-    const errors = options.data ? getMutationErrors(options.data) : []
+export function getMutationStatus<TData extends Record<string, MzawadieMutationResult | any>>(
+    opts: MutationResult<TData>
+): ConfirmButtonTransitionState {
+    const errors = opts.data ? getMutationErrors(opts.data) : [];
 
-    return getMutationState(options.called, options.loading, errors)
+    return getMutationState(opts.called, opts.loading, errors);
 }
 
-export function getFullName<T extends { firstName: string; lastName: string }>(data: T) {
-    if (!data || !data.firstName || !data.lastName) {
-        return ""
-    }
-
-    return `${data.firstName} ${data.lastName}`
+export function getMutationProviderData<TData, TVariables>(
+    mutateFn: MutationFunction<TData, TVariables>,
+    opts: MutationResult<TData> & MutationResultAdditionalProps
+): PartialMutationProviderOutput<TData, TVariables> {
+    return {
+        mutate: (variables: any) => mutateFn({ variables }),
+        opts,
+    };
 }
-
-export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<
-    T,
-    Exclude<keyof T, Keys>
-> &
-    { [K in Keys]-?: Required<Pick<T, K>> }[Keys]
-
-export type RequireOnlyOne<T, Keys extends keyof T = keyof T> = Pick<
-    T,
-    Exclude<keyof T, Keys>
-> &
-    {
-        [K in Keys]-?: Required<Pick<T, K>> & Partial<Record<Exclude<Keys, K>, undefined>>
-    }[Keys]
 
 interface User {
-    email: string
-    firstName?: string
-    lastName?: string
+    email: string;
+    firstName?: string;
+    lastName?: string;
 }
 
 export function getUserName(user?: User, returnEmail?: boolean) {
@@ -95,7 +106,7 @@ export function getUserName(user?: User, returnEmail?: boolean) {
             : returnEmail
             ? user.email
             : user.email.split("@")[0]
-        : undefined
+        : undefined;
 }
 
 export function getUserInitials(user?: User) {
@@ -104,5 +115,13 @@ export function getUserInitials(user?: User) {
               ? user.firstName[0] + user.lastName[0]
               : user.email.slice(0, 2)
           ).toUpperCase()
-        : undefined
+        : undefined;
+}
+
+export function getFullName<T extends { firstName: string; lastName: string }>(data: T) {
+    if (!data || !data.firstName || !data.lastName) {
+        return "";
+    }
+
+    return `${data.firstName} ${data.lastName}`;
 }

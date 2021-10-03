@@ -1,17 +1,16 @@
 export interface AppError {
-    type: "unhandled"
-    id: string | null | undefined
+    type: "unhandled" | undefined;
+    id: string | null | undefined;
 }
 
 interface IAppState {
-    error: AppError | null
-    loading: boolean
+    error: AppError | null;
+    loading: boolean | undefined;
 }
 
 export const initialAppState: IAppState = {
-    // eslint-disable-next-line unicorn/no-null
     error: null,
     loading: false,
-}
+};
 
-export default IAppState
+export default IAppState;

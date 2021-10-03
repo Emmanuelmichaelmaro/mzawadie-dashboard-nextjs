@@ -1,267 +1,264 @@
-/* eslint-disable unicorn/filename-case */
-
-/* eslint-disable unicorn/no-useless-undefined */
-
-/* eslint-disable unicorn/filename-case */
-
-/* eslint-disable @typescript-eslint/indent */
-
-/* eslint-disable unicorn/filename-case */
-import { useMutation } from "@apollo/client"
-import { useEffect, useRef, useState } from "react"
-
-import {
-    ExternalAuthenticationUrl,
-    ExternalObtainAccessTokens,
-    ExternalRefresh,
-    ExternalVerify,
-    MutationExternalAuthenticationUrlArgs as MutationExternalAuthenticationUrlArguments,
-    MutationExternalObtainAccessTokensArgs as MutationExternalObtainAccessTokensArguments,
-    MutationExternalRefreshArgs as MutationExternalRefreshArguments,
-    MutationExternalVerifyArgs as MutationExternalVerifyArguments,
-    User,
-} from "../../../generated/graphql"
-import { DEMO_MODE } from "../../config"
-import { SetLocalStorage } from "../../hooks/useLocalStorage"
-import { commonMessages } from "../../intl"
-import { getFullName, getMutationStatus } from "../../misc"
-import errorTracker from "../../services/errorTracking"
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useMutation } from "@apollo/client";
+import { displayDemoMessage, getTokens, removeTokens, setAuthToken, setTokens } from "@mzawadie/auth";
 import {
     externalAuthenticationUrlMutation,
     externalObtainAccessTokensMutation,
     externalTokenRefreshMutation,
     externalTokenVerifyMutation,
-} from "../mutations"
+} from "@mzawadie/auth/mutations";
 import {
-    displayDemoMessage,
-    getTokens,
-    removeTokens,
-    setAuthToken,
-    setTokens,
-} from "../utils"
-import { UseAuthProvider, UseAuthProviderOptions } from "./useAuthProvider"
+    ExternalAuthenticationUrl,
+    ExternalAuthenticationUrlVariables,
+} from "@mzawadie/auth/types/ExternalAuthenticationUrl";
+import {
+    ExternalObtainAccessTokens,
+    ExternalObtainAccessTokens_externalObtainAccessTokens,
+    ExternalObtainAccessTokensVariables,
+} from "@mzawadie/auth/types/ExternalObtainAccessTokens";
+import {
+    ExternalRefreshToken,
+    ExternalRefreshTokenVariables,
+} from "@mzawadie/auth/types/ExternalRefreshToken";
+import {
+    ExternalVerifyToken,
+    ExternalVerifyTokenVariables,
+} from "@mzawadie/auth/types/ExternalVerifyToken";
+import { DEMO_MODE } from "@mzawadie/config";
+import { User } from "@mzawadie/fragments/types/User";
+import { SetLocalStorage } from "@mzawadie/hooks/useLocalStorage";
+import { commonMessages } from "@mzawadie/intl";
+import { getFullName, getMutationStatus } from "@mzawadie/misc";
+import errorTracker from "@mzawadie/services/errorTracking";
+import { useEffect, useRef, useState } from "react";
 
-const persistToken = false
+import { UseAuthProvider, UseAuthProviderOpts } from "./useAuthProvider";
 
 export interface RequestExternalLoginInput {
-    redirectUri: string
+    redirectUri: string;
 }
 
 export interface ExternalLoginInput {
-    code: string
-    state: string
+    code: string;
+    state: string;
 }
 
 export interface UseExternalAuthProvider extends UseAuthProvider {
-    requestLoginByExternalPlugin: (
-        pluginId: string,
-        input: RequestExternalLoginInput
-    ) => Promise<void>
+    requestLoginByExternalPlugin: (pluginId: string, input: RequestExternalLoginInput) => Promise<void>;
     loginByExternalPlugin: (
         input: ExternalLoginInput
-    ) => Promise<ExternalObtainAccessTokens>
+    ) => Promise<ExternalObtainAccessTokens_externalObtainAccessTokens | null | undefined>;
 }
 
-// eslint-disable-next-line unicorn/prevent-abbreviations
-export interface UseExternalAuthProviderOpts extends UseAuthProviderOptions {
-    setAuthPlugin: SetLocalStorage<any>
-    authPlugin: string
+export interface UseExternalAuthProviderOpts extends UseAuthProviderOpts {
+    setAuthPlugin: SetLocalStorage<any>;
+    authPlugin: string;
 }
 
-export function useExternalAuthProvider({
+const persistToken = false;
+
+export const useExternalAuthProvider = ({
     apolloClient,
-    authPlugin,
     intl,
     notify,
+    authPlugin,
     setAuthPlugin,
-}: UseExternalAuthProviderOpts): UseExternalAuthProvider {
-    // eslint-disable-next-line unicorn/no-useless-undefined
-    const [userContext, setUserContext] = useState<undefined | User>(undefined)
-    const autologinPromise = useRef<Promise<any>>()
-    const refreshPromise = useRef<Promise<boolean>>()
+}: UseExternalAuthProviderOpts): UseExternalAuthProvider => {
+    const [userContext, setUserContext] = useState<undefined | User>(undefined);
+    const autoLoginPromise = useRef<Promise<any>>();
+    const refreshPromise = useRef<Promise<boolean>>();
 
     useEffect(() => {
-        const token = getTokens().auth
+        const token = getTokens().auth;
 
         if (authPlugin && !!token && !userContext) {
             const input = JSON.stringify({
                 token,
-            })
-            autologinPromise.current = tokenVerify({
+            });
+            autoLoginPromise.current = tokenVerify({
                 variables: { input, pluginId: authPlugin },
-            })
+            });
         }
-    }, [])
+    }, []);
 
     useEffect(() => {
         if (authPlugin && userContext) {
-            const { id, email } = userContext
+            const { id, email } = userContext;
+
             errorTracker.setUserData({
                 email,
                 id,
                 username: getFullName(userContext),
-            })
+            });
 
-            // eslint-disable-next-line unicorn/consistent-destructuring
             if (!userContext.isStaff) {
-                logout()
+                logout();
                 notify({
                     status: "error",
                     text: intl.formatMessage(commonMessages.unauthorizedDashboardAccess),
                     title: intl.formatMessage(commonMessages.insufficientPermissions),
-                })
+                });
             }
         }
-    }, [userContext])
+    }, [userContext]);
 
     const logout = () => {
-        setUserContext(undefined)
-        setAuthPlugin(undefined)
-        removeTokens()
-    }
+        setUserContext(undefined);
+        setAuthPlugin(undefined);
+        removeTokens();
+    };
 
     const [externalAuthenticationUrl] = useMutation<
         ExternalAuthenticationUrl,
-        MutationExternalAuthenticationUrlArguments
+        ExternalAuthenticationUrlVariables
     >(externalAuthenticationUrlMutation, {
         client: apolloClient,
         onError: logout,
-    })
+    });
 
     const [obtainAccessTokens, obtainAccessTokensResult] = useMutation<
         ExternalObtainAccessTokens,
-        MutationExternalObtainAccessTokensArguments
+        ExternalObtainAccessTokensVariables
     >(externalObtainAccessTokensMutation, {
         client: apolloClient,
-        onCompleted: ({ errors, csrfToken, token, user }) => {
-            if (errors.length > 0) {
-                logout()
+        onCompleted: ({ externalObtainAccessTokens }) => {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            if (externalObtainAccessTokens?.errors?.length > 0) {
+                logout();
             }
 
-            setUserContext(user!)
+            const user = externalObtainAccessTokens?.user;
 
-            if (user) {
-                setTokens(token!, csrfToken!, persistToken)
+            if (user && externalObtainAccessTokens?.token && externalObtainAccessTokens?.csrfToken) {
+                setUserContext(user);
+                setTokens(
+                    externalObtainAccessTokens?.token,
+                    externalObtainAccessTokens?.csrfToken,
+                    persistToken
+                );
             }
         },
         onError: logout,
-    })
+    });
 
-    const [tokenRefresh] = useMutation<ExternalRefresh, MutationExternalRefreshArguments>(
+    const [tokenRefresh] = useMutation<ExternalRefreshToken, ExternalRefreshTokenVariables>(
         externalTokenRefreshMutation,
         {
             client: apolloClient,
             onError: logout,
         }
-    )
+    );
 
     const [tokenVerify, tokenVerifyResult] = useMutation<
-        ExternalVerify,
-        MutationExternalVerifyArguments
+        ExternalVerifyToken,
+        ExternalVerifyTokenVariables
     >(externalTokenVerifyMutation, {
         client: apolloClient,
         onCompleted: (result) => {
-            if (result === null) {
-                logout()
+            if (result.externalVerify === null) {
+                logout();
             } else {
-                const user = result.user
+                const user = result.externalVerify?.user;
 
-                if (!!user) {
-                    setUserContext(user)
+                if (user) {
+                    setUserContext(user);
                 }
             }
         },
         onError: logout,
-    })
+    });
 
-    const obtainAccessTokensOptions = {
+    const obtainAccessTokensOpts = {
         ...obtainAccessTokensResult,
         status: getMutationStatus(obtainAccessTokensResult),
-    }
+    };
 
-    const tokenVerifyOptions = {
+    const tokenVerifyOpts = {
         ...tokenVerifyResult,
         status: getMutationStatus(tokenVerifyResult),
-    }
+    };
 
     const onLogin = () => {
         if (DEMO_MODE) {
-            displayDemoMessage(intl, notify)
+            displayDemoMessage(intl, notify);
         }
-    }
+    };
 
     const requestLoginByExternalPlugin = async (
         pluginId: string,
         pluginInput: RequestExternalLoginInput
     ) => {
-        const input = JSON.stringify(pluginInput)
+        const input = JSON.stringify(pluginInput);
         const result = await externalAuthenticationUrl({
             variables: {
                 input,
                 pluginId,
             },
-        })
+        });
 
-        if (result && result.data?.errors.length === 0) {
-            setAuthPlugin(pluginId)
+        if (result && !result.data?.externalAuthenticationUrl?.errors.length) {
+            setAuthPlugin(pluginId);
 
-            const authenticationData = JSON.parse(result.data.authenticationData)
+            const authenticationData = JSON.parse(
+                result.data?.externalAuthenticationUrl?.authenticationData
+            );
 
-            location.href = authenticationData.authorizationUrl
+            // eslint-disable-next-line no-restricted-globals
+            location.href = authenticationData.authorizationUrl;
         } else {
-            setAuthPlugin(undefined)
+            setAuthPlugin(undefined);
         }
-    }
+    };
 
     const loginByExternalPlugin = async (loginInput: ExternalLoginInput) => {
-        const input = JSON.stringify(loginInput)
+        const input = JSON.stringify(loginInput);
         const result = await obtainAccessTokens({
             variables: { input, pluginId: authPlugin },
-        })
+        });
 
-        if (result && !result.data?.errors?.length) {
-            if (!!onLogin) {
-                onLogin()
+        if (result && !result.data?.externalObtainAccessTokens?.errors?.length) {
+            if (onLogin) {
+                onLogin();
             }
         } else {
-            setAuthPlugin(undefined)
+            setAuthPlugin(undefined);
         }
 
-        return result?.data
-    }
+        return result?.data?.externalObtainAccessTokens;
+    };
 
     const refreshToken = (): Promise<boolean> => {
-        if (!!refreshPromise.current) {
-            return refreshPromise.current
+        if (refreshPromise.current) {
+            return refreshPromise.current;
         }
 
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         return new Promise((resolve) => {
-            const token = getTokens().refresh
+            const token = getTokens().refresh;
             const input = JSON.stringify({
                 refreshToken: token,
-            })
+            });
 
-            return tokenRefresh({ variables: { input, pluginId: authPlugin } }).then(
-                (refreshData) => {
-                    if (!!refreshData.data?.token) {
-                        setAuthToken(refreshData.data.token, persistToken)
-                        return resolve(true)
-                    }
-
-                    return resolve(false)
+            return tokenRefresh({ variables: { input, pluginId: authPlugin } }).then((refreshData) => {
+                if (refreshData.data?.externalRefresh?.token) {
+                    setAuthToken(refreshData.data?.externalRefresh.token, persistToken);
+                    return resolve(true);
                 }
-            )
-        })
-    }
+
+                return resolve(false);
+            });
+        });
+    };
 
     return {
-        autologinPromise,
+        autoLoginPromise,
         loginByExternalPlugin,
         logout,
         requestLoginByExternalPlugin,
-        tokenAuthLoading: obtainAccessTokensOptions.loading,
+        tokenAuthLoading: obtainAccessTokensOpts.loading,
         tokenRefresh: refreshToken,
-        tokenVerifyLoading: tokenVerifyOptions.loading,
+        tokenVerifyLoading: tokenVerifyOpts.loading,
         user: userContext,
-    }
-}
+    };
+};

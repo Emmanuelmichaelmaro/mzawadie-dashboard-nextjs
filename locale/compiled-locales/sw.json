@@ -1,0 +1,566 @@
+{
+    "+xTpT1": [
+        {
+            "type": 0,
+            "value": "Attributes"
+        }
+    ],
+    "/8/Ffn": [
+        {
+            "type": 0,
+            "value": "Show"
+        }
+    ],
+    "0OfZJA": [
+        {
+            "type": 0,
+            "value": "Back"
+        }
+    ],
+    "2FQsYj": [
+        {
+            "type": 0,
+            "value": "Clear"
+        }
+    ],
+    "2YaS7K": [
+        {
+            "type": 0,
+            "value": "E-mail Address"
+        }
+    ],
+    "2atspc": [
+        {
+            "type": 0,
+            "value": "Drafts"
+        }
+    ],
+    "4JW9iJ": [
+        {
+            "type": 0,
+            "value": "Home"
+        }
+    ],
+    "4OZ8Mj": [
+        {
+            "type": 0,
+            "value": "Karibu kwenye Dashibodi, Msimamizi!!!"
+        }
+    ],
+    "577R2r": [
+        {
+            "type": 0,
+            "value": "Invalid value"
+        }
+    ],
+    "5elC9k": [
+        {
+            "type": 0,
+            "value": "Taxes"
+        }
+    ],
+    "5fCMUI": [
+        {
+            "type": 0,
+            "value": "Translations"
+        }
+    ],
+    "6nSTuC": [
+        {
+            "type": 0,
+            "value": "Webhooks"
+        }
+    ],
+    "8oIbMI": [
+        {
+            "type": 0,
+            "value": "Reached limit for this plan"
+        }
+    ],
+    "8xsKUv": [
+        {
+            "type": 0,
+            "value": "Service Accounts"
+        }
+    ],
+    "9C7PZE": [
+        {
+            "type": 0,
+            "value": "Navigation"
+        }
+    ],
+    "9q562c": [
+        {
+            "type": 0,
+            "value": "Apps"
+        }
+    ],
+    "9uNz+T": [
+        {
+            "type": 0,
+            "value": "Cancel"
+        }
+    ],
+    "AQFMYU": [
+        {
+            "type": 0,
+            "value": "Staff Members"
+        }
+    ],
+    "D9ie4n": [
+        {
+            "type": 0,
+            "value": "Shipping Methods"
+        }
+    ],
+    "DJFPzq": [
+        {
+            "type": 0,
+            "value": "Confirm"
+        }
+    ],
+    "DNTxWr": [
+        {
+            "type": 0,
+            "value": "Permission Groups"
+        }
+    ],
+    "DOkfyZ": [
+        {
+            "type": 0,
+            "value": "Insufficient permissions"
+        }
+    ],
+    "Fvvgoi": [
+        {
+            "type": 0,
+            "value": "Your session has expired. Please log in again to continue."
+        }
+    ],
+    "GOdq5V": [
+        {
+            "type": 0,
+            "value": "Catalog"
+        }
+    ],
+    "H5NKfr": [
+        {
+            "type": 0,
+            "value": "Create"
+        }
+    ],
+    "H6NsC1": [
+        {
+            "type": 0,
+            "value": "Pages"
+        }
+    ],
+    "HSmg1/": [
+        {
+            "type": 0,
+            "value": "Gift Cards"
+        }
+    ],
+    "IbVKSH": [
+        {
+            "type": 0,
+            "value": "Manage"
+        }
+    ],
+    "Ja7gHc": [
+        {
+            "type": 0,
+            "value": "Edit"
+        }
+    ],
+    "JiVwOU": [
+        {
+            "type": 0,
+            "value": "There was a problem with the file you uploaded as an image and it couldn't be used. Please try a different file."
+        }
+    ],
+    "K8xNLe": [
+        {
+            "type": 0,
+            "value": "Products"
+        }
+    ],
+    "KN7zKn": [
+        {
+            "type": 0,
+            "value": "Error"
+        }
+    ],
+    "KeO51o": [
+        {
+            "type": 0,
+            "value": "Channel"
+        }
+    ],
+    "LVa5ew": [
+        {
+            "type": 0,
+            "value": "Saleor ran into an unexpected problem"
+        }
+    ],
+    "Lx1ima": [
+        {
+            "type": 0,
+            "value": "Upload image"
+        }
+    ],
+    "MKtgZB": [
+        {
+            "type": 0,
+            "value": "Only staff users can access the dashboard"
+        }
+    ],
+    "McN+wq": [
+        {
+            "type": 0,
+            "value": "Customers"
+        }
+    ],
+    "Mi4JOd": [
+        {
+            "type": 0,
+            "value": "Error"
+        }
+    ],
+    "NNT3Lp": [
+        {
+            "type": 0,
+            "value": "Collections"
+        }
+    ],
+    "NlSJMM": [
+        {
+            "type": 0,
+            "value": "Channels"
+        }
+    ],
+    "P7PLVj": [
+        {
+            "type": 0,
+            "value": "Date"
+        }
+    ],
+    "Q6wcZ5": [
+        {
+            "type": 0,
+            "value": "First Name"
+        }
+    ],
+    "Q8Qw5B": [
+        {
+            "type": 0,
+            "value": "Description"
+        }
+    ],
+    "QirE3M": [
+        {
+            "type": 0,
+            "value": "Start Date"
+        }
+    ],
+    "RaycYK": [
+        {
+            "type": 0,
+            "value": "Save"
+        }
+    ],
+    "Rjs1CD": [
+        {
+            "type": 0,
+            "value": "Continue"
+        }
+    ],
+    "RrCui3": [
+        {
+            "type": 0,
+            "value": "Summary"
+        }
+    ],
+    "T4GOiX": [
+        {
+            "type": 0,
+            "value": "End Date"
+        }
+    ],
+    "TKmub+": [
+        {
+            "type": 0,
+            "value": "This field is required"
+        }
+    ],
+    "Ta9j04": [
+        {
+            "type": 0,
+            "value": "Orders"
+        }
+    ],
+    "WhvuCb": [
+        {
+            "type": 0,
+            "value": "Plugins"
+        }
+    ],
+    "YMBn8d": [
+        {
+            "type": 0,
+            "value": "Draft Orders"
+        }
+    ],
+    "YQ3EXR": [
+        {
+            "type": 0,
+            "value": "Product Types"
+        }
+    ],
+    "Yo2kC+": [
+        {
+            "type": 0,
+            "value": "Couldn't process image"
+        }
+    ],
+    "a+x05s": [
+        {
+            "type": 0,
+            "value": "Select"
+        }
+    ],
+    "a5msuh": [
+        {
+            "type": 0,
+            "value": "Yes"
+        }
+    ],
+    "a9S9Je": [
+        {
+            "type": 0,
+            "value": "Page Types"
+        }
+    ],
+    "aI80kg": [
+        {
+            "type": 0,
+            "value": "Properties"
+        }
+    ],
+    "aheQdn": [
+        {
+            "type": 0,
+            "value": "Last Name"
+        }
+    ],
+    "bZenNC": [
+        {
+            "type": 0,
+            "value": "Description (optional)"
+        }
+    ],
+    "bu/fC1": [
+        {
+            "type": 0,
+            "value": "Remove"
+        }
+    ],
+    "c5pMZ8": [
+        {
+            "type": 0,
+            "value": "API error"
+        }
+    ],
+    "eOrLzG": [
+        {
+            "type": 0,
+            "value": "Done"
+        }
+    ],
+    "eWcvOc": [
+        {
+            "type": 0,
+            "value": "Choose file"
+        }
+    ],
+    "hOxIeP": [
+        {
+            "type": 0,
+            "value": "Availability"
+        }
+    ],
+    "hqVMLQ": [
+        {
+            "type": 0,
+            "value": "Send"
+        }
+    ],
+    "hzSNj4": [
+        {
+            "type": 0,
+            "value": "Dashboard"
+        }
+    ],
+    "i0AcKY": [
+        {
+            "type": 0,
+            "value": "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes."
+        }
+    ],
+    "iUy2dx": [
+        {
+            "type": 0,
+            "value": "Vouchers"
+        }
+    ],
+    "j0ugM4": [
+        {
+            "type": 0,
+            "value": "Exchange Rates"
+        }
+    ],
+    "juBV+h": [
+        {
+            "type": 0,
+            "value": "End Hour"
+        }
+    ],
+    "kFYlu2": [
+        {
+            "type": 0,
+            "value": "Saleor runs in read-only mode. Changes not saved."
+        }
+    ],
+    "kJQczl": [
+        {
+            "type": 0,
+            "value": "Sales"
+        }
+    ],
+    "l2oVCF": [
+        {
+            "type": 0,
+            "value": "Attributes"
+        }
+    ],
+    "lzdvwp": [
+        {
+            "type": 0,
+            "value": "Optional"
+        }
+    ],
+    "n+Gwbu": [
+        {
+            "type": 0,
+            "value": "Discounts"
+        }
+    ],
+    "oUWADl": [
+        {
+            "type": 0,
+            "value": "No"
+        }
+    ],
+    "pkUbrL": [
+        {
+            "type": 0,
+            "value": "General Information"
+        }
+    ],
+    "qDwvZ4": [
+        {
+            "type": 0,
+            "value": "Unknown error"
+        }
+    ],
+    "rfvBAF": [
+        {
+            "type": 0,
+            "value": "Select All"
+        }
+    ],
+    "rqiCWU": [
+        {
+            "type": 0,
+            "value": "Saved changes"
+        }
+    ],
+    "s9sOcC": [
+        {
+            "type": 0,
+            "value": "OK"
+        }
+    ],
+    "sK1FPw": [
+        {
+            "type": 0,
+            "value": "Categories"
+        }
+    ],
+    "skPoVe": [
+        {
+            "type": 0,
+            "value": "Accept"
+        }
+    ],
+    "tWbE34": [
+        {
+            "type": 0,
+            "value": "Start Hour"
+        }
+    ],
+    "tzMNF3": [
+        {
+            "type": 0,
+            "value": "Status"
+        }
+    ],
+    "u3sYPH": [
+        {
+            "type": 0,
+            "value": "Time"
+        }
+    ],
+    "ufmuTp": [
+        {
+            "type": 0,
+            "value": "Delete"
+        }
+    ],
+    "vN3qdA": [
+        {
+            "type": 0,
+            "value": "Undo"
+        }
+    ],
+    "viFkCw": [
+        {
+            "type": 0,
+            "value": "Site Settings"
+        }
+    ],
+    "w4R/SO": [
+        {
+            "type": 0,
+            "value": "Local Apps"
+        }
+    ],
+    "wlQTfb": [
+        {
+            "type": 0,
+            "value": "Next"
+        }
+    ],
+    "xfGZsi": [
+        {
+            "type": 0,
+            "value": "Configuration"
+        }
+    ],
+    "ycMLN9": [
+        {
+            "type": 0,
+            "value": "Warehouses"
+        }
+    ]
+}

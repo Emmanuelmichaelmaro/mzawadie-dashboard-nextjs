@@ -1,0 +1,15 @@
+export interface MetadataFragment_metadata {
+    __typename: "MetadataItem";
+    key: string;
+    value: string;
+}
+export interface MetadataFragment_privateMetadata {
+    __typename: "MetadataItem";
+    key: string;
+    value: string;
+}
+export interface MetadataFragment {
+    __typename: "App" | "Attribute" | "Category" | "Checkout" | "Collection" | "DigitalContent" | "Fulfillment" | "GiftCard" | "Invoice" | "Menu" | "MenuItem" | "Order" | "Page" | "PageType" | "Product" | "ProductType" | "ProductVariant" | "Sale" | "ShippingMethod" | "ShippingZone" | "User" | "Voucher" | "Warehouse";
+    metadata: (MetadataFragment_metadata | null)[];
+    privateMetadata: (MetadataFragment_privateMetadata | null)[];
+}

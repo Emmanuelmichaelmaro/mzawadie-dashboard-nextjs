@@ -1,222 +1,224 @@
-export const attributeErrorFragment = /* GraphQL */ `
+import { gql } from "@apollo/client";
+
+export const attributeErrorFragment = gql`
     fragment AttributeErrorFragment on AttributeError {
         code
         field
     }
-`
+`;
 
-export const productErrorFragment = /* GraphQL */ `
+export const productErrorFragment = gql`
     fragment ProductErrorFragment on ProductError {
         code
         field
     }
-`
+`;
 
-export const productErrorWithAttributesFragment = /* GraphQL */ `
+export const productErrorWithAttributesFragment = gql`
     ${productErrorFragment}
     fragment ProductErrorWithAttributesFragment on ProductError {
         ...ProductErrorFragment
         attributes
     }
-`
+`;
 
-export const productChannelListingErrorFragment = /* GraphQL */ `
+export const productChannelListingErrorFragment = gql`
     fragment ProductChannelListingErrorFragment on ProductChannelListingError {
         code
         field
         message
         channels
     }
-`
+`;
 
-export const collectionChannelListingErrorFragment = /* GraphQL */ `
+export const collectionChannelListingErrorFragment = gql`
     fragment CollectionChannelListingErrorFragment on CollectionChannelListingError {
         code
         field
         message
         channels
     }
-`
+`;
 
-export const accountErrorFragment = /* GraphQL */ `
+export const accountErrorFragment = gql`
     fragment AccountErrorFragment on AccountError {
         code
         field
         addressType
     }
-`
+`;
 
-export const discountErrorFragment = /* GraphQL */ `
+export const discountErrorFragment = gql`
     fragment DiscountErrorFragment on DiscountError {
         code
         field
         channels
     }
-`
+`;
 
-export const menuErrorFragment = /* GraphQL */ `
+export const menuErrorFragment = gql`
     fragment MenuErrorFragment on MenuError {
         code
         field
     }
-`
+`;
 
-export const orderErrorFragment = /* GraphQL */ `
+export const orderErrorFragment = gql`
     fragment OrderErrorFragment on OrderError {
         code
         field
         addressType
     }
-`
+`;
 
-export const orderSettingsErrorFragment = /* GraphQL */ `
+export const orderSettingsErrorFragment = gql`
     fragment OrderSettingsErrorFragment on OrderSettingsError {
         code
         field
     }
-`
+`;
 
-export const pageErrorFragment = /* GraphQL */ `
+export const pageErrorFragment = gql`
     fragment PageErrorFragment on PageError {
         code
         field
     }
-`
+`;
 
-export const pageErrorWithAttributesFragment = /* GraphQL */ `
+export const pageErrorWithAttributesFragment = gql`
     ${pageErrorFragment}
     fragment PageErrorWithAttributesFragment on PageError {
         ...PageErrorFragment
         attributes
     }
-`
+`;
 
-export const permissionGroupErrorFragment = /* GraphQL */ `
+export const permissionGroupErrorFragment = gql`
     fragment PermissionGroupErrorFragment on PermissionGroupError {
         code
         field
     }
-`
+`;
 
-export const bulkProductErrorFragment = /* GraphQL */ `
+export const bulkProductErrorFragment = gql`
     fragment BulkProductErrorFragment on BulkProductError {
         field
         code
         index
         channels
     }
-`
-export const bulkStockErrorFragment = /* GraphQL */ `
+`;
+export const bulkStockErrorFragment = gql`
     fragment BulkStockErrorFragment on BulkStockError {
         code
         field
         index
     }
-`
-export const stockErrorFragment = /* GraphQL */ `
+`;
+export const stockErrorFragment = gql`
     fragment StockErrorFragment on StockError {
         code
         field
     }
-`
+`;
 
-export const shippingChannelsErrorFragment = /* GraphQL */ `
+export const shippingChannelsErrorFragment = gql`
     fragment ShippingChannelsErrorFragment on ShippingError {
         code
         field
         channels
     }
-`
+`;
 
-export const shippingErrorFragment = /* GraphQL */ `
+export const shippingErrorFragment = gql`
     fragment ShippingErrorFragment on ShippingError {
         code
         field
     }
-`
+`;
 
-export const shopErrorFragment = /* GraphQL */ `
+export const shopErrorFragment = gql`
     fragment ShopErrorFragment on ShopError {
         code
         field
     }
-`
+`;
 
-export const staffErrorFragment = /* GraphQL */ `
+export const staffErrorFragment = gql`
     fragment StaffErrorFragment on StaffError {
         code
         field
     }
-`
+`;
 
-export const warehouseErrorFragment = /* GraphQL */ `
+export const warehouseErrorFragment = gql`
     fragment WarehouseErrorFragment on WarehouseError {
         code
         field
     }
-`
+`;
 
-export const webhookErrorFragment = /* GraphQL */ `
+export const webhookErrorFragment = gql`
     fragment WebhookErrorFragment on WebhookError {
         code
         field
     }
-`
+`;
 
-export const invoiceErrorFragment = /* GraphQL */ `
+export const invoiceErrorFragment = gql`
     fragment InvoiceErrorFragment on InvoiceError {
         code
         field
     }
-`
+`;
 
-export const appErrorFragment = /* GraphQL */ `
+export const appErrorFragment = gql`
     fragment AppErrorFragment on AppError {
         field
         message
         code
         permissions
     }
-`
+`;
 
-export const exportErrorFragment = /* GraphQL */ `
+export const exportErrorFragment = gql`
     fragment ExportErrorFragment on ExportError {
         code
         field
     }
-`
+`;
 
-export const pluginErrorFragment = /* GraphQL */ `
+export const pluginErrorFragment = gql`
     fragment PluginErrorFragment on PluginError {
         code
         field
     }
-`
+`;
 
-export const metadataErrorFragment = /* GraphQL */ `
+export const metadataErrorFragment = gql`
     fragment MetadataErrorFragment on MetadataError {
         code
         field
     }
-`
+`;
 
-export const collectionsErrorFragment = /* GraphQL */ `
+export const collectionsErrorFragment = gql`
     fragment CollectionErrorFragment on CollectionError {
         code
         field
     }
-`
+`;
 
-export const uploadErrorFragment = /* GraphQL */ `
+export const uploadErrorFragment = gql`
     fragment UploadErrorFragment on UploadError {
         code
         field
     }
-`
+`;
 
-export const giftCardErrorFragment = /* GraphQL */ `
+export const giftCardErrorFragment = gql`
     fragment GiftCardError on GiftCardError {
         code
         field
     }
-`
+`;

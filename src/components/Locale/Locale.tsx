@@ -1,194 +1,111 @@
-/* tslint:disable */
-import dynamic from "next/dynamic"
-import React from "react"
-import { IntlProvider, ReactIntlErrorCode } from "react-intl"
+/* eslint-disable
+react/prop-types,
+prettier/prettier,
+react-hooks/exhaustive-deps,
+@typescript-eslint/ban-ts-comment,
+@typescript-eslint/naming-convention
+*/
+import "@formatjs/intl-datetimeformat/add-all-tz";
+import "@formatjs/intl-datetimeformat/locale-data/en";
+import "@formatjs/intl-datetimeformat/locale-data/es";
+import "@formatjs/intl-datetimeformat/locale-data/fr";
+import "@formatjs/intl-datetimeformat/locale-data/sw";
+import "@formatjs/intl-datetimeformat/polyfill";
+import "@formatjs/intl-displaynames/locale-data/en";
+import "@formatjs/intl-displaynames/locale-data/es";
+import "@formatjs/intl-displaynames/locale-data/fr";
+import "@formatjs/intl-displaynames/locale-data/sw";
+import "@formatjs/intl-displaynames/polyfill";
+import "@formatjs/intl-getcanonicallocales/polyfill";
+import "@formatjs/intl-listformat/locale-data/en";
+import "@formatjs/intl-listformat/locale-data/es";
+import "@formatjs/intl-listformat/locale-data/fr";
+import "@formatjs/intl-listformat/locale-data/sw";
+import "@formatjs/intl-listformat/polyfill";
+import "@formatjs/intl-locale/polyfill";
+import "@formatjs/intl-numberformat/locale-data/en";
+import "@formatjs/intl-numberformat/locale-data/es";
+import "@formatjs/intl-numberformat/locale-data/fr";
+import "@formatjs/intl-numberformat/locale-data/sw";
+import "@formatjs/intl-numberformat/polyfill";
+import "@formatjs/intl-pluralrules/locale-data/en";
+import "@formatjs/intl-pluralrules/locale-data/es";
+import "@formatjs/intl-pluralrules/locale-data/fr";
+import "@formatjs/intl-pluralrules/locale-data/sw";
+import "@formatjs/intl-pluralrules/polyfill";
+import "@formatjs/intl-relativetimeformat/locale-data/en";
+import "@formatjs/intl-relativetimeformat/locale-data/es";
+import "@formatjs/intl-relativetimeformat/locale-data/fr";
+import "@formatjs/intl-relativetimeformat/locale-data/sw";
+import "@formatjs/intl-relativetimeformat/polyfill";
+import React from "react";
+import { IntlProvider, ReactIntlErrorCode } from "react-intl";
 
-import useLocalStorage from "../../hooks/useLocalStorage"
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { getKeyValueJson, getMatchingLocale, Locale } from "./utils";
 
-export enum Locale {
-    AR = "ar",
-    AZ = "az",
-    BG = "bg",
-    BN = "bn",
-    CA = "ca",
-    CS = "cs",
-    DA = "da",
-    DE = "de",
-    EL = "el",
-    EN = "en",
-    ES = "es",
-    ES_CO = "es-CO",
-    ET = "et",
-    FA = "fa",
-    FR = "fr",
-    HI = "hi",
-    HU = "hu",
-    HY = "hy",
-    ID = "id",
-    IS = "is",
-    IT = "it",
-    JA = "ja",
-    KO = "ko",
-    MN = "mn",
-    NB = "nb",
-    NL = "nl",
-    PL = "pl",
-    PT = "pt",
-    PT_BR = "pt-BR",
-    RO = "ro",
-    RU = "ru",
-    SK = "sk",
-    SL = "sl",
-    SQ = "sq",
-    SR = "sr",
-    SV = "sv",
-    TH = "th",
-    TR = "tr",
-    UK = "uk",
-    VI = "vi",
-    ZH_HANS = "zh-Hans",
-    ZH_HANT = "zh-Hant",
-}
-
-interface StructuredMessage {
-    context?: string
-    string: string
-}
-
-type LocaleMessages = Record<string, StructuredMessage>
-
-export const localeNames: Record<Locale, string> = {
-    [Locale.AR]: "العربيّة",
-    [Locale.AZ]: "Azərbaycanca",
-    [Locale.BG]: "български",
-    [Locale.BN]: "বাংলা",
-    [Locale.CA]: "català",
-    [Locale.CS]: "česky",
-    [Locale.DA]: "dansk",
-    [Locale.DE]: "Deutsch",
-    [Locale.EL]: "Ελληνικά",
-    [Locale.EN]: "English",
-    [Locale.ES]: "español",
-    [Locale.ES_CO]: "español de Colombia",
-    [Locale.ET]: "eesti",
-    [Locale.FA]: "فارسی",
-    [Locale.FR]: "français",
-    [Locale.HI]: "Hindi",
-    [Locale.HU]: "Magyar",
-    [Locale.HY]: "հայերեն",
-    [Locale.ID]: "Bahasa Indonesia",
-    [Locale.IS]: "Íslenska",
-    [Locale.IT]: "italiano",
-    [Locale.JA]: "日本語",
-    [Locale.KO]: "한국어",
-    [Locale.MN]: "Mongolian",
-    [Locale.NB]: "norsk (bokmål)",
-    [Locale.NL]: "Nederlands",
-    [Locale.PL]: "polski",
-    [Locale.PT]: "Português",
-    [Locale.PT_BR]: "Português Brasileiro",
-    [Locale.RO]: "Română",
-    [Locale.RU]: "Русский",
-    [Locale.SK]: "Slovensky",
-    [Locale.SL]: "Slovenščina",
-    [Locale.SQ]: "shqip",
-    [Locale.SR]: "српски",
-    [Locale.SV]: "svenska",
-    [Locale.TH]: "ภาษาไทย",
-    [Locale.TR]: "Türkçe",
-    [Locale.UK]: "Українська",
-    [Locale.VI]: "Tiếng Việt",
-    [Locale.ZH_HANS]: "简体中文",
-    [Locale.ZH_HANT]: "繁體中文",
-}
-
-const dotSeparator = "_dot_"
-const separatorRegExp = new RegExp(dotSeparator, "g")
-
-function getKeyValueJson(messages: LocaleMessages): Record<string, string> {
-    if (messages) {
-        const keyValueMessages: Record<string, string> = {}
-        return Object.entries(messages).reduce((accumulator, [id, message]) => {
-            accumulator[id.replace(separatorRegExp, ".")] = message.string
-            return accumulator
-        }, keyValueMessages)
-    }
-}
-
-export function getMatchingLocale(languages: readonly string[]): Locale {
-    const localeEntries = Object.entries(Locale)
-
-    for (const preferredLocale of languages) {
-        for (const localeEntry of localeEntries) {
-            if (localeEntry[1].toLowerCase() === preferredLocale.toLowerCase()) {
-                return Locale[localeEntry[0]]
-            }
-        }
-    }
-
-    return undefined
-}
-
-const defaultLocale = Locale.EN
+const defaultLocale = Locale.EN;
 
 export interface LocaleContextType {
-    locale: Locale
-    setLocale: (locale: Locale) => void
+    locale: Locale;
+    setLocale: (locale: Locale) => void;
 }
 
 export const LocaleContext = React.createContext<LocaleContextType>({
     locale: defaultLocale,
-    setLocale: () => {},
-})
+    setLocale: () => undefined,
+});
 
-const { Consumer: LocaleConsumer, Provider: RawLocaleProvider } = LocaleContext
+const { Consumer: LocaleConsumer, Provider: RawLocaleProvider } = LocaleContext;
+
+// interface LocaleProviderProps {
+//     messages: LocaleMessages;
+// }
 
 const LocaleProvider: React.FC = ({ children }) => {
-    const [locale, setLocale] = useLocalStorage(
-        "locale",
-        getMatchingLocale(navigator.languages) || defaultLocale
-    )
+    const [locale, setLocale] = useLocalStorage("locale", defaultLocale);
 
-    const [messages, setMessages] = React.useState()
+    React.useEffect(() => {
+        setLocale(getMatchingLocale(navigator.languages) || defaultLocale);
+    }, []);
+
+    // @ts-ignore
+    const [i10nMessages, seti10nMessages] = React.useState();
 
     React.useEffect(() => {
         async function changeLocale() {
             if (locale !== defaultLocale) {
                 // It seems like Webpack is unable to use aliases for lazy imports
-                const module_ = await import(`../../../locale/${locale}.json`)
-                setMessages(module_.default)
+                const module = await import(`../../../locale/${locale}.json`);
+                seti10nMessages(module.default);
             } else {
-                setMessages()
+                seti10nMessages(undefined);
             }
         }
 
-        changeLocale()
-    }, [locale])
-
-    console.log(messages)
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        changeLocale();
+    }, [locale]);
 
     return (
         <IntlProvider
+            key="en"
+            locale="en"
+            messages={getKeyValueJson(i10nMessages)}
             defaultLocale={defaultLocale}
-            locale={locale}
-            // messages={getKeyValueJson(messages)}
             onError={(error) => {
                 if (!(error.code === ReactIntlErrorCode.MISSING_TRANSLATION)) {
-                    console.error(error)
+                    console.error(error);
                 }
+                if (!(error.code === ReactIntlErrorCode.MISSING_DATA)) {
+                    console.error(error);
+                }
+                console.error(error);
             }}
-            key={locale}
         >
-            <RawLocaleProvider
-                value={{
-                    locale,
-                    setLocale,
-                }}
-            >
-                {children}
-            </RawLocaleProvider>
+            <RawLocaleProvider value={{ locale, setLocale }}>{children}</RawLocaleProvider>
         </IntlProvider>
-    )
-}
+    );
+};
 
-export { LocaleConsumer, LocaleProvider, RawLocaleProvider }
+export { Locale, LocaleConsumer, LocaleProvider, RawLocaleProvider };

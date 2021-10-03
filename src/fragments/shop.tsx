@@ -1,6 +1,7 @@
-import gql from "graphql-tag"
+/* eslint-disable import/prefer-default-export */
+import { gql } from "@apollo/client";
 
-import { fragmentAddress } from "./address"
+import { fragmentAddress } from "./address";
 
 export const limitFragment = gql`
     fragment LimitInfoFragment on Limits {
@@ -21,7 +22,7 @@ export const limitFragment = gql`
             }
         }
     }
-`
+`;
 
 export const shopFragment = gql`
     ${fragmentAddress}
@@ -42,4 +43,4 @@ export const shopFragment = gql`
         }
         name
     }
-`
+`;

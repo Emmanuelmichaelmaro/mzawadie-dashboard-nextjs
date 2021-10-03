@@ -1,12 +1,20 @@
 overwrite: true
-schema: "https://vercel.saleor.cloud/graphql/"
+schema: "https://demo.saleor.io/graphql/"
 documents: "src/**/*.tsx"
 generates:
     generated/graphql.tsx:
         plugins:
+            - add:
+                  content: "// THIS IS A GENERATED FILE, use `npm run codegen-generate` to regenerate"
+            - add:
+                  content: "/* tslint:disable */"
+            - add:
+                  content: "/* eslint:disable */"
             - "typescript"
             - "typescript-operations"
             - "typescript-react-apollo"
-    ./graphql.schema.json:
+    generated/graphql-schema.json:
         plugins:
             - "introspection"
+        config:
+            minify: true

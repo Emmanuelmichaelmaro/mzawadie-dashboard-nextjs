@@ -1,43 +1,42 @@
 {
     "compilerOptions": {
-        "target": "es5",
-        "lib": [
-            "es6",
-            "dom",
-            "dom.iterable",
-            "esnext",
-            "esnext.intl",
-            "es2017.intl",
-            "es2018.intl"
-        ],
+        "baseUrl": ".",
+        "jsx": "preserve", // Support JSX in .tsx files
+        "sourceMap": true, // *** Generate corrresponding .map file ***
+        "declaration": true, // *** Generate corresponding .d.ts file ***
+        "noUnusedLocals": true, // *** Report errors on unused locals ***
+        "noUnusedParameters": true, // *** Report errors on unused parameters ***
+        "target": "es5", // Specify ECMAScript target version
+        "lib": ["es6", "dom", "dom.iterable", "esnext", "esnext.intl", "es2017.intl", "es2018.intl"], // List of library files to be included in the compilation
         "noImplicitAny": true,
         "noImplicitThis": true,
         "strictNullChecks": true,
-        "allowJs": true,
-        "skipLibCheck": true,
-        "strict": true,
-        "forceConsistentCasingInFileNames": true,
-        "noEmit": true,
+        "allowJs": true, // Allow JavaScript files to be compiled
+        "skipLibCheck": true, // Skip type checking of all declaration files
+        "strict": false, // Enable all strict type checking options
+        "forceConsistentCasingInFileNames": true, // Disallow inconsistently-cased references to the same file.
+        "noEmit": false, // Do not emit output (meaning do not compile code, only perform type checking)
         "esModuleInterop": true,
-        "module": "esnext",
-        "moduleResolution": "node",
-        "resolveJsonModule": true,
-        "isolatedModules": true,
-        "jsx": "preserve",
-        "plugins": [
-            {
-                "name": "typescript-tslint-plugin"
-            }
-        ]
+        "module": "esnext", // Specify module code generation
+        "moduleResolution": "node", // Resolve modules using Node.js style
+        "resolveJsonModule": true, // Include modules imported with .json extension
+        "isolatedModules": true, // Transpile each file as a separate module
+        "paths": {
+            "@assets/*": ["public/assets/*"],
+            "@locale/*": ["locale/*"],
+            "@mzawadie/*": ["src/*"],
+            "@test/*": ["testUtils/*"]
+        }
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
     "exclude": [
         "node_modules",
         "build",
+        "dist",
         "scripts",
         "acceptance-tests",
         "webpack",
         "jest",
-        "src/setupTests.ts"
+        "**/*.spec.ts"
     ]
 }

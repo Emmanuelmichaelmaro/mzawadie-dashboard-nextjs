@@ -1,4 +1,6 @@
-export const fragmentUser = /* GraphQL */ `
+import { gql } from "@apollo/client";
+
+export const fragmentUser = gql`
     fragment User on User {
         id
         email
@@ -13,12 +15,12 @@ export const fragmentUser = /* GraphQL */ `
             url
         }
     }
-`
+`;
 
-export const fragmentUserBase = /* GraphQL */ `
+export const fragmentUserBase = gql`
     fragment UserBase on User {
         id
         firstName
         lastName
     }
-`
+`;

@@ -6,6 +6,9 @@ coverage
 *.html
 
 .next/
+.storybook/
+
+*.d.ts
 
 package-lock.json
 node_modules

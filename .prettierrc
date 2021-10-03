@@ -1,11 +1,12 @@
 {
-    "printWidth": 90,
+    "printWidth": 104,
     "arrowParens": "always",
-    "semi": false,
+    "semi": true,
     "tabWidth": 4,
+    "endOfLine": "auto",
     "bracketSpacing": true,
     "trailingComma": "es5",
     "jsxBracketSameLine": false,
     "importOrder": ["^@core/(.*)$", "^@server/(.*)$", "^@ui/(.*)$", "^[./]"],
-    "importOrderSeparation": true,
+    "importOrderSeparation": true
 }

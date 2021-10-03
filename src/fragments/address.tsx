@@ -1,4 +1,5 @@
-import gql from "graphql-tag"
+/* eslint-disable import/prefer-default-export */
+import { gql } from "@apollo/client";
 
 export const fragmentAddress = gql`
     fragment AddressFragment on Address {
@@ -19,4 +20,4 @@ export const fragmentAddress = gql`
         streetAddress1
         streetAddress2
     }
-`
+`;

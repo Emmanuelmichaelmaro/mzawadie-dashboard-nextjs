@@ -1,11 +1,12 @@
-import { ApolloError } from "@apollo/client"
-import { IntlShape } from "react-intl"
+import { ApolloError } from "@apollo/client";
+import { IMessageContext } from "@mzawadie/components/messages";
+import { UseNotifierResult } from "@mzawadie/hooks/useNotifier";
+import { commonMessages } from "@mzawadie/intl";
+import { IntlShape } from "react-intl";
 
-import { IMessageContext } from "../components/messages"
-import { UseNotifierResult } from "../hooks/useNotifier"
-import { commonMessages } from "../intl"
-import { isJwtError, isTokenExpired } from "./errors"
+import { isJwtError, isTokenExpired } from "./errors";
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export enum TOKEN_STORAGE_KEY {
     AUTH = "auth",
     CSRF = "csrf",
@@ -13,41 +14,39 @@ export enum TOKEN_STORAGE_KEY {
 
 export const getTokens = () => ({
     auth:
-        localStorage.getItem(TOKEN_STORAGE_KEY.AUTH) ||
-        sessionStorage.getItem(TOKEN_STORAGE_KEY.AUTH),
+        localStorage.getItem(TOKEN_STORAGE_KEY.AUTH) || sessionStorage.getItem(TOKEN_STORAGE_KEY.AUTH),
     refresh:
-        localStorage.getItem(TOKEN_STORAGE_KEY.CSRF) ||
-        sessionStorage.getItem(TOKEN_STORAGE_KEY.CSRF),
-})
+        localStorage.getItem(TOKEN_STORAGE_KEY.CSRF) || sessionStorage.getItem(TOKEN_STORAGE_KEY.CSRF),
+});
 
 export const setTokens = (auth: string, csrf: string, persist: boolean) => {
     if (persist) {
-        localStorage.setItem(TOKEN_STORAGE_KEY.AUTH, auth)
-        localStorage.setItem(TOKEN_STORAGE_KEY.CSRF, csrf)
+        localStorage.setItem(TOKEN_STORAGE_KEY.AUTH, auth);
+        localStorage.setItem(TOKEN_STORAGE_KEY.CSRF, csrf);
     } else {
-        sessionStorage.setItem(TOKEN_STORAGE_KEY.AUTH, auth)
-        sessionStorage.setItem(TOKEN_STORAGE_KEY.CSRF, csrf)
+        sessionStorage.setItem(TOKEN_STORAGE_KEY.AUTH, auth);
+        sessionStorage.setItem(TOKEN_STORAGE_KEY.CSRF, csrf);
     }
-}
+};
 
 export const setAuthToken = (auth: string, persist: boolean) => {
     if (persist) {
-        localStorage.setItem(TOKEN_STORAGE_KEY.AUTH, auth)
+        localStorage.setItem(TOKEN_STORAGE_KEY.AUTH, auth);
     } else {
-        sessionStorage.setItem(TOKEN_STORAGE_KEY.AUTH, auth)
+        sessionStorage.setItem(TOKEN_STORAGE_KEY.AUTH, auth);
     }
-}
+};
 
 export const removeTokens = () => {
-    localStorage.removeItem(TOKEN_STORAGE_KEY.AUTH)
-    sessionStorage.removeItem(TOKEN_STORAGE_KEY.AUTH)
-}
+    localStorage.removeItem(TOKEN_STORAGE_KEY.AUTH);
+    sessionStorage.removeItem(TOKEN_STORAGE_KEY.AUTH);
+};
 
 export const displayDemoMessage = (intl: IntlShape, notify: UseNotifierResult) => {
     notify({
         text: intl.formatMessage(commonMessages.demo),
-    })
-}
+    });
+};
 
 export async function handleQueryAuthError(
     error: ApolloError,
@@ -56,32 +55,30 @@ export async function handleQueryAuthError(
     logout: () => void,
     intl: IntlShape
 ) {
-    if (error.graphQLErrors.some((element) => isJwtError(element))) {
-        if (error.graphQLErrors.every((element) => isTokenExpired(element))) {
-            const success = await tokenRefresh()
+    if (error.graphQLErrors.some(isJwtError)) {
+        if (error.graphQLErrors.every(isTokenExpired)) {
+            const success = await tokenRefresh();
 
             if (!success) {
-                logout()
+                logout();
                 notify({
                     status: "error",
                     text: intl.formatMessage(commonMessages.sessionExpired),
-                })
+                });
             }
         } else {
-            logout()
+            logout();
             notify({
                 status: "error",
                 text: intl.formatMessage(commonMessages.somethingWentWrong),
-            })
+            });
         }
     } else if (
-        !error.graphQLErrors.every(
-            (error_) => error_.extensions?.exception?.code === "PermissionDenied"
-        )
+        !error.graphQLErrors.every((err) => err.extensions?.exception?.code === "PermissionDenied")
     ) {
         notify({
             status: "error",
             text: intl.formatMessage(commonMessages.somethingWentWrong),
-        })
+        });
     }
 }

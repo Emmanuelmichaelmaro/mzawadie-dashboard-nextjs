@@ -1,0 +1,442 @@
+{
+    "+xTpT1": {
+        "defaultMessage": "Attributes"
+    },
+    "/8/Ffn": {
+        "defaultMessage": "Show",
+        "description": "button"
+    },
+    "0OfZJA": {
+        "defaultMessage": "Back",
+        "description": "button"
+    },
+    "1n1tOR": {
+        "defaultMessage": "Group is out of your permission scope"
+    },
+    "1wyZpQ": {
+        "defaultMessage": "These passwords are too similar"
+    },
+    "2FQsYj": {
+        "defaultMessage": "Clear",
+        "description": "button"
+    },
+    "2YaS7K": {
+        "defaultMessage": "E-mail Address"
+    },
+    "2atspc": {
+        "defaultMessage": "Drafts"
+    },
+    "2ob30/": {
+        "defaultMessage": "Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
+    },
+    "2oyWT9": {
+        "defaultMessage": "Back to login",
+        "description": "button"
+    },
+    "3ublOS": {
+        "defaultMessage": "Forgot your password? Don't worry, we'll reset it for you."
+    },
+    "4JW9iJ": {
+        "defaultMessage": "Home",
+        "description": "home section name"
+    },
+    "4OZ8Mj": {
+        "defaultMessage": "Welcome to Dashboard, Admin!!!"
+    },
+    "577R2r": {
+        "defaultMessage": "Invalid value"
+    },
+    "5elC9k": {
+        "defaultMessage": "Taxes",
+        "description": "taxes section name"
+    },
+    "5fCMUI": {
+        "defaultMessage": "Translations",
+        "description": "translations section name"
+    },
+    "5sg7KC": {
+        "defaultMessage": "Password"
+    },
+    "6nSTuC": {
+        "defaultMessage": "Webhooks",
+        "description": "webhooks section name"
+    },
+    "7Chrsf": {
+        "defaultMessage": "Passwords do not match"
+    },
+    "8oIbMI": {
+        "defaultMessage": "Reached limit for this plan"
+    },
+    "8xsKUv": {
+        "defaultMessage": "Service Accounts",
+        "description": "service accounts section name"
+    },
+    "9A1NDT": {
+        "defaultMessage": "Please set up a new password."
+    },
+    "9C7PZE": {
+        "defaultMessage": "Navigation",
+        "description": "navigation section name"
+    },
+    "9q562c": {
+        "defaultMessage": "Apps",
+        "description": "apps section name"
+    },
+    "9uNz+T": {
+        "defaultMessage": "Cancel",
+        "description": "button"
+    },
+    "AQFMYU": {
+        "defaultMessage": "Staff Members",
+        "description": "staff section name"
+    },
+    "C0JLNW": {
+        "defaultMessage": "Provided email address does not exist in our database."
+    },
+    "CJEIRC": {
+        "defaultMessage": "Product export has finished and was sent to your email address."
+    },
+    "D9ie4n": {
+        "defaultMessage": "Shipping Methods",
+        "description": "shipping section name"
+    },
+    "DJFPzq": {
+        "defaultMessage": "Confirm",
+        "description": "button"
+    },
+    "DNTxWr": {
+        "defaultMessage": "Permission Groups",
+        "description": "permission groups section name"
+    },
+    "DOkfyZ": {
+        "defaultMessage": "Insufficient permissions"
+    },
+    "Dhherd": {
+        "defaultMessage": "Invoice Generation",
+        "description": "dialog header, title"
+    },
+    "ENBELI": {
+        "defaultMessage": "or login using",
+        "description": "description"
+    },
+    "Ev6SEF": {
+        "defaultMessage": "New Password"
+    },
+    "Fvvgoi": {
+        "defaultMessage": "Your session has expired. Please log in again to continue."
+    },
+    "GOdq5V": {
+        "defaultMessage": "Catalog"
+    },
+    "H5NKfr": {
+        "defaultMessage": "Create",
+        "description": "button"
+    },
+    "H6NsC1": {
+        "defaultMessage": "Pages",
+        "description": "pages section name"
+    },
+    "HSmg1/": {
+        "defaultMessage": "Gift Cards",
+        "description": "gift cards section name"
+    },
+    "IbVKSH": {
+        "defaultMessage": "Manage",
+        "description": "button"
+    },
+    "JTcz2G": {
+        "defaultMessage": "Exporting CSV finished",
+        "description": "csv file exporting has finished, header"
+    },
+    "Ja7gHc": {
+        "defaultMessage": "Edit",
+        "description": "button"
+    },
+    "JiVwOU": {
+        "defaultMessage": "There was a problem with the file you uploaded as an image and it couldn't be used. Please try a different file."
+    },
+    "K8xNLe": {
+        "defaultMessage": "Products",
+        "description": "products section name"
+    },
+    "KN7zKn": {
+        "defaultMessage": "Error"
+    },
+    "KRqgfo": {
+        "defaultMessage": "User is out of your permissions scope"
+    },
+    "KeO51o": {
+        "defaultMessage": "Channel"
+    },
+    "LR3HlT": {
+        "defaultMessage": "This password is too short"
+    },
+    "LVa5ew": {
+        "defaultMessage": "Saleor ran into an unexpected problem"
+    },
+    "Lx1ima": {
+        "defaultMessage": "Upload image",
+        "description": "button"
+    },
+    "MKtgZB": {
+        "defaultMessage": "Only staff users can access the dashboard"
+    },
+    "McN+wq": {
+        "defaultMessage": "Customers",
+        "description": "customers section name"
+    },
+    "Mi4JOd": {
+        "defaultMessage": "Error",
+        "description": "button"
+    },
+    "NNT3Lp": {
+        "defaultMessage": "Collections",
+        "description": "collections section name"
+    },
+    "NlSJMM": {
+        "defaultMessage": "Channels",
+        "description": "channels section name"
+    },
+    "P7PLVj": {
+        "defaultMessage": "Date"
+    },
+    "PkrH7Z": {
+        "defaultMessage": "Send Instructions",
+        "description": "password reset, button"
+    },
+    "Q6wcZ5": {
+        "defaultMessage": "First Name"
+    },
+    "Q8Qw5B": {
+        "defaultMessage": "Description"
+    },
+    "QirE3M": {
+        "defaultMessage": "Start Date"
+    },
+    "RaycYK": {
+        "defaultMessage": "Save",
+        "description": "button"
+    },
+    "Rjs1CD": {
+        "defaultMessage": "Continue",
+        "description": "button"
+    },
+    "RrCui3": {
+        "defaultMessage": "Summary"
+    },
+    "S22jIs": {
+        "defaultMessage": "Set new password",
+        "description": "button"
+    },
+    "T4GOiX": {
+        "defaultMessage": "End Date"
+    },
+    "TDhHMi": {
+        "defaultMessage": "This needs to be unique"
+    },
+    "TKmub+": {
+        "defaultMessage": "This field is required"
+    },
+    "Ta9j04": {
+        "defaultMessage": "Orders",
+        "description": "orders section name"
+    },
+    "VhoPoT": {
+        "defaultMessage": "Sorry, login went wrong. Please try again."
+    },
+    "WhvuCb": {
+        "defaultMessage": "Plugins",
+        "description": "plugins section name"
+    },
+    "YMBn8d": {
+        "defaultMessage": "Draft Orders",
+        "description": "draft orders section name"
+    },
+    "YQ3EXR": {
+        "defaultMessage": "Product Types",
+        "description": "product types section name"
+    },
+    "Yo2kC+": {
+        "defaultMessage": "Couldn't process image"
+    },
+    "a+x05s": {
+        "defaultMessage": "Select",
+        "description": "select option, button"
+    },
+    "a5msuh": {
+        "defaultMessage": "Yes"
+    },
+    "a9S9Je": {
+        "defaultMessage": "Page Types",
+        "description": "page types section name"
+    },
+    "aI80kg": {
+        "defaultMessage": "Properties"
+    },
+    "aheQdn": {
+        "defaultMessage": "Last Name"
+    },
+    "bZenNC": {
+        "defaultMessage": "Description (optional)"
+    },
+    "bu/fC1": {
+        "defaultMessage": "Remove",
+        "description": "button"
+    },
+    "c5pMZ8": {
+        "defaultMessage": "API error"
+    },
+    "cY42ht": {
+        "defaultMessage": "Password cannot be entirely numeric"
+    },
+    "eOrLzG": {
+        "defaultMessage": "Done",
+        "description": "button"
+    },
+    "eWcvOc": {
+        "defaultMessage": "Choose file",
+        "description": "button"
+    },
+    "eu98dw": {
+        "defaultMessage": "Invalid password"
+    },
+    "hOxIeP": {
+        "defaultMessage": "Availability"
+    },
+    "hqVMLQ": {
+        "defaultMessage": "Send",
+        "description": "button"
+    },
+    "hzSNj4": {
+        "defaultMessage": "Dashboard"
+    },
+    "i+Vox0": {
+        "defaultMessage": "Invoice Generated",
+        "description": "invoice generating has finished, header"
+    },
+    "i0AcKY": {
+        "defaultMessage": "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes.",
+        "description": "notification message after log in"
+    },
+    "iUy2dx": {
+        "defaultMessage": "Vouchers",
+        "description": "vouchers section name"
+    },
+    "j0ugM4": {
+        "defaultMessage": "Exchange Rates",
+        "description": "Manage and Update your warehouse information"
+    },
+    "juBV+h": {
+        "defaultMessage": "End Hour"
+    },
+    "kFYlu2": {
+        "defaultMessage": "Saleor runs in read-only mode. Changes not saved."
+    },
+    "kJQczl": {
+        "defaultMessage": "Sales",
+        "description": "sales section name"
+    },
+    "l2oVCF": {
+        "defaultMessage": "Attributes",
+        "description": "attributes section name"
+    },
+    "lzdvwp": {
+        "defaultMessage": "Optional",
+        "description": "field is optional"
+    },
+    "n+Gwbu": {
+        "defaultMessage": "Discounts"
+    },
+    "oUWADl": {
+        "defaultMessage": "No"
+    },
+    "pkUbrL": {
+        "defaultMessage": "General Information"
+    },
+    "qDwvZ4": {
+        "defaultMessage": "Unknown error"
+    },
+    "rVkNwf": {
+        "defaultMessage": "Use this link to recover it",
+        "description": "link"
+    },
+    "rfvBAF": {
+        "defaultMessage": "Select All",
+        "description": "select all options, button"
+    },
+    "rqiCWU": {
+        "defaultMessage": "Saved changes"
+    },
+    "ryAyPr": {
+        "defaultMessage": "Requested Invoice was generated. It was added to the top of the invoice list on this view. Enjoy!"
+    },
+    "s9sOcC": {
+        "defaultMessage": "OK",
+        "description": "button"
+    },
+    "sK1FPw": {
+        "defaultMessage": "Categories",
+        "description": "categories section name"
+    },
+    "skPoVe": {
+        "defaultMessage": "Accept",
+        "description": "button"
+    },
+    "tWbE34": {
+        "defaultMessage": "Start Hour"
+    },
+    "tpUtKP": {
+        "defaultMessage": "Forgot password? {resetPasswordLink}",
+        "description": "description"
+    },
+    "tzMNF3": {
+        "defaultMessage": "Status"
+    },
+    "u3sYPH": {
+        "defaultMessage": "Time",
+        "description": "independent of any particular day, eg. 11:35"
+    },
+    "ufmuTp": {
+        "defaultMessage": "Delete",
+        "description": "button"
+    },
+    "vHCQ9e": {
+        "defaultMessage": "Sorry, your username and/or password are incorrect. Please try again."
+    },
+    "vN3qdA": {
+        "defaultMessage": "Undo",
+        "description": "button"
+    },
+    "vfG+nh": {
+        "defaultMessage": "Confirm Password"
+    },
+    "viFkCw": {
+        "defaultMessage": "Site Settings",
+        "description": "site settings section name"
+    },
+    "w4R/SO": {
+        "defaultMessage": "Local Apps"
+    },
+    "wlQTfb": {
+        "defaultMessage": "Next",
+        "description": "go to next step, button"
+    },
+    "wn3di2": {
+        "defaultMessage": "This password is too commonly used"
+    },
+    "x8piIu": {
+        "defaultMessage": "Login",
+        "description": "button"
+    },
+    "xfGZsi": {
+        "defaultMessage": "Configuration",
+        "description": "configuration section name"
+    },
+    "yHeZRQ": {
+        "defaultMessage": "Product Export Failed"
+    },
+    "ycMLN9": {
+        "defaultMessage": "Warehouses",
+        "description": "warehouses section name"
+    }
+}

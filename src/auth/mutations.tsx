@@ -1,17 +1,11 @@
-/* eslint-disable @typescript-eslint/indent */
+/* eslint-disable import/prefer-default-export */
+import { gql } from "@apollo/client";
+import { fragmentUser } from "@mzawadie/fragments/auth";
+import { accountErrorFragment } from "@mzawadie/fragments/errors";
 
-/* eslint-disable unicorn/prevent-abbreviations */
-import { gql } from "@apollo/client"
-
-import {
-    MutationRequestPasswordResetArgs,
-    MutationSetPasswordArgs,
-    RequestPasswordReset,
-    SetPassword,
-} from "../../generated/graphql"
-import { fragmentUser } from "../fragments/auth"
-import { accountErrorFragment } from "../fragments/errors"
-import { TypedMutation } from "../mutations"
+import { TypedMutation } from "../mutations";
+import { RequestPasswordReset, RequestPasswordResetVariables } from "./types/RequestPasswordReset";
+import { SetPassword, SetPasswordVariables } from "./types/SetPassword";
 
 export const tokenAuthMutation = gql`
     ${fragmentUser}
@@ -28,7 +22,7 @@ export const tokenAuthMutation = gql`
             }
         }
     }
-`
+`;
 
 export const tokenVerifyMutation = gql`
     ${fragmentUser}
@@ -40,7 +34,7 @@ export const tokenVerifyMutation = gql`
             }
         }
     }
-`
+`;
 
 export const tokenRefreshMutation = gql`
     mutation RefreshToken($token: String!) {
@@ -48,7 +42,7 @@ export const tokenRefreshMutation = gql`
             token
         }
     }
-`
+`;
 
 export const requestPasswordReset = gql`
     ${accountErrorFragment}
@@ -59,11 +53,12 @@ export const requestPasswordReset = gql`
             }
         }
     }
-`
+`;
+
 export const RequestPasswordResetMutation = TypedMutation<
     RequestPasswordReset,
-    MutationRequestPasswordResetArgs
->(requestPasswordReset)
+    RequestPasswordResetVariables
+>(requestPasswordReset);
 
 export const setPassword = gql`
     ${accountErrorFragment}
@@ -81,10 +76,9 @@ export const setPassword = gql`
             }
         }
     }
-`
-export const SetPasswordMutation = TypedMutation<SetPassword, MutationSetPasswordArgs>(
-    setPassword
-)
+`;
+
+export const SetPasswordMutation = TypedMutation<SetPassword, SetPasswordVariables>(setPassword);
 
 export const externalAuthenticationUrlMutation = gql`
     ${accountErrorFragment}
@@ -96,7 +90,7 @@ export const externalAuthenticationUrlMutation = gql`
             }
         }
     }
-`
+`;
 
 export const externalObtainAccessTokensMutation = gql`
     ${accountErrorFragment}
@@ -113,7 +107,7 @@ export const externalObtainAccessTokensMutation = gql`
             }
         }
     }
-`
+`;
 
 export const externalTokenRefreshMutation = gql`
     mutation ExternalRefreshToken($pluginId: String!, $input: JSONString!) {
@@ -121,7 +115,7 @@ export const externalTokenRefreshMutation = gql`
             token
         }
     }
-`
+`;
 
 export const externalTokenVerifyMutation = gql`
     ${fragmentUser}
@@ -133,4 +127,4 @@ export const externalTokenVerifyMutation = gql`
             }
         }
     }
-`
+`;

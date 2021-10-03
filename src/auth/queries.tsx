@@ -1,6 +1,7 @@
-import gql from "graphql-tag"
+/* eslint-disable import/prefer-default-export */
+import { gql } from "@apollo/client";
 
-export const availableExternalAuthentications = /* GraphQL */ `
+export const availableExternalAuthentications = gql`
     query AvailableExternalAuthentications {
         shop {
             availableExternalAuthentications {
@@ -9,4 +10,4 @@ export const availableExternalAuthentications = /* GraphQL */ `
             }
         }
     }
-`
+`;

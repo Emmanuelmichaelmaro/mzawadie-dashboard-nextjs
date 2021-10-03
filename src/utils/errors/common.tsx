@@ -1,4 +1,4 @@
-import { defineMessages } from "react-intl"
+import { defineMessages } from "react-intl";
 
 const commonErrorMessages = defineMessages({
     graphqlError: {
@@ -13,6 +13,6 @@ const commonErrorMessages = defineMessages({
         defaultMessage: "Unknown error",
         id: "qDwvZ4",
     },
-})
+});
 
-export default commonErrorMessages
+export default commonErrorMessages;

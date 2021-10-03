@@ -1,0 +1,756 @@
+{
+    "+xTpT1": [
+        {
+            "type": 0,
+            "value": "Attributes"
+        }
+    ],
+    "/8/Ffn": [
+        {
+            "type": 0,
+            "value": "Show"
+        }
+    ],
+    "0OfZJA": [
+        {
+            "type": 0,
+            "value": "Back"
+        }
+    ],
+    "1n1tOR": [
+        {
+            "type": 0,
+            "value": "Group is out of your permission scope"
+        }
+    ],
+    "1wyZpQ": [
+        {
+            "type": 0,
+            "value": "These passwords are too similar"
+        }
+    ],
+    "2FQsYj": [
+        {
+            "type": 0,
+            "value": "Clear"
+        }
+    ],
+    "2YaS7K": [
+        {
+            "type": 0,
+            "value": "E-mail Address"
+        }
+    ],
+    "2atspc": [
+        {
+            "type": 0,
+            "value": "Drafts"
+        }
+    ],
+    "2ob30/": [
+        {
+            "type": 0,
+            "value": "Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
+        }
+    ],
+    "2oyWT9": [
+        {
+            "type": 0,
+            "value": "Back to login"
+        }
+    ],
+    "3ublOS": [
+        {
+            "type": 0,
+            "value": "Forgot your password? Don't worry, we'll reset it for you."
+        }
+    ],
+    "4JW9iJ": [
+        {
+            "type": 0,
+            "value": "Home"
+        }
+    ],
+    "4OZ8Mj": [
+        {
+            "type": 0,
+            "value": "Welcome to Dashboard, Admin!!!"
+        }
+    ],
+    "577R2r": [
+        {
+            "type": 0,
+            "value": "Invalid value"
+        }
+    ],
+    "5elC9k": [
+        {
+            "type": 0,
+            "value": "Taxes"
+        }
+    ],
+    "5fCMUI": [
+        {
+            "type": 0,
+            "value": "Translations"
+        }
+    ],
+    "5sg7KC": [
+        {
+            "type": 0,
+            "value": "Password"
+        }
+    ],
+    "6nSTuC": [
+        {
+            "type": 0,
+            "value": "Webhooks"
+        }
+    ],
+    "7Chrsf": [
+        {
+            "type": 0,
+            "value": "Passwords do not match"
+        }
+    ],
+    "8oIbMI": [
+        {
+            "type": 0,
+            "value": "Reached limit for this plan"
+        }
+    ],
+    "8xsKUv": [
+        {
+            "type": 0,
+            "value": "Service Accounts"
+        }
+    ],
+    "9A1NDT": [
+        {
+            "type": 0,
+            "value": "Please set up a new password."
+        }
+    ],
+    "9C7PZE": [
+        {
+            "type": 0,
+            "value": "Navigation"
+        }
+    ],
+    "9q562c": [
+        {
+            "type": 0,
+            "value": "Apps"
+        }
+    ],
+    "9uNz+T": [
+        {
+            "type": 0,
+            "value": "Cancel"
+        }
+    ],
+    "AQFMYU": [
+        {
+            "type": 0,
+            "value": "Staff Members"
+        }
+    ],
+    "C0JLNW": [
+        {
+            "type": 0,
+            "value": "Provided email address does not exist in our database."
+        }
+    ],
+    "CJEIRC": [
+        {
+            "type": 0,
+            "value": "Product export has finished and was sent to your email address."
+        }
+    ],
+    "D9ie4n": [
+        {
+            "type": 0,
+            "value": "Shipping Methods"
+        }
+    ],
+    "DJFPzq": [
+        {
+            "type": 0,
+            "value": "Confirm"
+        }
+    ],
+    "DNTxWr": [
+        {
+            "type": 0,
+            "value": "Permission Groups"
+        }
+    ],
+    "DOkfyZ": [
+        {
+            "type": 0,
+            "value": "Insufficient permissions"
+        }
+    ],
+    "Dhherd": [
+        {
+            "type": 0,
+            "value": "Invoice Generation"
+        }
+    ],
+    "ENBELI": [
+        {
+            "type": 0,
+            "value": "or login using"
+        }
+    ],
+    "Ev6SEF": [
+        {
+            "type": 0,
+            "value": "New Password"
+        }
+    ],
+    "Fvvgoi": [
+        {
+            "type": 0,
+            "value": "Your session has expired. Please log in again to continue."
+        }
+    ],
+    "GOdq5V": [
+        {
+            "type": 0,
+            "value": "Catalog"
+        }
+    ],
+    "H5NKfr": [
+        {
+            "type": 0,
+            "value": "Create"
+        }
+    ],
+    "H6NsC1": [
+        {
+            "type": 0,
+            "value": "Pages"
+        }
+    ],
+    "HSmg1/": [
+        {
+            "type": 0,
+            "value": "Gift Cards"
+        }
+    ],
+    "IbVKSH": [
+        {
+            "type": 0,
+            "value": "Manage"
+        }
+    ],
+    "JTcz2G": [
+        {
+            "type": 0,
+            "value": "Exporting CSV finished"
+        }
+    ],
+    "Ja7gHc": [
+        {
+            "type": 0,
+            "value": "Edit"
+        }
+    ],
+    "JiVwOU": [
+        {
+            "type": 0,
+            "value": "There was a problem with the file you uploaded as an image and it couldn't be used. Please try a different file."
+        }
+    ],
+    "K8xNLe": [
+        {
+            "type": 0,
+            "value": "Products"
+        }
+    ],
+    "KN7zKn": [
+        {
+            "type": 0,
+            "value": "Error"
+        }
+    ],
+    "KRqgfo": [
+        {
+            "type": 0,
+            "value": "User is out of your permissions scope"
+        }
+    ],
+    "KeO51o": [
+        {
+            "type": 0,
+            "value": "Channel"
+        }
+    ],
+    "LR3HlT": [
+        {
+            "type": 0,
+            "value": "This password is too short"
+        }
+    ],
+    "LVa5ew": [
+        {
+            "type": 0,
+            "value": "Saleor ran into an unexpected problem"
+        }
+    ],
+    "Lx1ima": [
+        {
+            "type": 0,
+            "value": "Upload image"
+        }
+    ],
+    "MKtgZB": [
+        {
+            "type": 0,
+            "value": "Only staff users can access the dashboard"
+        }
+    ],
+    "McN+wq": [
+        {
+            "type": 0,
+            "value": "Customers"
+        }
+    ],
+    "Mi4JOd": [
+        {
+            "type": 0,
+            "value": "Error"
+        }
+    ],
+    "NNT3Lp": [
+        {
+            "type": 0,
+            "value": "Collections"
+        }
+    ],
+    "NlSJMM": [
+        {
+            "type": 0,
+            "value": "Channels"
+        }
+    ],
+    "P7PLVj": [
+        {
+            "type": 0,
+            "value": "Date"
+        }
+    ],
+    "PkrH7Z": [
+        {
+            "type": 0,
+            "value": "Send Instructions"
+        }
+    ],
+    "Q6wcZ5": [
+        {
+            "type": 0,
+            "value": "First Name"
+        }
+    ],
+    "Q8Qw5B": [
+        {
+            "type": 0,
+            "value": "Description"
+        }
+    ],
+    "QirE3M": [
+        {
+            "type": 0,
+            "value": "Start Date"
+        }
+    ],
+    "RaycYK": [
+        {
+            "type": 0,
+            "value": "Save"
+        }
+    ],
+    "Rjs1CD": [
+        {
+            "type": 0,
+            "value": "Continue"
+        }
+    ],
+    "RrCui3": [
+        {
+            "type": 0,
+            "value": "Summary"
+        }
+    ],
+    "S22jIs": [
+        {
+            "type": 0,
+            "value": "Set new password"
+        }
+    ],
+    "T4GOiX": [
+        {
+            "type": 0,
+            "value": "End Date"
+        }
+    ],
+    "TDhHMi": [
+        {
+            "type": 0,
+            "value": "This needs to be unique"
+        }
+    ],
+    "TKmub+": [
+        {
+            "type": 0,
+            "value": "This field is required"
+        }
+    ],
+    "Ta9j04": [
+        {
+            "type": 0,
+            "value": "Orders"
+        }
+    ],
+    "VhoPoT": [
+        {
+            "type": 0,
+            "value": "Sorry, login went wrong. Please try again."
+        }
+    ],
+    "WhvuCb": [
+        {
+            "type": 0,
+            "value": "Plugins"
+        }
+    ],
+    "YMBn8d": [
+        {
+            "type": 0,
+            "value": "Draft Orders"
+        }
+    ],
+    "YQ3EXR": [
+        {
+            "type": 0,
+            "value": "Product Types"
+        }
+    ],
+    "Yo2kC+": [
+        {
+            "type": 0,
+            "value": "Couldn't process image"
+        }
+    ],
+    "a+x05s": [
+        {
+            "type": 0,
+            "value": "Select"
+        }
+    ],
+    "a5msuh": [
+        {
+            "type": 0,
+            "value": "Yes"
+        }
+    ],
+    "a9S9Je": [
+        {
+            "type": 0,
+            "value": "Page Types"
+        }
+    ],
+    "aI80kg": [
+        {
+            "type": 0,
+            "value": "Properties"
+        }
+    ],
+    "aheQdn": [
+        {
+            "type": 0,
+            "value": "Last Name"
+        }
+    ],
+    "bZenNC": [
+        {
+            "type": 0,
+            "value": "Description (optional)"
+        }
+    ],
+    "bu/fC1": [
+        {
+            "type": 0,
+            "value": "Remove"
+        }
+    ],
+    "c5pMZ8": [
+        {
+            "type": 0,
+            "value": "API error"
+        }
+    ],
+    "cY42ht": [
+        {
+            "type": 0,
+            "value": "Password cannot be entirely numeric"
+        }
+    ],
+    "eOrLzG": [
+        {
+            "type": 0,
+            "value": "Done"
+        }
+    ],
+    "eWcvOc": [
+        {
+            "type": 0,
+            "value": "Choose file"
+        }
+    ],
+    "eu98dw": [
+        {
+            "type": 0,
+            "value": "Invalid password"
+        }
+    ],
+    "hOxIeP": [
+        {
+            "type": 0,
+            "value": "Availability"
+        }
+    ],
+    "hqVMLQ": [
+        {
+            "type": 0,
+            "value": "Send"
+        }
+    ],
+    "hzSNj4": [
+        {
+            "type": 0,
+            "value": "Dashboard"
+        }
+    ],
+    "i+Vox0": [
+        {
+            "type": 0,
+            "value": "Invoice Generated"
+        }
+    ],
+    "i0AcKY": [
+        {
+            "type": 0,
+            "value": "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes."
+        }
+    ],
+    "iUy2dx": [
+        {
+            "type": 0,
+            "value": "Vouchers"
+        }
+    ],
+    "j0ugM4": [
+        {
+            "type": 0,
+            "value": "Exchange Rates"
+        }
+    ],
+    "juBV+h": [
+        {
+            "type": 0,
+            "value": "End Hour"
+        }
+    ],
+    "kFYlu2": [
+        {
+            "type": 0,
+            "value": "Saleor runs in read-only mode. Changes not saved."
+        }
+    ],
+    "kJQczl": [
+        {
+            "type": 0,
+            "value": "Sales"
+        }
+    ],
+    "l2oVCF": [
+        {
+            "type": 0,
+            "value": "Attributes"
+        }
+    ],
+    "lzdvwp": [
+        {
+            "type": 0,
+            "value": "Optional"
+        }
+    ],
+    "n+Gwbu": [
+        {
+            "type": 0,
+            "value": "Discounts"
+        }
+    ],
+    "oUWADl": [
+        {
+            "type": 0,
+            "value": "No"
+        }
+    ],
+    "pkUbrL": [
+        {
+            "type": 0,
+            "value": "General Information"
+        }
+    ],
+    "qDwvZ4": [
+        {
+            "type": 0,
+            "value": "Unknown error"
+        }
+    ],
+    "rVkNwf": [
+        {
+            "type": 0,
+            "value": "Use this link to recover it"
+        }
+    ],
+    "rfvBAF": [
+        {
+            "type": 0,
+            "value": "Select All"
+        }
+    ],
+    "rqiCWU": [
+        {
+            "type": 0,
+            "value": "Saved changes"
+        }
+    ],
+    "ryAyPr": [
+        {
+            "type": 0,
+            "value": "Requested Invoice was generated. It was added to the top of the invoice list on this view. Enjoy!"
+        }
+    ],
+    "s9sOcC": [
+        {
+            "type": 0,
+            "value": "OK"
+        }
+    ],
+    "sK1FPw": [
+        {
+            "type": 0,
+            "value": "Categories"
+        }
+    ],
+    "skPoVe": [
+        {
+            "type": 0,
+            "value": "Accept"
+        }
+    ],
+    "tWbE34": [
+        {
+            "type": 0,
+            "value": "Start Hour"
+        }
+    ],
+    "tpUtKP": [
+        {
+            "type": 0,
+            "value": "Forgot password? "
+        },
+        {
+            "type": 1,
+            "value": "resetPasswordLink"
+        }
+    ],
+    "tzMNF3": [
+        {
+            "type": 0,
+            "value": "Status"
+        }
+    ],
+    "u3sYPH": [
+        {
+            "type": 0,
+            "value": "Time"
+        }
+    ],
+    "ufmuTp": [
+        {
+            "type": 0,
+            "value": "Delete"
+        }
+    ],
+    "vHCQ9e": [
+        {
+            "type": 0,
+            "value": "Sorry, your username and/or password are incorrect. Please try again."
+        }
+    ],
+    "vN3qdA": [
+        {
+            "type": 0,
+            "value": "Undo"
+        }
+    ],
+    "vfG+nh": [
+        {
+            "type": 0,
+            "value": "Confirm Password"
+        }
+    ],
+    "viFkCw": [
+        {
+            "type": 0,
+            "value": "Site Settings"
+        }
+    ],
+    "w4R/SO": [
+        {
+            "type": 0,
+            "value": "Local Apps"
+        }
+    ],
+    "wlQTfb": [
+        {
+            "type": 0,
+            "value": "Next"
+        }
+    ],
+    "wn3di2": [
+        {
+            "type": 0,
+            "value": "This password is too commonly used"
+        }
+    ],
+    "x8piIu": [
+        {
+            "type": 0,
+            "value": "Login"
+        }
+    ],
+    "xfGZsi": [
+        {
+            "type": 0,
+            "value": "Configuration"
+        }
+    ],
+    "yHeZRQ": [
+        {
+            "type": 0,
+            "value": "Product Export Failed"
+        }
+    ],
+    "ycMLN9": [
+        {
+            "type": 0,
+            "value": "Warehouses"
+        }
+    ]
+}

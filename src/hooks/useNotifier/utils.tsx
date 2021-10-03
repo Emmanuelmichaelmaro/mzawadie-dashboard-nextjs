@@ -1,13 +1,10 @@
-import { IntlShape } from "react-intl"
+/* eslint-disable import/prefer-default-export */
+import { IMessage } from "@mzawadie/components/messages";
+import { commonMessages } from "@mzawadie/intl";
+import commonErrorMessages from "@mzawadie/utils/errors/common";
+import { IntlShape } from "react-intl";
 
-import { IMessage } from "../../components/messages"
-import { commonMessages } from "../../intl"
-import commonErrorMessages from "../../utils/errors/common"
-
-export const getDefaultNotifierSuccessErrorData = (
-    errors: any[],
-    intl: IntlShape
-): IMessage =>
+export const getDefaultNotifierSuccessErrorData = (errors: any[], intl: IntlShape): IMessage =>
     errors.length === 0
         ? {
               status: "success",
@@ -16,4 +13,4 @@ export const getDefaultNotifierSuccessErrorData = (
         : {
               status: "error",
               text: intl.formatMessage(commonErrorMessages.unknownError),
-          }
+          };

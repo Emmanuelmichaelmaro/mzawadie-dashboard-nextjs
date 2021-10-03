@@ -1,5 +1,4 @@
-/* eslint-disable unicorn/filename-case */
-import { makeStyles } from "@saleor/macaw-ui"
+import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
     () => ({
@@ -21,4 +20,4 @@ export const useStyles = makeStyles(
         },
     }),
     { name: "MessageManager" }
-)
+);

@@ -1,0 +1,12 @@
+declare type List<TData> = TData[];
+declare type Compare<TData> = (a: TData, b: TData) => boolean;
+export declare function isSelected<TData>(data: TData, list: List<TData>, compare: Compare<TData>): boolean;
+export declare function add<TData>(data: TData, list: List<TData>): TData[];
+export declare function addAtIndex<TData>(data: TData, list: List<TData>, index: number): TData[];
+export declare function move<TData>(data: TData, list: List<TData>, compare: Compare<TData>, index: number): TData[];
+export declare function update<TData>(data: TData, list: List<TData>, compare: Compare<TData>): TData[];
+export declare function updateAtIndex<TData>(data: TData, list: List<TData>, index: number): TData[];
+export declare function remove<TData>(data: TData, list: List<TData>, compare: Compare<TData>): TData[];
+export declare function removeAtIndex<TData>(list: List<TData>, index: number): TData[];
+export declare function toggle<TData>(data: TData, list: List<TData>, compare: Compare<TData>): TData[];
+export {};

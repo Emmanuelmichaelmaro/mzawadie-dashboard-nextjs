@@ -1,11 +1,7 @@
 // import useRouter from "use-react-router"
-import Router, { useRouter } from "next/router"
+import Router, { useRouter } from "next/router";
 
-export type UseNavigatorResult = (
-    url: string,
-    replace?: boolean,
-    preserveQs?: boolean
-) => void
+export type UseNavigatorResult = (url: string, replace?: boolean, preserveQs?: boolean) => void;
 
 function useNavigator(): UseNavigatorResult {
     // const {
@@ -13,22 +9,24 @@ function useNavigator(): UseNavigatorResult {
     //     history,
     // } = useRouter()
 
-    const { query } = useRouter()
+    const { query } = useRouter();
 
-    return (url: string, replace = false, preserveQs = false) => {
-        const targetUrl = preserveQs ? url + query : url
+    return async (url: string, replace = false, preserveQs = false) => {
+        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+        const targetUrl = preserveQs ? url + query : url;
 
         if (replace) {
-            Router.replace(targetUrl)
+            await Router.replace(targetUrl);
         } else {
-            Router.push(targetUrl)
+            await Router.push(targetUrl);
         }
 
-        window.scrollTo({ behavior: "smooth", top: 0 })
-    }
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        typeof window !== "undefined" ? window.scrollTo({ behavior: "smooth", top: 0 }) : undefined;
+    };
 }
 
-export default useNavigator
+export default useNavigator;
 
 // import { useApolloClient, useQuery } from "@apollo/react-hooks";
 // import { useRouter } from "next/router";
