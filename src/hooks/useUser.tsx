@@ -1,4 +1,4 @@
-import { UserContext } from "@mzawadie/auth";
+import { UserContext } from "@mzawadie/views/auth/AuthProvider";
 import { useContext } from "react";
 
 function useUser() {

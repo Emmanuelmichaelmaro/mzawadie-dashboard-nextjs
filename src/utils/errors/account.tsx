@@ -1,5 +1,5 @@
+import { commonMessages } from "@mzawadie/core";
 import { AccountErrorFragment } from "@mzawadie/fragments/types/AccountErrorFragment";
-import { commonMessages } from "@mzawadie/intl";
 import { AccountErrorCode } from "@mzawadie/types/globalTypes";
 import { defineMessages, IntlShape } from "react-intl";
 

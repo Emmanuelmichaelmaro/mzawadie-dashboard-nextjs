@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface WarehouseFragment {
-    __typename: "Warehouse";
-    id: string;
-    name: string;
+  __typename: "Warehouse";
+  id: string;
+  name: string;
 }

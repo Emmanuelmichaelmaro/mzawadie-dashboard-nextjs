@@ -9,6 +9,8 @@ coverage
 
 .github
 
-generated
+**/__generated__/*
 
 *.d.ts
+
+.eslintrc

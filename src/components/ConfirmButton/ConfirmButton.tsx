@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/indent */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import Button, { ButtonProps } from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { createStyles, Theme, WithStyles, withStyles } from "@material-ui/core/styles";
 import CheckIcon from "@material-ui/icons/Check";
-import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@mzawadie/config";
-import { buttonMessages } from "@mzawadie/intl";
+import { DEFAULT_NOTIFICATION_SHOW_TIME, buttonMessages } from "@mzawadie/core";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -72,7 +71,7 @@ const ConfirmButton = withStyles(styles, { name: "ConfirmButton" })(
             displayCompletedActionState: false,
         };
 
-        timeout: ReturnType<typeof setTimeout>;
+        timeout: null | ReturnType<typeof setTimeout> = null;
 
         static getDerivedStateFromProps(
             nextProperties: ConfirmButtonProperties,
@@ -102,12 +101,14 @@ const ConfirmButton = withStyles(styles, { name: "ConfirmButton" })(
                         }
                     }, DEFAULT_NOTIFICATION_SHOW_TIME);
                 } else if (transitionState === "loading") {
+                    // @ts-ignore
                     clearTimeout(this.timeout);
                 }
             }
         }
 
         componentWillUnmount() {
+            // @ts-ignore
             clearTimeout(this.timeout);
         }
 

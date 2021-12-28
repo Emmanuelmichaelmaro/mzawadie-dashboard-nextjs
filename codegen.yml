@@ -1,20 +1,53 @@
 overwrite: true
-schema: "https://demo.saleor.io/graphql/"
-documents: "src/**/*.tsx"
+watch: false
+schema:
+    - schema.graphql
+    - src/client-schema-extensions.ts
+documents: ["src/**/*.{ts,tsx}"]
+hooks:
+    afterAllFileWrite:
+        - prettier --write
 generates:
-    generated/graphql.tsx:
+    # Get schemas from server
+    src/graphql/autogenerate/schemas.ts:
         plugins:
-            - add:
-                  content: "// THIS IS A GENERATED FILE, use `npm run codegen-generate` to regenerate"
-            - add:
-                  content: "/* tslint:disable */"
-            - add:
-                  content: "/* eslint:disable */"
-            - "typescript"
-            - "typescript-operations"
-            - "typescript-react-apollo"
-    generated/graphql-schema.json:
+            - typescript
+
+    # Create operations based on queries
+    src/graphql/autogenerate/operations.ts:
+        preset: import-types
+        presetConfig:
+            typesPath: ./schemas
         plugins:
-            - "introspection"
+            - typescript-operations
         config:
-            minify: true
+            flattenGeneratedTypes: true
+
+    # Create hooks based on queries
+    src/graphql/autogenerate/hooks.ts:
+        preset: import-types
+        presetConfig:
+            typesPath: ./operations
+        plugins:
+            - typescript-react-apollo
+        config:
+            withHooks: true
+            withHOC: false
+            withComponent: false
+            flattenGeneratedTypes: true
+            withRefetchFn: true
+
+    # Create fragments based on queries
+    src/graphql/autogenerate/fragments.ts:
+        plugins:
+            - fragment-matcher
+        config:
+            apolloClientVersion: 3
+
+    # Get schema in graphql Format
+    src/graphql/autogenerate/schema.graphql:
+        plugins:
+            - schema-ast
+        config:
+            includeDirectives: true
+            flattenGeneratedTypes: true

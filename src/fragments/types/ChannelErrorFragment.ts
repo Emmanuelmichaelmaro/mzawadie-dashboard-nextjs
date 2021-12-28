@@ -1,8 +1,8 @@
 /* tslint:disable */
-
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
+
 import { ChannelErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
@@ -10,8 +10,8 @@ import { ChannelErrorCode } from "./../../types/globalTypes";
 // ====================================================
 
 export interface ChannelErrorFragment {
-    __typename: "ChannelError";
-    code: ChannelErrorCode;
-    field: string | null;
-    message: string | null;
+  __typename: "ChannelError";
+  code: ChannelErrorCode;
+  field: string | null;
+  message: string | null;
 }

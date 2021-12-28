@@ -1,8 +1,8 @@
 /* tslint:disable */
-
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
+
 import { ProductErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
@@ -10,7 +10,7 @@ import { ProductErrorCode } from "./../../types/globalTypes";
 // ====================================================
 
 export interface ProductErrorFragment {
-    __typename: "ProductError";
-    code: ProductErrorCode;
-    field: string | null;
+  __typename: "ProductError";
+  code: ProductErrorCode;
+  field: string | null;
 }

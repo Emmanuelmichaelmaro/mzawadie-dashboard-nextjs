@@ -7,7 +7,6 @@ interface Config {
     environment?: string;
 }
 
-// eslint-disable-next-line import/prefer-default-export
 export const SentryAdapter = (config: Config): TrackerMethods => {
     const init: TrackerMethods["init"] = () => {
         if (config?.dsn) {

@@ -1,8 +1,8 @@
 /* tslint:disable */
-
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
+
 import { ExportErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
@@ -10,7 +10,7 @@ import { ExportErrorCode } from "./../../types/globalTypes";
 // ====================================================
 
 export interface ExportErrorFragment {
-    __typename: "ExportError";
-    code: ExportErrorCode;
-    field: string | null;
+  __typename: "ExportError";
+  code: ExportErrorCode;
+  field: string | null;
 }

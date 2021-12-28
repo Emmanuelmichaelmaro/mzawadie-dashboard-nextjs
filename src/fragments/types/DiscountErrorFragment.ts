@@ -1,8 +1,8 @@
 /* tslint:disable */
-
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
+
 import { DiscountErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
@@ -10,8 +10,8 @@ import { DiscountErrorCode } from "./../../types/globalTypes";
 // ====================================================
 
 export interface DiscountErrorFragment {
-    __typename: "DiscountError";
-    code: DiscountErrorCode;
-    field: string | null;
-    channels: string[] | null;
+  __typename: "DiscountError";
+  code: DiscountErrorCode;
+  field: string | null;
+  channels: string[] | null;
 }

@@ -4,7 +4,6 @@ export type SetLocalStorageValue<T> = T | ((previousValue: T) => T);
 export type SetLocalStorage<T> = (value: SetLocalStorageValue<T>) => void;
 
 export default function useLocalStorage<T>(key: string, initialValue: T): [T, SetLocalStorage<T>] {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const [storedValue, setStoredValue] = useState<T>(() => {
         const item = typeof window !== "undefined" ? window.localStorage.getItem(key) : undefined;

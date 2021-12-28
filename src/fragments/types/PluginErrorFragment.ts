@@ -1,8 +1,8 @@
 /* tslint:disable */
-
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
+
 import { PluginErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
@@ -10,7 +10,7 @@ import { PluginErrorCode } from "./../../types/globalTypes";
 // ====================================================
 
 export interface PluginErrorFragment {
-    __typename: "PluginError";
-    code: PluginErrorCode;
-    field: string | null;
+  __typename: "PluginError";
+  code: PluginErrorCode;
+  field: string | null;
 }

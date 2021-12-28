@@ -1,8 +1,8 @@
 /* tslint:disable */
-
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
+
 import { WarehouseErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
@@ -10,7 +10,7 @@ import { WarehouseErrorCode } from "./../../types/globalTypes";
 // ====================================================
 
 export interface WarehouseErrorFragment {
-    __typename: "WarehouseError";
-    code: WarehouseErrorCode;
-    field: string | null;
+  __typename: "WarehouseError";
+  code: WarehouseErrorCode;
+  field: string | null;
 }

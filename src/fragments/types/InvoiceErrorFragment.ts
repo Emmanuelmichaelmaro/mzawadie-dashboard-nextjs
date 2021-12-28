@@ -1,8 +1,8 @@
 /* tslint:disable */
-
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
+
 import { InvoiceErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
@@ -10,7 +10,7 @@ import { InvoiceErrorCode } from "./../../types/globalTypes";
 // ====================================================
 
 export interface InvoiceErrorFragment {
-    __typename: "InvoiceError";
-    code: InvoiceErrorCode;
-    field: string | null;
+  __typename: "InvoiceError";
+  code: InvoiceErrorCode;
+  field: string | null;
 }

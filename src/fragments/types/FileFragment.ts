@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface FileFragment {
-    __typename: "File";
-    url: string;
-    contentType: string | null;
+  __typename: "File";
+  url: string;
+  contentType: string | null;
 }

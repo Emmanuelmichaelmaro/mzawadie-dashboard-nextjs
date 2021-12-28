@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
-import { IMessage } from "@mzawadie/components/messages";
-import { commonMessages } from "@mzawadie/intl";
+import { IMessage } from "@mzawadie/components/Messages";
+import { commonMessages } from "@mzawadie/core";
 import commonErrorMessages from "@mzawadie/utils/errors/common";
 import { IntlShape } from "react-intl";
 

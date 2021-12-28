@@ -1,0 +1,1394 @@
+{
+    "+7OsyM": {
+        "context": "button",
+        "string": "Set as default shipping address"
+    },
+    "+NUzaQ": {
+        "context": "check to mark this account as active",
+        "string": "User account active"
+    },
+    "+c/f61": {
+        "context": "retry installation",
+        "string": "Retry"
+    },
+    "+hib+V": {
+        "context": "error message",
+        "string": "This attribute is already assigned."
+    },
+    "+x4cZH": {
+        "string": "Only staff members can be assigned"
+    },
+    "+x84Ji": {
+        "context": "order status",
+        "string": "Unconfirmed"
+    },
+    "+xTpT1": {
+        "string": "Attributes"
+    },
+    "/8/Ffn": {
+        "context": "button",
+        "string": "Show"
+    },
+    "/kWzY1": {
+        "string": "Are you sure you want to delete this address from users address book?"
+    },
+    "07HgGe": {
+        "context": "customer informations, header",
+        "string": "Personal Informations"
+    },
+    "0OfZJA": {
+        "context": "button",
+        "string": "Back"
+    },
+    "0dPP8O": {
+        "string": "Order #{orderId} was placed"
+    },
+    "0fM/pV": {
+        "context": "message title",
+        "string": "App installed"
+    },
+    "0opVvi": {
+        "context": "number of ordered products",
+        "string": "{amount, plural,one {One ordered}other {{amount} Ordered}}"
+    },
+    "1H+V6k": {
+        "context": "error message",
+        "string": "Page with these attributes already exists."
+    },
+    "1LiVhv": {
+        "context": "section header",
+        "string": "Recent Orders"
+    },
+    "1gzck6": {
+        "string": "{firstName} {lastName}"
+    },
+    "1n1tOR": {
+        "string": "Group is out of your permission scope"
+    },
+    "1qRwgQ": {
+        "context": "app installation",
+        "string": "Installing app..."
+    },
+    "1wyZpQ": {
+        "string": "These passwords are too similar"
+    },
+    "26BKkX": {
+        "context": "order status",
+        "string": "Partially returned"
+    },
+    "2FQsYj": {
+        "context": "button",
+        "string": "Clear"
+    },
+    "2NgTCJ": {
+        "string": "A product with this SKU already exists"
+    },
+    "2YaS7K": {
+        "string": "E-mail Address"
+    },
+    "2atspc": {
+        "string": "Drafts"
+    },
+    "2mRLis": {
+        "string": "Search Customer"
+    },
+    "2ob30/": {
+        "string": "Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
+    },
+    "2oyWT9": {
+        "context": "button",
+        "string": "Back to login"
+    },
+    "2p0tZx": {
+        "context": "delete customer, dialog content",
+        "string": "Are you sure you want to delete {email}?"
+    },
+    "2pw5dQ": {
+        "context": "payment status",
+        "string": "Fully paid"
+    },
+    "2r4cTE": {
+        "context": "button",
+        "string": "Enable Dark Mode"
+    },
+    "3+990c": {
+        "context": "button",
+        "string": "View all orders"
+    },
+    "34F7Jk": {
+        "context": "filter range separator",
+        "string": "and"
+    },
+    "3AqOxp": {
+        "context": "no category set error",
+        "string": "Product category not set"
+    },
+    "3TlhJS": {
+        "context": "navigator command mode description",
+        "string": "Search Command"
+    },
+    "3d1RXL": {
+        "string": "This customer has no addresses yet"
+    },
+    "3ublOS": {
+        "string": "Forgot your password? Don't worry, we'll reset it for you."
+    },
+    "450Fty": {
+        "string": "None"
+    },
+    "4Dc2j0": {
+        "context": "order status",
+        "string": "Returned"
+    },
+    "4JW9iJ": {
+        "context": "home section name",
+        "string": "Home"
+    },
+    "4gT3eD": {
+        "context": "navigator section header",
+        "string": "Search in Customers"
+    },
+    "4prRLv": {
+        "string": "Permission is out of your scope"
+    },
+    "5+Xcrz": {
+        "context": "app deactivated",
+        "string": "Deactivated"
+    },
+    "577R2r": {
+        "string": "Invalid value"
+    },
+    "5LRkEs": {
+        "string": "The new dashboard and the GraphQL API are preview-quality software."
+    },
+    "5SPHkk": {
+        "string": "Order #{orderId} was fully paid"
+    },
+    "5dyOs0": {
+        "string": "No payments waiting for capture"
+    },
+    "5elC9k": {
+        "context": "taxes section name",
+        "string": "Taxes"
+    },
+    "5fCMUI": {
+        "context": "translations section name",
+        "string": "Translations"
+    },
+    "5sg7KC": {
+        "string": "Password"
+    },
+    "5t/4um": {
+        "context": "message title",
+        "string": "Couldn’t Install {name}"
+    },
+    "62T585": {
+        "context": "button",
+        "string": "{languageName} - {languageCode}"
+    },
+    "6L6Fy2": {
+        "context": "header",
+        "string": "Disclaimer"
+    },
+    "6hLZNA": {
+        "context": "delete app",
+        "string": "Are you sure you want to delete this app?"
+    },
+    "6nSTuC": {
+        "context": "webhooks section name",
+        "string": "Webhooks"
+    },
+    "7Chrsf": {
+        "string": "Passwords do not match"
+    },
+    "7NfoiJ": {
+        "context": "custom search delete, dialog header",
+        "string": "Delete Search"
+    },
+    "7Oorx5": {
+        "context": "navigator section header",
+        "string": "Search in Catalog"
+    },
+    "8B8E+3": {
+        "context": "navigator placeholder",
+        "string": "Order Number"
+    },
+    "8Ec9Mr": {
+        "context": "customer contact section, header",
+        "string": "Contact Informations"
+    },
+    "8oIbMI": {
+        "string": "Reached limit for this plan"
+    },
+    "8xsKUv": {
+        "context": "service accounts section name",
+        "string": "Service Accounts"
+    },
+    "95oJ5d": {
+        "context": "button",
+        "string": "Go back to dashboard"
+    },
+    "97l2MO": {
+        "string": "Customer Email"
+    },
+    "9A1NDT": {
+        "string": "Please set up a new password."
+    },
+    "9C7PZE": {
+        "context": "navigation section name",
+        "string": "Navigation"
+    },
+    "9YazHG": {
+        "string": "Company"
+    },
+    "9q562c": {
+        "context": "apps section name",
+        "string": "Apps"
+    },
+    "9tgY4G": {
+        "context": "apps content",
+        "string": "You don’t have any installed apps in your dashboard"
+    },
+    "9uNz+T": {
+        "context": "button",
+        "string": "Cancel"
+    },
+    "AOI4LW": {
+        "context": "navigator placeholder",
+        "string": "Search in Catalog"
+    },
+    "AQFMYU": {
+        "context": "staff section name",
+        "string": "Staff Members"
+    },
+    "AY7Tuz": {
+        "string": "The same object cannot be in both lists"
+    },
+    "AdmPca": {
+        "context": "error message",
+        "string": "Max value cannot be less than min value"
+    },
+    "AuwpCm": {
+        "string": "Country area"
+    },
+    "B52Em/": {
+        "string": "Address line 1"
+    },
+    "BM+zfY": {
+        "context": "empty metadata text",
+        "string": "Use the button below to add new metadata field"
+    },
+    "BM1JiJ": {
+        "context": "error message",
+        "string": "This order cannot be cancelled"
+    },
+    "BNP7jl": {
+        "string": "{amount, plural,one {One product out of stock}other {{amount} Products out of stock}}"
+    },
+    "BNTZLv": {
+        "string": "Order #{orderId} was placed from draft"
+    },
+    "BXkF8Z": {
+        "context": "header",
+        "string": "Activity"
+    },
+    "BfJGij": {
+        "context": "header",
+        "string": "Address Information"
+    },
+    "BooQvo": {
+        "context": "navigator placeholder",
+        "string": "Type {key} to see available actions"
+    },
+    "By5ZBp": {
+        "context": "header",
+        "string": "Hello there, {userName}"
+    },
+    "C0JLNW": {
+        "string": "Provided email address does not exist in our database."
+    },
+    "C4hCsD": {
+        "string": "App is out of your permissions scope"
+    },
+    "CjSRT1": {
+        "context": "button",
+        "string": "Create Category"
+    },
+    "CqestX": {
+        "context": "empty metadata text",
+        "string": "There is no private metadata created for this element."
+    },
+    "D2qihU": {
+        "string": "Permission is invalid"
+    },
+    "D9ie4n": {
+        "context": "shipping section name",
+        "string": "Shipping Methods"
+    },
+    "DEa1T1": {
+        "context": "button",
+        "string": "Save Search"
+    },
+    "DHBlFi": {
+        "context": "navigator customer mode description",
+        "string": "Search Customers"
+    },
+    "DILs4b": {
+        "string": "Unsupported media provider or incorrect URL"
+    },
+    "DJFPzq": {
+        "context": "button",
+        "string": "Confirm"
+    },
+    "DK+8PB": {
+        "string": "This channel has already been created"
+    },
+    "DNTxWr": {
+        "context": "permission groups section name",
+        "string": "Permission Groups"
+    },
+    "DOkfyZ": {
+        "string": "Insufficient permissions"
+    },
+    "E8T3e+": {
+        "string": "Cannot add and remove group the same time"
+    },
+    "E8VDeH": {
+        "string": "No. of Orders"
+    },
+    "E9Jssl": {
+        "string": "No orders ready to fulfill"
+    },
+    "EEW+ND": {
+        "string": "Navigator"
+    },
+    "EM+30g": {
+        "context": "navigator notification",
+        "string": "Our new feature to help you with your daily tasks. Run Navigator using {keyboardShortcut} shortcut."
+    },
+    "ENBELI": {
+        "context": "description",
+        "string": "or login using"
+    },
+    "ETHnjq": {
+        "context": "header",
+        "string": "Private Metadata"
+    },
+    "EWD/wU": {
+        "context": "delete app",
+        "string": "Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
+    },
+    "Ev6SEF": {
+        "string": "New Password"
+    },
+    "FBtqtl": {
+        "context": "payment status",
+        "string": "Unpaid"
+    },
+    "FNAZoh": {
+        "string": "Last login"
+    },
+    "FNpv6K": {
+        "context": "button",
+        "string": "Filters"
+    },
+    "FpIcp9": {
+        "string": "No customers found"
+    },
+    "FuAV5G": {
+        "string": "This name is already taken. Please provide another."
+    },
+    "Fvvgoi": {
+        "string": "Your session has expired. Please log in again to continue."
+    },
+    "Fz3kic": {
+        "context": "error message",
+        "string": "Billing address is not set or invoice is not ready to be send"
+    },
+    "G7mu0y": {
+        "string": "The GraphQL API is beta quality. It is not fully optimized and some mutations or queries may be missing."
+    },
+    "GOdq5V": {
+        "string": "Catalog"
+    },
+    "GiDxS4": {
+        "context": "add metadata field,button",
+        "string": "Add Field"
+    },
+    "Gr1SAu": {
+        "string": "Customer Name"
+    },
+    "Gxm7Qx": {
+        "context": "navigator notification title",
+        "string": "Navigator is here to help"
+    },
+    "H5NKfr": {
+        "context": "button",
+        "string": "Create"
+    },
+    "H6NsC1": {
+        "context": "pages section name",
+        "string": "Pages"
+    },
+    "HMD+ib": {
+        "string": "Last order"
+    },
+    "HSmg1/": {
+        "context": "gift cards section name",
+        "string": "Gift Cards"
+    },
+    "HnVtSS": {
+        "context": "search",
+        "string": "No results"
+    },
+    "I+UwqI": {
+        "context": "is filter range or value",
+        "string": "equal to"
+    },
+    "I4nAXS": {
+        "context": "status label inactive",
+        "string": "Inactive"
+    },
+    "IFWHn0": {
+        "context": "error message",
+        "string": "Billing address is not set"
+    },
+    "INNPVX": {
+        "context": "payment status",
+        "string": "Partially paid"
+    },
+    "IbVKSH": {
+        "context": "button",
+        "string": "Manage"
+    },
+    "IyHQr0": {
+        "context": "navigator action",
+        "string": "Go to order #{orderNumber}"
+    },
+    "JFmOfi": {
+        "context": "button",
+        "string": "Create Product"
+    },
+    "Ja7gHc": {
+        "context": "button",
+        "string": "Edit"
+    },
+    "JiVwOU": {
+        "string": "There was a problem with the file you uploaded as an image and it couldn't be used. Please try a different file."
+    },
+    "JufWFT": {
+        "context": "app installation error",
+        "string": "There was a problem during installation"
+    },
+    "K8xNLe": {
+        "context": "products section name",
+        "string": "Products"
+    },
+    "KFv8hX": {
+        "string": "An attribute already exists."
+    },
+    "KN7zKn": {
+        "string": "Error"
+    },
+    "KRqgfo": {
+        "string": "User is out of your permissions scope"
+    },
+    "KeO51o": {
+        "string": "Channel"
+    },
+    "LATpSE": {
+        "context": "marketplace content",
+        "string": "Discover great free and paid apps in our Saleor Marketplace."
+    },
+    "LR3HlT": {
+        "string": "This password is too short"
+    },
+    "LVa5ew": {
+        "string": "Saleor ran into an unexpected problem"
+    },
+    "LkuDEb": {
+        "context": "metadata field value, header",
+        "string": "Value"
+    },
+    "LtqrM8": {
+        "context": "delete custom app",
+        "string": "Deleting {name}, you will delete all the data and webhooks regarding this app. Are you sure you want to do that?"
+    },
+    "Lx1ima": {
+        "context": "button",
+        "string": "Upload image"
+    },
+    "M1uijW": {
+        "context": "collection",
+        "string": "Not Published"
+    },
+    "MEajfd": {
+        "context": "empty metadata text",
+        "string": "There is no metadata created for this element."
+    },
+    "MKtgZB": {
+        "string": "Only staff users can access the dashboard"
+    },
+    "McN+wq": {
+        "context": "customers section name",
+        "string": "Customers"
+    },
+    "Mi4JOd": {
+        "context": "button",
+        "string": "Error"
+    },
+    "MjUyhA": {
+        "context": "section subheader",
+        "string": "Active member since {date}"
+    },
+    "MpR4zK": {
+        "context": "customer details, header",
+        "string": "{fullName} Details"
+    },
+    "N2SbNc": {
+        "string": "{counter,plural,one{Are you sure you want to delete this customer?} other{Are you sure you want to delete {displayQuantity} customers?}}"
+    },
+    "N43t3/": {
+        "context": "error message",
+        "string": "Number not set for an invoice"
+    },
+    "N76zUg": {
+        "context": "page header",
+        "string": "Create Customer"
+    },
+    "N7XGzW": {
+        "context": "error message",
+        "string": "This name is already taken. Please provide another."
+    },
+    "NNT3Lp": {
+        "context": "collections section name",
+        "string": "Collections"
+    },
+    "NlSJMM": {
+        "context": "channels section name",
+        "string": "Channels"
+    },
+    "NqxvFh": {
+        "context": "navigator placeholder",
+        "string": "Type Command"
+    },
+    "NskBjH": {
+        "context": "marketplace content",
+        "string": "Marketplace is coming soon"
+    },
+    "Nuq83+": {
+        "string": "Create new channel"
+    },
+    "NxeDbG": {
+        "context": "image upload",
+        "string": "Drop here to upload"
+    },
+    "O95R3Z": {
+        "string": "Phone"
+    },
+    "OGemtu": {
+        "context": "payment status",
+        "string": "Partially refunded"
+    },
+    "P7PLVj": {
+        "string": "Date"
+    },
+    "PCoO4D": {
+        "context": "error message",
+        "string": "Page not found."
+    },
+    "PLCwT/": {
+        "context": "search results",
+        "string": "Show more"
+    },
+    "PXatmC": {
+        "string": "Customer Removed"
+    },
+    "PbqNhi": {
+        "context": "order status",
+        "string": "Partially fulfilled"
+    },
+    "PkrH7Z": {
+        "context": "password reset, button",
+        "string": "Send Instructions"
+    },
+    "Q1Uzbb": {
+        "string": "No products found"
+    },
+    "Q6wcZ5": {
+        "string": "First Name"
+    },
+    "Q8Qw5B": {
+        "string": "Description"
+    },
+    "QBxN6z": {
+        "context": "is filter range or value",
+        "string": "between"
+    },
+    "QCwBUI": {
+        "context": "button",
+        "string": "Delete Search"
+    },
+    "QFBjlV": {
+        "context": "error message",
+        "string": "Stock for this warehouse already exists for this product variant"
+    },
+    "QFCUEt": {
+        "string": "Slug must be unique"
+    },
+    "QLVddq": {
+        "context": "button",
+        "string": "Create customer"
+    },
+    "QcIFCs": {
+        "context": "save search tab",
+        "string": "Search Name"
+    },
+    "QirE3M": {
+        "string": "Start Date"
+    },
+    "QnOvJw": {
+        "string": "We've encountered a problem..."
+    },
+    "QooeI/": {
+        "context": "button",
+        "string": "Create Customer"
+    },
+    "RaycYK": {
+        "context": "button",
+        "string": "Save"
+    },
+    "Rjs1CD": {
+        "context": "button",
+        "string": "Continue"
+    },
+    "RlfqSV": {
+        "string": "No orders found"
+    },
+    "RrCui3": {
+        "string": "Summary"
+    },
+    "S22jIs": {
+        "context": "button",
+        "string": "Set new password"
+    },
+    "SKFr04": {
+        "string": "Attribute not found."
+    },
+    "SwISVH": {
+        "context": "section header",
+        "string": "Saleor Marketplace"
+    },
+    "T4GOiX": {
+        "string": "End Date"
+    },
+    "TBaMo2": {
+        "context": "about app",
+        "string": "About"
+    },
+    "TDhHMi": {
+        "string": "This needs to be unique"
+    },
+    "TE4fIS": {
+        "string": "City"
+    },
+    "TKmub+": {
+        "string": "This field is required"
+    },
+    "Ta9j04": {
+        "context": "orders section name",
+        "string": "Orders"
+    },
+    "TpPx7V": {
+        "context": "navigator placeholder",
+        "string": "Search Customer"
+    },
+    "U2WgwW": {
+        "context": "add custom select input option",
+        "string": "Add new value: {value}"
+    },
+    "USS3Q7": {
+        "context": "filters error messages unknown error",
+        "string": "Unknown error occurred"
+    },
+    "UaYJJ8": {
+        "string": "Are you sure you want to delete {name} search tab?"
+    },
+    "V1mqpZ": {
+        "context": "button",
+        "string": "Create Permission Group"
+    },
+    "V2BBQu": {
+        "string": "Currency in both channels must be the same"
+    },
+    "VEE4gD": {
+        "context": "error message",
+        "string": "Shipping method is not valid for chosen shipping address"
+    },
+    "VIABHy": {
+        "context": "error message",
+        "string": "Default shipping zone already exists"
+    },
+    "VcI+Zh": {
+        "context": "header",
+        "string": "Metadata"
+    },
+    "VdDcxc": {
+        "context": "button",
+        "string": "Create Collection"
+    },
+    "VhoPoT": {
+        "string": "Sorry, login went wrong. Please try again."
+    },
+    "VyzsWZ": {
+        "string": "Default Billing Address"
+    },
+    "W0kQd+": {
+        "context": "dialog title",
+        "string": "Add Address"
+    },
+    "WGD+fL": {
+        "context": "custom apps content",
+        "string": "Your custom created apps will be shown here."
+    },
+    "WhvuCb": {
+        "context": "plugins section name",
+        "string": "Plugins"
+    },
+    "Wlc67M": {
+        "context": "error message",
+        "string": "Cannot choose a shipping method for an order without the shipping address"
+    },
+    "WzA5Ll": {
+        "string": "Cannot remove user from last group"
+    },
+    "X8+Lpa": {
+        "context": "button",
+        "string": "Account Settings"
+    },
+    "XB2Jj9": {
+        "context": "create app button",
+        "string": "Create App"
+    },
+    "XJSRDK": {
+        "context": "payment status",
+        "string": "Fully refunded"
+    },
+    "Xb6BJ9": {
+        "context": "error message",
+        "string": "Manual payments can not be refunded"
+    },
+    "Xel9C+": {
+        "context": "navigator default mode description",
+        "string": "Search Views and Actions"
+    },
+    "XkX56I": {
+        "context": "filters error messages value required",
+        "string": "Choose a value"
+    },
+    "Y1B0PN": {
+        "context": "error message",
+        "string": "There's no payment associated with the order"
+    },
+    "YMBn8d": {
+        "context": "draft orders section name",
+        "string": "Draft Orders"
+    },
+    "YQ3EXR": {
+        "context": "product types section name",
+        "string": "Product Types"
+    },
+    "YYkkhx": {
+        "context": "navigator section header",
+        "string": "Navigate to"
+    },
+    "Yo2kC+": {
+        "string": "Couldn't process image"
+    },
+    "Z6QAbw": {
+        "string": "This variant does not have any digital content"
+    },
+    "Zd3Eew": {
+        "context": "subsection header",
+        "string": "Shipping Address"
+    },
+    "ZeD2TK": {
+        "context": "section header",
+        "string": "Third-party Apps"
+    },
+    "ZprV2g": {
+        "context": "app has been installed",
+        "string": "{name} is ready to be used"
+    },
+    "a+x05s": {
+        "context": "select option, button",
+        "string": "Select"
+    },
+    "a5msuh": {
+        "string": "Yes"
+    },
+    "a9S9Je": {
+        "context": "page types section name",
+        "string": "Page Types"
+    },
+    "aCX8rl": {
+        "context": "subheader",
+        "string": "Here is some information we gathered about your store"
+    },
+    "aI80kg": {
+        "string": "Properties"
+    },
+    "abTH5q": {
+        "context": "error message",
+        "string": "Email address is not set"
+    },
+    "aggaJg": {
+        "string": "This attribute has already been assigned to this product type"
+    },
+    "aheQdn": {
+        "string": "Last Name"
+    },
+    "bHdFph": {
+        "context": "subsection header",
+        "string": "Address"
+    },
+    "bZenNC": {
+        "string": "Description (optional)"
+    },
+    "biVFKU": {
+        "context": "subsection header",
+        "string": "Billing Address"
+    },
+    "bj6pTd": {
+        "string": "Something's missing"
+    },
+    "bu/fC1": {
+        "context": "button",
+        "string": "Remove"
+    },
+    "c1b4T+": {
+        "string": "Don't worry, everything is gonna be fine"
+    },
+    "c5pMZ8": {
+        "string": "API error"
+    },
+    "cSbZKV": {
+        "context": "number of metadata fields in model",
+        "string": "{number,plural,one{{number} Field} other{{number} Fields}}"
+    },
+    "cY42ht": {
+        "string": "Password cannot be entirely numeric"
+    },
+    "ccXLVi": {
+        "string": "Category"
+    },
+    "cd13nN": {
+        "context": "product attribute error",
+        "string": "All attributes should have value"
+    },
+    "cfQf0w": {
+        "context": "button",
+        "string": "Create Order"
+    },
+    "csbU1S": {
+        "string": "{amount, plural,one {One payment to capture}other {{amount} Payments to capture}}"
+    },
+    "d9UqaJ": {
+        "context": "error message",
+        "string": "Cannot change the quantity because of insufficient stock"
+    },
+    "dxCVWI": {
+        "context": "error message",
+        "string": "Cannot request an invoice for draft order"
+    },
+    "e7Nyu7": {
+        "context": "section header",
+        "string": "Customer History"
+    },
+    "eOrLzG": {
+        "context": "button",
+        "string": "Done"
+    },
+    "eWcvOc": {
+        "context": "button",
+        "string": "Choose file"
+    },
+    "erC44f": {
+        "context": "filters error messages dependencies missing",
+        "string": "Filter requires other filters: {dependencies}"
+    },
+    "eu98dw": {
+        "string": "Invalid password"
+    },
+    "ey0lZj": {
+        "context": "dialog header",
+        "string": "Delete Customer"
+    },
+    "fhksPD": {
+        "string": "Number of Orders"
+    },
+    "fjPWOA": {
+        "context": "header",
+        "string": "Customer Overview"
+    },
+    "ftcHpD": {
+        "string": "Customer created"
+    },
+    "g/BrOt": {
+        "string": "Url has invalid format"
+    },
+    "gKdGxP": {
+        "context": "error message",
+        "string": "Only pre-authorized payments can be captured"
+    },
+    "gQGUsN": {
+        "context": "dialog title",
+        "string": "Edit Address"
+    },
+    "hLOEeb": {
+        "context": "button",
+        "string": "Set as default billing address"
+    },
+    "hMRP6J": {
+        "string": "Default Address"
+    },
+    "hOxIeP": {
+        "string": "Availability"
+    },
+    "hX5PAb": {
+        "string": "No results found"
+    },
+    "ho75Lr": {
+        "context": "status label deactivated",
+        "string": "Deactivated"
+    },
+    "hptDxW": {
+        "context": "money",
+        "string": "to {money}"
+    },
+    "hqVMLQ": {
+        "context": "button",
+        "string": "Send"
+    },
+    "hzSNj4": {
+        "string": "Dashboard"
+    },
+    "i0AcKY": {
+        "context": "notification message after log in",
+        "string": "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes."
+    },
+    "i3Mvj8": {
+        "context": "product attribute error",
+        "string": "This variant already exists"
+    },
+    "iAvKNf": {
+        "context": "navigator help mode description",
+        "string": "Display Help"
+    },
+    "iUy2dx": {
+        "context": "vouchers section name",
+        "string": "Vouchers"
+    },
+    "icz/jb": {
+        "context": "customer",
+        "string": "Join Date"
+    },
+    "ij7olm": {
+        "context": "error message",
+        "string": "This fulfillment cannot be cancelled"
+    },
+    "j0ugM4": {
+        "context": "Manage and Update your warehouse information",
+        "string": "Exchange Rates"
+    },
+    "jGGnSZ": {
+        "context": "page header",
+        "string": "Primary Address"
+    },
+    "juBV+h": {
+        "string": "End Hour"
+    },
+    "k8bltk": {
+        "string": "No Results"
+    },
+    "kErneR": {
+        "string": "This customer doesn’t have any adresses added to his address book. You can add address using the button below."
+    },
+    "kFYlu2": {
+        "string": "Saleor runs in read-only mode. Changes not saved."
+    },
+    "kJQczl": {
+        "context": "sales section name",
+        "string": "Sales"
+    },
+    "kbkjEc": {
+        "context": "navigator catalog mode description",
+        "string": "Search in Catalog"
+    },
+    "l2oVCF": {
+        "context": "attributes section name",
+        "string": "Attributes"
+    },
+    "lL3YJO": {
+        "context": "collection",
+        "string": "Published"
+    },
+    "lLwtgs": {
+        "string": "Variants are disabled in this product type"
+    },
+    "lW5uJO": {
+        "context": "money",
+        "string": "from {money}"
+    },
+    "liLrVs": {
+        "context": "save filter tab, header",
+        "string": "Save Custom Search"
+    },
+    "lzdvwp": {
+        "context": "field is optional",
+        "string": "Optional"
+    },
+    "m8cjcK": {
+        "context": "add authorization key error",
+        "string": "Authorization key with this type already exists"
+    },
+    "mFZklm": {
+        "string": "{amount, plural,one {One order is ready to fulfill} other {{amount} Orders are ready to fulfill}}"
+    },
+    "mYs3tb": {
+        "string": "Product price cannot be lower than 0."
+    },
+    "me585h": {
+        "context": "navigator section header",
+        "string": "Quick Actions"
+    },
+    "mgFyBA": {
+        "string": "This name should be unique"
+    },
+    "mvbXRP": {
+        "context": "order status",
+        "string": "Cancelled"
+    },
+    "n+Gwbu": {
+        "string": "Discounts"
+    },
+    "n5vskv": {
+        "context": "customer's address book, header",
+        "string": "{fullName}'s Address Book"
+    },
+    "nEixpu": {
+        "context": "table action",
+        "string": "Actions"
+    },
+    "nIrjSR": {
+        "context": "section header",
+        "string": "Ongoing Installations"
+    },
+    "nKjLjT": {
+        "context": "error message",
+        "string": "Slug must be unique for each warehouse"
+    },
+    "nLML8Y": {
+        "string": "Default Shipping Address"
+    },
+    "nOo0oL": {
+        "context": "error message",
+        "string": "Not enough items to fulfill"
+    },
+    "nRiOg+": {
+        "string": "Sorry, the page was not found"
+    },
+    "nTF6tG": {
+        "context": "number of order",
+        "string": "No. of Order"
+    },
+    "nX2pCU": {
+        "context": "window title",
+        "string": "Create customer"
+    },
+    "nudPsY": {
+        "context": "metadata field name, header",
+        "string": "Field"
+    },
+    "oB0y5Y": {
+        "context": "order status",
+        "string": "Unfulfilled"
+    },
+    "oLMXDv": {
+        "context": "order status",
+        "string": "Ready to fulfill"
+    },
+    "oQY0a2": {
+        "string": "Address line 2"
+    },
+    "oUWADl": {
+        "string": "No"
+    },
+    "oYGfnY": {
+        "string": "ZIP / Postal code"
+    },
+    "pC6/1z": {
+        "string": "Invalid manifest format"
+    },
+    "pFVX6g": {
+        "string": "Variant with these attributes already exists"
+    },
+    "pURrk1": {
+        "context": "order status",
+        "string": "Status"
+    },
+    "phAZoj": {
+        "string": "Collection"
+    },
+    "pkUbrL": {
+        "string": "General Information"
+    },
+    "pkjXPD": {
+        "context": "order status",
+        "string": "Fulfilled"
+    },
+    "puikeb": {
+        "context": "button",
+        "string": "Delete Address"
+    },
+    "q8ep2I": {
+        "context": "dialog header",
+        "string": "Delete Customers"
+    },
+    "qDwvZ4": {
+        "string": "Unknown error"
+    },
+    "qIgdO6": {
+        "string": "Custom Filter"
+    },
+    "qLOBff": {
+        "context": "dialog header",
+        "string": "Delete Address"
+    },
+    "qLbse5": {
+        "context": "button",
+        "string": "Log out"
+    },
+    "qNcoRY": {
+        "context": "notes about customer header",
+        "string": "Notes"
+    },
+    "qu/hXD": {
+        "string": "Selected {number} items"
+    },
+    "r+8q4B": {
+        "context": "error message",
+        "string": "Only draft orders can be edited"
+    },
+    "rKXi19": {
+        "string": "No products out of stock"
+    },
+    "rQOS7K": {
+        "context": "status label active",
+        "string": "Active"
+    },
+    "rVkNwf": {
+        "context": "link",
+        "string": "Use this link to recover it"
+    },
+    "rZf1qL": {
+        "context": "bulk variant create error",
+        "string": "SKUs must be unique"
+    },
+    "rfvBAF": {
+        "context": "select all options, button",
+        "string": "Select All"
+    },
+    "ri3kK9": {
+        "context": "order placement date",
+        "string": "Date"
+    },
+    "rjy9/k": {
+        "context": "button",
+        "string": "Add address"
+    },
+    "rqiCWU": {
+        "string": "Saved changes"
+    },
+    "rqtV5d": {
+        "context": "order status",
+        "string": "Ready to capture"
+    },
+    "rr8fyf": {
+        "context": "header",
+        "string": "Top Products"
+    },
+    "s9sOcC": {
+        "context": "button",
+        "string": "OK"
+    },
+    "sK1FPw": {
+        "context": "categories section name",
+        "string": "Categories"
+    },
+    "sZ27WU": {
+        "context": "error message",
+        "string": "Only pre-authorized payments can be voided"
+    },
+    "sjRXXz": {
+        "string": "Order #{orderId} was placed from draft by {userEmail}"
+    },
+    "skPoVe": {
+        "context": "button",
+        "string": "Accept"
+    },
+    "stjHjY": {
+        "context": "error message",
+        "string": "Promo code already exists"
+    },
+    "tWbE34": {
+        "string": "Start Hour"
+    },
+    "taX/V3": {
+        "context": "order total amount",
+        "string": "Total"
+    },
+    "toDL5R": {
+        "context": "order status",
+        "string": "Draft"
+    },
+    "tpUtKP": {
+        "context": "description",
+        "string": "Forgot password? {resetPasswordLink}"
+    },
+    "tzMNF3": {
+        "string": "Status"
+    },
+    "u24Ppd": {
+        "string": "This attribute cannot be assigned to this product type"
+    },
+    "u3sYPH": {
+        "context": "independent of any particular day, eg. 11:35",
+        "string": "Time"
+    },
+    "uIPD1i": {
+        "context": "app has been removed",
+        "string": "App successfully removed"
+    },
+    "uRTj1Q": {
+        "context": "error message",
+        "string": "Invoice not found"
+    },
+    "uUQ+Al": {
+        "context": "note about customer",
+        "string": "Note"
+    },
+    "ufmuTp": {
+        "context": "button",
+        "string": "Delete"
+    },
+    "usSkzP": {
+        "context": "navigator order mode description",
+        "string": "Search Orders"
+    },
+    "v3WWK+": {
+        "string": "Status is invalid"
+    },
+    "vHCQ9e": {
+        "string": "Sorry, your username and/or password are incorrect. Please try again."
+    },
+    "vN3qdA": {
+        "context": "button",
+        "string": "Undo"
+    },
+    "vONi+O": {
+        "string": "Country"
+    },
+    "vP7g2+": {
+        "context": "error message",
+        "string": "URL not set for an invoice"
+    },
+    "vVviA2": {
+        "string": "Those permissions are out of your scope"
+    },
+    "vfG+nh": {
+        "string": "Confirm Password"
+    },
+    "viFkCw": {
+        "context": "site settings section name",
+        "string": "Site Settings"
+    },
+    "vjkcAv": {
+        "context": "button",
+        "string": "Back to home"
+    },
+    "w+8BfK": {
+        "context": "button",
+        "string": "Edit Address"
+    },
+    "w3sGrD": {
+        "string": "Enter any extra infotmation regarding this customer."
+    },
+    "w4R/SO": {
+        "string": "Local Apps"
+    },
+    "wNQzS/": {
+        "string": "The primary address of this customer."
+    },
+    "wWTUrM": {
+        "string": "No activities found"
+    },
+    "wlQTfb": {
+        "context": "go to next step, button",
+        "string": "Next"
+    },
+    "wn3di2": {
+        "string": "This password is too commonly used"
+    },
+    "wxFwUW": {
+        "context": "marketplace button",
+        "string": "Visit Marketplace"
+    },
+    "x/ZVlU": {
+        "string": "Product"
+    },
+    "x8piIu": {
+        "context": "button",
+        "string": "Login"
+    },
+    "xQK2EC": {
+        "context": "tab name",
+        "string": "All Customers"
+    },
+    "xfGZsi": {
+        "context": "configuration section name",
+        "string": "Configuration"
+    },
+    "y/UWBR": {
+        "string": "There is no address to show for this customer"
+    },
+    "y9cvqE": {
+        "context": "button",
+        "string": "Create Voucher"
+    },
+    "yH56V+": {
+        "string": "Ooops!..."
+    },
+    "ycMLN9": {
+        "context": "warehouses section name",
+        "string": "Warehouses"
+    },
+    "ychKsb": {
+        "context": "error message",
+        "string": "Shipping method is required for this order"
+    },
+    "zQX6xO": {
+        "context": "dialog header",
+        "string": "Delete App"
+    },
+    "zSOvI0": {
+        "string": "Filters"
+    },
+    "zTdwWM": {
+        "context": "money",
+        "string": "{fromMoney} - {toMoney}"
+    },
+    "zWgbGg": {
+        "string": "Today"
+    }
+}

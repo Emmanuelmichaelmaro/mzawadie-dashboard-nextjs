@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { TrackerMethods, TrackerPermission, UserData } from "./types";
 
 type ErrorTrackerFactoryProps = (

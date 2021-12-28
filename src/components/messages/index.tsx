@@ -1,4 +1,5 @@
-import { createContext } from "react";
+/* eslint-disable import/no-cycle */
+import React, { createContext } from "react";
 
 export type Status = "success" | "error" | "info" | "warning";
 
@@ -7,7 +8,7 @@ export interface IMessage {
         label: string;
         action: () => void;
     };
-    autohide?: number;
+    autoHide?: number | null | undefined;
     expandText?: string;
     title?: string;
     text: React.ReactNode;
@@ -43,7 +44,8 @@ export interface INotificationContext {
 }
 
 export type IMessageContext = (message: IMessage) => void;
-export const MessageContext = createContext<INotificationContext>(null!);
+export const MessageContext = createContext<INotificationContext | null>(null);
 
+// @ts-ignore
 export * from "./MessageManagerProvider";
 export { default } from "./MessageManagerProvider";

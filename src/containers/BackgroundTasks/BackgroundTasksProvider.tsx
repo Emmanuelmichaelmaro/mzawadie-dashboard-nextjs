@@ -1,6 +1,8 @@
 /* eslint-disable no-useless-catch */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+// @ts-nocheck
 import { ApolloClient, useApolloClient } from "@apollo/client";
-import { IMessageContext } from "@mzawadie/components/messages";
+import { IMessageContext } from "@mzawadie/components/Messages";
 import useNotifier from "@mzawadie/hooks/useNotifier";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
@@ -46,7 +48,6 @@ export function useBackgroundTasks(
                 }
             };
 
-            // eslint-disable-next-line @typescript-eslint/no-floating-promises
             queue();
         }, backgroundTasksRefreshTime);
 

@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -15,7 +14,9 @@ export const AppStateContext = React.createContext<AppStateContextType>([
 
 const AppStateProvider: React.FC = ({ children }) => {
     const router = useRouter();
+
     const stateAndDispatch = React.useReducer(appStateReducer, initialAppState);
+
     const [state, dispatch] = stateAndDispatch;
 
     React.useEffect(() => {

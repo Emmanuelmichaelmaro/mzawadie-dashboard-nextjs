@@ -1,8 +1,8 @@
 /* tslint:disable */
-
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
+
 import { PermissionEnum } from "./../../types/globalTypes";
 
 // ====================================================
@@ -10,7 +10,7 @@ import { PermissionEnum } from "./../../types/globalTypes";
 // ====================================================
 
 export interface PermissionFragment {
-    __typename: "Permission";
-    code: PermissionEnum;
-    name: string;
+  __typename: "Permission";
+  code: PermissionEnum;
+  name: string;
 }

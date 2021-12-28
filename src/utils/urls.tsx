@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import isArray from "lodash/isArray";
 import { stringify } from "qs";
 

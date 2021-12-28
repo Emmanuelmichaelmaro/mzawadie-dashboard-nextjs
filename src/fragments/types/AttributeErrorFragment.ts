@@ -1,8 +1,8 @@
 /* tslint:disable */
-
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
+
 import { AttributeErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
@@ -10,7 +10,7 @@ import { AttributeErrorCode } from "./../../types/globalTypes";
 // ====================================================
 
 export interface AttributeErrorFragment {
-    __typename: "AttributeError";
-    code: AttributeErrorCode;
-    field: string | null;
+  __typename: "AttributeError";
+  code: AttributeErrorCode;
+  field: string | null;
 }

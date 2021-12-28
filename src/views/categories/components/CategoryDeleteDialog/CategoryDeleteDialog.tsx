@@ -1,0 +1,75 @@
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+} from "@material-ui/core";
+import { buttonMessages } from "@mzawadie/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage } from "react-intl";
+
+const useStyles = makeStyles(
+    (theme) => ({
+        deleteButton: {
+            "&:hover": {
+                backgroundColor: theme.palette.error.main,
+            },
+            backgroundColor: theme.palette.error.main,
+            color: theme.palette.error.contrastText,
+        },
+    }),
+    {
+        name: "CategoryDeleteDialog",
+    }
+);
+
+export interface CategoryDeleteDialogProps {
+    open: boolean;
+    name: string;
+    onClose: () => void;
+    onConfirm: () => void;
+}
+
+const CategoryDeleteDialog: React.FC<CategoryDeleteDialogProps> = (props) => {
+    const { name, open, onConfirm, onClose } = props;
+
+    const classes = useStyles(props);
+
+    return (
+        <Dialog onClose={onClose} open={open}>
+            <DialogTitle>
+                <FormattedMessage
+                    defaultMessage="Delete category"
+                    id="xo5UIb"
+                    description="dialog title"
+                />
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText>
+                    <FormattedMessage
+                        defaultMessage="Are you sure you want to delete {categoryName}?"
+                        id="dJQxHt"
+                        description="delete category"
+                        values={{
+                            categoryName: <strong>{name}</strong>,
+                        }}
+                    />
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={onClose}>
+                    <FormattedMessage {...buttonMessages.back} />
+                </Button>
+                <Button className={classes.deleteButton} variant="contained" onClick={onConfirm}>
+                    <FormattedMessage {...buttonMessages.save} />
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
+};
+
+CategoryDeleteDialog.displayName = "CategoryDeleteDialog";
+export default CategoryDeleteDialog;

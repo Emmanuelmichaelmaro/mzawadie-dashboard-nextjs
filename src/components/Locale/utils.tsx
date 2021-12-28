@@ -109,6 +109,7 @@ export const loadMessagesJson = async (locale: Locale | undefined = Locale.EN) =
     let localeJson = LOCALE_CACHE[locale];
 
     if (!localeJson && filename !== undefined) {
+        console.log(filename);
         localeJson = await import(`../../../locale/${filename}.json`);
         LOCALE_CACHE[locale] = localeJson;
     }

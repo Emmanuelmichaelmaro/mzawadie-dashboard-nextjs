@@ -1,8 +1,8 @@
 /* tslint:disable */
-
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
+
 import { UploadErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
@@ -10,7 +10,7 @@ import { UploadErrorCode } from "./../../types/globalTypes";
 // ====================================================
 
 export interface UploadErrorFragment {
-    __typename: "UploadError";
-    code: UploadErrorCode;
-    field: string | null;
+  __typename: "UploadError";
+  code: UploadErrorCode;
+  field: string | null;
 }

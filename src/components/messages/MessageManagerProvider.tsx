@@ -1,29 +1,35 @@
-import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@mzawadie/config";
+/* eslint-disable no-extra-boolean-cast */
+// @ts-nocheck
+import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@mzawadie/core";
 import { Notification } from "@saleor/macaw-ui";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { TransitionGroup } from "react-transition-group";
 
-// eslint-disable-next-line import/no-cycle
+// @ts-ignore
 import { INotification, ITimer, MessageContext } from ".";
-// import Container from "./Container";
+// @ts-ignore
+import Container from "./Container";
+// @ts-ignore
 import Transition from "./Transition";
 import { useStyles } from "./styles";
 
-const MessageManagerProvider = ({ children }: any) => {
+const MessageManagerProvider = ({ children }) => {
     const classes = useStyles();
-    const timersArray = useRef<ITimer[]>([]);
+    const timersArr = useRef<ITimer[]>([]);
     const [notifications, setNotifications] = useState<INotification[]>([]);
 
     useEffect(() => {
-        const timersArrayReference = timersArray.current;
+        const timersArrRef = timersArr.current;
 
         return () => {
-            // eslint-disable-next-line no-restricted-syntax
-            for (const timer of timersArrayReference) {
-                clearTimeout(timer.timeoutId);
-            }
+            timersArrRef.forEach((timer) => clearTimeout(timer.timeoutId));
         };
     }, []);
+
+    const timerCallback = (notification: INotification) => {
+        remove(notification.id);
+        timersArr.current = timersArr.current.filter((timer) => timer.id !== notification.id);
+    };
 
     const remove = useCallback((notificationId) => {
         setNotifications((currentNotifications) =>
@@ -31,55 +37,45 @@ const MessageManagerProvider = ({ children }: any) => {
         );
     }, []);
 
-    const timerCallback = useCallback(
-        (notification: INotification) => {
-            remove(notification.id);
-            timersArray.current = timersArray.current.filter((timer) => timer.id !== notification.id);
-        },
-        [remove]
-    );
+    const show = useCallback((message = {}, timeout = DEFAULT_NOTIFICATION_SHOW_TIME) => {
+        const id = Date.now();
 
-    const show = useCallback(
-        (message = {}, timeout = DEFAULT_NOTIFICATION_SHOW_TIME) => {
-            const id = Date.now();
-            const notification = {
-                close: () => remove(id),
-                id,
-                message,
-                timeout,
-            };
-            if (timeout !== null) {
-                const timeoutId = window.setTimeout(() => {
-                    timerCallback(notification);
-                }, timeout);
+        const notification = {
+            close: () => remove(id),
+            id,
+            message,
+            timeout,
+        };
 
-                timersArray.current.push({
-                    id: notification.id,
-                    notification,
-                    remaining: timeout,
-                    start: Date.now(),
-                    timeoutId,
-                });
-            }
+        if (timeout !== null) {
+            const timeoutId = window.setTimeout(() => {
+                timerCallback(notification);
+            }, timeout);
 
-            setNotifications((state) => [notification, ...state]);
+            timersArr.current.push({
+                id: notification.id,
+                notification,
+                remaining: timeout,
+                start: new Date().getTime(),
+                timeoutId,
+            });
+        }
 
-            return notification;
-        },
-        [remove, timerCallback]
-    );
+        setNotifications((state) => [notification, ...state]);
+
+        return notification;
+    }, []);
 
     const getCurrentTimer = (notification: INotification) => {
-        const currentTimerIndex = timersArray.current.findIndex(
-            (timer) => timer.id === notification.id
-        );
-        return timersArray.current[currentTimerIndex];
+        const currentTimerIndex = timersArr.current.findIndex((timer) => timer.id === notification.id);
+        return timersArr.current[currentTimerIndex];
     };
 
     const pauseTimer = (notification: INotification) => {
         const currentTimer = getCurrentTimer(notification);
+
         if (currentTimer) {
-            currentTimer.remaining -= Date.now() - currentTimer.start;
+            currentTimer.remaining -= new Date().getTime() - currentTimer.start;
             window.clearTimeout(currentTimer.timeoutId);
         }
     };
@@ -87,7 +83,7 @@ const MessageManagerProvider = ({ children }: any) => {
     const resumeTimer = (notification: INotification) => {
         const currentTimer = getCurrentTimer(notification);
         if (currentTimer) {
-            currentTimer.start = Date.now();
+            currentTimer.start = new Date().getTime();
             currentTimer.timeoutId = window.setTimeout(
                 () => timerCallback(notification),
                 currentTimer.remaining
@@ -98,23 +94,22 @@ const MessageManagerProvider = ({ children }: any) => {
     return (
         <>
             <MessageContext.Provider value={{ remove, show }}>{children}</MessageContext.Provider>
-
-            <TransitionGroup appear options={{ position: "top right" }} component={null}>
-                {notifications.length > 0 &&
+            <TransitionGroup appear options={{ position: "top right" }} component={Container}>
+                {!!notifications.length &&
                     notifications.map((notification) => (
                         <Transition key={notification.id}>
                             <Notification
-                                {...(notification.timeout
+                                {...(!!notification.timeout
                                     ? {
                                           onMouseEnter: () => pauseTimer(notification),
                                           onMouseLeave: () => resumeTimer(notification),
                                       }
                                     : {})}
                                 onClose={notification.close}
-                                title={notification.message.title!}
+                                title={notification.message.title}
                                 type={notification.message.status || "info"}
                                 content={notification.message.text}
-                                {...(notification.message.actionBtn
+                                {...(!!notification.message.actionBtn
                                     ? {
                                           action: {
                                               label: notification.message.actionBtn.label,

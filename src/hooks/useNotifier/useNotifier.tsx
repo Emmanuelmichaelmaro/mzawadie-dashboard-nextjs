@@ -1,4 +1,6 @@
-import { IMessage, IMessageContext, MessageContext } from "@mzawadie/components/messages";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+import { IMessage, IMessageContext, MessageContext } from "@mzawadie/components/Messages";
 import { useContext } from "react";
 
 export type UseNotifierResult = IMessageContext;
@@ -7,7 +9,7 @@ function useNotifier(): UseNotifierResult {
     const notificationContext = useContext(MessageContext);
 
     return (options: IMessage) => {
-        const timeout = options.status === "error" ? null : options.autohide;
+        const timeout = options.status === "error" ? null : options.autoHide;
         notificationContext.show(options, timeout);
     };
 }

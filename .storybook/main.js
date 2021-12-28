@@ -1,4 +1,4 @@
-const path = require("path")
+const path = require("path");
 
 module.exports = {
     stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
@@ -14,6 +14,9 @@ module.exports = {
             },
         },
     ],
-    // Add nextjs preset
-    presets: [path.resolve(__dirname, './next-preset.js')]
-}
+    core: {
+        builder: "webpack5",
+    },
+    // Add next js preset
+    presets: [path.resolve(__dirname, "./next-preset.js")],
+};

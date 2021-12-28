@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface Money {
-    __typename: "Money";
-    amount: number;
-    currency: string;
+  __typename: "Money";
+  amount: number;
+  currency: string;
 }

@@ -1,11 +1,20 @@
 const withPlugins = require("next-compose-plugins");
 const withImages = require("next-images");
-const withPWA = require("next-pwa");
 const { transform } = require("@formatjs/ts-transformer");
 
 // optional next.js configuration
 const nextConfig = {
+    // distDir: "build",
     reactStrictMode: true,
+    i18n: {
+        // These are all the locales you want to support in
+        // your application
+        locales: ["en", "fr", "es", "sw"],
+        // This is the default locale you want to be used when visiting
+        // a non-locale prefixed path e.g. `/hello`
+        defaultLocale: "en",
+        localeDetection: false,
+    },
     webpack: (config) => {
         const fileLoaderRule = config.module.rules.find((rule) => rule.test && rule.test.test(".svg"));
 
@@ -57,33 +66,6 @@ const nextConfig = {
 
         return config;
     },
-    i18n: {
-        // These are all the locales you want to support in
-        // your application
-        locales: ["en", "fr", "es", "sw"],
-        // This is the default locale you want to be used when visiting
-        // a non-locale prefixed path e.g. `/hello`
-        defaultLocale: "en",
-        localeDetection: false,
-    },
 };
 
-module.exports = withPlugins(
-    [
-        [withImages],
-        // [
-        //     withPWA,
-        //     {
-        //         pwa: {
-        //             dest: "public",
-        //             // disable: process.env.NODE_ENV === 'development',
-        //             // register: true,
-        //             // scope: '/app',
-        //             // sw: 'service-worker.js',
-        //             //...
-        //         },
-        //     },
-        // ],
-    ],
-    nextConfig
-);
+module.exports = withPlugins([withImages], nextConfig);

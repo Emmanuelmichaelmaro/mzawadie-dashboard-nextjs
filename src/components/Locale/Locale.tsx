@@ -38,11 +38,11 @@ import "@formatjs/intl-relativetimeformat/locale-data/es";
 import "@formatjs/intl-relativetimeformat/locale-data/fr";
 import "@formatjs/intl-relativetimeformat/locale-data/sw";
 import "@formatjs/intl-relativetimeformat/polyfill";
+import useLocalStorage from "@mzawadie/hooks";
 import React from "react";
 import { IntlProvider, ReactIntlErrorCode } from "react-intl";
 
-import useLocalStorage from "../../hooks/useLocalStorage";
-import { getKeyValueJson, getMatchingLocale, Locale } from "./utils";
+import { getKeyValueJson, getMatchingLocale, Locale, localeData } from "./utils";
 
 const defaultLocale = Locale.EN;
 
@@ -59,24 +59,26 @@ export const LocaleContext = React.createContext<LocaleContextType>({
 const { Consumer: LocaleConsumer, Provider: RawLocaleProvider } = LocaleContext;
 
 // interface LocaleProviderProps {
-//     messages: LocaleMessages;
+//     Messages: LocaleMessages;
 // }
 
 const LocaleProvider: React.FC = ({ children }) => {
-    const [locale, setLocale] = useLocalStorage("locale", defaultLocale);
+    const [locale, setLocale] = useLocalStorage(
+        "locale",
+        getMatchingLocale(navigator.languages) || defaultLocale
+    );
 
-    React.useEffect(() => {
-        setLocale(getMatchingLocale(navigator.languages) || defaultLocale);
-    }, []);
+    const [i10nMessages, seti10nMessages] = React.useState(undefined);
 
-    // @ts-ignore
-    const [i10nMessages, seti10nMessages] = React.useState();
+    // React.useEffect(() => {
+    //     setLocale(getMatchingLocale(navigator.languages) || defaultLocale);
+    // }, []);
 
     React.useEffect(() => {
         async function changeLocale() {
             if (locale !== defaultLocale) {
                 // It seems like Webpack is unable to use aliases for lazy imports
-                const module = await import(`../../../locale/${locale}.json`);
+                const module = await import(`../../../locale/${locale.replace(/^"|"$/g, "")}.json`);
                 seti10nMessages(module.default);
             } else {
                 seti10nMessages(undefined);
@@ -108,4 +110,4 @@ const LocaleProvider: React.FC = ({ children }) => {
     );
 };
 
-export { Locale, LocaleConsumer, LocaleProvider, RawLocaleProvider };
+export { Locale, localeData, LocaleConsumer, LocaleProvider, RawLocaleProvider };

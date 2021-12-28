@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
 /* eslint-disable @typescript-eslint/no-misused-promises */
+// @ts-nocheck
 import { User } from "@mzawadie/fragments/types/User";
 
 declare global {

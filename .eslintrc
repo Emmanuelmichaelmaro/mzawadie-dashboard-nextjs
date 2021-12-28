@@ -19,14 +19,17 @@
         "simple-import-sort",
         "import",
         "formatjs",
-        "prettier"
+        "prettier",
+        "testing-library"
     ],
     "extends": [
         "airbnb",
-        "airbnb-typescript",
         "airbnb/hooks",
+        "airbnb-typescript",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
+        "next",
+        "next/core-web-vitals",
         "plugin:prettier/recommended"
     ],
     "settings": {
@@ -63,6 +66,7 @@
         "no-underscore-dangle": 0,
         "no-unused-vars": "off",
         "no-useless-constructor": "off",
+        "consistent-return": "off",
         "formatjs/no-offset": "error",
         "formatjs/enforce-id": [
             "error",
@@ -70,25 +74,25 @@
                 "idInterpolationPattern": "[sha512:contenthash:base64:6]"
             }
         ],
-        // "import/extensions": [
-        //     "error",
-        //     "ignorePackages",
-        //     {
-        //         "js": "never",
-        //         "jsx": "never",
-        //         "ts": "never",
-        //         "tsx": "never"
-        //     }
-        // ],
+        "func-names": "off",
         "import/first": "error",
         "import/newline-after-import": "error",
+        "import/no-cycle": "off",
         "import/no-duplicates": "error",
+        "import/no-extraneous-dependencies": "off",
+        "import/no-named-as-default": "off",
+        "import/export": "off",
+        "import/extensions": "off",
+        "import/prefer-default-export": "off",
+        "jsx-a11y/anchor-is-valid": "off",
+        "jsx-a11y/click-events-have-key-events": "off",
+        "jsx-a11y/no-static-element-interactions": "off",
         "max-len": [
             "warn",
             {
                 "code": 104,
                 "tabWidth": 4,
-                "comments": 100,
+                "comments": 104,
                 "ignoreComments": false,
                 "ignoreTrailingComments": true,
                 "ignoreUrls": true,
@@ -98,17 +102,16 @@
             }
         ],
         "multiline-ternary": 0,
+        "radix": "off",
         "react/prop-types": 0,
+        "react/jsx-key": 0,
         "react/jsx-props-no-spreading": 0,
-        // "simple-import-sort/imports": "error",
-        // "simple-import-sort/exports": "error",
-        // "space-before-function-paren": ["error", {
-        //     "anonymous": "always",
-        //     "named": "always",
-        //     "asyncArrow": "always"
-        // }],
-        // "object-curly-spacing": ["error", "always", { "arraysInObjects": false }],
+        "react/no-array-index-key": "off",
+        "react/no-unused-prop-types": "off",
+        "react/require-default-props": "off",
         "@next/next/no-img-element": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/ban-types": "off",
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/no-shadow": "off",
         "@typescript-eslint/no-unused-vars": "off",
@@ -119,7 +122,13 @@
         "@typescript-eslint/no-unsafe-return": "off",
         "@typescript-eslint/no-unsafe-call": "off",
         "@typescript-eslint/restrict-template-expressions": "off",
-        "@typescript-eslint/no-explicit-any": "off"
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/restrict-plus-operands": "off",
+        "@typescript-eslint/unbound-method": "off",
+        "testing-library/await-async-query": "error",
+        "testing-library/no-await-sync-query": "error",
+        "testing-library/no-debug": "warn",
+        "testing-library/no-dom-import": "off"
     },
     "overrides": [
         {
@@ -135,6 +144,7 @@
                 "node": true,
                 "jest": true
             },
+            "extends": ["plugin:testing-library/react"],
             "rules": {
                 "simple-import-sort/imports": "off",
                 "import/order": [
