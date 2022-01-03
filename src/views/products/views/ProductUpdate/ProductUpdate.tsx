@@ -450,6 +450,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     return (
         <>
             <WindowTitle title={data?.product?.name} />
+
             {!!allChannels?.length &&
                 (isSimpleProduct ? (
                     <ChannelsAvailabilityDialog
@@ -476,6 +477,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                         variants={product?.variants}
                     />
                 ))}
+
             <ProductUpdatePage
                 hasChannelChanged={
                     haveChannelsWithVariantsDataChanged ||
@@ -557,6 +559,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                 onCloseDialog={() => navigate(productUrl(id))}
                 onAttributeSelectBlur={searchAttributeReset}
             />
+
             <ActionDialog
                 open={params.action === "remove"}
                 onClose={closeModal}
@@ -572,6 +575,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                     />
                 </DialogContentText>
             </ActionDialog>
+
             <ActionDialog
                 open={params.action === "remove-variants"}
                 onClose={closeModal}
@@ -596,6 +600,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
                     />
                 </DialogContentText>
             </ActionDialog>
+
             <ProductVariantCreateDialog
                 open={params.action === "add-variants"}
                 onClose={closeModal}
@@ -606,4 +611,5 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         </>
     );
 };
+
 export default ProductUpdate;

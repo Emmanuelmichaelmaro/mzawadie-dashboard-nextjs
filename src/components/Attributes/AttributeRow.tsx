@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { InputAdornment, TextField } from "@material-ui/core";
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -19,7 +18,7 @@ import Checkbox from "@mzawadie/components/Checkbox";
 import { DateTimeField } from "@mzawadie/components/DateTimeField";
 import FileUploadField from "@mzawadie/components/FileUploadField";
 import MultiAutocompleteSelectField from "@mzawadie/components/MultiAutocompleteSelectField";
-import RichTextEditor from "@mzawadie/components/RichTextEditor";
+// import RichTextEditor from "@mzawadie/components/RichTextEditor";
 import SingleAutocompleteSelectField from "@mzawadie/components/SingleAutocompleteSelectField";
 import SortableChipsField from "@mzawadie/components/SortableChipsField";
 import { commonMessages, FetchMoreProps, ReorderEvent } from "@mzawadie/core";
@@ -29,8 +28,11 @@ import { ProductErrorWithAttributesFragment } from "@mzawadie/fragments/types/Pr
 import { FormsetChange } from "@mzawadie/hooks/useFormset";
 import { AttributeInputTypeEnum } from "@mzawadie/types/globalTypes";
 import { getMeasurementUnitMessage } from "@mzawadie/views/attributes/components/AttributeDetails/utils";
+import dynamic from "next/dynamic";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
+
+const RichTextEditor = dynamic(() => import("@mzawadie/components/RichTextEditor"), { ssr: false });
 
 const messages = defineMessages({
     multipleValueLabel: {

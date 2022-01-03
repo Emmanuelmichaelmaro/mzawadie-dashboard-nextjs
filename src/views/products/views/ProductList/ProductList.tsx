@@ -84,58 +84,74 @@ interface ProductListProps {
 
 export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     const navigate = useNavigator();
+
     const notify = useNotifier();
+
     const paginate = usePaginator();
+
     const { queue } = useBackgroundTask();
+
     const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
+
     const { updateListSettings, settings } = useListSettings<ProductListColumns>(
         ListViews.PRODUCT_LIST
     );
+
     const intl = useIntl();
+
     const { data: initialFilterAttributes } = useInitialProductFilterAttributesQuery({});
+
     const { data: initialFilterCategories } = useInitialProductFilterCategoriesQuery({
         variables: {
             categories: params.categories,
         },
         skip: !params.categories?.length,
     });
+
     const { data: initialFilterCollections } = useInitialProductFilterCollectionsQuery({
         variables: {
             collections: params.collections,
         },
         skip: !params.collections?.length,
     });
+
     const { data: initialFilterProductTypes } = useInitialProductFilterProductTypesQuery({
         variables: {
             productTypes: params.productTypes,
         },
         skip: !params.productTypes?.length,
     });
+
     const searchCategories = useCategorySearch({
         variables: {
             ...DEFAULT_INITIAL_SEARCH_DATA,
             first: 5,
         },
     });
+
     const searchCollections = useCollectionSearch({
         variables: {
             ...DEFAULT_INITIAL_SEARCH_DATA,
             first: 5,
         },
     });
+
     const searchProductTypes = useProductTypeSearch({
         variables: {
             ...DEFAULT_INITIAL_SEARCH_DATA,
             first: 5,
         },
     });
+
     const searchAttributes = useAttributeSearch({
         variables: {
             ...DEFAULT_INITIAL_SEARCH_DATA,
             first: 10,
         },
     });
+
     const [focusedAttribute, setFocusedAttribute] = useState<string>();
+
     const searchAttributeValues = useAttributeValueSearch({
         variables: {
             id: focusedAttribute,
@@ -144,13 +160,16 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         },
         skip: !focusedAttribute,
     });
+
     const warehouses = useWarehouseList({
         variables: {
             first: 100,
         },
         skip: params.action !== "export",
     });
+
     const { availableChannels } = useAppChannel(false);
+
     const limitOpts = useShopLimitsQuery({
         variables: {
             productVariants: true,
@@ -276,11 +295,15 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         );
 
     const paginationState = createPaginationState(settings.rowNumber, params);
+
     const channelOpts = availableChannels
         ? mapNodeToChoice(availableChannels, (channel) => channel.slug)
         : null;
+
     const filter = getFilterVariables(params, !!selectedChannel);
+
     const sort = getSortQueryVariables(params, !!selectedChannel);
+
     const queryVariables = React.useMemo<ProductListVariables>(
         () => ({
             ...paginationState,
@@ -290,6 +313,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         }),
         [filter, paginationState, selectedChannel?.slug, sort]
     );
+
     // TODO: When channel is undefined we should skip detailed pricing listings
     const { data, loading, refetch } = useProductListQuery({
         displayLoader: true,
@@ -299,9 +323,11 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     function filterColumnIds(columns: ProductListColumns[]) {
         return columns.filter(isAttributeColumnValue).map(getAttributeIdFromColumnValue);
     }
+
     const availableInGridAttributes = useAvailableInGridAttributesQuery({
         variables: { first: 24 },
     });
+
     const gridAttributes = useGridAttributesQuery({
         variables: { ids: filterColumnIds(settings.columns) },
     });
@@ -437,6 +463,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                 channelsCount={availableChannels?.length}
                 selectedChannelId={selectedChannel?.id}
             />
+
             <ActionDialog
                 open={params.action === "delete"}
                 confirmButtonState={productBulkDeleteOpts.status}
@@ -465,6 +492,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                     />
                 </DialogContentText>
             </ActionDialog>
+
             <ProductExportDialog
                 attributes={mapEdgesToItems(searchAttributes?.result?.data?.search) || []}
                 hasMore={searchAttributes.result.data?.search.pageInfo.hasNextPage}
@@ -496,12 +524,14 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                     })
                 }
             />
+
             <SaveFilterTabDialog
                 open={params.action === "save-search"}
                 confirmButtonState="default"
                 onClose={closeModal}
                 onSubmit={handleFilterTabSave}
             />
+
             <DeleteFilterTabDialog
                 open={params.action === "delete-search"}
                 confirmButtonState="default"
@@ -512,4 +542,5 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         </>
     );
 };
+
 export default ProductList;

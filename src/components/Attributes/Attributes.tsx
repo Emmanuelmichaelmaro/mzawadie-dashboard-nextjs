@@ -31,6 +31,7 @@ export interface AttributeInputData {
     selectedValues?: AttributeValueFragment[];
     references?: AttributeReference[];
 }
+
 export type AttributeInput = FormsetAtomicData<AttributeInputData, string[]>;
 export type AttributeFileInput = FormsetAtomicData<AttributeInputData, File[]>;
 export interface AttributesProps extends AttributeRowHandlers {
@@ -124,12 +125,15 @@ const Attributes: React.FC<AttributesProps> = ({
 }) => {
     const intl = useIntl();
     const classes = useStyles({});
+
     const [expanded, setExpansionStatus] = React.useState(true);
+
     const toggleExpansion = () => setExpansionStatus(!expanded);
 
     return (
         <Card className={classes.card}>
             <CardTitle title={title || intl.formatMessage(messages.header)} />
+
             <CardContent className={classes.cardContent}>
                 <div className={classes.expansionBar}>
                     <div className={classes.expansionBarLabelContainer}>
@@ -142,6 +146,7 @@ const Attributes: React.FC<AttributesProps> = ({
                             />
                         </Typography>
                     </div>
+
                     <IconButton
                         className={classes.expansionBarButton}
                         onClick={toggleExpansion}
@@ -154,15 +159,18 @@ const Attributes: React.FC<AttributesProps> = ({
                         />
                     </IconButton>
                 </div>
+
                 {expanded && attributes.length > 0 && (
                     <>
                         <Hr />
+
                         {attributes.map((attribute, attributeIndex) => {
                             const error = errors.find((err) => err.attributes?.includes(attribute.id));
 
                             return (
                                 <React.Fragment key={attribute.id}>
                                     {attributeIndex > 0 && <Hr />}
+
                                     <AttributeRow
                                         entityId={entityId}
                                         attribute={attribute}

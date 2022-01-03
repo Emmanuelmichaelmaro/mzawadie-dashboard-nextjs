@@ -144,20 +144,26 @@ export const ProductList: React.FC<ProductListProps> = (props) => {
             <ResponsiveTable className={classes.table}>
                 <colgroup>
                     <col />
+
                     <col className={classes.colName} />
+
                     <DisplayColumn column="productType" displayColumns={settings.columns}>
                         <col className={classes.colType} />
                     </DisplayColumn>
+
                     <DisplayColumn column="availability" displayColumns={settings.columns}>
                         <col className={classes.colPublished} />
                     </DisplayColumn>
+
                     {gridAttributesFromSettings.map((gridAttribute) => (
                         <col className={classes.colAttribute} key={gridAttribute} />
                     ))}
+
                     <DisplayColumn column="price" displayColumns={settings.columns}>
                         <col className={classes.colPrice} />
                     </DisplayColumn>
                 </colgroup>
+
                 <TableHead
                     colSpan={numberOfColumns}
                     selected={selected}
@@ -183,6 +189,7 @@ export const ProductList: React.FC<ProductListProps> = (props) => {
                             <FormattedMessage defaultMessage="Name" id="VQLIXd" description="product" />
                         </span>
                     </TableCellHeader>
+
                     <DisplayColumn column="productType" displayColumns={settings.columns}>
                         <TableCellHeader
                             data-test-id="colTypeHeader"
@@ -201,6 +208,7 @@ export const ProductList: React.FC<ProductListProps> = (props) => {
                             />
                         </TableCellHeader>
                     </DisplayColumn>
+
                     <DisplayColumn column="availability" displayColumns={settings.columns}>
                         <TableCellHeader
                             data-test-id="colAvailabilityHeader"
@@ -220,6 +228,7 @@ export const ProductList: React.FC<ProductListProps> = (props) => {
                             />
                         </TableCellHeader>
                     </DisplayColumn>
+
                     {gridAttributesFromSettings.map((gridAttributeFromSettings) => {
                         const attributeId = getAttributeIdFromColumnValue(gridAttributeFromSettings);
 
@@ -245,6 +254,7 @@ export const ProductList: React.FC<ProductListProps> = (props) => {
                             </TableCellHeader>
                         );
                     })}
+
                     <DisplayColumn column="price" displayColumns={settings.columns}>
                         <TableCellHeader
                             data-test-id="colPriceHeader"
@@ -266,6 +276,7 @@ export const ProductList: React.FC<ProductListProps> = (props) => {
                         </TableCellHeader>
                     </DisplayColumn>
                 </TableHead>
+
                 <TableFooter>
                     <TableRow>
                         <TablePagination
@@ -279,6 +290,7 @@ export const ProductList: React.FC<ProductListProps> = (props) => {
                         />
                     </TableRow>
                 </TableFooter>
+
                 <TableBody>
                     {renderCollection(
                         products,
@@ -306,6 +318,7 @@ export const ProductList: React.FC<ProductListProps> = (props) => {
                                             onChange={() => toggle(product.id)}
                                         />
                                     </TableCell>
+
                                     <TableCellAvatar
                                         className={classes.colName}
                                         thumbnail={maybe(() => product.thumbnail.url)}
@@ -335,6 +348,7 @@ export const ProductList: React.FC<ProductListProps> = (props) => {
                                             <Skeleton />
                                         )}
                                     </TableCellAvatar>
+
                                     <DisplayColumn
                                         column="productType"
                                         displayColumns={settings.columns}
@@ -343,6 +357,7 @@ export const ProductList: React.FC<ProductListProps> = (props) => {
                                             {product?.productType?.name || <Skeleton />}
                                         </TableCell>
                                     </DisplayColumn>
+
                                     <DisplayColumn
                                         column="availability"
                                         displayColumns={settings.columns}
@@ -368,6 +383,7 @@ export const ProductList: React.FC<ProductListProps> = (props) => {
                                                 ))}
                                         </TableCell>
                                     </DisplayColumn>
+
                                     {gridAttributesFromSettings.map((gridAttribute) => (
                                         <TableCell
                                             className={classes.colAttribute}
@@ -392,6 +408,7 @@ export const ProductList: React.FC<ProductListProps> = (props) => {
                                             }, <Skeleton />)}
                                         </TableCell>
                                     ))}
+
                                     <DisplayColumn column="price" displayColumns={settings.columns}>
                                         <TableCell className={classes.colPrice} data-test="price">
                                             {product?.channelListings ? (

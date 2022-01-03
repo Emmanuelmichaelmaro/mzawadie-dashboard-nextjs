@@ -96,7 +96,9 @@ export const ProductListPage: React.FC<ProductListPageProps> = (props) => {
         selectedChannelId,
         ...listProps
     } = props;
+
     const intl = useIntl();
+
     const classes = useStyles(props);
 
     const handleSave = (columns: ProductListColumns[]) => onUpdateListSettings("columns", columns);
@@ -162,6 +164,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = (props) => {
                     ]}
                     data-test="menu"
                 />
+
                 <ColumnPicker
                     className={classes.columnPicker}
                     columns={columns}
@@ -172,6 +175,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = (props) => {
                     onFetchMore={onFetchMore}
                     onSave={handleSave}
                 />
+
                 <Button
                     disabled={limitReached}
                     onClick={onAdd}
@@ -186,6 +190,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = (props) => {
                     />
                 </Button>
             </PageHeader>
+
             {limitReached && (
                 <LimitReachedAlert
                     title={intl.formatMessage({
@@ -200,6 +205,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = (props) => {
                     />
                 </LimitReachedAlert>
             )}
+
             <Card>
                 <FilterBar
                     currencySymbol={currencySymbol}
@@ -224,6 +230,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = (props) => {
                         id: "kIvvax",
                     })}
                 />
+
                 <ProductList
                     {...listProps}
                     loading={loading}
