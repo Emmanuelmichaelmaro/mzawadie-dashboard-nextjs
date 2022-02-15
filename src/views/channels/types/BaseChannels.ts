@@ -8,14 +8,14 @@
 // ====================================================
 
 export interface BaseChannels_channels {
-  __typename: "Channel";
-  id: string;
-  isActive: boolean;
-  name: string;
-  slug: string;
-  currencyCode: string;
+    __typename: "Channel";
+    id: string;
+    isActive: boolean;
+    name: string;
+    slug: string;
+    currencyCode: string;
 }
 
 export interface BaseChannels {
-  channels: BaseChannels_channels[] | null;
+    channels: BaseChannels_channels[] | null;
 }

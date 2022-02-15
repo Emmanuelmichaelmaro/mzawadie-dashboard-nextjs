@@ -4,7 +4,7 @@ import { ApolloQueryResult, QueryResult } from "@apollo/client";
 import { Query } from "@apollo/client/react/components";
 import useAppState from "@mzawadie/hooks/useAppState";
 import useNotifier from "@mzawadie/hooks/useNotifier";
-import { useAuth } from "@mzawadie/sdk/lib/src";
+import useUser from "@mzawadie/hooks/useUser";
 import { handleQueryAuthError } from "@mzawadie/views/auth/utils";
 import { DocumentNode } from "graphql";
 import React from "react";
@@ -74,7 +74,7 @@ export function TypedQuery<TData, TVariables>(
 
         const intl = useIntl();
 
-        const { user } = useAuth();
+        const user = useUser();
 
         return (
             <Query

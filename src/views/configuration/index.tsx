@@ -3,22 +3,28 @@ import { WindowTitle } from "@mzawadie/components/WindowTitle";
 import { sectionNames } from "@mzawadie/core";
 import { maybe } from "@mzawadie/core/misc";
 import useNavigator from "@mzawadie/hooks/useNavigator";
+import useUser from "@mzawadie/hooks/useUser";
 import Attributes from "@mzawadie/icons/Attributes";
 import Channels from "@mzawadie/icons/Channels";
 import Navigation from "@mzawadie/icons/Navigation";
+import PageTypes from "@mzawadie/icons/PageTypes";
+import Pages from "@mzawadie/icons/Pages";
 import PermissionGroups from "@mzawadie/icons/PermissionGroups";
+import Plugins from "@mzawadie/icons/Plugins";
 import ProductTypes from "@mzawadie/icons/ProductTypes";
 import ShippingMethods from "@mzawadie/icons/ShippingMethods";
 import SiteSettings from "@mzawadie/icons/SiteSettings";
 import StaffMembers from "@mzawadie/icons/StaffMembers";
 import Taxes from "@mzawadie/icons/Taxes";
 import Warehouses from "@mzawadie/icons/Warehouses";
-import { useAuth } from "@mzawadie/sdk/lib/src";
 import { PermissionEnum } from "@mzawadie/types/globalTypes";
 import { attributeListUrl } from "@mzawadie/views/attributes/urls";
 import { channelsListUrl } from "@mzawadie/views/channels/urls";
 import { menuListUrl } from "@mzawadie/views/navigation/urls";
+import { pageTypeListUrl } from "@mzawadie/views/pageTypes/urls";
+import { pageListUrl } from "@mzawadie/views/pages/urls";
 import { permissionGroupListUrl } from "@mzawadie/views/permissionGroups/urls";
+import { pluginListUrl } from "@mzawadie/views/plugins/urls";
 import { productTypeListUrl } from "@mzawadie/views/productTypes/urls";
 import { shippingZonesListUrl } from "@mzawadie/views/shipping/urls";
 import { siteSettingsUrl } from "@mzawadie/views/siteSettings/urls";
@@ -143,6 +149,36 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
         },
         {
             label: intl.formatMessage({
+                defaultMessage: "Content Management",
+                id: "HjXnIf",
+            }),
+            menuItems: [
+                {
+                    description: intl.formatMessage({
+                        defaultMessage: "Define types of content pages used in your store",
+                        id: "JPH/uP",
+                    }),
+                    icon: <PageTypes fontSize="inherit" viewBox="0 0 44 44" />,
+                    permission: PermissionEnum.MANAGE_PAGES,
+                    title: intl.formatMessage(sectionNames.pageTypes),
+                    url: pageTypeListUrl(),
+                    testId: "configurationMenuPageTypes",
+                },
+                {
+                    description: intl.formatMessage({
+                        defaultMessage: "Manage and add additional pages",
+                        id: "4CgHai",
+                    }),
+                    icon: <Pages fontSize="inherit" viewBox="0 0 44 44" />,
+                    permission: PermissionEnum.MANAGE_PAGES,
+                    title: intl.formatMessage(sectionNames.pages),
+                    url: pageListUrl(),
+                    testId: "configurationMenuPages",
+                },
+            ],
+        },
+        {
+            label: intl.formatMessage({
                 defaultMessage: "Multichannel",
                 id: "MWSacl",
             }),
@@ -188,55 +224,25 @@ export function createConfigurationMenu(intl: IntlShape): MenuSection[] {
                     url: siteSettingsUrl(),
                     testId: "configurationMenuSiteSettings",
                 },
-                // {
-                //     description: intl.formatMessage({
-                //         defaultMessage: "View and update your plugins and their settings.",
-                //         id: "m19JfL",
-                //     }),
-                //     icon: (
-                //         <Plugins
-                //             fontSize="inherit"
-                //             viewBox="-8 -5 44 44"
-                //             preserveAspectRatio="xMinYMin meet"
-                //         />
-                //     ),
-                //     permission: PermissionEnum.MANAGE_PLUGINS,
-                //     title: intl.formatMessage(sectionNames.plugins),
-                //     url: pluginListUrl(),
-                //     testId: "configurationPluginsPages",
-                // },
+                {
+                    description: intl.formatMessage({
+                        defaultMessage: "View and update your plugins and their settings.",
+                        id: "m19JfL",
+                    }),
+                    icon: (
+                        <Plugins
+                            fontSize="inherit"
+                            viewBox="-8 -5 44 44"
+                            preserveAspectRatio="xMinYMin meet"
+                        />
+                    ),
+                    permission: PermissionEnum.MANAGE_PLUGINS,
+                    title: intl.formatMessage(sectionNames.plugins),
+                    url: pluginListUrl(),
+                    testId: "configurationPluginsPages",
+                },
             ],
         },
-        // {
-        //     label: intl.formatMessage({
-        //         defaultMessage: "Content Management",
-        //         id: "HjXnIf",
-        //     }),
-        //     menuItems: [
-        //         {
-        //             description: intl.formatMessage({
-        //                 defaultMessage: "Define types of content pages used in your store",
-        //                 id: "JPH/uP",
-        //             }),
-        //             icon: <PageTypes fontSize="inherit" viewBox="0 0 44 44" />,
-        //             permission: PermissionEnum.MANAGE_PAGES,
-        //             title: intl.formatMessage(sectionNames.pageTypes),
-        //             url: pageTypeListUrl(),
-        //             testId: "configurationMenuPageTypes",
-        //         },
-        //         {
-        //             description: intl.formatMessage({
-        //                 defaultMessage: "Manage and add additional pages",
-        //                 id: "4CgHai",
-        //             }),
-        //             icon: <Pages fontSize="inherit" viewBox="0 0 44 44" />,
-        //             permission: PermissionEnum.MANAGE_PAGES,
-        //             title: intl.formatMessage(sectionNames.pages),
-        //             url: pageListUrl(),
-        //             testId: "configurationMenuPages",
-        //         },
-        //     ],
-        // },
     ];
 }
 
@@ -247,7 +253,7 @@ export const ConfigurationSection: React.FC = () => {
 
     const intl = useIntl();
 
-    const { user } = useAuth();
+    const { user } = useUser();
 
     return (
         <>

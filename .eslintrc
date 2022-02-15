@@ -28,8 +28,6 @@
         "airbnb-typescript",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
-        "next",
-        "next/core-web-vitals",
         "plugin:prettier/recommended"
     ],
     "settings": {
@@ -57,13 +55,14 @@
         }
     },
     "rules": {
-        "no-console": 0,
+        "no-console": "off",
         "no-debugger": "off",
-        "no-nested-ternary": 0,
-        "no-param-reassign": 0,
-        "no-shadow": 0,
-        "no-ternary": 0,
-        "no-underscore-dangle": 0,
+        "no-nested-ternary": "off",
+        "no-param-reassign": "off",
+        "no-restricted-globals": "off",
+        "no-shadow": "off",
+        "no-ternary": "off",
+        "no-underscore-dangle": "off",
         "no-unused-vars": "off",
         "no-useless-constructor": "off",
         "consistent-return": "off",
@@ -101,15 +100,16 @@
                 "ignoreRegExpLiterals": true
             }
         ],
-        "multiline-ternary": 0,
+        "multiline-ternary": "off",
         "radix": "off",
-        "react/prop-types": 0,
-        "react/jsx-key": 0,
-        "react/jsx-props-no-spreading": 0,
+        "react/prop-types": "off",
+        "react/jsx-key": "off",
+        "react/jsx-props-no-spreading": "off",
+        "react/jsx-no-duplicate-props": "warn",
         "react/no-array-index-key": "off",
         "react/no-unused-prop-types": "off",
         "react/require-default-props": "off",
-        "@next/next/no-img-element": "off",
+        "react-hooks/exhaustive-deps": "off",
         "@typescript-eslint/ban-ts-comment": "off",
         "@typescript-eslint/ban-types": "off",
         "@typescript-eslint/explicit-module-boundary-types": "off",
@@ -125,6 +125,8 @@
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/restrict-plus-operands": "off",
         "@typescript-eslint/unbound-method": "off",
+        "@typescript-eslint/no-misused-promises": "off",
+        "@typescript-eslint/no-floating-promises": "off",
         "testing-library/await-async-query": "error",
         "testing-library/no-await-sync-query": "error",
         "testing-library/no-debug": "warn",
@@ -159,8 +161,10 @@
     "ignorePatterns": [
         "node_modules/",
         "package-lock.json",
-        "generated/",
-        "src/stories/*",
+        "webpack.config.js",
+        "babel.config.js",
+        ".storybook/",
+        "**/stories/**/*",
         "**/types/**/*"
     ]
 }

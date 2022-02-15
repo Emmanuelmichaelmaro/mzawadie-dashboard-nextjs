@@ -1,10 +1,8 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import Container from "@mzawadie/components/Container";
 import PageHeader from "@mzawadie/components/PageHeader";
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@mzawadie/config";
-import { sectionNames } from "@mzawadie/core";
+import { DEFAULT_INITIAL_SEARCH_DATA, sectionNames } from "@mzawadie/core";
 import { getSearchFetchMoreProps } from "@mzawadie/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import useNotifier from "@mzawadie/hooks/useNotifier";
@@ -21,7 +19,7 @@ import { useChannelCreateMutation } from "../../mutations";
 import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
 import { channelPath, channelsListUrl } from "../../urls";
 
-export const ChannelCreateView = ({}) => {
+export const ChannelCreateView = () => {
     const navigate = useNavigator();
     const notify = useNotifier();
     const intl = useIntl();

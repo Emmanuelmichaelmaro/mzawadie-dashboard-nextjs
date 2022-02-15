@@ -8,20 +8,20 @@
 // ====================================================
 
 export interface VoucherBulkDelete_voucherBulkDelete_errors {
-  __typename: "DiscountError";
-  field: string | null;
-  message: string | null;
+    __typename: "DiscountError";
+    field: string | null;
+    message: string | null;
 }
 
 export interface VoucherBulkDelete_voucherBulkDelete {
-  __typename: "VoucherBulkDelete";
-  errors: VoucherBulkDelete_voucherBulkDelete_errors[];
+    __typename: "VoucherBulkDelete";
+    errors: VoucherBulkDelete_voucherBulkDelete_errors[];
 }
 
 export interface VoucherBulkDelete {
-  voucherBulkDelete: VoucherBulkDelete_voucherBulkDelete | null;
+    voucherBulkDelete: VoucherBulkDelete_voucherBulkDelete | null;
 }
 
 export interface VoucherBulkDeleteVariables {
-  ids: (string | null)[];
+    ids: (string | null)[];
 }

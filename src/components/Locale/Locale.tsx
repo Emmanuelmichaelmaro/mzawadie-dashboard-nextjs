@@ -1,10 +1,5 @@
-/* eslint-disable
-react/prop-types,
-prettier/prettier,
-react-hooks/exhaustive-deps,
-@typescript-eslint/ban-ts-comment,
-@typescript-eslint/naming-convention
-*/
+/* eslint-disable prettier/prettier,@typescript-eslint/naming-convention */
+// @ts-nocheck
 import "@formatjs/intl-datetimeformat/add-all-tz";
 import "@formatjs/intl-datetimeformat/locale-data/en";
 import "@formatjs/intl-datetimeformat/locale-data/es";
@@ -58,10 +53,6 @@ export const LocaleContext = React.createContext<LocaleContextType>({
 
 const { Consumer: LocaleConsumer, Provider: RawLocaleProvider } = LocaleContext;
 
-// interface LocaleProviderProps {
-//     Messages: LocaleMessages;
-// }
-
 const LocaleProvider: React.FC = ({ children }) => {
     const [locale, setLocale] = useLocalStorage(
         "locale",
@@ -70,22 +61,17 @@ const LocaleProvider: React.FC = ({ children }) => {
 
     const [i10nMessages, seti10nMessages] = React.useState(undefined);
 
-    // React.useEffect(() => {
-    //     setLocale(getMatchingLocale(navigator.languages) || defaultLocale);
-    // }, []);
-
     React.useEffect(() => {
         async function changeLocale() {
             if (locale !== defaultLocale) {
                 // It seems like Webpack is unable to use aliases for lazy imports
-                const module = await import(`../../../locale/${locale.replace(/^"|"$/g, "")}.json`);
+                const module = await import(`../../../locale/${locale}.json`);
                 seti10nMessages(module.default);
             } else {
                 seti10nMessages(undefined);
             }
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
         changeLocale();
     }, [locale]);
 

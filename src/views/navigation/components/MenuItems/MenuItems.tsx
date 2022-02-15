@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 // @ts-nocheck
 import { Button, Card, CardActions, IconButton, Paper, Typography } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -265,5 +266,7 @@ const MenuItems: React.FC<MenuItemsProps> = (props) => {
         </Card>
     );
 };
+
 MenuItems.displayName = "MenuItems";
+
 export default MenuItems;

@@ -52,6 +52,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const intl = useIntl();
     const notify = useNotifier();
     const value = useAuthProvider({ apolloClient, intl, notify });
+
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 
@@ -64,10 +65,6 @@ export const useAuth = () => {
         tokenAuthLoading: context.tokenAuthLoading,
         tokenVerifyLoading: context.tokenVerifyLoading,
         user: context.user,
-        initializing: context.initializing,
-        setRedirect: context.setRedirect,
-        getRedirect: context.getRedirect,
-        clearRedirect: context.clearRedirect,
     };
 };
 

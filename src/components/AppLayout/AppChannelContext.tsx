@@ -1,8 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 // @ts-nocheck
 import { ChannelFragment } from "@mzawadie/fragments/types/ChannelFragment";
 import useLocalStorage from "@mzawadie/hooks/useLocalStorage";
-import { useAuth } from "@mzawadie/sdk/lib/src";
+import { useAuth } from "@mzawadie/views/auth/AuthProvider";
 import { useBaseChannelsList } from "@mzawadie/views/channels/queries";
 import { BaseChannels_channels } from "@mzawadie/views/channels/types/BaseChannels";
 import { getById } from "@mzawadie/views/orders/components/OrderReturnPage/utils";
@@ -38,12 +37,12 @@ const isValidChannel = (channelId: string, channelList?: BaseChannels_channels[]
 };
 
 export const AppChannelProvider: React.FC = ({ children }) => {
-    const { authenticated } = useAuth();
+    const { isAuthenticated } = useAuth();
 
     const [selectedChannel, setSelectedChannel] = useLocalStorage("channel", "");
 
     const { data: channelData, refetch } = useBaseChannelsList({
-        skip: !authenticated,
+        skip: !isAuthenticated,
     });
 
     const [isPickerActive, setPickerActive] = React.useState(false);

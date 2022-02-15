@@ -8,22 +8,22 @@
 // ====================================================
 
 export interface ShippingZoneChannels_shippingZone_channels {
-  __typename: "Channel";
-  id: string;
-  name: string;
-  currencyCode: string;
+    __typename: "Channel";
+    id: string;
+    name: string;
+    currencyCode: string;
 }
 
 export interface ShippingZoneChannels_shippingZone {
-  __typename: "ShippingZone";
-  id: string;
-  channels: ShippingZoneChannels_shippingZone_channels[];
+    __typename: "ShippingZone";
+    id: string;
+    channels: ShippingZoneChannels_shippingZone_channels[];
 }
 
 export interface ShippingZoneChannels {
-  shippingZone: ShippingZoneChannels_shippingZone | null;
+    shippingZone: ShippingZoneChannels_shippingZone | null;
 }
 
 export interface ShippingZoneChannelsVariables {
-  id: string;
+    id: string;
 }

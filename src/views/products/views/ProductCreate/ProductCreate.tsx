@@ -211,7 +211,6 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         if (productCreateComplete && productId) {
             handleSuccess(productId);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [productCreateComplete]);
 
     const fetchMoreProductTypes = {

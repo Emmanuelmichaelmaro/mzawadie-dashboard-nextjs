@@ -7,7 +7,7 @@ import {
 } from "@apollo/client";
 import { commonMessages, getMutationStatus } from "@mzawadie/core";
 import { MutationResultAdditionalProps } from "@mzawadie/core/types";
-import { useAuth } from "@mzawadie/sdk/lib/src";
+import useUser from "@mzawadie/hooks/useUser";
 import { GqlErrors, hasError } from "@mzawadie/utils/api";
 import { isJwtError } from "@mzawadie/views/auth/errors";
 import { DocumentNode } from "graphql";
@@ -40,7 +40,7 @@ function makeMutation<TData, TVariables>(mutation: DocumentNode): UseMutationHoo
 
         const intl = useIntl();
 
-        const { user } = useAuth();
+        const user = useUser();
 
         const [mutateFn, result] = useBaseMutation(mutation, {
             onCompleted,

@@ -2,7 +2,7 @@
 import useAppChannel from "@mzawadie/components/AppLayout/AppChannelContext";
 import { getDatePeriod, getUserName } from "@mzawadie/core";
 import useNavigator from "@mzawadie/hooks/useNavigator";
-import { useAuth } from "@mzawadie/sdk/lib/src";
+import useUser from "@mzawadie/hooks/useUser";
 import { OrderStatusFilter, StockAvailability } from "@mzawadie/types/globalTypes";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import { channelsListUrl } from "@mzawadie/views/channels/urls";
@@ -16,7 +16,7 @@ import { useHomePage } from "../queries";
 const HomeSection = () => {
     const navigate = useNavigator();
 
-    const { user } = useAuth();
+    const { user } = useUser();
 
     const { channel } = useAppChannel();
 

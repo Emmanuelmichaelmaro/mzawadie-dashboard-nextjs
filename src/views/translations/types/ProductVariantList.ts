@@ -8,22 +8,22 @@
 // ====================================================
 
 export interface ProductVariantList_product_variants {
-  __typename: "ProductVariant";
-  id: string;
-  name: string;
-  sku: string;
+    __typename: "ProductVariant";
+    id: string;
+    name: string;
+    sku: string;
 }
 
 export interface ProductVariantList_product {
-  __typename: "Product";
-  id: string;
-  variants: (ProductVariantList_product_variants | null)[] | null;
+    __typename: "Product";
+    id: string;
+    variants: (ProductVariantList_product_variants | null)[] | null;
 }
 
 export interface ProductVariantList {
-  product: ProductVariantList_product | null;
+    product: ProductVariantList_product | null;
 }
 
 export interface ProductVariantListVariables {
-  id: string;
+    id: string;
 }

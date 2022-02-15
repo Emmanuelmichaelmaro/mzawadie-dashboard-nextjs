@@ -3,22 +3,12 @@ import { OutputData } from "@editorjs/editorjs";
 import { Card, CardContent, TextField } from "@material-ui/core";
 import CardTitle from "@mzawadie/components/CardTitle";
 import FormSpacer from "@mzawadie/components/FormSpacer";
-// import RichTextEditor, { RichTextEditorChange } from "@mzawadie/components/RichTextEditor";
+import RichTextEditor, { RichTextEditorChange } from "@mzawadie/components/RichTextEditor";
 import { commonMessages } from "@mzawadie/core";
 import { CollectionErrorFragment } from "@mzawadie/fragments/types/CollectionErrorFragment";
 import { getFormErrors, getProductErrorMessage } from "@mzawadie/utils/errors";
-import dynamic from "next/dynamic";
 import React from "react";
 import { useIntl } from "react-intl";
-
-const RichTextEditor = dynamic(() => import("@mzawadie/components/RichTextEditor"), { ssr: false });
-const RichTextEditorChange = dynamic(
-    async () => {
-        const moduleR = await import("@mzawadie/components/RichTextEditor");
-        return moduleR.RichTextEditorChange;
-    },
-    { ssr: false }
-);
 
 export interface CollectionDetailsProps {
     data: {
@@ -28,7 +18,7 @@ export interface CollectionDetailsProps {
     disabled: boolean;
     errors: CollectionErrorFragment[];
     onChange: (event: React.ChangeEvent<any>) => void;
-    onDescriptionChange: typeof RichTextEditorChange;
+    onDescriptionChange: RichTextEditorChange;
 }
 
 const CollectionDetails: React.FC<CollectionDetailsProps> = ({

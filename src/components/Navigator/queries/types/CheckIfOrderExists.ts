@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { OrderStatus } from "./../../../../types/globalTypes";
 
 // ====================================================
@@ -10,15 +10,15 @@ import { OrderStatus } from "./../../../../types/globalTypes";
 // ====================================================
 
 export interface CheckIfOrderExists_order {
-  __typename: "Order";
-  id: string;
-  status: OrderStatus;
+    __typename: "Order";
+    id: string;
+    status: OrderStatus;
 }
 
 export interface CheckIfOrderExists {
-  order: CheckIfOrderExists_order | null;
+    order: CheckIfOrderExists_order | null;
 }
 
 export interface CheckIfOrderExistsVariables {
-  id: string;
+    id: string;
 }

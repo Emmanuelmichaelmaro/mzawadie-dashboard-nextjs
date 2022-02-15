@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { OrderErrorCode, AddressTypeEnum } from "./../../../types/globalTypes";
 
 // ====================================================
@@ -10,21 +10,21 @@ import { OrderErrorCode, AddressTypeEnum } from "./../../../types/globalTypes";
 // ====================================================
 
 export interface OrderDraftBulkCancel_draftOrderBulkDelete_errors {
-  __typename: "OrderError";
-  code: OrderErrorCode;
-  field: string | null;
-  addressType: AddressTypeEnum | null;
+    __typename: "OrderError";
+    code: OrderErrorCode;
+    field: string | null;
+    addressType: AddressTypeEnum | null;
 }
 
 export interface OrderDraftBulkCancel_draftOrderBulkDelete {
-  __typename: "DraftOrderBulkDelete";
-  errors: OrderDraftBulkCancel_draftOrderBulkDelete_errors[];
+    __typename: "DraftOrderBulkDelete";
+    errors: OrderDraftBulkCancel_draftOrderBulkDelete_errors[];
 }
 
 export interface OrderDraftBulkCancel {
-  draftOrderBulkDelete: OrderDraftBulkCancel_draftOrderBulkDelete | null;
+    draftOrderBulkDelete: OrderDraftBulkCancel_draftOrderBulkDelete | null;
 }
 
 export interface OrderDraftBulkCancelVariables {
-  ids: (string | null)[];
+    ids: (string | null)[];
 }

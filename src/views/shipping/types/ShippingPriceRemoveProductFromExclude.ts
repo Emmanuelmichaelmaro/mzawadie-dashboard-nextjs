@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { ShippingErrorCode } from "./../../../types/globalTypes";
 
 // ====================================================
@@ -10,21 +10,21 @@ import { ShippingErrorCode } from "./../../../types/globalTypes";
 // ====================================================
 
 export interface ShippingPriceRemoveProductFromExclude_shippingPriceRemoveProductFromExclude_errors {
-  __typename: "ShippingError";
-  code: ShippingErrorCode;
-  field: string | null;
+    __typename: "ShippingError";
+    code: ShippingErrorCode;
+    field: string | null;
 }
 
 export interface ShippingPriceRemoveProductFromExclude_shippingPriceRemoveProductFromExclude {
-  __typename: "ShippingPriceRemoveProductFromExclude";
-  errors: ShippingPriceRemoveProductFromExclude_shippingPriceRemoveProductFromExclude_errors[];
+    __typename: "ShippingPriceRemoveProductFromExclude";
+    errors: ShippingPriceRemoveProductFromExclude_shippingPriceRemoveProductFromExclude_errors[];
 }
 
 export interface ShippingPriceRemoveProductFromExclude {
-  shippingPriceRemoveProductFromExclude: ShippingPriceRemoveProductFromExclude_shippingPriceRemoveProductFromExclude | null;
+    shippingPriceRemoveProductFromExclude: ShippingPriceRemoveProductFromExclude_shippingPriceRemoveProductFromExclude | null;
 }
 
 export interface ShippingPriceRemoveProductFromExcludeVariables {
-  id: string;
-  products: (string | null)[];
+    id: string;
+    products: (string | null)[];
 }

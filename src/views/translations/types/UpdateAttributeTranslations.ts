@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { NameTranslationInput, LanguageCodeEnum } from "./../../../types/globalTypes";
 
 // ====================================================
@@ -10,36 +10,36 @@ import { NameTranslationInput, LanguageCodeEnum } from "./../../../types/globalT
 // ====================================================
 
 export interface UpdateAttributeTranslations_attributeTranslate_errors {
-  __typename: "TranslationError";
-  field: string | null;
-  message: string | null;
+    __typename: "TranslationError";
+    field: string | null;
+    message: string | null;
 }
 
 export interface UpdateAttributeTranslations_attributeTranslate_attribute_translation {
-  __typename: "AttributeTranslation";
-  id: string;
-  name: string;
+    __typename: "AttributeTranslation";
+    id: string;
+    name: string;
 }
 
 export interface UpdateAttributeTranslations_attributeTranslate_attribute {
-  __typename: "Attribute";
-  id: string;
-  name: string | null;
-  translation: UpdateAttributeTranslations_attributeTranslate_attribute_translation | null;
+    __typename: "Attribute";
+    id: string;
+    name: string | null;
+    translation: UpdateAttributeTranslations_attributeTranslate_attribute_translation | null;
 }
 
 export interface UpdateAttributeTranslations_attributeTranslate {
-  __typename: "AttributeTranslate";
-  errors: UpdateAttributeTranslations_attributeTranslate_errors[];
-  attribute: UpdateAttributeTranslations_attributeTranslate_attribute | null;
+    __typename: "AttributeTranslate";
+    errors: UpdateAttributeTranslations_attributeTranslate_errors[];
+    attribute: UpdateAttributeTranslations_attributeTranslate_attribute | null;
 }
 
 export interface UpdateAttributeTranslations {
-  attributeTranslate: UpdateAttributeTranslations_attributeTranslate | null;
+    attributeTranslate: UpdateAttributeTranslations_attributeTranslate | null;
 }
 
 export interface UpdateAttributeTranslationsVariables {
-  id: string;
-  input: NameTranslationInput;
-  language: LanguageCodeEnum;
+    id: string;
+    input: NameTranslationInput;
+    language: LanguageCodeEnum;
 }

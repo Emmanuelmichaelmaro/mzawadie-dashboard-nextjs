@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { AccountErrorCode, AddressTypeEnum } from "./../../../types/globalTypes";
 
 // ====================================================
@@ -10,33 +10,33 @@ import { AccountErrorCode, AddressTypeEnum } from "./../../../types/globalTypes"
 // ====================================================
 
 export interface StaffAvatarUpdate_userAvatarUpdate_errors {
-  __typename: "AccountError";
-  code: AccountErrorCode;
-  field: string | null;
-  addressType: AddressTypeEnum | null;
+    __typename: "AccountError";
+    code: AccountErrorCode;
+    field: string | null;
+    addressType: AddressTypeEnum | null;
 }
 
 export interface StaffAvatarUpdate_userAvatarUpdate_user_avatar {
-  __typename: "Image";
-  url: string;
+    __typename: "Image";
+    url: string;
 }
 
 export interface StaffAvatarUpdate_userAvatarUpdate_user {
-  __typename: "User";
-  id: string;
-  avatar: StaffAvatarUpdate_userAvatarUpdate_user_avatar | null;
+    __typename: "User";
+    id: string;
+    avatar: StaffAvatarUpdate_userAvatarUpdate_user_avatar | null;
 }
 
 export interface StaffAvatarUpdate_userAvatarUpdate {
-  __typename: "UserAvatarUpdate";
-  errors: StaffAvatarUpdate_userAvatarUpdate_errors[];
-  user: StaffAvatarUpdate_userAvatarUpdate_user | null;
+    __typename: "UserAvatarUpdate";
+    errors: StaffAvatarUpdate_userAvatarUpdate_errors[];
+    user: StaffAvatarUpdate_userAvatarUpdate_user | null;
 }
 
 export interface StaffAvatarUpdate {
-  userAvatarUpdate: StaffAvatarUpdate_userAvatarUpdate | null;
+    userAvatarUpdate: StaffAvatarUpdate_userAvatarUpdate | null;
 }
 
 export interface StaffAvatarUpdateVariables {
-  image: any;
+    image: any;
 }

@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { Card, CardContent, Popper, TextField, Typography } from "@material-ui/core";
 import { PopperPlacementType } from "@material-ui/core/Popper";

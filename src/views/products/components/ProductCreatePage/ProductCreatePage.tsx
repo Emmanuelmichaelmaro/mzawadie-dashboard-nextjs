@@ -39,6 +39,7 @@ import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import ProductBundle from "../ProductBundle";
 import ProductDetailsForm from "../ProductDetailsForm";
 import ProductOrganization from "../ProductOrganization";
 import ProductShipping from "../ProductShipping/ProductShipping";
@@ -147,8 +148,11 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     const [selectedTaxType, setSelectedTaxType] = useStateFromProps(initial?.taxCode || null);
 
     const categories = getChoices(categoryChoiceList);
+
     const collections = getChoices(collectionChoiceList);
+
     const productTypes = getChoices(productTypeChoiceList);
+
     const taxTypeChoices =
         taxTypes?.map((taxType) => ({
             label: taxType.description,
@@ -197,6 +201,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
             {({ change, data, disabled: formDisabled, handlers, hasChanged, submit }) => {
                 // Comparing explicitly to false because `hasVariants` can be undefined
                 const isSimpleProduct = data.productType?.hasVariants === false;
+                const isBundleProduct = data.productType?.name === "Bundle Product";
 
                 return (
                     <Container>
@@ -273,6 +278,14 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                                             onWarehouseStockDelete={handlers.deleteStock}
                                             onWarehouseConfigure={onWarehouseConfigure}
                                         />
+
+                                        <CardSpacer />
+                                    </>
+                                )}
+
+                                {isBundleProduct && (
+                                    <>
+                                        <ProductBundle />
 
                                         <CardSpacer />
                                     </>

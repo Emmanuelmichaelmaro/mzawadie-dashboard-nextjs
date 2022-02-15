@@ -8,19 +8,19 @@
 // ====================================================
 
 export interface Channel_channel {
-  __typename: "Channel";
-  id: string;
-  isActive: boolean;
-  name: string;
-  slug: string;
-  currencyCode: string;
-  hasOrders: boolean;
+    __typename: "Channel";
+    id: string;
+    isActive: boolean;
+    name: string;
+    slug: string;
+    currencyCode: string;
+    hasOrders: boolean;
 }
 
 export interface Channel {
-  channel: Channel_channel | null;
+    channel: Channel_channel | null;
 }
 
 export interface ChannelVariables {
-  id: string;
+    id: string;
 }

@@ -13,6 +13,7 @@ import {
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import useNotifier from "@mzawadie/hooks/useNotifier";
 import useUser from "@mzawadie/hooks/useUser";
+import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import usePermissionGroupSearch from "@mzawadie/views/searches/usePermissionGroupSearch";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

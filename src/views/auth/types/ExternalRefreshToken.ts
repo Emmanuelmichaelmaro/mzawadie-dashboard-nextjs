@@ -8,15 +8,15 @@
 // ====================================================
 
 export interface ExternalRefreshToken_externalRefresh {
-  __typename: "ExternalRefresh";
-  token: string | null;
+    __typename: "ExternalRefresh";
+    token: string | null;
 }
 
 export interface ExternalRefreshToken {
-  externalRefresh: ExternalRefreshToken_externalRefresh | null;
+    externalRefresh: ExternalRefreshToken_externalRefresh | null;
 }
 
 export interface ExternalRefreshTokenVariables {
-  pluginId: string;
-  input: any;
+    pluginId: string;
+    input: any;
 }

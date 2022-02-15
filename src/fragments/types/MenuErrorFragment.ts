@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { MenuErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
@@ -10,7 +10,7 @@ import { MenuErrorCode } from "./../../types/globalTypes";
 // ====================================================
 
 export interface MenuErrorFragment {
-  __typename: "MenuError";
-  code: MenuErrorCode;
-  field: string | null;
+    __typename: "MenuError";
+    code: MenuErrorCode;
+    field: string | null;
 }

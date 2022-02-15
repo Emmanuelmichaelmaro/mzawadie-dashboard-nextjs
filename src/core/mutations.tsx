@@ -9,7 +9,7 @@ import {
 } from "@apollo/client";
 import { Mutation } from "@apollo/client/react/components";
 import useNotifier from "@mzawadie/hooks/useNotifier";
-import { useAuth } from "@mzawadie/sdk/lib/src";
+import useUser from "@mzawadie/hooks/useUser";
 import { GqlErrors, hasError } from "@mzawadie/utils/api";
 import { isJwtError } from "@mzawadie/views/auth/errors";
 import React from "react";
@@ -40,7 +40,7 @@ export function TypedMutation<TData, TVariables>(
 
         const intl = useIntl();
         const notify = useNotifier();
-        const { user } = useAuth();
+        const user = useUser();
 
         return (
             <Mutation

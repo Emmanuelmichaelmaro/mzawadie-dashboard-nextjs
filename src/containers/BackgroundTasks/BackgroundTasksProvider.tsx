@@ -1,4 +1,5 @@
 /* eslint-disable no-useless-catch */
+
 /* eslint-disable @typescript-eslint/no-floating-promises */
 // @ts-nocheck
 import { ApolloClient, useApolloClient } from "@apollo/client";

@@ -8,36 +8,36 @@
 // ====================================================
 
 export interface SearchWarehouses_search_edges_node {
-  __typename: "Warehouse";
-  id: string;
-  name: string;
+    __typename: "Warehouse";
+    id: string;
+    name: string;
 }
 
 export interface SearchWarehouses_search_edges {
-  __typename: "WarehouseCountableEdge";
-  node: SearchWarehouses_search_edges_node;
+    __typename: "WarehouseCountableEdge";
+    node: SearchWarehouses_search_edges_node;
 }
 
 export interface SearchWarehouses_search_pageInfo {
-  __typename: "PageInfo";
-  endCursor: string | null;
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
-  startCursor: string | null;
+    __typename: "PageInfo";
+    endCursor: string | null;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+    startCursor: string | null;
 }
 
 export interface SearchWarehouses_search {
-  __typename: "WarehouseCountableConnection";
-  edges: SearchWarehouses_search_edges[];
-  pageInfo: SearchWarehouses_search_pageInfo;
+    __typename: "WarehouseCountableConnection";
+    edges: SearchWarehouses_search_edges[];
+    pageInfo: SearchWarehouses_search_pageInfo;
 }
 
 export interface SearchWarehouses {
-  search: SearchWarehouses_search | null;
+    search: SearchWarehouses_search | null;
 }
 
 export interface SearchWarehousesVariables {
-  after?: string | null;
-  first: number;
-  query: string;
+    after?: string | null;
+    first: number;
+    query: string;
 }

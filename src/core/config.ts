@@ -1,20 +1,23 @@
 /* eslint-disable prefer-destructuring */
+// @ts-nocheck
 import { ListSettings, ListViews, Pagination } from "@mzawadie/core/types";
 import { SearchVariables } from "@mzawadie/hooks";
 
 import packageInfo from "../../package.json";
 
-export const APP_MOUNT_URI = process.env.NEXT_PUBLIC_APP_MOUNT_URI;
+export const APP_MOUNT_URI = process.env.APP_MOUNT_URI;
 
 export const APP_DEFAULT_URI = "/";
 
-export const API_URI = process.env.NEXT_PUBLIC_API_URI!;
+export const API_URI = process.env.API_URI!;
 
 export const APP_VERSION = packageInfo.version;
 
-export const CHANNEL_SLUG = process.env.NEXT_PUBLIC_MZAWADIE_CHANNEL_SLUG!;
+export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL, 0);
 
-export const DEMO_MODE = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+export const CHANNEL_SLUG = process.env.MZAWADIE_CHANNEL_SLUG!;
+
+export const DEMO_MODE = process.env.DEMO_MODE === "true";
 
 export const DEFAULT_NOTIFICATION_SHOW_TIME = 3000;
 

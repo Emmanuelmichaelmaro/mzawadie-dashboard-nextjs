@@ -6,22 +6,12 @@ import CardTitle from "@mzawadie/components/CardTitle";
 import FormSpacer from "@mzawadie/components/FormSpacer";
 import Grid from "@mzawadie/components/Grid";
 import Hr from "@mzawadie/components/Hr";
-// import RichTextEditor, { RichTextEditorChange } from "@mzawadie/components/RichTextEditor";
+import RichTextEditor, { RichTextEditorChange } from "@mzawadie/components/RichTextEditor";
 import { commonMessages } from "@mzawadie/core";
 import { ProductErrorFragment } from "@mzawadie/fragments/types/ProductErrorFragment";
 import { getFormErrors, getProductErrorMessage } from "@mzawadie/utils/errors";
-import dynamic from "next/dynamic";
 import React from "react";
 import { useIntl } from "react-intl";
-
-const RichTextEditor = dynamic(() => import("@mzawadie/components/RichTextEditor"), { ssr: false });
-const RichTextEditorChange = dynamic(
-    async () => {
-        const moduleR = await import("@mzawadie/components/RichTextEditor");
-        return moduleR.RichTextEditorChange;
-    },
-    { ssr: false }
-);
 
 interface ProductDetailsFormProps {
     data: {
@@ -32,7 +22,7 @@ interface ProductDetailsFormProps {
     disabled?: boolean;
     errors: ProductErrorFragment[];
 
-    onDescriptionChange: typeof RichTextEditorChange;
+    onDescriptionChange: RichTextEditorChange;
     onChange: (event: any) => any;
 }
 

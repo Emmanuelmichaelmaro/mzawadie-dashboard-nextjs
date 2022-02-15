@@ -8,10 +8,10 @@
 // ====================================================
 
 export interface OrderSettings_orderSettings {
-  __typename: "OrderSettings";
-  automaticallyConfirmAllNewOrders: boolean;
+    __typename: "OrderSettings";
+    automaticallyConfirmAllNewOrders: boolean;
 }
 
 export interface OrderSettings {
-  orderSettings: OrderSettings_orderSettings | null;
+    orderSettings: OrderSettings_orderSettings | null;
 }

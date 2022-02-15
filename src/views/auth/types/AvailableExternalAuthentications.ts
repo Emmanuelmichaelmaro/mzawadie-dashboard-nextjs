@@ -8,16 +8,16 @@
 // ====================================================
 
 export interface AvailableExternalAuthentications_shop_availableExternalAuthentications {
-  __typename: "ExternalAuthentication";
-  id: string;
-  name: string | null;
+    __typename: "ExternalAuthentication";
+    id: string;
+    name: string | null;
 }
 
 export interface AvailableExternalAuthentications_shop {
-  __typename: "Shop";
-  availableExternalAuthentications: AvailableExternalAuthentications_shop_availableExternalAuthentications[];
+    __typename: "Shop";
+    availableExternalAuthentications: AvailableExternalAuthentications_shop_availableExternalAuthentications[];
 }
 
 export interface AvailableExternalAuthentications {
-  shop: AvailableExternalAuthentications_shop;
+    shop: AvailableExternalAuthentications_shop;
 }

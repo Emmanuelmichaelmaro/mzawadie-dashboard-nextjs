@@ -1,4 +1,5 @@
 /* eslint-disable no-restricted-syntax */
+// @ts-nocheck
 interface StructuredMessage {
     context?: string;
     string: string;
@@ -7,7 +8,6 @@ interface StructuredMessage {
 export type LocaleMessages = Record<string, StructuredMessage>;
 
 export enum Locale {
-    EN = "en",
     AR = "ar",
     AZ = "az",
     BG = "bg",
@@ -17,6 +17,7 @@ export enum Locale {
     DA = "da",
     DE = "de",
     EL = "el",
+    EN = "en",
     ES = "es",
     ES_CO = "es-CO",
     ET = "et",
@@ -52,8 +53,7 @@ export enum Locale {
     ZH_HANT = "zh-Hant",
 }
 
-export const localeData: Record<Locale, string | undefined> = {
-    [Locale.EN]: undefined,
+export const localeData: Record<Locale, string> = {
     [Locale.AR]: "العربيّة",
     [Locale.AZ]: "Azərbaycanca",
     [Locale.BG]: "български",
@@ -63,6 +63,7 @@ export const localeData: Record<Locale, string | undefined> = {
     [Locale.DA]: "dansk",
     [Locale.DE]: "Deutsch",
     [Locale.EL]: "Ελληνικά",
+    [Locale.EN]: "English",
     [Locale.ES]: "español",
     [Locale.ES_CO]: "español de Colombia",
     [Locale.ET]: "eesti",
@@ -104,24 +105,10 @@ const separatorRegExp = new RegExp(dotSeparator, "g");
 
 const LOCALE_CACHE: { [key in Locale]?: LocaleMessages } = {};
 
-export const loadMessagesJson = async (locale: Locale | undefined = Locale.EN) => {
-    const filename = localeData[locale];
-    let localeJson = LOCALE_CACHE[locale];
-
-    if (!localeJson && filename !== undefined) {
-        console.log(filename);
-        localeJson = await import(`../../../locale/${filename}.json`);
-        LOCALE_CACHE[locale] = localeJson;
-    }
-
-    return localeJson;
-};
-
-export function getKeyValueJson(
-    messages: LocaleMessages | undefined
-): Record<string, string> | undefined {
+export function getKeyValueJson(messages: LocaleMessages): Record<string, string> {
     if (messages) {
         const keyValueMessages: Record<string, string> = {};
+
         return Object.entries(messages).reduce((accumulator, [id, message]) => {
             accumulator[id.replace(separatorRegExp, ".")] = message.string;
             return accumulator;
@@ -131,14 +118,12 @@ export function getKeyValueJson(
     return undefined;
 }
 
-export function getMatchingLocale(languages: readonly string[]): Locale | undefined {
+export function getMatchingLocale(languages: readonly string[]): Locale {
     const localeEntries = Object.entries(Locale);
 
     for (const preferredLocale of languages) {
         for (const localeEntry of localeEntries) {
             if (localeEntry[1].toLowerCase() === preferredLocale.toLowerCase()) {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
                 return Locale[localeEntry[0]];
             }
         }

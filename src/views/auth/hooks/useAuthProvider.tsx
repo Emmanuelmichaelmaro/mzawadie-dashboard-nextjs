@@ -7,21 +7,6 @@ import { useMzawadieAuthProvider } from "@mzawadie/views/auth/hooks/useMzawadieA
 import { MutableRefObject } from "react";
 import { IntlShape } from "react-intl";
 
-const redirectKey = "sign_in_redirect";
-
-const setRedirect = (redirect: string) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    typeof window !== "undefined" ? window.sessionStorage.setItem(redirectKey, redirect) : undefined;
-};
-
-const getRedirect = (): string | null | undefined => {
-    return typeof window !== "undefined" ? window.sessionStorage.getItem(redirectKey) : undefined;
-};
-
-const clearRedirect = () => {
-    return typeof window !== "undefined" ? window.sessionStorage.removeItem(redirectKey) : undefined;
-};
-
 export interface UseAuthProvider {
     logout: () => void;
     tokenAuthLoading: boolean;
@@ -64,17 +49,11 @@ export const useAuthProvider = (opts: UseAuthProviderOpts) => {
         return {
             ...externalAuth,
             ...loginAuth,
-            setRedirect,
-            getRedirect,
-            clearRedirect,
         };
     }
 
     return {
         ...mzawadieAuth,
         ...loginAuth,
-        setRedirect,
-        getRedirect,
-        clearRedirect,
     };
 };

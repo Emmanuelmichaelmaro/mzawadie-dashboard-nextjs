@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { CircularProgress, MenuItem, Paper, TextField } from "@material-ui/core";
 import ArrowBack from "@material-ui/icons/ArrowBack";
-import { buttonMessages } from "@mzawadie/intl";
+import { buttonMessages } from "@mzawadie/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import Downshift from "downshift";
 import React from "react";

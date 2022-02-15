@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { ShippingErrorCode } from "./../../../types/globalTypes";
 
 // ====================================================
@@ -10,20 +10,20 @@ import { ShippingErrorCode } from "./../../../types/globalTypes";
 // ====================================================
 
 export interface BulkDeleteShippingZone_shippingZoneBulkDelete_errors {
-  __typename: "ShippingError";
-  code: ShippingErrorCode;
-  field: string | null;
+    __typename: "ShippingError";
+    code: ShippingErrorCode;
+    field: string | null;
 }
 
 export interface BulkDeleteShippingZone_shippingZoneBulkDelete {
-  __typename: "ShippingZoneBulkDelete";
-  errors: BulkDeleteShippingZone_shippingZoneBulkDelete_errors[];
+    __typename: "ShippingZoneBulkDelete";
+    errors: BulkDeleteShippingZone_shippingZoneBulkDelete_errors[];
 }
 
 export interface BulkDeleteShippingZone {
-  shippingZoneBulkDelete: BulkDeleteShippingZone_shippingZoneBulkDelete | null;
+    shippingZoneBulkDelete: BulkDeleteShippingZone_shippingZoneBulkDelete | null;
 }
 
 export interface BulkDeleteShippingZoneVariables {
-  ids: (string | null)[];
+    ids: (string | null)[];
 }

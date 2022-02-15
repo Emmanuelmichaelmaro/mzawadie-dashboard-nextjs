@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { Button, Card, TableBody, TableCell, TableHead, TableRow } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -10,13 +9,11 @@ import MoneyRange from "@mzawadie/components/MoneyRange";
 import ResponsiveTable from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import WeightRange from "@mzawadie/components/WeightRange";
-import { ChannelProps } from "@mzawadie/core";
+import { ChannelProps, maybe, renderCollection } from "@mzawadie/core";
 import { ShippingZoneDetailsFragment_shippingMethods } from "@mzawadie/fragments/types/ShippingZoneDetailsFragment";
 import { makeStyles, ICONBUTTON_SIZE } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { maybe, renderCollection } from "../../../../misc";
 
 export interface ShippingZoneRatesProps extends ChannelProps {
     disabled: boolean;

@@ -8,26 +8,26 @@
 // ====================================================
 
 export interface RefundOrderLineFragment_unitPrice_gross {
-  __typename: "Money";
-  amount: number;
-  currency: string;
+    __typename: "Money";
+    amount: number;
+    currency: string;
 }
 
 export interface RefundOrderLineFragment_unitPrice {
-  __typename: "TaxedMoney";
-  gross: RefundOrderLineFragment_unitPrice_gross;
+    __typename: "TaxedMoney";
+    gross: RefundOrderLineFragment_unitPrice_gross;
 }
 
 export interface RefundOrderLineFragment_thumbnail {
-  __typename: "Image";
-  url: string;
+    __typename: "Image";
+    url: string;
 }
 
 export interface RefundOrderLineFragment {
-  __typename: "OrderLine";
-  id: string;
-  productName: string;
-  quantity: number;
-  unitPrice: RefundOrderLineFragment_unitPrice;
-  thumbnail: RefundOrderLineFragment_thumbnail | null;
+    __typename: "OrderLine";
+    id: string;
+    productName: string;
+    quantity: number;
+    unitPrice: RefundOrderLineFragment_unitPrice;
+    thumbnail: RefundOrderLineFragment_thumbnail | null;
 }

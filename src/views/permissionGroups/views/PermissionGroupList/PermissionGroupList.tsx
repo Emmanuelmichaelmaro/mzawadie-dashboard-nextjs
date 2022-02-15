@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { getStringOrPlaceholder, ListViews } from "@mzawadie/core";
-import { configurationMenuUrl } from "@mzawadie/coreuration";
 import { PermissionGroupErrorFragment } from "@mzawadie/fragments/types/PermissionGroupErrorFragment";
 import useListSettings from "@mzawadie/hooks/useListSettings";
 import useNavigator from "@mzawadie/hooks/useNavigator";
@@ -12,6 +10,7 @@ import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHan
 import createSortHandler from "@mzawadie/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import { getSortParams } from "@mzawadie/utils/sort";
+import { configurationMenuUrl } from "@mzawadie/views/configuration";
 import PermissionGroupDeleteDialog from "@mzawadie/views/permissionGroups/components/PermissionGroupDeleteDialog";
 import { usePermissionGroupDelete } from "@mzawadie/views/permissionGroups/mutations";
 import { usePermissionGroupListQuery } from "@mzawadie/views/permissionGroups/queries";

@@ -6,17 +6,17 @@ module.exports = (api) => {
     const ignore = isTest || isStorybook ? [] : ["**/*.test.ts", "**/*.test.tsx", "src/storybook"];
 
     const presets = [
-        "next/babel",
-        // [
-        //     "@babel/preset-env",
-        //     {
-        //         corejs: "3.2.1",
-        //         modules: isTest ? "auto" : false,
-        //         useBuiltIns: "usage",
-        //     },
-        // ],
-        // "@babel/preset-react",
-        // "@babel/preset-typescript",
+        // "next/babel",
+        [
+            "@babel/preset-env",
+            {
+                corejs: "3.2.1",
+                modules: isTest ? "auto" : false,
+                useBuiltIns: "usage",
+            },
+        ],
+        "@babel/preset-react",
+        "@babel/preset-typescript",
     ];
 
     const plugins = [

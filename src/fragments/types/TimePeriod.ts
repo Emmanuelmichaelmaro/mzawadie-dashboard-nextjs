@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { TimePeriodTypeEnum } from "./../../types/globalTypes";
 
 // ====================================================
@@ -10,7 +10,7 @@ import { TimePeriodTypeEnum } from "./../../types/globalTypes";
 // ====================================================
 
 export interface TimePeriod {
-  __typename: "TimePeriod";
-  amount: number;
-  type: TimePeriodTypeEnum;
+    __typename: "TimePeriod";
+    amount: number;
+    type: TimePeriodTypeEnum;
 }

@@ -3,7 +3,7 @@
 import { ApolloQueryResult, QueryResult, useQuery as useBaseQuery } from "@apollo/client";
 import { RequireAtLeastOne } from "@mzawadie/core";
 import { User_userPermissions } from "@mzawadie/fragments/types/User";
-import { useAuth } from "@mzawadie/sdk/lib/src";
+import useUser from "@mzawadie/hooks/useUser";
 import { PrefixedPermissions } from "@mzawadie/types/extendedTypes";
 import { PermissionEnum } from "@mzawadie/types/globalTypes";
 import { handleQueryAuthError } from "@mzawadie/views/auth/utils";
@@ -65,7 +65,7 @@ function makeQuery<TData, TVariables>(query: DocumentNode): UseQueryHook<TData, 
 
         const [, dispatchAppState] = useAppState();
 
-        const { refreshSignInToken, signOut, user } = useAuth();
+        const { tokenRefresh, logout, user } = useUser();
 
         const userPermissions = getUserPermissions(user?.userPermissions || []);
 
@@ -81,7 +81,7 @@ function makeQuery<TData, TVariables>(query: DocumentNode): UseQueryHook<TData, 
             },
             errorPolicy: "all",
             fetchPolicy: "cache-and-network",
-            onError: (error) => handleQueryAuthError(error, notify, refreshSignInToken, signOut, intl),
+            onError: (error) => handleQueryAuthError(error, notify, tokenRefresh, logout, intl),
             skip,
             variables: variablesWithPermissions,
         });

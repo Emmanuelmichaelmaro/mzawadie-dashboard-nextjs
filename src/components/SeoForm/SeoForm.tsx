@@ -223,7 +223,9 @@ const SeoForm: React.FC<SeoFormProps> = (props) => {
                             onChange={handleSlugChange}
                             fullWidth
                         />
+
                         <FormSpacer />
+
                         <TextField
                             error={title?.length > maxTitleLength}
                             name={SeoField.title}
@@ -235,6 +237,7 @@ const SeoForm: React.FC<SeoFormProps> = (props) => {
                                             id="w2Cewo"
                                         />
                                     </div>
+
                                     {title?.length > 0 && (
                                         <span>
                                             <FormattedMessage
@@ -262,7 +265,9 @@ const SeoForm: React.FC<SeoFormProps> = (props) => {
                             onChange={onChange}
                             fullWidth
                         />
+
                         <FormSpacer />
+
                         <TextField
                             error={description?.length > maxDescriptionLength}
                             name={SeoField.description}
@@ -274,6 +279,7 @@ const SeoForm: React.FC<SeoFormProps> = (props) => {
                                             id="CXTIq8"
                                         />
                                     </div>
+
                                     {description?.length > 0 && (
                                         <span>
                                             <FormattedMessage

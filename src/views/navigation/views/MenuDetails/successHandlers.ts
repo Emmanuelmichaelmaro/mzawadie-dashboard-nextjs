@@ -1,7 +1,7 @@
 // @ts-nocheck
+import { commonMessages } from "@mzawadie/core";
 import { UseNavigatorResult } from "@mzawadie/hooks/useNavigator";
 import { UseNotifierResult } from "@mzawadie/hooks/useNotifier";
-import { commonMessages } from "@mzawadie/intl";
 import { IntlShape } from "react-intl";
 
 import { MenuDelete } from "../../types/MenuDelete";

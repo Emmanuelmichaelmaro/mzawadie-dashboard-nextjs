@@ -1,4 +1,4 @@
-/* eslint-disable no-extra-boolean-cast */
+/* eslint-disable no-extra-boolean-cast,react-hooks/exhaustive-deps */
 // @ts-nocheck
 import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@mzawadie/core";
 import { Notification } from "@saleor/macaw-ui";

@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { UserCreateInput, AccountErrorCode, AddressTypeEnum } from "./../../../types/globalTypes";
 
 // ====================================================
@@ -10,27 +10,27 @@ import { UserCreateInput, AccountErrorCode, AddressTypeEnum } from "./../../../t
 // ====================================================
 
 export interface CreateCustomer_customerCreate_errors {
-  __typename: "AccountError";
-  code: AccountErrorCode;
-  field: string | null;
-  addressType: AddressTypeEnum | null;
+    __typename: "AccountError";
+    code: AccountErrorCode;
+    field: string | null;
+    addressType: AddressTypeEnum | null;
 }
 
 export interface CreateCustomer_customerCreate_user {
-  __typename: "User";
-  id: string;
+    __typename: "User";
+    id: string;
 }
 
 export interface CreateCustomer_customerCreate {
-  __typename: "CustomerCreate";
-  errors: CreateCustomer_customerCreate_errors[];
-  user: CreateCustomer_customerCreate_user | null;
+    __typename: "CustomerCreate";
+    errors: CreateCustomer_customerCreate_errors[];
+    user: CreateCustomer_customerCreate_user | null;
 }
 
 export interface CreateCustomer {
-  customerCreate: CreateCustomer_customerCreate | null;
+    customerCreate: CreateCustomer_customerCreate | null;
 }
 
 export interface CreateCustomerVariables {
-  input: UserCreateInput;
+    input: UserCreateInput;
 }

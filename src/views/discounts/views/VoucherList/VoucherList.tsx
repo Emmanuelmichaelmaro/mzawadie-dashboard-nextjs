@@ -149,6 +149,7 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
             });
             reset();
             closeModal();
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
             refetch();
         }
     };

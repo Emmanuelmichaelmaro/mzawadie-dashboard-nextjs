@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { Button, Card, CardContent } from "@material-ui/core";
 import CardTitle from "@mzawadie/components/CardTitle";
@@ -255,7 +254,11 @@ const ProductMedia: React.FC<ProductMediaProps> = (props) => {
                     <CardContent>
                         <div className={classes.root}>
                             <div className={classes.imageContainer}>
-                                <img className={classes.image} src={placeholderImage} />
+                                <img
+                                    className={classes.image}
+                                    src={placeholderImage}
+                                    alt="Product Media"
+                                />
                             </div>
                         </div>
                     </CardContent>
@@ -296,5 +299,7 @@ const ProductMedia: React.FC<ProductMediaProps> = (props) => {
         </Card>
     );
 };
+
 ProductMedia.displayName = "ProductMedia";
+
 export default ProductMedia;

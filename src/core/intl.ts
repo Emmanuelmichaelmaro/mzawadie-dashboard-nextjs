@@ -99,8 +99,8 @@ export const commonMessages = defineMessages({
         id: "aI80kg",
     },
     readOnly: {
-        defaultMessage: "Saleor runs in read-only mode. Changes not saved.",
-        id: "kFYlu2",
+        defaultMessage: "Mzawadie runs in read-only mode. Changes not saved.",
+        id: "OeKIoY",
     },
     requiredField: {
         defaultMessage: "This field is required",
@@ -115,8 +115,8 @@ export const commonMessages = defineMessages({
         id: "Fvvgoi",
     },
     somethingWentWrong: {
-        defaultMessage: "Saleor ran into an unexpected problem",
-        id: "LVa5ew",
+        defaultMessage: "Mzawadie ran into an unexpected problem",
+        id: "xqfaLi",
     },
     startDate: {
         defaultMessage: "Start Date",

@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { ProductFilterInput } from "./../../../types/globalTypes";
 
 // ====================================================
@@ -10,15 +10,15 @@ import { ProductFilterInput } from "./../../../types/globalTypes";
 // ====================================================
 
 export interface ProductCount_products {
-  __typename: "ProductCountableConnection";
-  totalCount: number | null;
+    __typename: "ProductCountableConnection";
+    totalCount: number | null;
 }
 
 export interface ProductCount {
-  products: ProductCount_products | null;
+    products: ProductCount_products | null;
 }
 
 export interface ProductCountVariables {
-  filter?: ProductFilterInput | null;
-  channel?: string | null;
+    filter?: ProductFilterInput | null;
+    channel?: string | null;
 }

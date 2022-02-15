@@ -25,11 +25,10 @@ import {
     displayDemoMessage,
     getTokens,
     removeTokens,
-    removeUserData,
     setAuthToken,
     setTokens,
 } from "@mzawadie/views/auth/utils";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 import { UseAuthProvider, UseAuthProviderOpts } from "./useAuthProvider";
 
@@ -53,7 +52,7 @@ export const useMzawadieAuthProvider = ({
     setAuthPlugin,
 }: UseMzawadieAuthProviderOpts): UseMzawadieAuthProvider => {
     const [userContext, setUserContext] = useLocalStorage<undefined | User>("user", undefined);
-    const [initializing, setInitializing] = useState(true);
+
     const autoLoginPromise = useRef<Promise<any>>();
     const refreshPromise = useRef<Promise<boolean>>();
 
@@ -65,9 +64,6 @@ export const useMzawadieAuthProvider = ({
         } else if (!authPlugin) {
             autoLoginPromise.current = loginWithCredentialsManagementAPI(login);
         } else if (!authPlugin && !!token) {
-            console.log(
-                "No AuthPlugin detected, but there is preserved token. I am Mzawadie Provider!"
-            );
             // eslint-disable-next-line @typescript-eslint/no-floating-promises
             tokenVerify({ variables: { token } });
         }
@@ -77,10 +73,6 @@ export const useMzawadieAuthProvider = ({
         if (!authPlugin && userContext) {
             const { id, email } = userContext;
 
-            console.log(
-                "No AuthPlugin detected, but user context is available. I am Mzawadie Provider!"
-            );
-
             errorTracker.setUserData({
                 email,
                 id,
@@ -88,7 +80,8 @@ export const useMzawadieAuthProvider = ({
             });
 
             if (!userContext.isStaff) {
-                // logout();
+                // eslint-disable-next-line @typescript-eslint/no-floating-promises
+                logout();
                 notify({
                     status: "error",
                     text: intl.formatMessage(commonMessages.unauthorizedDashboardAccess),
@@ -104,7 +97,6 @@ export const useMzawadieAuthProvider = ({
             await navigator.credentials.preventSilentAccess();
         }
         removeTokens();
-        removeUserData();
     };
 
     const [tokenAuth, tokenAuthResult] = useMutation<TokenAuth, TokenAuthVariables>(tokenAuthMutation, {
@@ -182,8 +174,6 @@ export const useMzawadieAuthProvider = ({
             }
         }
 
-        setInitializing(false);
-
         return result.data?.tokenCreate;
     };
 
@@ -191,7 +181,6 @@ export const useMzawadieAuthProvider = ({
         setAuthPlugin(undefined);
         setUserContext(user);
         setTokens(auth, refresh, persistToken);
-        setInitializing(false);
     };
 
     const refreshToken = (): Promise<boolean> => {
@@ -227,6 +216,5 @@ export const useMzawadieAuthProvider = ({
         tokenRefresh: refreshToken,
         tokenVerifyLoading: tokenVerifyOpts.loading,
         user: userContext,
-        initializing,
     };
 };

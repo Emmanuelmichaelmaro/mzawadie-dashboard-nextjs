@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { IFilterElement } from "@mzawadie/components/Filter";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
@@ -97,6 +96,7 @@ export function getFilterVariables(params: VoucherListUrlFilters): VoucherFilter
 export function getFilterQueryParam(filter: IFilterElement<VoucherFilterKeys>): VoucherListUrlFilters {
     const { name } = filter;
 
+    // eslint-disable-next-line default-case
     switch (name) {
         case VoucherFilterKeys.saleType:
             return getMultipleEnumValueQueryParam(

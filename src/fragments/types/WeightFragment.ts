@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { WeightUnitsEnum } from "./../../types/globalTypes";
 
 // ====================================================
@@ -10,7 +10,7 @@ import { WeightUnitsEnum } from "./../../types/globalTypes";
 // ====================================================
 
 export interface WeightFragment {
-  __typename: "Weight";
-  unit: WeightUnitsEnum;
-  value: number;
+    __typename: "Weight";
+    unit: WeightUnitsEnum;
+    value: number;
 }

@@ -1,6 +1,6 @@
 import useShop from "@mzawadie/hooks/useShop";
-import Head from "next/head";
 import React from "react";
+import Helmet from "react-helmet";
 
 interface WindowTitleProps {
     title: string;
@@ -9,9 +9,5 @@ interface WindowTitleProps {
 export const WindowTitle: React.FC<WindowTitleProps> = ({ title }) => {
     const shop = useShop();
 
-    return shop === undefined || !title ? null : (
-        <Head>
-            <title>{`${title} | ${shop.name}`}</title>
-        </Head>
-    );
+    return shop === undefined || !title ? null : <Helmet title={`${title} | ${shop.name}`} />;
 };

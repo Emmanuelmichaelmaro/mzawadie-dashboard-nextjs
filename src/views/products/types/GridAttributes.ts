@@ -8,25 +8,25 @@
 // ====================================================
 
 export interface GridAttributes_grid_edges_node {
-  __typename: "Attribute";
-  id: string;
-  name: string | null;
+    __typename: "Attribute";
+    id: string;
+    name: string | null;
 }
 
 export interface GridAttributes_grid_edges {
-  __typename: "AttributeCountableEdge";
-  node: GridAttributes_grid_edges_node;
+    __typename: "AttributeCountableEdge";
+    node: GridAttributes_grid_edges_node;
 }
 
 export interface GridAttributes_grid {
-  __typename: "AttributeCountableConnection";
-  edges: GridAttributes_grid_edges[];
+    __typename: "AttributeCountableConnection";
+    edges: GridAttributes_grid_edges[];
 }
 
 export interface GridAttributes {
-  grid: GridAttributes_grid | null;
+    grid: GridAttributes_grid | null;
 }
 
 export interface GridAttributesVariables {
-  ids: string[];
+    ids: string[];
 }

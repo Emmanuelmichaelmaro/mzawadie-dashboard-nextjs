@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { useShopLimitsQuery } from "@mzawadie/components/Shop/query";
 import useNavigator from "@mzawadie/hooks/useNavigator";

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 // @ts-nocheck
 interface IBaseMenuItem<TMenuData = {}, TValue = string> {
     label: React.ReactNode;

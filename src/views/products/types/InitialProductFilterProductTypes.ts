@@ -8,25 +8,25 @@
 // ====================================================
 
 export interface InitialProductFilterProductTypes_productTypes_edges_node {
-  __typename: "ProductType";
-  id: string;
-  name: string;
+    __typename: "ProductType";
+    id: string;
+    name: string;
 }
 
 export interface InitialProductFilterProductTypes_productTypes_edges {
-  __typename: "ProductTypeCountableEdge";
-  node: InitialProductFilterProductTypes_productTypes_edges_node;
+    __typename: "ProductTypeCountableEdge";
+    node: InitialProductFilterProductTypes_productTypes_edges_node;
 }
 
 export interface InitialProductFilterProductTypes_productTypes {
-  __typename: "ProductTypeCountableConnection";
-  edges: InitialProductFilterProductTypes_productTypes_edges[];
+    __typename: "ProductTypeCountableConnection";
+    edges: InitialProductFilterProductTypes_productTypes_edges[];
 }
 
 export interface InitialProductFilterProductTypes {
-  productTypes: InitialProductFilterProductTypes_productTypes | null;
+    productTypes: InitialProductFilterProductTypes_productTypes | null;
 }
 
 export interface InitialProductFilterProductTypesVariables {
-  productTypes?: string[] | null;
+    productTypes?: string[] | null;
 }

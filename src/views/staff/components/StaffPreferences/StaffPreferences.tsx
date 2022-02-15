@@ -25,6 +25,7 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleCha
                     description: "section header",
                 })}
             />
+
             <CardContent>
                 <SingleAutocompleteSelectField
                     choices={Object.values(Locale).map((locale) => ({
@@ -44,7 +45,9 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleCha
                     value={locale}
                     onChange={(event) => onLocaleChange(event.target.value)}
                 />
+
                 <FormSpacer />
+
                 <Typography>
                     <FormattedMessage
                         defaultMessage="Please note, while all currency and date adjustments are complete, language translations are at varying degrees of completion."

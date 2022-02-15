@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { AccountErrorCode, AddressTypeEnum } from "./../../../types/globalTypes";
 
 // ====================================================
@@ -10,23 +10,23 @@ import { AccountErrorCode, AddressTypeEnum } from "./../../../types/globalTypes"
 // ====================================================
 
 export interface ExternalAuthenticationUrl_externalAuthenticationUrl_errors {
-  __typename: "AccountError";
-  code: AccountErrorCode;
-  field: string | null;
-  addressType: AddressTypeEnum | null;
+    __typename: "AccountError";
+    code: AccountErrorCode;
+    field: string | null;
+    addressType: AddressTypeEnum | null;
 }
 
 export interface ExternalAuthenticationUrl_externalAuthenticationUrl {
-  __typename: "ExternalAuthenticationUrl";
-  authenticationData: any | null;
-  errors: ExternalAuthenticationUrl_externalAuthenticationUrl_errors[];
+    __typename: "ExternalAuthenticationUrl";
+    authenticationData: any | null;
+    errors: ExternalAuthenticationUrl_externalAuthenticationUrl_errors[];
 }
 
 export interface ExternalAuthenticationUrl {
-  externalAuthenticationUrl: ExternalAuthenticationUrl_externalAuthenticationUrl | null;
+    externalAuthenticationUrl: ExternalAuthenticationUrl_externalAuthenticationUrl | null;
 }
 
 export interface ExternalAuthenticationUrlVariables {
-  pluginId: string;
-  input: any;
+    pluginId: string;
+    input: any;
 }

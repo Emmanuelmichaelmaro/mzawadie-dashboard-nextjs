@@ -1,5 +1,5 @@
-import { useRouter } from "next/router";
 import React from "react";
+import useRouter from "use-react-router";
 
 import appStateReducer, { AppStateReducerAction } from "./reducer";
 import IAppState, { initialAppState } from "./state";
@@ -13,7 +13,7 @@ export const AppStateContext = React.createContext<AppStateContextType>([
 ]);
 
 const AppStateProvider: React.FC = ({ children }) => {
-    const router = useRouter();
+    const { location } = useRouter();
 
     const stateAndDispatch = React.useReducer(appStateReducer, initialAppState);
 
@@ -28,7 +28,8 @@ const AppStateProvider: React.FC = ({ children }) => {
                 type: "displayError",
             });
         }
-    }, [dispatch, router, state.error]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [location]);
 
     return <AppStateContext.Provider value={stateAndDispatch}>{children}</AppStateContext.Provider>;
 };

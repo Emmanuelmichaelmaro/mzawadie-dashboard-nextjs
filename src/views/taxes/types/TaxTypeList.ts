@@ -8,11 +8,11 @@
 // ====================================================
 
 export interface TaxTypeList_taxTypes {
-  __typename: "TaxType";
-  description: string | null;
-  taxCode: string | null;
+    __typename: "TaxType";
+    description: string | null;
+    taxCode: string | null;
 }
 
 export interface TaxTypeList {
-  taxTypes: (TaxTypeList_taxTypes | null)[] | null;
+    taxTypes: (TaxTypeList_taxTypes | null)[] | null;
 }

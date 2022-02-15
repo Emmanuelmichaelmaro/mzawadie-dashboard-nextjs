@@ -1,5 +1,5 @@
 // @ts-nocheck
-// import { OutputData } from "@editorjs/editorjs";
+import { OutputData } from "@editorjs/editorjs";
 import { MetadataFormData } from "@mzawadie/components/Metadata";
 import { RichTextEditorChange } from "@mzawadie/components/RichTextEditor";
 import useForm, { FormChange } from "@mzawadie/hooks/useForm";
@@ -13,14 +13,6 @@ import { CollectionDetails_collection } from "@mzawadie/views/collections/types/
 import { createChannelsChangeHandler } from "@mzawadie/views/collections/utils";
 import dynamic from "next/dynamic";
 import React from "react";
-
-const OutputData = dynamic(
-    async () => {
-        const moduleO = await import("@editorjs/editorjs");
-        return moduleO.OutputData;
-    },
-    { ssr: false }
-);
 
 export interface CollectionUpdateFormData extends MetadataFormData {
     backgroundImageAlt: string;

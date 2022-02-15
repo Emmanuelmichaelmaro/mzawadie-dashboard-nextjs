@@ -8,59 +8,59 @@
 // ====================================================
 
 export interface ShippingZones_shippingZones_edges_node_metadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
+    __typename: "MetadataItem";
+    key: string;
+    value: string;
 }
 
 export interface ShippingZones_shippingZones_edges_node_privateMetadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
+    __typename: "MetadataItem";
+    key: string;
+    value: string;
 }
 
 export interface ShippingZones_shippingZones_edges_node_countries {
-  __typename: "CountryDisplay";
-  code: string;
-  country: string;
+    __typename: "CountryDisplay";
+    code: string;
+    country: string;
 }
 
 export interface ShippingZones_shippingZones_edges_node {
-  __typename: "ShippingZone";
-  metadata: (ShippingZones_shippingZones_edges_node_metadata | null)[];
-  privateMetadata: (ShippingZones_shippingZones_edges_node_privateMetadata | null)[];
-  id: string;
-  countries: (ShippingZones_shippingZones_edges_node_countries | null)[] | null;
-  name: string;
-  description: string | null;
+    __typename: "ShippingZone";
+    metadata: (ShippingZones_shippingZones_edges_node_metadata | null)[];
+    privateMetadata: (ShippingZones_shippingZones_edges_node_privateMetadata | null)[];
+    id: string;
+    countries: (ShippingZones_shippingZones_edges_node_countries | null)[] | null;
+    name: string;
+    description: string | null;
 }
 
 export interface ShippingZones_shippingZones_edges {
-  __typename: "ShippingZoneCountableEdge";
-  node: ShippingZones_shippingZones_edges_node;
+    __typename: "ShippingZoneCountableEdge";
+    node: ShippingZones_shippingZones_edges_node;
 }
 
 export interface ShippingZones_shippingZones_pageInfo {
-  __typename: "PageInfo";
-  endCursor: string | null;
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
-  startCursor: string | null;
+    __typename: "PageInfo";
+    endCursor: string | null;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+    startCursor: string | null;
 }
 
 export interface ShippingZones_shippingZones {
-  __typename: "ShippingZoneCountableConnection";
-  edges: ShippingZones_shippingZones_edges[];
-  pageInfo: ShippingZones_shippingZones_pageInfo;
+    __typename: "ShippingZoneCountableConnection";
+    edges: ShippingZones_shippingZones_edges[];
+    pageInfo: ShippingZones_shippingZones_pageInfo;
 }
 
 export interface ShippingZones {
-  shippingZones: ShippingZones_shippingZones | null;
+    shippingZones: ShippingZones_shippingZones | null;
 }
 
 export interface ShippingZonesVariables {
-  first?: number | null;
-  after?: string | null;
-  last?: number | null;
-  before?: string | null;
+    first?: number | null;
+    after?: string | null;
+    last?: number | null;
+    before?: string | null;
 }

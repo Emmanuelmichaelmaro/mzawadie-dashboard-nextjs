@@ -8,6 +8,6 @@
 // ====================================================
 
 export interface OrderSettingsFragment {
-  __typename: "OrderSettings";
-  automaticallyConfirmAllNewOrders: boolean;
+    __typename: "OrderSettings";
+    automaticallyConfirmAllNewOrders: boolean;
 }

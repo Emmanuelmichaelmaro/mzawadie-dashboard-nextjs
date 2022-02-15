@@ -19,13 +19,12 @@ import TableCellAvatar from "@mzawadie/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@mzawadie/components/TableCellAvatar/Avatar";
 import TableHead from "@mzawadie/components/TableHead";
 import TablePagination from "@mzawadie/components/TablePagination";
+import { ListActions, PageListProps, maybe, renderCollection } from "@mzawadie/core";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe, renderCollection } from "../../../../misc";
-import { ListActions, PageListProps } from "../../../../types";
 import { CollectionDetails_collection } from "../../types/CollectionDetails";
 
 const useStyles = makeStyles(

@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import {
     Button,
@@ -14,13 +13,12 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import CardTitle from "@mzawadie/components/CardTitle";
 import ResponsiveTable from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
+import { getStringOrPlaceholder, maybe, renderCollection } from "@mzawadie/core";
 import { CountryFragment } from "@mzawadie/fragments/types/CountryFragment";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-
-import { getStringOrPlaceholder, maybe, renderCollection } from "../../misc";
 
 export interface CountryListProps {
     countries: CountryFragment[];

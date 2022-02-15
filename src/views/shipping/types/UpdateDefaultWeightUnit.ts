@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { WeightUnitsEnum } from "./../../../types/globalTypes";
 
 // ====================================================
@@ -10,26 +10,26 @@ import { WeightUnitsEnum } from "./../../../types/globalTypes";
 // ====================================================
 
 export interface UpdateDefaultWeightUnit_shopSettingsUpdate_errors {
-  __typename: "ShopError";
-  field: string | null;
-  message: string | null;
+    __typename: "ShopError";
+    field: string | null;
+    message: string | null;
 }
 
 export interface UpdateDefaultWeightUnit_shopSettingsUpdate_shop {
-  __typename: "Shop";
-  defaultWeightUnit: WeightUnitsEnum | null;
+    __typename: "Shop";
+    defaultWeightUnit: WeightUnitsEnum | null;
 }
 
 export interface UpdateDefaultWeightUnit_shopSettingsUpdate {
-  __typename: "ShopSettingsUpdate";
-  errors: UpdateDefaultWeightUnit_shopSettingsUpdate_errors[];
-  shop: UpdateDefaultWeightUnit_shopSettingsUpdate_shop | null;
+    __typename: "ShopSettingsUpdate";
+    errors: UpdateDefaultWeightUnit_shopSettingsUpdate_errors[];
+    shop: UpdateDefaultWeightUnit_shopSettingsUpdate_shop | null;
 }
 
 export interface UpdateDefaultWeightUnit {
-  shopSettingsUpdate: UpdateDefaultWeightUnit_shopSettingsUpdate | null;
+    shopSettingsUpdate: UpdateDefaultWeightUnit_shopSettingsUpdate | null;
 }
 
 export interface UpdateDefaultWeightUnitVariables {
-  unit?: WeightUnitsEnum | null;
+    unit?: WeightUnitsEnum | null;
 }

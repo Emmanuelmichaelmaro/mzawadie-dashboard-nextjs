@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@mzawadie/components/ConfirmButton";
@@ -11,10 +10,12 @@ import { MultiAutocompleteChoiceType } from "@mzawadie/components/MultiAutocompl
 import PageHeader from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
+import { ChannelProps, FetchMoreProps, SearchProps, getStringOrPlaceholder } from "@mzawadie/core";
 import { ShippingErrorFragment } from "@mzawadie/fragments/types/ShippingErrorFragment";
 import { ShippingZoneDetailsFragment_warehouses } from "@mzawadie/fragments/types/ShippingZoneDetailsFragment";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import useStateFromProps from "@mzawadie/hooks/useStateFromProps";
+import { ShippingMethodTypeEnum } from "@mzawadie/types/globalTypes";
 import createMultiAutocompleteSelectHandler from "@mzawadie/utils/handlers/multiAutocompleteSelectChangeHandler";
 import { mapNodeToChoice } from "@mzawadie/utils/maps";
 import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChangeTrigger";
@@ -24,9 +25,6 @@ import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { getStringOrPlaceholder } from "../../../../misc";
-import { ChannelProps, FetchMoreProps, SearchProps } from "../../../../types";
-import { ShippingMethodTypeEnum } from "../../../../types/globalTypes";
 import ShippingZoneInfo from "../ShippingZoneInfo";
 import ShippingZoneRates from "../ShippingZoneRates";
 import ShippingZoneSettingsCard from "../ShippingZoneSettingsCard";

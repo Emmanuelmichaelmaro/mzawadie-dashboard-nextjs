@@ -1,6 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { gql } from "@apollo/client";
+import { TypedMutation } from "@mzawadie/core";
 import {
     saleDetailsFragment,
     saleFragment,
@@ -9,7 +9,6 @@ import {
 } from "@mzawadie/fragments/discounts";
 import { discountErrorFragment } from "@mzawadie/fragments/errors";
 import makeMutation from "@mzawadie/hooks/makeMutation";
-import { TypedMutation } from "@mzawadie/mutations";
 import {
     SaleBulkDelete,
     SaleBulkDeleteVariables,

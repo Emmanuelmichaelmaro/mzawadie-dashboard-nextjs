@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { JobStatusEnum } from "./../../../types/globalTypes";
 
 // ====================================================
@@ -10,14 +10,14 @@ import { JobStatusEnum } from "./../../../types/globalTypes";
 // ====================================================
 
 export interface AppsInstallations_appsInstallations {
-  __typename: "AppInstallation";
-  status: JobStatusEnum;
-  message: string | null;
-  appName: string;
-  manifestUrl: string;
-  id: string;
+    __typename: "AppInstallation";
+    status: JobStatusEnum;
+    message: string | null;
+    appName: string;
+    manifestUrl: string;
+    id: string;
 }
 
 export interface AppsInstallations {
-  appsInstallations: AppsInstallations_appsInstallations[];
+    appsInstallations: AppsInstallations_appsInstallations[];
 }

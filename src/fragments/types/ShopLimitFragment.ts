@@ -8,30 +8,30 @@
 // ====================================================
 
 export interface ShopLimitFragment_limits_currentUsage {
-  __typename: "Limits";
-  channels: number | null;
-  orders: number | null;
-  productVariants: number | null;
-  staffUsers: number | null;
-  warehouses: number | null;
+    __typename: "Limits";
+    channels: number | null;
+    orders: number | null;
+    productVariants: number | null;
+    staffUsers: number | null;
+    warehouses: number | null;
 }
 
 export interface ShopLimitFragment_limits_allowedUsage {
-  __typename: "Limits";
-  channels: number | null;
-  orders: number | null;
-  productVariants: number | null;
-  staffUsers: number | null;
-  warehouses: number | null;
+    __typename: "Limits";
+    channels: number | null;
+    orders: number | null;
+    productVariants: number | null;
+    staffUsers: number | null;
+    warehouses: number | null;
 }
 
 export interface ShopLimitFragment_limits {
-  __typename: "LimitInfo";
-  currentUsage: ShopLimitFragment_limits_currentUsage;
-  allowedUsage: ShopLimitFragment_limits_allowedUsage;
+    __typename: "LimitInfo";
+    currentUsage: ShopLimitFragment_limits_currentUsage;
+    allowedUsage: ShopLimitFragment_limits_allowedUsage;
 }
 
 export interface ShopLimitFragment {
-  __typename: "Shop";
-  limits: ShopLimitFragment_limits;
+    __typename: "Shop";
+    limits: ShopLimitFragment_limits;
 }

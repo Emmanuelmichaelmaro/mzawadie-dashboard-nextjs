@@ -1,14 +1,20 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { DialogContentText } from "@material-ui/core";
 import ActionDialog from "@mzawadie/components/ActionDialog";
 import useAppChannel from "@mzawadie/components/AppLayout/AppChannelContext";
 import NotFoundPage from "@mzawadie/components/NotFoundPage";
-import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY, commonMessages } from "@mzawadie/core";
+import {
+    DEFAULT_INITIAL_SEARCH_DATA,
+    PAGINATE_BY,
+    commonMessages,
+    findValueInEnum,
+    getStringOrPlaceholder,
+} from "@mzawadie/core";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import useNotifier from "@mzawadie/hooks/useNotifier";
 import { createPaginationState } from "@mzawadie/hooks/usePaginator";
 import useShop from "@mzawadie/hooks/useShop";
+import { CountryCode } from "@mzawadie/types/globalTypes";
 import { arrayDiff } from "@mzawadie/utils/arrays";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@mzawadie/utils/handlers/metadataUpdateHandler";
@@ -28,8 +34,6 @@ import { useWarehouseCreate } from "@mzawadie/views/warehouses/mutations";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { findValueInEnum, getStringOrPlaceholder } from "../../../../misc";
-import { CountryCode } from "../../../../types/globalTypes";
 import ShippingZoneDetailsPage from "../../components/ShippingZoneDetailsPage";
 import { FormData } from "../../components/ShippingZoneDetailsPage/types";
 import { useShippingZone } from "../../queries";

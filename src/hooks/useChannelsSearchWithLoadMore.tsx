@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // @ts-nocheck
 import { useBaseChannelsList } from "@mzawadie/views/channels/queries";
 import chunk from "lodash/chunk";

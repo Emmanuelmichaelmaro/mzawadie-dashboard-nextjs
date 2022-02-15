@@ -2,7 +2,6 @@
 // @ts-nocheck
 import { LinearProgress, useMediaQuery } from "@material-ui/core";
 import { isDarkTheme } from "@mzawadie/core";
-import { useAuth } from "@mzawadie/sdk/lib/src";
 import { staffMemberDetailsUrl } from "@mzawadie/views/staff/urls";
 import {
     makeStyles,
@@ -14,12 +13,13 @@ import {
     useTheme,
 } from "@saleor/macaw-ui";
 import classNames from "classnames";
-import { useRouter } from "next/router";
 import React from "react";
 import { useIntl } from "react-intl";
+import useRouter from "use-react-router";
 
 import useAppState from "../../hooks/useAppState";
 import useNavigator from "../../hooks/useNavigator";
+import useUser from "../../hooks/useUser";
 import Container from "../Container";
 import ErrorPage from "../ErrorPage";
 import Navigator from "../Navigator";
@@ -123,7 +123,7 @@ interface AppLayoutProps {
 const AppLayout: React.FC<AppLayoutProps> = ({ children }: AppLayoutProps) => {
     const intl = useIntl();
 
-    const router = useRouter();
+    const { location } = useRouter();
 
     const navigate = useNavigator();
 
@@ -131,7 +131,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }: AppLayoutProps) => {
 
     const appHeaderAnchor = useBacklink();
 
-    const { signOut, user } = useAuth();
+    const { logout, user } = useUser();
 
     const { anchor: appActionAnchor, docked } = useActionBar();
 
@@ -145,11 +145,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }: AppLayoutProps) => {
 
     const menuStructure = createMenuStructure(intl, user);
 
-    const activeMenu = menuStructure.find((menuItem) =>
-        typeof window !== "undefined"
-            ? isMenuActive(window.location.pathname, menuItem)
-            : isMenuActive(router.asPath, menuItem)
-    )?.id;
+    const activeMenu = menuStructure.find((menuItem) => isMenuActive(location.pathname, menuItem))?.id;
 
     const [isNavigatorVisible, setNavigatorVisibility] = React.useState(false);
 
@@ -214,7 +210,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }: AppLayoutProps) => {
                                             <UserChip
                                                 isDarkThemeEnabled={isDarkTheme(themeType)}
                                                 user={user}
-                                                onLogout={signOut}
+                                                onLogout={logout}
                                                 onProfileClick={() =>
                                                     navigate(staffMemberDetailsUrl(user?.id))
                                                 }

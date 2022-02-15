@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { LanguageCodeEnum } from "./../../../types/globalTypes";
 
 // ====================================================
@@ -10,46 +10,58 @@ import { LanguageCodeEnum } from "./../../../types/globalTypes";
 // ====================================================
 
 export interface CategoryTranslationDetails_translation_ProductTranslatableContent {
-  __typename: "ProductTranslatableContent" | "CollectionTranslatableContent" | "AttributeTranslatableContent" | "AttributeValueTranslatableContent" | "ProductVariantTranslatableContent" | "PageTranslatableContent" | "ShippingMethodTranslatableContent" | "SaleTranslatableContent" | "VoucherTranslatableContent" | "MenuItemTranslatableContent";
+    __typename:
+        | "ProductTranslatableContent"
+        | "CollectionTranslatableContent"
+        | "AttributeTranslatableContent"
+        | "AttributeValueTranslatableContent"
+        | "ProductVariantTranslatableContent"
+        | "PageTranslatableContent"
+        | "ShippingMethodTranslatableContent"
+        | "SaleTranslatableContent"
+        | "VoucherTranslatableContent"
+        | "MenuItemTranslatableContent";
 }
 
 export interface CategoryTranslationDetails_translation_CategoryTranslatableContent_translation_language {
-  __typename: "LanguageDisplay";
-  language: string;
+    __typename: "LanguageDisplay";
+    language: string;
 }
 
 export interface CategoryTranslationDetails_translation_CategoryTranslatableContent_translation {
-  __typename: "CategoryTranslation";
-  id: string;
-  description: any | null;
-  language: CategoryTranslationDetails_translation_CategoryTranslatableContent_translation_language;
-  name: string | null;
-  seoDescription: string | null;
-  seoTitle: string | null;
+    __typename: "CategoryTranslation";
+    id: string;
+    description: any | null;
+    language: CategoryTranslationDetails_translation_CategoryTranslatableContent_translation_language;
+    name: string | null;
+    seoDescription: string | null;
+    seoTitle: string | null;
 }
 
 export interface CategoryTranslationDetails_translation_CategoryTranslatableContent_category {
-  __typename: "Category";
-  id: string;
-  name: string;
-  description: any | null;
-  seoDescription: string | null;
-  seoTitle: string | null;
+    __typename: "Category";
+    id: string;
+    name: string;
+    description: any | null;
+    seoDescription: string | null;
+    seoTitle: string | null;
 }
 
 export interface CategoryTranslationDetails_translation_CategoryTranslatableContent {
-  __typename: "CategoryTranslatableContent";
-  translation: CategoryTranslationDetails_translation_CategoryTranslatableContent_translation | null;
-  category: CategoryTranslationDetails_translation_CategoryTranslatableContent_category | null;
+    __typename: "CategoryTranslatableContent";
+    translation: CategoryTranslationDetails_translation_CategoryTranslatableContent_translation | null;
+    category: CategoryTranslationDetails_translation_CategoryTranslatableContent_category | null;
 }
 
-export type CategoryTranslationDetails_translation = CategoryTranslationDetails_translation_ProductTranslatableContent | CategoryTranslationDetails_translation_CategoryTranslatableContent;
+export type CategoryTranslationDetails_translation =
+    | CategoryTranslationDetails_translation_ProductTranslatableContent
+    | CategoryTranslationDetails_translation_CategoryTranslatableContent;
 
 export interface CategoryTranslationDetails {
-  translation: CategoryTranslationDetails_translation | null;
+    translation: CategoryTranslationDetails_translation | null;
 }
 
 export interface CategoryTranslationDetailsVariables {
-  id: string;
-  language: LanguageCodeEnum;
+    id: string;
+    language: LanguageCodeEnum;
 }

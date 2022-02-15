@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { ShippingZoneFilterInput } from "./../../../types/globalTypes";
 
 // ====================================================
@@ -10,25 +10,25 @@ import { ShippingZoneFilterInput } from "./../../../types/globalTypes";
 // ====================================================
 
 export interface ChannelShippingZones_shippingZones_edges_node {
-  __typename: "ShippingZone";
-  id: string;
-  name: string;
+    __typename: "ShippingZone";
+    id: string;
+    name: string;
 }
 
 export interface ChannelShippingZones_shippingZones_edges {
-  __typename: "ShippingZoneCountableEdge";
-  node: ChannelShippingZones_shippingZones_edges_node;
+    __typename: "ShippingZoneCountableEdge";
+    node: ChannelShippingZones_shippingZones_edges_node;
 }
 
 export interface ChannelShippingZones_shippingZones {
-  __typename: "ShippingZoneCountableConnection";
-  edges: ChannelShippingZones_shippingZones_edges[];
+    __typename: "ShippingZoneCountableConnection";
+    edges: ChannelShippingZones_shippingZones_edges[];
 }
 
 export interface ChannelShippingZones {
-  shippingZones: ChannelShippingZones_shippingZones | null;
+    shippingZones: ChannelShippingZones_shippingZones | null;
 }
 
 export interface ChannelShippingZonesVariables {
-  filter?: ShippingZoneFilterInput | null;
+    filter?: ShippingZoneFilterInput | null;
 }

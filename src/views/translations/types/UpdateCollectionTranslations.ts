@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { TranslationInput, LanguageCodeEnum } from "./../../../types/globalTypes";
 
 // ====================================================
@@ -10,48 +10,48 @@ import { TranslationInput, LanguageCodeEnum } from "./../../../types/globalTypes
 // ====================================================
 
 export interface UpdateCollectionTranslations_collectionTranslate_errors {
-  __typename: "TranslationError";
-  field: string | null;
-  message: string | null;
+    __typename: "TranslationError";
+    field: string | null;
+    message: string | null;
 }
 
 export interface UpdateCollectionTranslations_collectionTranslate_collection_translation_language {
-  __typename: "LanguageDisplay";
-  language: string;
+    __typename: "LanguageDisplay";
+    language: string;
 }
 
 export interface UpdateCollectionTranslations_collectionTranslate_collection_translation {
-  __typename: "CollectionTranslation";
-  id: string;
-  description: any | null;
-  language: UpdateCollectionTranslations_collectionTranslate_collection_translation_language;
-  name: string | null;
-  seoDescription: string | null;
-  seoTitle: string | null;
+    __typename: "CollectionTranslation";
+    id: string;
+    description: any | null;
+    language: UpdateCollectionTranslations_collectionTranslate_collection_translation_language;
+    name: string | null;
+    seoDescription: string | null;
+    seoTitle: string | null;
 }
 
 export interface UpdateCollectionTranslations_collectionTranslate_collection {
-  __typename: "Collection";
-  id: string;
-  name: string;
-  description: any | null;
-  seoDescription: string | null;
-  seoTitle: string | null;
-  translation: UpdateCollectionTranslations_collectionTranslate_collection_translation | null;
+    __typename: "Collection";
+    id: string;
+    name: string;
+    description: any | null;
+    seoDescription: string | null;
+    seoTitle: string | null;
+    translation: UpdateCollectionTranslations_collectionTranslate_collection_translation | null;
 }
 
 export interface UpdateCollectionTranslations_collectionTranslate {
-  __typename: "CollectionTranslate";
-  errors: UpdateCollectionTranslations_collectionTranslate_errors[];
-  collection: UpdateCollectionTranslations_collectionTranslate_collection | null;
+    __typename: "CollectionTranslate";
+    errors: UpdateCollectionTranslations_collectionTranslate_errors[];
+    collection: UpdateCollectionTranslations_collectionTranslate_collection | null;
 }
 
 export interface UpdateCollectionTranslations {
-  collectionTranslate: UpdateCollectionTranslations_collectionTranslate | null;
+    collectionTranslate: UpdateCollectionTranslations_collectionTranslate | null;
 }
 
 export interface UpdateCollectionTranslationsVariables {
-  id: string;
-  input: TranslationInput;
-  language: LanguageCodeEnum;
+    id: string;
+    input: TranslationInput;
+    language: LanguageCodeEnum;
 }

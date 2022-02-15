@@ -1,22 +1,22 @@
 const path = require("path");
 
 module.exports = {
-    stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
-    addons: [
+    "stories": [
+        "../src/**/*.stories.mdx",
+        "../src/**/*.stories.@(js|jsx|ts|tsx)"
+    ],
+    "addons": [
         "@storybook/addon-links",
         "@storybook/addon-essentials",
         {
-            name: "@storybook/addon-postcss",
-            options: {
-                postcssLoaderOptions: {
-                    implementation: require("postcss"),
+            "name": "@storybook/addon-postcss",
+            "options": {
+                "postcssLoaderOptions": {
+                    "implementation": require("postcss"),
                 },
             },
-        },
+        }
     ],
-    core: {
-        builder: "webpack5",
-    },
-    // Add next js preset
-    presets: [path.resolve(__dirname, "./next-preset.js")],
-};
+    "presets": [path.resolve(__dirname, "./addon-preset.js")],
+    "framework": "@storybook/react"
+}

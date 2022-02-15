@@ -223,6 +223,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                     </Downshift>
                 )}
             </DebounceAutocomplete>
+
             <div className={classes.chipContainer}>
                 {displayValues.map((value) => (
                     <div className={classes.chip} key={value.value}>

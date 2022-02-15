@@ -8,26 +8,26 @@
 // ====================================================
 
 export interface ProductTypeDelete_productTypeDelete_errors {
-  __typename: "ProductError";
-  field: string | null;
-  message: string | null;
+    __typename: "ProductError";
+    field: string | null;
+    message: string | null;
 }
 
 export interface ProductTypeDelete_productTypeDelete_productType {
-  __typename: "ProductType";
-  id: string;
+    __typename: "ProductType";
+    id: string;
 }
 
 export interface ProductTypeDelete_productTypeDelete {
-  __typename: "ProductTypeDelete";
-  errors: ProductTypeDelete_productTypeDelete_errors[];
-  productType: ProductTypeDelete_productTypeDelete_productType | null;
+    __typename: "ProductTypeDelete";
+    errors: ProductTypeDelete_productTypeDelete_errors[];
+    productType: ProductTypeDelete_productTypeDelete_productType | null;
 }
 
 export interface ProductTypeDelete {
-  productTypeDelete: ProductTypeDelete_productTypeDelete | null;
+    productTypeDelete: ProductTypeDelete_productTypeDelete | null;
 }
 
 export interface ProductTypeDeleteVariables {
-  id: string;
+    id: string;
 }

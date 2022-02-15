@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { PermissionGroupErrorCode } from "./../../../types/globalTypes";
 
 // ====================================================
@@ -10,20 +10,20 @@ import { PermissionGroupErrorCode } from "./../../../types/globalTypes";
 // ====================================================
 
 export interface PermissionGroupDelete_permissionGroupDelete_errors {
-  __typename: "PermissionGroupError";
-  code: PermissionGroupErrorCode;
-  field: string | null;
+    __typename: "PermissionGroupError";
+    code: PermissionGroupErrorCode;
+    field: string | null;
 }
 
 export interface PermissionGroupDelete_permissionGroupDelete {
-  __typename: "PermissionGroupDelete";
-  errors: PermissionGroupDelete_permissionGroupDelete_errors[];
+    __typename: "PermissionGroupDelete";
+    errors: PermissionGroupDelete_permissionGroupDelete_errors[];
 }
 
 export interface PermissionGroupDelete {
-  permissionGroupDelete: PermissionGroupDelete_permissionGroupDelete | null;
+    permissionGroupDelete: PermissionGroupDelete_permissionGroupDelete | null;
 }
 
 export interface PermissionGroupDeleteVariables {
-  id: string;
+    id: string;
 }

@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { AccountErrorCode, AddressTypeEnum } from "./../../../types/globalTypes";
 
 // ====================================================
@@ -10,21 +10,21 @@ import { AccountErrorCode, AddressTypeEnum } from "./../../../types/globalTypes"
 // ====================================================
 
 export interface BulkRemoveCustomers_customerBulkDelete_errors {
-  __typename: "AccountError";
-  code: AccountErrorCode;
-  field: string | null;
-  addressType: AddressTypeEnum | null;
+    __typename: "AccountError";
+    code: AccountErrorCode;
+    field: string | null;
+    addressType: AddressTypeEnum | null;
 }
 
 export interface BulkRemoveCustomers_customerBulkDelete {
-  __typename: "CustomerBulkDelete";
-  errors: BulkRemoveCustomers_customerBulkDelete_errors[];
+    __typename: "CustomerBulkDelete";
+    errors: BulkRemoveCustomers_customerBulkDelete_errors[];
 }
 
 export interface BulkRemoveCustomers {
-  customerBulkDelete: BulkRemoveCustomers_customerBulkDelete | null;
+    customerBulkDelete: BulkRemoveCustomers_customerBulkDelete | null;
 }
 
 export interface BulkRemoveCustomersVariables {
-  ids: (string | null)[];
+    ids: (string | null)[];
 }

@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { SaleFilterInput, SaleSortingInput, SaleType } from "./../../../types/globalTypes";
 
 // ====================================================
@@ -10,73 +10,73 @@ import { SaleFilterInput, SaleSortingInput, SaleType } from "./../../../types/gl
 // ====================================================
 
 export interface SaleList_sales_edges_node_metadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
+    __typename: "MetadataItem";
+    key: string;
+    value: string;
 }
 
 export interface SaleList_sales_edges_node_privateMetadata {
-  __typename: "MetadataItem";
-  key: string;
-  value: string;
+    __typename: "MetadataItem";
+    key: string;
+    value: string;
 }
 
 export interface SaleList_sales_edges_node_channelListings_channel {
-  __typename: "Channel";
-  id: string;
-  name: string;
-  currencyCode: string;
+    __typename: "Channel";
+    id: string;
+    name: string;
+    currencyCode: string;
 }
 
 export interface SaleList_sales_edges_node_channelListings {
-  __typename: "SaleChannelListing";
-  id: string;
-  channel: SaleList_sales_edges_node_channelListings_channel;
-  discountValue: number;
-  currency: string;
+    __typename: "SaleChannelListing";
+    id: string;
+    channel: SaleList_sales_edges_node_channelListings_channel;
+    discountValue: number;
+    currency: string;
 }
 
 export interface SaleList_sales_edges_node {
-  __typename: "Sale";
-  metadata: (SaleList_sales_edges_node_metadata | null)[];
-  privateMetadata: (SaleList_sales_edges_node_privateMetadata | null)[];
-  id: string;
-  name: string;
-  type: SaleType;
-  startDate: any;
-  endDate: any | null;
-  channelListings: SaleList_sales_edges_node_channelListings[] | null;
+    __typename: "Sale";
+    metadata: (SaleList_sales_edges_node_metadata | null)[];
+    privateMetadata: (SaleList_sales_edges_node_privateMetadata | null)[];
+    id: string;
+    name: string;
+    type: SaleType;
+    startDate: any;
+    endDate: any | null;
+    channelListings: SaleList_sales_edges_node_channelListings[] | null;
 }
 
 export interface SaleList_sales_edges {
-  __typename: "SaleCountableEdge";
-  node: SaleList_sales_edges_node;
+    __typename: "SaleCountableEdge";
+    node: SaleList_sales_edges_node;
 }
 
 export interface SaleList_sales_pageInfo {
-  __typename: "PageInfo";
-  endCursor: string | null;
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
-  startCursor: string | null;
+    __typename: "PageInfo";
+    endCursor: string | null;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+    startCursor: string | null;
 }
 
 export interface SaleList_sales {
-  __typename: "SaleCountableConnection";
-  edges: SaleList_sales_edges[];
-  pageInfo: SaleList_sales_pageInfo;
+    __typename: "SaleCountableConnection";
+    edges: SaleList_sales_edges[];
+    pageInfo: SaleList_sales_pageInfo;
 }
 
 export interface SaleList {
-  sales: SaleList_sales | null;
+    sales: SaleList_sales | null;
 }
 
 export interface SaleListVariables {
-  after?: string | null;
-  before?: string | null;
-  first?: number | null;
-  last?: number | null;
-  filter?: SaleFilterInput | null;
-  sort?: SaleSortingInput | null;
-  channel?: string | null;
+    after?: string | null;
+    before?: string | null;
+    first?: number | null;
+    last?: number | null;
+    filter?: SaleFilterInput | null;
+    sort?: SaleSortingInput | null;
+    channel?: string | null;
 }

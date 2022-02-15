@@ -8,36 +8,36 @@
 // ====================================================
 
 export interface SearchAttributes_search_edges_node {
-  __typename: "Attribute";
-  id: string;
-  name: string | null;
+    __typename: "Attribute";
+    id: string;
+    name: string | null;
 }
 
 export interface SearchAttributes_search_edges {
-  __typename: "AttributeCountableEdge";
-  node: SearchAttributes_search_edges_node;
+    __typename: "AttributeCountableEdge";
+    node: SearchAttributes_search_edges_node;
 }
 
 export interface SearchAttributes_search_pageInfo {
-  __typename: "PageInfo";
-  endCursor: string | null;
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
-  startCursor: string | null;
+    __typename: "PageInfo";
+    endCursor: string | null;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+    startCursor: string | null;
 }
 
 export interface SearchAttributes_search {
-  __typename: "AttributeCountableConnection";
-  edges: SearchAttributes_search_edges[];
-  pageInfo: SearchAttributes_search_pageInfo;
+    __typename: "AttributeCountableConnection";
+    edges: SearchAttributes_search_edges[];
+    pageInfo: SearchAttributes_search_pageInfo;
 }
 
 export interface SearchAttributes {
-  search: SearchAttributes_search | null;
+    search: SearchAttributes_search | null;
 }
 
 export interface SearchAttributesVariables {
-  after?: string | null;
-  first: number;
-  query: string;
+    after?: string | null;
+    first: number;
+    query: string;
 }

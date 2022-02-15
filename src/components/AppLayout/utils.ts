@@ -1,8 +1,7 @@
 // @ts-nocheck
-import { matchPath } from "@mzawadie/core";
 import { orderDraftListUrl, orderListUrl } from "@mzawadie/views/orders/urls";
 import { SidebarMenuItem } from "@saleor/macaw-ui";
-import router from "next/router";
+import { matchPath } from "react-router";
 
 export function isMenuActive(location: string, menuItem: SidebarMenuItem) {
     if (menuItem.children) {
@@ -13,7 +12,7 @@ export function isMenuActive(location: string, menuItem: SidebarMenuItem) {
     }
 
     const activeUrl = location.split("?")[0];
-    const menuItemUrl = menuItem.url?.split("?")[0];
+    const menuItemUrl = menuItem?.url?.split("?")[0];
 
     return activeUrl === orderDraftListUrl().split("?")[0] &&
         menuItemUrl === orderListUrl().split("?")[0]

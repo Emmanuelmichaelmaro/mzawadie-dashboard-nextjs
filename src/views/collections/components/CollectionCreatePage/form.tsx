@@ -1,5 +1,5 @@
 // @ts-nocheck
-// import { OutputData } from "@editorjs/editorjs";
+import { OutputData } from "@editorjs/editorjs";
 import { MetadataFormData } from "@mzawadie/components/Metadata";
 import { RichTextEditorChange } from "@mzawadie/components/RichTextEditor";
 import useForm, { FormChange, SubmitPromise } from "@mzawadie/hooks/useForm";
@@ -8,16 +8,7 @@ import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChange
 import useRichText from "@mzawadie/utils/richText/useRichText";
 import { ChannelCollectionData } from "@mzawadie/views/channels/utils";
 import { createChannelsChangeHandler } from "@mzawadie/views/collections/utils";
-import dynamic from "next/dynamic";
 import React from "react";
-
-const OutputData = dynamic(
-    async () => {
-        const moduleO = await import("@editorjs/editorjs");
-        return moduleO.OutputData;
-    },
-    { ssr: false }
-);
 
 export interface CollectionCreateFormData extends MetadataFormData {
     backgroundImage: {

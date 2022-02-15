@@ -8,16 +8,16 @@
 // ====================================================
 
 export interface CustomerCreateData_shop_countries {
-  __typename: "CountryDisplay";
-  code: string;
-  country: string;
+    __typename: "CountryDisplay";
+    code: string;
+    country: string;
 }
 
 export interface CustomerCreateData_shop {
-  __typename: "Shop";
-  countries: CustomerCreateData_shop_countries[];
+    __typename: "Shop";
+    countries: CustomerCreateData_shop_countries[];
 }
 
 export interface CustomerCreateData {
-  shop: CustomerCreateData_shop;
+    shop: CustomerCreateData_shop;
 }

@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { LanguageCodeEnum } from "./../../../types/globalTypes";
 
 // ====================================================
@@ -10,76 +10,88 @@ import { LanguageCodeEnum } from "./../../../types/globalTypes";
 // ====================================================
 
 export interface PageTranslationDetails_translation_ProductTranslatableContent {
-  __typename: "ProductTranslatableContent" | "CollectionTranslatableContent" | "CategoryTranslatableContent" | "AttributeTranslatableContent" | "AttributeValueTranslatableContent" | "ProductVariantTranslatableContent" | "ShippingMethodTranslatableContent" | "SaleTranslatableContent" | "VoucherTranslatableContent" | "MenuItemTranslatableContent";
+    __typename:
+        | "ProductTranslatableContent"
+        | "CollectionTranslatableContent"
+        | "CategoryTranslatableContent"
+        | "AttributeTranslatableContent"
+        | "AttributeValueTranslatableContent"
+        | "ProductVariantTranslatableContent"
+        | "ShippingMethodTranslatableContent"
+        | "SaleTranslatableContent"
+        | "VoucherTranslatableContent"
+        | "MenuItemTranslatableContent";
 }
 
 export interface PageTranslationDetails_translation_PageTranslatableContent_page {
-  __typename: "Page";
-  id: string;
-  content: any | null;
-  seoDescription: string | null;
-  seoTitle: string | null;
-  title: string;
+    __typename: "Page";
+    id: string;
+    content: any | null;
+    seoDescription: string | null;
+    seoTitle: string | null;
+    title: string;
 }
 
 export interface PageTranslationDetails_translation_PageTranslatableContent_translation_language {
-  __typename: "LanguageDisplay";
-  code: LanguageCodeEnum;
-  language: string;
+    __typename: "LanguageDisplay";
+    code: LanguageCodeEnum;
+    language: string;
 }
 
 export interface PageTranslationDetails_translation_PageTranslatableContent_translation {
-  __typename: "PageTranslation";
-  id: string;
-  content: any | null;
-  seoDescription: string | null;
-  seoTitle: string | null;
-  title: string | null;
-  language: PageTranslationDetails_translation_PageTranslatableContent_translation_language;
+    __typename: "PageTranslation";
+    id: string;
+    content: any | null;
+    seoDescription: string | null;
+    seoTitle: string | null;
+    title: string | null;
+    language: PageTranslationDetails_translation_PageTranslatableContent_translation_language;
 }
 
 export interface PageTranslationDetails_translation_PageTranslatableContent_attributeValues_attributeValue {
-  __typename: "AttributeValue";
-  id: string;
+    __typename: "AttributeValue";
+    id: string;
 }
 
 export interface PageTranslationDetails_translation_PageTranslatableContent_attributeValues_translation_language {
-  __typename: "LanguageDisplay";
-  code: LanguageCodeEnum;
-  language: string;
+    __typename: "LanguageDisplay";
+    code: LanguageCodeEnum;
+    language: string;
 }
 
 export interface PageTranslationDetails_translation_PageTranslatableContent_attributeValues_translation {
-  __typename: "AttributeValueTranslation";
-  id: string;
-  name: string;
-  richText: any | null;
-  language: PageTranslationDetails_translation_PageTranslatableContent_attributeValues_translation_language;
+    __typename: "AttributeValueTranslation";
+    id: string;
+    name: string;
+    richText: any | null;
+    language: PageTranslationDetails_translation_PageTranslatableContent_attributeValues_translation_language;
 }
 
 export interface PageTranslationDetails_translation_PageTranslatableContent_attributeValues {
-  __typename: "AttributeValueTranslatableContent";
-  id: string;
-  name: string;
-  richText: any | null;
-  attributeValue: PageTranslationDetails_translation_PageTranslatableContent_attributeValues_attributeValue | null;
-  translation: PageTranslationDetails_translation_PageTranslatableContent_attributeValues_translation | null;
+    __typename: "AttributeValueTranslatableContent";
+    id: string;
+    name: string;
+    richText: any | null;
+    attributeValue: PageTranslationDetails_translation_PageTranslatableContent_attributeValues_attributeValue | null;
+    translation: PageTranslationDetails_translation_PageTranslatableContent_attributeValues_translation | null;
 }
 
 export interface PageTranslationDetails_translation_PageTranslatableContent {
-  __typename: "PageTranslatableContent";
-  page: PageTranslationDetails_translation_PageTranslatableContent_page | null;
-  translation: PageTranslationDetails_translation_PageTranslatableContent_translation | null;
-  attributeValues: PageTranslationDetails_translation_PageTranslatableContent_attributeValues[];
+    __typename: "PageTranslatableContent";
+    page: PageTranslationDetails_translation_PageTranslatableContent_page | null;
+    translation: PageTranslationDetails_translation_PageTranslatableContent_translation | null;
+    attributeValues: PageTranslationDetails_translation_PageTranslatableContent_attributeValues[];
 }
 
-export type PageTranslationDetails_translation = PageTranslationDetails_translation_ProductTranslatableContent | PageTranslationDetails_translation_PageTranslatableContent;
+export type PageTranslationDetails_translation =
+    | PageTranslationDetails_translation_ProductTranslatableContent
+    | PageTranslationDetails_translation_PageTranslatableContent;
 
 export interface PageTranslationDetails {
-  translation: PageTranslationDetails_translation | null;
+    translation: PageTranslationDetails_translation | null;
 }
 
 export interface PageTranslationDetailsVariables {
-  id: string;
-  language: LanguageCodeEnum;
+    id: string;
+    language: LanguageCodeEnum;
 }

@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { AttributeErrorCode } from "./../../../types/globalTypes";
 
 // ====================================================
@@ -10,20 +10,20 @@ import { AttributeErrorCode } from "./../../../types/globalTypes";
 // ====================================================
 
 export interface AttributeBulkDelete_attributeBulkDelete_errors {
-  __typename: "AttributeError";
-  code: AttributeErrorCode;
-  field: string | null;
+    __typename: "AttributeError";
+    code: AttributeErrorCode;
+    field: string | null;
 }
 
 export interface AttributeBulkDelete_attributeBulkDelete {
-  __typename: "AttributeBulkDelete";
-  errors: AttributeBulkDelete_attributeBulkDelete_errors[];
+    __typename: "AttributeBulkDelete";
+    errors: AttributeBulkDelete_attributeBulkDelete_errors[];
 }
 
 export interface AttributeBulkDelete {
-  attributeBulkDelete: AttributeBulkDelete_attributeBulkDelete | null;
+    attributeBulkDelete: AttributeBulkDelete_attributeBulkDelete | null;
 }
 
 export interface AttributeBulkDeleteVariables {
-  ids: string[];
+    ids: string[];
 }

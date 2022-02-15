@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { ShippingErrorCode } from "./../../types/globalTypes";
 
 // ====================================================
@@ -10,7 +10,7 @@ import { ShippingErrorCode } from "./../../types/globalTypes";
 // ====================================================
 
 export interface ShippingErrorFragment {
-  __typename: "ShippingError";
-  code: ShippingErrorCode;
-  field: string | null;
+    __typename: "ShippingError";
+    code: ShippingErrorCode;
+    field: string | null;
 }

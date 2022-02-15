@@ -8,38 +8,38 @@
 // ====================================================
 
 export interface CollectionProductFragment_productType {
-  __typename: "ProductType";
-  id: string;
-  name: string;
+    __typename: "ProductType";
+    id: string;
+    name: string;
 }
 
 export interface CollectionProductFragment_thumbnail {
-  __typename: "Image";
-  url: string;
+    __typename: "Image";
+    url: string;
 }
 
 export interface CollectionProductFragment_channelListings_channel {
-  __typename: "Channel";
-  id: string;
-  name: string;
-  currencyCode: string;
+    __typename: "Channel";
+    id: string;
+    name: string;
+    currencyCode: string;
 }
 
 export interface CollectionProductFragment_channelListings {
-  __typename: "ProductChannelListing";
-  isPublished: boolean;
-  publicationDate: any | null;
-  isAvailableForPurchase: boolean | null;
-  availableForPurchase: any | null;
-  visibleInListings: boolean;
-  channel: CollectionProductFragment_channelListings_channel;
+    __typename: "ProductChannelListing";
+    isPublished: boolean;
+    publicationDate: any | null;
+    isAvailableForPurchase: boolean | null;
+    availableForPurchase: any | null;
+    visibleInListings: boolean;
+    channel: CollectionProductFragment_channelListings_channel;
 }
 
 export interface CollectionProductFragment {
-  __typename: "Product";
-  id: string;
-  name: string;
-  productType: CollectionProductFragment_productType;
-  thumbnail: CollectionProductFragment_thumbnail | null;
-  channelListings: CollectionProductFragment_channelListings[] | null;
+    __typename: "Product";
+    id: string;
+    name: string;
+    productType: CollectionProductFragment_productType;
+    thumbnail: CollectionProductFragment_thumbnail | null;
+    channelListings: CollectionProductFragment_channelListings[] | null;
 }

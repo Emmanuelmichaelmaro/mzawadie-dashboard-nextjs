@@ -32,11 +32,10 @@ import {
     displayDemoMessage,
     getTokens,
     removeTokens,
-    removeUserData,
     setAuthToken,
     setTokens,
 } from "@mzawadie/views/auth/utils";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 import { UseAuthProvider, UseAuthProviderOpts } from "./useAuthProvider";
 
@@ -71,7 +70,7 @@ export const useExternalAuthProvider = ({
     setAuthPlugin,
 }: UseExternalAuthProviderOpts): UseExternalAuthProvider => {
     const [userContext, setUserContext] = useLocalStorage<undefined | User>("user", undefined);
-    const [initializing, setInitializing] = useState(true);
+
     const autoLoginPromise = useRef<Promise<any>>();
     const refreshPromise = useRef<Promise<boolean>>();
 
@@ -85,15 +84,12 @@ export const useExternalAuthProvider = ({
             autoLoginPromise.current = tokenVerify({
                 variables: { input, pluginId: authPlugin },
             });
-            console.log("AuthPlugin detected, but there is no User context. I am External Provider!");
         }
     }, []);
 
     useEffect(() => {
         if (authPlugin && userContext) {
             const { id, email } = userContext;
-
-            console.log("AuthPlugin detected && User context is available. I am External Provider!");
 
             errorTracker.setUserData({
                 email,
@@ -102,7 +98,7 @@ export const useExternalAuthProvider = ({
             });
 
             if (!userContext.isStaff) {
-                // logout();
+                logout();
                 notify({
                     status: "error",
                     text: intl.formatMessage(commonMessages.unauthorizedDashboardAccess),
@@ -116,7 +112,6 @@ export const useExternalAuthProvider = ({
         setUserContext(undefined);
         setAuthPlugin(undefined);
         removeTokens();
-        removeUserData();
     };
 
     const [externalAuthenticationUrl] = useMutation<
@@ -217,7 +212,6 @@ export const useExternalAuthProvider = ({
             window.location.href = authenticationData.authorizationUrl;
         } else {
             setAuthPlugin(undefined);
-            setInitializing(false);
         }
     };
 
@@ -234,7 +228,6 @@ export const useExternalAuthProvider = ({
             }
         } else {
             setAuthPlugin(undefined);
-            setInitializing(false);
         }
 
         return result?.data?.externalObtainAccessTokens;
@@ -272,6 +265,5 @@ export const useExternalAuthProvider = ({
         tokenRefresh: refreshToken,
         tokenVerifyLoading: tokenVerifyOpts.loading,
         user: userContext,
-        initializing,
     };
 };

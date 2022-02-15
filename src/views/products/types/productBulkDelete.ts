@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { ProductErrorCode } from "./../../../types/globalTypes";
 
 // ====================================================
@@ -10,20 +10,20 @@ import { ProductErrorCode } from "./../../../types/globalTypes";
 // ====================================================
 
 export interface productBulkDelete_productBulkDelete_errors {
-  __typename: "ProductError";
-  code: ProductErrorCode;
-  field: string | null;
+    __typename: "ProductError";
+    code: ProductErrorCode;
+    field: string | null;
 }
 
 export interface productBulkDelete_productBulkDelete {
-  __typename: "ProductBulkDelete";
-  errors: productBulkDelete_productBulkDelete_errors[];
+    __typename: "ProductBulkDelete";
+    errors: productBulkDelete_productBulkDelete_errors[];
 }
 
 export interface productBulkDelete {
-  productBulkDelete: productBulkDelete_productBulkDelete | null;
+    productBulkDelete: productBulkDelete_productBulkDelete | null;
 }
 
 export interface productBulkDeleteVariables {
-  ids: string[];
+    ids: string[];
 }

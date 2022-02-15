@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { AppErrorCode, PermissionEnum } from "./../../../types/globalTypes";
 
 // ====================================================
@@ -10,22 +10,22 @@ import { AppErrorCode, PermissionEnum } from "./../../../types/globalTypes";
 // ====================================================
 
 export interface AppDeactivate_appDeactivate_errors {
-  __typename: "AppError";
-  field: string | null;
-  message: string | null;
-  code: AppErrorCode;
-  permissions: PermissionEnum[] | null;
+    __typename: "AppError";
+    field: string | null;
+    message: string | null;
+    code: AppErrorCode;
+    permissions: PermissionEnum[] | null;
 }
 
 export interface AppDeactivate_appDeactivate {
-  __typename: "AppDeactivate";
-  errors: AppDeactivate_appDeactivate_errors[];
+    __typename: "AppDeactivate";
+    errors: AppDeactivate_appDeactivate_errors[];
 }
 
 export interface AppDeactivate {
-  appDeactivate: AppDeactivate_appDeactivate | null;
+    appDeactivate: AppDeactivate_appDeactivate | null;
 }
 
 export interface AppDeactivateVariables {
-  id: string;
+    id: string;
 }

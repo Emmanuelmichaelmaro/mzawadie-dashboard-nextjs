@@ -1,8 +1,8 @@
 /* tslint:disable */
+
 /* eslint-disable */
 // @generated
 // This file was automatically generated and should not be edited.
-
 import { DiscountErrorCode } from "./../../../types/globalTypes";
 
 // ====================================================
@@ -10,21 +10,21 @@ import { DiscountErrorCode } from "./../../../types/globalTypes";
 // ====================================================
 
 export interface SaleDelete_saleDelete_errors {
-  __typename: "DiscountError";
-  code: DiscountErrorCode;
-  field: string | null;
-  channels: string[] | null;
+    __typename: "DiscountError";
+    code: DiscountErrorCode;
+    field: string | null;
+    channels: string[] | null;
 }
 
 export interface SaleDelete_saleDelete {
-  __typename: "SaleDelete";
-  errors: SaleDelete_saleDelete_errors[];
+    __typename: "SaleDelete";
+    errors: SaleDelete_saleDelete_errors[];
 }
 
 export interface SaleDelete {
-  saleDelete: SaleDelete_saleDelete | null;
+    saleDelete: SaleDelete_saleDelete | null;
 }
 
 export interface SaleDeleteVariables {
-  id: string;
+    id: string;
 }
