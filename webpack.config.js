@@ -37,7 +37,7 @@ const checkerPlugin = new CheckerPlugin({
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
     filename: "index.html",
     hash: true,
-    template: "./src/index.html",
+    template: "./public/index.html",
 });
 
 const environmentPlugin = new webpack.EnvironmentPlugin({
@@ -102,7 +102,7 @@ module.exports = speedMeasureWrapper((env, argv) => {
 
     if (!devMode) {
         manifestPlugin = new InjectManifest({
-            swSrc: "./src/sw.js",
+            swSrc: "./src/containers/ServiceWorker/ServiceWorker.js",
             swDest: "sw.js",
             maximumFileSizeToCacheInBytes: 5000000,
             webpackCompilationPlugins: [checkerPlugin],

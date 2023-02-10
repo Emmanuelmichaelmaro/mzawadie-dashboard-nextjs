@@ -23,15 +23,19 @@
         "isolatedModules": true, // Transpile each file as a separate module
         "outDir": "./build/typings", // All emitted typings location, if any present in src use; rimraf ./src/**/*.d.ts
         "paths": {
-            "@assets/*": ["src/assets/*"],
+            "@assets/*": ["assets/*"],
             "@locale/*": ["locale/*"],
             "@mzawadie/*": ["src/*"],
-            "@mzawadie/core/*": ["src/core/*"],
-            "@mzawadie/core": ["src/core/index.ts"],
             "@mzawadie/components/*": ["src/components/*"],
             "@mzawadie/components": ["src/components/index.ts"],
+            "@mzawadie/core/*": ["src/core/*"],
+            "@mzawadie/core": ["src/core/index.ts"],
+            "@mzawadie/containers/*": ["src/containers/*"],
+            "@mzawadie/containers": ["src/containers/index.ts"],
             "@mzawadie/hooks/*": ["src/hooks/*"],
             "@mzawadie/hooks": ["src/hooks/index.ts"],
+            "@icons/*": ["src/icons/*"],
+            "@icons": ["src/icons/index.ts"],
             "@test/*": ["testUtils/*"]
         }
     },

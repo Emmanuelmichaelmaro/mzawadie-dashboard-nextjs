@@ -1,0 +1,4 @@
+# Restrict Deployment Workflows to be Approved by Mzawadie Team
+.github/workflows/test-env* @mzawadie/cloud
+.github/workflows/deploy-* @mzawadie/cloud
+.github/workflows/notify/* @mzawadie/cloud

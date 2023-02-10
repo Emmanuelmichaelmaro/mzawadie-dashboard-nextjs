@@ -5,7 +5,7 @@ module.exports = {
         excludes: ["**/__tests__/**", "**/*.d.ts", "**/graphql/**"],
         name: "dashboard",
         service: {
-            localSchemaFile: ["schema.graphql", "src/client-schema-extensions.graphql"],
+            localSchemaFile: ["schema.graphql"],
             name: "mzawadie",
         },
     },

@@ -2,19 +2,18 @@ overwrite: true
 watch: false
 schema:
     - schema.graphql
-    - src/client-schema-extensions.ts
 documents: ["src/**/*.{ts,tsx}"]
 hooks:
     afterAllFileWrite:
         - prettier --write
 generates:
     # Get schemas from server
-    src/graphql/autogenerate/schemas.ts:
+    src/graphql/schemas.ts:
         plugins:
             - typescript
 
     # Create operations based on queries
-    src/graphql/autogenerate/operations.ts:
+    src/graphql/operations.ts:
         preset: import-types
         presetConfig:
             typesPath: ./schemas
@@ -24,7 +23,7 @@ generates:
             flattenGeneratedTypes: true
 
     # Create hooks based on queries
-    src/graphql/autogenerate/hooks.ts:
+    src/graphql/hooks.ts:
         preset: import-types
         presetConfig:
             typesPath: ./operations
@@ -38,14 +37,20 @@ generates:
             withRefetchFn: true
 
     # Create fragments based on queries
-    src/graphql/autogenerate/fragments.ts:
+    src/graphql/fragments.json:
         plugins:
             - fragment-matcher
         config:
             apolloClientVersion: 3
+            minify: false
+
+    # Create policy types based on queries
+    src/graphql/type-policies.ts:
+        plugins:
+            - typescript-apollo-client-helpers
 
     # Get schema in graphql Format
-    src/graphql/autogenerate/schema.graphql:
+    src/graphql/schema.graphql:
         plugins:
             - schema-ast
         config:

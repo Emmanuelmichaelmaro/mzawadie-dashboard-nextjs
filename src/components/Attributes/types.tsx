@@ -1,5 +1,0 @@
-export enum VariantAttributeScope {
-    ALL = "ALL",
-    VARIANT_SELECTION = "VARIANT_SELECTION",
-    NOT_VARIANT_SELECTION = "NOT_VARIANT_SELECTION",
-}

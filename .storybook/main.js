@@ -17,6 +17,6 @@ module.exports = {
             },
         }
     ],
-    "presets": [path.resolve(__dirname, "./addon-preset.js")],
+    "presets": [],
     "framework": "@storybook/react"
 }

@@ -1,6 +1,7 @@
 dist
 build
 coverage
+idea
 
 **/node_modules/*
 **/out/*
@@ -8,6 +9,7 @@ coverage
 **/.storybook/*
 
 .github
+.vscode
 
 **/__generated__/*
 

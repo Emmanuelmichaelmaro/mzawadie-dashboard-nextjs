@@ -3,10 +3,9 @@ module.exports = (api) => {
     const isTest = api.env("test");
     const isStorybook = api.env("storybook");
 
-    const ignore = isTest || isStorybook ? [] : ["**/*.test.ts", "**/*.test.tsx", "src/storybook"];
+    const ignore = isTest || isStorybook ? [] : ["**/*.test.ts", "**/*.test.tsx", "src/stories"];
 
     const presets = [
-        // "next/babel",
         [
             "@babel/preset-env",
             {

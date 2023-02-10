@@ -6,5 +6,6 @@ declare module "*.svg" {
 }
 
 declare interface Window {
+    // @ts-ignore
     PasswordCredential: PasswordCredential;
 }

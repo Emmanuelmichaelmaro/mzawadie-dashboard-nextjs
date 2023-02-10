@@ -18,6 +18,7 @@ manageTranslations({
             );
             const structuredJsonFormat = msgDescriptors.reduce((msgs, msg) => {
                 const key = msg.id.replace(/\./g, dotSeparator);
+
                 if (msgs[key] && msgs[key].context === undefined) {
                     msgs[key].context = msg.description;
                 } else {

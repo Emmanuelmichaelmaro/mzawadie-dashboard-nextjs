@@ -2,10 +2,6 @@
     "root":true,
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaVersion": 2020,
-        "ecmaFeatures":  {
-            "jsx":  true
-        },
         "project": "./tsconfig.json",
         "sourceType": "module"
     },
@@ -19,8 +15,7 @@
         "simple-import-sort",
         "import",
         "formatjs",
-        "prettier",
-        "testing-library"
+        "prettier"
     ],
     "extends": [
         "airbnb",
@@ -55,37 +50,12 @@
         }
     },
     "rules": {
-        "no-console": "off",
-        "no-debugger": "off",
-        "no-nested-ternary": "off",
-        "no-param-reassign": "off",
-        "no-restricted-globals": "off",
-        "no-shadow": "off",
-        "no-ternary": "off",
-        "no-underscore-dangle": "off",
-        "no-unused-vars": "off",
-        "no-useless-constructor": "off",
-        "consistent-return": "off",
-        "formatjs/no-offset": "error",
         "formatjs/enforce-id": [
             "error",
             {
                 "idInterpolationPattern": "[sha512:contenthash:base64:6]"
             }
         ],
-        "func-names": "off",
-        "import/first": "error",
-        "import/newline-after-import": "error",
-        "import/no-cycle": "off",
-        "import/no-duplicates": "error",
-        "import/no-extraneous-dependencies": "off",
-        "import/no-named-as-default": "off",
-        "import/export": "off",
-        "import/extensions": "off",
-        "import/prefer-default-export": "off",
-        "jsx-a11y/anchor-is-valid": "off",
-        "jsx-a11y/click-events-have-key-events": "off",
-        "jsx-a11y/no-static-element-interactions": "off",
         "max-len": [
             "warn",
             {
@@ -99,38 +69,7 @@
                 "ignoreTemplateLiterals": true,
                 "ignoreRegExpLiterals": true
             }
-        ],
-        "multiline-ternary": "off",
-        "radix": "off",
-        "react/prop-types": "off",
-        "react/jsx-key": "off",
-        "react/jsx-props-no-spreading": "off",
-        "react/jsx-no-duplicate-props": "warn",
-        "react/no-array-index-key": "off",
-        "react/no-unused-prop-types": "off",
-        "react/require-default-props": "off",
-        "react-hooks/exhaustive-deps": "off",
-        "@typescript-eslint/ban-ts-comment": "off",
-        "@typescript-eslint/ban-types": "off",
-        "@typescript-eslint/explicit-module-boundary-types": "off",
-        "@typescript-eslint/no-shadow": "off",
-        "@typescript-eslint/no-unused-vars": "off",
-        "@typescript-eslint/no-use-before-define": "off",
-        "@typescript-eslint/no-useless-constructor": "error",
-        "@typescript-eslint/no-unsafe-member-access": "off",
-        "@typescript-eslint/no-unsafe-assignment": "off",
-        "@typescript-eslint/no-unsafe-return": "off",
-        "@typescript-eslint/no-unsafe-call": "off",
-        "@typescript-eslint/restrict-template-expressions": "off",
-        "@typescript-eslint/no-explicit-any": "off",
-        "@typescript-eslint/restrict-plus-operands": "off",
-        "@typescript-eslint/unbound-method": "off",
-        "@typescript-eslint/no-misused-promises": "off",
-        "@typescript-eslint/no-floating-promises": "off",
-        "testing-library/await-async-query": "error",
-        "testing-library/no-await-sync-query": "error",
-        "testing-library/no-debug": "warn",
-        "testing-library/no-dom-import": "off"
+        ]
     },
     "overrides": [
         {
@@ -161,10 +100,16 @@
     "ignorePatterns": [
         "node_modules/",
         "package-lock.json",
+        "postcss.config.js",
+        "tailwind.config.js",
         "webpack.config.js",
         "babel.config.js",
-        ".storybook/",
+        "apollo.config.js",
+        ".storybook/*",
+        ".github/*",
+        "scripts/*",
         "**/stories/**/*",
-        "**/types/**/*"
+        "**/types/**/*",
+        "*.d.ts"
     ]
 }
