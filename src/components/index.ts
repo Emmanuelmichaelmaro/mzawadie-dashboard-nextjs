@@ -96,3 +96,4 @@ export * from "./AddressEdit";
 export * from "./AddressFormatter";
 export * from "./IconButtonTableCell";
 export * from "./PreviewPill";
+export * from "./CompanyAddressInput";

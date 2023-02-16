@@ -1,0 +1,44 @@
+// @ts-nocheck
+import { SiteSettings_shop } from "./types/SiteSettings";
+
+export const shop: SiteSettings_shop = {
+    __typename: "Shop",
+    companyAddress: {
+        __typename: "Address",
+        city: "Kenstad",
+        cityArea: "Alabama",
+        companyName: "Mzawadie Commerce",
+        country: {
+            __typename: "CountryDisplay",
+            code: "UA",
+            country: "United Arab Emirates",
+        },
+        countryArea: null,
+        firstName: null,
+        id: "1",
+        lastName: null,
+        phone: "+41 876-373-9137",
+        postalCode: "89880-6342",
+        streetAddress1: "01419 Bernhard Plain",
+        streetAddress2: null,
+    },
+    countries: [
+        {
+            __typename: "CountryDisplay",
+            code: "UA",
+            country: "United Arab Emirates",
+        },
+    ],
+    customerSetPasswordUrl: "https://example.com/reset-password",
+    defaultMailSenderAddress: "noreply@example.com",
+    defaultMailSenderName: "Mzawadie",
+    description: "Lorem ipsum dolor sit amet",
+    domain: {
+        __typename: "Domain",
+        host: "localhost:8000",
+    },
+    name: "Mzawadie e-commerce",
+    reserveStockDurationAnonymousUser: 10,
+    reserveStockDurationAuthenticatedUser: 10,
+    limitQuantityPerCheckout: 50,
+};

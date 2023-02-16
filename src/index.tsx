@@ -34,6 +34,7 @@ import { getConfigMenuItemsPermissions } from "@mzawadie/pages/configuration/uti
 import CustomerPage from "@mzawadie/pages/customers";
 import HomePage from "@mzawadie/pages/home";
 import NavigationPage from "@mzawadie/pages/navigation";
+import SiteSettingsPage from "@mzawadie/pages/siteSettings";
 import { PermissionEnum } from "@mzawadie/types/globalTypes";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { createFetch, createSaleorClient, SaleorProvider } from "@saleor/sdk";
@@ -164,11 +165,11 @@ const Routes: React.FC = () => {
                                 component={NavigationPage}
                             />
 
-                            {/* <SectionRoute*/}
-                            {/*    permissions={[PermissionEnum.MANAGE_SETTINGS]}*/}
-                            {/*    path="/site-settings"*/}
-                            {/*    component={SiteSettingsPage}*/}
-                            {/*/ >*/}
+                            <SectionRoute
+                                permissions={[PermissionEnum.MANAGE_SETTINGS]}
+                                path="/site-settings"
+                                component={SiteSettingsPage}
+                            />
 
                             {/* <SectionRoute*/}
                             {/*    permissions={[PermissionEnum.MANAGE_CHANNELS]}*/}

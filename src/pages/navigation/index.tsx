@@ -4,7 +4,7 @@ import { parse as parseQs } from "qs";
 import React from "react";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
-import { menuListPath, MenuListUrlQueryParams, MenuListUrlSortField } from "./urls";
+import { menuListPath, MenuListUrlQueryParams, MenuListUrlSortField, menuPath } from "./urls";
 import MenuDetailsComponent from "./views/MenuDetails";
 import { MenuListComponent } from "./views/MenuList";
 
