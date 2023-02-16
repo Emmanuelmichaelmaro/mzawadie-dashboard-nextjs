@@ -92,3 +92,5 @@ export * from "./Timeline";
 export * from "./PriceField";
 export * from "./CollectionWithDividers";
 export * from "./Metadata";
+export * from "./AddressEdit";
+export * from "./AddressFormatter";

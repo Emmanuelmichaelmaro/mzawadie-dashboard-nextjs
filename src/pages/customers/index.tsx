@@ -8,7 +8,13 @@ import { useIntl } from "react-intl";
 import { RouteComponentProps } from "react-router";
 import { Route, Switch } from "react-router-dom";
 
-import { customerListPath, CustomerListUrlQueryParams, CustomerListUrlSortField } from "./urls";
+import {
+    customerListPath,
+    CustomerListUrlQueryParams,
+    CustomerListUrlSortField,
+    customerPath,
+} from "./urls";
+import { CustomerDetailsViewComponent } from "./views/CustomerDetails";
 import { CustomerListViewComponent } from "./views/CustomerList";
 
 const CustomerListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
@@ -16,6 +22,19 @@ const CustomerListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
     const params: CustomerListUrlQueryParams = asSortParams(qs, CustomerListUrlSortField);
 
     return <CustomerListViewComponent params={params} />;
+};
+
+interface CustomerDetailsRouteParams {
+    id: string;
+}
+
+const CustomerDetailsView: React.FC<RouteComponentProps<CustomerDetailsRouteParams>> = ({
+    location,
+    match,
+}) => {
+    const params: CustomerUrlQueryParams = parseQs(location.search.substr(1));
+
+    return <CustomerDetailsViewComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
 
 const CustomerPage: React.FC<{}> = () => {
@@ -26,6 +45,7 @@ const CustomerPage: React.FC<{}> = () => {
             <WindowTitle title={intl.formatMessage(sectionNames.customers)} />
             <Switch>
                 <Route exact path={customerListPath} component={CustomerListView} />
+                <Route path={customerPath(":id")} component={CustomerDetailsView} />
             </Switch>
         </>
     );
