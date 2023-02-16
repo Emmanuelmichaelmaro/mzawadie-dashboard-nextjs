@@ -37,8 +37,10 @@ generates:
             withRefetchFn: true
 
     # Create fragments based on queries
-    src/graphql/fragments.json:
+    src/graphql/fragments.ts:
         plugins:
+            - add:
+                  content: /* eslint-disable */
             - fragment-matcher
         config:
             apolloClientVersion: 3
@@ -47,12 +49,13 @@ generates:
     # Create policy types based on queries
     src/graphql/type-policies.ts:
         plugins:
+            - add:
+                  content: /* eslint-disable */
             - typescript-apollo-client-helpers
-
-    # Get schema in graphql Format
-    src/graphql/schema.graphql:
-        plugins:
-            - schema-ast
-        config:
-            includeDirectives: true
-            flattenGeneratedTypes: true
+#    # Get schema in graphql Format
+#    src/graphql/schema.graphql:
+#        plugins:
+#            - schema-ast
+#        config:
+#            includeDirectives: true
+#            flattenGeneratedTypes: true

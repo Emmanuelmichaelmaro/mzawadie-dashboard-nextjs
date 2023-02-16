@@ -1,0 +1,1261 @@
+{
+    "+hib+V": {
+        "context": "error message",
+        "string": "This attribute is already assigned."
+    },
+    "+x4cZH": {
+        "string": "Only staff members can be assigned"
+    },
+    "+x84Ji": {
+        "context": "order status",
+        "string": "Unconfirmed"
+    },
+    "+xTpT1": {
+        "string": "Attributes"
+    },
+    "/8/Ffn": {
+        "context": "button",
+        "string": "Show"
+    },
+    "/X8Mjx": {
+        "string": "Play with <emphasis>GraphQL API</emphasis>"
+    },
+    "0AQH0Q": {
+        "string": "Plugin is misconfigured and cannot be activated"
+    },
+    "0OfZJA": {
+        "context": "button",
+        "string": "Back"
+    },
+    "0cVk9I": {
+        "string": "Show in product listings"
+    },
+    "0dPP8O": {
+        "string": "Order #{orderId} was placed"
+    },
+    "0opVvi": {
+        "context": "number of ordered products",
+        "string": "{amount, plural,one {One ordered}other {{amount} Ordered}}"
+    },
+    "19/lwV": {
+        "string": "Determine attributes used to create product types"
+    },
+    "1H+V6k": {
+        "context": "error message",
+        "string": "Page with these attributes already exists."
+    },
+    "1gzck6": {
+        "string": "{firstName} {lastName}"
+    },
+    "1n1tOR": {
+        "string": "Group is out of your permission scope"
+    },
+    "1wyZpQ": {
+        "string": "These passwords are too similar"
+    },
+    "26BKkX": {
+        "context": "order status",
+        "string": "Partially returned"
+    },
+    "2FQsYj": {
+        "context": "button",
+        "string": "Clear"
+    },
+    "2NgTCJ": {
+        "string": "A product with this SKU already exists"
+    },
+    "2atspc": {
+        "string": "Drafts"
+    },
+    "2ob30/": {
+        "string": "Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
+    },
+    "2oyWT9": {
+        "context": "button",
+        "string": "Back to login"
+    },
+    "2pw5dQ": {
+        "context": "payment status",
+        "string": "Fully paid"
+    },
+    "2r4cTE": {
+        "context": "button",
+        "string": "Enable Dark Mode"
+    },
+    "34F7Jk": {
+        "context": "filter range separator",
+        "string": "and"
+    },
+    "3AqOxp": {
+        "context": "no category set error",
+        "string": "Product category not set"
+    },
+    "3JAOk9": {
+        "context": "ExitFormPrompt title",
+        "string": "Are you sure you want to leave?"
+    },
+    "3TlhJS": {
+        "context": "navigator command mode description",
+        "string": "Search Command"
+    },
+    "3tbL7x": {
+        "context": "description",
+        "string": "Forgot password?"
+    },
+    "3ukd9/": {
+        "context": "attributes, section header",
+        "string": "Attributes"
+    },
+    "450Fty": {
+        "string": "None"
+    },
+    "4Dc2j0": {
+        "context": "order status",
+        "string": "Returned"
+    },
+    "4JW9iJ": {
+        "context": "home section name",
+        "string": "Home"
+    },
+    "4gT3eD": {
+        "context": "navigator section header",
+        "string": "Search in Customers"
+    },
+    "4gZl/n": {
+        "string": "See <emphasis>DEMO STOREFRONT</emphasis>"
+    },
+    "4prRLv": {
+        "string": "Permission is out of your scope"
+    },
+    "54M0Gu": {
+        "string": "Provide us with an email - if we find it in our database we will send you a link to reset your password. You should be able to find it in your inbox in the next couple of minutes."
+    },
+    "577R2r": {
+        "string": "Invalid value"
+    },
+    "59XppT": {
+        "context": "button",
+        "string": "Approve"
+    },
+    "5BajZK": {
+        "string": "View and update your site settings"
+    },
+    "5LRkEs": {
+        "string": "The new dashboard and the GraphQL API are preview-quality software."
+    },
+    "5RmuD+": {
+        "string": "Manage and update your warehouse information"
+    },
+    "5SPHkk": {
+        "string": "Order #{orderId} was fully paid"
+    },
+    "5dyOs0": {
+        "string": "No payments waiting for capture"
+    },
+    "5elC9k": {
+        "context": "taxes section name",
+        "string": "Taxes"
+    },
+    "5fCMUI": {
+        "context": "translations section name",
+        "string": "Translations"
+    },
+    "5sg7KC": {
+        "string": "Password"
+    },
+    "5ukAFZ": {
+        "string": "Disabling this checkbox will remove product from search and category pages. It will be available on collection pages."
+    },
+    "62T585": {
+        "context": "button",
+        "string": "{languageName} - {languageCode}"
+    },
+    "6D+yYX": {
+        "string": "Payment status"
+    },
+    "6L6Fy2": {
+        "context": "header",
+        "string": "Disclaimer"
+    },
+    "6QjMei": {
+        "string": "Preorder end time needs to be set in the future"
+    },
+    "6nSTuC": {
+        "context": "webhooks section name",
+        "string": "Webhooks"
+    },
+    "7Chrsf": {
+        "string": "Passwords do not match"
+    },
+    "7Oorx5": {
+        "context": "navigator section header",
+        "string": "Search in Catalog"
+    },
+    "7v2oBd": {
+        "context": "header",
+        "string": "Error"
+    },
+    "8B8E+3": {
+        "context": "navigator placeholder",
+        "string": "Order Number"
+    },
+    "8aV98y": {
+        "context": "new version notification content",
+        "string": "You need to update Saleor to the newest version. Before doing so - save all changes to prevent loss of data. To update use the button below."
+    },
+    "8oIbMI": {
+        "string": "Reached limit for this plan"
+    },
+    "8vJCJ4": {
+        "string": "Define and manage your sales channels"
+    },
+    "8xsKUv": {
+        "context": "service accounts section name",
+        "string": "Service Accounts"
+    },
+    "95oJ5d": {
+        "context": "button",
+        "string": "Go back to dashboard"
+    },
+    "9C7PZE": {
+        "context": "navigation section name",
+        "string": "Navigation"
+    },
+    "9mGA/Q": {
+        "context": "button linking to dashboard",
+        "string": "Dashboard"
+    },
+    "9q562c": {
+        "context": "apps section name",
+        "string": "Apps"
+    },
+    "9uNz+T": {
+        "context": "button",
+        "string": "Cancel"
+    },
+    "AOI4LW": {
+        "context": "navigator placeholder",
+        "string": "Search in Catalog"
+    },
+    "AQ+9Ez": {
+        "string": "We’ve encountered an unexpected error"
+    },
+    "AQFMYU": {
+        "context": "staff section name",
+        "string": "Staff Members"
+    },
+    "AY7Tuz": {
+        "string": "The same object cannot be in both lists"
+    },
+    "AdmPca": {
+        "context": "error message",
+        "string": "Max value cannot be less than min value"
+    },
+    "AubJ/S": {
+        "context": "button",
+        "string": "Sign in"
+    },
+    "B2LE7A": {
+        "context": "menu item loading",
+        "string": "working..."
+    },
+    "BM1JiJ": {
+        "context": "error message",
+        "string": "This order cannot be cancelled"
+    },
+    "BNTZLv": {
+        "string": "Order #{orderId} was placed from draft"
+    },
+    "BXkF8Z": {
+        "context": "header",
+        "string": "Activity"
+    },
+    "BooQvo": {
+        "context": "navigator placeholder",
+        "string": "Type {key} to see available actions"
+    },
+    "By5ZBp": {
+        "context": "header",
+        "string": "Hello there, {userName}"
+    },
+    "C0JLNW": {
+        "string": "Provided email address does not exist in our database."
+    },
+    "C4hCsD": {
+        "string": "App is out of your permissions scope"
+    },
+    "CJEIRC": {
+        "string": "Product export has finished and was sent to your email address."
+    },
+    "ChGI4V": {
+        "context": "error message",
+        "string": "Saleor is unavailable, please check your network connection and try again."
+    },
+    "CjSRT1": {
+        "context": "button",
+        "string": "Create Category"
+    },
+    "D2qihU": {
+        "string": "Permission is invalid"
+    },
+    "D9ie4n": {
+        "context": "shipping section name",
+        "string": "Shipping Methods"
+    },
+    "DEa1T1": {
+        "context": "button",
+        "string": "Save Search"
+    },
+    "DHBlFi": {
+        "context": "navigator customer mode description",
+        "string": "Search Customers"
+    },
+    "DILs4b": {
+        "string": "Unsupported media provider or incorrect URL"
+    },
+    "DJFPzq": {
+        "context": "button",
+        "string": "Confirm"
+    },
+    "DK+8PB": {
+        "string": "This channel has already been created"
+    },
+    "DNTxWr": {
+        "context": "permission groups section name",
+        "string": "Permission Groups"
+    },
+    "DOkfyZ": {
+        "string": "Insufficient permissions"
+    },
+    "Dhherd": {
+        "context": "dialog header, title",
+        "string": "Invoice Generation"
+    },
+    "E8T3e+": {
+        "string": "Cannot add and remove group the same time"
+    },
+    "E9Jssl": {
+        "string": "No orders ready to fulfill"
+    },
+    "EEW+ND": {
+        "string": "Navigator"
+    },
+    "EIULpW": {
+        "string": "Manage how your store charges tax"
+    },
+    "EM+30g": {
+        "context": "navigator notification",
+        "string": "Our new feature to help you with your daily tasks. Run Navigator using {keyboardShortcut} shortcut."
+    },
+    "ENBELI": {
+        "context": "description",
+        "string": "or login using"
+    },
+    "Ediw6/": {
+        "context": "button label",
+        "string": "Assign references"
+    },
+    "Ev6SEF": {
+        "string": "New Password"
+    },
+    "FBtqtl": {
+        "context": "payment status",
+        "string": "Unpaid"
+    },
+    "FNpv6K": {
+        "context": "button",
+        "string": "Filters"
+    },
+    "FuAV5G": {
+        "string": "This name is already taken. Please provide another."
+    },
+    "Fvvgoi": {
+        "string": "Your session has expired. Please log in again to continue."
+    },
+    "Fz3kic": {
+        "context": "error message",
+        "string": "Billing address is not set or invoice is not ready to be send"
+    },
+    "G7mu0y": {
+        "string": "The GraphQL API is beta quality. It is not fully optimized and some mutations or queries may be missing."
+    },
+    "GOdq5V": {
+        "string": "Catalog"
+    },
+    "Gxm7Qx": {
+        "context": "navigator notification title",
+        "string": "Navigator is here to help"
+    },
+    "H5NKfr": {
+        "context": "button",
+        "string": "Create"
+    },
+    "H6NsC1": {
+        "context": "pages section name",
+        "string": "Pages"
+    },
+    "HP6m+q": {
+        "string": "Attributes and Product Types"
+    },
+    "HSmg1/": {
+        "context": "gift cards section name",
+        "string": "Gift Cards"
+    },
+    "HjXnIf": {
+        "string": "Content Management"
+    },
+    "HnVtSS": {
+        "context": "search",
+        "string": "No results"
+    },
+    "I+UwqI": {
+        "context": "is filter range or value",
+        "string": "equal to"
+    },
+    "I4nAXS": {
+        "context": "status label inactive",
+        "string": "Inactive"
+    },
+    "IFWHn0": {
+        "context": "error message",
+        "string": "Billing address is not set"
+    },
+    "INNPVX": {
+        "context": "payment status",
+        "string": "Partially paid"
+    },
+    "IbVKSH": {
+        "context": "button",
+        "string": "Manage"
+    },
+    "IyHQr0": {
+        "context": "navigator action",
+        "string": "Go to order #{orderNumber}"
+    },
+    "JFmOfi": {
+        "context": "button",
+        "string": "Create Product"
+    },
+    "JPH/uP": {
+        "string": "Define types of content pages used in your store"
+    },
+    "JTcz2G": {
+        "context": "csv file exporting has finished, header",
+        "string": "Exporting CSV finished"
+    },
+    "Ja7gHc": {
+        "context": "button",
+        "string": "Edit"
+    },
+    "JiVwOU": {
+        "string": "There was a problem with the file you uploaded as an image and it couldn't be used. Please try a different file."
+    },
+    "Jt3DwJ": {
+        "context": "publish on date",
+        "string": "Publish on"
+    },
+    "K8xNLe": {
+        "context": "products section name",
+        "string": "Products"
+    },
+    "KFv8hX": {
+        "string": "An attribute already exists."
+    },
+    "KN7zKn": {
+        "string": "Error"
+    },
+    "KRqgfo": {
+        "string": "User is out of your permissions scope"
+    },
+    "KeO51o": {
+        "string": "Channel"
+    },
+    "LR3HlT": {
+        "string": "This password is too short"
+    },
+    "LmKz3g": {
+        "string": "Storefront"
+    },
+    "Lx1ima": {
+        "context": "button",
+        "string": "Upload image"
+    },
+    "M1uijW": {
+        "context": "collection",
+        "string": "Not Published"
+    },
+    "M4q0Ye": {
+        "context": "error message",
+        "string": "Sorry, login went wrong. Please try again."
+    },
+    "MKtgZB": {
+        "string": "Only staff users can access the dashboard"
+    },
+    "MWSacl": {
+        "string": "Multichannel"
+    },
+    "McN+wq": {
+        "context": "customers section name",
+        "string": "Customers"
+    },
+    "Mi4JOd": {
+        "context": "button",
+        "string": "Error"
+    },
+    "N43t3/": {
+        "context": "error message",
+        "string": "Number not set for an invoice"
+    },
+    "N7XGzW": {
+        "context": "error message",
+        "string": "This name is already taken. Please provide another."
+    },
+    "NNT3Lp": {
+        "context": "collections section name",
+        "string": "Collections"
+    },
+    "NlSJMM": {
+        "context": "channels section name",
+        "string": "Channels"
+    },
+    "NqxvFh": {
+        "context": "navigator placeholder",
+        "string": "Type Command"
+    },
+    "Nuq83+": {
+        "string": "Create new channel"
+    },
+    "NxeDbG": {
+        "context": "image upload",
+        "string": "Drop here to upload"
+    },
+    "OA+fw+": {
+        "context": "conjunction, choice between going to dashboard or refreshing page",
+        "string": "or"
+    },
+    "OGemtu": {
+        "context": "payment status",
+        "string": "Partially refunded"
+    },
+    "OeKIoY": {
+        "string": "Mzawadie runs in read-only mode. Changes not saved."
+    },
+    "Ol1vso": {
+        "context": "ExitFormPrompt cancel button",
+        "string": "leave without saving"
+    },
+    "P7PLVj": {
+        "string": "Date"
+    },
+    "PCoO4D": {
+        "context": "error message",
+        "string": "Page not found."
+    },
+    "PLCwT/": {
+        "context": "search results",
+        "string": "Show more"
+    },
+    "PbqNhi": {
+        "context": "order status",
+        "string": "Partially fulfilled"
+    },
+    "Q1Uzbb": {
+        "string": "No products found"
+    },
+    "Q6wcZ5": {
+        "string": "First Name"
+    },
+    "Q8Qw5B": {
+        "string": "Description"
+    },
+    "QBxN6z": {
+        "context": "is filter range or value",
+        "string": "between"
+    },
+    "QCwBUI": {
+        "context": "button",
+        "string": "Delete Search"
+    },
+    "QFBjlV": {
+        "context": "error message",
+        "string": "Stock for this warehouse already exists for this product variant"
+    },
+    "QFCUEt": {
+        "string": "Slug must be unique"
+    },
+    "QcIFCs": {
+        "context": "save search tab",
+        "string": "Search Name"
+    },
+    "QirE3M": {
+        "string": "Start Date"
+    },
+    "QooeI/": {
+        "context": "button",
+        "string": "Create Customer"
+    },
+    "RQUkVW": {
+        "string": "Manage your employees and their permissions"
+    },
+    "RaycYK": {
+        "context": "button",
+        "string": "Save"
+    },
+    "Rjs1CD": {
+        "context": "button",
+        "string": "Continue"
+    },
+    "RrCui3": {
+        "string": "Summary"
+    },
+    "S/TQBw": {
+        "context": "ExitFormPrompt description",
+        "string": "You have unsaved changes on this view. What would you like to do with them?"
+    },
+    "S22jIs": {
+        "context": "button",
+        "string": "Set new password"
+    },
+    "SKFr04": {
+        "string": "Attribute not found."
+    },
+    "T4GOiX": {
+        "string": "End Date"
+    },
+    "TDhHMi": {
+        "string": "This needs to be unique"
+    },
+    "TKmub+": {
+        "string": "This field is required"
+    },
+    "Ta9j04": {
+        "context": "orders section name",
+        "string": "Orders"
+    },
+    "TpPx7V": {
+        "context": "navigator placeholder",
+        "string": "Search Customer"
+    },
+    "U2WgwW": {
+        "context": "add custom select input option",
+        "string": "Add new value: {value}"
+    },
+    "U3BQKA": {
+        "string": "Set publication date"
+    },
+    "UN+yTt": {
+        "string": "Staff Settings"
+    },
+    "USS3Q7": {
+        "context": "filters error messages unknown error",
+        "string": "Unknown error occurred"
+    },
+    "UjsI4o": {
+        "context": "date",
+        "string": "since {date}"
+    },
+    "V1mqpZ": {
+        "context": "button",
+        "string": "Create Permission Group"
+    },
+    "V2BBQu": {
+        "string": "Currency in both channels must be the same"
+    },
+    "VEE4gD": {
+        "context": "error message",
+        "string": "Shipping method is not valid for chosen shipping address"
+    },
+    "VIABHy": {
+        "context": "error message",
+        "string": "Default shipping zone already exists"
+    },
+    "VdDcxc": {
+        "context": "button",
+        "string": "Create Collection"
+    },
+    "WhKGPA": {
+        "context": "page title",
+        "string": "Set up new password"
+    },
+    "WhvuCb": {
+        "context": "plugins section name",
+        "string": "Plugins"
+    },
+    "Wlc67M": {
+        "context": "error message",
+        "string": "Cannot choose a shipping method for an order without the shipping address"
+    },
+    "WzA5Ll": {
+        "string": "Cannot remove user from last group"
+    },
+    "X8+Lpa": {
+        "context": "button",
+        "string": "Account Settings"
+    },
+    "XCIV8H": {
+        "context": "button",
+        "string": "Refresh"
+    },
+    "XJSRDK": {
+        "context": "payment status",
+        "string": "Fully refunded"
+    },
+    "Xb6BJ9": {
+        "context": "error message",
+        "string": "Manual payments can not be refunded"
+    },
+    "Xel9C+": {
+        "context": "navigator default mode description",
+        "string": "Search Views and Actions"
+    },
+    "XkX56I": {
+        "context": "filters error messages value required",
+        "string": "Choose a value"
+    },
+    "Y1B0PN": {
+        "context": "error message",
+        "string": "There's no payment associated with the order"
+    },
+    "Y7UlMR": {
+        "context": "app extensions subsection",
+        "string": "Apps"
+    },
+    "Y7Vy19": {
+        "context": "available on date",
+        "string": "Set available on"
+    },
+    "YMBn8d": {
+        "context": "draft orders section name",
+        "string": "Draft Orders"
+    },
+    "YQ3EXR": {
+        "context": "product types section name",
+        "string": "Product Types"
+    },
+    "YYkkhx": {
+        "context": "navigator section header",
+        "string": "Navigate to"
+    },
+    "YZl6cv": {
+        "string": "Miscellaneous"
+    },
+    "Yo2kC+": {
+        "string": "Couldn't process image"
+    },
+    "Yy/yDL": {
+        "string": "Reset password"
+    },
+    "Z6QAbw": {
+        "string": "This variant does not have any digital content"
+    },
+    "a+x05s": {
+        "context": "select option, button",
+        "string": "Select"
+    },
+    "a5msuh": {
+        "string": "Yes"
+    },
+    "a9S9Je": {
+        "context": "page types section name",
+        "string": "Page Types"
+    },
+    "aCX8rl": {
+        "context": "subheader",
+        "string": "Here is some information we gathered about your store"
+    },
+    "aI80kg": {
+        "string": "Properties"
+    },
+    "abTH5q": {
+        "context": "error message",
+        "string": "Email address is not set"
+    },
+    "aggaJg": {
+        "string": "This attribute has already been assigned to this product type"
+    },
+    "aheQdn": {
+        "string": "Last Name"
+    },
+    "akXDST": {
+        "context": "section header",
+        "string": "Visibility"
+    },
+    "bFhzRX": {
+        "string": "No products are out of stock"
+    },
+    "bZenNC": {
+        "string": "Description (optional)"
+    },
+    "bj6pTd": {
+        "string": "Something's missing"
+    },
+    "bu/fC1": {
+        "context": "button",
+        "string": "Remove"
+    },
+    "byP6IC": {
+        "string": "Selected"
+    },
+    "c0H45L": {
+        "string": "{amount, plural,one {One order is ready to fulfill} other {{amount} orders are ready to fulfill}}"
+    },
+    "c5pMZ8": {
+        "string": "API error"
+    },
+    "cY42ht": {
+        "string": "Password cannot be entirely numeric"
+    },
+    "ccXLVi": {
+        "string": "Category"
+    },
+    "cd13nN": {
+        "context": "product attribute error",
+        "string": "All attributes should have value"
+    },
+    "cdxwA8": {
+        "string": "{amount, plural,one {One product out of stock}other {{amount} products out of stock}}"
+    },
+    "cfQf0w": {
+        "context": "button",
+        "string": "Create Order"
+    },
+    "d9UqaJ": {
+        "context": "error message",
+        "string": "Cannot change the quantity because of insufficient stock"
+    },
+    "dOQB9o": {
+        "context": "payment status",
+        "string": "Cancelled"
+    },
+    "dxCVWI": {
+        "context": "error message",
+        "string": "Cannot request an invoice for draft order"
+    },
+    "eOrLzG": {
+        "context": "button",
+        "string": "Done"
+    },
+    "eWcvOc": {
+        "context": "button",
+        "string": "Choose file"
+    },
+    "erC44f": {
+        "context": "filters error messages dependencies missing",
+        "string": "Filter requires other filters: {dependencies}"
+    },
+    "eu98dw": {
+        "string": "Invalid password"
+    },
+    "fNFEkh": {
+        "string": "No of Rows:"
+    },
+    "fgHLXc": {
+        "context": "attribute value",
+        "string": "Value"
+    },
+    "g/BrOt": {
+        "string": "Url has invalid format"
+    },
+    "gKdGxP": {
+        "context": "error message",
+        "string": "Only pre-authorized payments can be captured"
+    },
+    "gTr0qE": {
+        "string": "Shipping Settings"
+    },
+    "hJZwTS": {
+        "string": "Email address"
+    },
+    "hLUYBt": {
+        "context": "payment status",
+        "string": "Pending"
+    },
+    "hOxIeP": {
+        "string": "Availability"
+    },
+    "hX5PAb": {
+        "string": "No results found"
+    },
+    "ho75Lr": {
+        "context": "status label deactivated",
+        "string": "Deactivated"
+    },
+    "hpMcW8": {
+        "string": "Define how users can navigate through your store"
+    },
+    "hptDxW": {
+        "context": "money",
+        "string": "to {money}"
+    },
+    "hqVMLQ": {
+        "context": "button",
+        "string": "Send"
+    },
+    "hzSNj4": {
+        "string": "Dashboard"
+    },
+    "i+Vox0": {
+        "context": "invoice generating has finished, header",
+        "string": "Invoice Generated"
+    },
+    "i0AcKY": {
+        "context": "notification message after log in",
+        "string": "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes."
+    },
+    "i3Mvj8": {
+        "context": "product attribute error",
+        "string": "This variant already exists"
+    },
+    "iAvKNf": {
+        "context": "navigator help mode description",
+        "string": "Display Help"
+    },
+    "iUy2dx": {
+        "context": "vouchers section name",
+        "string": "Vouchers"
+    },
+    "ij7olm": {
+        "context": "error message",
+        "string": "This fulfillment cannot be cancelled"
+    },
+    "ijl+4z": {
+        "context": "ExitFormPrompt confirm button",
+        "string": "save & continue"
+    },
+    "ivJ1qt": {
+        "string": "Manage your permission groups and their permissions"
+    },
+    "j0ugM4": {
+        "context": "Manage and Update your warehouse information",
+        "string": "Exchange Rates"
+    },
+    "j8PV7E": {
+        "context": "attribute values",
+        "string": "Values"
+    },
+    "jFrdB5": {
+        "string": "Product Settings"
+    },
+    "juBV+h": {
+        "string": "End Hour"
+    },
+    "k8bltk": {
+        "string": "No Results"
+    },
+    "kJQczl": {
+        "context": "sales section name",
+        "string": "Sales"
+    },
+    "kbkjEc": {
+        "context": "navigator catalog mode description",
+        "string": "Search in Catalog"
+    },
+    "l2oVCF": {
+        "context": "attributes section name",
+        "string": "Attributes"
+    },
+    "lL3YJO": {
+        "context": "collection",
+        "string": "Published"
+    },
+    "lLwtgs": {
+        "string": "Variants are disabled in this product type"
+    },
+    "lW5uJO": {
+        "context": "money",
+        "string": "from {money}"
+    },
+    "liLrVs": {
+        "context": "save filter tab, header",
+        "string": "Save Custom Search"
+    },
+    "lm9NSK": {
+        "context": "password reset, button",
+        "string": "Send an email with reset link"
+    },
+    "lqIzC8": {
+        "string": "This field needs to be unique"
+    },
+    "lzdvwp": {
+        "context": "field is optional",
+        "string": "Optional"
+    },
+    "m0Dz+2": {
+        "string": "Please set up a new password for your account. Repeat your new password to make sure you will be able to remember it."
+    },
+    "m19JfL": {
+        "string": "View and update your plugins and their settings."
+    },
+    "m8cjcK": {
+        "context": "add authorization key error",
+        "string": "Authorization key with this type already exists"
+    },
+    "mYs3tb": {
+        "string": "Product price cannot be lower than 0."
+    },
+    "md326v": {
+        "string": "{amount, plural,one {One payment to capture}other {{amount} payments to capture}}"
+    },
+    "me585h": {
+        "context": "navigator section header",
+        "string": "Quick Actions"
+    },
+    "mgFyBA": {
+        "string": "This name should be unique"
+    },
+    "n+Gwbu": {
+        "string": "Discounts"
+    },
+    "n0RwMK": {
+        "string": "Define types of products you sell"
+    },
+    "nKjLjT": {
+        "context": "error message",
+        "string": "Slug must be unique for each warehouse"
+    },
+    "nOo0oL": {
+        "context": "error message",
+        "string": "Not enough items to fulfill"
+    },
+    "nRiOg+": {
+        "string": "Sorry, the page was not found"
+    },
+    "nwnwJ0": {
+        "context": "payment status",
+        "string": "Refused"
+    },
+    "o8f4Sg": {
+        "context": "disabled option description",
+        "string": "Can’t fulfill until payment is captured"
+    },
+    "oB0y5Y": {
+        "context": "order status",
+        "string": "Unfulfilled"
+    },
+    "oLMXDv": {
+        "context": "order status",
+        "string": "Ready to fulfill"
+    },
+    "oUWADl": {
+        "string": "No"
+    },
+    "oiuwOl": {
+        "context": "button",
+        "string": "Assign"
+    },
+    "p0SUJj": {
+        "string": "Don’t worry we will fix it soon. Try to refresh the page or go back to dashboard."
+    },
+    "pC6/1z": {
+        "string": "Invalid manifest format"
+    },
+    "pFVX6g": {
+        "string": "Variant with these attributes already exists"
+    },
+    "phAZoj": {
+        "string": "Collection"
+    },
+    "pkUbrL": {
+        "string": "General Information"
+    },
+    "pkjXPD": {
+        "context": "order status",
+        "string": "Fulfilled"
+    },
+    "qDwvZ4": {
+        "string": "Unknown error"
+    },
+    "qIgdO6": {
+        "string": "Custom Filter"
+    },
+    "qLbse5": {
+        "context": "button",
+        "string": "Log out"
+    },
+    "qu/hXD": {
+        "string": "Selected {number} items"
+    },
+    "r+8q4B": {
+        "context": "error message",
+        "string": "Only draft orders can be edited"
+    },
+    "rQOS7K": {
+        "context": "status label active",
+        "string": "Active"
+    },
+    "rZf1qL": {
+        "context": "bulk variant create error",
+        "string": "SKUs must be unique"
+    },
+    "rfvBAF": {
+        "context": "select all options, button",
+        "string": "Select All"
+    },
+    "rqiCWU": {
+        "string": "Saved changes"
+    },
+    "rqtV5d": {
+        "context": "order status",
+        "string": "Ready to capture"
+    },
+    "rr8fyf": {
+        "context": "header",
+        "string": "Top Products"
+    },
+    "ryAyPr": {
+        "string": "Requested Invoice was generated. It was added to the top of the invoice list on this view. Enjoy!"
+    },
+    "s9sOcC": {
+        "context": "button",
+        "string": "OK"
+    },
+    "sK1FPw": {
+        "context": "categories section name",
+        "string": "Categories"
+    },
+    "sZ27WU": {
+        "context": "error message",
+        "string": "Only pre-authorized payments can be voided"
+    },
+    "sjRXXz": {
+        "string": "Order #{orderId} was placed from draft by {userEmail}"
+    },
+    "skPoVe": {
+        "context": "button",
+        "string": "Accept"
+    },
+    "stjHjY": {
+        "context": "error message",
+        "string": "Promo code already exists"
+    },
+    "tEdFmZ": {
+        "context": "notification title",
+        "string": "System update required"
+    },
+    "tTtoKd": {
+        "context": "error message",
+        "string": "Sorry, your username and/or password are incorrect. Please try again."
+    },
+    "tWbE34": {
+        "string": "Start Hour"
+    },
+    "toDL5R": {
+        "context": "order status",
+        "string": "Draft"
+    },
+    "tzMNF3": {
+        "string": "Status"
+    },
+    "u24Ppd": {
+        "string": "This attribute cannot be assigned to this product type"
+    },
+    "u3sYPH": {
+        "context": "independent of any particular day, eg. 11:35",
+        "string": "Time"
+    },
+    "uRTj1Q": {
+        "context": "error message",
+        "string": "Invoice not found"
+    },
+    "ufmuTp": {
+        "context": "button",
+        "string": "Delete"
+    },
+    "usSkzP": {
+        "context": "navigator order mode description",
+        "string": "Search Orders"
+    },
+    "v3WWK+": {
+        "string": "Status is invalid"
+    },
+    "vN3qdA": {
+        "context": "button",
+        "string": "Undo"
+    },
+    "vP7g2+": {
+        "context": "error message",
+        "string": "URL not set for an invoice"
+    },
+    "vVviA2": {
+        "string": "Those permissions are out of your scope"
+    },
+    "vfG+nh": {
+        "string": "Confirm Password"
+    },
+    "viFkCw": {
+        "context": "site settings section name",
+        "string": "Site Settings"
+    },
+    "vzgZ3U": {
+        "context": "card header",
+        "string": "Sign In"
+    },
+    "w4R/SO": {
+        "string": "Local Apps"
+    },
+    "wWTUrM": {
+        "string": "No activities found"
+    },
+    "wlQTfb": {
+        "context": "go to next step, button",
+        "string": "Next"
+    },
+    "wn3di2": {
+        "string": "This password is too commonly used"
+    },
+    "x/ZVlU": {
+        "string": "Product"
+    },
+    "xfGZsi": {
+        "context": "configuration section name",
+        "string": "Configuration"
+    },
+    "xqfaLi": {
+        "string": "Mzawadie ran into an unexpected problem"
+    },
+    "xwEc8K": {
+        "string": "API"
+    },
+    "y9cvqE": {
+        "context": "button",
+        "string": "Create Voucher"
+    },
+    "yH56V+": {
+        "string": "Ooops!..."
+    },
+    "yHeZRQ": {
+        "string": "Product Export Failed"
+    },
+    "ycMLN9": {
+        "context": "warehouses section name",
+        "string": "Warehouses"
+    },
+    "ychKsb": {
+        "context": "error message",
+        "string": "Shipping method is required for this order"
+    },
+    "ypW4Mi": {
+        "context": "button refreshing page",
+        "string": "Refresh page"
+    },
+    "z0gGP+": {
+        "context": "number of attributes",
+        "string": "{number} Attributes"
+    },
+    "zSOvI0": {
+        "string": "Filters"
+    },
+    "zTdwWM": {
+        "context": "money",
+        "string": "{fromMoney} - {toMoney}"
+    },
+    "zWgbGg": {
+        "string": "Today"
+    },
+    "zxs6G3": {
+        "string": "Manage how you ship out orders"
+    },
+    "zyXcBP": {
+        "string": "Sorting by this column requires active filter: {filterName}"
+    }
+}

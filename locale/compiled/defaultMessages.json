@@ -1,2 +1,2350 @@
 {
+    "+hib+V": [
+        {
+            "type": 0,
+            "value": "This attribute is already assigned."
+        }
+    ],
+    "+x4cZH": [
+        {
+            "type": 0,
+            "value": "Only staff members can be assigned"
+        }
+    ],
+    "+x84Ji": [
+        {
+            "type": 0,
+            "value": "Unconfirmed"
+        }
+    ],
+    "+xTpT1": [
+        {
+            "type": 0,
+            "value": "Attributes"
+        }
+    ],
+    "/8/Ffn": [
+        {
+            "type": 0,
+            "value": "Show"
+        }
+    ],
+    "/X8Mjx": [
+        {
+            "type": 0,
+            "value": "Play with "
+        },
+        {
+            "children": [
+                {
+                    "type": 0,
+                    "value": "GraphQL API"
+                }
+            ],
+            "type": 8,
+            "value": "emphasis"
+        }
+    ],
+    "0AQH0Q": [
+        {
+            "type": 0,
+            "value": "Plugin is misconfigured and cannot be activated"
+        }
+    ],
+    "0OfZJA": [
+        {
+            "type": 0,
+            "value": "Back"
+        }
+    ],
+    "0cVk9I": [
+        {
+            "type": 0,
+            "value": "Show in product listings"
+        }
+    ],
+    "0dPP8O": [
+        {
+            "type": 0,
+            "value": "Order #"
+        },
+        {
+            "type": 1,
+            "value": "orderId"
+        },
+        {
+            "type": 0,
+            "value": " was placed"
+        }
+    ],
+    "0opVvi": [
+        {
+            "offset": 0,
+            "options": {
+                "one": {
+                    "value": [
+                        {
+                            "type": 0,
+                            "value": "One ordered"
+                        }
+                    ]
+                },
+                "other": {
+                    "value": [
+                        {
+                            "type": 1,
+                            "value": "amount"
+                        },
+                        {
+                            "type": 0,
+                            "value": " Ordered"
+                        }
+                    ]
+                }
+            },
+            "pluralType": "cardinal",
+            "type": 6,
+            "value": "amount"
+        }
+    ],
+    "19/lwV": [
+        {
+            "type": 0,
+            "value": "Determine attributes used to create product types"
+        }
+    ],
+    "1H+V6k": [
+        {
+            "type": 0,
+            "value": "Page with these attributes already exists."
+        }
+    ],
+    "1gzck6": [
+        {
+            "type": 1,
+            "value": "firstName"
+        },
+        {
+            "type": 0,
+            "value": " "
+        },
+        {
+            "type": 1,
+            "value": "lastName"
+        }
+    ],
+    "1n1tOR": [
+        {
+            "type": 0,
+            "value": "Group is out of your permission scope"
+        }
+    ],
+    "1wyZpQ": [
+        {
+            "type": 0,
+            "value": "These passwords are too similar"
+        }
+    ],
+    "26BKkX": [
+        {
+            "type": 0,
+            "value": "Partially returned"
+        }
+    ],
+    "2FQsYj": [
+        {
+            "type": 0,
+            "value": "Clear"
+        }
+    ],
+    "2NgTCJ": [
+        {
+            "type": 0,
+            "value": "A product with this SKU already exists"
+        }
+    ],
+    "2atspc": [
+        {
+            "type": 0,
+            "value": "Drafts"
+        }
+    ],
+    "2ob30/": [
+        {
+            "type": 0,
+            "value": "Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
+        }
+    ],
+    "2oyWT9": [
+        {
+            "type": 0,
+            "value": "Back to login"
+        }
+    ],
+    "2pw5dQ": [
+        {
+            "type": 0,
+            "value": "Fully paid"
+        }
+    ],
+    "2r4cTE": [
+        {
+            "type": 0,
+            "value": "Enable Dark Mode"
+        }
+    ],
+    "34F7Jk": [
+        {
+            "type": 0,
+            "value": "and"
+        }
+    ],
+    "3AqOxp": [
+        {
+            "type": 0,
+            "value": "Product category not set"
+        }
+    ],
+    "3JAOk9": [
+        {
+            "type": 0,
+            "value": "Are you sure you want to leave?"
+        }
+    ],
+    "3TlhJS": [
+        {
+            "type": 0,
+            "value": "Search Command"
+        }
+    ],
+    "3tbL7x": [
+        {
+            "type": 0,
+            "value": "Forgot password?"
+        }
+    ],
+    "3ukd9/": [
+        {
+            "type": 0,
+            "value": "Attributes"
+        }
+    ],
+    "450Fty": [
+        {
+            "type": 0,
+            "value": "None"
+        }
+    ],
+    "4Dc2j0": [
+        {
+            "type": 0,
+            "value": "Returned"
+        }
+    ],
+    "4JW9iJ": [
+        {
+            "type": 0,
+            "value": "Home"
+        }
+    ],
+    "4gT3eD": [
+        {
+            "type": 0,
+            "value": "Search in Customers"
+        }
+    ],
+    "4gZl/n": [
+        {
+            "type": 0,
+            "value": "See "
+        },
+        {
+            "children": [
+                {
+                    "type": 0,
+                    "value": "DEMO STOREFRONT"
+                }
+            ],
+            "type": 8,
+            "value": "emphasis"
+        }
+    ],
+    "4prRLv": [
+        {
+            "type": 0,
+            "value": "Permission is out of your scope"
+        }
+    ],
+    "54M0Gu": [
+        {
+            "type": 0,
+            "value": "Provide us with an email - if we find it in our database we will send you a link to reset your password. You should be able to find it in your inbox in the next couple of minutes."
+        }
+    ],
+    "577R2r": [
+        {
+            "type": 0,
+            "value": "Invalid value"
+        }
+    ],
+    "59XppT": [
+        {
+            "type": 0,
+            "value": "Approve"
+        }
+    ],
+    "5BajZK": [
+        {
+            "type": 0,
+            "value": "View and update your site settings"
+        }
+    ],
+    "5LRkEs": [
+        {
+            "type": 0,
+            "value": "The new dashboard and the GraphQL API are preview-quality software."
+        }
+    ],
+    "5RmuD+": [
+        {
+            "type": 0,
+            "value": "Manage and update your warehouse information"
+        }
+    ],
+    "5SPHkk": [
+        {
+            "type": 0,
+            "value": "Order #"
+        },
+        {
+            "type": 1,
+            "value": "orderId"
+        },
+        {
+            "type": 0,
+            "value": " was fully paid"
+        }
+    ],
+    "5dyOs0": [
+        {
+            "type": 0,
+            "value": "No payments waiting for capture"
+        }
+    ],
+    "5elC9k": [
+        {
+            "type": 0,
+            "value": "Taxes"
+        }
+    ],
+    "5fCMUI": [
+        {
+            "type": 0,
+            "value": "Translations"
+        }
+    ],
+    "5sg7KC": [
+        {
+            "type": 0,
+            "value": "Password"
+        }
+    ],
+    "5ukAFZ": [
+        {
+            "type": 0,
+            "value": "Disabling this checkbox will remove product from search and category pages. It will be available on collection pages."
+        }
+    ],
+    "62T585": [
+        {
+            "type": 1,
+            "value": "languageName"
+        },
+        {
+            "type": 0,
+            "value": " - "
+        },
+        {
+            "type": 1,
+            "value": "languageCode"
+        }
+    ],
+    "6D+yYX": [
+        {
+            "type": 0,
+            "value": "Payment status"
+        }
+    ],
+    "6L6Fy2": [
+        {
+            "type": 0,
+            "value": "Disclaimer"
+        }
+    ],
+    "6QjMei": [
+        {
+            "type": 0,
+            "value": "Preorder end time needs to be set in the future"
+        }
+    ],
+    "6nSTuC": [
+        {
+            "type": 0,
+            "value": "Webhooks"
+        }
+    ],
+    "7Chrsf": [
+        {
+            "type": 0,
+            "value": "Passwords do not match"
+        }
+    ],
+    "7Oorx5": [
+        {
+            "type": 0,
+            "value": "Search in Catalog"
+        }
+    ],
+    "7v2oBd": [
+        {
+            "type": 0,
+            "value": "Error"
+        }
+    ],
+    "8B8E+3": [
+        {
+            "type": 0,
+            "value": "Order Number"
+        }
+    ],
+    "8aV98y": [
+        {
+            "type": 0,
+            "value": "You need to update Saleor to the newest version. Before doing so - save all changes to prevent loss of data. To update use the button below."
+        }
+    ],
+    "8oIbMI": [
+        {
+            "type": 0,
+            "value": "Reached limit for this plan"
+        }
+    ],
+    "8vJCJ4": [
+        {
+            "type": 0,
+            "value": "Define and manage your sales channels"
+        }
+    ],
+    "8xsKUv": [
+        {
+            "type": 0,
+            "value": "Service Accounts"
+        }
+    ],
+    "95oJ5d": [
+        {
+            "type": 0,
+            "value": "Go back to dashboard"
+        }
+    ],
+    "9C7PZE": [
+        {
+            "type": 0,
+            "value": "Navigation"
+        }
+    ],
+    "9mGA/Q": [
+        {
+            "type": 0,
+            "value": "Dashboard"
+        }
+    ],
+    "9q562c": [
+        {
+            "type": 0,
+            "value": "Apps"
+        }
+    ],
+    "9uNz+T": [
+        {
+            "type": 0,
+            "value": "Cancel"
+        }
+    ],
+    "AOI4LW": [
+        {
+            "type": 0,
+            "value": "Search in Catalog"
+        }
+    ],
+    "AQ+9Ez": [
+        {
+            "type": 0,
+            "value": "We’ve encountered an unexpected error"
+        }
+    ],
+    "AQFMYU": [
+        {
+            "type": 0,
+            "value": "Staff Members"
+        }
+    ],
+    "AY7Tuz": [
+        {
+            "type": 0,
+            "value": "The same object cannot be in both lists"
+        }
+    ],
+    "AdmPca": [
+        {
+            "type": 0,
+            "value": "Max value cannot be less than min value"
+        }
+    ],
+    "AubJ/S": [
+        {
+            "type": 0,
+            "value": "Sign in"
+        }
+    ],
+    "B2LE7A": [
+        {
+            "type": 0,
+            "value": "working..."
+        }
+    ],
+    "BM1JiJ": [
+        {
+            "type": 0,
+            "value": "This order cannot be cancelled"
+        }
+    ],
+    "BNTZLv": [
+        {
+            "type": 0,
+            "value": "Order #"
+        },
+        {
+            "type": 1,
+            "value": "orderId"
+        },
+        {
+            "type": 0,
+            "value": " was placed from draft"
+        }
+    ],
+    "BXkF8Z": [
+        {
+            "type": 0,
+            "value": "Activity"
+        }
+    ],
+    "BooQvo": [
+        {
+            "type": 0,
+            "value": "Type "
+        },
+        {
+            "type": 1,
+            "value": "key"
+        },
+        {
+            "type": 0,
+            "value": " to see available actions"
+        }
+    ],
+    "By5ZBp": [
+        {
+            "type": 0,
+            "value": "Hello there, "
+        },
+        {
+            "type": 1,
+            "value": "userName"
+        }
+    ],
+    "C0JLNW": [
+        {
+            "type": 0,
+            "value": "Provided email address does not exist in our database."
+        }
+    ],
+    "C4hCsD": [
+        {
+            "type": 0,
+            "value": "App is out of your permissions scope"
+        }
+    ],
+    "CJEIRC": [
+        {
+            "type": 0,
+            "value": "Product export has finished and was sent to your email address."
+        }
+    ],
+    "ChGI4V": [
+        {
+            "type": 0,
+            "value": "Saleor is unavailable, please check your network connection and try again."
+        }
+    ],
+    "CjSRT1": [
+        {
+            "type": 0,
+            "value": "Create Category"
+        }
+    ],
+    "D2qihU": [
+        {
+            "type": 0,
+            "value": "Permission is invalid"
+        }
+    ],
+    "D9ie4n": [
+        {
+            "type": 0,
+            "value": "Shipping Methods"
+        }
+    ],
+    "DEa1T1": [
+        {
+            "type": 0,
+            "value": "Save Search"
+        }
+    ],
+    "DHBlFi": [
+        {
+            "type": 0,
+            "value": "Search Customers"
+        }
+    ],
+    "DILs4b": [
+        {
+            "type": 0,
+            "value": "Unsupported media provider or incorrect URL"
+        }
+    ],
+    "DJFPzq": [
+        {
+            "type": 0,
+            "value": "Confirm"
+        }
+    ],
+    "DK+8PB": [
+        {
+            "type": 0,
+            "value": "This channel has already been created"
+        }
+    ],
+    "DNTxWr": [
+        {
+            "type": 0,
+            "value": "Permission Groups"
+        }
+    ],
+    "DOkfyZ": [
+        {
+            "type": 0,
+            "value": "Insufficient permissions"
+        }
+    ],
+    "Dhherd": [
+        {
+            "type": 0,
+            "value": "Invoice Generation"
+        }
+    ],
+    "E8T3e+": [
+        {
+            "type": 0,
+            "value": "Cannot add and remove group the same time"
+        }
+    ],
+    "E9Jssl": [
+        {
+            "type": 0,
+            "value": "No orders ready to fulfill"
+        }
+    ],
+    "EEW+ND": [
+        {
+            "type": 0,
+            "value": "Navigator"
+        }
+    ],
+    "EIULpW": [
+        {
+            "type": 0,
+            "value": "Manage how your store charges tax"
+        }
+    ],
+    "EM+30g": [
+        {
+            "type": 0,
+            "value": "Our new feature to help you with your daily tasks. Run Navigator using "
+        },
+        {
+            "type": 1,
+            "value": "keyboardShortcut"
+        },
+        {
+            "type": 0,
+            "value": " shortcut."
+        }
+    ],
+    "ENBELI": [
+        {
+            "type": 0,
+            "value": "or login using"
+        }
+    ],
+    "Ediw6/": [
+        {
+            "type": 0,
+            "value": "Assign references"
+        }
+    ],
+    "Ev6SEF": [
+        {
+            "type": 0,
+            "value": "New Password"
+        }
+    ],
+    "FBtqtl": [
+        {
+            "type": 0,
+            "value": "Unpaid"
+        }
+    ],
+    "FNpv6K": [
+        {
+            "type": 0,
+            "value": "Filters"
+        }
+    ],
+    "FuAV5G": [
+        {
+            "type": 0,
+            "value": "This name is already taken. Please provide another."
+        }
+    ],
+    "Fvvgoi": [
+        {
+            "type": 0,
+            "value": "Your session has expired. Please log in again to continue."
+        }
+    ],
+    "Fz3kic": [
+        {
+            "type": 0,
+            "value": "Billing address is not set or invoice is not ready to be send"
+        }
+    ],
+    "G7mu0y": [
+        {
+            "type": 0,
+            "value": "The GraphQL API is beta quality. It is not fully optimized and some mutations or queries may be missing."
+        }
+    ],
+    "GOdq5V": [
+        {
+            "type": 0,
+            "value": "Catalog"
+        }
+    ],
+    "Gxm7Qx": [
+        {
+            "type": 0,
+            "value": "Navigator is here to help"
+        }
+    ],
+    "H5NKfr": [
+        {
+            "type": 0,
+            "value": "Create"
+        }
+    ],
+    "H6NsC1": [
+        {
+            "type": 0,
+            "value": "Pages"
+        }
+    ],
+    "HP6m+q": [
+        {
+            "type": 0,
+            "value": "Attributes and Product Types"
+        }
+    ],
+    "HSmg1/": [
+        {
+            "type": 0,
+            "value": "Gift Cards"
+        }
+    ],
+    "HjXnIf": [
+        {
+            "type": 0,
+            "value": "Content Management"
+        }
+    ],
+    "HnVtSS": [
+        {
+            "type": 0,
+            "value": "No results"
+        }
+    ],
+    "I+UwqI": [
+        {
+            "type": 0,
+            "value": "equal to"
+        }
+    ],
+    "I4nAXS": [
+        {
+            "type": 0,
+            "value": "Inactive"
+        }
+    ],
+    "IFWHn0": [
+        {
+            "type": 0,
+            "value": "Billing address is not set"
+        }
+    ],
+    "INNPVX": [
+        {
+            "type": 0,
+            "value": "Partially paid"
+        }
+    ],
+    "IbVKSH": [
+        {
+            "type": 0,
+            "value": "Manage"
+        }
+    ],
+    "IyHQr0": [
+        {
+            "type": 0,
+            "value": "Go to order #"
+        },
+        {
+            "type": 1,
+            "value": "orderNumber"
+        }
+    ],
+    "JFmOfi": [
+        {
+            "type": 0,
+            "value": "Create Product"
+        }
+    ],
+    "JPH/uP": [
+        {
+            "type": 0,
+            "value": "Define types of content pages used in your store"
+        }
+    ],
+    "JTcz2G": [
+        {
+            "type": 0,
+            "value": "Exporting CSV finished"
+        }
+    ],
+    "Ja7gHc": [
+        {
+            "type": 0,
+            "value": "Edit"
+        }
+    ],
+    "JiVwOU": [
+        {
+            "type": 0,
+            "value": "There was a problem with the file you uploaded as an image and it couldn't be used. Please try a different file."
+        }
+    ],
+    "Jt3DwJ": [
+        {
+            "type": 0,
+            "value": "Publish on"
+        }
+    ],
+    "K8xNLe": [
+        {
+            "type": 0,
+            "value": "Products"
+        }
+    ],
+    "KFv8hX": [
+        {
+            "type": 0,
+            "value": "An attribute already exists."
+        }
+    ],
+    "KN7zKn": [
+        {
+            "type": 0,
+            "value": "Error"
+        }
+    ],
+    "KRqgfo": [
+        {
+            "type": 0,
+            "value": "User is out of your permissions scope"
+        }
+    ],
+    "KeO51o": [
+        {
+            "type": 0,
+            "value": "Channel"
+        }
+    ],
+    "LR3HlT": [
+        {
+            "type": 0,
+            "value": "This password is too short"
+        }
+    ],
+    "LmKz3g": [
+        {
+            "type": 0,
+            "value": "Storefront"
+        }
+    ],
+    "Lx1ima": [
+        {
+            "type": 0,
+            "value": "Upload image"
+        }
+    ],
+    "M1uijW": [
+        {
+            "type": 0,
+            "value": "Not Published"
+        }
+    ],
+    "M4q0Ye": [
+        {
+            "type": 0,
+            "value": "Sorry, login went wrong. Please try again."
+        }
+    ],
+    "MKtgZB": [
+        {
+            "type": 0,
+            "value": "Only staff users can access the dashboard"
+        }
+    ],
+    "MWSacl": [
+        {
+            "type": 0,
+            "value": "Multichannel"
+        }
+    ],
+    "McN+wq": [
+        {
+            "type": 0,
+            "value": "Customers"
+        }
+    ],
+    "Mi4JOd": [
+        {
+            "type": 0,
+            "value": "Error"
+        }
+    ],
+    "N43t3/": [
+        {
+            "type": 0,
+            "value": "Number not set for an invoice"
+        }
+    ],
+    "N7XGzW": [
+        {
+            "type": 0,
+            "value": "This name is already taken. Please provide another."
+        }
+    ],
+    "NNT3Lp": [
+        {
+            "type": 0,
+            "value": "Collections"
+        }
+    ],
+    "NlSJMM": [
+        {
+            "type": 0,
+            "value": "Channels"
+        }
+    ],
+    "NqxvFh": [
+        {
+            "type": 0,
+            "value": "Type Command"
+        }
+    ],
+    "Nuq83+": [
+        {
+            "type": 0,
+            "value": "Create new channel"
+        }
+    ],
+    "NxeDbG": [
+        {
+            "type": 0,
+            "value": "Drop here to upload"
+        }
+    ],
+    "OA+fw+": [
+        {
+            "type": 0,
+            "value": "or"
+        }
+    ],
+    "OGemtu": [
+        {
+            "type": 0,
+            "value": "Partially refunded"
+        }
+    ],
+    "OeKIoY": [
+        {
+            "type": 0,
+            "value": "Mzawadie runs in read-only mode. Changes not saved."
+        }
+    ],
+    "Ol1vso": [
+        {
+            "type": 0,
+            "value": "leave without saving"
+        }
+    ],
+    "P7PLVj": [
+        {
+            "type": 0,
+            "value": "Date"
+        }
+    ],
+    "PCoO4D": [
+        {
+            "type": 0,
+            "value": "Page not found."
+        }
+    ],
+    "PLCwT/": [
+        {
+            "type": 0,
+            "value": "Show more"
+        }
+    ],
+    "PbqNhi": [
+        {
+            "type": 0,
+            "value": "Partially fulfilled"
+        }
+    ],
+    "Q1Uzbb": [
+        {
+            "type": 0,
+            "value": "No products found"
+        }
+    ],
+    "Q6wcZ5": [
+        {
+            "type": 0,
+            "value": "First Name"
+        }
+    ],
+    "Q8Qw5B": [
+        {
+            "type": 0,
+            "value": "Description"
+        }
+    ],
+    "QBxN6z": [
+        {
+            "type": 0,
+            "value": "between"
+        }
+    ],
+    "QCwBUI": [
+        {
+            "type": 0,
+            "value": "Delete Search"
+        }
+    ],
+    "QFBjlV": [
+        {
+            "type": 0,
+            "value": "Stock for this warehouse already exists for this product variant"
+        }
+    ],
+    "QFCUEt": [
+        {
+            "type": 0,
+            "value": "Slug must be unique"
+        }
+    ],
+    "QcIFCs": [
+        {
+            "type": 0,
+            "value": "Search Name"
+        }
+    ],
+    "QirE3M": [
+        {
+            "type": 0,
+            "value": "Start Date"
+        }
+    ],
+    "QooeI/": [
+        {
+            "type": 0,
+            "value": "Create Customer"
+        }
+    ],
+    "RQUkVW": [
+        {
+            "type": 0,
+            "value": "Manage your employees and their permissions"
+        }
+    ],
+    "RaycYK": [
+        {
+            "type": 0,
+            "value": "Save"
+        }
+    ],
+    "Rjs1CD": [
+        {
+            "type": 0,
+            "value": "Continue"
+        }
+    ],
+    "RrCui3": [
+        {
+            "type": 0,
+            "value": "Summary"
+        }
+    ],
+    "S/TQBw": [
+        {
+            "type": 0,
+            "value": "You have unsaved changes on this view. What would you like to do with them?"
+        }
+    ],
+    "S22jIs": [
+        {
+            "type": 0,
+            "value": "Set new password"
+        }
+    ],
+    "SKFr04": [
+        {
+            "type": 0,
+            "value": "Attribute not found."
+        }
+    ],
+    "T4GOiX": [
+        {
+            "type": 0,
+            "value": "End Date"
+        }
+    ],
+    "TDhHMi": [
+        {
+            "type": 0,
+            "value": "This needs to be unique"
+        }
+    ],
+    "TKmub+": [
+        {
+            "type": 0,
+            "value": "This field is required"
+        }
+    ],
+    "Ta9j04": [
+        {
+            "type": 0,
+            "value": "Orders"
+        }
+    ],
+    "TpPx7V": [
+        {
+            "type": 0,
+            "value": "Search Customer"
+        }
+    ],
+    "U2WgwW": [
+        {
+            "type": 0,
+            "value": "Add new value: "
+        },
+        {
+            "type": 1,
+            "value": "value"
+        }
+    ],
+    "U3BQKA": [
+        {
+            "type": 0,
+            "value": "Set publication date"
+        }
+    ],
+    "UN+yTt": [
+        {
+            "type": 0,
+            "value": "Staff Settings"
+        }
+    ],
+    "USS3Q7": [
+        {
+            "type": 0,
+            "value": "Unknown error occurred"
+        }
+    ],
+    "UjsI4o": [
+        {
+            "type": 0,
+            "value": "since "
+        },
+        {
+            "type": 1,
+            "value": "date"
+        }
+    ],
+    "V1mqpZ": [
+        {
+            "type": 0,
+            "value": "Create Permission Group"
+        }
+    ],
+    "V2BBQu": [
+        {
+            "type": 0,
+            "value": "Currency in both channels must be the same"
+        }
+    ],
+    "VEE4gD": [
+        {
+            "type": 0,
+            "value": "Shipping method is not valid for chosen shipping address"
+        }
+    ],
+    "VIABHy": [
+        {
+            "type": 0,
+            "value": "Default shipping zone already exists"
+        }
+    ],
+    "VdDcxc": [
+        {
+            "type": 0,
+            "value": "Create Collection"
+        }
+    ],
+    "WhKGPA": [
+        {
+            "type": 0,
+            "value": "Set up new password"
+        }
+    ],
+    "WhvuCb": [
+        {
+            "type": 0,
+            "value": "Plugins"
+        }
+    ],
+    "Wlc67M": [
+        {
+            "type": 0,
+            "value": "Cannot choose a shipping method for an order without the shipping address"
+        }
+    ],
+    "WzA5Ll": [
+        {
+            "type": 0,
+            "value": "Cannot remove user from last group"
+        }
+    ],
+    "X8+Lpa": [
+        {
+            "type": 0,
+            "value": "Account Settings"
+        }
+    ],
+    "XCIV8H": [
+        {
+            "type": 0,
+            "value": "Refresh"
+        }
+    ],
+    "XJSRDK": [
+        {
+            "type": 0,
+            "value": "Fully refunded"
+        }
+    ],
+    "Xb6BJ9": [
+        {
+            "type": 0,
+            "value": "Manual payments can not be refunded"
+        }
+    ],
+    "Xel9C+": [
+        {
+            "type": 0,
+            "value": "Search Views and Actions"
+        }
+    ],
+    "XkX56I": [
+        {
+            "type": 0,
+            "value": "Choose a value"
+        }
+    ],
+    "Y1B0PN": [
+        {
+            "type": 0,
+            "value": "There's no payment associated with the order"
+        }
+    ],
+    "Y7UlMR": [
+        {
+            "type": 0,
+            "value": "Apps"
+        }
+    ],
+    "Y7Vy19": [
+        {
+            "type": 0,
+            "value": "Set available on"
+        }
+    ],
+    "YMBn8d": [
+        {
+            "type": 0,
+            "value": "Draft Orders"
+        }
+    ],
+    "YQ3EXR": [
+        {
+            "type": 0,
+            "value": "Product Types"
+        }
+    ],
+    "YYkkhx": [
+        {
+            "type": 0,
+            "value": "Navigate to"
+        }
+    ],
+    "YZl6cv": [
+        {
+            "type": 0,
+            "value": "Miscellaneous"
+        }
+    ],
+    "Yo2kC+": [
+        {
+            "type": 0,
+            "value": "Couldn't process image"
+        }
+    ],
+    "Yy/yDL": [
+        {
+            "type": 0,
+            "value": "Reset password"
+        }
+    ],
+    "Z6QAbw": [
+        {
+            "type": 0,
+            "value": "This variant does not have any digital content"
+        }
+    ],
+    "a+x05s": [
+        {
+            "type": 0,
+            "value": "Select"
+        }
+    ],
+    "a5msuh": [
+        {
+            "type": 0,
+            "value": "Yes"
+        }
+    ],
+    "a9S9Je": [
+        {
+            "type": 0,
+            "value": "Page Types"
+        }
+    ],
+    "aCX8rl": [
+        {
+            "type": 0,
+            "value": "Here is some information we gathered about your store"
+        }
+    ],
+    "aI80kg": [
+        {
+            "type": 0,
+            "value": "Properties"
+        }
+    ],
+    "abTH5q": [
+        {
+            "type": 0,
+            "value": "Email address is not set"
+        }
+    ],
+    "aggaJg": [
+        {
+            "type": 0,
+            "value": "This attribute has already been assigned to this product type"
+        }
+    ],
+    "aheQdn": [
+        {
+            "type": 0,
+            "value": "Last Name"
+        }
+    ],
+    "akXDST": [
+        {
+            "type": 0,
+            "value": "Visibility"
+        }
+    ],
+    "bFhzRX": [
+        {
+            "type": 0,
+            "value": "No products are out of stock"
+        }
+    ],
+    "bZenNC": [
+        {
+            "type": 0,
+            "value": "Description (optional)"
+        }
+    ],
+    "bj6pTd": [
+        {
+            "type": 0,
+            "value": "Something's missing"
+        }
+    ],
+    "bu/fC1": [
+        {
+            "type": 0,
+            "value": "Remove"
+        }
+    ],
+    "byP6IC": [
+        {
+            "type": 0,
+            "value": "Selected"
+        }
+    ],
+    "c0H45L": [
+        {
+            "offset": 0,
+            "options": {
+                "one": {
+                    "value": [
+                        {
+                            "type": 0,
+                            "value": "One order is ready to fulfill"
+                        }
+                    ]
+                },
+                "other": {
+                    "value": [
+                        {
+                            "type": 1,
+                            "value": "amount"
+                        },
+                        {
+                            "type": 0,
+                            "value": " orders are ready to fulfill"
+                        }
+                    ]
+                }
+            },
+            "pluralType": "cardinal",
+            "type": 6,
+            "value": "amount"
+        }
+    ],
+    "c5pMZ8": [
+        {
+            "type": 0,
+            "value": "API error"
+        }
+    ],
+    "cY42ht": [
+        {
+            "type": 0,
+            "value": "Password cannot be entirely numeric"
+        }
+    ],
+    "ccXLVi": [
+        {
+            "type": 0,
+            "value": "Category"
+        }
+    ],
+    "cd13nN": [
+        {
+            "type": 0,
+            "value": "All attributes should have value"
+        }
+    ],
+    "cdxwA8": [
+        {
+            "offset": 0,
+            "options": {
+                "one": {
+                    "value": [
+                        {
+                            "type": 0,
+                            "value": "One product out of stock"
+                        }
+                    ]
+                },
+                "other": {
+                    "value": [
+                        {
+                            "type": 1,
+                            "value": "amount"
+                        },
+                        {
+                            "type": 0,
+                            "value": " products out of stock"
+                        }
+                    ]
+                }
+            },
+            "pluralType": "cardinal",
+            "type": 6,
+            "value": "amount"
+        }
+    ],
+    "cfQf0w": [
+        {
+            "type": 0,
+            "value": "Create Order"
+        }
+    ],
+    "d9UqaJ": [
+        {
+            "type": 0,
+            "value": "Cannot change the quantity because of insufficient stock"
+        }
+    ],
+    "dOQB9o": [
+        {
+            "type": 0,
+            "value": "Cancelled"
+        }
+    ],
+    "dxCVWI": [
+        {
+            "type": 0,
+            "value": "Cannot request an invoice for draft order"
+        }
+    ],
+    "eOrLzG": [
+        {
+            "type": 0,
+            "value": "Done"
+        }
+    ],
+    "eWcvOc": [
+        {
+            "type": 0,
+            "value": "Choose file"
+        }
+    ],
+    "erC44f": [
+        {
+            "type": 0,
+            "value": "Filter requires other filters: "
+        },
+        {
+            "type": 1,
+            "value": "dependencies"
+        }
+    ],
+    "eu98dw": [
+        {
+            "type": 0,
+            "value": "Invalid password"
+        }
+    ],
+    "fNFEkh": [
+        {
+            "type": 0,
+            "value": "No of Rows:"
+        }
+    ],
+    "fgHLXc": [
+        {
+            "type": 0,
+            "value": "Value"
+        }
+    ],
+    "g/BrOt": [
+        {
+            "type": 0,
+            "value": "Url has invalid format"
+        }
+    ],
+    "gKdGxP": [
+        {
+            "type": 0,
+            "value": "Only pre-authorized payments can be captured"
+        }
+    ],
+    "gTr0qE": [
+        {
+            "type": 0,
+            "value": "Shipping Settings"
+        }
+    ],
+    "hJZwTS": [
+        {
+            "type": 0,
+            "value": "Email address"
+        }
+    ],
+    "hLUYBt": [
+        {
+            "type": 0,
+            "value": "Pending"
+        }
+    ],
+    "hOxIeP": [
+        {
+            "type": 0,
+            "value": "Availability"
+        }
+    ],
+    "hX5PAb": [
+        {
+            "type": 0,
+            "value": "No results found"
+        }
+    ],
+    "ho75Lr": [
+        {
+            "type": 0,
+            "value": "Deactivated"
+        }
+    ],
+    "hpMcW8": [
+        {
+            "type": 0,
+            "value": "Define how users can navigate through your store"
+        }
+    ],
+    "hptDxW": [
+        {
+            "type": 0,
+            "value": "to "
+        },
+        {
+            "type": 1,
+            "value": "money"
+        }
+    ],
+    "hqVMLQ": [
+        {
+            "type": 0,
+            "value": "Send"
+        }
+    ],
+    "hzSNj4": [
+        {
+            "type": 0,
+            "value": "Dashboard"
+        }
+    ],
+    "i+Vox0": [
+        {
+            "type": 0,
+            "value": "Invoice Generated"
+        }
+    ],
+    "i0AcKY": [
+        {
+            "type": 0,
+            "value": "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes."
+        }
+    ],
+    "i3Mvj8": [
+        {
+            "type": 0,
+            "value": "This variant already exists"
+        }
+    ],
+    "iAvKNf": [
+        {
+            "type": 0,
+            "value": "Display Help"
+        }
+    ],
+    "iUy2dx": [
+        {
+            "type": 0,
+            "value": "Vouchers"
+        }
+    ],
+    "ij7olm": [
+        {
+            "type": 0,
+            "value": "This fulfillment cannot be cancelled"
+        }
+    ],
+    "ijl+4z": [
+        {
+            "type": 0,
+            "value": "save & continue"
+        }
+    ],
+    "ivJ1qt": [
+        {
+            "type": 0,
+            "value": "Manage your permission groups and their permissions"
+        }
+    ],
+    "j0ugM4": [
+        {
+            "type": 0,
+            "value": "Exchange Rates"
+        }
+    ],
+    "j8PV7E": [
+        {
+            "type": 0,
+            "value": "Values"
+        }
+    ],
+    "jFrdB5": [
+        {
+            "type": 0,
+            "value": "Product Settings"
+        }
+    ],
+    "juBV+h": [
+        {
+            "type": 0,
+            "value": "End Hour"
+        }
+    ],
+    "k8bltk": [
+        {
+            "type": 0,
+            "value": "No Results"
+        }
+    ],
+    "kJQczl": [
+        {
+            "type": 0,
+            "value": "Sales"
+        }
+    ],
+    "kbkjEc": [
+        {
+            "type": 0,
+            "value": "Search in Catalog"
+        }
+    ],
+    "l2oVCF": [
+        {
+            "type": 0,
+            "value": "Attributes"
+        }
+    ],
+    "lL3YJO": [
+        {
+            "type": 0,
+            "value": "Published"
+        }
+    ],
+    "lLwtgs": [
+        {
+            "type": 0,
+            "value": "Variants are disabled in this product type"
+        }
+    ],
+    "lW5uJO": [
+        {
+            "type": 0,
+            "value": "from "
+        },
+        {
+            "type": 1,
+            "value": "money"
+        }
+    ],
+    "liLrVs": [
+        {
+            "type": 0,
+            "value": "Save Custom Search"
+        }
+    ],
+    "lm9NSK": [
+        {
+            "type": 0,
+            "value": "Send an email with reset link"
+        }
+    ],
+    "lqIzC8": [
+        {
+            "type": 0,
+            "value": "This field needs to be unique"
+        }
+    ],
+    "lzdvwp": [
+        {
+            "type": 0,
+            "value": "Optional"
+        }
+    ],
+    "m0Dz+2": [
+        {
+            "type": 0,
+            "value": "Please set up a new password for your account. Repeat your new password to make sure you will be able to remember it."
+        }
+    ],
+    "m19JfL": [
+        {
+            "type": 0,
+            "value": "View and update your plugins and their settings."
+        }
+    ],
+    "m8cjcK": [
+        {
+            "type": 0,
+            "value": "Authorization key with this type already exists"
+        }
+    ],
+    "mYs3tb": [
+        {
+            "type": 0,
+            "value": "Product price cannot be lower than 0."
+        }
+    ],
+    "md326v": [
+        {
+            "offset": 0,
+            "options": {
+                "one": {
+                    "value": [
+                        {
+                            "type": 0,
+                            "value": "One payment to capture"
+                        }
+                    ]
+                },
+                "other": {
+                    "value": [
+                        {
+                            "type": 1,
+                            "value": "amount"
+                        },
+                        {
+                            "type": 0,
+                            "value": " payments to capture"
+                        }
+                    ]
+                }
+            },
+            "pluralType": "cardinal",
+            "type": 6,
+            "value": "amount"
+        }
+    ],
+    "me585h": [
+        {
+            "type": 0,
+            "value": "Quick Actions"
+        }
+    ],
+    "mgFyBA": [
+        {
+            "type": 0,
+            "value": "This name should be unique"
+        }
+    ],
+    "n+Gwbu": [
+        {
+            "type": 0,
+            "value": "Discounts"
+        }
+    ],
+    "n0RwMK": [
+        {
+            "type": 0,
+            "value": "Define types of products you sell"
+        }
+    ],
+    "nKjLjT": [
+        {
+            "type": 0,
+            "value": "Slug must be unique for each warehouse"
+        }
+    ],
+    "nOo0oL": [
+        {
+            "type": 0,
+            "value": "Not enough items to fulfill"
+        }
+    ],
+    "nRiOg+": [
+        {
+            "type": 0,
+            "value": "Sorry, the page was not found"
+        }
+    ],
+    "nwnwJ0": [
+        {
+            "type": 0,
+            "value": "Refused"
+        }
+    ],
+    "o8f4Sg": [
+        {
+            "type": 0,
+            "value": "Can’t fulfill until payment is captured"
+        }
+    ],
+    "oB0y5Y": [
+        {
+            "type": 0,
+            "value": "Unfulfilled"
+        }
+    ],
+    "oLMXDv": [
+        {
+            "type": 0,
+            "value": "Ready to fulfill"
+        }
+    ],
+    "oUWADl": [
+        {
+            "type": 0,
+            "value": "No"
+        }
+    ],
+    "oiuwOl": [
+        {
+            "type": 0,
+            "value": "Assign"
+        }
+    ],
+    "p0SUJj": [
+        {
+            "type": 0,
+            "value": "Don’t worry we will fix it soon. Try to refresh the page or go back to dashboard."
+        }
+    ],
+    "pC6/1z": [
+        {
+            "type": 0,
+            "value": "Invalid manifest format"
+        }
+    ],
+    "pFVX6g": [
+        {
+            "type": 0,
+            "value": "Variant with these attributes already exists"
+        }
+    ],
+    "phAZoj": [
+        {
+            "type": 0,
+            "value": "Collection"
+        }
+    ],
+    "pkUbrL": [
+        {
+            "type": 0,
+            "value": "General Information"
+        }
+    ],
+    "pkjXPD": [
+        {
+            "type": 0,
+            "value": "Fulfilled"
+        }
+    ],
+    "qDwvZ4": [
+        {
+            "type": 0,
+            "value": "Unknown error"
+        }
+    ],
+    "qIgdO6": [
+        {
+            "type": 0,
+            "value": "Custom Filter"
+        }
+    ],
+    "qLbse5": [
+        {
+            "type": 0,
+            "value": "Log out"
+        }
+    ],
+    "qu/hXD": [
+        {
+            "type": 0,
+            "value": "Selected "
+        },
+        {
+            "type": 1,
+            "value": "number"
+        },
+        {
+            "type": 0,
+            "value": " items"
+        }
+    ],
+    "r+8q4B": [
+        {
+            "type": 0,
+            "value": "Only draft orders can be edited"
+        }
+    ],
+    "rQOS7K": [
+        {
+            "type": 0,
+            "value": "Active"
+        }
+    ],
+    "rZf1qL": [
+        {
+            "type": 0,
+            "value": "SKUs must be unique"
+        }
+    ],
+    "rfvBAF": [
+        {
+            "type": 0,
+            "value": "Select All"
+        }
+    ],
+    "rqiCWU": [
+        {
+            "type": 0,
+            "value": "Saved changes"
+        }
+    ],
+    "rqtV5d": [
+        {
+            "type": 0,
+            "value": "Ready to capture"
+        }
+    ],
+    "rr8fyf": [
+        {
+            "type": 0,
+            "value": "Top Products"
+        }
+    ],
+    "ryAyPr": [
+        {
+            "type": 0,
+            "value": "Requested Invoice was generated. It was added to the top of the invoice list on this view. Enjoy!"
+        }
+    ],
+    "s9sOcC": [
+        {
+            "type": 0,
+            "value": "OK"
+        }
+    ],
+    "sK1FPw": [
+        {
+            "type": 0,
+            "value": "Categories"
+        }
+    ],
+    "sZ27WU": [
+        {
+            "type": 0,
+            "value": "Only pre-authorized payments can be voided"
+        }
+    ],
+    "sjRXXz": [
+        {
+            "type": 0,
+            "value": "Order #"
+        },
+        {
+            "type": 1,
+            "value": "orderId"
+        },
+        {
+            "type": 0,
+            "value": " was placed from draft by "
+        },
+        {
+            "type": 1,
+            "value": "userEmail"
+        }
+    ],
+    "skPoVe": [
+        {
+            "type": 0,
+            "value": "Accept"
+        }
+    ],
+    "stjHjY": [
+        {
+            "type": 0,
+            "value": "Promo code already exists"
+        }
+    ],
+    "tEdFmZ": [
+        {
+            "type": 0,
+            "value": "System update required"
+        }
+    ],
+    "tTtoKd": [
+        {
+            "type": 0,
+            "value": "Sorry, your username and/or password are incorrect. Please try again."
+        }
+    ],
+    "tWbE34": [
+        {
+            "type": 0,
+            "value": "Start Hour"
+        }
+    ],
+    "toDL5R": [
+        {
+            "type": 0,
+            "value": "Draft"
+        }
+    ],
+    "tzMNF3": [
+        {
+            "type": 0,
+            "value": "Status"
+        }
+    ],
+    "u24Ppd": [
+        {
+            "type": 0,
+            "value": "This attribute cannot be assigned to this product type"
+        }
+    ],
+    "u3sYPH": [
+        {
+            "type": 0,
+            "value": "Time"
+        }
+    ],
+    "uRTj1Q": [
+        {
+            "type": 0,
+            "value": "Invoice not found"
+        }
+    ],
+    "ufmuTp": [
+        {
+            "type": 0,
+            "value": "Delete"
+        }
+    ],
+    "usSkzP": [
+        {
+            "type": 0,
+            "value": "Search Orders"
+        }
+    ],
+    "v3WWK+": [
+        {
+            "type": 0,
+            "value": "Status is invalid"
+        }
+    ],
+    "vN3qdA": [
+        {
+            "type": 0,
+            "value": "Undo"
+        }
+    ],
+    "vP7g2+": [
+        {
+            "type": 0,
+            "value": "URL not set for an invoice"
+        }
+    ],
+    "vVviA2": [
+        {
+            "type": 0,
+            "value": "Those permissions are out of your scope"
+        }
+    ],
+    "vfG+nh": [
+        {
+            "type": 0,
+            "value": "Confirm Password"
+        }
+    ],
+    "viFkCw": [
+        {
+            "type": 0,
+            "value": "Site Settings"
+        }
+    ],
+    "vzgZ3U": [
+        {
+            "type": 0,
+            "value": "Sign In"
+        }
+    ],
+    "w4R/SO": [
+        {
+            "type": 0,
+            "value": "Local Apps"
+        }
+    ],
+    "wWTUrM": [
+        {
+            "type": 0,
+            "value": "No activities found"
+        }
+    ],
+    "wlQTfb": [
+        {
+            "type": 0,
+            "value": "Next"
+        }
+    ],
+    "wn3di2": [
+        {
+            "type": 0,
+            "value": "This password is too commonly used"
+        }
+    ],
+    "x/ZVlU": [
+        {
+            "type": 0,
+            "value": "Product"
+        }
+    ],
+    "xfGZsi": [
+        {
+            "type": 0,
+            "value": "Configuration"
+        }
+    ],
+    "xqfaLi": [
+        {
+            "type": 0,
+            "value": "Mzawadie ran into an unexpected problem"
+        }
+    ],
+    "xwEc8K": [
+        {
+            "type": 0,
+            "value": "API"
+        }
+    ],
+    "y9cvqE": [
+        {
+            "type": 0,
+            "value": "Create Voucher"
+        }
+    ],
+    "yH56V+": [
+        {
+            "type": 0,
+            "value": "Ooops!..."
+        }
+    ],
+    "yHeZRQ": [
+        {
+            "type": 0,
+            "value": "Product Export Failed"
+        }
+    ],
+    "ycMLN9": [
+        {
+            "type": 0,
+            "value": "Warehouses"
+        }
+    ],
+    "ychKsb": [
+        {
+            "type": 0,
+            "value": "Shipping method is required for this order"
+        }
+    ],
+    "ypW4Mi": [
+        {
+            "type": 0,
+            "value": "Refresh page"
+        }
+    ],
+    "z0gGP+": [
+        {
+            "type": 1,
+            "value": "number"
+        },
+        {
+            "type": 0,
+            "value": " Attributes"
+        }
+    ],
+    "zSOvI0": [
+        {
+            "type": 0,
+            "value": "Filters"
+        }
+    ],
+    "zTdwWM": [
+        {
+            "type": 1,
+            "value": "fromMoney"
+        },
+        {
+            "type": 0,
+            "value": " - "
+        },
+        {
+            "type": 1,
+            "value": "toMoney"
+        }
+    ],
+    "zWgbGg": [
+        {
+            "type": 0,
+            "value": "Today"
+        }
+    ],
+    "zxs6G3": [
+        {
+            "type": 0,
+            "value": "Manage how you ship out orders"
+        }
+    ],
+    "zyXcBP": [
+        {
+            "type": 0,
+            "value": "Sorting by this column requires active filter: "
+        },
+        {
+            "type": 1,
+            "value": "filterName"
+        }
+    ]
 }

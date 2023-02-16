@@ -1,2 +1,1261 @@
 {
+    "+hib+V": {
+        "defaultMessage": "This attribute is already assigned.",
+        "description": "error message"
+    },
+    "+x4cZH": {
+        "defaultMessage": "Only staff members can be assigned"
+    },
+    "+x84Ji": {
+        "defaultMessage": "Unconfirmed",
+        "description": "order status"
+    },
+    "+xTpT1": {
+        "defaultMessage": "Attributes"
+    },
+    "/8/Ffn": {
+        "defaultMessage": "Show",
+        "description": "button"
+    },
+    "/X8Mjx": {
+        "defaultMessage": "Play with <emphasis>GraphQL API</emphasis>"
+    },
+    "0AQH0Q": {
+        "defaultMessage": "Plugin is misconfigured and cannot be activated"
+    },
+    "0OfZJA": {
+        "defaultMessage": "Back",
+        "description": "button"
+    },
+    "0cVk9I": {
+        "defaultMessage": "Show in product listings"
+    },
+    "0dPP8O": {
+        "defaultMessage": "Order #{orderId} was placed"
+    },
+    "0opVvi": {
+        "defaultMessage": "{amount, plural,one {One ordered}other {{amount} Ordered}}",
+        "description": "number of ordered products"
+    },
+    "19/lwV": {
+        "defaultMessage": "Determine attributes used to create product types"
+    },
+    "1H+V6k": {
+        "defaultMessage": "Page with these attributes already exists.",
+        "description": "error message"
+    },
+    "1gzck6": {
+        "defaultMessage": "{firstName} {lastName}"
+    },
+    "1n1tOR": {
+        "defaultMessage": "Group is out of your permission scope"
+    },
+    "1wyZpQ": {
+        "defaultMessage": "These passwords are too similar"
+    },
+    "26BKkX": {
+        "defaultMessage": "Partially returned",
+        "description": "order status"
+    },
+    "2FQsYj": {
+        "defaultMessage": "Clear",
+        "description": "button"
+    },
+    "2NgTCJ": {
+        "defaultMessage": "A product with this SKU already exists"
+    },
+    "2atspc": {
+        "defaultMessage": "Drafts"
+    },
+    "2ob30/": {
+        "defaultMessage": "Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
+    },
+    "2oyWT9": {
+        "defaultMessage": "Back to login",
+        "description": "button"
+    },
+    "2pw5dQ": {
+        "defaultMessage": "Fully paid",
+        "description": "payment status"
+    },
+    "2r4cTE": {
+        "defaultMessage": "Enable Dark Mode",
+        "description": "button"
+    },
+    "34F7Jk": {
+        "defaultMessage": "and",
+        "description": "filter range separator"
+    },
+    "3AqOxp": {
+        "defaultMessage": "Product category not set",
+        "description": "no category set error"
+    },
+    "3JAOk9": {
+        "defaultMessage": "Are you sure you want to leave?",
+        "description": "ExitFormPrompt title"
+    },
+    "3TlhJS": {
+        "defaultMessage": "Search Command",
+        "description": "navigator command mode description"
+    },
+    "3tbL7x": {
+        "defaultMessage": "Forgot password?",
+        "description": "description"
+    },
+    "3ukd9/": {
+        "defaultMessage": "Attributes",
+        "description": "attributes, section header"
+    },
+    "450Fty": {
+        "defaultMessage": "None"
+    },
+    "4Dc2j0": {
+        "defaultMessage": "Returned",
+        "description": "order status"
+    },
+    "4JW9iJ": {
+        "defaultMessage": "Home",
+        "description": "home section name"
+    },
+    "4gT3eD": {
+        "defaultMessage": "Search in Customers",
+        "description": "navigator section header"
+    },
+    "4gZl/n": {
+        "defaultMessage": "See <emphasis>DEMO STOREFRONT</emphasis>"
+    },
+    "4prRLv": {
+        "defaultMessage": "Permission is out of your scope"
+    },
+    "54M0Gu": {
+        "defaultMessage": "Provide us with an email - if we find it in our database we will send you a link to reset your password. You should be able to find it in your inbox in the next couple of minutes."
+    },
+    "577R2r": {
+        "defaultMessage": "Invalid value"
+    },
+    "59XppT": {
+        "defaultMessage": "Approve",
+        "description": "button"
+    },
+    "5BajZK": {
+        "defaultMessage": "View and update your site settings"
+    },
+    "5LRkEs": {
+        "defaultMessage": "The new dashboard and the GraphQL API are preview-quality software."
+    },
+    "5RmuD+": {
+        "defaultMessage": "Manage and update your warehouse information"
+    },
+    "5SPHkk": {
+        "defaultMessage": "Order #{orderId} was fully paid"
+    },
+    "5dyOs0": {
+        "defaultMessage": "No payments waiting for capture"
+    },
+    "5elC9k": {
+        "defaultMessage": "Taxes",
+        "description": "taxes section name"
+    },
+    "5fCMUI": {
+        "defaultMessage": "Translations",
+        "description": "translations section name"
+    },
+    "5sg7KC": {
+        "defaultMessage": "Password"
+    },
+    "5ukAFZ": {
+        "defaultMessage": "Disabling this checkbox will remove product from search and category pages. It will be available on collection pages."
+    },
+    "62T585": {
+        "defaultMessage": "{languageName} - {languageCode}",
+        "description": "button"
+    },
+    "6D+yYX": {
+        "defaultMessage": "Payment status"
+    },
+    "6L6Fy2": {
+        "defaultMessage": "Disclaimer",
+        "description": "header"
+    },
+    "6QjMei": {
+        "defaultMessage": "Preorder end time needs to be set in the future"
+    },
+    "6nSTuC": {
+        "defaultMessage": "Webhooks",
+        "description": "webhooks section name"
+    },
+    "7Chrsf": {
+        "defaultMessage": "Passwords do not match"
+    },
+    "7Oorx5": {
+        "defaultMessage": "Search in Catalog",
+        "description": "navigator section header"
+    },
+    "7v2oBd": {
+        "defaultMessage": "Error",
+        "description": "header"
+    },
+    "8B8E+3": {
+        "defaultMessage": "Order Number",
+        "description": "navigator placeholder"
+    },
+    "8aV98y": {
+        "defaultMessage": "You need to update Saleor to the newest version. Before doing so - save all changes to prevent loss of data. To update use the button below.",
+        "description": "new version notification content"
+    },
+    "8oIbMI": {
+        "defaultMessage": "Reached limit for this plan"
+    },
+    "8vJCJ4": {
+        "defaultMessage": "Define and manage your sales channels"
+    },
+    "8xsKUv": {
+        "defaultMessage": "Service Accounts",
+        "description": "service accounts section name"
+    },
+    "95oJ5d": {
+        "defaultMessage": "Go back to dashboard",
+        "description": "button"
+    },
+    "9C7PZE": {
+        "defaultMessage": "Navigation",
+        "description": "navigation section name"
+    },
+    "9mGA/Q": {
+        "defaultMessage": "Dashboard",
+        "description": "button linking to dashboard"
+    },
+    "9q562c": {
+        "defaultMessage": "Apps",
+        "description": "apps section name"
+    },
+    "9uNz+T": {
+        "defaultMessage": "Cancel",
+        "description": "button"
+    },
+    "AOI4LW": {
+        "defaultMessage": "Search in Catalog",
+        "description": "navigator placeholder"
+    },
+    "AQ+9Ez": {
+        "defaultMessage": "We’ve encountered an unexpected error"
+    },
+    "AQFMYU": {
+        "defaultMessage": "Staff Members",
+        "description": "staff section name"
+    },
+    "AY7Tuz": {
+        "defaultMessage": "The same object cannot be in both lists"
+    },
+    "AdmPca": {
+        "defaultMessage": "Max value cannot be less than min value",
+        "description": "error message"
+    },
+    "AubJ/S": {
+        "defaultMessage": "Sign in",
+        "description": "button"
+    },
+    "B2LE7A": {
+        "defaultMessage": "working...",
+        "description": "menu item loading"
+    },
+    "BM1JiJ": {
+        "defaultMessage": "This order cannot be cancelled",
+        "description": "error message"
+    },
+    "BNTZLv": {
+        "defaultMessage": "Order #{orderId} was placed from draft"
+    },
+    "BXkF8Z": {
+        "defaultMessage": "Activity",
+        "description": "header"
+    },
+    "BooQvo": {
+        "defaultMessage": "Type {key} to see available actions",
+        "description": "navigator placeholder"
+    },
+    "By5ZBp": {
+        "defaultMessage": "Hello there, {userName}",
+        "description": "header"
+    },
+    "C0JLNW": {
+        "defaultMessage": "Provided email address does not exist in our database."
+    },
+    "C4hCsD": {
+        "defaultMessage": "App is out of your permissions scope"
+    },
+    "CJEIRC": {
+        "defaultMessage": "Product export has finished and was sent to your email address."
+    },
+    "ChGI4V": {
+        "defaultMessage": "Saleor is unavailable, please check your network connection and try again.",
+        "description": "error message"
+    },
+    "CjSRT1": {
+        "defaultMessage": "Create Category",
+        "description": "button"
+    },
+    "D2qihU": {
+        "defaultMessage": "Permission is invalid"
+    },
+    "D9ie4n": {
+        "defaultMessage": "Shipping Methods",
+        "description": "shipping section name"
+    },
+    "DEa1T1": {
+        "defaultMessage": "Save Search",
+        "description": "button"
+    },
+    "DHBlFi": {
+        "defaultMessage": "Search Customers",
+        "description": "navigator customer mode description"
+    },
+    "DILs4b": {
+        "defaultMessage": "Unsupported media provider or incorrect URL"
+    },
+    "DJFPzq": {
+        "defaultMessage": "Confirm",
+        "description": "button"
+    },
+    "DK+8PB": {
+        "defaultMessage": "This channel has already been created"
+    },
+    "DNTxWr": {
+        "defaultMessage": "Permission Groups",
+        "description": "permission groups section name"
+    },
+    "DOkfyZ": {
+        "defaultMessage": "Insufficient permissions"
+    },
+    "Dhherd": {
+        "defaultMessage": "Invoice Generation",
+        "description": "dialog header, title"
+    },
+    "E8T3e+": {
+        "defaultMessage": "Cannot add and remove group the same time"
+    },
+    "E9Jssl": {
+        "defaultMessage": "No orders ready to fulfill"
+    },
+    "EEW+ND": {
+        "defaultMessage": "Navigator"
+    },
+    "EIULpW": {
+        "defaultMessage": "Manage how your store charges tax"
+    },
+    "EM+30g": {
+        "defaultMessage": "Our new feature to help you with your daily tasks. Run Navigator using {keyboardShortcut} shortcut.",
+        "description": "navigator notification"
+    },
+    "ENBELI": {
+        "defaultMessage": "or login using",
+        "description": "description"
+    },
+    "Ediw6/": {
+        "defaultMessage": "Assign references",
+        "description": "button label"
+    },
+    "Ev6SEF": {
+        "defaultMessage": "New Password"
+    },
+    "FBtqtl": {
+        "defaultMessage": "Unpaid",
+        "description": "payment status"
+    },
+    "FNpv6K": {
+        "defaultMessage": "Filters",
+        "description": "button"
+    },
+    "FuAV5G": {
+        "defaultMessage": "This name is already taken. Please provide another."
+    },
+    "Fvvgoi": {
+        "defaultMessage": "Your session has expired. Please log in again to continue."
+    },
+    "Fz3kic": {
+        "defaultMessage": "Billing address is not set or invoice is not ready to be send",
+        "description": "error message"
+    },
+    "G7mu0y": {
+        "defaultMessage": "The GraphQL API is beta quality. It is not fully optimized and some mutations or queries may be missing."
+    },
+    "GOdq5V": {
+        "defaultMessage": "Catalog"
+    },
+    "Gxm7Qx": {
+        "defaultMessage": "Navigator is here to help",
+        "description": "navigator notification title"
+    },
+    "H5NKfr": {
+        "defaultMessage": "Create",
+        "description": "button"
+    },
+    "H6NsC1": {
+        "defaultMessage": "Pages",
+        "description": "pages section name"
+    },
+    "HP6m+q": {
+        "defaultMessage": "Attributes and Product Types"
+    },
+    "HSmg1/": {
+        "defaultMessage": "Gift Cards",
+        "description": "gift cards section name"
+    },
+    "HjXnIf": {
+        "defaultMessage": "Content Management"
+    },
+    "HnVtSS": {
+        "defaultMessage": "No results",
+        "description": "search"
+    },
+    "I+UwqI": {
+        "defaultMessage": "equal to",
+        "description": "is filter range or value"
+    },
+    "I4nAXS": {
+        "defaultMessage": "Inactive",
+        "description": "status label inactive"
+    },
+    "IFWHn0": {
+        "defaultMessage": "Billing address is not set",
+        "description": "error message"
+    },
+    "INNPVX": {
+        "defaultMessage": "Partially paid",
+        "description": "payment status"
+    },
+    "IbVKSH": {
+        "defaultMessage": "Manage",
+        "description": "button"
+    },
+    "IyHQr0": {
+        "defaultMessage": "Go to order #{orderNumber}",
+        "description": "navigator action"
+    },
+    "JFmOfi": {
+        "defaultMessage": "Create Product",
+        "description": "button"
+    },
+    "JPH/uP": {
+        "defaultMessage": "Define types of content pages used in your store"
+    },
+    "JTcz2G": {
+        "defaultMessage": "Exporting CSV finished",
+        "description": "csv file exporting has finished, header"
+    },
+    "Ja7gHc": {
+        "defaultMessage": "Edit",
+        "description": "button"
+    },
+    "JiVwOU": {
+        "defaultMessage": "There was a problem with the file you uploaded as an image and it couldn't be used. Please try a different file."
+    },
+    "Jt3DwJ": {
+        "defaultMessage": "Publish on",
+        "description": "publish on date"
+    },
+    "K8xNLe": {
+        "defaultMessage": "Products",
+        "description": "products section name"
+    },
+    "KFv8hX": {
+        "defaultMessage": "An attribute already exists."
+    },
+    "KN7zKn": {
+        "defaultMessage": "Error"
+    },
+    "KRqgfo": {
+        "defaultMessage": "User is out of your permissions scope"
+    },
+    "KeO51o": {
+        "defaultMessage": "Channel"
+    },
+    "LR3HlT": {
+        "defaultMessage": "This password is too short"
+    },
+    "LmKz3g": {
+        "defaultMessage": "Storefront"
+    },
+    "Lx1ima": {
+        "defaultMessage": "Upload image",
+        "description": "button"
+    },
+    "M1uijW": {
+        "defaultMessage": "Not Published",
+        "description": "collection"
+    },
+    "M4q0Ye": {
+        "defaultMessage": "Sorry, login went wrong. Please try again.",
+        "description": "error message"
+    },
+    "MKtgZB": {
+        "defaultMessage": "Only staff users can access the dashboard"
+    },
+    "MWSacl": {
+        "defaultMessage": "Multichannel"
+    },
+    "McN+wq": {
+        "defaultMessage": "Customers",
+        "description": "customers section name"
+    },
+    "Mi4JOd": {
+        "defaultMessage": "Error",
+        "description": "button"
+    },
+    "N43t3/": {
+        "defaultMessage": "Number not set for an invoice",
+        "description": "error message"
+    },
+    "N7XGzW": {
+        "defaultMessage": "This name is already taken. Please provide another.",
+        "description": "error message"
+    },
+    "NNT3Lp": {
+        "defaultMessage": "Collections",
+        "description": "collections section name"
+    },
+    "NlSJMM": {
+        "defaultMessage": "Channels",
+        "description": "channels section name"
+    },
+    "NqxvFh": {
+        "defaultMessage": "Type Command",
+        "description": "navigator placeholder"
+    },
+    "Nuq83+": {
+        "defaultMessage": "Create new channel"
+    },
+    "NxeDbG": {
+        "defaultMessage": "Drop here to upload",
+        "description": "image upload"
+    },
+    "OA+fw+": {
+        "defaultMessage": "or",
+        "description": "conjunction, choice between going to dashboard or refreshing page"
+    },
+    "OGemtu": {
+        "defaultMessage": "Partially refunded",
+        "description": "payment status"
+    },
+    "OeKIoY": {
+        "defaultMessage": "Mzawadie runs in read-only mode. Changes not saved."
+    },
+    "Ol1vso": {
+        "defaultMessage": "leave without saving",
+        "description": "ExitFormPrompt cancel button"
+    },
+    "P7PLVj": {
+        "defaultMessage": "Date"
+    },
+    "PCoO4D": {
+        "defaultMessage": "Page not found.",
+        "description": "error message"
+    },
+    "PLCwT/": {
+        "defaultMessage": "Show more",
+        "description": "search results"
+    },
+    "PbqNhi": {
+        "defaultMessage": "Partially fulfilled",
+        "description": "order status"
+    },
+    "Q1Uzbb": {
+        "defaultMessage": "No products found"
+    },
+    "Q6wcZ5": {
+        "defaultMessage": "First Name"
+    },
+    "Q8Qw5B": {
+        "defaultMessage": "Description"
+    },
+    "QBxN6z": {
+        "defaultMessage": "between",
+        "description": "is filter range or value"
+    },
+    "QCwBUI": {
+        "defaultMessage": "Delete Search",
+        "description": "button"
+    },
+    "QFBjlV": {
+        "defaultMessage": "Stock for this warehouse already exists for this product variant",
+        "description": "error message"
+    },
+    "QFCUEt": {
+        "defaultMessage": "Slug must be unique"
+    },
+    "QcIFCs": {
+        "defaultMessage": "Search Name",
+        "description": "save search tab"
+    },
+    "QirE3M": {
+        "defaultMessage": "Start Date"
+    },
+    "QooeI/": {
+        "defaultMessage": "Create Customer",
+        "description": "button"
+    },
+    "RQUkVW": {
+        "defaultMessage": "Manage your employees and their permissions"
+    },
+    "RaycYK": {
+        "defaultMessage": "Save",
+        "description": "button"
+    },
+    "Rjs1CD": {
+        "defaultMessage": "Continue",
+        "description": "button"
+    },
+    "RrCui3": {
+        "defaultMessage": "Summary"
+    },
+    "S/TQBw": {
+        "defaultMessage": "You have unsaved changes on this view. What would you like to do with them?",
+        "description": "ExitFormPrompt description"
+    },
+    "S22jIs": {
+        "defaultMessage": "Set new password",
+        "description": "button"
+    },
+    "SKFr04": {
+        "defaultMessage": "Attribute not found."
+    },
+    "T4GOiX": {
+        "defaultMessage": "End Date"
+    },
+    "TDhHMi": {
+        "defaultMessage": "This needs to be unique"
+    },
+    "TKmub+": {
+        "defaultMessage": "This field is required"
+    },
+    "Ta9j04": {
+        "defaultMessage": "Orders",
+        "description": "orders section name"
+    },
+    "TpPx7V": {
+        "defaultMessage": "Search Customer",
+        "description": "navigator placeholder"
+    },
+    "U2WgwW": {
+        "defaultMessage": "Add new value: {value}",
+        "description": "add custom select input option"
+    },
+    "U3BQKA": {
+        "defaultMessage": "Set publication date"
+    },
+    "UN+yTt": {
+        "defaultMessage": "Staff Settings"
+    },
+    "USS3Q7": {
+        "defaultMessage": "Unknown error occurred",
+        "description": "filters error messages unknown error"
+    },
+    "UjsI4o": {
+        "defaultMessage": "since {date}",
+        "description": "date"
+    },
+    "V1mqpZ": {
+        "defaultMessage": "Create Permission Group",
+        "description": "button"
+    },
+    "V2BBQu": {
+        "defaultMessage": "Currency in both channels must be the same"
+    },
+    "VEE4gD": {
+        "defaultMessage": "Shipping method is not valid for chosen shipping address",
+        "description": "error message"
+    },
+    "VIABHy": {
+        "defaultMessage": "Default shipping zone already exists",
+        "description": "error message"
+    },
+    "VdDcxc": {
+        "defaultMessage": "Create Collection",
+        "description": "button"
+    },
+    "WhKGPA": {
+        "defaultMessage": "Set up new password",
+        "description": "page title"
+    },
+    "WhvuCb": {
+        "defaultMessage": "Plugins",
+        "description": "plugins section name"
+    },
+    "Wlc67M": {
+        "defaultMessage": "Cannot choose a shipping method for an order without the shipping address",
+        "description": "error message"
+    },
+    "WzA5Ll": {
+        "defaultMessage": "Cannot remove user from last group"
+    },
+    "X8+Lpa": {
+        "defaultMessage": "Account Settings",
+        "description": "button"
+    },
+    "XCIV8H": {
+        "defaultMessage": "Refresh",
+        "description": "button"
+    },
+    "XJSRDK": {
+        "defaultMessage": "Fully refunded",
+        "description": "payment status"
+    },
+    "Xb6BJ9": {
+        "defaultMessage": "Manual payments can not be refunded",
+        "description": "error message"
+    },
+    "Xel9C+": {
+        "defaultMessage": "Search Views and Actions",
+        "description": "navigator default mode description"
+    },
+    "XkX56I": {
+        "defaultMessage": "Choose a value",
+        "description": "filters error messages value required"
+    },
+    "Y1B0PN": {
+        "defaultMessage": "There's no payment associated with the order",
+        "description": "error message"
+    },
+    "Y7UlMR": {
+        "defaultMessage": "Apps",
+        "description": "app extensions subsection"
+    },
+    "Y7Vy19": {
+        "defaultMessage": "Set available on",
+        "description": "available on date"
+    },
+    "YMBn8d": {
+        "defaultMessage": "Draft Orders",
+        "description": "draft orders section name"
+    },
+    "YQ3EXR": {
+        "defaultMessage": "Product Types",
+        "description": "product types section name"
+    },
+    "YYkkhx": {
+        "defaultMessage": "Navigate to",
+        "description": "navigator section header"
+    },
+    "YZl6cv": {
+        "defaultMessage": "Miscellaneous"
+    },
+    "Yo2kC+": {
+        "defaultMessage": "Couldn't process image"
+    },
+    "Yy/yDL": {
+        "defaultMessage": "Reset password"
+    },
+    "Z6QAbw": {
+        "defaultMessage": "This variant does not have any digital content"
+    },
+    "a+x05s": {
+        "defaultMessage": "Select",
+        "description": "select option, button"
+    },
+    "a5msuh": {
+        "defaultMessage": "Yes"
+    },
+    "a9S9Je": {
+        "defaultMessage": "Page Types",
+        "description": "page types section name"
+    },
+    "aCX8rl": {
+        "defaultMessage": "Here is some information we gathered about your store",
+        "description": "subheader"
+    },
+    "aI80kg": {
+        "defaultMessage": "Properties"
+    },
+    "abTH5q": {
+        "defaultMessage": "Email address is not set",
+        "description": "error message"
+    },
+    "aggaJg": {
+        "defaultMessage": "This attribute has already been assigned to this product type"
+    },
+    "aheQdn": {
+        "defaultMessage": "Last Name"
+    },
+    "akXDST": {
+        "defaultMessage": "Visibility",
+        "description": "section header"
+    },
+    "bFhzRX": {
+        "defaultMessage": "No products are out of stock"
+    },
+    "bZenNC": {
+        "defaultMessage": "Description (optional)"
+    },
+    "bj6pTd": {
+        "defaultMessage": "Something's missing"
+    },
+    "bu/fC1": {
+        "defaultMessage": "Remove",
+        "description": "button"
+    },
+    "byP6IC": {
+        "defaultMessage": "Selected"
+    },
+    "c0H45L": {
+        "defaultMessage": "{amount, plural,one {One order is ready to fulfill} other {{amount} orders are ready to fulfill}}"
+    },
+    "c5pMZ8": {
+        "defaultMessage": "API error"
+    },
+    "cY42ht": {
+        "defaultMessage": "Password cannot be entirely numeric"
+    },
+    "ccXLVi": {
+        "defaultMessage": "Category"
+    },
+    "cd13nN": {
+        "defaultMessage": "All attributes should have value",
+        "description": "product attribute error"
+    },
+    "cdxwA8": {
+        "defaultMessage": "{amount, plural,one {One product out of stock}other {{amount} products out of stock}}"
+    },
+    "cfQf0w": {
+        "defaultMessage": "Create Order",
+        "description": "button"
+    },
+    "d9UqaJ": {
+        "defaultMessage": "Cannot change the quantity because of insufficient stock",
+        "description": "error message"
+    },
+    "dOQB9o": {
+        "defaultMessage": "Cancelled",
+        "description": "payment status"
+    },
+    "dxCVWI": {
+        "defaultMessage": "Cannot request an invoice for draft order",
+        "description": "error message"
+    },
+    "eOrLzG": {
+        "defaultMessage": "Done",
+        "description": "button"
+    },
+    "eWcvOc": {
+        "defaultMessage": "Choose file",
+        "description": "button"
+    },
+    "erC44f": {
+        "defaultMessage": "Filter requires other filters: {dependencies}",
+        "description": "filters error messages dependencies missing"
+    },
+    "eu98dw": {
+        "defaultMessage": "Invalid password"
+    },
+    "fNFEkh": {
+        "defaultMessage": "No of Rows:"
+    },
+    "fgHLXc": {
+        "defaultMessage": "Value",
+        "description": "attribute value"
+    },
+    "g/BrOt": {
+        "defaultMessage": "Url has invalid format"
+    },
+    "gKdGxP": {
+        "defaultMessage": "Only pre-authorized payments can be captured",
+        "description": "error message"
+    },
+    "gTr0qE": {
+        "defaultMessage": "Shipping Settings"
+    },
+    "hJZwTS": {
+        "defaultMessage": "Email address"
+    },
+    "hLUYBt": {
+        "defaultMessage": "Pending",
+        "description": "payment status"
+    },
+    "hOxIeP": {
+        "defaultMessage": "Availability"
+    },
+    "hX5PAb": {
+        "defaultMessage": "No results found"
+    },
+    "ho75Lr": {
+        "defaultMessage": "Deactivated",
+        "description": "status label deactivated"
+    },
+    "hpMcW8": {
+        "defaultMessage": "Define how users can navigate through your store"
+    },
+    "hptDxW": {
+        "defaultMessage": "to {money}",
+        "description": "money"
+    },
+    "hqVMLQ": {
+        "defaultMessage": "Send",
+        "description": "button"
+    },
+    "hzSNj4": {
+        "defaultMessage": "Dashboard"
+    },
+    "i+Vox0": {
+        "defaultMessage": "Invoice Generated",
+        "description": "invoice generating has finished, header"
+    },
+    "i0AcKY": {
+        "defaultMessage": "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes.",
+        "description": "notification message after log in"
+    },
+    "i3Mvj8": {
+        "defaultMessage": "This variant already exists",
+        "description": "product attribute error"
+    },
+    "iAvKNf": {
+        "defaultMessage": "Display Help",
+        "description": "navigator help mode description"
+    },
+    "iUy2dx": {
+        "defaultMessage": "Vouchers",
+        "description": "vouchers section name"
+    },
+    "ij7olm": {
+        "defaultMessage": "This fulfillment cannot be cancelled",
+        "description": "error message"
+    },
+    "ijl+4z": {
+        "defaultMessage": "save & continue",
+        "description": "ExitFormPrompt confirm button"
+    },
+    "ivJ1qt": {
+        "defaultMessage": "Manage your permission groups and their permissions"
+    },
+    "j0ugM4": {
+        "defaultMessage": "Exchange Rates",
+        "description": "Manage and Update your warehouse information"
+    },
+    "j8PV7E": {
+        "defaultMessage": "Values",
+        "description": "attribute values"
+    },
+    "jFrdB5": {
+        "defaultMessage": "Product Settings"
+    },
+    "juBV+h": {
+        "defaultMessage": "End Hour"
+    },
+    "k8bltk": {
+        "defaultMessage": "No Results"
+    },
+    "kJQczl": {
+        "defaultMessage": "Sales",
+        "description": "sales section name"
+    },
+    "kbkjEc": {
+        "defaultMessage": "Search in Catalog",
+        "description": "navigator catalog mode description"
+    },
+    "l2oVCF": {
+        "defaultMessage": "Attributes",
+        "description": "attributes section name"
+    },
+    "lL3YJO": {
+        "defaultMessage": "Published",
+        "description": "collection"
+    },
+    "lLwtgs": {
+        "defaultMessage": "Variants are disabled in this product type"
+    },
+    "lW5uJO": {
+        "defaultMessage": "from {money}",
+        "description": "money"
+    },
+    "liLrVs": {
+        "defaultMessage": "Save Custom Search",
+        "description": "save filter tab, header"
+    },
+    "lm9NSK": {
+        "defaultMessage": "Send an email with reset link",
+        "description": "password reset, button"
+    },
+    "lqIzC8": {
+        "defaultMessage": "This field needs to be unique"
+    },
+    "lzdvwp": {
+        "defaultMessage": "Optional",
+        "description": "field is optional"
+    },
+    "m0Dz+2": {
+        "defaultMessage": "Please set up a new password for your account. Repeat your new password to make sure you will be able to remember it."
+    },
+    "m19JfL": {
+        "defaultMessage": "View and update your plugins and their settings."
+    },
+    "m8cjcK": {
+        "defaultMessage": "Authorization key with this type already exists",
+        "description": "add authorization key error"
+    },
+    "mYs3tb": {
+        "defaultMessage": "Product price cannot be lower than 0."
+    },
+    "md326v": {
+        "defaultMessage": "{amount, plural,one {One payment to capture}other {{amount} payments to capture}}"
+    },
+    "me585h": {
+        "defaultMessage": "Quick Actions",
+        "description": "navigator section header"
+    },
+    "mgFyBA": {
+        "defaultMessage": "This name should be unique"
+    },
+    "n+Gwbu": {
+        "defaultMessage": "Discounts"
+    },
+    "n0RwMK": {
+        "defaultMessage": "Define types of products you sell"
+    },
+    "nKjLjT": {
+        "defaultMessage": "Slug must be unique for each warehouse",
+        "description": "error message"
+    },
+    "nOo0oL": {
+        "defaultMessage": "Not enough items to fulfill",
+        "description": "error message"
+    },
+    "nRiOg+": {
+        "defaultMessage": "Sorry, the page was not found"
+    },
+    "nwnwJ0": {
+        "defaultMessage": "Refused",
+        "description": "payment status"
+    },
+    "o8f4Sg": {
+        "defaultMessage": "Can’t fulfill until payment is captured",
+        "description": "disabled option description"
+    },
+    "oB0y5Y": {
+        "defaultMessage": "Unfulfilled",
+        "description": "order status"
+    },
+    "oLMXDv": {
+        "defaultMessage": "Ready to fulfill",
+        "description": "order status"
+    },
+    "oUWADl": {
+        "defaultMessage": "No"
+    },
+    "oiuwOl": {
+        "defaultMessage": "Assign",
+        "description": "button"
+    },
+    "p0SUJj": {
+        "defaultMessage": "Don’t worry we will fix it soon. Try to refresh the page or go back to dashboard."
+    },
+    "pC6/1z": {
+        "defaultMessage": "Invalid manifest format"
+    },
+    "pFVX6g": {
+        "defaultMessage": "Variant with these attributes already exists"
+    },
+    "phAZoj": {
+        "defaultMessage": "Collection"
+    },
+    "pkUbrL": {
+        "defaultMessage": "General Information"
+    },
+    "pkjXPD": {
+        "defaultMessage": "Fulfilled",
+        "description": "order status"
+    },
+    "qDwvZ4": {
+        "defaultMessage": "Unknown error"
+    },
+    "qIgdO6": {
+        "defaultMessage": "Custom Filter"
+    },
+    "qLbse5": {
+        "defaultMessage": "Log out",
+        "description": "button"
+    },
+    "qu/hXD": {
+        "defaultMessage": "Selected {number} items"
+    },
+    "r+8q4B": {
+        "defaultMessage": "Only draft orders can be edited",
+        "description": "error message"
+    },
+    "rQOS7K": {
+        "defaultMessage": "Active",
+        "description": "status label active"
+    },
+    "rZf1qL": {
+        "defaultMessage": "SKUs must be unique",
+        "description": "bulk variant create error"
+    },
+    "rfvBAF": {
+        "defaultMessage": "Select All",
+        "description": "select all options, button"
+    },
+    "rqiCWU": {
+        "defaultMessage": "Saved changes"
+    },
+    "rqtV5d": {
+        "defaultMessage": "Ready to capture",
+        "description": "order status"
+    },
+    "rr8fyf": {
+        "defaultMessage": "Top Products",
+        "description": "header"
+    },
+    "ryAyPr": {
+        "defaultMessage": "Requested Invoice was generated. It was added to the top of the invoice list on this view. Enjoy!"
+    },
+    "s9sOcC": {
+        "defaultMessage": "OK",
+        "description": "button"
+    },
+    "sK1FPw": {
+        "defaultMessage": "Categories",
+        "description": "categories section name"
+    },
+    "sZ27WU": {
+        "defaultMessage": "Only pre-authorized payments can be voided",
+        "description": "error message"
+    },
+    "sjRXXz": {
+        "defaultMessage": "Order #{orderId} was placed from draft by {userEmail}"
+    },
+    "skPoVe": {
+        "defaultMessage": "Accept",
+        "description": "button"
+    },
+    "stjHjY": {
+        "defaultMessage": "Promo code already exists",
+        "description": "error message"
+    },
+    "tEdFmZ": {
+        "defaultMessage": "System update required",
+        "description": "notification title"
+    },
+    "tTtoKd": {
+        "defaultMessage": "Sorry, your username and/or password are incorrect. Please try again.",
+        "description": "error message"
+    },
+    "tWbE34": {
+        "defaultMessage": "Start Hour"
+    },
+    "toDL5R": {
+        "defaultMessage": "Draft",
+        "description": "order status"
+    },
+    "tzMNF3": {
+        "defaultMessage": "Status"
+    },
+    "u24Ppd": {
+        "defaultMessage": "This attribute cannot be assigned to this product type"
+    },
+    "u3sYPH": {
+        "defaultMessage": "Time",
+        "description": "independent of any particular day, eg. 11:35"
+    },
+    "uRTj1Q": {
+        "defaultMessage": "Invoice not found",
+        "description": "error message"
+    },
+    "ufmuTp": {
+        "defaultMessage": "Delete",
+        "description": "button"
+    },
+    "usSkzP": {
+        "defaultMessage": "Search Orders",
+        "description": "navigator order mode description"
+    },
+    "v3WWK+": {
+        "defaultMessage": "Status is invalid"
+    },
+    "vN3qdA": {
+        "defaultMessage": "Undo",
+        "description": "button"
+    },
+    "vP7g2+": {
+        "defaultMessage": "URL not set for an invoice",
+        "description": "error message"
+    },
+    "vVviA2": {
+        "defaultMessage": "Those permissions are out of your scope"
+    },
+    "vfG+nh": {
+        "defaultMessage": "Confirm Password"
+    },
+    "viFkCw": {
+        "defaultMessage": "Site Settings",
+        "description": "site settings section name"
+    },
+    "vzgZ3U": {
+        "defaultMessage": "Sign In",
+        "description": "card header"
+    },
+    "w4R/SO": {
+        "defaultMessage": "Local Apps"
+    },
+    "wWTUrM": {
+        "defaultMessage": "No activities found"
+    },
+    "wlQTfb": {
+        "defaultMessage": "Next",
+        "description": "go to next step, button"
+    },
+    "wn3di2": {
+        "defaultMessage": "This password is too commonly used"
+    },
+    "x/ZVlU": {
+        "defaultMessage": "Product"
+    },
+    "xfGZsi": {
+        "defaultMessage": "Configuration",
+        "description": "configuration section name"
+    },
+    "xqfaLi": {
+        "defaultMessage": "Mzawadie ran into an unexpected problem"
+    },
+    "xwEc8K": {
+        "defaultMessage": "API"
+    },
+    "y9cvqE": {
+        "defaultMessage": "Create Voucher",
+        "description": "button"
+    },
+    "yH56V+": {
+        "defaultMessage": "Ooops!..."
+    },
+    "yHeZRQ": {
+        "defaultMessage": "Product Export Failed"
+    },
+    "ycMLN9": {
+        "defaultMessage": "Warehouses",
+        "description": "warehouses section name"
+    },
+    "ychKsb": {
+        "defaultMessage": "Shipping method is required for this order",
+        "description": "error message"
+    },
+    "ypW4Mi": {
+        "defaultMessage": "Refresh page",
+        "description": "button refreshing page"
+    },
+    "z0gGP+": {
+        "defaultMessage": "{number} Attributes",
+        "description": "number of attributes"
+    },
+    "zSOvI0": {
+        "defaultMessage": "Filters"
+    },
+    "zTdwWM": {
+        "defaultMessage": "{fromMoney} - {toMoney}",
+        "description": "money"
+    },
+    "zWgbGg": {
+        "defaultMessage": "Today"
+    },
+    "zxs6G3": {
+        "defaultMessage": "Manage how you ship out orders"
+    },
+    "zyXcBP": {
+        "defaultMessage": "Sorting by this column requires active filter: {filterName}"
+    }
 }

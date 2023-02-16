@@ -1,0 +1,32 @@
+// @ts-nocheck
+import { ExitFormDialogContext, ExitFormDialogData, SubmitFn, WithFormId } from "@mzawadie/components";
+import { useContext, useRef } from "react";
+
+export interface UseExitFormDialogResult
+    extends Pick<
+            ExitFormDialogData,
+            "setEnableExitDialog" | "shouldBlockNavigation" | "setIsSubmitting"
+        >,
+        WithFormId {
+    setIsDirty: (isDirty: boolean) => void;
+    setExitDialogSubmitRef: (submitFn: SubmitFn) => void;
+}
+
+export interface UseExitFormDialogProps {
+    formId: symbol;
+}
+
+export const useExitFormDialog = (
+    { formId }: UseExitFormDialogProps = { formId: undefined }
+): UseExitFormDialogResult => {
+    const id = useRef(formId || Symbol()).current;
+
+    const { setIsDirty, setExitDialogSubmitRef, ...rest } = useContext(ExitFormDialogContext);
+
+    return {
+        ...rest,
+        formId: id,
+        setIsDirty: (value: boolean) => setIsDirty(id, value),
+        setExitDialogSubmitRef: (submitFn: SubmitFn) => setExitDialogSubmitRef(id, submitFn),
+    };
+};

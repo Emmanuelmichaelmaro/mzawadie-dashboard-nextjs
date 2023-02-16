@@ -23,7 +23,7 @@
         "isolatedModules": true, // Transpile each file as a separate module
         "outDir": "./build/typings", // All emitted typings location, if any present in src use; rimraf ./src/**/*.d.ts
         "paths": {
-            "@assets/*": ["assets/*"],
+            "@assets/*": ["public/assets/*"],
             "@locale/*": ["locale/*"],
             "@mzawadie/*": ["src/*"],
             "@mzawadie/components/*": ["src/components/*"],

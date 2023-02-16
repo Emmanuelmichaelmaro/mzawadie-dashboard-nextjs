@@ -38,6 +38,7 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
     filename: "index.html",
     hash: true,
     template: "./public/index.html",
+    favicon: "./public/assets/favicons/favicon.ico",
 });
 
 const environmentPlugin = new webpack.EnvironmentPlugin({
@@ -102,7 +103,7 @@ module.exports = speedMeasureWrapper((env, argv) => {
 
     if (!devMode) {
         manifestPlugin = new InjectManifest({
-            swSrc: "./src/containers/ServiceWorker/ServiceWorker.js",
+            swSrc: "./src/containers/ServiceWorker/serviceWorker.js",
             swDest: "sw.js",
             maximumFileSizeToCacheInBytes: 5000000,
             webpackCompilationPlugins: [checkerPlugin],
@@ -134,9 +135,9 @@ module.exports = speedMeasureWrapper((env, argv) => {
                 {
                     include: [
                         resolve("node_modules"),
-                        resolve("src/assets/fonts"),
-                        resolve("src/assets/images"),
-                        resolve("src/assets/favicons"),
+                        resolve("public/assets/fonts"),
+                        resolve("public/assets/images"),
+                        resolve("public/assets/favicons"),
                     ],
                     loader: fileLoaderPath,
                     test: /\.(eot|otf|png|svg|jpg|ttf|woff|woff2)(\?v=[0-9.]+)?$/,
