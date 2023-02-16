@@ -94,3 +94,5 @@ export * from "./CollectionWithDividers";
 export * from "./Metadata";
 export * from "./AddressEdit";
 export * from "./AddressFormatter";
+export * from "./IconButtonTableCell";
+export * from "./PreviewPill";
