@@ -29,6 +29,8 @@ import { ExternalAppProvider } from "@mzawadie/pages/apps/components/ExternalApp
 import Auth, { useUser } from "@mzawadie/pages/auth";
 import AuthProvider from "@mzawadie/pages/auth/AuthProvider";
 import { LoginLoading, SectionRoute } from "@mzawadie/pages/auth/components";
+import ConfigurationPage from "@mzawadie/pages/configuration";
+import { getConfigMenuItemsPermissions } from "@mzawadie/pages/configuration/utils";
 import CustomerPage from "@mzawadie/pages/customers";
 import HomePage from "@mzawadie/pages/home";
 import { PermissionEnum } from "@mzawadie/types/globalTypes";
@@ -191,13 +193,13 @@ const Routes: React.FC = () => {
                             {/*    component={TaxesPage}*/}
                             {/*/ >*/}
 
-                            {/* <SectionRoute*/}
-                            {/*    matchPermission="any"*/}
-                            {/*    permissions={getConfigMenuItemsPermissions(intl)}*/}
-                            {/*    exact*/}
-                            {/*    path="/configuration"*/}
-                            {/*    component={ConfigurationPage}*/}
-                            {/*/ >*/}
+                            <SectionRoute
+                                matchPermission="any"
+                                permissions={getConfigMenuItemsPermissions(intl)}
+                                exact
+                                path="/configuration"
+                                component={ConfigurationPage}
+                            />
 
                             <Route component={NotFoundPage} />
                         </Switch>

@@ -9,11 +9,17 @@ import { RouteComponentProps } from "react-router";
 import { Route, Switch } from "react-router-dom";
 
 import {
+    customerAddPath,
+    customerAddressesPath,
+    CustomerAddressesUrlQueryParams,
     customerListPath,
     CustomerListUrlQueryParams,
     CustomerListUrlSortField,
     customerPath,
+    CustomerUrlQueryParams,
 } from "./urls";
+import CustomerAddressesViewComponent from "./views/CustomerAddresses";
+import CustomerCreateView from "./views/CustomerCreate";
 import { CustomerDetailsViewComponent } from "./views/CustomerDetails";
 import { CustomerListViewComponent } from "./views/CustomerList";
 
@@ -37,6 +43,18 @@ const CustomerDetailsView: React.FC<RouteComponentProps<CustomerDetailsRoutePara
     return <CustomerDetailsViewComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
 
+interface CustomerAddressesRouteParams {
+    id: string;
+}
+
+const CustomerAddressesView: React.FC<RouteComponentProps<CustomerAddressesRouteParams>> = ({
+    match,
+}) => {
+    const params: CustomerAddressesUrlQueryParams = parseQs(location.search.substr(1));
+
+    return <CustomerAddressesViewComponent id={decodeURIComponent(match.params.id)} params={params} />;
+};
+
 const CustomerPage: React.FC<{}> = () => {
     const intl = useIntl();
 
@@ -46,6 +64,8 @@ const CustomerPage: React.FC<{}> = () => {
             <Switch>
                 <Route exact path={customerListPath} component={CustomerListView} />
                 <Route path={customerPath(":id")} component={CustomerDetailsView} />
+                <Route exact path={customerAddPath} component={CustomerCreateView} />
+                <Route path={customerAddressesPath(":id")} component={CustomerAddressesView} />
             </Switch>
         </>
     );

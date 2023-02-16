@@ -21,6 +21,7 @@ const useStyles = makeStyles(
             display: "grid",
             gridTemplateColumns: "1fr 487px",
             margin: "0 auto",
+            padding: "4rem",
             width: 830,
         },
         header: {
