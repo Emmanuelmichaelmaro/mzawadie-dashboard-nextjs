@@ -1,8 +1,6 @@
 // @ts-nocheck
+import { FieldType, IFilterElement, MultiAutocompleteChoiceType } from "@mzawadie/components";
 import { FetchMoreProps, MinMax, SearchPageProps } from "@mzawadie/core";
-
-import { FieldType, IFilterElement } from "../../components/Filter";
-import { MultiAutocompleteChoiceType } from "../../components/MultiAutocompleteSelectField";
 
 export function createPriceField<T extends string>(
     name: T,

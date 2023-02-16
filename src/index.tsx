@@ -29,7 +29,9 @@ import { ExternalAppProvider } from "@mzawadie/pages/apps/components/ExternalApp
 import Auth, { useUser } from "@mzawadie/pages/auth";
 import AuthProvider from "@mzawadie/pages/auth/AuthProvider";
 import { LoginLoading, SectionRoute } from "@mzawadie/pages/auth/components";
+import CustomerPage from "@mzawadie/pages/customers";
 import HomePage from "@mzawadie/pages/home";
+import { PermissionEnum } from "@mzawadie/types/globalTypes";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { createFetch, createSaleorClient, SaleorProvider } from "@saleor/sdk";
 import { createUploadLink } from "apollo-upload-client";
@@ -135,11 +137,11 @@ const Routes: React.FC = () => {
                         <Switch>
                             <SectionRoute exact path="/" component={HomePage} />
 
-                            {/* <SectionRoute*/}
-                            {/*    permissions={[PermissionEnum.MANAGE_USERS]}*/}
-                            {/*    path="/customers"*/}
-                            {/*    component={CustomerPage}*/}
-                            {/*/ >*/}
+                            <SectionRoute
+                                permissions={[PermissionEnum.MANAGE_USERS]}
+                                path="/customers"
+                                component={CustomerPage}
+                            />
 
                             {/* <SectionRoute*/}
                             {/*    permissions={[PermissionEnum.MANAGE_STAFF]}*/}

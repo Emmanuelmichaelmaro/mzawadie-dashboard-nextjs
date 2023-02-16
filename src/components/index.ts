@@ -91,3 +91,4 @@ export * from "./Timezone";
 export * from "./Timeline";
 export * from "./PriceField";
 export * from "./CollectionWithDividers";
+export * from "./Metadata";

@@ -1,10 +1,9 @@
+/* eslint-disable radix */
 // @ts-nocheck
-import { findValueInEnum } from "@mzawadie/core";
+import { IFilter, IFilterElement } from "@mzawadie/components/Filter";
+import { findValueInEnum, ActiveTab } from "@mzawadie/core";
 import isArray from "lodash/isArray";
 
-import { IFilter, IFilterElement } from "../../components/Filter";
-
-// eslint-disable-next-line @typescript-eslint/ban-types
 function createFilterUtils<TQueryParams extends {}, TFilters extends {}>(filters: {}) {
     function getActiveFilters(params: TQueryParams): TFilters {
         return Object.keys(params)
@@ -19,9 +18,21 @@ function createFilterUtils<TQueryParams extends {}, TFilters extends {}>(filters
         return Object.keys(getActiveFilters(params)).some((key) => !!params[key]);
     }
 
+    function getFiltersCurrentTab<TQueryTabParams extends ActiveTab>(
+        params: TQueryTabParams,
+        tabs: unknown[]
+    ) {
+        return params.activeTab === undefined
+            ? areFiltersApplied(params as unknown as TQueryParams)
+                ? tabs.length + 1
+                : 0
+            : parseInt(params.activeTab, 0);
+    }
+
     return {
         areFiltersApplied,
         getActiveFilters,
+        getFiltersCurrentTab,
     };
 }
 
@@ -33,14 +44,10 @@ export function dedupeFilter<T>(array: T[]): T[] {
     return Array.from(new Set(array));
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 export type GetFilterQueryParam<TFilterKeys extends string, TFilters extends {}> = (
     filter: IFilterElement<TFilterKeys>,
-    // eslint-disable-next-line @typescript-eslint/ban-types
     params?: {}
 ) => TFilters;
-
-// eslint-disable-next-line @typescript-eslint/ban-types
 export function getFilterQueryParams<TFilterKeys extends string, TUrlFilters extends {}>(
     filter: IFilter<TFilterKeys>,
     getFilterQueryParam: GetFilterQueryParam<TFilterKeys, TUrlFilters>
@@ -55,11 +62,9 @@ export function getFilterQueryParams<TFilterKeys extends string, TUrlFilters ext
 }
 
 export type GteLte<T> = Partial<Record<"gte" | "lte", T>>;
-
 export function getGteLteVariables<T>(variables: GteLte<T>): GteLte<T> | null {
     if (
-        [variables.gte, variables.lte].some(
-            // eslint-disable-next-line no-restricted-globals
+        !![variables.gte, variables.lte].some(
             (v) => v !== undefined && v !== null && !(typeof v === "number" && isNaN(v))
         )
     ) {
@@ -89,7 +94,6 @@ export function getSingleValueQueryParam<TKey extends string, TUrlKey extends st
 export function getSingleEnumValueQueryParam<
     TKey extends string,
     TUrlKey extends string,
-    // eslint-disable-next-line @typescript-eslint/ban-types
     TEnum extends {}
 >(param: IFilterElement<TKey>, key: TUrlKey, haystack: TEnum) {
     const { active, value } = param;
@@ -108,7 +112,6 @@ export function getSingleEnumValueQueryParam<
 export function getMultipleEnumValueQueryParam<
     TKey extends string,
     TUrlKey extends string,
-    // eslint-disable-next-line @typescript-eslint/ban-types
     TEnum extends {}
 >(param: IFilterElement<TKey>, key: TUrlKey, haystack: TEnum) {
     const { active, value } = param;
