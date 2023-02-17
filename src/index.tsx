@@ -29,6 +29,7 @@ import { ExternalAppProvider } from "@mzawadie/pages/apps/components/ExternalApp
 import Auth, { useUser } from "@mzawadie/pages/auth";
 import AuthProvider from "@mzawadie/pages/auth/AuthProvider";
 import { LoginLoading, SectionRoute } from "@mzawadie/pages/auth/components";
+import ChannelsPage from "@mzawadie/pages/channels";
 import ConfigurationPage from "@mzawadie/pages/configuration";
 import { getConfigMenuItemsPermissions } from "@mzawadie/pages/configuration/utils";
 import CustomerPage from "@mzawadie/pages/customers";
@@ -191,11 +192,11 @@ const Routes: React.FC = () => {
                                 component={SiteSettingsPage}
                             />
 
-                            {/* <SectionRoute*/}
-                            {/*    permissions={[PermissionEnum.MANAGE_CHANNELS]}*/}
-                            {/*    path="/channels"*/}
-                            {/*    component={ChannelsPage}*/}
-                            {/*/ >*/}
+                            <SectionRoute
+                                permissions={[PermissionEnum.MANAGE_CHANNELS]}
+                                path="/channels"
+                                component={ChannelsPage}
+                            />
 
                             {/* <SectionRoute*/}
                             {/*    permissions={[PermissionEnum.MANAGE_PRODUCTS]}*/}

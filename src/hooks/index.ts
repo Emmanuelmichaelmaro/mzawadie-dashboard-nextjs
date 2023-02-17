@@ -46,3 +46,4 @@ export * from "./useSearchQuery";
 export * from "./useScroll";
 export * from "./useScrollableDialogStyle";
 export * from "./useWindowScroll";
+export * from "./useClipboard";
