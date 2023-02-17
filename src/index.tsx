@@ -26,6 +26,7 @@ import result from "@mzawadie/graphql/fragments";
 import { TypedTypePolicies } from "@mzawadie/graphql/type-policies";
 import { useAppState } from "@mzawadie/hooks/useAppState";
 import { ExternalAppProvider } from "@mzawadie/pages/apps/components/ExternalAppContext";
+import AttributePage from "@mzawadie/pages/attributes";
 import Auth, { useUser } from "@mzawadie/pages/auth";
 import AuthProvider from "@mzawadie/pages/auth/AuthProvider";
 import { LoginLoading, SectionRoute } from "@mzawadie/pages/auth/components";
@@ -225,6 +226,16 @@ const Routes: React.FC = () => {
                                 exact
                                 path="/configuration"
                                 component={ConfigurationPage}
+                            />
+
+                            <SectionRoute
+                                permissions={[
+                                    PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
+                                    PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
+                                ]}
+                                path="/attributes"
+                                component={AttributePage}
+                                matchPermission="any"
                             />
 
                             <Route component={NotFoundPage} />
