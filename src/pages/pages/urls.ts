@@ -1,15 +1,14 @@
 // @ts-nocheck
-import { stringifyQs } from "@mzawadie/utils/urls";
-import urlJoin from "url-join";
-
 import {
     BulkAction,
     Dialog,
     FiltersWithMultipleValues,
     Pagination,
     SingleAction,
-    Sort
+    Sort,
 } from "@mzawadie/core";
+import { stringifyQs } from "@mzawadie/utils/urls";
+import urlJoin from "url-join";
 
 export const pagesSection = "/pages/";
 
@@ -20,16 +19,14 @@ export type PageListUrlDialog = "publish" | "unpublish" | "remove";
 export enum PageListUrlSortField {
     title = "title",
     slug = "slug",
-    visible = "visible"
+    visible = "visible",
 }
 
 export enum PageListUrlFiltersWithMultipleValues {
-    pageTypes = "pageTypes"
+    pageTypes = "pageTypes",
 }
 
-export type PageListUrlFilters = FiltersWithMultipleValues<
-    PageListUrlFiltersWithMultipleValues
-    >;
+export type PageListUrlFilters = FiltersWithMultipleValues<PageListUrlFiltersWithMultipleValues>;
 
 export type PageListUrlSort = Sort<PageListUrlSortField>;
 

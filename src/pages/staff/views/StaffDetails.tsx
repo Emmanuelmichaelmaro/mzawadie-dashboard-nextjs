@@ -19,10 +19,7 @@ import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import {
-    StaffDetailsPage,
-    StaffDetailsFormData,
-} from "../components/StaffDetailsPage";
+import { StaffDetailsPage, StaffDetailsFormData } from "../components/StaffDetailsPage";
 import { StaffPasswordResetDialog } from "../components/StaffPasswordResetDialog";
 import {
     TypedStaffAvatarDeleteMutation,

@@ -5,8 +5,8 @@ import { ConfirmButtonTransitionState } from "@mzawadie/components/ConfirmButton
 import { Channel } from "@mzawadie/pages/channels/utils";
 import React from "react";
 
-import {ChannelsAvailabilityDialogChannelsList} from "../ChannelsAvailabilityDialogChannelsList";
-import {ChannelsAvailabilityDialogWrapper} from "../ChannelsAvailabilityDialogContentWrapper";
+import { ChannelsAvailabilityDialogChannelsList } from "../ChannelsAvailabilityDialogChannelsList";
+import { ChannelsAvailabilityDialogWrapper } from "../ChannelsAvailabilityDialogContentWrapper";
 import { useChannelsSearch } from "./utils";
 
 export interface ChannelsAvailabilityDialogProps {

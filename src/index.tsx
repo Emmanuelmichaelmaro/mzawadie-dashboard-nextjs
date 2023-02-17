@@ -38,8 +38,10 @@ import NavigationPage from "@mzawadie/pages/navigation";
 import PageTypesSection from "@mzawadie/pages/pageTypes";
 import PageSection from "@mzawadie/pages/pages";
 import PermissionGroupPage from "@mzawadie/pages/permissionGroups";
+import ShippingPage from "@mzawadie/pages/shipping";
 import SiteSettingsPage from "@mzawadie/pages/siteSettings";
 import StaffPage from "@mzawadie/pages/staff";
+import TaxesPage from "@mzawadie/pages/taxes";
 import WarehousePage from "@mzawadie/pages/warehouses";
 import { PermissionEnum } from "@mzawadie/types/globalTypes";
 import { ThemeProvider } from "@saleor/macaw-ui";
@@ -205,17 +207,17 @@ const Routes: React.FC = () => {
                                 component={WarehousePage}
                             />
 
-                            {/* <SectionRoute*/}
-                            {/*    permissions={[PermissionEnum.MANAGE_SHIPPING]}*/}
-                            {/*    path="/shipping"*/}
-                            {/*    component={ShippingPage}*/}
-                            {/*/ >*/}
+                            <SectionRoute
+                                permissions={[PermissionEnum.MANAGE_SHIPPING]}
+                                path="/shipping"
+                                component={ShippingPage}
+                            />
 
-                            {/* <SectionRoute*/}
-                            {/*    permissions={[PermissionEnum.MANAGE_SETTINGS]}*/}
-                            {/*    path="/taxes"*/}
-                            {/*    component={TaxesPage}*/}
-                            {/*/ >*/}
+                            <SectionRoute
+                                permissions={[PermissionEnum.MANAGE_SETTINGS]}
+                                path="/taxes"
+                                component={TaxesPage}
+                            />
 
                             <SectionRoute
                                 matchPermission="any"

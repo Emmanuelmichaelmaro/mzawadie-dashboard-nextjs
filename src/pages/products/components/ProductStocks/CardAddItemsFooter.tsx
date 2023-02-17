@@ -5,7 +5,7 @@ import React, { MutableRefObject } from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
-    theme => ({
+    (theme) => ({
         container: {
             paddingTop: theme.spacing(1),
             paddingBottom: theme.spacing(1),
@@ -14,8 +14,8 @@ const useStyles = makeStyles(
             justifyContent: "space-between",
             alignItems: "center",
             width: "100%",
-            position: "relative"
-        }
+            position: "relative",
+        },
     }),
     { name: "CardAddItemsFooter" }
 );
@@ -31,12 +31,12 @@ interface CardAddItemsFooterProps {
 }
 
 const CardAddItemsFooter: React.FC<CardAddItemsFooterProps> = ({
-                                                                   title,
-                                                                   onAdd,
-                                                                   testIds,
-                                                                   ref,
-                                                                   children
-                                                               }) => {
+    title,
+    onAdd,
+    testIds,
+    ref,
+    children,
+}) => {
     const intl = useIntl();
     const classes = useStyles({});
 

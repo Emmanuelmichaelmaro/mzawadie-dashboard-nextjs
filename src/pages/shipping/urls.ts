@@ -1,10 +1,9 @@
 // @ts-nocheck
 import { BulkAction, Dialog, Pagination, SingleAction } from "@mzawadie/core";
+import { ChannelsAction } from "@mzawadie/pages/channels/urls";
 import { ShippingMethodTypeEnum } from "@mzawadie/types/globalTypes";
 import { stringifyQs } from "@mzawadie/utils/urls";
 import urlJoin from "url-join";
-
-import { ChannelsAction } from "../channels/urls";
 
 export const shippingSection = "/shipping/";
 

@@ -3,7 +3,8 @@ import { TextField } from "@material-ui/core";
 import FormSpacer from "@mzawadie/components/FormSpacer";
 import { Grid } from "@mzawadie/components/Grid";
 import {
-    SingleAutocompleteSelectField, SingleAutocompleteChoiceType,
+    SingleAutocompleteSelectField,
+    SingleAutocompleteChoiceType,
 } from "@mzawadie/components/SingleAutocompleteSelectField";
 import { AccountErrorFragment } from "@mzawadie/fragments/types/AccountErrorFragment";
 import { ShopErrorFragment } from "@mzawadie/fragments/types/ShopErrorFragment";

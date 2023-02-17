@@ -1,3 +1,4 @@
+// @ts-nocheck
 export * from "./useNotifier";
 export * from "./useLocalStorage";
 export { default as useLocalStorage } from "./useLocalStorage";
@@ -47,3 +48,5 @@ export * from "./useScroll";
 export * from "./useScrollableDialogStyle";
 export * from "./useWindowScroll";
 export * from "./useClipboard";
+export * from "./useLocalPageInfo";
+export * from "./useLocalPaginator";

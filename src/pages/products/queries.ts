@@ -1,8 +1,5 @@
 import { gql } from "@apollo/client";
-import {
-    attributeValueFragment,
-    attributeValueListFragment,
-} from "@mzawadie/fragments/attributes";
+import { attributeValueFragment, attributeValueListFragment } from "@mzawadie/fragments/attributes";
 import { pageInfoFragment } from "@mzawadie/fragments/pageInfo";
 import {
     fragmentVariant,

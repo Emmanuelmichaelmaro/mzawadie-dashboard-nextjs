@@ -1,7 +1,4 @@
 // @ts-nocheck
-import { stringifyQs } from "@mzawadie/utils/urls";
-import urlJoin from "url-join";
-
 import {
     ActiveTab,
     BulkAction,
@@ -10,8 +7,10 @@ import {
     Pagination,
     SingleAction,
     Sort,
-    TabActionDialog
+    TabActionDialog,
 } from "@mzawadie/core";
+import { stringifyQs } from "@mzawadie/utils/urls";
+import urlJoin from "url-join";
 
 const pageTypeSection = "/page-types/";
 
@@ -19,7 +18,7 @@ export const pageTypeListPath = pageTypeSection;
 
 export enum PageTypeListUrlFiltersEnum {
     type = "type",
-    query = "query"
+    query = "query",
 }
 
 export type PageTypeListUrlFilters = Filters<PageTypeListUrlFiltersEnum>;
@@ -27,7 +26,7 @@ export type PageTypeListUrlFilters = Filters<PageTypeListUrlFiltersEnum>;
 export type PageTypeListUrlDialog = "remove" | TabActionDialog;
 
 export enum PageTypeListUrlSortField {
-    name = "name"
+    name = "name",
 }
 
 export type PageTypeListUrlSort = Sort<PageTypeListUrlSortField>;
@@ -57,8 +56,8 @@ export type PageTypeUrlDialog =
 export type PageTypeUrlQueryParams = BulkAction &
     Dialog<PageTypeUrlDialog> &
     SingleAction & {
-    type?: string;
-};
+        type?: string;
+    };
 
 export const pageTypeUrl = (id: string, params?: PageTypeUrlQueryParams) =>
     pageTypePath(encodeURIComponent(id)) + "?" + stringifyQs(params);

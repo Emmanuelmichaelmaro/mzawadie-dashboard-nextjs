@@ -1,8 +1,5 @@
 import { gql } from "@apollo/client";
-import {
-    collectionDetailsFragment,
-    collectionProductFragment,
-} from "@mzawadie/fragments/collections";
+import { collectionDetailsFragment, collectionProductFragment } from "@mzawadie/fragments/collections";
 import {
     collectionChannelListingErrorFragment,
     collectionsErrorFragment,

@@ -1,8 +1,5 @@
 import { gql } from "@apollo/client";
-import {
-    attributeDetailsFragment,
-    attributeValueListFragment,
-} from "@mzawadie/fragments/attributes";
+import { attributeDetailsFragment, attributeValueListFragment } from "@mzawadie/fragments/attributes";
 import { attributeErrorFragment } from "@mzawadie/fragments/errors";
 import { pageInfoFragment } from "@mzawadie/fragments/pageInfo";
 import makeMutation from "@mzawadie/hooks/makeMutation";

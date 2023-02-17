@@ -1,7 +1,7 @@
 // @ts-nocheck
+import { PageListUrlSortField } from "@mzawadie/pages/pages/urls";
 import { PageSortField } from "@mzawadie/types/globalTypes";
 import { createGetSortQueryVariables } from "@mzawadie/utils/sort";
-import { PageListUrlSortField } from "@mzawadie/pages/pages/urls";
 
 export function getSortQueryField(sort: PageListUrlSortField): PageSortField | undefined {
     switch (sort) {
