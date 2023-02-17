@@ -23,6 +23,9 @@ export const SectionRoute: React.FC<SectionRouteProps> = ({
 }) => {
     const { user } = useUser();
 
+    // eslint-disable-next-line no-console
+    console.log(JSON.stringify(user, null, 4));
+
     const hasSectionPermissions = () => {
         if (!permissions) {
             return true;

@@ -34,7 +34,9 @@ import { getConfigMenuItemsPermissions } from "@mzawadie/pages/configuration/uti
 import CustomerPage from "@mzawadie/pages/customers";
 import HomePage from "@mzawadie/pages/home";
 import NavigationPage from "@mzawadie/pages/navigation";
+import PermissionGroupPage from "@mzawadie/pages/permissionGroups";
 import SiteSettingsPage from "@mzawadie/pages/siteSettings";
+import StaffPage from "@mzawadie/pages/staff";
 import { PermissionEnum } from "@mzawadie/types/globalTypes";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { createFetch, createSaleorClient, SaleorProvider } from "@saleor/sdk";
@@ -147,16 +149,32 @@ const Routes: React.FC = () => {
                                 component={CustomerPage}
                             />
 
+                            <SectionRoute
+                                permissions={[PermissionEnum.MANAGE_STAFF]}
+                                path="/staff"
+                                component={StaffPage}
+                            />
+
+                            <SectionRoute
+                                permissions={[PermissionEnum.MANAGE_STAFF]}
+                                path="/permission-groups"
+                                component={PermissionGroupPage}
+                            />
+
                             {/* <SectionRoute*/}
-                            {/*    permissions={[PermissionEnum.MANAGE_STAFF]}*/}
-                            {/*    path="/staff"*/}
-                            {/*    component={StaffPage}*/}
+                            {/*    permissions={[PermissionEnum.MANAGE_PAGES]}*/}
+                            {/*    path="/pages"*/}
+                            {/*    component={PageSection}*/}
                             {/*/ >*/}
 
                             {/* <SectionRoute*/}
-                            {/*    permissions={[PermissionEnum.MANAGE_STAFF]}*/}
-                            {/*    path="/permission-groups"*/}
-                            {/*    component={PermissionGroupPage}*/}
+                            {/*    permissions={[*/}
+                            {/*        PermissionEnum.MANAGE_PAGES,*/}
+                            {/*        PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES*/}
+                            {/*    ]}*/}
+                            {/*    path="/page-types"*/}
+                            {/*    component={PageTypesSection}*/}
+                            {/*    matchPermission="any"*/}
                             {/*/ >*/}
 
                             <SectionRoute
