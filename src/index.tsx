@@ -37,6 +37,7 @@ import NavigationPage from "@mzawadie/pages/navigation";
 import PermissionGroupPage from "@mzawadie/pages/permissionGroups";
 import SiteSettingsPage from "@mzawadie/pages/siteSettings";
 import StaffPage from "@mzawadie/pages/staff";
+import PageSection from "@mzawadie/pages/pages"
 import { PermissionEnum } from "@mzawadie/types/globalTypes";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { createFetch, createSaleorClient, SaleorProvider } from "@saleor/sdk";
@@ -161,11 +162,11 @@ const Routes: React.FC = () => {
                                 component={PermissionGroupPage}
                             />
 
-                            {/* <SectionRoute*/}
-                            {/*    permissions={[PermissionEnum.MANAGE_PAGES]}*/}
-                            {/*    path="/pages"*/}
-                            {/*    component={PageSection}*/}
-                            {/*/ >*/}
+                             <SectionRoute
+                                permissions={[PermissionEnum.MANAGE_PAGES]}
+                                path="/pages"
+                                component={PageSection}
+                            / >
 
                             {/* <SectionRoute*/}
                             {/*    permissions={[*/}
