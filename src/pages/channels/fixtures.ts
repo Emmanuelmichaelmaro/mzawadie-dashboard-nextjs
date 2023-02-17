@@ -1,4 +1,5 @@
-import { ChannelErrorFragment } from "@mzawadie/core/fragments/types/ChannelErrorFragment";
+// @ts-nocheck
+import { ChannelErrorFragment } from "@mzawadie/fragments/types/ChannelErrorFragment";
 import { ProductDetails_product_channelListings } from "@mzawadie/pages/products/types/ProductDetails";
 import { ChannelErrorCode } from "@mzawadie/types/globalTypes";
 

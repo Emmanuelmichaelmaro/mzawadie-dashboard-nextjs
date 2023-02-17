@@ -40,6 +40,7 @@ import PageSection from "@mzawadie/pages/pages";
 import PermissionGroupPage from "@mzawadie/pages/permissionGroups";
 import SiteSettingsPage from "@mzawadie/pages/siteSettings";
 import StaffPage from "@mzawadie/pages/staff";
+import WarehousePage from "@mzawadie/pages/warehouses";
 import { PermissionEnum } from "@mzawadie/types/globalTypes";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { createFetch, createSaleorClient, SaleorProvider } from "@saleor/sdk";
@@ -198,11 +199,11 @@ const Routes: React.FC = () => {
                                 component={ChannelsPage}
                             />
 
-                            {/* <SectionRoute*/}
-                            {/*    permissions={[PermissionEnum.MANAGE_PRODUCTS]}*/}
-                            {/*    path="/warehouses"*/}
-                            {/*    component={WarehousePage}*/}
-                            {/*/ >*/}
+                            <SectionRoute
+                                permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                                path="/warehouses"
+                                component={WarehousePage}
+                            />
 
                             {/* <SectionRoute*/}
                             {/*    permissions={[PermissionEnum.MANAGE_SHIPPING]}*/}

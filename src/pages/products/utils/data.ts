@@ -2,9 +2,9 @@ import { AttributeInput, VariantAttributeScope } from "@mzawadie/components/Attr
 import { MetadataFormData } from "@mzawadie/components/Metadata/types";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
 import { maybe } from "@mzawadie/core";
-import { ProductVariant } from "@mzawadie/core/fragments/types/ProductVariant";
-import { SelectedVariantAttributeFragment } from "@mzawadie/core/fragments/types/SelectedVariantAttributeFragment";
-import { VariantAttributeFragment } from "@mzawadie/core/fragments/types/VariantAttributeFragment";
+import { ProductVariant } from "@mzawadie/fragments/types/ProductVariant";
+import { SelectedVariantAttributeFragment } from "@mzawadie/fragments/types/SelectedVariantAttributeFragment";
+import { VariantAttributeFragment } from "@mzawadie/fragments/types/VariantAttributeFragment";
 import { FormsetAtomicData } from "@mzawadie/hooks/useFormset";
 import {
     getDefaultAttributeValues,
