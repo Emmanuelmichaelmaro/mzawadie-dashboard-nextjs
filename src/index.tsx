@@ -34,10 +34,11 @@ import { getConfigMenuItemsPermissions } from "@mzawadie/pages/configuration/uti
 import CustomerPage from "@mzawadie/pages/customers";
 import HomePage from "@mzawadie/pages/home";
 import NavigationPage from "@mzawadie/pages/navigation";
+import PageTypesSection from "@mzawadie/pages/pageTypes";
+import PageSection from "@mzawadie/pages/pages";
 import PermissionGroupPage from "@mzawadie/pages/permissionGroups";
 import SiteSettingsPage from "@mzawadie/pages/siteSettings";
 import StaffPage from "@mzawadie/pages/staff";
-import PageSection from "@mzawadie/pages/pages"
 import { PermissionEnum } from "@mzawadie/types/globalTypes";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { createFetch, createSaleorClient, SaleorProvider } from "@saleor/sdk";
@@ -162,21 +163,21 @@ const Routes: React.FC = () => {
                                 component={PermissionGroupPage}
                             />
 
-                             <SectionRoute
+                            <SectionRoute
                                 permissions={[PermissionEnum.MANAGE_PAGES]}
                                 path="/pages"
                                 component={PageSection}
-                            / >
+                            />
 
-                            {/* <SectionRoute*/}
-                            {/*    permissions={[*/}
-                            {/*        PermissionEnum.MANAGE_PAGES,*/}
-                            {/*        PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES*/}
-                            {/*    ]}*/}
-                            {/*    path="/page-types"*/}
-                            {/*    component={PageTypesSection}*/}
-                            {/*    matchPermission="any"*/}
-                            {/*/ >*/}
+                            <SectionRoute
+                                permissions={[
+                                    PermissionEnum.MANAGE_PAGES,
+                                    PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
+                                ]}
+                                path="/page-types"
+                                component={PageTypesSection}
+                                matchPermission="any"
+                            />
 
                             <SectionRoute
                                 permissions={[PermissionEnum.MANAGE_MENUS]}

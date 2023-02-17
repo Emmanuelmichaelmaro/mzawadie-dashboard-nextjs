@@ -1,3 +1,7 @@
+// @ts-nocheck
+import { stringifyQs } from "@mzawadie/utils/urls";
+import urlJoin from "url-join";
+
 import {
     ActiveTab,
     BulkAction,
@@ -6,46 +10,55 @@ import {
     Pagination,
     SingleAction,
     Sort,
-    TabActionDialog,
+    TabActionDialog
 } from "@mzawadie/core";
-import { stringifyQs } from "@mzawadie/utils/urls";
-import urlJoin from "url-join";
 
 const pageTypeSection = "/page-types/";
 
 export const pageTypeListPath = pageTypeSection;
+
 export enum PageTypeListUrlFiltersEnum {
     type = "type",
-    query = "query",
+    query = "query"
 }
+
 export type PageTypeListUrlFilters = Filters<PageTypeListUrlFiltersEnum>;
+
 export type PageTypeListUrlDialog = "remove" | TabActionDialog;
+
 export enum PageTypeListUrlSortField {
-    name = "name",
+    name = "name"
 }
+
 export type PageTypeListUrlSort = Sort<PageTypeListUrlSortField>;
+
 export type PageTypeListUrlQueryParams = ActiveTab &
     BulkAction &
     Dialog<PageTypeListUrlDialog> &
     Pagination &
     PageTypeListUrlFilters &
     PageTypeListUrlSort;
+
 export const pageTypeListUrl = (params?: PageTypeListUrlQueryParams) =>
-    `${pageTypeListPath}?${stringifyQs(params || {})}`;
+    pageTypeListPath + "?" + stringifyQs(params);
 
 export const pageTypeAddPath = urlJoin(pageTypeSection, "add");
+
 export const pageTypeAddUrl = pageTypeAddPath;
 
 export const pageTypePath = (id: string) => urlJoin(pageTypeSection, id);
+
 export type PageTypeUrlDialog =
     | "assign-attribute"
     | "unassign-attribute"
     | "unassign-attributes"
     | "remove";
+
 export type PageTypeUrlQueryParams = BulkAction &
     Dialog<PageTypeUrlDialog> &
     SingleAction & {
-        type?: string;
-    };
+    type?: string;
+};
+
 export const pageTypeUrl = (id: string, params?: PageTypeUrlQueryParams) =>
-    `${pageTypePath(encodeURIComponent(id))}?${stringifyQs(params || {})}`;
+    pageTypePath(encodeURIComponent(id)) + "?" + stringifyQs(params);

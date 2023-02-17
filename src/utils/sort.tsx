@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { TableCellHeaderArrowDirection } from "@mzawadie/components";
 import { findValueInEnum, parseBoolean, Sort } from "@mzawadie/core";
 import { OrderDirection } from "@mzawadie/types/globalTypes";
@@ -71,8 +72,6 @@ export function createGetSortQueryVariables<
 >(
     getSortQueryField: GetSortQueryField<TUrlField, TSortField>
 ): GetSortQueryVariables<TSortField, TParams> {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     return (params: TParams) => {
         const field = getSortQueryField(params.sort);
 
