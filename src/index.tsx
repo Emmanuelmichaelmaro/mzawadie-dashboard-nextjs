@@ -41,6 +41,7 @@ import NavigationPage from "@mzawadie/pages/navigation";
 import PageTypesSection from "@mzawadie/pages/pageTypes";
 import PageSection from "@mzawadie/pages/pages";
 import PermissionGroupPage from "@mzawadie/pages/permissionGroups";
+import ProductTypesPage from "@mzawadie/pages/productTypes";
 import ShippingPage from "@mzawadie/pages/shipping";
 import SiteSettingsPage from "@mzawadie/pages/siteSettings";
 import StaffPage from "@mzawadie/pages/staff";
@@ -252,13 +253,11 @@ const Routes: React.FC = () => {
                                 component={CollectionPage}
                             />
 
-                            {/* <SectionRoute*/}
-                            {/*    permissions={[*/}
-                            {/*        PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES*/}
-                            {/*    ]}*/}
-                            {/*    path="/product-types"*/}
-                            {/*    component={ProductTypesPage}*/}
-                            {/*/ >*/}
+                            <SectionRoute
+                                permissions={[PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES]}
+                                path="/product-types"
+                                component={ProductTypesPage}
+                            />
 
                             {/* <SectionRoute*/}
                             {/*    permissions={[PermissionEnum.MANAGE_PRODUCTS]}*/}
