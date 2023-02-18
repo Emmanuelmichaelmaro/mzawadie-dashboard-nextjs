@@ -1,5 +1,5 @@
+import { ProductDetails_product_productType_variantAttributes } from "@mzawadie/pages/products/types/ProductDetails";
 import { AttributeInputTypeEnum, AttributeTypeEnum } from "@mzawadie/types/globalTypes";
-import { ProductDetails_product_productType_variantAttributes } from "@mzawadie/views/products/types/ProductDetails";
 
 import { AttributeDetails_attribute } from "./types/AttributeDetails";
 import { AttributeList_attributes_edges_node } from "./types/AttributeList";

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands,radix */
 // @ts-nocheck
 import { IconButton } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
 import { DeleteFilterTabDialog } from "@mzawadie/components/DeleteFilterTabDialog";
 import {
     SaveFilterTabDialog,
@@ -27,11 +26,12 @@ import createFilterHandlers from "@mzawadie/utils/handlers/filterHandlers";
 import createSortHandler from "@mzawadie/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import { getSortParams } from "@mzawadie/utils/sort";
+import { DeleteIcon } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import AttributeBulkDeleteDialog from "../../components/AttributeBulkDeleteDialog";
-import AttributeListPage from "../../components/AttributeListPage";
+import { AttributeBulkDeleteDialog } from "../../components/AttributeBulkDeleteDialog";
+import { AttributeListPage } from "../../components/AttributeListPage";
 import { useAttributeBulkDeleteMutation } from "../../mutations";
 import { useAttributeListQuery } from "../../queries";
 import {

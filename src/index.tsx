@@ -30,6 +30,7 @@ import AttributePage from "@mzawadie/pages/attributes";
 import Auth, { useUser } from "@mzawadie/pages/auth";
 import AuthProvider from "@mzawadie/pages/auth/AuthProvider";
 import { LoginLoading, SectionRoute } from "@mzawadie/pages/auth/components";
+import CategoryPage from "@mzawadie/pages/categories";
 import ChannelsPage from "@mzawadie/pages/channels";
 import ConfigurationPage from "@mzawadie/pages/configuration";
 import { getConfigMenuItemsPermissions } from "@mzawadie/pages/configuration/utils";
@@ -237,6 +238,18 @@ const Routes: React.FC = () => {
                                 component={AttributePage}
                                 matchPermission="any"
                             />
+
+                            <SectionRoute
+                                permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                                path="/categories"
+                                component={CategoryPage}
+                            />
+
+                            {/* <SectionRoute*/}
+                            {/*    permissions={[PermissionEnum.MANAGE_PRODUCTS]}*/}
+                            {/*    path="/collections"*/}
+                            {/*    component={CollectionPage}*/}
+                            {/*/ >*/}
 
                             <Route component={NotFoundPage} />
                         </Switch>

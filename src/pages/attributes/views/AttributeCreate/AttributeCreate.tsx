@@ -16,9 +16,10 @@ import React from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
 
-import AttributePage, { AttributePageFormData } from "../../components/AttributePage";
-import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
-import AttributeValueEditDialog, {
+import { AttributePage, AttributePageFormData } from "../../components/AttributePage";
+import { AttributeValueDeleteDialog } from "../../components/AttributeValueDeleteDialog";
+import {
+    AttributeValueEditDialog,
     AttributeValueEditDialogFormData,
 } from "../../components/AttributeValueEditDialog";
 import { useAttributeCreateMutation } from "../../mutations";

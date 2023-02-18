@@ -18,7 +18,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { AttributeList_attributes_edges_node } from "../../types/AttributeList";
-import AttributeList from "../AttributeList/AttributeList";
+import { AttributeList } from "../AttributeList";
 import { AttributeFilterKeys, AttributeListFilterOpts, createFilterStructure } from "./filters";
 
 export interface AttributeListPageProps

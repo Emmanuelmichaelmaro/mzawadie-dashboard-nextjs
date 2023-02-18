@@ -12,10 +12,10 @@ import { useMetadataUpdate, usePrivateMetadataUpdate } from "@mzawadie/utils/met
 import React from "react";
 import { useIntl } from "react-intl";
 
-import AttributeDeleteDialog from "../../components/AttributeDeleteDialog";
-import AttributePage, { AttributePageFormData } from "../../components/AttributePage";
-import AttributeValueDeleteDialog from "../../components/AttributeValueDeleteDialog";
-import AttributeValueEditDialog from "../../components/AttributeValueEditDialog";
+import { AttributeDeleteDialog } from "../../components/AttributeDeleteDialog";
+import { AttributePage, AttributePageFormData } from "../../components/AttributePage";
+import { AttributeValueDeleteDialog } from "../../components/AttributeValueDeleteDialog";
+import { AttributeValueEditDialog } from "../../components/AttributeValueEditDialog";
 import {
     useAttributeDeleteMutation,
     useAttributeUpdateMutation,

@@ -1,2 +1,2 @@
 export * from "./AttributeDetails";
-export { default as AttributeDetails } from "./AttributeDetails";
+export { default as AttributeDetailsComponent } from "./AttributeDetails";

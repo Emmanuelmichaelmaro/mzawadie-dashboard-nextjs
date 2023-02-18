@@ -16,9 +16,9 @@ import {
     attributePath,
     AttributeUrlQueryParams,
 } from "./urls";
-import AttributeCreateComponent from "./views/AttributeCreate";
-import AttributeDetailsComponent from "./views/AttributeDetails";
-import AttributeListComponent from "./views/AttributeList";
+import { AttributeCreateComponent } from "./views/AttributeCreate";
+import { AttributeDetailsComponent } from "./views/AttributeDetails";
+import { AttributeListComponent } from "./views/AttributeList";
 
 const AttributeList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
     const qs = parseQs(location.search.substr(1));
