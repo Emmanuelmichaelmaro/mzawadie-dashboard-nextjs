@@ -32,6 +32,7 @@ import AuthProvider from "@mzawadie/pages/auth/AuthProvider";
 import { LoginLoading, SectionRoute } from "@mzawadie/pages/auth/components";
 import CategoryPage from "@mzawadie/pages/categories";
 import ChannelsPage from "@mzawadie/pages/channels";
+import CollectionPage from "@mzawadie/pages/collections";
 import ConfigurationPage from "@mzawadie/pages/configuration";
 import { getConfigMenuItemsPermissions } from "@mzawadie/pages/configuration/utils";
 import CustomerPage from "@mzawadie/pages/customers";
@@ -245,10 +246,24 @@ const Routes: React.FC = () => {
                                 component={CategoryPage}
                             />
 
+                            <SectionRoute
+                                permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                                path="/collections"
+                                component={CollectionPage}
+                            />
+
+                            {/* <SectionRoute*/}
+                            {/*    permissions={[*/}
+                            {/*        PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES*/}
+                            {/*    ]}*/}
+                            {/*    path="/product-types"*/}
+                            {/*    component={ProductTypesPage}*/}
+                            {/*/ >*/}
+
                             {/* <SectionRoute*/}
                             {/*    permissions={[PermissionEnum.MANAGE_PRODUCTS]}*/}
-                            {/*    path="/collections"*/}
-                            {/*    component={CollectionPage}*/}
+                            {/*    path="/products"*/}
+                            {/*    component={ProductPage}*/}
                             {/*/ >*/}
 
                             <Route component={NotFoundPage} />

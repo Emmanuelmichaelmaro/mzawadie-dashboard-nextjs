@@ -4,7 +4,7 @@ import { Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import ChannelsAvailabilityMenuContent from "../ChannelsAvailabilityMenuContent";
+import { ChannelsAvailabilityMenuContent } from "../ChannelsAvailabilityMenuContent";
 import { messages } from "./messages";
 import { CollectionChannels, getDropdownColor, mapChannelsToPills } from "./utils";
 
