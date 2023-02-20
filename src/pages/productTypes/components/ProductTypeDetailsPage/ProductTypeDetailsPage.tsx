@@ -9,7 +9,8 @@ import { MetadataFormData } from "@mzawadie/components/Metadata/types";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { sectionNames, maybe, ListActions, ReorderEvent, UserError } from "@mzawadie/core";
-import { SubmitPromise } from "@mzawadie/hooks";
+import { FormChange, SubmitPromise } from "@mzawadie/hooks";
+import useStateFromProps from "@mzawadie/hooks/useStateFromProps";
 import {
     ProductAttributeType,
     ProductTypeKindEnum,

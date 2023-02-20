@@ -17,7 +17,7 @@ import useBulkActions from "@mzawadie/hooks/useBulkActions";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { attributeUrl } from "@mzawadie/pages/attributes/urls";
-import {useProductTypeDelete} from "@mzawadie/pages/productTypes/hooks/useProductTypeDelete";
+import { useProductTypeDelete } from "@mzawadie/pages/productTypes/hooks/useProductTypeDelete";
 import { useProductTypeUpdateMutation } from "@mzawadie/pages/productTypes/mutations";
 import { ProductAttributeType } from "@mzawadie/types/globalTypes";
 import createMetadataUpdateHandler from "@mzawadie/utils/handlers/metadataUpdateHandler";
@@ -82,6 +82,8 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
 
     const [updateMetadata] = useMetadataUpdate({});
     const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+
+    const [selectedVariantAttributes, setSelectedVariantAttributes] = React.useState<string[]>([]);
 
     const handleBack = () => navigate(productTypeListUrl());
 
@@ -244,6 +246,8 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
                                         productType={maybe(() => data.productType)}
                                         saveButtonBarState={updateProductTypeOpts.status}
                                         taxTypes={maybe(() => data.taxTypes, [])}
+                                        selectedVariantAttributes={selectedVariantAttributes}
+                                        setSelectedVariantAttributes={setSelectedVariantAttributes}
                                         onAttributeAdd={(type) =>
                                             navigate(
                                                 productTypeUrl(id, {
@@ -325,6 +329,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
                                             ),
                                         }}
                                     />
+
                                     {!dataLoading && (
                                         <>
                                             {Object.keys(ProductAttributeType).map((key) => (
@@ -374,6 +379,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
                                                     key={key}
                                                 />
                                             ))}
+
                                             {productType && (
                                                 <TypeDeleteWarningDialog
                                                     {...productTypeDeleteData}
@@ -400,6 +406,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
                                         open={params.action === "unassign-attributes"}
                                         itemTypeName={getStringOrPlaceholder(data?.productType.name)}
                                     />
+
                                     <AttributeUnassignDialog
                                         title={intl.formatMessage({
                                             defaultMessage: "Unassign Attribute From Product Type",

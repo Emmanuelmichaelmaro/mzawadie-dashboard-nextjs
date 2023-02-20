@@ -50,6 +50,8 @@ import {
     CollectionUrlQueryParams,
 } from "../urls";
 import { COLLECTION_DETAILS_FORM_ID } from "./consts";
+import {createCollectionChannels, createCollectionChannelsData} from "@mzawadie/pages/channels/utils";
+import {productUrl} from "@mzawadie/pages/products/urls";
 
 interface CollectionDetailsProps {
     id: string;
@@ -156,13 +158,17 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({ id, params
         <TypedCollectionDetailsQuery displayLoader variables={{ id, ...paginationState }}>
             {({ data, loading }) => {
                 const collection = data?.collection;
+
                 if (collection === null) {
                     return <NotFoundPage onBack={handleBack} />;
                 }
+
                 const allChannels = createCollectionChannels(availableChannels)?.sort(
                     (channel, nextChannel) => channel.name.localeCompare(nextChannel.name)
                 );
+
                 const collectionChannelsChoices = createCollectionChannelsData(collection);
+
                 const {
                     channelListElements,
                     channelsToggle,
@@ -202,6 +208,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({ id, params
                             input,
                         },
                     });
+
                     const initialIds = collectionChannelsChoices.map((channel) => channel.id);
                     const modifiedIds = formData.channelListings.map((channel) => channel.id);
 
@@ -245,6 +252,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({ id, params
                 return (
                     <>
                         <WindowTitle title={data?.collection?.name} />
+
                         {!!allChannels?.length && (
                             <ChannelsAvailabilityDialog
                                 isSelected={isChannelSelected}
@@ -263,6 +271,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({ id, params
                                 toggleAll={toggleAllChannels}
                             />
                         )}
+
                         <CollectionDetailsPage
                             onAdd={() => openModal("assign")}
                             onBack={handleBack}
@@ -328,6 +337,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({ id, params
                             openChannelsModal={handleChannelsModalOpen}
                             onChannelsChange={setCurrentChannels}
                         />
+
                         <AssignProductDialog
                             confirmButtonState={assignProductOpts.status}
                             hasMore={result.data?.search?.pageInfo.hasNextPage}
@@ -349,6 +359,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({ id, params
                                 (suggestedProduct) => suggestedProduct.id
                             )}
                         />
+
                         <ActionDialog
                             confirmButtonState={removeCollectionOpts.status}
                             onClose={closeModal}
@@ -377,6 +388,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({ id, params
                                 />
                             </DialogContentText>
                         </ActionDialog>
+
                         <ActionDialog
                             confirmButtonState={unassignProductOpts.status}
                             onClose={closeModal}
@@ -409,6 +421,7 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({ id, params
                                 />
                             </DialogContentText>
                         </ActionDialog>
+
                         <ActionDialog
                             confirmButtonState={updateCollectionOpts.status}
                             onClose={closeModal}
@@ -443,4 +456,5 @@ export const CollectionDetails: React.FC<CollectionDetailsProps> = ({ id, params
         </TypedCollectionDetailsQuery>
     );
 };
+
 export default CollectionDetails;
