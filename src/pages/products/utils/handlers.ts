@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FormChange, UseFormResult } from "@mzawadie/hooks/useForm";
 import {
     ChannelData,

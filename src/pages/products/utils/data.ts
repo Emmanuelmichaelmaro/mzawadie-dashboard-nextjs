@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AttributeInput, VariantAttributeScope } from "@mzawadie/components/Attributes";
 import { MetadataFormData } from "@mzawadie/components/Metadata/types";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";

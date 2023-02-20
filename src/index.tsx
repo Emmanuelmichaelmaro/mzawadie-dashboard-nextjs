@@ -42,6 +42,7 @@ import PageTypesSection from "@mzawadie/pages/pageTypes";
 import PageSection from "@mzawadie/pages/pages";
 import PermissionGroupPage from "@mzawadie/pages/permissionGroups";
 import ProductTypesPage from "@mzawadie/pages/productTypes";
+import ProductPage from "@mzawadie/pages/products";
 import ShippingPage from "@mzawadie/pages/shipping";
 import SiteSettingsPage from "@mzawadie/pages/siteSettings";
 import StaffPage from "@mzawadie/pages/staff";
@@ -259,11 +260,11 @@ const Routes: React.FC = () => {
                                 component={ProductTypesPage}
                             />
 
-                            {/* <SectionRoute*/}
-                            {/*    permissions={[PermissionEnum.MANAGE_PRODUCTS]}*/}
-                            {/*    path="/products"*/}
-                            {/*    component={ProductPage}*/}
-                            {/*/ >*/}
+                            <SectionRoute
+                                permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                                path="/products"
+                                component={ProductPage}
+                            />
 
                             <Route component={NotFoundPage} />
                         </Switch>

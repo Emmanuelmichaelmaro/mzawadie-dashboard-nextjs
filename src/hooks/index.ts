@@ -50,3 +50,4 @@ export * from "./useWindowScroll";
 export * from "./useClipboard";
 export * from "./useLocalPageInfo";
 export * from "./useLocalPaginator";
+export * from "./useWizard";

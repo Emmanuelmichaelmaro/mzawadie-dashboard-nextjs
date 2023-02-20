@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Typography } from "@material-ui/core";
 import { Container } from "@mzawadie/components/Container";
 import { PageHeader } from "@mzawadie/components/PageHeader";

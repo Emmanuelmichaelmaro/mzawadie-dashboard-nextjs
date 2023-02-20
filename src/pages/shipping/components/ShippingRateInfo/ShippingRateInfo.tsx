@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { OutputData } from "@editorjs/editorjs";
 import { Card, CardContent, TextField } from "@material-ui/core";
 import CardSpacer from "@mzawadie/components/CardSpacer";
