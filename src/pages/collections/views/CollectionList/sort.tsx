@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { CollectionListUrlSortField } from "@mzawadie/pages/collections/urls";
 import { CollectionSortField } from "@mzawadie/types/globalTypes";
 import { createGetSortQueryVariables } from "@mzawadie/utils/sort";
@@ -16,7 +17,7 @@ export function canBeSorted(sort: CollectionListUrlSortField, isChannelSelected:
     }
 }
 
-export function getSortQueryField(sort: CollectionListUrlSortField): CollectionSortField {
+export function getSortQueryField(sort: CollectionListUrlSortField): CollectionSortField | undefined {
     switch (sort) {
         case CollectionListUrlSortField.name:
             return CollectionSortField.NAME;

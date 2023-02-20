@@ -37,7 +37,7 @@ export type PageListUrlQueryParams = BulkAction &
     Pagination;
 
 export const pageListUrl = (params?: PageListUrlQueryParams) =>
-    pageListPath + "?" + stringifyQs(params);
+    `${pageListPath}?${stringifyQs(params)}`;
 
 export const pagePath = (id: string) => urlJoin(pagesSection, id);
 
@@ -46,9 +46,9 @@ export type PageUrlDialog = "remove" | "assign-attribute-value";
 export type PageUrlQueryParams = Dialog<PageUrlDialog> & SingleAction;
 
 export const pageUrl = (id: string, params?: PageUrlQueryParams) =>
-    pagePath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+    `${pagePath(encodeURIComponent(id))}?${stringifyQs(params)}`;
 
 export const pageCreatePath = urlJoin(pagesSection, "add");
 
 export const pageCreateUrl = (params?: PageUrlQueryParams) =>
-    pageCreatePath + "?" + stringifyQs(params);
+    `${pageCreatePath}?${stringifyQs(params)}`;

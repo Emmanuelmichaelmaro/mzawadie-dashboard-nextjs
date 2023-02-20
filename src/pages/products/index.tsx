@@ -4,6 +4,8 @@ import { sectionNames } from "@mzawadie/core";
 import {
     productAddPath,
     ProductCreateUrlQueryParams,
+    productImagePath,
+    ProductImageUrlQueryParams,
     productListPath,
     ProductListUrlQueryParams,
     ProductListUrlSortField,
@@ -16,7 +18,20 @@ import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { ProductCreateComponent } from "./views/ProductCreate";
+import ProductImageComponent from "./views/ProductImage";
 import { ProductListComponent } from "./views/ProductList";
+
+const ProductImage: React.FC<RouteComponentProps<any>> = ({ location, match }) => {
+    const params: ProductImageUrlQueryParams = parseQs(location.search.substr(1));
+
+    return (
+        <ProductImageComponent
+            mediaId={decodeURIComponent(match.params.imageId)}
+            productId={decodeURIComponent(match.params.productId)}
+            params={params}
+        />
+    );
+};
 
 const ProductCreate: React.FC<RouteComponentProps<any>> = () => {
     const params: ProductCreateUrlQueryParams = parseQs(location.search.substr(1));
@@ -49,6 +64,7 @@ const Component = () => {
             <Switch>
                 <Route exact path={productListPath} component={ProductList} />
                 <Route exact path={productAddPath} component={ProductCreate} />
+                <Route path={productImagePath(":productId", ":imageId")} component={ProductImage} />
             </Switch>
         </>
     );

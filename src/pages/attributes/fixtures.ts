@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ProductDetails_product_productType_variantAttributes } from "@mzawadie/pages/products/types/ProductDetails";
 import { AttributeInputTypeEnum, AttributeTypeEnum } from "@mzawadie/types/globalTypes";
 

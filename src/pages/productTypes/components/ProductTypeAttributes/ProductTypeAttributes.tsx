@@ -1,6 +1,5 @@
 // @ts-nocheck
 import { Card, TableCell, TableRow } from "@material-ui/core";
-import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { Checkbox } from "@mzawadie/components/Checkbox";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
@@ -9,6 +8,7 @@ import { SortableTableBody, SortableTableRow } from "@mzawadie/components/Sortab
 import { TableHead } from "@mzawadie/components/TableHead";
 import { ListActions, ReorderAction, maybe, renderCollection, stopPropagation } from "@mzawadie/core";
 import { ProductAttributeType } from "@mzawadie/types/globalTypes";
+import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

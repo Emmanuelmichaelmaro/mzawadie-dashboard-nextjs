@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ClickAwayListener } from "@material-ui/core";
 import { SingleAutocompleteSelectField } from "@mzawadie/components/SingleAutocompleteSelectField";
 import { ChannelShippingZones } from "@mzawadie/pages/channels/components/ChannelDetailsPage/types";

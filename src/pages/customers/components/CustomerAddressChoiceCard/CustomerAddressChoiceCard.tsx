@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { AddressFormatter } from "@mzawadie/components/AddressFormatter";
 import { commonMessages } from "@mzawadie/core";

@@ -32,8 +32,6 @@ import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-
-
 import { ProductListUrlSortField } from "../../urls";
 import { ProductList } from "../ProductList";
 import { columnsMessages } from "../ProductList/messages";

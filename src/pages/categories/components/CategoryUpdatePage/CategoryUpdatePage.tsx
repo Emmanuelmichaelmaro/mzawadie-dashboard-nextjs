@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+/* eslint-disable @typescript-eslint/member-ordering */
 // @ts-nocheck
 import { Button, Card } from "@material-ui/core";
 import { CardSpacer } from "@mzawadie/components/CardSpacer";

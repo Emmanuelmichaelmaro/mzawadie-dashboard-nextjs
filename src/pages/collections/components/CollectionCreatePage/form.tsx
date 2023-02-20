@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { OutputData } from "@editorjs/editorjs";
 import { useExitFormDialog } from "@mzawadie/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@mzawadie/components/Metadata";

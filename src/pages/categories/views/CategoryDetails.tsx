@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-floating-promises,react-hooks/rules-of-hooks */
 // @ts-nocheck
-import { DialogContentText, IconButton } from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
+import { DialogContentText } from "@material-ui/core";
 import { ActionDialog } from "@mzawadie/components/ActionDialog";
 import useAppChannel from "@mzawadie/components/AppLayout/AppChannelContext";
 import { NotFoundPage } from "@mzawadie/components/NotFoundPage";
@@ -18,6 +17,7 @@ import createMetadataUpdateHandler from "@mzawadie/utils/handlers/metadataUpdate
 import { mapEdgesToItems, mapNodeToChoice } from "@mzawadie/utils/maps";
 import { useMetadataUpdate, usePrivateMetadataUpdate } from "@mzawadie/utils/metadata/updateMetadata";
 import { getParsedDataForJsonStringField } from "@mzawadie/utils/richText/misc";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

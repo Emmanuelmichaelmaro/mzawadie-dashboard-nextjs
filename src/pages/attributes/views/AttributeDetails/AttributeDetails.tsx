@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 // @ts-nocheck
 import { ListViews, ReorderEvent, commonMessages, maybe } from "@mzawadie/core";
 import useListSettings from "@mzawadie/hooks/useListSettings";
