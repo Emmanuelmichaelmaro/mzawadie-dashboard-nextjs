@@ -2,6 +2,8 @@
 import { WindowTitle } from "@mzawadie/components";
 import { sectionNames } from "@mzawadie/core";
 import {
+    productAddPath,
+    ProductCreateUrlQueryParams,
     productListPath,
     ProductListUrlQueryParams,
     ProductListUrlSortField,
@@ -13,7 +15,13 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
+import { ProductCreateComponent } from "./views/ProductCreate";
 import { ProductListComponent } from "./views/ProductList";
+
+const ProductCreate: React.FC<RouteComponentProps<any>> = () => {
+    const params: ProductCreateUrlQueryParams = parseQs(location.search.substr(1));
+    return <ProductCreateComponent params={params} />;
+};
 
 const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
     const qs = parseQs(location.search.substr(1));
@@ -40,6 +48,7 @@ const Component = () => {
             <WindowTitle title={intl.formatMessage(sectionNames.products)} />
             <Switch>
                 <Route exact path={productListPath} component={ProductList} />
+                <Route exact path={productAddPath} component={ProductCreate} />
             </Switch>
         </>
     );

@@ -1,3 +1,3 @@
-// export { default } from "./ProductCreatePage";
-// export * from "./ProductCreatePage";
+export { default as ProductCreatePage } from "./ProductCreatePage";
+export * from "./ProductCreatePage";
 export * from "./form";
