@@ -7,7 +7,6 @@ import {
 } from "@apollo/client";
 import { commonMessages, getMutationStatus, MutationResultAdditionalProps } from "@mzawadie/core";
 import { useUser } from "@mzawadie/pages/auth";
-import { isJwtError } from "@mzawadie/pages/auth/errors";
 import { GqlErrors, hasError } from "@mzawadie/utils/api";
 import { DocumentNode } from "graphql";
 import { useIntl } from "react-intl";
@@ -24,6 +23,7 @@ export type UseMutation<TData, TVariables> = [
 export type UseMutationCbs<TData> = Partial<{
     onCompleted: (data: TData) => void;
     onError: (error: ApolloError) => void;
+    refetchQueries?: string[];
 }>;
 
 export type UseMutationHook<TData, TVariables> = (
@@ -34,15 +34,15 @@ function makeMutation<TData, TVariables>(mutation: DocumentNode): UseMutationHoo
     function useMutation<TData, TVariables>({
         onCompleted,
         onError,
+        refetchQueries = [],
     }: UseMutationCbs<TData>): UseMutation<TData, TVariables> {
         const notify = useNotifier();
-
         const intl = useIntl();
-
         const user = useUser();
 
         const [mutateFn, result] = useBaseMutation(mutation, {
             onCompleted,
+            refetchQueries,
             onError: (err: ApolloError) => {
                 if (hasError(err, GqlErrors.ReadOnlyException)) {
                     notify({

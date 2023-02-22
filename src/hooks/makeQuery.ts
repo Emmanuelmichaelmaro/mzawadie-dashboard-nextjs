@@ -1,23 +1,27 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 // @ts-nocheck
-import { ApolloQueryResult, QueryResult, useQuery as useBaseQuery } from "@apollo/client";
+import {
+    ApolloError,
+    ApolloQueryResult,
+    QueryResult,
+    useQuery as useBaseQuery,
+    WatchQueryFetchPolicy,
+} from "@apollo/client";
 import { RequireAtLeastOne, PrefixedPermissions } from "@mzawadie/core";
-import { User_userPermissions } from "@mzawadie/fragments/types/User";
-import { useUser } from "@mzawadie/pages/auth";
-import { handleQueryAuthError } from "@mzawadie/pages/auth/utils";
-import { PermissionEnum } from "@mzawadie/types/globalTypes";
+import { handleQueryAuthError, useUser } from "@mzawadie/pages/auth";
 import { DocumentNode } from "graphql";
 import { useEffect } from "react";
 import { useIntl } from "react-intl";
 
-import { useAppState } from "./useAppState";
+import { User_userPermissions } from "../fragments/types/User";
+import { PermissionEnum } from "../types/globalTypes";
+import useAppState from "./useAppState";
 import { useNotifier } from "./useNotifier";
 
 const getPermissionKey = (permission: string) => `PERMISSION_${permission}` as PrefixedPermissions;
 
 const allPermissions = Object.keys(PermissionEnum).reduce(
-    (previous, code) => ({
-        ...previous,
+    (prev, code) => ({
+        ...prev,
         [getPermissionKey(code)]: false,
     }),
     {} as Record<PrefixedPermissions, boolean>
@@ -25,8 +29,8 @@ const allPermissions = Object.keys(PermissionEnum).reduce(
 
 const getUserPermissions = (userPermissions: User_userPermissions[]) =>
     userPermissions.reduce(
-        (previous, permission) => ({
-            ...previous,
+        (prev, permission) => ({
+            ...prev,
             [getPermissionKey(permission.code)]: true,
         }),
         {} as Record<PrefixedPermissions, boolean>
@@ -34,7 +38,7 @@ const getUserPermissions = (userPermissions: User_userPermissions[]) =>
 
 export interface LoadMore<TData, TVariables> {
     loadMore: (
-        mergeFunction: (previous: TData, next: TData) => TData,
+        mergeFunc: (prev: TData, next: TData) => TData,
         extraVariables: Partial<TVariables>
     ) => Promise<ApolloQueryResult<TData>>;
 }
@@ -46,10 +50,12 @@ export type UseQueryOpts<TVariables> = Partial<{
     displayLoader: boolean;
     skip: boolean;
     variables: TVariables;
+    fetchPolicy: WatchQueryFetchPolicy;
+    handleError?: (error: ApolloError) => void | undefined;
 }>;
 
 type UseQueryHook<TData, TVariables> = (
-    options: UseQueryOpts<Omit<TVariables, PrefixedPermissions>>
+    opts?: UseQueryOpts<Omit<TVariables, PrefixedPermissions>>
 ) => UseQueryResult<TData, TVariables>;
 
 function makeQuery<TData, TVariables>(query: DocumentNode): UseQueryHook<TData, TVariables> {
@@ -57,16 +63,14 @@ function makeQuery<TData, TVariables>(query: DocumentNode): UseQueryHook<TData, 
         displayLoader,
         skip,
         variables,
-    }: UseQueryOpts<TVariables>): UseQueryResult<TData, TVariables> {
+        fetchPolicy,
+        handleError,
+    }: UseQueryOpts<TVariables> = {}): UseQueryResult<TData, TVariables> {
         const notify = useNotifier();
-
         const intl = useIntl();
-
         const [, dispatchAppState] = useAppState();
-
-        const { tokenRefresh, logout, user } = useUser();
-
-        const userPermissions = getUserPermissions(user?.userPermissions || []);
+        const user = useUser();
+        const userPermissions = getUserPermissions(user.user?.userPermissions || []);
 
         const variablesWithPermissions = {
             ...variables,
@@ -79,8 +83,14 @@ function makeQuery<TData, TVariables>(query: DocumentNode): UseQueryHook<TData, 
                 useBatching: true,
             },
             errorPolicy: "all",
-            fetchPolicy: "cache-and-network",
-            onError: (error) => handleQueryAuthError(error, notify, tokenRefresh, logout, intl),
+            fetchPolicy: fetchPolicy || "cache-and-network",
+            onError: (error) => {
+                if (!!handleError) {
+                    handleError(error);
+                } else {
+                    handleQueryAuthError(error, notify, user.logout, intl);
+                }
+            },
             skip,
             variables: variablesWithPermissions,
         });
@@ -94,10 +104,10 @@ function makeQuery<TData, TVariables>(query: DocumentNode): UseQueryHook<TData, 
                     type: "displayLoader",
                 });
             }
-        }, [dispatchAppState, displayLoader, queryData.loading]);
+        }, [queryData.loading]);
 
         const loadMore = (
-            mergeFunction: (previousResults: TData, fetchMoreResult: TData) => TData,
+            mergeFunc: (previousResults: TData, fetchMoreResult: TData) => TData,
             extraVariables: RequireAtLeastOne<TVariables>
         ) =>
             queryData.fetchMore({
@@ -106,7 +116,7 @@ function makeQuery<TData, TVariables>(query: DocumentNode): UseQueryHook<TData, 
                     if (!fetchMoreResult) {
                         return previousResults;
                     }
-                    return mergeFunction(previousResults, fetchMoreResult);
+                    return mergeFunc(previousResults, fetchMoreResult);
                 },
                 variables: { ...variablesWithPermissions, ...extraVariables },
             });

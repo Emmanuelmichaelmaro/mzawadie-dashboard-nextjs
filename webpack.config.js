@@ -57,7 +57,6 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
     filename: "index.html",
     hash: true,
     template: "./public/index.html",
-    favicon: "./public/assets/favicons/favicon.ico",
 });
 
 const environmentPlugin = new webpack.EnvironmentPlugin({
@@ -82,8 +81,8 @@ module.exports = speedMeasureWrapper((env, argv) => {
         throw new Error("Environment variable API_URI not set");
     }
 
-    // const publicPath = process.env.STATIC_URL || "/";
-    const publicPath = publicUrlOrPath;
+    const publicPath = process.env.STATIC_URL || "/";
+    // const publicPath = publicUrlOrPath;
 
     if (!devMode) {
         output = {

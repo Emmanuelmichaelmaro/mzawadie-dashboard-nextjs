@@ -38,6 +38,8 @@ export function TypedMutation<TData, TVariables>(
                 mutation={mutation}
                 onCompleted={onCompleted}
                 onError={(err: ApolloError) => {
+                    // eslint-disable-next-line no-console
+                    console.log(JSON.stringify(err, null, 4));
                     if (err.networkError) {
                         notify({
                             status: "error",

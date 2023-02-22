@@ -20,4 +20,5 @@ const PageSectionHeader: React.FC<PageSectionHeaderProps> = (props) => {
 };
 
 PageSectionHeader.displayName = "PageSectionHeader";
+
 export default PageSectionHeader;

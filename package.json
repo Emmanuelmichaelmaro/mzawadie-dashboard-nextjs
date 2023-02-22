@@ -10,7 +10,7 @@
         "react",
         "headless"
     ],
-    "author": "Bethel Software",
+    "author": "Adullam Software",
     "contributors": [
         {
             "name": "Emmanuel Michael Maro",
@@ -32,7 +32,7 @@
         "url": "https://github.com/Emmanuelmichaelmaro/mzawadie-dashboard/issues",
         "email": "emmanuelmaro733@gmail.com"
     },
-    "homepage": "https://demo.mzawadie.co.tz/dashboard/",
+    "homepage": ".",
     "engines": {
         "node": ">=14 <15",
         "npm": ">=6.11.0 <7"

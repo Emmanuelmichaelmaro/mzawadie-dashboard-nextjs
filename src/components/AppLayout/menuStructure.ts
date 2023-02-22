@@ -23,6 +23,7 @@ import { configurationMenuUrl } from "../../pages/configuration";
 import { getConfigMenuItemsPermissions } from "../../pages/configuration/utils";
 import { customerListUrl } from "../../pages/customers/urls";
 import { saleListUrl, voucherListUrl } from "../../pages/discounts/urls";
+import { giftCardListUrl } from "../../pages/giftCards/urls";
 import { orderDraftListUrl, orderListUrl } from "../../pages/orders/urls";
 import { pageListPath } from "../../pages/pages/urls";
 import { productListUrl } from "../../pages/products/urls";
@@ -88,19 +89,41 @@ function useMenuStructure(
                     url: collectionListUrl(),
                     permissions: [PermissionEnum.MANAGE_PRODUCTS],
                 },
-                // {
-                //     ariaLabel: "giftCards",
-                //     label: intl.formatMessage(sectionNames.giftCards),
-                //     id: "giftCards",
-                //     url: giftCardListUrl(),
-                //     permissions: [PermissionEnum.MANAGE_GIFT_CARD],
-                // },
+                {
+                    ariaLabel: "giftCards",
+                    label: intl.formatMessage(sectionNames.giftCards),
+                    id: "giftCards",
+                    url: giftCardListUrl(),
+                    permissions: [PermissionEnum.MANAGE_GIFT_CARD],
+                },
                 ...mapToExtensionsItems(extensions.NAVIGATION_CATALOG, appExtensionsHeaderItem),
             ],
             iconSrc: catalogIcon,
             label: intl.formatMessage(commonMessages.catalog),
             permissions: [PermissionEnum.MANAGE_GIFT_CARD, PermissionEnum.MANAGE_PRODUCTS],
             id: "catalogue",
+        },
+        {
+            ariaLabel: "discounts",
+            children: [
+                {
+                    ariaLabel: "sales",
+                    label: intl.formatMessage(sectionNames.sales),
+                    id: "sales",
+                    url: saleListUrl(),
+                },
+                {
+                    ariaLabel: "vouchers",
+                    label: intl.formatMessage(sectionNames.vouchers),
+                    id: "vouchers",
+                    url: voucherListUrl(),
+                },
+                ...mapToExtensionsItems(extensions.NAVIGATION_DISCOUNTS, appExtensionsHeaderItem),
+            ],
+            iconSrc: discountsIcon,
+            label: intl.formatMessage(commonMessages.discounts),
+            permissions: [PermissionEnum.MANAGE_DISCOUNTS],
+            id: "discounts",
         },
         {
             ariaLabel: "orders",
@@ -125,28 +148,6 @@ function useMenuStructure(
             label: intl.formatMessage(sectionNames.orders),
             permissions: [PermissionEnum.MANAGE_ORDERS],
             id: "orders",
-        },
-        {
-            ariaLabel: "discounts",
-            children: [
-                {
-                    ariaLabel: "sales",
-                    label: intl.formatMessage(sectionNames.sales),
-                    id: "sales",
-                    url: saleListUrl(),
-                },
-                {
-                    ariaLabel: "vouchers",
-                    label: intl.formatMessage(sectionNames.vouchers),
-                    id: "vouchers",
-                    url: voucherListUrl(),
-                },
-                ...mapToExtensionsItems(extensions.NAVIGATION_DISCOUNTS, appExtensionsHeaderItem),
-            ],
-            iconSrc: discountsIcon,
-            label: intl.formatMessage(commonMessages.discounts),
-            permissions: [PermissionEnum.MANAGE_DISCOUNTS],
-            id: "discounts",
         },
         {
             ariaLabel: "customers",

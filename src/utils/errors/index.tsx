@@ -10,6 +10,8 @@ export function getErrors(errors: UserError[]): string[] {
     return errors.filter((err) => ["", null].includes(err.field)).map((err) => err.message);
 }
 
+export type FormErrors<TField extends string, TError extends UserError> = Record<TField, TError>;
+
 export function getFormErrors<TField extends string, TError extends UserError>(
     fields: TField[],
     errors: TError[] = []

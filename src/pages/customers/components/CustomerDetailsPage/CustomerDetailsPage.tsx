@@ -12,6 +12,7 @@ import {
 import { sectionNames, getUserName } from "@mzawadie/core";
 import { AccountErrorFragment } from "@mzawadie/fragments/types/AccountErrorFragment";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
+import CustomerGiftCardsCard from "@mzawadie/pages/giftCards/components/GiftCardCustomerCard/CustomerGiftCardsCard";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@mzawadie/utils/maps";
 import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChangeTrigger";
 import { ConfirmButtonTransitionState, Backlink } from "@saleor/macaw-ui";
@@ -123,6 +124,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                                 <CardSpacer />
                                 <CustomerStats customer={customer} />
                                 <CardSpacer />
+                                <CustomerGiftCardsCard />
                             </div>
                         </Grid>
 
