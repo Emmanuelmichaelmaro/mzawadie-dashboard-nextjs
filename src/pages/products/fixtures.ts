@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ProductList_products_edges_node } from "./types/ProductList";
 
 export const products = (placeholderImage: string): ProductList_products_edges_node[] => [

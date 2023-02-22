@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require("path");
+const fs = require("fs");
+const getPublicUrlOrPath = require("react-dev-utils/getPublicUrlOrPath");
 const CheckerPlugin = require("fork-ts-checker-webpack-plugin");
 const webpack = require("webpack");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
@@ -10,6 +12,23 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPl
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 
 require("dotenv").config();
+
+// Make sure any symlinks in the project folder are resolved:
+// https://github.com/facebook/create-react-app/issues/637
+const appDirectory = fs.realpathSync(process.cwd());
+const resolveApp = (relativePath) => path.resolve(appDirectory, relativePath);
+
+// We use `PUBLIC_URL` environment variable or "homepage" field to infer
+// "public path" at which the app is served.
+// webpack needs to know it to put the right <script> hrefs into HTML even in
+// single-page apps that may serve index.html for nested URLs like /todos/42.
+// We can't use a relative path in HTML because we don't want to load something
+// like /todos/42/static/js/bundle.7289d.js. We have to know the root.
+const publicUrlOrPath = getPublicUrlOrPath(
+    process.env.NODE_ENV === "development",
+    require(resolveApp("package.json")).homepage,
+    process.env.PUBLIC_URL
+);
 
 const resolve = path.resolve.bind(path, __dirname);
 
@@ -63,7 +82,8 @@ module.exports = speedMeasureWrapper((env, argv) => {
         throw new Error("Environment variable API_URI not set");
     }
 
-    const publicPath = process.env.STATIC_URL || "/";
+    // const publicPath = process.env.STATIC_URL || "/";
+    const publicPath = publicUrlOrPath;
 
     if (!devMode) {
         output = {
@@ -103,8 +123,8 @@ module.exports = speedMeasureWrapper((env, argv) => {
 
     if (!devMode) {
         manifestPlugin = new InjectManifest({
-            swSrc: "./src/containers/ServiceWorker/serviceWorker.js",
-            swDest: "sw.js",
+            swSrc: "./src/serviceWorker.js",
+            swDest: "service-worker.js",
             maximumFileSizeToCacheInBytes: 5000000,
             webpackCompilationPlugins: [checkerPlugin],
         });
@@ -147,7 +167,9 @@ module.exports = speedMeasureWrapper((env, argv) => {
         optimization: {
             removeAvailableModules: false,
             removeEmptyChunks: false,
-            splitChunks: false,
+            splitChunks: {
+                chunks: "all",
+            },
         },
         output,
         plugins: [

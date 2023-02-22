@@ -39,7 +39,7 @@ export type PageTypeListUrlQueryParams = ActiveTab &
     PageTypeListUrlSort;
 
 export const pageTypeListUrl = (params?: PageTypeListUrlQueryParams) =>
-    pageTypeListPath + "?" + stringifyQs(params);
+    `${pageTypeListPath}?${stringifyQs(params)}`;
 
 export const pageTypeAddPath = urlJoin(pageTypeSection, "add");
 
@@ -60,4 +60,4 @@ export type PageTypeUrlQueryParams = BulkAction &
     };
 
 export const pageTypeUrl = (id: string, params?: PageTypeUrlQueryParams) =>
-    pageTypePath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+    `${pageTypePath(encodeURIComponent(id))}?${stringifyQs(params)}`;

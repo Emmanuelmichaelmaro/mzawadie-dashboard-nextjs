@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-redeclare, no-redeclare */
 // @ts-nocheck
 import { Typography } from "@material-ui/core";
 import { HorizontalSpacer } from "@mzawadie/pages/apps/components/HorizontalSpacer";
@@ -13,7 +14,7 @@ import { useStyles } from "./styles";
 export interface ChannelsAvailabilityMenuContentProps {
     pills: Pill[];
 }
-// eslint-disable-next-line @typescript-eslint/no-redeclare
+
 export interface Pill {
     channel: CollectionList_collections_edges_node_channelListings_channel;
     color: PillColor;

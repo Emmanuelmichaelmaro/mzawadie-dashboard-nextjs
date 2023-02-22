@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 package-lock.json
+stats.json
 .pnp.*
 .yarn/*
 !.yarn/patches

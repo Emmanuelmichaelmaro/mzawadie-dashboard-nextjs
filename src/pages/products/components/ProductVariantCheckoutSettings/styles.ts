@@ -1,10 +1,10 @@
 import { makeStyles } from "@saleor/macaw-ui";
 
 const useStyles = makeStyles(
-    theme => ({
+    (theme) => ({
         preview: {
-            marginLeft: theme.spacing(1)
-        }
+            marginLeft: theme.spacing(1),
+        },
     }),
     { name: "ProductVariantCheckoutSettings" }
 );

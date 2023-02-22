@@ -1,4 +1,5 @@
 /* eslint-disable sort-keys */
+// @ts-nocheck
 import * as richTextEditorFixtures from "@mzawadie/components/RichTextEditor/fixtures.json";
 import { AttributeInputTypeEnum } from "@mzawadie/types/globalTypes";
 

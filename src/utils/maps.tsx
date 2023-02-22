@@ -1,3 +1,4 @@
+/* eslint-disable no-redeclare */
 // @ts-nocheck
 import {
     ChoiceValue,

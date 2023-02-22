@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Card, CardContent, Hidden, TableCell, Typography } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { CardTitle } from "@mzawadie/components/CardTitle";

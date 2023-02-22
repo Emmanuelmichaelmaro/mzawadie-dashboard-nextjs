@@ -1,10 +1,10 @@
 import { FetchMoreProps } from "@mzawadie/core";
 import { WarehouseFragment } from "@mzawadie/fragments/types/WarehouseFragment";
-import { isSelected } from "@mzawadie/utils/lists";
 import { ChannelPriceData } from "@mzawadie/pages/channels/utils";
 import { ProductDetails_product_productType_variantAttributes } from "@mzawadie/pages/products/types/ProductDetails";
 import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@mzawadie/pages/products/types/ProductVariantBulkCreate";
 import { SearchAttributeValues_attribute_choices_edges_node } from "@mzawadie/searches/types/SearchAttributeValues";
+import { isSelected } from "@mzawadie/utils/lists";
 import React from "react";
 
 import ProductVariantCreatorPriceAndSku from "./ProductVariantCreatorPriceAndSku";

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as richTextEditorFixtures from "@mzawadie/components/RichTextEditor/fixtures.json";
 import { CategoryFragment } from "@mzawadie/fragments/types/CategoryFragment";
 

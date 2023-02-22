@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-redeclare, no-redeclare */
 // @ts-nocheck
 import Draggable from "@mzawadie/icons/Draggable";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -18,7 +19,6 @@ interface SortableHandle {
     className?: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 const SortableHandle = SortableHandleHoc((props: any) => {
     const { className, ...restProps } = props;
     const classes = useStyles(props);

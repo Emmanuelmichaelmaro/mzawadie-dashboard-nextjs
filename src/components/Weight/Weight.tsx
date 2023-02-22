@@ -1,16 +1,17 @@
+/* eslint-disable @typescript-eslint/no-redeclare, no-redeclare */
 // @ts-nocheck
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-export interface Weight {
+export interface WeightInterface {
     unit: string;
     value: number;
 }
+
 export interface WeightProps {
-    weight: Weight;
+    weight: WeightInterface;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-redeclare
 const Weight: React.FC<WeightProps> = ({ weight }) => (
     <FormattedMessage
         defaultMessage="{value} {unit}"

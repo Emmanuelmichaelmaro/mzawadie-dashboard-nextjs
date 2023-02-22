@@ -37,6 +37,7 @@ import {
     mergeAttributeValues,
 } from "@mzawadie/pages/attributes/utils/data";
 import ChannelsWithVariantsAvailabilityCard from "@mzawadie/pages/channels/components/ChannelsWithVariantsAvailabilityCard/ChannelsWithVariantsAvailabilityCard";
+import { ChannelData } from "@mzawadie/pages/channels/utils";
 import { ChannelsWithVariantsData } from "@mzawadie/pages/products/views/ProductUpdate/types";
 import { SearchAttributeValues_attribute_choices_edges_node } from "@mzawadie/searches/types/SearchAttributeValues";
 import { SearchCategories_search_edges_node } from "@mzawadie/searches/types/SearchCategories";
@@ -44,6 +45,7 @@ import { SearchCollections_search_edges_node } from "@mzawadie/searches/types/Se
 import { SearchPages_search_edges_node } from "@mzawadie/searches/types/SearchPages";
 import { SearchProducts_search_edges_node } from "@mzawadie/searches/types/SearchProducts";
 import { PermissionEnum } from "@mzawadie/types/globalTypes";
+import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

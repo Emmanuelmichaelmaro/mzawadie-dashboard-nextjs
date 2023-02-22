@@ -7,7 +7,7 @@ import React from "react";
 import { SortableContainerProps } from "react-sortable-hoc";
 
 import Skeleton from "../Skeleton";
-import DraggableChip from "../SortableChip";
+import SortableChip from "../SortableChip";
 import SortableContainer from "./SortableContainer";
 
 const useStyles = makeStyles(
@@ -51,7 +51,7 @@ const SortableChipsField: React.FC<SortableChipsFieldProps> = (props) => {
                     <Skeleton />
                 ) : (
                     values.map((value, valueIndex) => (
-                        <DraggableChip
+                        <SortableChip
                             className={classes.chip}
                             key={valueIndex}
                             index={valueIndex}
@@ -60,6 +60,7 @@ const SortableChipsField: React.FC<SortableChipsFieldProps> = (props) => {
                         />
                     ))
                 )}
+
                 {error && (
                     <Typography variant="caption" className={classes.errorText}>
                         {helperText}

@@ -1,1261 +1,5006 @@
 {
-    "+hib+V": {
-        "defaultMessage": "This attribute is already assigned.",
-        "description": "error message"
-    },
-    "+x4cZH": {
-        "defaultMessage": "Only staff members can be assigned"
-    },
-    "+x84Ji": {
-        "defaultMessage": "Unconfirmed",
-        "description": "order status"
-    },
-    "+xTpT1": {
-        "defaultMessage": "Attributes"
-    },
-    "/8/Ffn": {
-        "defaultMessage": "Show",
-        "description": "button"
-    },
-    "/X8Mjx": {
-        "defaultMessage": "Play with <emphasis>GraphQL API</emphasis>"
-    },
-    "0AQH0Q": {
-        "defaultMessage": "Plugin is misconfigured and cannot be activated"
-    },
-    "0OfZJA": {
-        "defaultMessage": "Back",
-        "description": "button"
-    },
-    "0cVk9I": {
-        "defaultMessage": "Show in product listings"
-    },
-    "0dPP8O": {
-        "defaultMessage": "Order #{orderId} was placed"
-    },
-    "0opVvi": {
-        "defaultMessage": "{amount, plural,one {One ordered}other {{amount} Ordered}}",
-        "description": "number of ordered products"
-    },
-    "19/lwV": {
-        "defaultMessage": "Determine attributes used to create product types"
-    },
-    "1H+V6k": {
-        "defaultMessage": "Page with these attributes already exists.",
-        "description": "error message"
-    },
-    "1gzck6": {
-        "defaultMessage": "{firstName} {lastName}"
-    },
-    "1n1tOR": {
-        "defaultMessage": "Group is out of your permission scope"
-    },
-    "1wyZpQ": {
-        "defaultMessage": "These passwords are too similar"
-    },
-    "26BKkX": {
-        "defaultMessage": "Partially returned",
-        "description": "order status"
-    },
-    "2FQsYj": {
-        "defaultMessage": "Clear",
-        "description": "button"
-    },
-    "2NgTCJ": {
-        "defaultMessage": "A product with this SKU already exists"
-    },
-    "2atspc": {
-        "defaultMessage": "Drafts"
-    },
-    "2ob30/": {
-        "defaultMessage": "Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
-    },
-    "2oyWT9": {
-        "defaultMessage": "Back to login",
-        "description": "button"
-    },
-    "2pw5dQ": {
-        "defaultMessage": "Fully paid",
-        "description": "payment status"
-    },
-    "2r4cTE": {
-        "defaultMessage": "Enable Dark Mode",
-        "description": "button"
-    },
-    "34F7Jk": {
-        "defaultMessage": "and",
-        "description": "filter range separator"
-    },
-    "3AqOxp": {
-        "defaultMessage": "Product category not set",
-        "description": "no category set error"
-    },
-    "3JAOk9": {
-        "defaultMessage": "Are you sure you want to leave?",
-        "description": "ExitFormPrompt title"
-    },
-    "3TlhJS": {
-        "defaultMessage": "Search Command",
-        "description": "navigator command mode description"
-    },
-    "3tbL7x": {
-        "defaultMessage": "Forgot password?",
-        "description": "description"
-    },
-    "3ukd9/": {
-        "defaultMessage": "Attributes",
-        "description": "attributes, section header"
-    },
-    "450Fty": {
-        "defaultMessage": "None"
-    },
-    "4Dc2j0": {
-        "defaultMessage": "Returned",
-        "description": "order status"
-    },
-    "4JW9iJ": {
-        "defaultMessage": "Home",
-        "description": "home section name"
-    },
-    "4gT3eD": {
-        "defaultMessage": "Search in Customers",
-        "description": "navigator section header"
-    },
-    "4gZl/n": {
-        "defaultMessage": "See <emphasis>DEMO STOREFRONT</emphasis>"
-    },
-    "4prRLv": {
-        "defaultMessage": "Permission is out of your scope"
-    },
-    "54M0Gu": {
-        "defaultMessage": "Provide us with an email - if we find it in our database we will send you a link to reset your password. You should be able to find it in your inbox in the next couple of minutes."
-    },
-    "577R2r": {
-        "defaultMessage": "Invalid value"
-    },
-    "59XppT": {
-        "defaultMessage": "Approve",
-        "description": "button"
-    },
-    "5BajZK": {
-        "defaultMessage": "View and update your site settings"
-    },
-    "5LRkEs": {
-        "defaultMessage": "The new dashboard and the GraphQL API are preview-quality software."
-    },
-    "5RmuD+": {
-        "defaultMessage": "Manage and update your warehouse information"
-    },
-    "5SPHkk": {
-        "defaultMessage": "Order #{orderId} was fully paid"
-    },
-    "5dyOs0": {
-        "defaultMessage": "No payments waiting for capture"
-    },
-    "5elC9k": {
-        "defaultMessage": "Taxes",
-        "description": "taxes section name"
-    },
-    "5fCMUI": {
-        "defaultMessage": "Translations",
-        "description": "translations section name"
-    },
-    "5sg7KC": {
-        "defaultMessage": "Password"
-    },
-    "5ukAFZ": {
-        "defaultMessage": "Disabling this checkbox will remove product from search and category pages. It will be available on collection pages."
-    },
-    "62T585": {
-        "defaultMessage": "{languageName} - {languageCode}",
-        "description": "button"
-    },
-    "6D+yYX": {
-        "defaultMessage": "Payment status"
-    },
-    "6L6Fy2": {
-        "defaultMessage": "Disclaimer",
-        "description": "header"
-    },
-    "6QjMei": {
-        "defaultMessage": "Preorder end time needs to be set in the future"
-    },
-    "6nSTuC": {
-        "defaultMessage": "Webhooks",
-        "description": "webhooks section name"
-    },
-    "7Chrsf": {
-        "defaultMessage": "Passwords do not match"
-    },
-    "7Oorx5": {
-        "defaultMessage": "Search in Catalog",
-        "description": "navigator section header"
-    },
-    "7v2oBd": {
-        "defaultMessage": "Error",
-        "description": "header"
-    },
-    "8B8E+3": {
-        "defaultMessage": "Order Number",
-        "description": "navigator placeholder"
-    },
-    "8aV98y": {
-        "defaultMessage": "You need to update Saleor to the newest version. Before doing so - save all changes to prevent loss of data. To update use the button below.",
-        "description": "new version notification content"
-    },
-    "8oIbMI": {
-        "defaultMessage": "Reached limit for this plan"
-    },
-    "8vJCJ4": {
-        "defaultMessage": "Define and manage your sales channels"
-    },
-    "8xsKUv": {
-        "defaultMessage": "Service Accounts",
-        "description": "service accounts section name"
-    },
-    "95oJ5d": {
-        "defaultMessage": "Go back to dashboard",
-        "description": "button"
-    },
-    "9C7PZE": {
-        "defaultMessage": "Navigation",
-        "description": "navigation section name"
-    },
-    "9mGA/Q": {
-        "defaultMessage": "Dashboard",
-        "description": "button linking to dashboard"
-    },
-    "9q562c": {
-        "defaultMessage": "Apps",
-        "description": "apps section name"
-    },
-    "9uNz+T": {
-        "defaultMessage": "Cancel",
-        "description": "button"
-    },
-    "AOI4LW": {
-        "defaultMessage": "Search in Catalog",
-        "description": "navigator placeholder"
-    },
-    "AQ+9Ez": {
-        "defaultMessage": "We’ve encountered an unexpected error"
-    },
-    "AQFMYU": {
-        "defaultMessage": "Staff Members",
-        "description": "staff section name"
-    },
-    "AY7Tuz": {
-        "defaultMessage": "The same object cannot be in both lists"
-    },
-    "AdmPca": {
-        "defaultMessage": "Max value cannot be less than min value",
-        "description": "error message"
-    },
-    "AubJ/S": {
-        "defaultMessage": "Sign in",
-        "description": "button"
-    },
-    "B2LE7A": {
-        "defaultMessage": "working...",
-        "description": "menu item loading"
-    },
-    "BM1JiJ": {
-        "defaultMessage": "This order cannot be cancelled",
-        "description": "error message"
-    },
-    "BNTZLv": {
-        "defaultMessage": "Order #{orderId} was placed from draft"
-    },
-    "BXkF8Z": {
-        "defaultMessage": "Activity",
-        "description": "header"
-    },
-    "BooQvo": {
-        "defaultMessage": "Type {key} to see available actions",
-        "description": "navigator placeholder"
-    },
-    "By5ZBp": {
-        "defaultMessage": "Hello there, {userName}",
-        "description": "header"
-    },
-    "C0JLNW": {
-        "defaultMessage": "Provided email address does not exist in our database."
-    },
-    "C4hCsD": {
-        "defaultMessage": "App is out of your permissions scope"
-    },
-    "CJEIRC": {
-        "defaultMessage": "Product export has finished and was sent to your email address."
-    },
-    "ChGI4V": {
-        "defaultMessage": "Saleor is unavailable, please check your network connection and try again.",
-        "description": "error message"
-    },
-    "CjSRT1": {
-        "defaultMessage": "Create Category",
-        "description": "button"
-    },
-    "D2qihU": {
-        "defaultMessage": "Permission is invalid"
-    },
-    "D9ie4n": {
-        "defaultMessage": "Shipping Methods",
-        "description": "shipping section name"
-    },
-    "DEa1T1": {
-        "defaultMessage": "Save Search",
-        "description": "button"
-    },
-    "DHBlFi": {
-        "defaultMessage": "Search Customers",
-        "description": "navigator customer mode description"
-    },
-    "DILs4b": {
-        "defaultMessage": "Unsupported media provider or incorrect URL"
-    },
-    "DJFPzq": {
-        "defaultMessage": "Confirm",
-        "description": "button"
-    },
-    "DK+8PB": {
-        "defaultMessage": "This channel has already been created"
-    },
-    "DNTxWr": {
-        "defaultMessage": "Permission Groups",
-        "description": "permission groups section name"
-    },
-    "DOkfyZ": {
-        "defaultMessage": "Insufficient permissions"
-    },
-    "Dhherd": {
-        "defaultMessage": "Invoice Generation",
-        "description": "dialog header, title"
-    },
-    "E8T3e+": {
-        "defaultMessage": "Cannot add and remove group the same time"
-    },
-    "E9Jssl": {
-        "defaultMessage": "No orders ready to fulfill"
-    },
-    "EEW+ND": {
-        "defaultMessage": "Navigator"
-    },
-    "EIULpW": {
-        "defaultMessage": "Manage how your store charges tax"
-    },
-    "EM+30g": {
-        "defaultMessage": "Our new feature to help you with your daily tasks. Run Navigator using {keyboardShortcut} shortcut.",
-        "description": "navigator notification"
-    },
-    "ENBELI": {
-        "defaultMessage": "or login using",
-        "description": "description"
-    },
-    "Ediw6/": {
-        "defaultMessage": "Assign references",
-        "description": "button label"
-    },
-    "Ev6SEF": {
-        "defaultMessage": "New Password"
-    },
-    "FBtqtl": {
-        "defaultMessage": "Unpaid",
-        "description": "payment status"
-    },
-    "FNpv6K": {
-        "defaultMessage": "Filters",
-        "description": "button"
-    },
-    "FuAV5G": {
-        "defaultMessage": "This name is already taken. Please provide another."
-    },
-    "Fvvgoi": {
-        "defaultMessage": "Your session has expired. Please log in again to continue."
-    },
-    "Fz3kic": {
-        "defaultMessage": "Billing address is not set or invoice is not ready to be send",
-        "description": "error message"
-    },
-    "G7mu0y": {
-        "defaultMessage": "The GraphQL API is beta quality. It is not fully optimized and some mutations or queries may be missing."
-    },
-    "GOdq5V": {
-        "defaultMessage": "Catalog"
-    },
-    "Gxm7Qx": {
-        "defaultMessage": "Navigator is here to help",
-        "description": "navigator notification title"
-    },
-    "H5NKfr": {
-        "defaultMessage": "Create",
-        "description": "button"
-    },
-    "H6NsC1": {
-        "defaultMessage": "Pages",
-        "description": "pages section name"
-    },
-    "HP6m+q": {
-        "defaultMessage": "Attributes and Product Types"
-    },
-    "HSmg1/": {
-        "defaultMessage": "Gift Cards",
-        "description": "gift cards section name"
-    },
-    "HjXnIf": {
-        "defaultMessage": "Content Management"
-    },
-    "HnVtSS": {
-        "defaultMessage": "No results",
-        "description": "search"
-    },
-    "I+UwqI": {
-        "defaultMessage": "equal to",
-        "description": "is filter range or value"
-    },
-    "I4nAXS": {
-        "defaultMessage": "Inactive",
-        "description": "status label inactive"
-    },
-    "IFWHn0": {
-        "defaultMessage": "Billing address is not set",
-        "description": "error message"
-    },
-    "INNPVX": {
-        "defaultMessage": "Partially paid",
-        "description": "payment status"
-    },
-    "IbVKSH": {
-        "defaultMessage": "Manage",
-        "description": "button"
-    },
-    "IyHQr0": {
-        "defaultMessage": "Go to order #{orderNumber}",
-        "description": "navigator action"
-    },
-    "JFmOfi": {
-        "defaultMessage": "Create Product",
-        "description": "button"
-    },
-    "JPH/uP": {
-        "defaultMessage": "Define types of content pages used in your store"
-    },
-    "JTcz2G": {
-        "defaultMessage": "Exporting CSV finished",
-        "description": "csv file exporting has finished, header"
-    },
-    "Ja7gHc": {
-        "defaultMessage": "Edit",
-        "description": "button"
-    },
-    "JiVwOU": {
-        "defaultMessage": "There was a problem with the file you uploaded as an image and it couldn't be used. Please try a different file."
-    },
-    "Jt3DwJ": {
-        "defaultMessage": "Publish on",
-        "description": "publish on date"
-    },
-    "K8xNLe": {
-        "defaultMessage": "Products",
-        "description": "products section name"
-    },
-    "KFv8hX": {
-        "defaultMessage": "An attribute already exists."
-    },
-    "KN7zKn": {
-        "defaultMessage": "Error"
-    },
-    "KRqgfo": {
-        "defaultMessage": "User is out of your permissions scope"
-    },
-    "KeO51o": {
-        "defaultMessage": "Channel"
-    },
-    "LR3HlT": {
-        "defaultMessage": "This password is too short"
-    },
-    "LmKz3g": {
-        "defaultMessage": "Storefront"
-    },
-    "Lx1ima": {
-        "defaultMessage": "Upload image",
-        "description": "button"
-    },
-    "M1uijW": {
-        "defaultMessage": "Not Published",
-        "description": "collection"
-    },
-    "M4q0Ye": {
-        "defaultMessage": "Sorry, login went wrong. Please try again.",
-        "description": "error message"
-    },
-    "MKtgZB": {
-        "defaultMessage": "Only staff users can access the dashboard"
-    },
-    "MWSacl": {
-        "defaultMessage": "Multichannel"
-    },
-    "McN+wq": {
-        "defaultMessage": "Customers",
-        "description": "customers section name"
-    },
-    "Mi4JOd": {
-        "defaultMessage": "Error",
-        "description": "button"
-    },
-    "N43t3/": {
-        "defaultMessage": "Number not set for an invoice",
-        "description": "error message"
-    },
-    "N7XGzW": {
-        "defaultMessage": "This name is already taken. Please provide another.",
-        "description": "error message"
-    },
-    "NNT3Lp": {
-        "defaultMessage": "Collections",
-        "description": "collections section name"
-    },
-    "NlSJMM": {
-        "defaultMessage": "Channels",
-        "description": "channels section name"
-    },
-    "NqxvFh": {
-        "defaultMessage": "Type Command",
-        "description": "navigator placeholder"
-    },
-    "Nuq83+": {
-        "defaultMessage": "Create new channel"
-    },
-    "NxeDbG": {
-        "defaultMessage": "Drop here to upload",
-        "description": "image upload"
-    },
-    "OA+fw+": {
-        "defaultMessage": "or",
-        "description": "conjunction, choice between going to dashboard or refreshing page"
-    },
-    "OGemtu": {
-        "defaultMessage": "Partially refunded",
-        "description": "payment status"
-    },
-    "OeKIoY": {
-        "defaultMessage": "Mzawadie runs in read-only mode. Changes not saved."
-    },
-    "Ol1vso": {
-        "defaultMessage": "leave without saving",
-        "description": "ExitFormPrompt cancel button"
-    },
-    "P7PLVj": {
-        "defaultMessage": "Date"
-    },
-    "PCoO4D": {
-        "defaultMessage": "Page not found.",
-        "description": "error message"
-    },
-    "PLCwT/": {
-        "defaultMessage": "Show more",
-        "description": "search results"
-    },
-    "PbqNhi": {
-        "defaultMessage": "Partially fulfilled",
-        "description": "order status"
-    },
-    "Q1Uzbb": {
-        "defaultMessage": "No products found"
-    },
-    "Q6wcZ5": {
-        "defaultMessage": "First Name"
-    },
-    "Q8Qw5B": {
-        "defaultMessage": "Description"
-    },
-    "QBxN6z": {
-        "defaultMessage": "between",
-        "description": "is filter range or value"
-    },
-    "QCwBUI": {
-        "defaultMessage": "Delete Search",
-        "description": "button"
-    },
-    "QFBjlV": {
-        "defaultMessage": "Stock for this warehouse already exists for this product variant",
-        "description": "error message"
-    },
-    "QFCUEt": {
-        "defaultMessage": "Slug must be unique"
-    },
-    "QcIFCs": {
-        "defaultMessage": "Search Name",
-        "description": "save search tab"
-    },
-    "QirE3M": {
-        "defaultMessage": "Start Date"
-    },
-    "QooeI/": {
-        "defaultMessage": "Create Customer",
-        "description": "button"
-    },
-    "RQUkVW": {
-        "defaultMessage": "Manage your employees and their permissions"
-    },
-    "RaycYK": {
-        "defaultMessage": "Save",
-        "description": "button"
-    },
-    "Rjs1CD": {
-        "defaultMessage": "Continue",
-        "description": "button"
-    },
-    "RrCui3": {
-        "defaultMessage": "Summary"
-    },
-    "S/TQBw": {
-        "defaultMessage": "You have unsaved changes on this view. What would you like to do with them?",
-        "description": "ExitFormPrompt description"
-    },
-    "S22jIs": {
-        "defaultMessage": "Set new password",
-        "description": "button"
-    },
-    "SKFr04": {
-        "defaultMessage": "Attribute not found."
-    },
-    "T4GOiX": {
-        "defaultMessage": "End Date"
-    },
-    "TDhHMi": {
-        "defaultMessage": "This needs to be unique"
-    },
-    "TKmub+": {
-        "defaultMessage": "This field is required"
-    },
-    "Ta9j04": {
-        "defaultMessage": "Orders",
-        "description": "orders section name"
-    },
-    "TpPx7V": {
-        "defaultMessage": "Search Customer",
-        "description": "navigator placeholder"
-    },
-    "U2WgwW": {
-        "defaultMessage": "Add new value: {value}",
-        "description": "add custom select input option"
-    },
-    "U3BQKA": {
-        "defaultMessage": "Set publication date"
-    },
-    "UN+yTt": {
-        "defaultMessage": "Staff Settings"
-    },
-    "USS3Q7": {
-        "defaultMessage": "Unknown error occurred",
-        "description": "filters error messages unknown error"
-    },
-    "UjsI4o": {
-        "defaultMessage": "since {date}",
-        "description": "date"
-    },
-    "V1mqpZ": {
-        "defaultMessage": "Create Permission Group",
-        "description": "button"
-    },
-    "V2BBQu": {
-        "defaultMessage": "Currency in both channels must be the same"
-    },
-    "VEE4gD": {
-        "defaultMessage": "Shipping method is not valid for chosen shipping address",
-        "description": "error message"
-    },
-    "VIABHy": {
-        "defaultMessage": "Default shipping zone already exists",
-        "description": "error message"
-    },
-    "VdDcxc": {
-        "defaultMessage": "Create Collection",
-        "description": "button"
-    },
-    "WhKGPA": {
-        "defaultMessage": "Set up new password",
-        "description": "page title"
-    },
-    "WhvuCb": {
-        "defaultMessage": "Plugins",
-        "description": "plugins section name"
-    },
-    "Wlc67M": {
-        "defaultMessage": "Cannot choose a shipping method for an order without the shipping address",
-        "description": "error message"
-    },
-    "WzA5Ll": {
-        "defaultMessage": "Cannot remove user from last group"
-    },
-    "X8+Lpa": {
-        "defaultMessage": "Account Settings",
-        "description": "button"
-    },
-    "XCIV8H": {
-        "defaultMessage": "Refresh",
-        "description": "button"
-    },
-    "XJSRDK": {
-        "defaultMessage": "Fully refunded",
-        "description": "payment status"
-    },
-    "Xb6BJ9": {
-        "defaultMessage": "Manual payments can not be refunded",
-        "description": "error message"
-    },
-    "Xel9C+": {
-        "defaultMessage": "Search Views and Actions",
-        "description": "navigator default mode description"
-    },
-    "XkX56I": {
-        "defaultMessage": "Choose a value",
-        "description": "filters error messages value required"
-    },
-    "Y1B0PN": {
-        "defaultMessage": "There's no payment associated with the order",
-        "description": "error message"
-    },
-    "Y7UlMR": {
-        "defaultMessage": "Apps",
-        "description": "app extensions subsection"
-    },
-    "Y7Vy19": {
-        "defaultMessage": "Set available on",
-        "description": "available on date"
-    },
-    "YMBn8d": {
-        "defaultMessage": "Draft Orders",
-        "description": "draft orders section name"
-    },
-    "YQ3EXR": {
-        "defaultMessage": "Product Types",
-        "description": "product types section name"
-    },
-    "YYkkhx": {
-        "defaultMessage": "Navigate to",
-        "description": "navigator section header"
-    },
-    "YZl6cv": {
-        "defaultMessage": "Miscellaneous"
-    },
-    "Yo2kC+": {
-        "defaultMessage": "Couldn't process image"
-    },
-    "Yy/yDL": {
-        "defaultMessage": "Reset password"
-    },
-    "Z6QAbw": {
-        "defaultMessage": "This variant does not have any digital content"
-    },
-    "a+x05s": {
-        "defaultMessage": "Select",
-        "description": "select option, button"
-    },
-    "a5msuh": {
-        "defaultMessage": "Yes"
-    },
-    "a9S9Je": {
-        "defaultMessage": "Page Types",
-        "description": "page types section name"
-    },
-    "aCX8rl": {
-        "defaultMessage": "Here is some information we gathered about your store",
-        "description": "subheader"
-    },
-    "aI80kg": {
-        "defaultMessage": "Properties"
-    },
-    "abTH5q": {
-        "defaultMessage": "Email address is not set",
-        "description": "error message"
-    },
-    "aggaJg": {
-        "defaultMessage": "This attribute has already been assigned to this product type"
-    },
-    "aheQdn": {
-        "defaultMessage": "Last Name"
-    },
-    "akXDST": {
-        "defaultMessage": "Visibility",
-        "description": "section header"
-    },
-    "bFhzRX": {
-        "defaultMessage": "No products are out of stock"
-    },
-    "bZenNC": {
-        "defaultMessage": "Description (optional)"
-    },
-    "bj6pTd": {
-        "defaultMessage": "Something's missing"
-    },
-    "bu/fC1": {
-        "defaultMessage": "Remove",
-        "description": "button"
-    },
-    "byP6IC": {
-        "defaultMessage": "Selected"
-    },
-    "c0H45L": {
-        "defaultMessage": "{amount, plural,one {One order is ready to fulfill} other {{amount} orders are ready to fulfill}}"
-    },
-    "c5pMZ8": {
-        "defaultMessage": "API error"
-    },
-    "cY42ht": {
-        "defaultMessage": "Password cannot be entirely numeric"
-    },
-    "ccXLVi": {
-        "defaultMessage": "Category"
-    },
-    "cd13nN": {
-        "defaultMessage": "All attributes should have value",
-        "description": "product attribute error"
-    },
-    "cdxwA8": {
-        "defaultMessage": "{amount, plural,one {One product out of stock}other {{amount} products out of stock}}"
-    },
-    "cfQf0w": {
-        "defaultMessage": "Create Order",
-        "description": "button"
-    },
-    "d9UqaJ": {
-        "defaultMessage": "Cannot change the quantity because of insufficient stock",
-        "description": "error message"
-    },
-    "dOQB9o": {
-        "defaultMessage": "Cancelled",
-        "description": "payment status"
-    },
-    "dxCVWI": {
-        "defaultMessage": "Cannot request an invoice for draft order",
-        "description": "error message"
-    },
-    "eOrLzG": {
-        "defaultMessage": "Done",
-        "description": "button"
-    },
-    "eWcvOc": {
-        "defaultMessage": "Choose file",
-        "description": "button"
-    },
-    "erC44f": {
-        "defaultMessage": "Filter requires other filters: {dependencies}",
-        "description": "filters error messages dependencies missing"
-    },
-    "eu98dw": {
-        "defaultMessage": "Invalid password"
-    },
-    "fNFEkh": {
-        "defaultMessage": "No of Rows:"
-    },
-    "fgHLXc": {
-        "defaultMessage": "Value",
-        "description": "attribute value"
-    },
-    "g/BrOt": {
-        "defaultMessage": "Url has invalid format"
-    },
-    "gKdGxP": {
-        "defaultMessage": "Only pre-authorized payments can be captured",
-        "description": "error message"
-    },
-    "gTr0qE": {
-        "defaultMessage": "Shipping Settings"
-    },
-    "hJZwTS": {
-        "defaultMessage": "Email address"
-    },
-    "hLUYBt": {
-        "defaultMessage": "Pending",
-        "description": "payment status"
-    },
-    "hOxIeP": {
-        "defaultMessage": "Availability"
-    },
-    "hX5PAb": {
-        "defaultMessage": "No results found"
-    },
-    "ho75Lr": {
-        "defaultMessage": "Deactivated",
-        "description": "status label deactivated"
-    },
-    "hpMcW8": {
-        "defaultMessage": "Define how users can navigate through your store"
-    },
-    "hptDxW": {
-        "defaultMessage": "to {money}",
-        "description": "money"
-    },
-    "hqVMLQ": {
-        "defaultMessage": "Send",
-        "description": "button"
-    },
-    "hzSNj4": {
-        "defaultMessage": "Dashboard"
-    },
-    "i+Vox0": {
-        "defaultMessage": "Invoice Generated",
-        "description": "invoice generating has finished, header"
-    },
-    "i0AcKY": {
-        "defaultMessage": "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes.",
-        "description": "notification message after log in"
-    },
-    "i3Mvj8": {
-        "defaultMessage": "This variant already exists",
-        "description": "product attribute error"
-    },
-    "iAvKNf": {
-        "defaultMessage": "Display Help",
-        "description": "navigator help mode description"
-    },
-    "iUy2dx": {
-        "defaultMessage": "Vouchers",
-        "description": "vouchers section name"
-    },
-    "ij7olm": {
-        "defaultMessage": "This fulfillment cannot be cancelled",
-        "description": "error message"
-    },
-    "ijl+4z": {
-        "defaultMessage": "save & continue",
-        "description": "ExitFormPrompt confirm button"
-    },
-    "ivJ1qt": {
-        "defaultMessage": "Manage your permission groups and their permissions"
-    },
-    "j0ugM4": {
-        "defaultMessage": "Exchange Rates",
-        "description": "Manage and Update your warehouse information"
-    },
-    "j8PV7E": {
-        "defaultMessage": "Values",
-        "description": "attribute values"
-    },
-    "jFrdB5": {
-        "defaultMessage": "Product Settings"
-    },
-    "juBV+h": {
-        "defaultMessage": "End Hour"
-    },
-    "k8bltk": {
-        "defaultMessage": "No Results"
-    },
-    "kJQczl": {
-        "defaultMessage": "Sales",
-        "description": "sales section name"
-    },
-    "kbkjEc": {
-        "defaultMessage": "Search in Catalog",
-        "description": "navigator catalog mode description"
-    },
-    "l2oVCF": {
-        "defaultMessage": "Attributes",
-        "description": "attributes section name"
-    },
-    "lL3YJO": {
-        "defaultMessage": "Published",
-        "description": "collection"
-    },
-    "lLwtgs": {
-        "defaultMessage": "Variants are disabled in this product type"
-    },
-    "lW5uJO": {
-        "defaultMessage": "from {money}",
-        "description": "money"
-    },
-    "liLrVs": {
-        "defaultMessage": "Save Custom Search",
-        "description": "save filter tab, header"
-    },
-    "lm9NSK": {
-        "defaultMessage": "Send an email with reset link",
-        "description": "password reset, button"
-    },
-    "lqIzC8": {
-        "defaultMessage": "This field needs to be unique"
-    },
-    "lzdvwp": {
-        "defaultMessage": "Optional",
-        "description": "field is optional"
-    },
-    "m0Dz+2": {
-        "defaultMessage": "Please set up a new password for your account. Repeat your new password to make sure you will be able to remember it."
-    },
-    "m19JfL": {
-        "defaultMessage": "View and update your plugins and their settings."
-    },
-    "m8cjcK": {
-        "defaultMessage": "Authorization key with this type already exists",
-        "description": "add authorization key error"
-    },
-    "mYs3tb": {
-        "defaultMessage": "Product price cannot be lower than 0."
-    },
-    "md326v": {
-        "defaultMessage": "{amount, plural,one {One payment to capture}other {{amount} payments to capture}}"
-    },
-    "me585h": {
-        "defaultMessage": "Quick Actions",
-        "description": "navigator section header"
-    },
-    "mgFyBA": {
-        "defaultMessage": "This name should be unique"
-    },
-    "n+Gwbu": {
-        "defaultMessage": "Discounts"
-    },
-    "n0RwMK": {
-        "defaultMessage": "Define types of products you sell"
-    },
-    "nKjLjT": {
-        "defaultMessage": "Slug must be unique for each warehouse",
-        "description": "error message"
-    },
-    "nOo0oL": {
-        "defaultMessage": "Not enough items to fulfill",
-        "description": "error message"
-    },
-    "nRiOg+": {
-        "defaultMessage": "Sorry, the page was not found"
-    },
-    "nwnwJ0": {
-        "defaultMessage": "Refused",
-        "description": "payment status"
-    },
-    "o8f4Sg": {
-        "defaultMessage": "Can’t fulfill until payment is captured",
-        "description": "disabled option description"
-    },
-    "oB0y5Y": {
-        "defaultMessage": "Unfulfilled",
-        "description": "order status"
-    },
-    "oLMXDv": {
-        "defaultMessage": "Ready to fulfill",
-        "description": "order status"
-    },
-    "oUWADl": {
-        "defaultMessage": "No"
-    },
-    "oiuwOl": {
-        "defaultMessage": "Assign",
-        "description": "button"
-    },
-    "p0SUJj": {
-        "defaultMessage": "Don’t worry we will fix it soon. Try to refresh the page or go back to dashboard."
-    },
-    "pC6/1z": {
-        "defaultMessage": "Invalid manifest format"
-    },
-    "pFVX6g": {
-        "defaultMessage": "Variant with these attributes already exists"
-    },
-    "phAZoj": {
-        "defaultMessage": "Collection"
-    },
-    "pkUbrL": {
-        "defaultMessage": "General Information"
-    },
-    "pkjXPD": {
-        "defaultMessage": "Fulfilled",
-        "description": "order status"
-    },
-    "qDwvZ4": {
-        "defaultMessage": "Unknown error"
-    },
-    "qIgdO6": {
-        "defaultMessage": "Custom Filter"
-    },
-    "qLbse5": {
-        "defaultMessage": "Log out",
-        "description": "button"
-    },
-    "qu/hXD": {
-        "defaultMessage": "Selected {number} items"
-    },
-    "r+8q4B": {
-        "defaultMessage": "Only draft orders can be edited",
-        "description": "error message"
-    },
-    "rQOS7K": {
-        "defaultMessage": "Active",
-        "description": "status label active"
-    },
-    "rZf1qL": {
-        "defaultMessage": "SKUs must be unique",
-        "description": "bulk variant create error"
-    },
-    "rfvBAF": {
-        "defaultMessage": "Select All",
-        "description": "select all options, button"
-    },
-    "rqiCWU": {
-        "defaultMessage": "Saved changes"
-    },
-    "rqtV5d": {
-        "defaultMessage": "Ready to capture",
-        "description": "order status"
-    },
-    "rr8fyf": {
-        "defaultMessage": "Top Products",
-        "description": "header"
-    },
-    "ryAyPr": {
-        "defaultMessage": "Requested Invoice was generated. It was added to the top of the invoice list on this view. Enjoy!"
-    },
-    "s9sOcC": {
-        "defaultMessage": "OK",
-        "description": "button"
-    },
-    "sK1FPw": {
-        "defaultMessage": "Categories",
-        "description": "categories section name"
-    },
-    "sZ27WU": {
-        "defaultMessage": "Only pre-authorized payments can be voided",
-        "description": "error message"
-    },
-    "sjRXXz": {
-        "defaultMessage": "Order #{orderId} was placed from draft by {userEmail}"
-    },
-    "skPoVe": {
-        "defaultMessage": "Accept",
-        "description": "button"
-    },
-    "stjHjY": {
-        "defaultMessage": "Promo code already exists",
-        "description": "error message"
-    },
-    "tEdFmZ": {
-        "defaultMessage": "System update required",
-        "description": "notification title"
-    },
-    "tTtoKd": {
-        "defaultMessage": "Sorry, your username and/or password are incorrect. Please try again.",
-        "description": "error message"
-    },
-    "tWbE34": {
-        "defaultMessage": "Start Hour"
-    },
-    "toDL5R": {
-        "defaultMessage": "Draft",
-        "description": "order status"
-    },
-    "tzMNF3": {
-        "defaultMessage": "Status"
-    },
-    "u24Ppd": {
-        "defaultMessage": "This attribute cannot be assigned to this product type"
-    },
-    "u3sYPH": {
-        "defaultMessage": "Time",
-        "description": "independent of any particular day, eg. 11:35"
-    },
-    "uRTj1Q": {
-        "defaultMessage": "Invoice not found",
-        "description": "error message"
-    },
-    "ufmuTp": {
-        "defaultMessage": "Delete",
-        "description": "button"
-    },
-    "usSkzP": {
-        "defaultMessage": "Search Orders",
-        "description": "navigator order mode description"
-    },
-    "v3WWK+": {
-        "defaultMessage": "Status is invalid"
-    },
-    "vN3qdA": {
-        "defaultMessage": "Undo",
-        "description": "button"
-    },
-    "vP7g2+": {
-        "defaultMessage": "URL not set for an invoice",
-        "description": "error message"
-    },
-    "vVviA2": {
-        "defaultMessage": "Those permissions are out of your scope"
-    },
-    "vfG+nh": {
-        "defaultMessage": "Confirm Password"
-    },
-    "viFkCw": {
-        "defaultMessage": "Site Settings",
-        "description": "site settings section name"
-    },
-    "vzgZ3U": {
-        "defaultMessage": "Sign In",
-        "description": "card header"
-    },
-    "w4R/SO": {
-        "defaultMessage": "Local Apps"
-    },
-    "wWTUrM": {
-        "defaultMessage": "No activities found"
-    },
-    "wlQTfb": {
-        "defaultMessage": "Next",
-        "description": "go to next step, button"
-    },
-    "wn3di2": {
-        "defaultMessage": "This password is too commonly used"
-    },
-    "x/ZVlU": {
-        "defaultMessage": "Product"
-    },
-    "xfGZsi": {
-        "defaultMessage": "Configuration",
-        "description": "configuration section name"
-    },
-    "xqfaLi": {
-        "defaultMessage": "Mzawadie ran into an unexpected problem"
-    },
-    "xwEc8K": {
-        "defaultMessage": "API"
-    },
-    "y9cvqE": {
-        "defaultMessage": "Create Voucher",
-        "description": "button"
-    },
-    "yH56V+": {
-        "defaultMessage": "Ooops!..."
-    },
-    "yHeZRQ": {
-        "defaultMessage": "Product Export Failed"
-    },
-    "ycMLN9": {
-        "defaultMessage": "Warehouses",
-        "description": "warehouses section name"
-    },
-    "ychKsb": {
-        "defaultMessage": "Shipping method is required for this order",
-        "description": "error message"
-    },
-    "ypW4Mi": {
-        "defaultMessage": "Refresh page",
-        "description": "button refreshing page"
-    },
-    "z0gGP+": {
-        "defaultMessage": "{number} Attributes",
-        "description": "number of attributes"
-    },
-    "zSOvI0": {
-        "defaultMessage": "Filters"
-    },
-    "zTdwWM": {
-        "defaultMessage": "{fromMoney} - {toMoney}",
-        "description": "money"
-    },
-    "zWgbGg": {
-        "defaultMessage": "Today"
-    },
-    "zxs6G3": {
-        "defaultMessage": "Manage how you ship out orders"
-    },
-    "zyXcBP": {
-        "defaultMessage": "Sorting by this column requires active filter: {filterName}"
-    }
+  "+43JV5": {
+    "defaultMessage": "Products in {categoryName}",
+    "description": "header"
+  },
+  "+7OsyM": {
+    "defaultMessage": "Set as default shipping address",
+    "description": "button"
+  },
+  "+G9l7u": {
+    "defaultMessage": "All available shipping zones have been selected",
+    "description": "all selected zones card message"
+  },
+  "+HuipK": {
+    "defaultMessage": "SKU {sku}",
+    "description": "variant sku"
+  },
+  "+NUzaQ": {
+    "defaultMessage": "User account active",
+    "description": "check to mark this account as active"
+  },
+  "+OV+Gj": {
+    "defaultMessage": "Fetch taxes",
+    "description": "button"
+  },
+  "+T0oJ7": {
+    "defaultMessage": "Stock reservation for anonymous user (in minutes)",
+    "description": "input label"
+  },
+  "+VEhV8": {
+    "defaultMessage": "Availability",
+    "description": "product channels"
+  },
+  "+a+2ug": {
+    "defaultMessage": "Members"
+  },
+  "+bFHzi": {
+    "defaultMessage": "Next",
+    "description": "button"
+  },
+  "+do3gl": {
+    "defaultMessage": "This number defines quantity of items in checkout line that can be bought. You can override this setting per variant. Leaving this setting empty mean that there is no limits.",
+    "description": "input helper text"
+  },
+  "+hib+V": {
+    "defaultMessage": "This attribute is already assigned.",
+    "description": "error message"
+  },
+  "+iVKR1": {
+    "defaultMessage": "Assign value",
+    "description": "assign attribute value button"
+  },
+  "+jCDvp": {
+    "defaultMessage": "Store Information",
+    "description": "section header"
+  },
+  "+kb2lM": {
+    "defaultMessage": "Change Password",
+    "description": "dialog header"
+  },
+  "+tIkAe": {
+    "defaultMessage": "Status",
+    "description": "status"
+  },
+  "+wpvnk": {
+    "defaultMessage": "Delete Collection",
+    "description": "dialog title"
+  },
+  "+x4cZH": {
+    "defaultMessage": "Only staff members can be assigned"
+  },
+  "+x84Ji": {
+    "defaultMessage": "Unconfirmed",
+    "description": "order status"
+  },
+  "+xTpT1": {
+    "defaultMessage": "Attributes"
+  },
+  "/0JckE": {
+    "defaultMessage": "Order was marked as paid by",
+    "description": "order marked as paid event title"
+  },
+  "/2OOMe": {
+    "defaultMessage": "Shipping",
+    "description": "product type shipping settings, section header"
+  },
+  "/68iG8": {
+    "defaultMessage": "Information exported",
+    "description": "product export to csv file, header"
+  },
+  "/8/Ffn": {
+    "defaultMessage": "Show",
+    "description": "button"
+  },
+  "/JENWS": {
+    "defaultMessage": "Reduced Tax Rates"
+  },
+  "/KWNJW": {
+    "defaultMessage": "Order discount was updated by",
+    "description": "order discount was updated event title"
+  },
+  "/L8wzi": {
+    "defaultMessage": "Unassign Attribute From Page Type",
+    "description": "dialog header"
+  },
+  "/Mcvt4": {
+    "defaultMessage": "Media",
+    "description": "section header"
+  },
+  "/Qb92c": {
+    "defaultMessage": "Based on your selections we will create {numberOfProducts} products. Use this step to customize price and stocks for your new products"
+  },
+  "/TF6BZ": {
+    "defaultMessage": "Search Products"
+  },
+  "/TK7QD": {
+    "defaultMessage": "Hidden",
+    "description": "page label"
+  },
+  "/WXs6H": {
+    "defaultMessage": "Name",
+    "description": "collection name"
+  },
+  "/X8Mjx": {
+    "defaultMessage": "Play with <emphasis>GraphQL API</emphasis>"
+  },
+  "/Zee1r": {
+    "defaultMessage": "Only added postal codes will be able to use this shipping rate"
+  },
+  "/cow4T": {
+    "defaultMessage": "Select Warehouse",
+    "description": "WarehousesSection select field placeholder"
+  },
+  "/dnWE8": {
+    "defaultMessage": "Products in {name}",
+    "description": "products in collection"
+  },
+  "/glQgs": {
+    "defaultMessage": "No channels found"
+  },
+  "/kWzY1": {
+    "defaultMessage": "Are you sure you want to delete this address from users address book?"
+  },
+  "/lBLBI": {
+    "defaultMessage": "Channels from A to Z",
+    "description": "channels alphabetically title"
+  },
+  "06bR4Z": {
+    "defaultMessage": "Order cancel information was sent to customer",
+    "description": "order history message"
+  },
+  "07KB2d": {
+    "defaultMessage": "Country Code"
+  },
+  "0AQH0Q": {
+    "defaultMessage": "Plugin is misconfigured and cannot be activated"
+  },
+  "0DgA8v": {
+    "defaultMessage": "Picker",
+    "description": "swatch attribute color picker label"
+  },
+  "0FIgpN": {
+    "defaultMessage": "This warehouse has no shipping zones assigned."
+  },
+  "0FexL7": {
+    "defaultMessage": "Min. value",
+    "description": "min price in channel"
+  },
+  "0GJfWd": {
+    "defaultMessage": "Country Name"
+  },
+  "0OfZJA": {
+    "defaultMessage": "Back",
+    "description": "button"
+  },
+  "0OtaXa": {
+    "defaultMessage": "Create Menu",
+    "description": "dialog header"
+  },
+  "0Vyr8h": {
+    "defaultMessage": "Name",
+    "description": "menu item name"
+  },
+  "0cVk9I": {
+    "defaultMessage": "Show in product listings"
+  },
+  "0dPP8O": {
+    "defaultMessage": "Order #{orderId} was placed"
+  },
+  "0em8tI": {
+    "defaultMessage": "Yes, I want to delete those products types and assigned products",
+    "description": "ProductTypeDeleteWarningDialog multiple consent label"
+  },
+  "0iMYc+": {
+    "defaultMessage": "(Optional)",
+    "description": "field is optional"
+  },
+  "0nL1D6": {
+    "defaultMessage": "Items",
+    "description": "number of menu items"
+  },
+  "0nLsyM": {
+    "defaultMessage": "No product types found"
+  },
+  "0opVvi": {
+    "defaultMessage": "{amount, plural,one {One ordered}other {{amount} Ordered}}",
+    "description": "number of ordered products"
+  },
+  "142MJn": {
+    "defaultMessage": "Columns",
+    "description": "select visible columns button"
+  },
+  "15IqlZ": {
+    "defaultMessage": "Can be used as column",
+    "description": "attribute can be column in product list table"
+  },
+  "15PiOX": {
+    "defaultMessage": "Unassign",
+    "description": "button title"
+  },
+  "19/lwV": {
+    "defaultMessage": "Determine attributes used to create product types"
+  },
+  "1GTU/3": {
+    "defaultMessage": "Products were replaced by",
+    "description": "replaced event title"
+  },
+  "1H+V6k": {
+    "defaultMessage": "Page with these attributes already exists.",
+    "description": "error message"
+  },
+  "1KSqnn": {
+    "defaultMessage": "All Product Types",
+    "description": "tab name"
+  },
+  "1LBYpE": {
+    "defaultMessage": "Delete Menus",
+    "description": "dialog header"
+  },
+  "1LiVhv": {
+    "defaultMessage": "Recent Orders",
+    "description": "section header"
+  },
+  "1T1fP8": {
+    "defaultMessage": "Postal codes (start)",
+    "description": "range input label"
+  },
+  "1div9r": {
+    "defaultMessage": "Search Attribute"
+  },
+  "1gzck6": {
+    "defaultMessage": "{firstName} {lastName}"
+  },
+  "1kdQdO": {
+    "defaultMessage": "Variants",
+    "description": "section header"
+  },
+  "1lk/oS": {
+    "defaultMessage": "Add postal code range",
+    "description": "button"
+  },
+  "1n1tOR": {
+    "defaultMessage": "Group is out of your permission scope"
+  },
+  "1shOIS": {
+    "defaultMessage": "Price",
+    "description": "column title"
+  },
+  "1w06LC": {
+    "defaultMessage": "{variantsCount} variants",
+    "description": "variants count label"
+  },
+  "1wyZpQ": {
+    "defaultMessage": "These passwords are too similar"
+  },
+  "2/L4zZ": {
+    "defaultMessage": "Select all channels"
+  },
+  "23g7PY": {
+    "defaultMessage": "Invite Staff Member",
+    "description": "dialog header"
+  },
+  "26BKkX": {
+    "defaultMessage": "Partially returned",
+    "description": "order status"
+  },
+  "28GZnc": {
+    "defaultMessage": "Start typing to begin search..."
+  },
+  "2FQsYj": {
+    "defaultMessage": "Clear",
+    "description": "button"
+  },
+  "2J6EFz": {
+    "defaultMessage": "Choose media",
+    "description": "button"
+  },
+  "2NgTCJ": {
+    "defaultMessage": "A product with this SKU already exists"
+  },
+  "2Sx05f": {
+    "defaultMessage": "Previous discount value",
+    "description": "Previous discount label"
+  },
+  "2Xt+sw": {
+    "defaultMessage": "Add postal codes",
+    "description": "dialog header"
+  },
+  "2Zyit2": {
+    "defaultMessage": "{counter,plural,one{Page Type you want to delete is used by some pages. Deleting this page type will also delete those pages. Are you sure you want to delete this page type? After doing so you won’t be able to revert changes.} other{Page Types you want to delete are used by some pages. Deleting these page types will also delete those pages. Are you sure you want to delete {displayQuantity} page types? After doing so you won’t be able to revert changes.}}",
+    "description": "delete page types with its pages"
+  },
+  "2atspc": {
+    "defaultMessage": "Drafts"
+  },
+  "2gsiR1": {
+    "defaultMessage": "No warehouses found"
+  },
+  "2i81/P": {
+    "defaultMessage": "Manage",
+    "description": "section header button"
+  },
+  "2mRLis": {
+    "defaultMessage": "Search Customer"
+  },
+  "2ob30/": {
+    "defaultMessage": "Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
+  },
+  "2oyWT9": {
+    "defaultMessage": "Back to login",
+    "description": "button"
+  },
+  "2p0tZx": {
+    "defaultMessage": "Are you sure you want to delete {email}?",
+    "description": "delete customer, dialog content"
+  },
+  "2pw5dQ": {
+    "defaultMessage": "Fully paid",
+    "description": "payment status"
+  },
+  "2qJc9y": {
+    "defaultMessage": "CANCEL END DATE"
+  },
+  "2r4cTE": {
+    "defaultMessage": "Enable Dark Mode",
+    "description": "button"
+  },
+  "2yU+q9": {
+    "defaultMessage": "All Warehouses",
+    "description": "tab name"
+  },
+  "2yV+s8": {
+    "defaultMessage": "Payment was captured",
+    "description": "order history message"
+  },
+  "3+990c": {
+    "defaultMessage": "View all orders",
+    "description": "button"
+  },
+  "3+KwtP": {
+    "defaultMessage": "Available in {publishedInChannelsCount} out of {availableChannelsCount}",
+    "description": "VariantDetailsChannelsAvailabilityCard subtitle"
+  },
+  "34F7Jk": {
+    "defaultMessage": "and",
+    "description": "filter range separator"
+  },
+  "37U5su": {
+    "defaultMessage": "All variants",
+    "description": "all variants label"
+  },
+  "39yi8w": {
+    "defaultMessage": "Selected currency",
+    "description": "selected currency"
+  },
+  "3AqOxp": {
+    "defaultMessage": "Product category not set",
+    "description": "no category set error"
+  },
+  "3BTtL2": {
+    "defaultMessage": "No countries found"
+  },
+  "3C3Nj5": {
+    "defaultMessage": "Add variant",
+    "description": "button"
+  },
+  "3DGvA/": {
+    "defaultMessage": "Remember this will also unpin all products assigned to this category, making them unavailable in storefront."
+  },
+  "3JAOk9": {
+    "defaultMessage": "Are you sure you want to leave?",
+    "description": "ExitFormPrompt title"
+  },
+  "3Sz1/t": {
+    "defaultMessage": "Delete Pages",
+    "description": "dialog header"
+  },
+  "3TlhJS": {
+    "defaultMessage": "Search Command",
+    "description": "navigator command mode description"
+  },
+  "3VyHbJ": {
+    "defaultMessage": "Create variant",
+    "description": "button"
+  },
+  "3Z8972": {
+    "defaultMessage": "Stock quantity",
+    "description": "product"
+  },
+  "3d1RXL": {
+    "defaultMessage": "This customer has no addresses yet"
+  },
+  "3dVKNR": {
+    "defaultMessage": "You are about to delete multiple product types. Some of them are assigned to products. Deleting those product types will also delete those products",
+    "description": "ProductTypeDeleteWarningDialog with items multiple description"
+  },
+  "3evXPj": {
+    "defaultMessage": "Leave your note here..."
+  },
+  "3fgyFh": {
+    "defaultMessage": "Payment was refunded",
+    "description": "order history message"
+  },
+  "3iznRW": {
+    "defaultMessage": "Are you sure you want to delete {countryName} from this shipping zone?",
+    "description": "unassign country"
+  },
+  "3psvRS": {
+    "defaultMessage": "Admin",
+    "description": "attribute values list: slug column header"
+  },
+  "3rIMq/": {
+    "defaultMessage": "Shipping",
+    "description": "product shipping"
+  },
+  "3sT9Qy": {
+    "defaultMessage": "Search by collection name, etc..."
+  },
+  "3tbL7x": {
+    "defaultMessage": "Forgot password?",
+    "description": "description"
+  },
+  "3ukd9/": {
+    "defaultMessage": "Attributes",
+    "description": "attributes, section header"
+  },
+  "3y4r+z": {
+    "defaultMessage": "Channel Settings",
+    "description": "channel settings"
+  },
+  "41z2Qi": {
+    "defaultMessage": "Removed pages",
+    "description": "notification"
+  },
+  "43Nlay": {
+    "defaultMessage": "Address Information",
+    "description": "warehouse"
+  },
+  "450Fty": {
+    "defaultMessage": "None"
+  },
+  "4B32Ba": {
+    "defaultMessage": "Are you sure you want to delete {title}?",
+    "description": "delete page"
+  },
+  "4Dc2j0": {
+    "defaultMessage": "Returned",
+    "description": "order status"
+  },
+  "4EuJKs": {
+    "defaultMessage": "All products prices are entered with tax included"
+  },
+  "4JW9iJ": {
+    "defaultMessage": "Home",
+    "description": "home section name"
+  },
+  "4JcNaA": {
+    "defaultMessage": "Invite staff member",
+    "description": "button"
+  },
+  "4Kq3O6": {
+    "defaultMessage": "This unit will be used as default shipping weight"
+  },
+  "4W/CKn": {
+    "defaultMessage": "Upload URL",
+    "description": "modal button"
+  },
+  "4Z6BtA": {
+    "defaultMessage": "Payment confirmation was sent to customer",
+    "description": "order history message"
+  },
+  "4gT3eD": {
+    "defaultMessage": "Search in Customers",
+    "description": "navigator section header"
+  },
+  "4gZl/n": {
+    "defaultMessage": "See <emphasis>DEMO STOREFRONT</emphasis>"
+  },
+  "4k9rMQ": {
+    "defaultMessage": "Variant Selection",
+    "description": "variant attribute checkbox"
+  },
+  "4prRLv": {
+    "defaultMessage": "Permission is out of your scope"
+  },
+  "4qe6hO": {
+    "defaultMessage": "Inventory",
+    "description": "product stock, section header"
+  },
+  "4v5gfh": {
+    "defaultMessage": "Account Information",
+    "description": "account information, header"
+  },
+  "54M0Gu": {
+    "defaultMessage": "Provide us with an email - if we find it in our database we will send you a link to reset your password. You should be able to find it in your inbox in the next couple of minutes."
+  },
+  "55LMJv": {
+    "defaultMessage": "Countries",
+    "description": "country list header"
+  },
+  "56vUeQ": {
+    "defaultMessage": "Added product to collection"
+  },
+  "577R2r": {
+    "defaultMessage": "Invalid value"
+  },
+  "57IYpr": {
+    "defaultMessage": "Value is invalid",
+    "description": "error message"
+  },
+  "59XppT": {
+    "defaultMessage": "Approve",
+    "description": "button"
+  },
+  "5A6/2C": {
+    "defaultMessage": "Availability",
+    "description": "section header"
+  },
+  "5BajZK": {
+    "defaultMessage": "View and update your site settings"
+  },
+  "5GSYCR": {
+    "defaultMessage": "Visibility",
+    "description": "page status"
+  },
+  "5HwLx9": {
+    "defaultMessage": "Warehouse limit reached",
+    "description": "alert"
+  },
+  "5LRkEs": {
+    "defaultMessage": "The new dashboard and the GraphQL API are preview-quality software."
+  },
+  "5OtU+V": {
+    "defaultMessage": "Unassign products from collection",
+    "description": "dialog title"
+  },
+  "5QKsu+": {
+    "defaultMessage": "Exporting CSV",
+    "description": "waiting for export to end, header"
+  },
+  "5R4VMl": {
+    "defaultMessage": "Draft was reissued from order",
+    "description": "draft created from replace event title"
+  },
+  "5RmuD+": {
+    "defaultMessage": "Manage and update your warehouse information"
+  },
+  "5SPHkk": {
+    "defaultMessage": "Order #{orderId} was fully paid"
+  },
+  "5TUpjG": {
+    "defaultMessage": "Products",
+    "description": "product attribute entity type"
+  },
+  "5Vwnu+": {
+    "defaultMessage": "You have reached your SKU limit, you will be no longer able to add SKUs to your store. If you would like to up your limit, contact your administration staff about raising your limits."
+  },
+  "5XG1CO": {
+    "defaultMessage": "acre-ft",
+    "description": "acre-ft unit"
+  },
+  "5ZvuVw": {
+    "defaultMessage": "No products matching given query"
+  },
+  "5bJ26s": {
+    "defaultMessage": "Successfully created page type"
+  },
+  "5dLpx0": {
+    "defaultMessage": "References",
+    "description": "references attribute type"
+  },
+  "5dyOs0": {
+    "defaultMessage": "No payments waiting for capture"
+  },
+  "5elC9k": {
+    "defaultMessage": "Taxes",
+    "description": "taxes section name"
+  },
+  "5fCMUI": {
+    "defaultMessage": "Translations",
+    "description": "translations section name"
+  },
+  "5ftg/B": {
+    "defaultMessage": "create permission group",
+    "description": "button"
+  },
+  "5kvaFR": {
+    "defaultMessage": "Export Variant SKU",
+    "description": "product field"
+  },
+  "5pHBSU": {
+    "defaultMessage": "Product type uses Variant Attributes",
+    "description": "switch button"
+  },
+  "5sg7KC": {
+    "defaultMessage": "Password"
+  },
+  "5tMkmJ": {
+    "defaultMessage": "Assign Collection",
+    "description": "dialog header"
+  },
+  "5ukAFZ": {
+    "defaultMessage": "Disabling this checkbox will remove product from search and category pages. It will be available on collection pages."
+  },
+  "5x6yT9": {
+    "defaultMessage": "{fromValue} {fromUnit} - {toValue} {toUnit}",
+    "description": "weight"
+  },
+  "6+sMz4": {
+    "defaultMessage": "Unavailable in all locations",
+    "description": "product variant inventory"
+  },
+  "62T585": {
+    "defaultMessage": "{languageName} - {languageCode}",
+    "description": "button"
+  },
+  "62Ywh2": {
+    "defaultMessage": "{number} Countries",
+    "description": "number of countries"
+  },
+  "67V0c0": {
+    "defaultMessage": "Unassign",
+    "description": "unassign product from collection, button"
+  },
+  "6AMFki": {
+    "defaultMessage": "Name",
+    "description": "product name"
+  },
+  "6D+yYX": {
+    "defaultMessage": "Payment status"
+  },
+  "6L6Fy2": {
+    "defaultMessage": "Disclaimer",
+    "description": "header"
+  },
+  "6PCKMS": {
+    "defaultMessage": "{numberOfSelected} columns selected out of {numberOfTotal}",
+    "description": "pick columns to display"
+  },
+  "6QjMei": {
+    "defaultMessage": "Preorder end time needs to be set in the future"
+  },
+  "6RQKxH": {
+    "defaultMessage": "Invoice no. {invoiceNumber} was updated",
+    "description": "order history message"
+  },
+  "6Sxp1x": {
+    "defaultMessage": "If selected, this will add all of the countries not selected to other shipping zones"
+  },
+  "6WRFp2": {
+    "defaultMessage": "Note was added to the order",
+    "description": "order history message"
+  },
+  "6Y1nQd": {
+    "defaultMessage": "Visible",
+    "description": "product is visible"
+  },
+  "6cS4Rd": {
+    "defaultMessage": "Available permissions",
+    "description": "card section description"
+  },
+  "6fORLY": {
+    "defaultMessage": "No page types found"
+  },
+  "6fxdUO": {
+    "defaultMessage": "Create New Shipping Zone",
+    "description": "section header"
+  },
+  "6iw4VR": {
+    "defaultMessage": "Delete Product Variants",
+    "description": "delete variant dialog title"
+  },
+  "6nSTuC": {
+    "defaultMessage": "Webhooks",
+    "description": "webhooks section name"
+  },
+  "6sjBvJ": {
+    "defaultMessage": "Search by name, email, etc...",
+    "description": "input placeholder"
+  },
+  "6xC/Ls": {
+    "defaultMessage": "SEO Information",
+    "description": "informations about product seo, header"
+  },
+  "6y+k8V": {
+    "defaultMessage": "Product Images",
+    "description": "product field"
+  },
+  "74Zo/H": {
+    "defaultMessage": "Slug",
+    "description": "channel slug"
+  },
+  "7Chrsf": {
+    "defaultMessage": "Passwords do not match"
+  },
+  "7FL+WZ": {
+    "defaultMessage": "Export Products",
+    "description": "export products to csv file, button"
+  },
+  "7H2D5m": {
+    "defaultMessage": "Value deleted",
+    "description": "attribute value deleted"
+  },
+  "7Ii5ZQ": {
+    "defaultMessage": "SETUP END DATE"
+  },
+  "7JAAul": {
+    "defaultMessage": "Export Product Weight",
+    "description": "product field"
+  },
+  "7NfoiJ": {
+    "defaultMessage": "Delete Search",
+    "description": "custom search delete, dialog header"
+  },
+  "7Oorx5": {
+    "defaultMessage": "Search in Catalog",
+    "description": "navigator section header"
+  },
+  "7WEC+G": {
+    "defaultMessage": "Price and SKUs",
+    "description": "page title"
+  },
+  "7WzUxn": {
+    "defaultMessage": "Inactive",
+    "description": "staff member status"
+  },
+  "7hNjaI": {
+    "defaultMessage": "Delete Variant",
+    "description": "button"
+  },
+  "7l5Bh9": {
+    "defaultMessage": "{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
+  },
+  "7mK2vs": {
+    "defaultMessage": "Unavailable",
+    "description": "product variant inventory"
+  },
+  "7nKXni": {
+    "defaultMessage": "This product will act as a payment method",
+    "description": "option description"
+  },
+  "7qsOwa": {
+    "defaultMessage": "Include postal codes",
+    "description": "action"
+  },
+  "7scATx": {
+    "defaultMessage": "Select channels you want for {contentType} to be available on",
+    "description": "select title"
+  },
+  "7v2oBd": {
+    "defaultMessage": "Error",
+    "description": "header"
+  },
+  "7v8suW": {
+    "defaultMessage": "This rate will apply to all orders",
+    "description": "info text"
+  },
+  "7wkGxW": {
+    "defaultMessage": "{unitsLeft} units left",
+    "description": "app has been installed"
+  },
+  "7yKZvp": {
+    "defaultMessage": "User Status",
+    "description": "section header"
+  },
+  "80FeaT": {
+    "defaultMessage": "{globalThreshold} Global threshold",
+    "description": "product variant preorder threshold"
+  },
+  "8B8E+3": {
+    "defaultMessage": "Order Number",
+    "description": "navigator placeholder"
+  },
+  "8CbACQ": {
+    "defaultMessage": "Add Shipping Zones",
+    "description": "add shipping zone title"
+  },
+  "8HRy+U": {
+    "defaultMessage": "Category Description"
+  },
+  "8InCjD": {
+    "defaultMessage": "Please provide range of postal codes you want to add to the include/exclude list."
+  },
+  "8RnPGF": {
+    "defaultMessage": "Payment was voided",
+    "description": "order history message"
+  },
+  "8aV98y": {
+    "defaultMessage": "You need to update Saleor to the newest version. Before doing so - save all changes to prevent loss of data. To update use the button below.",
+    "description": "new version notification content"
+  },
+  "8cUEPV": {
+    "defaultMessage": "Create New Attribute",
+    "description": "page title"
+  },
+  "8oIbMI": {
+    "defaultMessage": "Reached limit for this plan"
+  },
+  "8qL/tV": {
+    "defaultMessage": "You will be able to define availability of product after creating variants.",
+    "description": "CannotDefineChannelsAvailabilityCard subtitle"
+  },
+  "8uo4v1": {
+    "defaultMessage": "Checkout limits",
+    "description": "title"
+  },
+  "8vJCJ4": {
+    "defaultMessage": "Define and manage your sales channels"
+  },
+  "8xsKUv": {
+    "defaultMessage": "Service Accounts",
+    "description": "service accounts section name"
+  },
+  "95oJ5d": {
+    "defaultMessage": "Go back to dashboard",
+    "description": "button"
+  },
+  "97l2MO": {
+    "defaultMessage": "Customer Email"
+  },
+  "98isC5": {
+    "defaultMessage": "Show gross prices to customers in the storefront"
+  },
+  "9C7PZE": {
+    "defaultMessage": "Navigation",
+    "description": "navigation section name"
+  },
+  "9CEu8k": {
+    "defaultMessage": "Upload Images",
+    "description": "modal button images upload"
+  },
+  "9EMudJ": {
+    "defaultMessage": "Create single variant",
+    "description": "option"
+  },
+  "9PmyrU": {
+    "defaultMessage": "Not stocked",
+    "description": "product variant inventory"
+  },
+  "9RvXNg": {
+    "defaultMessage": "Media Information",
+    "description": "section header"
+  },
+  "9Sz0By": {
+    "defaultMessage": "Currency",
+    "description": "channel currency"
+  },
+  "9TAzb5": {
+    "defaultMessage": "{productName} discount was added by",
+    "description": "order line discount added title"
+  },
+  "9Tl/bT": {
+    "defaultMessage": "Spreadsheet for Excel, Numbers etc.",
+    "description": "export items as spreadsheet"
+  },
+  "9YazHG": {
+    "defaultMessage": "Company"
+  },
+  "9Zlogd": {
+    "defaultMessage": "Active",
+    "description": "staff member status"
+  },
+  "9eC0MZ": {
+    "defaultMessage": "Hidden",
+    "description": "collection"
+  },
+  "9kzAW9": {
+    "defaultMessage": "Search by attribute name"
+  },
+  "9mGA/Q": {
+    "defaultMessage": "Dashboard",
+    "description": "button linking to dashboard"
+  },
+  "9piUVz": {
+    "defaultMessage": "Order refund information was sent to customer",
+    "description": "order history message"
+  },
+  "9q562c": {
+    "defaultMessage": "Apps",
+    "description": "apps section name"
+  },
+  "9scTQ0": {
+    "defaultMessage": "Product Attributes",
+    "description": "section header"
+  },
+  "9uNz+T": {
+    "defaultMessage": "Cancel",
+    "description": "button"
+  },
+  "9vQR6c": {
+    "defaultMessage": "Visible",
+    "description": "collection label"
+  },
+  "9xlPgt": {
+    "defaultMessage": "{count}/{max} members",
+    "description": "used staff users counter"
+  },
+  "A0Wlg7": {
+    "defaultMessage": "{productName} discount was removed by",
+    "description": "product discount removed title"
+  },
+  "A9QSur": {
+    "defaultMessage": "Area",
+    "description": "area units type"
+  },
+  "ABgQcF": {
+    "defaultMessage": "Stock",
+    "description": "variant stock, header"
+  },
+  "ADTNND": {
+    "defaultMessage": "Physical",
+    "description": "product type"
+  },
+  "AHK0K9": {
+    "defaultMessage": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}",
+    "description": "dialog content"
+  },
+  "AHRDWt": {
+    "defaultMessage": "Create page",
+    "description": "button"
+  },
+  "ANRRpG": {
+    "defaultMessage": "Shipping Zones",
+    "description": "card title"
+  },
+  "AOI4LW": {
+    "defaultMessage": "Search in Catalog",
+    "description": "navigator placeholder"
+  },
+  "AQ+9Ez": {
+    "defaultMessage": "We’ve encountered an unexpected error"
+  },
+  "AQFMYU": {
+    "defaultMessage": "Staff Members",
+    "description": "staff section name"
+  },
+  "AQSmqG": {
+    "defaultMessage": "Order discount was updated automatically updated",
+    "description": "order discount was updated automatically event title"
+  },
+  "AY7Tuz": {
+    "defaultMessage": "The same object cannot be in both lists"
+  },
+  "AdmPca": {
+    "defaultMessage": "Max value cannot be less than min value",
+    "description": "error message"
+  },
+  "AgY5Mv": {
+    "defaultMessage": "Storefront Properties",
+    "description": "attribute properties regarding storefront"
+  },
+  "AkyGP2": {
+    "defaultMessage": "Channel deleted"
+  },
+  "AubJ/S": {
+    "defaultMessage": "Sign in",
+    "description": "button"
+  },
+  "AulH/n": {
+    "defaultMessage": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
+  },
+  "AuwpCm": {
+    "defaultMessage": "Country area"
+  },
+  "Av74Fa": {
+    "defaultMessage": "You can set basic checkout rules that will be applied globally to all your channels",
+    "description": "section description"
+  },
+  "AzMSmb": {
+    "defaultMessage": "If enabled this attribute can be used as a column in product table.",
+    "description": "caption"
+  },
+  "AzshS2": {
+    "defaultMessage": "Published pages",
+    "description": "notification"
+  },
+  "B0PaVS": {
+    "defaultMessage": "pint",
+    "description": "pint unit"
+  },
+  "B2LE7A": {
+    "defaultMessage": "working...",
+    "description": "menu item loading"
+  },
+  "B52Em/": {
+    "defaultMessage": "Address line 1"
+  },
+  "B9yrkK": {
+    "defaultMessage": "No Channels found"
+  },
+  "BBfN0m": {
+    "defaultMessage": "Configurable",
+    "description": "product is configurable"
+  },
+  "BCPrmK": {
+    "defaultMessage": "Shipping details was sent to customer",
+    "description": "order history message"
+  },
+  "BHQrgz": {
+    "defaultMessage": "Subcategories",
+    "description": "number of subcategories"
+  },
+  "BIqhVQ": {
+    "defaultMessage": "Skip stock for now"
+  },
+  "BM+zfY": {
+    "defaultMessage": "Use the button below to add new metadata field",
+    "description": "empty metadata text"
+  },
+  "BM1JiJ": {
+    "defaultMessage": "This order cannot be cancelled",
+    "description": "error message"
+  },
+  "BNTZLv": {
+    "defaultMessage": "Order #{orderId} was placed from draft"
+  },
+  "BQ2NVl": {
+    "defaultMessage": "Content Type Name",
+    "description": "page type name"
+  },
+  "BUKMzM": {
+    "defaultMessage": "Variant removed"
+  },
+  "BXMSl4": {
+    "defaultMessage": "There is no available channel to move order information to. Please create a channel with same currency so that information can be moved to it.",
+    "description": "currency channel"
+  },
+  "BXkF8Z": {
+    "defaultMessage": "Activity",
+    "description": "header"
+  },
+  "BfJGij": {
+    "defaultMessage": "Address Information",
+    "description": "header"
+  },
+  "BftZHy": {
+    "defaultMessage": "Create Page Type",
+    "description": "window title"
+  },
+  "BooQvo": {
+    "defaultMessage": "Type {key} to see available actions",
+    "description": "navigator placeholder"
+  },
+  "Bx367s": {
+    "defaultMessage": "Hidden",
+    "description": "product is hidden"
+  },
+  "By5ZBp": {
+    "defaultMessage": "Hello there, {userName}",
+    "description": "header"
+  },
+  "C0JLNW": {
+    "defaultMessage": "Provided email address does not exist in our database."
+  },
+  "C1luwg": {
+    "defaultMessage": "Delete Page",
+    "description": "dialog header"
+  },
+  "C4aDMy": {
+    "defaultMessage": "Set up time amount that stock in checkout is reserved for the customer. You can set separate values for authenticated and anonymous customers.",
+    "description": "description"
+  },
+  "C4hCsD": {
+    "defaultMessage": "App is out of your permissions scope"
+  },
+  "C7I2lg": {
+    "defaultMessage": "Limit quantity per checkout (optional)",
+    "description": "input label"
+  },
+  "C7eDb9": {
+    "defaultMessage": "Permission groups"
+  },
+  "C9pcQx": {
+    "defaultMessage": "{counter,plural,one{Are you sure you want to delete this shipping zone?} other{Are you sure you want to delete {displayQuantity} shipping zones?}}",
+    "description": "dialog content"
+  },
+  "CEavJt": {
+    "defaultMessage": "Unlimited",
+    "description": "section header"
+  },
+  "CJEIRC": {
+    "defaultMessage": "Product export has finished and was sent to your email address."
+  },
+  "CLeDae": {
+    "defaultMessage": "Preferences",
+    "description": "section header"
+  },
+  "CT5PAn": {
+    "defaultMessage": "Availability",
+    "description": "CannotDefineChannelsAvailabilityCard title"
+  },
+  "CWqmRU": {
+    "defaultMessage": "Address Book",
+    "description": "customer's address book when no customer name is available, header"
+  },
+  "CXTIq8": {
+    "defaultMessage": "Search engine description"
+  },
+  "CXn88q": {
+    "defaultMessage": "No permission groups found"
+  },
+  "CcEwXH": {
+    "defaultMessage": "Delete Page Types",
+    "description": "dialog header"
+  },
+  "CdIHMu": {
+    "defaultMessage": "Tax Rate",
+    "description": "select tax ratte"
+  },
+  "ChAjJu": {
+    "defaultMessage": "{numberOfCharacters} of {maxCharacters} characters",
+    "description": "character limit"
+  },
+  "ChGI4V": {
+    "defaultMessage": "Saleor is unavailable, please check your network connection and try again.",
+    "description": "error message"
+  },
+  "CjSRT1": {
+    "defaultMessage": "Create Category",
+    "description": "button"
+  },
+  "ClFzoD": {
+    "defaultMessage": "Selected values will be used to create variants for the configurable product."
+  },
+  "CqestX": {
+    "defaultMessage": "There is no private metadata created for this element.",
+    "description": "empty metadata text"
+  },
+  "CrbI/c": {
+    "defaultMessage": "{channel} Price",
+    "description": "variant channel price"
+  },
+  "D2qihU": {
+    "defaultMessage": "Permission is invalid"
+  },
+  "D3WUc/": {
+    "defaultMessage": "Order was refunded by {refundedBy}",
+    "description": "order history message"
+  },
+  "D8nsBc": {
+    "defaultMessage": "There are no warehouses set up for your store. To add stock quantity to the variant please <a>configure a warehouse</a>",
+    "description": "no warehouses info"
+  },
+  "D9Rg+F": {
+    "defaultMessage": "Channel details",
+    "description": "window title"
+  },
+  "D9ie4n": {
+    "defaultMessage": "Shipping Methods",
+    "description": "shipping section name"
+  },
+  "DASYUF": {
+    "defaultMessage": "Checkout Configuration",
+    "description": "section title"
+  },
+  "DEa1T1": {
+    "defaultMessage": "Save Search",
+    "description": "button"
+  },
+  "DHBlFi": {
+    "defaultMessage": "Search Customers",
+    "description": "navigator customer mode description"
+  },
+  "DILs4b": {
+    "defaultMessage": "Unsupported media provider or incorrect URL"
+  },
+  "DIrxt7": {
+    "defaultMessage": "Visible since {date}",
+    "description": "channel publication date"
+  },
+  "DJFPzq": {
+    "defaultMessage": "Confirm",
+    "description": "button"
+  },
+  "DK+8PB": {
+    "defaultMessage": "This channel has already been created"
+  },
+  "DM/Ha1": {
+    "defaultMessage": "Add",
+    "description": "add postal code range, button"
+  },
+  "DNTxWr": {
+    "defaultMessage": "Permission Groups",
+    "description": "permission groups section name"
+  },
+  "DO8+uV": {
+    "defaultMessage": "Product created"
+  },
+  "DOkfyZ": {
+    "defaultMessage": "Insufficient permissions"
+  },
+  "DP6b8U": {
+    "defaultMessage": "Background Image (optional)",
+    "description": "section header"
+  },
+  "DPz5y6": {
+    "defaultMessage": "Assign Staff Members",
+    "description": "dialog header"
+  },
+  "DTL7sE": {
+    "defaultMessage": "Are you sure you want to delete {warehouseName}?",
+    "description": "dialog content"
+  },
+  "DWs4ba": {
+    "defaultMessage": "No menus found"
+  },
+  "Dhherd": {
+    "defaultMessage": "Invoice Generation",
+    "description": "dialog header, title"
+  },
+  "DnghuS": {
+    "defaultMessage": "New Channel",
+    "description": "channel create"
+  },
+  "DovGIa": {
+    "defaultMessage": "Permission Group Deleted"
+  },
+  "DzPVnj": {
+    "defaultMessage": "Date Time",
+    "description": "date time attribute type"
+  },
+  "E+18ig": {
+    "defaultMessage": "Delete photo",
+    "description": "button"
+  },
+  "E54eoT": {
+    "defaultMessage": "Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy"
+  },
+  "E8T3e+": {
+    "defaultMessage": "Cannot add and remove group the same time"
+  },
+  "E8VDeH": {
+    "defaultMessage": "No. of Orders"
+  },
+  "E9Jssl": {
+    "defaultMessage": "No orders ready to fulfill"
+  },
+  "EEW+ND": {
+    "defaultMessage": "Navigator"
+  },
+  "EGG8f+": {
+    "defaultMessage": "Apply unique prices by attribute to each SKU"
+  },
+  "EIULpW": {
+    "defaultMessage": "Manage how your store charges tax"
+  },
+  "EKoPNg": {
+    "defaultMessage": "Price",
+    "description": "shipping method price"
+  },
+  "EM+30g": {
+    "defaultMessage": "Our new feature to help you with your daily tasks. Run Navigator using {keyboardShortcut} shortcut.",
+    "description": "navigator notification"
+  },
+  "EM730i": {
+    "defaultMessage": "Manage Channel Availability"
+  },
+  "ENBELI": {
+    "defaultMessage": "or login using",
+    "description": "description"
+  },
+  "ER/yBq": {
+    "defaultMessage": "Max. value",
+    "description": "max price in channel"
+  },
+  "ETHnjq": {
+    "defaultMessage": "Private Metadata",
+    "description": "header"
+  },
+  "EWCUdP": {
+    "defaultMessage": "Channels A to Z"
+  },
+  "Eau5AV": {
+    "defaultMessage": "Manage Products Channel Availability"
+  },
+  "Ediw6/": {
+    "defaultMessage": "Assign references",
+    "description": "button label"
+  },
+  "ErNH3D": {
+    "defaultMessage": "Define where this attribute should be used in Saleor system"
+  },
+  "EsZH44": {
+    "defaultMessage": "Hidden",
+    "description": "VariantDetailsChannelsAvailabilityCard item subtitle hidden"
+  },
+  "Ev6SEF": {
+    "defaultMessage": "New Password"
+  },
+  "EzU7KV": {
+    "defaultMessage": "Create new variant using variant details view",
+    "description": "option description"
+  },
+  "F3Upht": {
+    "defaultMessage": "Product type deleted"
+  },
+  "F4WdSO": {
+    "defaultMessage": "Delete Products",
+    "description": "dialog header"
+  },
+  "F8gsds": {
+    "defaultMessage": "Unpublish",
+    "description": "unpublish page, button"
+  },
+  "FBtqtl": {
+    "defaultMessage": "Unpaid",
+    "description": "payment status"
+  },
+  "FNAZoh": {
+    "defaultMessage": "Last login"
+  },
+  "FNKhkx": {
+    "defaultMessage": "Charge taxes on shipping rates"
+  },
+  "FNpv6K": {
+    "defaultMessage": "Filters",
+    "description": "button"
+  },
+  "FSinkL": {
+    "defaultMessage": "Available inventory at:",
+    "description": "variant stock status"
+  },
+  "Fbr4Vp": {
+    "defaultMessage": "Permissions",
+    "description": "dialog header"
+  },
+  "Fc3O3r": {
+    "defaultMessage": "Deactivated",
+    "description": "staff member's account"
+  },
+  "FcTTvh": {
+    "defaultMessage": "Postal codes",
+    "description": "postal codes, header"
+  },
+  "FcVEpe": {
+    "defaultMessage": "Unpublished",
+    "description": "collection publication date"
+  },
+  "FjrExY": {
+    "defaultMessage": "Price Based Rates",
+    "description": "price based shipping methods, section header"
+  },
+  "FkDObY": {
+    "defaultMessage": "Shipping rate name",
+    "description": "label"
+  },
+  "FkRNk+": {
+    "defaultMessage": "Description of a shipping zone.",
+    "description": "field placeholder"
+  },
+  "Fl3ORD": {
+    "defaultMessage": "Oversold {quantity} items",
+    "description": "order history message"
+  },
+  "FpIcp9": {
+    "defaultMessage": "No customers found"
+  },
+  "FuAV5G": {
+    "defaultMessage": "This name is already taken. Please provide another."
+  },
+  "Fvvgoi": {
+    "defaultMessage": "Your session has expired. Please log in again to continue."
+  },
+  "FwHWUm": {
+    "defaultMessage": "SKU limit reached",
+    "description": "alert"
+  },
+  "Fxa6xp": {
+    "defaultMessage": "Add Collection",
+    "description": "page header"
+  },
+  "Fz3kic": {
+    "defaultMessage": "Billing address is not set or invoice is not ready to be send",
+    "description": "error message"
+  },
+  "G/SYtU": {
+    "defaultMessage": "Are you sure you want to delete menu {menuName}?"
+  },
+  "G/pgG3": {
+    "defaultMessage": "Select a channel",
+    "description": "dialog header"
+  },
+  "G0+gAp": {
+    "defaultMessage": "Shipping",
+    "description": "shipping section header"
+  },
+  "G1KzEx": {
+    "defaultMessage": "Published",
+    "description": "page status"
+  },
+  "G4g5Ii": {
+    "defaultMessage": "All Collections",
+    "description": "tab name"
+  },
+  "G7mu0y": {
+    "defaultMessage": "The GraphQL API is beta quality. It is not fully optimized and some mutations or queries may be missing."
+  },
+  "GAmGog": {
+    "defaultMessage": "Discount value",
+    "description": "value input label"
+  },
+  "GCPzKf": {
+    "defaultMessage": "View products",
+    "description": "ProductTypeDeleteWarningDialog single assigned items button label"
+  },
+  "GD/bom": {
+    "defaultMessage": "Min Delivery Time",
+    "description": "label"
+  },
+  "GFJabu": {
+    "defaultMessage": "Delete Variant",
+    "description": "dialog header"
+  },
+  "GJAX0z": {
+    "defaultMessage": "Order was placed",
+    "description": "order history message"
+  },
+  "GLy2UR": {
+    "defaultMessage": "Fulfillment was cancelled",
+    "description": "order history message"
+  },
+  "GOdq5V": {
+    "defaultMessage": "Catalog"
+  },
+  "GQcp83": {
+    "defaultMessage": "Stock and Warehousing",
+    "description": "variant stock, header"
+  },
+  "GUlwXU": {
+    "defaultMessage": "Assign Attribute Value",
+    "description": "dialog header"
+  },
+  "GVM/fi": {
+    "defaultMessage": "Payment was authorized",
+    "description": "order history message"
+  },
+  "GXdwyR": {
+    "defaultMessage": "Previous Password",
+    "description": "input label"
+  },
+  "GZgjK7": {
+    "defaultMessage": "will be visible from {date}",
+    "description": "page"
+  },
+  "Gfbp36": {
+    "defaultMessage": "Unassign Products From Shipping",
+    "description": "dialog header"
+  },
+  "Gg4+K7": {
+    "defaultMessage": "No Products"
+  },
+  "GhXwO/": {
+    "defaultMessage": "delete Staff User",
+    "description": "dialog header"
+  },
+  "GhcypC": {
+    "defaultMessage": "Create Warehouse",
+    "description": "header"
+  },
+  "GiDxS4": {
+    "defaultMessage": "Add Field",
+    "description": "add metadata field,button"
+  },
+  "Gjo89T": {
+    "defaultMessage": "Warehouses",
+    "description": "header"
+  },
+  "Gr1SAu": {
+    "defaultMessage": "Customer Name"
+  },
+  "Gxm7Qx": {
+    "defaultMessage": "Navigator is here to help",
+    "description": "navigator notification title"
+  },
+  "Gz+4CI": {
+    "defaultMessage": "Preordered products will be available in all warehouses. You can set a threshold for sold quantity. Leaving input blank will be interpreted as no limit to sale. Sold items will be allocated at the warehouse assigned to chosen shipping zone.",
+    "description": "info text"
+  },
+  "GzbSQk": {
+    "defaultMessage": "Scheduled to publish",
+    "description": "Status label when object is scheduled to publish in a channel"
+  },
+  "H/o4Ex": {
+    "defaultMessage": "You are not able to modify this group members. Solve this problem to continue with request.",
+    "description": "dialog content"
+  },
+  "H27/Gy": {
+    "defaultMessage": "Maximum weight cannot be lower than minimum",
+    "description": "error message"
+  },
+  "H3Uirw": {
+    "defaultMessage": "Add Item",
+    "description": "create new menu item, header"
+  },
+  "H5NKfr": {
+    "defaultMessage": "Create",
+    "description": "button"
+  },
+  "H5yp8O": {
+    "defaultMessage": "Product Type Name",
+    "description": "label"
+  },
+  "H60H6L": {
+    "defaultMessage": "Default Store View",
+    "description": "attribute values list: name column header"
+  },
+  "H6NsC1": {
+    "defaultMessage": "Pages",
+    "description": "pages section name"
+  },
+  "HEOBp6": {
+    "defaultMessage": "Cost Price",
+    "description": "tabel column header"
+  },
+  "HMD+ib": {
+    "defaultMessage": "Last order"
+  },
+  "HP6m+q": {
+    "defaultMessage": "Attributes and Product Types"
+  },
+  "HPEyPj": {
+    "defaultMessage": "Quick Pick"
+  },
+  "HQR2y0": {
+    "defaultMessage": "Value Required",
+    "description": "attribute value is required"
+  },
+  "HR9OTW": {
+    "defaultMessage": "Active",
+    "description": "staff member's account"
+  },
+  "HSmg1/": {
+    "defaultMessage": "Gift Cards",
+    "description": "gift cards section name"
+  },
+  "HXsmnA": {
+    "defaultMessage": "Store description is shown on taskbar after your store name"
+  },
+  "HYHLsB": {
+    "defaultMessage": "Export Variant ID",
+    "description": "product field"
+  },
+  "HcQEUk": {
+    "defaultMessage": "Sold units",
+    "description": "table column header, sold units preorder quantity"
+  },
+  "HcjV6k": {
+    "defaultMessage": "Create variants",
+    "description": "button"
+  },
+  "HivFnX": {
+    "defaultMessage": "Are you sure you want to delete <b>{typeName}</b>? If you remove it you won’t be able to assign it to created products.",
+    "description": "ProductTypeDeleteWarningDialog single no assigned items description"
+  },
+  "Hj3T7P": {
+    "defaultMessage": "Channel name",
+    "description": "column title"
+  },
+  "HjUoHK": {
+    "defaultMessage": "Default Label",
+    "description": "attribute's label'"
+  },
+  "HjXnIf": {
+    "defaultMessage": "Content Management"
+  },
+  "HnVtSS": {
+    "defaultMessage": "No results",
+    "description": "search"
+  },
+  "HtQGEH": {
+    "defaultMessage": "Successfully fetched tax rates"
+  },
+  "HvJPcU": {
+    "defaultMessage": "Category deleted"
+  },
+  "I+UwqI": {
+    "defaultMessage": "equal to",
+    "description": "is filter range or value"
+  },
+  "I1Mz7h": {
+    "defaultMessage": "Manage Collection Channel Availability"
+  },
+  "I2wCwj": {
+    "defaultMessage": "Image",
+    "description": "swatch attribute image label"
+  },
+  "I4nAXS": {
+    "defaultMessage": "Inactive",
+    "description": "status label inactive"
+  },
+  "I8dAAe": {
+    "defaultMessage": "Slug",
+    "description": "page internal name"
+  },
+  "I8mqqj": {
+    "defaultMessage": "View pages",
+    "description": "PageTypeDeleteWarningDialog single assigned items button label"
+  },
+  "IBw72y": {
+    "defaultMessage": "Is this product shippable?",
+    "description": "switch button"
+  },
+  "IFWHn0": {
+    "defaultMessage": "Billing address is not set",
+    "description": "error message"
+  },
+  "IGvQ8k": {
+    "defaultMessage": "Create attribute",
+    "description": "button"
+  },
+  "IN5iJz": {
+    "defaultMessage": "Invalid value",
+    "description": "value input helper text"
+  },
+  "INNPVX": {
+    "defaultMessage": "Partially paid",
+    "description": "payment status"
+  },
+  "Iafyt5": {
+    "defaultMessage": "Pages",
+    "description": "page attribute entity type"
+  },
+  "IbVKSH": {
+    "defaultMessage": "Manage",
+    "description": "button"
+  },
+  "Ic7Wln": {
+    "defaultMessage": "Select shipping zones that will be supplied via this channel. You can assign shipping zones to multiple channels.",
+    "description": "card subtitle"
+  },
+  "IeoGgH": {
+    "defaultMessage": "Variant created",
+    "description": "variant created success message"
+  },
+  "IhK1F3": {
+    "defaultMessage": "No shipping zones found"
+  },
+  "Ihp4D3": {
+    "defaultMessage": "Edit Media",
+    "description": "header"
+  },
+  "Im+6VU": {
+    "defaultMessage": "Search by country name"
+  },
+  "IoDlcd": {
+    "defaultMessage": "Slug"
+  },
+  "Irflxf": {
+    "defaultMessage": "Create category",
+    "description": "window title"
+  },
+  "IyHQr0": {
+    "defaultMessage": "Go to order #{orderNumber}",
+    "description": "navigator action"
+  },
+  "J/QqOI": {
+    "defaultMessage": "This value already exists within this attribute"
+  },
+  "J0UdxG": {
+    "defaultMessage": "Skip pricing for now"
+  },
+  "J3uE0t": {
+    "defaultMessage": "Attribute Values",
+    "description": "section header"
+  },
+  "J7mFhU": {
+    "defaultMessage": "{code} - {countries}",
+    "description": "currency code select"
+  },
+  "JDz5h8": {
+    "defaultMessage": "Subcategories",
+    "description": "number of subcategories in category"
+  },
+  "JFmOfi": {
+    "defaultMessage": "Create Product",
+    "description": "button"
+  },
+  "JFtFgc": {
+    "defaultMessage": "Selling Price",
+    "description": "tabel column header"
+  },
+  "JGm7E5": {
+    "defaultMessage": "Export stock for all warehouses",
+    "description": "option"
+  },
+  "JI2Xwp": {
+    "defaultMessage": "Delete attribute",
+    "description": "dialog title"
+  },
+  "JJgJwi": {
+    "defaultMessage": "Selecting this will change the language of your dashboard"
+  },
+  "JMbFNo": {
+    "defaultMessage": "Successfully created new page"
+  },
+  "JPH/uP": {
+    "defaultMessage": "Define types of content pages used in your store"
+  },
+  "JTcz2G": {
+    "defaultMessage": "Exporting CSV finished",
+    "description": "csv file exporting has finished, header"
+  },
+  "JUQwne": {
+    "defaultMessage": "Gift Card",
+    "description": "order"
+  },
+  "JXRYQg": {
+    "defaultMessage": "Create Menu",
+    "description": "button"
+  },
+  "JYvf8/": {
+    "defaultMessage": "Preorder",
+    "description": "is preorder"
+  },
+  "Ja7gHc": {
+    "defaultMessage": "Edit",
+    "description": "button"
+  },
+  "JfKvrV": {
+    "defaultMessage": "Select a specific variant media from product media",
+    "description": "select variant media"
+  },
+  "JgXBAw": {
+    "defaultMessage": "No channels",
+    "description": "dropdown label when there are no channels assigned"
+  },
+  "JiVwOU": {
+    "defaultMessage": "There was a problem with the file you uploaded as an image and it couldn't be used. Please try a different file."
+  },
+  "JiXNEV": {
+    "defaultMessage": "Search Category"
+  },
+  "JjeZEG": {
+    "defaultMessage": "Organize Product",
+    "description": "section header"
+  },
+  "Jsh6+U": {
+    "defaultMessage": "Type",
+    "description": "product type is digital or physical"
+  },
+  "Jt3DwJ": {
+    "defaultMessage": "Publish on",
+    "description": "publish on date"
+  },
+  "JtZ71e": {
+    "defaultMessage": "All Warehouses",
+    "description": "filtering option"
+  },
+  "JyQEHU": {
+    "defaultMessage": "Channels",
+    "description": "tabel column header"
+  },
+  "JyQoES": {
+    "defaultMessage": "Are you sure you want to delete \"{name}\" value?",
+    "description": "delete attribute value"
+  },
+  "Jz/Cb+": {
+    "defaultMessage": "Simple",
+    "description": "product type"
+  },
+  "K+vjtE": {
+    "defaultMessage": "Search Variants"
+  },
+  "K/gnGg": {
+    "defaultMessage": "If you want to disable this User please uncheck the box below."
+  },
+  "K8xNLe": {
+    "defaultMessage": "Products",
+    "description": "products section name"
+  },
+  "KCjd1o": {
+    "defaultMessage": "Delete products",
+    "description": "dialog title"
+  },
+  "KFv8hX": {
+    "defaultMessage": "An attribute already exists."
+  },
+  "KGsaGO": {
+    "defaultMessage": "This feature is in a preview state and can be subject to changes at later point",
+    "description": "tooltip"
+  },
+  "KKQUMK": {
+    "defaultMessage": "Edit Item",
+    "description": "edit menu item, header"
+  },
+  "KN7zKn": {
+    "defaultMessage": "Error"
+  },
+  "KRqgfo": {
+    "defaultMessage": "User is out of your permissions scope"
+  },
+  "KSp+8B": {
+    "defaultMessage": "will become available on {date}",
+    "description": "product available for purchase date"
+  },
+  "KTAg0f": {
+    "defaultMessage": "Warehouse Name",
+    "description": "tabel column header"
+  },
+  "KXkdMH": {
+    "defaultMessage": "Order discount was removed by",
+    "description": "order discount removed title"
+  },
+  "Kb86Y2": {
+    "defaultMessage": "Financial Information",
+    "description": "information's about product prices etc, header"
+  },
+  "KeO51o": {
+    "defaultMessage": "Channel"
+  },
+  "Kgxlsf": {
+    "defaultMessage": "Paid with Gift Card",
+    "description": "order"
+  },
+  "Krzyo+": {
+    "defaultMessage": "Shipment was refunded",
+    "description": "shipment refund title"
+  },
+  "KupNHw": {
+    "defaultMessage": "Category",
+    "description": "product field"
+  },
+  "Kw0jHS": {
+    "defaultMessage": "{count}/{max} SKUs used",
+    "description": "created products counter"
+  },
+  "L5io1l": {
+    "defaultMessage": "Products returned",
+    "description": "returned products list title"
+  },
+  "L5rthO": {
+    "defaultMessage": "Apply unique stock by attribute to each SKU"
+  },
+  "L6+p8a": {
+    "defaultMessage": "Delete permission group",
+    "description": "dialog title"
+  },
+  "L7N+0y": {
+    "defaultMessage": "Product Rating",
+    "description": "product rating"
+  },
+  "LICZeR": {
+    "defaultMessage": "from {value} {unit}",
+    "description": "weight"
+  },
+  "LKoIB1": {
+    "defaultMessage": "Add search engine title and description to make this product easier to find"
+  },
+  "LR3HlT": {
+    "defaultMessage": "This password is too short"
+  },
+  "LkuDEb": {
+    "defaultMessage": "Value",
+    "description": "metadata field value, header"
+  },
+  "LmKz3g": {
+    "defaultMessage": "Storefront"
+  },
+  "LnRlch": {
+    "defaultMessage": "Entity",
+    "description": "attribute's editor component entity"
+  },
+  "LsgHmZ": {
+    "defaultMessage": "Are you sure you want to delete {name}?",
+    "description": "delete shipping zone"
+  },
+  "Lx1ima": {
+    "defaultMessage": "Upload image",
+    "description": "button"
+  },
+  "M1uijW": {
+    "defaultMessage": "Not Published",
+    "description": "collection"
+  },
+  "M4q0Ye": {
+    "defaultMessage": "Sorry, login went wrong. Please try again.",
+    "description": "error message"
+  },
+  "MEajfd": {
+    "defaultMessage": "There is no metadata created for this element.",
+    "description": "empty metadata text"
+  },
+  "MHVglr": {
+    "defaultMessage": "Deactivate",
+    "description": "deactivate"
+  },
+  "MKtgZB": {
+    "defaultMessage": "Only staff users can access the dashboard"
+  },
+  "MNZY28": {
+    "defaultMessage": "Channel threshold",
+    "description": "table column header"
+  },
+  "MQwT1W": {
+    "defaultMessage": "Activate",
+    "description": "activate"
+  },
+  "MTl5o6": {
+    "defaultMessage": "New discount value",
+    "description": "new discount label"
+  },
+  "MVU6ol": {
+    "defaultMessage": "This groups permissions exceeds your own. You are able only to manage permissions that you have.",
+    "description": "exceeded permissions description"
+  },
+  "MWSacl": {
+    "defaultMessage": "Multichannel"
+  },
+  "McN+wq": {
+    "defaultMessage": "Customers",
+    "description": "customers section name"
+  },
+  "Mee46w": {
+    "defaultMessage": "Becomes published on {date}",
+    "description": "collection publication date"
+  },
+  "Mi4JOd": {
+    "defaultMessage": "Error",
+    "description": "button"
+  },
+  "MjUyhA": {
+    "defaultMessage": "Active member since {date}",
+    "description": "section subheader"
+  },
+  "MpR4zK": {
+    "defaultMessage": "{fullName} Details",
+    "description": "customer details, header"
+  },
+  "MxhVZv": {
+    "defaultMessage": "Are you sure you want to delete collection's image?"
+  },
+  "MyM2oR": {
+    "defaultMessage": "Create variant",
+    "description": "window title"
+  },
+  "Mz0cx+": {
+    "defaultMessage": "Deleting channel will delete all product data regarding this channel. Are you sure you want to delete this channel?",
+    "description": "delete channel"
+  },
+  "N2SbNc": {
+    "defaultMessage": "{counter,plural,one{Are you sure you want to delete this customer?} other{Are you sure you want to delete {displayQuantity} customers?}}"
+  },
+  "N3Zot1": {
+    "defaultMessage": "Change your password",
+    "description": "button"
+  },
+  "N43t3/": {
+    "defaultMessage": "Number not set for an invoice",
+    "description": "error message"
+  },
+  "N76zUg": {
+    "defaultMessage": "Create Customer",
+    "description": "page header"
+  },
+  "N7XGzW": {
+    "defaultMessage": "This name is already taken. Please provide another.",
+    "description": "error message"
+  },
+  "NBP8uu": {
+    "defaultMessage": "New Product",
+    "description": "page header"
+  },
+  "NDm2Fe": {
+    "defaultMessage": "Weight Rate Create",
+    "description": "page title"
+  },
+  "NGc9kE": {
+    "defaultMessage": "Page type deleted"
+  },
+  "NNT3Lp": {
+    "defaultMessage": "Collections",
+    "description": "collections section name"
+  },
+  "NUevU9": {
+    "defaultMessage": "Swatch",
+    "description": "attribute values list: slug column header"
+  },
+  "NXpFlL": {
+    "defaultMessage": "Choose Values",
+    "description": "product attribute values, page title"
+  },
+  "NcY4ph": {
+    "defaultMessage": "Threshold that cannot be exceeded even if per channel thresholds are still available"
+  },
+  "NgCb99": {
+    "defaultMessage": "{productName} discount was updated by",
+    "description": "order line discount updated title"
+  },
+  "NivJal": {
+    "defaultMessage": "All Subcategories",
+    "description": "section header"
+  },
+  "NlSJMM": {
+    "defaultMessage": "Channels",
+    "description": "channels section name"
+  },
+  "NqxvFh": {
+    "defaultMessage": "Type Command",
+    "description": "navigator placeholder"
+  },
+  "NsgWhZ": {
+    "defaultMessage": "Search by value name, etc...",
+    "description": "placeholder"
+  },
+  "NtFVFS": {
+    "defaultMessage": "{value} {unit}",
+    "description": "weight"
+  },
+  "Nuq83+": {
+    "defaultMessage": "Create new channel"
+  },
+  "NxeDbG": {
+    "defaultMessage": "Drop here to upload",
+    "description": "image upload"
+  },
+  "Nz24W4": {
+    "defaultMessage": "Name of your store is shown on tab in web browser"
+  },
+  "O1sXAN": {
+    "defaultMessage": "Search by category name, etc..."
+  },
+  "O22NIZ": {
+    "defaultMessage": "Cant's delete group which is out of your permission scope",
+    "description": "deletion error message"
+  },
+  "O95R3Z": {
+    "defaultMessage": "Phone"
+  },
+  "OA+fw+": {
+    "defaultMessage": "or",
+    "description": "conjunction, choice between going to dashboard or refreshing page"
+  },
+  "OGemtu": {
+    "defaultMessage": "Partially refunded",
+    "description": "payment status"
+  },
+  "OGm8wO": {
+    "defaultMessage": "Create Channel",
+    "description": "button"
+  },
+  "OKGd/k": {
+    "defaultMessage": "Order was created from draft",
+    "description": "order history message"
+  },
+  "OTek3r": {
+    "defaultMessage": "Variant",
+    "description": "product variant name"
+  },
+  "OVOU1z": {
+    "defaultMessage": "Metadata",
+    "description": "section header"
+  },
+  "OaA0f9": {
+    "defaultMessage": "You have reached your staff member limit, you will be no longer able to add staff members to your store. If you would like to up your limit, contact your administration staff about raising your limits."
+  },
+  "OaKyz4": {
+    "defaultMessage": "Stock reservation for authenticated user (in minutes)",
+    "description": "input label"
+  },
+  "Oe62bR": {
+    "defaultMessage": "Availability",
+    "description": "product availability"
+  },
+  "OeKIoY": {
+    "defaultMessage": "Mzawadie runs in read-only mode. Changes not saved."
+  },
+  "OgFBAj": {
+    "defaultMessage": "Price",
+    "description": "input label"
+  },
+  "OhFGpX": {
+    "defaultMessage": "Assign members",
+    "description": "button"
+  },
+  "Ol1vso": {
+    "defaultMessage": "leave without saving",
+    "description": "ExitFormPrompt cancel button"
+  },
+  "OrMr/k": {
+    "defaultMessage": "Create Channel",
+    "description": "window title"
+  },
+  "Orgqv4": {
+    "defaultMessage": "Unit",
+    "description": "numeric attribute unit"
+  },
+  "OwG/0z": {
+    "defaultMessage": "Deleted menu"
+  },
+  "Oyu9jL": {
+    "defaultMessage": "Assign attributes",
+    "description": "button"
+  },
+  "OzHN0Z": {
+    "defaultMessage": "Links to the order's digital goods were sent",
+    "description": "order history message"
+  },
+  "P+kVxW": {
+    "defaultMessage": "User is assigned to:",
+    "description": "card description"
+  },
+  "P/EDn1": {
+    "defaultMessage": "Order was fully paid",
+    "description": "order history message"
+  },
+  "P/oGtb": {
+    "defaultMessage": "Available for purchase",
+    "description": "product availability"
+  },
+  "P79U4b": {
+    "defaultMessage": "Attribute Code",
+    "description": "attribute's slug short code label"
+  },
+  "P7PLVj": {
+    "defaultMessage": "Date"
+  },
+  "PCoO4D": {
+    "defaultMessage": "Page not found.",
+    "description": "error message"
+  },
+  "PFXGaR": {
+    "defaultMessage": "Shipping Zones"
+  },
+  "PLCwT/": {
+    "defaultMessage": "Show more",
+    "description": "search results"
+  },
+  "PNE6Jk": {
+    "defaultMessage": "Delete from Shipping Zone",
+    "description": "unassign country, dialog header"
+  },
+  "PRlD0A": {
+    "defaultMessage": "Shipping"
+  },
+  "PTW56s": {
+    "defaultMessage": "Channel limit reached",
+    "description": "alert"
+  },
+  "PV0SQd": {
+    "defaultMessage": "Warehouse",
+    "description": "WarehousesSection select field label"
+  },
+  "PXatmC": {
+    "defaultMessage": "Customer Removed"
+  },
+  "PXx4Jk": {
+    "defaultMessage": "Create Product",
+    "description": "window title"
+  },
+  "PbqNhi": {
+    "defaultMessage": "Partially fulfilled",
+    "description": "order status"
+  },
+  "PcPMjC": {
+    "defaultMessage": "Fulfillment awaits approval",
+    "description": "order history message"
+  },
+  "PctLol": {
+    "defaultMessage": "No Channels Found",
+    "description": "no channels found title"
+  },
+  "PiSXjb": {
+    "defaultMessage": "Select unit",
+    "description": "check to require numeric attribute unit"
+  },
+  "Pp/7T7": {
+    "defaultMessage": "{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
+  },
+  "PqMbma": {
+    "defaultMessage": "Add Value",
+    "description": "add attribute value"
+  },
+  "PsRG+v": {
+    "defaultMessage": "Filterable in Storefront",
+    "description": "use attribute in filtering"
+  },
+  "PuLTny": {
+    "defaultMessage": "App Status",
+    "description": "section header"
+  },
+  "Pyjarj": {
+    "defaultMessage": "This shipping rate has no postal codes assigned"
+  },
+  "PzXIXh": {
+    "defaultMessage": "Customer",
+    "description": "order"
+  },
+  "Q/Nbku": {
+    "defaultMessage": "Type",
+    "description": "product field"
+  },
+  "Q1Uzbb": {
+    "defaultMessage": "No products found"
+  },
+  "Q2UXlW": {
+    "defaultMessage": "Upload URL",
+    "description": "modal button url upload"
+  },
+  "Q3j++G": {
+    "defaultMessage": "Create",
+    "description": "create multiple variants, button"
+  },
+  "Q6wcZ5": {
+    "defaultMessage": "First Name"
+  },
+  "Q7uuDr": {
+    "defaultMessage": "This is used internally. Make sure you don’t use spaces",
+    "description": "attribute slug input field helper text"
+  },
+  "Q8Qw5B": {
+    "defaultMessage": "Description"
+  },
+  "Q8wHwJ": {
+    "defaultMessage": "Deleted collection"
+  },
+  "Q9wTrz": {
+    "defaultMessage": "If enabled, you’ll be able to use this attribute to filter products in product list.",
+    "description": "caption"
+  },
+  "QBxN6z": {
+    "defaultMessage": "between",
+    "description": "is filter range or value"
+  },
+  "QCwBUI": {
+    "defaultMessage": "Delete Search",
+    "description": "button"
+  },
+  "QFBjlV": {
+    "defaultMessage": "Stock for this warehouse already exists for this product variant",
+    "description": "error message"
+  },
+  "QFCUEt": {
+    "defaultMessage": "Slug must be unique"
+  },
+  "QHB48n": {
+    "defaultMessage": "Tax Rates in {countryName}",
+    "description": "header"
+  },
+  "QLVddq": {
+    "defaultMessage": "Create customer",
+    "description": "button"
+  },
+  "QM9P8G": {
+    "defaultMessage": "Assign Attribute",
+    "description": "dialog header"
+  },
+  "QSnh4Y": {
+    "defaultMessage": "Add",
+    "description": "add button label"
+  },
+  "QVNg8A": {
+    "defaultMessage": "Charge Taxes",
+    "description": "product field"
+  },
+  "QY7FSs": {
+    "defaultMessage": "create product type",
+    "description": "button"
+  },
+  "QZoU0r": {
+    "defaultMessage": "Delete Channel",
+    "description": "dialog header"
+  },
+  "QcIFCs": {
+    "defaultMessage": "Search Name",
+    "description": "save search tab"
+  },
+  "QclvqG": {
+    "defaultMessage": "Checkout line limit",
+    "description": "input label"
+  },
+  "QiN4hv": {
+    "defaultMessage": "Active",
+    "description": "active"
+  },
+  "QirE3M": {
+    "defaultMessage": "Start Date"
+  },
+  "QooeI/": {
+    "defaultMessage": "Create Customer",
+    "description": "button"
+  },
+  "QzseV7": {
+    "defaultMessage": "Delete Menu",
+    "description": "dialog header"
+  },
+  "R8qYhj": {
+    "defaultMessage": "These are general information about your store. They define what is the URL of your store and what is shown in browsers taskbar.",
+    "description": "section description"
+  },
+  "REVk27": {
+    "defaultMessage": "Set up an end date of preorder. When end date will be reached product will be automatically taken from preorder to standard selling",
+    "description": "info text"
+  },
+  "RH+aOF": {
+    "defaultMessage": "Use in Filtering",
+    "description": "use attribute in filtering"
+  },
+  "RJ5QxE": {
+    "defaultMessage": "Global threshold"
+  },
+  "RLBLPQ": {
+    "defaultMessage": "There are no warehouses set up for your store. To add stock quantity to the product please <a>configure a warehouse</a>",
+    "description": "no warehouses info"
+  },
+  "RLTaAR": {
+    "defaultMessage": "Order address was updated",
+    "description": "order history message"
+  },
+  "RQUkVW": {
+    "defaultMessage": "Manage your employees and their permissions"
+  },
+  "RUzdUH": {
+    "defaultMessage": "No shipping rates found"
+  },
+  "RXPGi/": {
+    "defaultMessage": "Price Rate Create",
+    "description": "page title"
+  },
+  "RZ32u5": {
+    "defaultMessage": "Yes, I want to delete this page type and assigned pages",
+    "description": "PageTypeDeleteWarningDialog single consent label"
+  },
+  "RZmdM3": {
+    "defaultMessage": "{counter,plural,one{Are you sure you want to delete this page type? After doing so you won’t be able to revert changes.} other{Are you sure you want to delete {displayQuantity} page types? After doing so you won’t be able to revert changes.}}",
+    "description": "delete page types"
+  },
+  "RaycYK": {
+    "defaultMessage": "Save",
+    "description": "button"
+  },
+  "Rj8LxK": {
+    "defaultMessage": "Add search engine title and description to make this collection easier to find"
+  },
+  "Rjs1CD": {
+    "defaultMessage": "Continue",
+    "description": "button"
+  },
+  "RlfqSV": {
+    "defaultMessage": "No orders found"
+  },
+  "RoKOQJ": {
+    "defaultMessage": "Search Attribute Value",
+    "description": "label"
+  },
+  "Rp/Okl": {
+    "defaultMessage": "Shipping Weight Unit"
+  },
+  "Rpfa+t": {
+    "defaultMessage": "Unassign Attribute from Page Type",
+    "description": "dialog header"
+  },
+  "RrCui3": {
+    "defaultMessage": "Summary"
+  },
+  "S/TQBw": {
+    "defaultMessage": "You have unsaved changes on this view. What would you like to do with them?",
+    "description": "ExitFormPrompt description"
+  },
+  "S22jIs": {
+    "defaultMessage": "Set new password",
+    "description": "button"
+  },
+  "S5PVx1": {
+    "defaultMessage": "Created Variants",
+    "description": "variant creator summary card header"
+  },
+  "S7j+Wf": {
+    "defaultMessage": "Unassign",
+    "description": "unassign attribute from product type, button"
+  },
+  "SHm7ee": {
+    "defaultMessage": "Search by product name, attribute, product type etc..."
+  },
+  "SKFr04": {
+    "defaultMessage": "Attribute not found."
+  },
+  "SMakqb": {
+    "defaultMessage": "Contact Information",
+    "description": "customer contact section, header"
+  },
+  "SNiyXb": {
+    "defaultMessage": "Numeric",
+    "description": "numeric attribute type"
+  },
+  "SSWFo8": {
+    "defaultMessage": "Create Product Type",
+    "description": "window title"
+  },
+  "STp3Hl": {
+    "defaultMessage": "Apply single stock to all SKUs"
+  },
+  "SUbxSK": {
+    "defaultMessage": "Weight",
+    "description": "product weight"
+  },
+  "SZH0fw": {
+    "defaultMessage": "Set as default",
+    "description": "set variant as default, button"
+  },
+  "SZJhvK": {
+    "defaultMessage": "Select Channel",
+    "description": "dialog header"
+  },
+  "SZt9kC": {
+    "defaultMessage": "Current search ({number})",
+    "description": "export filtered items to csv file"
+  },
+  "Sd0Ppm": {
+    "defaultMessage": "Published on {date}",
+    "description": "product publication date"
+  },
+  "Sna+WK": {
+    "defaultMessage": "Out Of Stock",
+    "description": "product status"
+  },
+  "Sx7QVu": {
+    "defaultMessage": "Prices and SKU",
+    "description": "variant creation step"
+  },
+  "T0Mfxq": {
+    "defaultMessage": "{channelCount} {channelCount,plural, =1 {Channel} other {Channels}}",
+    "description": "product status title"
+  },
+  "T4GOiX": {
+    "defaultMessage": "End Date"
+  },
+  "T6dXGG": {
+    "defaultMessage": "Create Variant",
+    "description": "header"
+  },
+  "TCR639": {
+    "defaultMessage": "Payment failed",
+    "description": "order history message"
+  },
+  "TDXskW": {
+    "defaultMessage": "Select Attribute",
+    "description": "variant attribute"
+  },
+  "TDhHMi": {
+    "defaultMessage": "This needs to be unique"
+  },
+  "TE4fIS": {
+    "defaultMessage": "City"
+  },
+  "TGX4T1": {
+    "defaultMessage": "Search Engine Preview"
+  },
+  "TKmub+": {
+    "defaultMessage": "This field is required"
+  },
+  "TLYeo5": {
+    "defaultMessage": "Shipping Rate Description",
+    "description": "label"
+  },
+  "TOMgXz": {
+    "defaultMessage": "Reset",
+    "description": "button"
+  },
+  "TPCRKr": {
+    "defaultMessage": "Price",
+    "description": "variant price, header"
+  },
+  "TSJRiZ": {
+    "defaultMessage": "Channel Status",
+    "description": "channel status title"
+  },
+  "TWVx7O": {
+    "defaultMessage": "Delete Product",
+    "description": "delete product dialog title"
+  },
+  "Ta9j04": {
+    "defaultMessage": "Orders",
+    "description": "orders section name"
+  },
+  "TalJlD": {
+    "defaultMessage": "Tax",
+    "description": "tax rate for a product type"
+  },
+  "TfY/Pi": {
+    "defaultMessage": "Charge taxes on this product",
+    "description": "checkbox"
+  },
+  "TjGYna": {
+    "defaultMessage": "Track Inventory",
+    "description": "product inventory, checkbox"
+  },
+  "TnTi/a": {
+    "defaultMessage": "Pricing",
+    "description": "pricing card title"
+  },
+  "TnyLrZ": {
+    "defaultMessage": "You are about to delete multiple page types. Some of them are assigned to pages. Deleting those page types will also delete those pages",
+    "description": "PageTypeDeleteWarningDialog with items multiple description"
+  },
+  "TpPx7V": {
+    "defaultMessage": "Search Customer",
+    "description": "navigator placeholder"
+  },
+  "U1eJIw": {
+    "defaultMessage": "Products were added to an order",
+    "description": "order history message"
+  },
+  "U2WgwW": {
+    "defaultMessage": "Add new value: {value}",
+    "description": "add custom select input option"
+  },
+  "U3BQKA": {
+    "defaultMessage": "Set publication date"
+  },
+  "U5aVd8": {
+    "defaultMessage": "Shippable",
+    "description": "product"
+  },
+  "U7jtzn": {
+    "defaultMessage": "Store domain"
+  },
+  "U8eeLW": {
+    "defaultMessage": "Assign products",
+    "description": "button"
+  },
+  "U9CIo7": {
+    "defaultMessage": "Save variant",
+    "description": "button"
+  },
+  "UJnqdm": {
+    "defaultMessage": "Unassign Attribute From Product Type",
+    "description": "dialog header"
+  },
+  "UN+yTt": {
+    "defaultMessage": "Staff Settings"
+  },
+  "UN3qWD": {
+    "defaultMessage": "Not Published",
+    "description": "page status"
+  },
+  "UNwG+4": {
+    "defaultMessage": "{counter,plural,one{Are you sure you want to delete this page?} other{Are you sure you want to delete {displayQuantity} pages?}}",
+    "description": "dialog content"
+  },
+  "UQ4Kuh": {
+    "defaultMessage": "Search Staff Members",
+    "description": "input label"
+  },
+  "USS3Q7": {
+    "defaultMessage": "Unknown error occurred",
+    "description": "filters error messages unknown error"
+  },
+  "UaYJJ8": {
+    "defaultMessage": "Are you sure you want to delete {name} search tab?"
+  },
+  "Ubath+": {
+    "defaultMessage": "No reduced tax categories found"
+  },
+  "Uf3oHA": {
+    "defaultMessage": "Create new item",
+    "description": "add new menu item"
+  },
+  "UhcALJ": {
+    "defaultMessage": "Name",
+    "description": "attribute name"
+  },
+  "UjsI4o": {
+    "defaultMessage": "since {date}",
+    "description": "date"
+  },
+  "Uo5MoU": {
+    "defaultMessage": "Variant Images",
+    "description": "product field"
+  },
+  "Urh2N3": {
+    "defaultMessage": "Link",
+    "description": "label"
+  },
+  "UxdBmI": {
+    "defaultMessage": "Availability",
+    "description": "collection availability"
+  },
+  "UycVMp": {
+    "defaultMessage": "Create subcategory",
+    "description": "button"
+  },
+  "UymotP": {
+    "defaultMessage": "Channel name",
+    "description": "channel name"
+  },
+  "V+fkAO": {
+    "defaultMessage": "Products",
+    "description": "number of products in category"
+  },
+  "V/VAHG": {
+    "defaultMessage": "Attribute deleted"
+  },
+  "V1Tj/B": {
+    "defaultMessage": "Are you sure you want to unassign {attributeName} from {itemTypeName}?"
+  },
+  "V1mqpZ": {
+    "defaultMessage": "Create Permission Group",
+    "description": "button"
+  },
+  "V2+HTM": {
+    "defaultMessage": "Title",
+    "description": "dialog header"
+  },
+  "V2BBQu": {
+    "defaultMessage": "Currency in both channels must be the same"
+  },
+  "V76IV7": {
+    "defaultMessage": "Variant",
+    "description": "variant name"
+  },
+  "V8FhTt": {
+    "defaultMessage": "Hidden",
+    "description": "collection label"
+  },
+  "VDwkEZ": {
+    "defaultMessage": "Products were refunded by",
+    "description": "refunded event title"
+  },
+  "VEE4gD": {
+    "defaultMessage": "Shipping method is not valid for chosen shipping address",
+    "description": "error message"
+  },
+  "VEext+": {
+    "defaultMessage": "Are you sure you want to delete this image?"
+  },
+  "VHuzgq": {
+    "defaultMessage": "Actions",
+    "description": "table actions"
+  },
+  "VIABHy": {
+    "defaultMessage": "Default shipping zone already exists",
+    "description": "error message"
+  },
+  "VKWPBf": {
+    "defaultMessage": "Delete Staff User Avatar",
+    "description": "dialog header"
+  },
+  "VOiUXQ": {
+    "defaultMessage": "Used to calculate rates for shipping for products of this product type, when specific weight is not given"
+  },
+  "VQLIXd": {
+    "defaultMessage": "Name",
+    "description": "product"
+  },
+  "VTITVe": {
+    "defaultMessage": "Staff Member Information",
+    "description": "section header"
+  },
+  "VZsE96": {
+    "defaultMessage": "Collection Name"
+  },
+  "VcI+Zh": {
+    "defaultMessage": "Metadata",
+    "description": "header"
+  },
+  "VdDcxc": {
+    "defaultMessage": "Create Collection",
+    "description": "button"
+  },
+  "Vdy5g7": {
+    "defaultMessage": "Weight",
+    "description": "weight units type"
+  },
+  "VmMDLN": {
+    "defaultMessage": "This group is last source of that permission",
+    "description": "permission list item description"
+  },
+  "VvA7ai": {
+    "defaultMessage": "Channels that don’t have assigned prices will use their parent channel to define the price. Price will be converted to channel’s currency",
+    "description": "info text"
+  },
+  "VvFJ/T": {
+    "defaultMessage": "Are you sure you want to delete <b>{typeName}</b>? If you remove it you won’t be able to assign it to created pages.",
+    "description": "PageTypeDeleteWarningDialog single no assigned items description"
+  },
+  "VyzsWZ": {
+    "defaultMessage": "Default Billing Address"
+  },
+  "W0kQd+": {
+    "defaultMessage": "Add Address",
+    "description": "dialog title"
+  },
+  "W32xfN": {
+    "defaultMessage": "Name",
+    "description": "staff member full name"
+  },
+  "W3JbSQ": {
+    "defaultMessage": "How would you like to create variants:",
+    "description": "create product variants"
+  },
+  "W5SK5c": {
+    "defaultMessage": "Select content type"
+  },
+  "W8i2Ez": {
+    "defaultMessage": "Name",
+    "description": "product field"
+  },
+  "WDTCZi": {
+    "defaultMessage": "Choose countries you want to add to shipping zone from list below"
+  },
+  "WFG7Zk": {
+    "defaultMessage": "Unassign",
+    "description": "unassign attribute from page type, button"
+  },
+  "WHkx+F": {
+    "defaultMessage": "Price cannot be lower than 0"
+  },
+  "WQMTKI": {
+    "defaultMessage": "Warehouses A to Z",
+    "description": "list of warehouses"
+  },
+  "WQnltU": {
+    "defaultMessage": "No products available in order channel matching given query"
+  },
+  "WR8rir": {
+    "defaultMessage": "Create rate",
+    "description": "button"
+  },
+  "WRPQMM": {
+    "defaultMessage": "{counter,plural,one{Are you sure you want to publish this page?} other{Are you sure you want to publish {displayQuantity} pages?}}",
+    "description": "dialog content"
+  },
+  "WTAwlQ": {
+    "defaultMessage": "There are no value limits",
+    "description": "checkbox label"
+  },
+  "WTj17Z": {
+    "defaultMessage": "Discount Item",
+    "description": "dialog title item discount"
+  },
+  "WUf3Iu": {
+    "defaultMessage": "Percentage",
+    "description": "percentage option"
+  },
+  "WW+Ruy": {
+    "defaultMessage": "Deleted product from collection"
+  },
+  "WWV8aZ": {
+    "defaultMessage": "Delete attribute value",
+    "description": "dialog title"
+  },
+  "Wd8vG7": {
+    "defaultMessage": "{counter,plural,one{Are you sure you want to unpublish this page?} other{Are you sure you want to unpublish {displayQuantity} pages?}}",
+    "description": "dialog content"
+  },
+  "WhKGPA": {
+    "defaultMessage": "Set up new password",
+    "description": "page title"
+  },
+  "WhvuCb": {
+    "defaultMessage": "Plugins",
+    "description": "plugins section name"
+  },
+  "Wlc67M": {
+    "defaultMessage": "Cannot choose a shipping method for an order without the shipping address",
+    "description": "error message"
+  },
+  "WwNtFn": {
+    "defaultMessage": "Are you sure you want to delete {name}?",
+    "description": "delete product variant"
+  },
+  "WwZfNK": {
+    "defaultMessage": "Add new menu item to begin creating menu"
+  },
+  "WzA5Ll": {
+    "defaultMessage": "Cannot remove user from last group"
+  },
+  "X/K4LI": {
+    "defaultMessage": "Normal",
+    "description": "label"
+  },
+  "X26jCC": {
+    "defaultMessage": "Visible",
+    "description": "page label"
+  },
+  "X7fqfM": {
+    "defaultMessage": "Reserved stock",
+    "description": "title"
+  },
+  "X8+Lpa": {
+    "defaultMessage": "Account Settings",
+    "description": "button"
+  },
+  "X8qjg3": {
+    "defaultMessage": "Inactive",
+    "description": "inactive"
+  },
+  "X90t9n": {
+    "defaultMessage": "Configurable",
+    "description": "product type"
+  },
+  "XBfvKN": {
+    "defaultMessage": "Order History"
+  },
+  "XBwpUv": {
+    "defaultMessage": "Export Variant Weight",
+    "description": "product field"
+  },
+  "XCIV8H": {
+    "defaultMessage": "Refresh",
+    "description": "button"
+  },
+  "XDeh5D": {
+    "defaultMessage": "Create Variants",
+    "description": "dialog header"
+  },
+  "XGBsoK": {
+    "defaultMessage": "Are you sure you want to unassign {counter,plural,one{this member} other{{displayQuantity} members}}?",
+    "description": "dialog content"
+  },
+  "XJSRDK": {
+    "defaultMessage": "Fully refunded",
+    "description": "payment status"
+  },
+  "XMrYaA": {
+    "defaultMessage": "User is active",
+    "description": "checkbox label"
+  },
+  "XMvH/d": {
+    "defaultMessage": "ACCEPT",
+    "description": "button label"
+  },
+  "XUU9sU": {
+    "defaultMessage": "All Media",
+    "description": "section header"
+  },
+  "XWGZLL": {
+    "defaultMessage": "Transaction reference",
+    "description": "transaction reference subtitle"
+  },
+  "XYhE8p": {
+    "defaultMessage": "Edit Value",
+    "description": "edit attribute value"
+  },
+  "Xb6BJ9": {
+    "defaultMessage": "Manual payments can not be refunded",
+    "description": "error message"
+  },
+  "Xel9C+": {
+    "defaultMessage": "Search Views and Actions",
+    "description": "navigator default mode description"
+  },
+  "XkX56I": {
+    "defaultMessage": "Choose a value",
+    "description": "filters error messages value required"
+  },
+  "Xm9qOu": {
+    "defaultMessage": "Pricing",
+    "description": "product pricing, section header"
+  },
+  "Xr5zxu": {
+    "defaultMessage": "You choices will add {variantsNumber} SKUs to your catalog which will exceed your limit by {aboveLimitVariantsNumber}. If you would like to up your limit, contact your administration staff about raising your limits."
+  },
+  "XwrKOi": {
+    "defaultMessage": "{counter,plural,one{Are you sure you want to unassign this attribute from {itemTypeName}?} other{Are you sure you want to unassign {attributeQuantity} attributes from {itemTypeName}?}}",
+    "description": "unassign multiple attributes from item"
+  },
+  "Y1B0PN": {
+    "defaultMessage": "There's no payment associated with the order",
+    "description": "error message"
+  },
+  "Y4cy0i": {
+    "defaultMessage": "Ending preorder",
+    "description": "dialog header"
+  },
+  "Y7UlMR": {
+    "defaultMessage": "Apps",
+    "description": "app extensions subsection"
+  },
+  "Y7Vy19": {
+    "defaultMessage": "Set available on",
+    "description": "available on date"
+  },
+  "Y9lv8z": {
+    "defaultMessage": "Unavailable for purchase",
+    "description": "product unavailability"
+  },
+  "YEv+6G": {
+    "defaultMessage": "Leaving this setting empty will mean that stock won’t be reserved",
+    "description": "input helper text"
+  },
+  "YFDAaX": {
+    "defaultMessage": "Discount this Order by:",
+    "description": "dialog title order discount"
+  },
+  "YFQBs1": {
+    "defaultMessage": "Set availability date",
+    "description": "product availability date label"
+  },
+  "YJ4TXc": {
+    "defaultMessage": "All Staff Members",
+    "description": "tab name"
+  },
+  "YKyNm9": {
+    "defaultMessage": "Gift Card",
+    "description": "label"
+  },
+  "YMBn8d": {
+    "defaultMessage": "Draft Orders",
+    "description": "draft orders section name"
+  },
+  "YQ3EXR": {
+    "defaultMessage": "Product Types",
+    "description": "product types section name"
+  },
+  "YVIajc": {
+    "defaultMessage": "Description",
+    "description": "product field"
+  },
+  "YYkkhx": {
+    "defaultMessage": "Navigate to",
+    "description": "navigator section header"
+  },
+  "YZl6cv": {
+    "defaultMessage": "Miscellaneous"
+  },
+  "YdeHZX": {
+    "defaultMessage": "Unassign",
+    "description": "unassign products from shipping method, button"
+  },
+  "YgE6ga": {
+    "defaultMessage": "Imperial",
+    "description": "imperial unit system"
+  },
+  "YicEbK": {
+    "defaultMessage": "Search Atrtibuttes"
+  },
+  "YjwDaY": {
+    "defaultMessage": "Expand or restrict group's permissions to access certain part of mzawadie system.",
+    "description": "card description"
+  },
+  "YkOzse": {
+    "defaultMessage": "{count}/{max} warehouses used",
+    "description": "used warehouses counter"
+  },
+  "Ykw8k5": {
+    "defaultMessage": "Delete collections",
+    "description": "dialog title"
+  },
+  "Yo2kC+": {
+    "defaultMessage": "Couldn't process image"
+  },
+  "YpLVVc": {
+    "defaultMessage": "Exclude postal codes",
+    "description": "action"
+  },
+  "YpukUN": {
+    "defaultMessage": "Shipping zone name",
+    "description": "label"
+  },
+  "Yw+9F7": {
+    "defaultMessage": "No collections found"
+  },
+  "Yy/yDL": {
+    "defaultMessage": "Reset password"
+  },
+  "Z6QAbw": {
+    "defaultMessage": "This variant does not have any digital content"
+  },
+  "ZDJEat": {
+    "defaultMessage": "Load More",
+    "description": "button"
+  },
+  "ZFfG4L": {
+    "defaultMessage": "You are about to delete product type <b>{typeName}</b>. It is assigned to {assignedItemsCount} {assignedItemsCount,plural,one{product} other{products}}. Deleting this product type will also delete those products. Are you sure you want to do this?",
+    "description": "ProductTypeDeleteWarningDialog single assigned items description"
+  },
+  "ZHF4Z9": {
+    "defaultMessage": "Are you sure you want to delete {name}?",
+    "description": "delete product dialog subtitle"
+  },
+  "ZIc5lM": {
+    "defaultMessage": "Product Name"
+  },
+  "ZMy18J": {
+    "defaultMessage": "You have reached your channel limit, you will be no longer able to add channels to your store. If you would like to up your limit, contact your administration staff about raising your limits."
+  },
+  "ZRz3hM": {
+    "defaultMessage": "Export Product Stock Quantity to CSV"
+  },
+  "ZayvsI": {
+    "defaultMessage": "Metric",
+    "description": "metric unit system"
+  },
+  "Zd3Eew": {
+    "defaultMessage": "Shipping Address",
+    "description": "subsection header"
+  },
+  "ZhDQel": {
+    "defaultMessage": "Password",
+    "description": "header"
+  },
+  "ZhaXLU": {
+    "defaultMessage": "Copy",
+    "description": "button"
+  },
+  "Zhxu58": {
+    "defaultMessage": "Fixed amount",
+    "description": "Fixed amount subtitle"
+  },
+  "Zptsep": {
+    "defaultMessage": "Order was discounted by",
+    "description": "order was discounted event title"
+  },
+  "a+x05s": {
+    "defaultMessage": "Select",
+    "description": "select option, button"
+  },
+  "a1uffz": {
+    "defaultMessage": "Products replaced",
+    "description": "draft created from replace products list title"
+  },
+  "a4qX2+": {
+    "defaultMessage": "Created",
+    "description": "order"
+  },
+  "a5msuh": {
+    "defaultMessage": "Yes"
+  },
+  "a9S9Je": {
+    "defaultMessage": "Page Types",
+    "description": "page types section name"
+  },
+  "aCJwVq": {
+    "defaultMessage": "Name",
+    "description": "warehouse"
+  },
+  "aCX8rl": {
+    "defaultMessage": "Here is some information we gathered about your store",
+    "description": "subheader"
+  },
+  "aDbrOK": {
+    "defaultMessage": "Search Staff Member"
+  },
+  "aFLtLk": {
+    "defaultMessage": "All Products",
+    "description": "tab name"
+  },
+  "aI80kg": {
+    "defaultMessage": "Properties"
+  },
+  "aMwxYb": {
+    "defaultMessage": "Countries"
+  },
+  "aPCrsp": {
+    "defaultMessage": "Name",
+    "description": "shipping method name"
+  },
+  "aPqizA": {
+    "defaultMessage": "Are you sure you want to delete selected product types? If you remove them you won’t be able to assign them to created products.",
+    "description": "ProductTypeDeleteWarningDialog multiple assigned items description"
+  },
+  "aYhcie": {
+    "defaultMessage": "Weight Range",
+    "description": "shipping method weight range"
+  },
+  "abTH5q": {
+    "defaultMessage": "Email address is not set",
+    "description": "error message"
+  },
+  "aggaJg": {
+    "defaultMessage": "This attribute has already been assigned to this product type"
+  },
+  "aheQdn": {
+    "defaultMessage": "Last Name"
+  },
+  "akXDST": {
+    "defaultMessage": "Visibility",
+    "description": "section header"
+  },
+  "anK7jD": {
+    "defaultMessage": "Product Type"
+  },
+  "aq5ZiN": {
+    "defaultMessage": "Fulfillment confirmation was sent to customer",
+    "description": "order history message"
+  },
+  "asdvmK": {
+    "defaultMessage": "Digital",
+    "description": "product type"
+  },
+  "avj76v": {
+    "defaultMessage": "Assign channels to this shipping zone so we know which orders will be supported",
+    "description": "ChannelsSection subtitle"
+  },
+  "axFFaD": {
+    "defaultMessage": "Postal codes (end)",
+    "description": "range input label"
+  },
+  "b1zuN9": {
+    "defaultMessage": "Price"
+  },
+  "b810WJ": {
+    "defaultMessage": "Price",
+    "description": "product price"
+  },
+  "bFhzRX": {
+    "defaultMessage": "No products are out of stock"
+  },
+  "bHdFph": {
+    "defaultMessage": "Address",
+    "description": "subsection header"
+  },
+  "bZenNC": {
+    "defaultMessage": "Description (optional)"
+  },
+  "bZksto": {
+    "defaultMessage": "Dropdown",
+    "description": "product attribute type"
+  },
+  "beuxAP": {
+    "defaultMessage": "Hidden",
+    "description": "channel publication status"
+  },
+  "biAxKR": {
+    "defaultMessage": "Click&Collect",
+    "description": "click and collect"
+  },
+  "biVFKU": {
+    "defaultMessage": "Billing Address",
+    "description": "subsection header"
+  },
+  "bj1U23": {
+    "defaultMessage": "Are you sure you want to delete {menuName}?"
+  },
+  "bj6pTd": {
+    "defaultMessage": "Something's missing"
+  },
+  "bk9KUX": {
+    "defaultMessage": "Yes, I want to delete this product type and assigned products",
+    "description": "ProductTypeDeleteWarningDialog single consent label"
+  },
+  "bp/i0x": {
+    "defaultMessage": "Quantity",
+    "description": "header"
+  },
+  "bq1eEx": {
+    "defaultMessage": "Create Product Type",
+    "description": "header"
+  },
+  "bu/fC1": {
+    "defaultMessage": "Remove",
+    "description": "button"
+  },
+  "byP6IC": {
+    "defaultMessage": "Selected"
+  },
+  "c0H45L": {
+    "defaultMessage": "{amount, plural,one {One order is ready to fulfill} other {{amount} orders are ready to fulfill}}"
+  },
+  "c4fjY/": {
+    "defaultMessage": "Availability",
+    "description": "availability status"
+  },
+  "c5pMZ8": {
+    "defaultMessage": "API error"
+  },
+  "c8UT0c": {
+    "defaultMessage": "Channel Name",
+    "description": "tabel column header"
+  },
+  "cBHRxx": {
+    "defaultMessage": "Assign Warehouse",
+    "description": "button"
+  },
+  "cFVgOo": {
+    "defaultMessage": "Channel",
+    "description": "Channel label"
+  },
+  "cJ5ASN": {
+    "defaultMessage": "Position in faceted navigation",
+    "description": "attribute position in storefront filters"
+  },
+  "cKjFfl": {
+    "defaultMessage": "Multiple Select",
+    "description": "product attribute type"
+  },
+  "cMFlOp": {
+    "defaultMessage": "New Password",
+    "description": "input label"
+  },
+  "cSbZKV": {
+    "defaultMessage": "{number,plural,one{{number} Field} other{{number} Fields}}",
+    "description": "number of metadata fields in model"
+  },
+  "cW1RIo": {
+    "defaultMessage": "Media View",
+    "description": "section header"
+  },
+  "cY42ht": {
+    "defaultMessage": "Password cannot be entirely numeric"
+  },
+  "caMMWN": {
+    "defaultMessage": "Search Warehouse"
+  },
+  "caqRmN": {
+    "defaultMessage": "Create Page Type",
+    "description": "header"
+  },
+  "cbPfB1": {
+    "defaultMessage": "Use in faceted search",
+    "description": "attribute can be searched in storefront"
+  },
+  "ccXLVi": {
+    "defaultMessage": "Category"
+  },
+  "cd13nN": {
+    "defaultMessage": "All attributes should have value",
+    "description": "product attribute error"
+  },
+  "cdxwA8": {
+    "defaultMessage": "{amount, plural,one {One product out of stock}other {{amount} products out of stock}}"
+  },
+  "cfQf0w": {
+    "defaultMessage": "Create Order",
+    "description": "button"
+  },
+  "cgsY/X": {
+    "defaultMessage": "Create New Category",
+    "description": "page header"
+  },
+  "chvryR": {
+    "defaultMessage": "Invoice was requested by {requestedBy}",
+    "description": "order history message"
+  },
+  "cmrFJ2": {
+    "defaultMessage": "This rate will apply to all orders of all prices",
+    "description": "price rates info"
+  },
+  "cnvyqW": {
+    "defaultMessage": "Add Channel",
+    "description": "ChannelsSection select field placeholder"
+  },
+  "cpZLRH": {
+    "defaultMessage": "Delete Shipping Zones",
+    "description": "dialog header"
+  },
+  "cqZ5UH": {
+    "defaultMessage": "Order confirmation was sent to customer",
+    "description": "order history message"
+  },
+  "cvVIV/": {
+    "defaultMessage": "Assign Countries",
+    "description": "dialog header"
+  },
+  "cvbqJu": {
+    "defaultMessage": "Visible on Product Page in Storefront",
+    "description": "attribute"
+  },
+  "cy8sV7": {
+    "defaultMessage": "Volume",
+    "description": "volume units types"
+  },
+  "d9UqaJ": {
+    "defaultMessage": "Cannot change the quantity because of insufficient stock",
+    "description": "error message"
+  },
+  "dEUZg2": {
+    "defaultMessage": "Menu Items",
+    "description": "header"
+  },
+  "dJQxHt": {
+    "defaultMessage": "Are you sure you want to delete {categoryName}?",
+    "description": "delete category"
+  },
+  "dKPMyh": {
+    "defaultMessage": "All Attributes",
+    "description": "tab name"
+  },
+  "dM86a2": {
+    "defaultMessage": "No categories found"
+  },
+  "dO3Zcx": {
+    "defaultMessage": "Store description"
+  },
+  "dOQB9o": {
+    "defaultMessage": "Cancelled",
+    "description": "payment status"
+  },
+  "dPYqy0": {
+    "defaultMessage": "We are currently exporting your requested CSV. As soon as it is available it will be sent to your email address"
+  },
+  "dS8Adx": {
+    "defaultMessage": "Digital",
+    "description": "product"
+  },
+  "dTCDMn": {
+    "defaultMessage": "Assign Product",
+    "description": "dialog header"
+  },
+  "dTCWqt": {
+    "defaultMessage": "You are about to end your products preorder. You have sold {variantGlobalSoldUnits} units of this variant. Sold units will be allocated at appropriate warehouses. Remember to add remaining threshold stock to warehouses."
+  },
+  "dc5KWn": {
+    "defaultMessage": "products",
+    "description": "products export type label"
+  },
+  "ddWFtA": {
+    "defaultMessage": "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones"
+  },
+  "diOQm7": {
+    "defaultMessage": "Available",
+    "description": "product status"
+  },
+  "dpY94C": {
+    "defaultMessage": "Published on {date}",
+    "description": "collection publication date"
+  },
+  "dxCVWI": {
+    "defaultMessage": "Cannot request an invoice for draft order",
+    "description": "error message"
+  },
+  "e+L+q3": {
+    "defaultMessage": "Remember this will also delete all products assigned to this category."
+  },
+  "e7Nyu7": {
+    "defaultMessage": "Customer History",
+    "description": "section header"
+  },
+  "e822us": {
+    "defaultMessage": "Please note, while all currency and date adjustments are complete, language translations are at varying degrees of completion."
+  },
+  "e92Uxp": {
+    "defaultMessage": "Updated fulfillment group's tracking number",
+    "description": "order history message"
+  },
+  "eAFU/E": {
+    "defaultMessage": "Variant currently in preorder",
+    "description": "product inventory, checkbox"
+  },
+  "eOrLzG": {
+    "defaultMessage": "Done",
+    "description": "button"
+  },
+  "eR3vfw": {
+    "defaultMessage": "Manage Channels Availability"
+  },
+  "eUjFjW": {
+    "defaultMessage": "Permission group created"
+  },
+  "eWV760": {
+    "defaultMessage": "Attribute with this slug already exists"
+  },
+  "eWcvOc": {
+    "defaultMessage": "Choose file",
+    "description": "button"
+  },
+  "ekXood": {
+    "defaultMessage": "Unlimited"
+  },
+  "erC44f": {
+    "defaultMessage": "Filter requires other filters: {dependencies}",
+    "description": "filters error messages dependencies missing"
+  },
+  "esg2wu": {
+    "defaultMessage": "Previous",
+    "description": "previous step, button"
+  },
+  "eu98dw": {
+    "defaultMessage": "Invalid password"
+  },
+  "ey0lZj": {
+    "defaultMessage": "Delete Customer",
+    "description": "dialog header"
+  },
+  "f3B4tc": {
+    "defaultMessage": "Variant Attributes",
+    "description": "attributes, section header"
+  },
+  "fNFEkh": {
+    "defaultMessage": "No of Rows:"
+  },
+  "fU+a9k": {
+    "defaultMessage": "Date",
+    "description": "date attribute type"
+  },
+  "fdbqIs": {
+    "defaultMessage": "Text",
+    "description": "text attribute type"
+  },
+  "fehqPs": {
+    "defaultMessage": "Products were deleted from an order",
+    "description": "order history message"
+  },
+  "fgHLXc": {
+    "defaultMessage": "Value",
+    "description": "attribute value"
+  },
+  "fhksPD": {
+    "defaultMessage": "Number of Orders"
+  },
+  "fjPWOA": {
+    "defaultMessage": "Customer Overview",
+    "description": "header"
+  },
+  "fkJH/L": {
+    "defaultMessage": "Shipping Zones",
+    "description": "zones that warehouse sends to"
+  },
+  "fkplbE": {
+    "defaultMessage": "Order was marked as paid",
+    "description": "order history message"
+  },
+  "fo7nfa": {
+    "defaultMessage": "Fixed Amount",
+    "description": "fixed amount"
+  },
+  "foB6wx": {
+    "defaultMessage": "Weight Based Rates",
+    "description": "weight based shipping methods, section header"
+  },
+  "ftcHpD": {
+    "defaultMessage": "Customer created"
+  },
+  "fzDI3A": {
+    "defaultMessage": "Link to: {url}",
+    "description": "add link to navigation"
+  },
+  "fzk04H": {
+    "defaultMessage": "Delete image",
+    "description": "dialog title"
+  },
+  "fzpXvv": {
+    "defaultMessage": "Are you sure you want to remove {email} avatar?"
+  },
+  "g+GAf4": {
+    "defaultMessage": "Visibility",
+    "description": "product visibility"
+  },
+  "g/BrOt": {
+    "defaultMessage": "Url has invalid format"
+  },
+  "g/FRtd": {
+    "defaultMessage": "Allocated",
+    "description": "table column header, allocated product quantity"
+  },
+  "g1WQlC": {
+    "defaultMessage": "Summary",
+    "description": "page title"
+  },
+  "g5zIpS": {
+    "defaultMessage": "No values found",
+    "description": "No attribute values found"
+  },
+  "g6yuk2": {
+    "defaultMessage": "Export information for:",
+    "description": "export items to csv file, choice field label"
+  },
+  "gF7hbK": {
+    "defaultMessage": "New Variant",
+    "description": "variant name"
+  },
+  "gKdGxP": {
+    "defaultMessage": "Only pre-authorized payments can be captured",
+    "description": "error message"
+  },
+  "gMwpNC": {
+    "defaultMessage": "Content",
+    "description": "page content"
+  },
+  "gQGUsN": {
+    "defaultMessage": "Edit Address",
+    "description": "dialog title"
+  },
+  "gRa/TS": {
+    "defaultMessage": "Name",
+    "description": "shipping zone"
+  },
+  "gSQ0Ge": {
+    "defaultMessage": "Variant {name} has been set as default."
+  },
+  "gTr0qE": {
+    "defaultMessage": "Shipping Settings"
+  },
+  "gVD1os": {
+    "defaultMessage": "You haven’t assigned any member to this permission group yet.",
+    "description": "empty list message"
+  },
+  "ge/xFX": {
+    "defaultMessage": "Quantity",
+    "description": "table column header"
+  },
+  "ghje1I": {
+    "defaultMessage": "System",
+    "description": "numeric attribute unit system"
+  },
+  "gr+oXW": {
+    "defaultMessage": "Title",
+    "description": "page title"
+  },
+  "gr53VQ": {
+    "defaultMessage": "Create Page",
+    "description": "page header"
+  },
+  "gtKcPf": {
+    "defaultMessage": "{zonesCount} / {totalCount} shipping zones",
+    "description": "title"
+  },
+  "gx4wCT": {
+    "defaultMessage": "Swatch",
+    "description": "swatch attribute type"
+  },
+  "gxPjIQ": {
+    "defaultMessage": "Are you sure you want to delete {email} from staff members?"
+  },
+  "h1rPPg": {
+    "defaultMessage": "Are you sure you want to delete {attributeName}?",
+    "description": "dialog content"
+  },
+  "h2Hta6": {
+    "defaultMessage": "If enabled, attribute will be accessible to customers.",
+    "description": "caption"
+  },
+  "h5r9+x": {
+    "defaultMessage": "Shipping By Zone",
+    "description": "sort shipping methods by zone, section header"
+  },
+  "hAcUEl": {
+    "defaultMessage": "will become published on {date}",
+    "description": "product publication date label"
+  },
+  "hHOI7D": {
+    "defaultMessage": "Type Name",
+    "description": "product type name"
+  },
+  "hJZwTS": {
+    "defaultMessage": "Email address"
+  },
+  "hLOEeb": {
+    "defaultMessage": "Set as default billing address",
+    "description": "button"
+  },
+  "hLUYBt": {
+    "defaultMessage": "Pending",
+    "description": "payment status"
+  },
+  "hMRP6J": {
+    "defaultMessage": "Default Address"
+  },
+  "hOxIeP": {
+    "defaultMessage": "Availability"
+  },
+  "hWO1SD": {
+    "defaultMessage": "Draft order was created",
+    "description": "order history message"
+  },
+  "hX5PAb": {
+    "defaultMessage": "No results found"
+  },
+  "hjH51x": {
+    "defaultMessage": "Change photo",
+    "description": "button"
+  },
+  "ho75Lr": {
+    "defaultMessage": "Deactivated",
+    "description": "status label deactivated"
+  },
+  "hpMcW8": {
+    "defaultMessage": "Define how users can navigate through your store"
+  },
+  "hptDxW": {
+    "defaultMessage": "to {money}",
+    "description": "money"
+  },
+  "hqVMLQ": {
+    "defaultMessage": "Send",
+    "description": "button"
+  },
+  "hw9Fah": {
+    "defaultMessage": "Send invite",
+    "description": "button"
+  },
+  "hzSNj4": {
+    "defaultMessage": "Dashboard"
+  },
+  "i+Vox0": {
+    "defaultMessage": "Invoice Generated",
+    "description": "invoice generating has finished, header"
+  },
+  "i0AcKY": {
+    "defaultMessage": "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes.",
+    "description": "notification message after log in"
+  },
+  "i3Mvj8": {
+    "defaultMessage": "This variant already exists",
+    "description": "product attribute error"
+  },
+  "iAvKNf": {
+    "defaultMessage": "Display Help",
+    "description": "navigator help mode description"
+  },
+  "iMJka8": {
+    "defaultMessage": "No pages found"
+  },
+  "iPk640": {
+    "defaultMessage": "Media Selection",
+    "description": "dialog header"
+  },
+  "iQVghC": {
+    "defaultMessage": "Information exported:",
+    "description": "select product information\\'s to be exported"
+  },
+  "iQxjow": {
+    "defaultMessage": "Content Attributes",
+    "description": "section header"
+  },
+  "iUy2dx": {
+    "defaultMessage": "Vouchers",
+    "description": "vouchers section name"
+  },
+  "iYH3Y7": {
+    "defaultMessage": "Override the product type's tax rate",
+    "description": "checkbox"
+  },
+  "icz/jb": {
+    "defaultMessage": "Join Date",
+    "description": "customer"
+  },
+  "iigydN": {
+    "defaultMessage": "Based on your selections we will create 8 products. Use this step to customize price and stocks for your new products."
+  },
+  "ij7olm": {
+    "defaultMessage": "This fulfillment cannot be cancelled",
+    "description": "error message"
+  },
+  "ijl+4z": {
+    "defaultMessage": "save & continue",
+    "description": "ExitFormPrompt confirm button"
+  },
+  "ivJ1qt": {
+    "defaultMessage": "Manage your permission groups and their permissions"
+  },
+  "j/vV0n": {
+    "defaultMessage": "Channel Name",
+    "description": "channel name"
+  },
+  "j0ugM4": {
+    "defaultMessage": "Exchange Rates",
+    "description": "Manage and Update your warehouse information"
+  },
+  "j3yE7I": {
+    "defaultMessage": "Shipping tracking number was sent to customer",
+    "description": "order history message"
+  },
+  "j8PV7E": {
+    "defaultMessage": "Values",
+    "description": "attribute values"
+  },
+  "jA7MDD": {
+    "defaultMessage": "Name of your store"
+  },
+  "jABdx1": {
+    "defaultMessage": "Active inventory tracking will automatically calculate changes of stock"
+  },
+  "jBmHIr": {
+    "defaultMessage": "Search Countries"
+  },
+  "jBu2yj": {
+    "defaultMessage": "acre-inch",
+    "description": "acre-inch unit"
+  },
+  "jFrdB5": {
+    "defaultMessage": "Product Settings"
+  },
+  "jGGnSZ": {
+    "defaultMessage": "Primary Address",
+    "description": "page header"
+  },
+  "jHJmjf": {
+    "defaultMessage": "No results"
+  },
+  "jKMIbC": {
+    "defaultMessage": "Rest of the World"
+  },
+  "jTifz+": {
+    "defaultMessage": "Successfully created attribute"
+  },
+  "jU9GPX": {
+    "defaultMessage": "Organize Content",
+    "description": "section header"
+  },
+  "jUuHVn": {
+    "defaultMessage": "No members found",
+    "description": "description"
+  },
+  "jWna9Q": {
+    "defaultMessage": "Content Type Name"
+  },
+  "jZbT0O": {
+    "defaultMessage": "Add search engine title and description to make this page easier to find"
+  },
+  "jhh/D6": {
+    "defaultMessage": "Menu Title"
+  },
+  "jqJqdE": {
+    "defaultMessage": "This variant is not available at any of the channels",
+    "description": "VariantDetailsChannelsAvailabilityCard no items available"
+  },
+  "jswILH": {
+    "defaultMessage": "Add to Column Options",
+    "description": "add attribute as column in product list table"
+  },
+  "ju8zHP": {
+    "defaultMessage": "Added postal codes will be excluded from using this delivery methods. If none are added all postal codes will be able to use that shipping rate"
+  },
+  "juBV+h": {
+    "defaultMessage": "End Hour"
+  },
+  "jxoMLL": {
+    "defaultMessage": "Collections",
+    "description": "product field"
+  },
+  "jyTwDR": {
+    "defaultMessage": "Type",
+    "description": "product type is either simple or configurable"
+  },
+  "jyaAlB": {
+    "defaultMessage": "Create collection",
+    "description": "button"
+  },
+  "k+HcTv": {
+    "defaultMessage": "Type",
+    "description": "product type"
+  },
+  "k/mTEl": {
+    "defaultMessage": "Distance",
+    "description": "distance units type"
+  },
+  "k3EI/U": {
+    "defaultMessage": "Delete Shipping Zone",
+    "description": "dialog header"
+  },
+  "k4brJy": {
+    "defaultMessage": "SKU"
+  },
+  "k6WDZl": {
+    "defaultMessage": "Visible",
+    "description": "attribute is visible"
+  },
+  "k8ZJ5L": {
+    "defaultMessage": "No. of Products",
+    "description": "number of products"
+  },
+  "k8bltk": {
+    "defaultMessage": "No Results"
+  },
+  "kErneR": {
+    "defaultMessage": "This customer doesn’t have any adresses added to his address book. You can add address using the button below."
+  },
+  "kFQvXv": {
+    "defaultMessage": "You have reached your warehouse limit, you will be no longer able to add warehouses to your store. If you would like to up your limit, contact your administration staff about raising your limits."
+  },
+  "kIvvax": {
+    "defaultMessage": "Search Products..."
+  },
+  "kJQczl": {
+    "defaultMessage": "Sales",
+    "description": "sales section name"
+  },
+  "kL3C+K": {
+    "defaultMessage": "Inventory",
+    "description": "product variant inventory status"
+  },
+  "kN6SLs": {
+    "defaultMessage": "Min Value"
+  },
+  "kTr2o8": {
+    "defaultMessage": "Attribute name"
+  },
+  "kVOslW": {
+    "defaultMessage": "Reason for discount",
+    "description": "reason for discount label"
+  },
+  "kVTWtR": {
+    "defaultMessage": "Last updated",
+    "description": "product updated at"
+  },
+  "kZfIl/": {
+    "defaultMessage": "These are general information about this Content Type."
+  },
+  "kaC4SV": {
+    "defaultMessage": "Filterable in Dashboard",
+    "description": "use attribute in filtering"
+  },
+  "kbkjEc": {
+    "defaultMessage": "Search in Catalog",
+    "description": "navigator catalog mode description"
+  },
+  "ki7Mr8": {
+    "defaultMessage": "Export Settings",
+    "description": "product export to csv file, header"
+  },
+  "kkIw+l": {
+    "defaultMessage": "Draft #{orderNumber}",
+    "description": "replacement created order history message draft number"
+  },
+  "kp2IYP": {
+    "defaultMessage": "Gift card product type",
+    "description": "option"
+  },
+  "kvSYZh": {
+    "defaultMessage": "was created for replaced products",
+    "description": "replacement created order history message description"
+  },
+  "l2oVCF": {
+    "defaultMessage": "Attributes",
+    "description": "attributes section name"
+  },
+  "l5V0QT": {
+    "defaultMessage": "Boolean",
+    "description": "boolean attribute type"
+  },
+  "lCxfDe": {
+    "defaultMessage": "Dashboard Properties",
+    "description": "attribute properties regarding dashboard"
+  },
+  "lG/MDw": {
+    "defaultMessage": "{counter,plural,one{Are you sure you want to delete this attribute?} other{Are you sure you want to delete {displayQuantity} attributes?}}",
+    "description": "dialog content"
+  },
+  "lGlDEH": {
+    "defaultMessage": "Group members",
+    "description": "header"
+  },
+  "lJP1iw": {
+    "defaultMessage": "Channel",
+    "description": "order"
+  },
+  "lL3YJO": {
+    "defaultMessage": "Published",
+    "description": "collection"
+  },
+  "lLwtgs": {
+    "defaultMessage": "Variants are disabled in this product type"
+  },
+  "lQRnYK": {
+    "defaultMessage": "Select All",
+    "description": "selectt all options"
+  },
+  "lT5MYM": {
+    "defaultMessage": "Unassign users",
+    "description": "dialog title"
+  },
+  "lVZ5n7": {
+    "defaultMessage": "Attribute",
+    "description": "variant attribute"
+  },
+  "lW5uJO": {
+    "defaultMessage": "from {money}",
+    "description": "money"
+  },
+  "la9cZ4": {
+    "defaultMessage": "Tax Rate"
+  },
+  "lct0qd": {
+    "defaultMessage": "This list shows all attributes that will be assigned to pages that have this page type assigned."
+  },
+  "li1BBk": {
+    "defaultMessage": "Plain CSV file",
+    "description": "export items as csv file"
+  },
+  "liLrVs": {
+    "defaultMessage": "Save Custom Search",
+    "description": "save filter tab, header"
+  },
+  "ll2dE6": {
+    "defaultMessage": "Are you sure you want to delete selected page types? If you remove them you won’t be able to assign them to created pages.",
+    "description": "PageTypeDeleteWarningDialog multiple assigned items description"
+  },
+  "llBnr+": {
+    "defaultMessage": "Warehouse Name"
+  },
+  "lm9NSK": {
+    "defaultMessage": "Send an email with reset link",
+    "description": "password reset, button"
+  },
+  "lnQAos": {
+    "defaultMessage": "Taxes",
+    "description": "header"
+  },
+  "lqIzC8": {
+    "defaultMessage": "This field needs to be unique"
+  },
+  "lra7Ej": {
+    "defaultMessage": "Apply single price to all SKUs"
+  },
+  "lw9WIk": {
+    "defaultMessage": "Attributes successfully delete",
+    "description": "deleted multiple attributes"
+  },
+  "lzdvwp": {
+    "defaultMessage": "Optional",
+    "description": "field is optional"
+  },
+  "m0Dz+2": {
+    "defaultMessage": "Please set up a new password for your account. Repeat your new password to make sure you will be able to remember it."
+  },
+  "m19JfL": {
+    "defaultMessage": "View and update your plugins and their settings."
+  },
+  "m8cjcK": {
+    "defaultMessage": "Authorization key with this type already exists",
+    "description": "add authorization key error"
+  },
+  "mAabef": {
+    "defaultMessage": "Group has full access to the store",
+    "description": "checkbox label"
+  },
+  "mDgOmP": {
+    "defaultMessage": "Visible",
+    "description": "channel publication status"
+  },
+  "mGiA6q": {
+    "defaultMessage": "Upload",
+    "description": "modal button upload"
+  },
+  "mIUNgR": {
+    "defaultMessage": "Create shipping zone",
+    "description": "button"
+  },
+  "mLZMb6": {
+    "defaultMessage": "Channel",
+    "description": "ChannelsSection select field label"
+  },
+  "mUb8Gt": {
+    "defaultMessage": "Taxes",
+    "description": "section header"
+  },
+  "mWQt3s": {
+    "defaultMessage": "No. of Products"
+  },
+  "mX7zJJ": {
+    "defaultMessage": "Create Page",
+    "description": "header"
+  },
+  "mYs3tb": {
+    "defaultMessage": "Product price cannot be lower than 0."
+  },
+  "mYs7O2": {
+    "defaultMessage": "Search Attributes"
+  },
+  "md326v": {
+    "defaultMessage": "{amount, plural,one {One payment to capture}other {{amount} payments to capture}}"
+  },
+  "me585h": {
+    "defaultMessage": "Quick Actions",
+    "description": "navigator section header"
+  },
+  "mgFyBA": {
+    "defaultMessage": "This name should be unique"
+  },
+  "mm0CXe": {
+    "defaultMessage": "You should change your password every month to avoid security issues."
+  },
+  "mp6KU/": {
+    "defaultMessage": "Simple",
+    "description": "product is not configurable"
+  },
+  "mr9jbO": {
+    "defaultMessage": "Preferred Language"
+  },
+  "n+Gwbu": {
+    "defaultMessage": "Discounts"
+  },
+  "n02c9W": {
+    "defaultMessage": "Price",
+    "description": "product variant price"
+  },
+  "n0RwMK": {
+    "defaultMessage": "Define types of products you sell"
+  },
+  "n25d+d": {
+    "defaultMessage": "Add New Warehouse",
+    "description": "WarehousesSection select field add text"
+  },
+  "n3+6w5": {
+    "defaultMessage": "Your customer won't be allowed to buy bigger quantity per checkout than shown here.",
+    "description": "input helper text"
+  },
+  "n5vskv": {
+    "defaultMessage": "{fullName}'s Address Book",
+    "description": "customer's address book, header"
+  },
+  "nEixpu": {
+    "defaultMessage": "Actions",
+    "description": "table action"
+  },
+  "nHmugP": {
+    "defaultMessage": "Fulfilled {quantity} items",
+    "description": "order history message"
+  },
+  "nKjLjT": {
+    "defaultMessage": "Slug must be unique for each warehouse",
+    "description": "error message"
+  },
+  "nKwgxY": {
+    "defaultMessage": "Channel name",
+    "description": "select label"
+  },
+  "nLML8Y": {
+    "defaultMessage": "Default Shipping Address"
+  },
+  "nNeWAx": {
+    "defaultMessage": "Delete Shipping Method",
+    "description": "dialog header"
+  },
+  "nOo0oL": {
+    "defaultMessage": "Not enough items to fulfill",
+    "description": "error message"
+  },
+  "nRiOg+": {
+    "defaultMessage": "Sorry, the page was not found"
+  },
+  "nTF6tG": {
+    "defaultMessage": "No. of Order",
+    "description": "number of order"
+  },
+  "nX2pCU": {
+    "defaultMessage": "Create customer",
+    "description": "window title"
+  },
+  "nayZY0": {
+    "defaultMessage": "Products were returned by",
+    "description": "returned event title"
+  },
+  "nf3XSt": {
+    "defaultMessage": "Slug",
+    "description": "attribute internal name"
+  },
+  "nfbabo": {
+    "defaultMessage": "Will become available on {date}",
+    "description": "channel publication date"
+  },
+  "njBulj": {
+    "defaultMessage": "Value Required",
+    "description": "check to require attribute to have value"
+  },
+  "njUQPz": {
+    "defaultMessage": "Value Range",
+    "description": "shipping method price range"
+  },
+  "nki0o/": {
+    "defaultMessage": "Products replaced",
+    "description": "replaced products list title"
+  },
+  "nngeI3": {
+    "defaultMessage": "Refunded amount",
+    "description": "amount title"
+  },
+  "no3Ygn": {
+    "defaultMessage": "Are you sure you want to delete \"{name}\" value? If you delete it you won’t be able to assign it to any of the products with \"{attributeName}\" attribute."
+  },
+  "nudPsY": {
+    "defaultMessage": "Field",
+    "description": "metadata field name, header"
+  },
+  "nvSJNR": {
+    "defaultMessage": "Reason",
+    "description": "discount reason input lavel"
+  },
+  "nwnwJ0": {
+    "defaultMessage": "Refused",
+    "description": "payment status"
+  },
+  "nwvQPg": {
+    "defaultMessage": "Organization",
+    "description": "section header"
+  },
+  "ny4zrH": {
+    "defaultMessage": "Delete Warehouse",
+    "description": "dialog title"
+  },
+  "o6260f": {
+    "defaultMessage": "Variant Selection Attributes",
+    "description": "attributes, section header"
+  },
+  "o8f4Sg": {
+    "defaultMessage": "Can’t fulfill until payment is captured",
+    "description": "disabled option description"
+  },
+  "oB0y5Y": {
+    "defaultMessage": "Unfulfilled",
+    "description": "order status"
+  },
+  "oChkS4": {
+    "defaultMessage": "Successfully created variants",
+    "description": "success message"
+  },
+  "oHbgcK": {
+    "defaultMessage": "Delete page {selectedTypesCount,plural,one{type} other{types}}",
+    "description": "PageTypeDeleteWarningDialog title"
+  },
+  "oIMMcO": {
+    "defaultMessage": "There are no warehouses set up for your store. You can configure variants without providing stock quantities.",
+    "description": "no warehouses info"
+  },
+  "oIvtua": {
+    "defaultMessage": "Catalog Input type for Store Owner",
+    "description": "attribute's editor component"
+  },
+  "oJkeS6": {
+    "defaultMessage": "Attribute Code"
+  },
+  "oLMXDv": {
+    "defaultMessage": "Ready to fulfill",
+    "description": "order status"
+  },
+  "oOFrUd": {
+    "defaultMessage": "export products",
+    "description": "export products to csv file, button"
+  },
+  "oQ27V4": {
+    "defaultMessage": "Order placed information was sent to customer",
+    "description": "order history message"
+  },
+  "oQY0a2": {
+    "defaultMessage": "Address line 2"
+  },
+  "oUWADl": {
+    "defaultMessage": "No"
+  },
+  "oVDZUb": {
+    "defaultMessage": "All Page Types",
+    "description": "tab name"
+  },
+  "oYGfnY": {
+    "defaultMessage": "ZIP / Postal code"
+  },
+  "oiuwOl": {
+    "defaultMessage": "Assign",
+    "description": "button"
+  },
+  "ojHyj3": {
+    "defaultMessage": "discount value",
+    "description": "discount value label"
+  },
+  "p/EWEZ": {
+    "defaultMessage": "Manage Channels",
+    "description": "channels variants availability dialog title"
+  },
+  "p0SUJj": {
+    "defaultMessage": "Don’t worry we will fix it soon. Try to refresh the page or go back to dashboard."
+  },
+  "p3eRUm": {
+    "defaultMessage": "Preview",
+    "description": "indicator that feature is in preview mode"
+  },
+  "pA8Mlv": {
+    "defaultMessage": "Staff Member limit reached",
+    "description": "alert"
+  },
+  "pBTTtU": {
+    "defaultMessage": "Product Kind",
+    "description": "product kind"
+  },
+  "pC6/1z": {
+    "defaultMessage": "Invalid manifest format"
+  },
+  "pFVX6g": {
+    "defaultMessage": "Variant with these attributes already exists"
+  },
+  "pRYGUR": {
+    "defaultMessage": "This address will be used to generate invoices and calculate shipping rates. Email address you provide here will be used as a contact address for your customers.",
+    "description": "section description"
+  },
+  "pTpx0p": {
+    "defaultMessage": "Invoice no. {invoiceNumber} was generated by {generatedBy}",
+    "description": "order history message"
+  },
+  "pURrk1": {
+    "defaultMessage": "Status",
+    "description": "order status"
+  },
+  "pVFoOk": {
+    "defaultMessage": "Are you sure you want to delete {collectionName}?"
+  },
+  "paa4m0": {
+    "defaultMessage": "Successfully created product type"
+  },
+  "pbGIUg": {
+    "defaultMessage": "Channel",
+    "description": "sales channel"
+  },
+  "phAZoj": {
+    "defaultMessage": "Collection"
+  },
+  "pkUbrL": {
+    "defaultMessage": "General Information"
+  },
+  "pkjXPD": {
+    "defaultMessage": "Fulfilled",
+    "description": "order status"
+  },
+  "puikeb": {
+    "defaultMessage": "Delete Address",
+    "description": "button"
+  },
+  "pwqwcy": {
+    "defaultMessage": "Maximum price cannot be lower than minimum",
+    "description": "error message"
+  },
+  "q8ep2I": {
+    "defaultMessage": "Delete Customers",
+    "description": "dialog header"
+  },
+  "qDwvZ4": {
+    "defaultMessage": "Unknown error"
+  },
+  "qEJT8e": {
+    "defaultMessage": "New password must be at least 8 characters long"
+  },
+  "qEZ463": {
+    "defaultMessage": "Selected products ({number})",
+    "description": "export selected items to csv file"
+  },
+  "qIgdO6": {
+    "defaultMessage": "Custom Filter"
+  },
+  "qJedl0": {
+    "defaultMessage": "Published",
+    "description": "product label"
+  },
+  "qLOBff": {
+    "defaultMessage": "Delete Address",
+    "description": "dialog header"
+  },
+  "qLbse5": {
+    "defaultMessage": "Log out",
+    "description": "button"
+  },
+  "qMB6d2": {
+    "defaultMessage": "to {value} {unit}",
+    "description": "weight"
+  },
+  "qNcoRY": {
+    "defaultMessage": "Notes",
+    "description": "notes about customer header"
+  },
+  "qbqMpk": {
+    "defaultMessage": "In preorder",
+    "description": "product variant preorder threshold"
+  },
+  "qddy2Z": {
+    "defaultMessage": "Invoice was sent to customer by {sentBy}",
+    "description": "order history message"
+  },
+  "qf/m5l": {
+    "defaultMessage": "Are you sure you want to delete {shippingZoneName} shipping zone?"
+  },
+  "qkRuT0": {
+    "defaultMessage": "Product Attribute",
+    "description": "attribute type"
+  },
+  "qpQ0uB": {
+    "defaultMessage": "Unpublished",
+    "description": "product publication date"
+  },
+  "qrWOxx": {
+    "defaultMessage": "No members found"
+  },
+  "qu/hXD": {
+    "defaultMessage": "Selected {number} items"
+  },
+  "qu8b3v": {
+    "defaultMessage": "Yes, I want to delete those pages types and assigned pages",
+    "description": "PageTypeDeleteWarningDialog multiple consent label"
+  },
+  "r+8q4B": {
+    "defaultMessage": "Only draft orders can be edited",
+    "description": "error message"
+  },
+  "r+dgiv": {
+    "defaultMessage": "Taxes"
+  },
+  "r/MSdb": {
+    "defaultMessage": "Search Collection"
+  },
+  "r0hgpM": {
+    "defaultMessage": "Becomes published on {date}",
+    "description": "product publication date"
+  },
+  "r1aQ2f": {
+    "defaultMessage": "Unassign Attribute from Product Type",
+    "description": "dialog header"
+  },
+  "r86alc": {
+    "defaultMessage": "Copied",
+    "description": "button"
+  },
+  "rHXF43": {
+    "defaultMessage": "Here is the summary of variants that will be created. You can change prices, stocks an SKU for each one created."
+  },
+  "rHoRbE": {
+    "defaultMessage": "Unpublished",
+    "description": "Status label when object is unpublished in a channel"
+  },
+  "rIJbNC": {
+    "defaultMessage": "Use variants for products that come in a variety of versions for example different sizes or colors"
+  },
+  "rJ3lkW": {
+    "defaultMessage": "Published since {publicationDate}",
+    "description": "VariantDetailsChannelsAvailabilityCard item subtitle published"
+  },
+  "rKf4LU": {
+    "defaultMessage": "Delete attributes",
+    "description": "dialog title"
+  },
+  "rPX1f2": {
+    "defaultMessage": "Company Information",
+    "description": "section title"
+  },
+  "rQOS7K": {
+    "defaultMessage": "Active",
+    "description": "status label active"
+  },
+  "rVaB7c": {
+    "defaultMessage": "Select Values",
+    "description": "attribute values, variant creation step"
+  },
+  "rZMT44": {
+    "defaultMessage": "{count}/{max} channels used",
+    "description": "created channels counter"
+  },
+  "rZf1qL": {
+    "defaultMessage": "SKUs must be unique",
+    "description": "bulk variant create error"
+  },
+  "rbkmfG": {
+    "defaultMessage": "Delete variant",
+    "description": "button"
+  },
+  "rfvBAF": {
+    "defaultMessage": "Select All",
+    "description": "select all options, button"
+  },
+  "ri3kK9": {
+    "defaultMessage": "Date",
+    "description": "order placement date"
+  },
+  "rjy9/k": {
+    "defaultMessage": "Add address",
+    "description": "button"
+  },
+  "rpFdD1": {
+    "defaultMessage": "Search Product Type"
+  },
+  "rpOkiA": {
+    "defaultMessage": "Use in Faceted Navigation",
+    "description": "attribute is filterable in storefront"
+  },
+  "rqiCWU": {
+    "defaultMessage": "Saved changes"
+  },
+  "rqtV5d": {
+    "defaultMessage": "Ready to capture",
+    "description": "order status"
+  },
+  "rr8fyf": {
+    "defaultMessage": "Top Products",
+    "description": "header"
+  },
+  "rrbzZt": {
+    "defaultMessage": "No subcategories found"
+  },
+  "rs815i": {
+    "defaultMessage": "Group name",
+    "description": "text field label"
+  },
+  "rvk9ls": {
+    "defaultMessage": "Variant Only",
+    "description": "attribute can be used only in variants"
+  },
+  "ryAyPr": {
+    "defaultMessage": "Requested Invoice was generated. It was added to the top of the invoice list on this view. Enjoy!"
+  },
+  "s/sTT6": {
+    "defaultMessage": "If empty, the preview shows what will be autogenerated."
+  },
+  "s2y5eG": {
+    "defaultMessage": "Status",
+    "description": "Status label"
+  },
+  "s5Imt5": {
+    "defaultMessage": "Edit website SEO",
+    "description": "button"
+  },
+  "s5v6m0": {
+    "defaultMessage": "Gift Card ordered",
+    "description": "order"
+  },
+  "s97tLq": {
+    "defaultMessage": "Search Collections"
+  },
+  "s9sOcC": {
+    "defaultMessage": "OK",
+    "description": "button"
+  },
+  "sG0w22": {
+    "defaultMessage": "Delete categories",
+    "description": "dialog title"
+  },
+  "sHON47": {
+    "defaultMessage": "Products refunded",
+    "description": "refunded products list title"
+  },
+  "sK1FPw": {
+    "defaultMessage": "Categories",
+    "description": "categories section name"
+  },
+  "sR0urA": {
+    "defaultMessage": "Are you sure you want to delete {name}?",
+    "description": "dialog content"
+  },
+  "sW9IyX": {
+    "defaultMessage": "Assign Category",
+    "description": "dialog header"
+  },
+  "sZ27WU": {
+    "defaultMessage": "Only pre-authorized payments can be voided",
+    "description": "error message"
+  },
+  "saKXY3": {
+    "defaultMessage": "Not published",
+    "description": "product label"
+  },
+  "scHVdW": {
+    "defaultMessage": "Assign product",
+    "description": "button"
+  },
+  "sdA14A": {
+    "defaultMessage": "Published",
+    "description": "Status label when object is published in a channel"
+  },
+  "sedoZ3": {
+    "defaultMessage": "Availability",
+    "description": "VariantDetailsChannelsAvailabilityCard title"
+  },
+  "sidKce": {
+    "defaultMessage": "All order information from this channel need to be moved to a different channel. Please select channel orders need to be moved to:.",
+    "description": "delete channel"
+  },
+  "sjRXXz": {
+    "defaultMessage": "Order #{orderId} was placed from draft by {userEmail}"
+  },
+  "skEK/i": {
+    "defaultMessage": "Variant Attributes",
+    "description": "section header"
+  },
+  "skPoVe": {
+    "defaultMessage": "Accept",
+    "description": "button"
+  },
+  "slKV5G": {
+    "defaultMessage": "Summary",
+    "description": "variant creation step"
+  },
+  "stjHjY": {
+    "defaultMessage": "Promo code already exists",
+    "description": "error message"
+  },
+  "svK+kv": {
+    "defaultMessage": "{counter,plural,one{Are you sure you want to delete this menu?} other{Are you sure you want to delete {displayQuantity} menus?}}"
+  },
+  "sw8Wl2": {
+    "defaultMessage": "There is no channel to define prices for. You need to first add variant to channels to define prices.",
+    "description": "variant pricing section subtitle"
+  },
+  "sxCmsG": {
+    "defaultMessage": "Product Organization",
+    "description": "information's about product organization, header"
+  },
+  "szXISP": {
+    "defaultMessage": "Permission Group Name",
+    "description": "permission group name"
+  },
+  "t/R8nK": {
+    "defaultMessage": "Settings",
+    "description": "ShippingZoneSettingsCard title"
+  },
+  "t3aiWF": {
+    "defaultMessage": "Excluded Products",
+    "description": "section header"
+  },
+  "tEdFmZ": {
+    "defaultMessage": "System update required",
+    "description": "notification title"
+  },
+  "tIc2/h": {
+    "defaultMessage": "Search by attribute name",
+    "description": "input helper text, search attributes"
+  },
+  "tQuE1q": {
+    "defaultMessage": "Select channels you want for {contentType} to be available on"
+  },
+  "tQxBXs": {
+    "defaultMessage": "You are about to delete page type <b>{typeName}</b>. It is assigned to {assignedItemsCount} {assignedItemsCount,plural,one{page} other{pages}}. Deleting this page type will also delete those pages. Are you sure you want to do this?",
+    "description": "PageTypeDeleteWarningDialog single assigned items description"
+  },
+  "tTtoKd": {
+    "defaultMessage": "Sorry, your username and/or password are incorrect. Please try again.",
+    "description": "error message"
+  },
+  "tV+Dcm": {
+    "defaultMessage": "Default country"
+  },
+  "tWbE34": {
+    "defaultMessage": "Start Hour"
+  },
+  "taX/V3": {
+    "defaultMessage": "Total",
+    "description": "order total amount"
+  },
+  "toDL5R": {
+    "defaultMessage": "Draft",
+    "description": "order status"
+  },
+  "ttMauu": {
+    "defaultMessage": "Create collection",
+    "description": "window title"
+  },
+  "tzMNF3": {
+    "defaultMessage": "Status"
+  },
+  "u0V06N": {
+    "defaultMessage": "Max. Order Weight"
+  },
+  "u24Ppd": {
+    "defaultMessage": "This attribute cannot be assigned to this product type"
+  },
+  "u3sYPH": {
+    "defaultMessage": "Time",
+    "description": "independent of any particular day, eg. 11:35"
+  },
+  "u5c/tR": {
+    "defaultMessage": "Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency",
+    "description": "channels discount info"
+  },
+  "uCn/rd": {
+    "defaultMessage": "Delete Image",
+    "description": "dialog header"
+  },
+  "uRTj1Q": {
+    "defaultMessage": "Invoice not found",
+    "description": "error message"
+  },
+  "uULcph": {
+    "defaultMessage": "Shipping",
+    "description": "header"
+  },
+  "uUQ+Al": {
+    "defaultMessage": "Note",
+    "description": "note about customer"
+  },
+  "uVssds": {
+    "defaultMessage": "{stockQuantity,plural,one{{stockQuantity} available} other{{stockQuantity} available}}",
+    "description": "product variant inventory"
+  },
+  "ubasgL": {
+    "defaultMessage": "Order was confirmed",
+    "description": "order history message"
+  },
+  "ucYPtV": {
+    "defaultMessage": "Choose attribute",
+    "description": "variant attribute"
+  },
+  "ud0w8h": {
+    "defaultMessage": "{number} postal code ranges",
+    "description": "number of postal code ranges"
+  },
+  "ufD5Jr": {
+    "defaultMessage": "Content type"
+  },
+  "ufmuTp": {
+    "defaultMessage": "Delete",
+    "description": "button"
+  },
+  "ugnggZ": {
+    "defaultMessage": "Created menu"
+  },
+  "ukdRUv": {
+    "defaultMessage": "{counter,plural,one{Are you sure you want to delete this variant?} other{Are you sure you want to delete {displayQuantity} variants?}}",
+    "description": "delete variant dialog subtitle"
+  },
+  "ulh3kf": {
+    "defaultMessage": "Collections"
+  },
+  "umsU70": {
+    "defaultMessage": "Search Page Type"
+  },
+  "usSkzP": {
+    "defaultMessage": "Search Orders",
+    "description": "navigator order mode description"
+  },
+  "utaSh3": {
+    "defaultMessage": "Status",
+    "description": "staff member's account"
+  },
+  "uxPpRx": {
+    "defaultMessage": "Assign attribute",
+    "description": "button"
+  },
+  "uxZZXx": {
+    "defaultMessage": "Create multiple variant via variant creator",
+    "description": "option"
+  },
+  "v+Pkm+": {
+    "defaultMessage": "*Optional. Adding product to collection helps users find it.",
+    "description": "field is optional"
+  },
+  "v/1VA6": {
+    "defaultMessage": "Send",
+    "description": "add order note, button"
+  },
+  "v17Lly": {
+    "defaultMessage": "Max Delivery Time",
+    "description": "label"
+  },
+  "v1pNHW": {
+    "defaultMessage": "Attribute Class"
+  },
+  "v3WWK+": {
+    "defaultMessage": "Status is invalid"
+  },
+  "vCUQrZ": {
+    "defaultMessage": "If you want to disable this App please uncheck the box below."
+  },
+  "vEYtiq": {
+    "defaultMessage": "Category Name"
+  },
+  "vN3qdA": {
+    "defaultMessage": "Undo",
+    "description": "button"
+  },
+  "vONi+O": {
+    "defaultMessage": "Country"
+  },
+  "vP7g2+": {
+    "defaultMessage": "URL not set for an invoice",
+    "description": "error message"
+  },
+  "vVviA2": {
+    "defaultMessage": "Those permissions are out of your scope"
+  },
+  "vWapBZ": {
+    "defaultMessage": "Order Weight",
+    "description": "card title"
+  },
+  "vXA5xU": {
+    "defaultMessage": "Use variant creator to create matrix of selected attribute values to create variants",
+    "description": "option description"
+  },
+  "vY2lpx": {
+    "defaultMessage": "Available at {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}",
+    "description": "channels availability text"
+  },
+  "vZMs8f": {
+    "defaultMessage": "Default",
+    "description": "default product variant indicator"
+  },
+  "ve/Sph": {
+    "defaultMessage": "and {number} more",
+    "description": "there are more elements of list that are hidden"
+  },
+  "vfG+nh": {
+    "defaultMessage": "Confirm Password"
+  },
+  "viFkCw": {
+    "defaultMessage": "Site Settings",
+    "description": "site settings section name"
+  },
+  "vjsfyn": {
+    "defaultMessage": "Max Value"
+  },
+  "vlLyvk": {
+    "defaultMessage": "{inputType} attributes cannot be used as variant selection attributes."
+  },
+  "vlVTmY": {
+    "defaultMessage": "Product removed"
+  },
+  "vof5TR": {
+    "defaultMessage": "Create category",
+    "description": "button"
+  },
+  "vuKrlW": {
+    "defaultMessage": "Stock"
+  },
+  "vy7fjd": {
+    "defaultMessage": "All Categories",
+    "description": "tab name"
+  },
+  "vzgZ3U": {
+    "defaultMessage": "Sign In",
+    "description": "card header"
+  },
+  "w+5Djm": {
+    "defaultMessage": "Min. Order Weight"
+  },
+  "w+8BfK": {
+    "defaultMessage": "Edit Address",
+    "description": "button"
+  },
+  "w2Cewo": {
+    "defaultMessage": "Search engine title"
+  },
+  "w4R/SO": {
+    "defaultMessage": "Local Apps"
+  },
+  "wL7VAE": {
+    "defaultMessage": "Actions"
+  },
+  "wNQzS/": {
+    "defaultMessage": "The primary address of this customer."
+  },
+  "wOeIR4": {
+    "defaultMessage": "Restocked {quantity} items",
+    "description": "order history message"
+  },
+  "wQdR8M": {
+    "defaultMessage": "Add search engine title and description to make this category easier to find"
+  },
+  "wWTUrM": {
+    "defaultMessage": "No activities found"
+  },
+  "wWYYBR": {
+    "defaultMessage": "{numLocations,plural,one{{numAvailable} available at {numLocations} location} other{{numAvailable} available at {numLocations} locations}}",
+    "description": "product variant inventory"
+  },
+  "wgA48T": {
+    "defaultMessage": "Countries A to Z",
+    "description": "country selection"
+  },
+  "wjKYSU": {
+    "defaultMessage": "Select warehouse from which you will ship products for this shipping zone. This warehouse address will also be used to calculate taxes.",
+    "description": "WarehousesSection subtitle"
+  },
+  "wlQTfb": {
+    "defaultMessage": "Next",
+    "description": "go to next step, button"
+  },
+  "wmdHhD": {
+    "defaultMessage": "Create Warehouse",
+    "description": "button"
+  },
+  "wn3di2": {
+    "defaultMessage": "This password is too commonly used"
+  },
+  "wpONQ2": {
+    "defaultMessage": "Enter any extra information regarding this customer."
+  },
+  "wtKQiW": {
+    "defaultMessage": "create page type",
+    "description": "button"
+  },
+  "wyvzh9": {
+    "defaultMessage": "Publish Pages",
+    "description": "dialog header"
+  },
+  "x/ZVlU": {
+    "defaultMessage": "Product"
+  },
+  "x/pIZ9": {
+    "defaultMessage": "Add product",
+    "description": "button"
+  },
+  "x3leH4": {
+    "defaultMessage": "Delete product {selectedTypesCount,plural,one{type} other{types}}",
+    "description": "ProductTypeDeleteWarningDialog title"
+  },
+  "x8V/xS": {
+    "defaultMessage": "Public",
+    "description": "attribute visibility in storefront"
+  },
+  "xAHOGV": {
+    "defaultMessage": "Assign Variant",
+    "description": "dialog header"
+  },
+  "xB7BTp": {
+    "defaultMessage": "SKU (Stock Keeping Unit)"
+  },
+  "xJQX5t": {
+    "defaultMessage": "No staff members found"
+  },
+  "xOEZjV": {
+    "defaultMessage": "Default Label",
+    "description": "attribute's label"
+  },
+  "xQK2EC": {
+    "defaultMessage": "All Customers",
+    "description": "tab name"
+  },
+  "xRbqcg": {
+    "defaultMessage": "Regular product type",
+    "description": "option"
+  },
+  "xRkj2h": {
+    "defaultMessage": "Are you sure you want to delete {categoryName}?"
+  },
+  "xVn5B0": {
+    "defaultMessage": "Added new value",
+    "description": "added new attribute value"
+  },
+  "xZhxBJ": {
+    "defaultMessage": "Assign Products",
+    "description": "dialog header"
+  },
+  "xfGZsi": {
+    "defaultMessage": "Configuration",
+    "description": "configuration section name"
+  },
+  "xjpTLF": {
+    "defaultMessage": "Inventory Information",
+    "description": "informations about product stock, header"
+  },
+  "xkjRu5": {
+    "defaultMessage": "Export Information",
+    "description": "export products to csv file, dialog header"
+  },
+  "xl7Fag": {
+    "defaultMessage": "Category created"
+  },
+  "xo5UIb": {
+    "defaultMessage": "Delete category",
+    "description": "dialog title"
+  },
+  "xqfaLi": {
+    "defaultMessage": "Mzawadie ran into an unexpected problem"
+  },
+  "xrPv2K": {
+    "defaultMessage": "by",
+    "description": "by preposition"
+  },
+  "xtUXnK": {
+    "defaultMessage": "All products ({number})",
+    "description": "export all items to csv file"
+  },
+  "xwEc8K": {
+    "defaultMessage": "API"
+  },
+  "xxQxLE": {
+    "defaultMessage": "Email Address"
+  },
+  "y/UWBR": {
+    "defaultMessage": "There is no address to show for this customer"
+  },
+  "y7mfbl": {
+    "defaultMessage": "Currently, there are no countries assigned to this shipping zone"
+  },
+  "y9cvqE": {
+    "defaultMessage": "Create Voucher",
+    "description": "button"
+  },
+  "yDkmX7": {
+    "defaultMessage": "{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}",
+    "description": "dialog content"
+  },
+  "yEmwxD": {
+    "defaultMessage": "Publish",
+    "description": "publish page, button"
+  },
+  "yH56V+": {
+    "defaultMessage": "Ooops!..."
+  },
+  "yHQQMQ": {
+    "defaultMessage": "Unpublish Pages",
+    "description": "dialog header"
+  },
+  "yHaQWG": {
+    "defaultMessage": "{variantsAmount} variants selected",
+    "description": "variants selected label"
+  },
+  "yHeZRQ": {
+    "defaultMessage": "Product Export Failed"
+  },
+  "yJynYK": {
+    "defaultMessage": "discount",
+    "description": "discount value"
+  },
+  "yKuba7": {
+    "defaultMessage": "Searchable",
+    "description": "attribute can be searched in dashboard"
+  },
+  "yNb+dT": {
+    "defaultMessage": "Simple product",
+    "description": "product type"
+  },
+  "yOaNWB": {
+    "defaultMessage": "Are you sure you want to delete {name}?",
+    "description": "delete shipping method"
+  },
+  "yT5zvU": {
+    "defaultMessage": "{counter,plural,one{Are you sure you want to delete this collection?} other{Are you sure you want to delete {displayQuantity} collections?}}"
+  },
+  "yatGsm": {
+    "defaultMessage": "Order Value",
+    "description": "card title"
+  },
+  "ybaLoZ": {
+    "defaultMessage": "Search through channels"
+  },
+  "ycMLN9": {
+    "defaultMessage": "Warehouses",
+    "description": "warehouses section name"
+  },
+  "ychKsb": {
+    "defaultMessage": "Shipping method is required for this order",
+    "description": "error message"
+  },
+  "ypW4Mi": {
+    "defaultMessage": "Refresh page",
+    "description": "button refreshing page"
+  },
+  "yzYXW/": {
+    "defaultMessage": "Create New Warehouse",
+    "description": "header, dialog"
+  },
+  "z+wMgQ": {
+    "defaultMessage": "Create Variants",
+    "description": "window title"
+  },
+  "z0gGP+": {
+    "defaultMessage": "{number} Attributes",
+    "description": "number of attributes"
+  },
+  "z1puMb": {
+    "defaultMessage": "Export as:",
+    "description": "export items as csv or spreadsheet file"
+  },
+  "z1y9oL": {
+    "defaultMessage": "File",
+    "description": "file attribute type"
+  },
+  "zCb8fX": {
+    "defaultMessage": "Weight"
+  },
+  "zD7/M6": {
+    "defaultMessage": "Please use Assign Members button to do so.",
+    "description": "empty list message"
+  },
+  "zDvDnG": {
+    "defaultMessage": "Media from the URL you supply will be shown in the media gallery. You will be able to define the order of the gallery.",
+    "description": "modal header"
+  },
+  "zMrrGu": {
+    "defaultMessage": "Select All",
+    "description": "select all options"
+  },
+  "zR9Ozi": {
+    "defaultMessage": "Select All Channels",
+    "description": "select all channels label"
+  },
+  "zRrcOG": {
+    "defaultMessage": "Order was cancelled",
+    "description": "order history message"
+  },
+  "zSOvI0": {
+    "defaultMessage": "Filters"
+  },
+  "zTdwWM": {
+    "defaultMessage": "{fromMoney} - {toMoney}",
+    "description": "money"
+  },
+  "zWM89r": {
+    "defaultMessage": "Units of",
+    "description": "numeric attribute units of"
+  },
+  "zWgbGg": {
+    "defaultMessage": "Today"
+  },
+  "zZCCqz": {
+    "defaultMessage": "Assign countries",
+    "description": "button"
+  },
+  "zbJHl7": {
+    "defaultMessage": "Content Attribute",
+    "description": "attribute type"
+  },
+  "ztQgD8": {
+    "defaultMessage": "No attributes found"
+  },
+  "zxs6G3": {
+    "defaultMessage": "Manage how you ship out orders"
+  },
+  "zyXcBP": {
+    "defaultMessage": "Sorting by this column requires active filter: {filterName}"
+  }
 }

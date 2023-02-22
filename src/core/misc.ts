@@ -1,3 +1,4 @@
+/* eslint-disable no-redeclare */
 // @ts-nocheck
 import { FetchResult, MutationFunction, MutationResult } from "@apollo/client";
 import { MultiAutocompleteChoiceType } from "@mzawadie/components/MultiAutocompleteSelectField";

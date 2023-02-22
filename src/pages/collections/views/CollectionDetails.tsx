@@ -21,6 +21,8 @@ import useLocalPaginator, { useLocalPaginationState } from "@mzawadie/hooks/useL
 import useLocalStorage from "@mzawadie/hooks/useLocalStorage";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
+import { createCollectionChannels, createCollectionChannelsData } from "@mzawadie/pages/channels/utils";
+import { productUrl } from "@mzawadie/pages/products/urls";
 import useProductSearch from "@mzawadie/searches/useProductSearch";
 import { arrayDiff } from "@mzawadie/utils/arrays";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
@@ -50,8 +52,6 @@ import {
     CollectionUrlQueryParams,
 } from "../urls";
 import { COLLECTION_DETAILS_FORM_ID } from "./consts";
-import {createCollectionChannels, createCollectionChannelsData} from "@mzawadie/pages/channels/utils";
-import {productUrl} from "@mzawadie/pages/products/urls";
 
 interface CollectionDetailsProps {
     id: string;
