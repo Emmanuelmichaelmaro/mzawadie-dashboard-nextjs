@@ -36,6 +36,7 @@ import CollectionPage from "@mzawadie/pages/collections";
 import ConfigurationPage from "@mzawadie/pages/configuration";
 import { getConfigMenuItemsPermissions } from "@mzawadie/pages/configuration/utils";
 import CustomerPage from "@mzawadie/pages/customers";
+import DiscountPage from "@mzawadie/pages/discounts";
 import GiftCardPage from "@mzawadie/pages/giftCards";
 import HomePage from "@mzawadie/pages/home";
 import NavigationPage from "@mzawadie/pages/navigation";
@@ -273,6 +274,12 @@ const Routes: React.FC = () => {
                                 permissions={[PermissionEnum.MANAGE_GIFT_CARD]}
                                 path="/gift-cards"
                                 component={GiftCardPage}
+                            />
+
+                            <SectionRoute
+                                permissions={[PermissionEnum.MANAGE_DISCOUNTS]}
+                                path="/discounts"
+                                component={DiscountPage}
                             />
 
                             <Route component={NotFoundPage} />
