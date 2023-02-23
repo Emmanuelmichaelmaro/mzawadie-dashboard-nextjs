@@ -1,8 +1,10 @@
+// @ts-nocheck
 import { gql } from "@apollo/client";
 import { TypedMutation } from "@mzawadie/core";
 import { fragmentAddress } from "@mzawadie/fragments/address";
 import { customerAddressesFragment, customerDetailsFragment } from "@mzawadie/fragments/customers";
 import { accountErrorFragment } from "@mzawadie/fragments/errors";
+import makeMutation from "@mzawadie/hooks/makeMutation";
 
 import { BulkRemoveCustomers, BulkRemoveCustomersVariables } from "./types/BulkRemoveCustomers";
 import { CreateCustomer, CreateCustomerVariables } from "./types/CreateCustomer";
@@ -47,7 +49,11 @@ const createCustomer = gql`
         }
     }
 `;
+
 export const TypedCreateCustomerMutation = TypedMutation<CreateCustomer, CreateCustomerVariables>(
+    createCustomer
+);
+export const useCreateCustomerMutation = makeMutation<CreateCustomer, CreateCustomerVariables>(
     createCustomer
 );
 
@@ -61,6 +67,7 @@ const removeCustomer = gql`
         }
     }
 `;
+
 export const TypedRemoveCustomerMutation = TypedMutation<RemoveCustomer, RemoveCustomerVariables>(
     removeCustomer
 );
@@ -79,6 +86,7 @@ const setCustomerDefaultAddress = gql`
         }
     }
 `;
+
 export const TypedSetCustomerDefaultAddressMutation = TypedMutation<
     SetCustomerDefaultAddress,
     SetCustomerDefaultAddressVariables
@@ -102,6 +110,7 @@ const createCustomerAddress = gql`
         }
     }
 `;
+
 export const TypedCreateCustomerAddressMutation = TypedMutation<
     CreateCustomerAddress,
     CreateCustomerAddressVariables
@@ -121,6 +130,7 @@ const updateCustomerAddress = gql`
         }
     }
 `;
+
 export const TypedUpdateCustomerAddressMutation = TypedMutation<
     UpdateCustomerAddress,
     UpdateCustomerAddressVariables
@@ -140,6 +150,7 @@ const removeCustomerAddress = gql`
         }
     }
 `;
+
 export const TypedRemoveCustomerAddressMutation = TypedMutation<
     RemoveCustomerAddress,
     RemoveCustomerAddressVariables
@@ -155,6 +166,7 @@ export const bulkRemoveCustomers = gql`
         }
     }
 `;
+
 export const TypedBulkRemoveCustomers = TypedMutation<
     BulkRemoveCustomers,
     BulkRemoveCustomersVariables

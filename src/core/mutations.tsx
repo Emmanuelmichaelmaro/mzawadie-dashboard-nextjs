@@ -46,6 +46,7 @@ export function TypedMutation<TData, TVariables>(
                             text: intl.formatMessage(commonMessages.somethingWentWrong),
                         });
                     }
+
                     if (hasError(err, GqlErrors.ReadOnlyException)) {
                         notify({
                             status: "error",
@@ -63,6 +64,7 @@ export function TypedMutation<TData, TVariables>(
                             text: intl.formatMessage(commonMessages.somethingWentWrong),
                         });
                     }
+
                     if (onError) {
                         onError(err);
                     }

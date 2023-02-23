@@ -85,14 +85,14 @@ const Layout: React.FC = (props) => {
     return (
         <div className={classes.root}>
             <div className={classes.mainPanel}>
-                <SVG
-                    className={classes.logo}
-                    src={themeType === "dark" ? saleorDarkLogo : saleorLightLogo}
-                />
+                {/* <SVG*/}
+                {/*    className={classes.logo}*/}
+                {/*    src={themeType === "dark" ? saleorDarkLogo : saleorLightLogo}*/}
+                {/*/ >*/}
 
                 <div className={classes.mainPanelContent}>{children}</div>
 
-                <footer className={classes.footer}>©2020 Mzawadie Commerce. All rights reserved</footer>
+                <footer className={classes.footer}>©2023 Adullam Commerce. All rights reserved</footer>
             </div>
 
             <div className={classes.sidebar}>

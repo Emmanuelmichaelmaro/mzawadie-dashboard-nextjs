@@ -71,8 +71,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
     const intl = useIntl();
 
     const [countryDisplayName, setCountryDisplayName] = React.useState("");
-    // eslint-disable-next-line no-console
-    console.log("customer create page component");
+
     const countryChoices = mapCountriesToChoices(countries);
 
     const { errors: validationErrors, submit: handleSubmitWithAddress } = useAddressValidation<

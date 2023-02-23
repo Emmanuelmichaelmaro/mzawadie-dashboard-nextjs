@@ -1,29 +1,17 @@
 import { FetchResult } from "@apollo/client";
+import { extractMutationErrors, getMutationErrors, joinDateTime } from "@mzawadie/core";
 import { VoucherDetailsPageFormData } from "@mzawadie/pages/discounts/components/VoucherDetailsPage";
 import { getChannelsVariables } from "@mzawadie/pages/discounts/handlers";
 import { DiscountTypeEnum, RequirementsPicker } from "@mzawadie/pages/discounts/types";
 import {
     VoucherChannelListingUpdate,
-    VoucherChannelListingUpdateVariables
+    VoucherChannelListingUpdateVariables,
 } from "@mzawadie/pages/discounts/types/VoucherChannelListingUpdate";
-import {
-    VoucherCreate,
-    VoucherCreateVariables
-} from "@mzawadie/pages/discounts/types/VoucherCreate";
-import {
-    extractMutationErrors,
-    getMutationErrors,
-    joinDateTime
-} from "@mzawadie/core";
-import {
-    DiscountValueTypeEnum,
-    VoucherTypeEnum
-} from "@mzawadie/types/globalTypes";
+import { VoucherCreate, VoucherCreateVariables } from "@mzawadie/pages/discounts/types/VoucherCreate";
+import { DiscountValueTypeEnum, VoucherTypeEnum } from "@mzawadie/types/globalTypes";
 
 export function createHandler(
-    voucherCreate: (
-        variables: VoucherCreateVariables
-    ) => Promise<FetchResult<VoucherCreate>>,
+    voucherCreate: (variables: VoucherCreateVariables) => Promise<FetchResult<VoucherCreate>>,
     updateChannels: (options: {
         variables: VoucherChannelListingUpdateVariables;
     }) => Promise<FetchResult<VoucherChannelListingUpdate>>
@@ -39,11 +27,9 @@ export function createHandler(
                     formData.discountType === DiscountTypeEnum.VALUE_PERCENTAGE
                         ? DiscountValueTypeEnum.PERCENTAGE
                         : formData.discountType === DiscountTypeEnum.VALUE_FIXED
-                            ? DiscountValueTypeEnum.FIXED
-                            : DiscountValueTypeEnum.PERCENTAGE,
-                endDate: formData.hasEndDate
-                    ? joinDateTime(formData.endDate, formData.endTime)
-                    : null,
+                        ? DiscountValueTypeEnum.FIXED
+                        : DiscountValueTypeEnum.PERCENTAGE,
+                endDate: formData.hasEndDate ? joinDateTime(formData.endDate, formData.endTime) : null,
                 minCheckoutItemsQuantity:
                     formData.requirementsPicker !== RequirementsPicker.ITEM
                         ? 0
@@ -53,8 +39,8 @@ export function createHandler(
                     formData.discountType === DiscountTypeEnum.SHIPPING
                         ? VoucherTypeEnum.SHIPPING
                         : formData.type,
-                usageLimit: formData.hasUsageLimit ? formData.usageLimit : null
-            }
+                usageLimit: formData.hasUsageLimit ? formData.usageLimit : null,
+            },
         });
 
         const errors = getMutationErrors(response);
@@ -69,7 +55,7 @@ export function createHandler(
                     response.data.voucherCreate.voucher.id,
                     formData,
                     formData.channelListings
-                )
+                ),
             })
         );
 

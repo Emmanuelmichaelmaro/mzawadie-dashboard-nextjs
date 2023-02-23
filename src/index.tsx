@@ -49,6 +49,7 @@ import ShippingPage from "@mzawadie/pages/shipping";
 import SiteSettingsPage from "@mzawadie/pages/siteSettings";
 import StaffPage from "@mzawadie/pages/staff";
 import TaxesPage from "@mzawadie/pages/taxes";
+import TranslationsPage from "@mzawadie/pages/translations";
 import WarehousePage from "@mzawadie/pages/warehouses";
 import { PermissionEnum } from "@mzawadie/types/globalTypes";
 import { ThemeProvider } from "@saleor/macaw-ui";
@@ -280,6 +281,12 @@ const Routes: React.FC = () => {
                                 permissions={[PermissionEnum.MANAGE_DISCOUNTS]}
                                 path="/discounts"
                                 component={DiscountPage}
+                            />
+
+                            <SectionRoute
+                                permissions={[PermissionEnum.MANAGE_TRANSLATIONS]}
+                                path="/translations"
+                                component={TranslationsPage}
                             />
 
                             <Route component={NotFoundPage} />

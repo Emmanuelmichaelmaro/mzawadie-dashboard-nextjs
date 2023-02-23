@@ -17,6 +17,7 @@ import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { usePaginationReset } from "@mzawadie/hooks/usePaginationReset";
 import usePaginator, { createPaginationState } from "@mzawadie/hooks/usePaginator";
+import { newPasswordUrl } from "@mzawadie/pages/auth/urls";
 import { configurationMenuUrl } from "@mzawadie/pages/configuration";
 import usePermissionGroupSearch from "@mzawadie/searches/usePermissionGroupSearch";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
@@ -84,12 +85,12 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
 
     const [addStaffMember, addStaffMemberData] = useStaffMemberAddMutation({
         onCompleted: (data) => {
-            if (data.staffCreate.errors.length === 0) {
+            if (data.staffCreate?.errors.length === 0) {
                 notify({
                     status: "success",
                     text: intl.formatMessage(commonMessages.savedChanges),
                 });
-                navigate(staffMemberDetailsUrl(data.staffCreate.user.id));
+                navigate(staffMemberDetailsUrl(data.staffCreate.user?.id));
             }
         },
     });

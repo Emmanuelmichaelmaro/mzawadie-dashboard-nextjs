@@ -47,6 +47,7 @@ const customerList = gql`
         }
     }
 `;
+
 export const useCustomerListQuery = makeQuery<ListCustomers, ListCustomersVariables>(customerList);
 
 const customerDetails = gql`
@@ -92,6 +93,7 @@ const customerAddresses = gql`
         }
     }
 `;
+
 export const TypedCustomerAddressesQuery = TypedQuery<CustomerAddresses, CustomerAddressesVariables>(
     customerAddresses
 );
@@ -109,4 +111,6 @@ const customerCreateData = gql`
         }
     }
 `;
+
 export const TypedCustomerCreateDataQuery = TypedQuery<CustomerCreateData, {}>(customerCreateData);
+export const useCustomerCreateDataQuery = makeQuery<CustomerCreateData, {}>(customerCreateData);
