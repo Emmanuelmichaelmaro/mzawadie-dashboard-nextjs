@@ -332,6 +332,6 @@
         "e2e": "start-server-and-test dev http://localhost:9000 cypress",
         "e2e:run": "start-server-and-test dev http://localhost:9000 cypress:run",
         "e2e:record": "start-server-and-test dev http://localhost:9000 cypress:record",
-        "release": "read -p 'GITHUB_TOKEN: ' GITHUB_TOKEN && export GITHUB_TOKEN=$GITHUB_TOKEN && release-it"
+        "release": "dotenv release-it --"
     }
 }
