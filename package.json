@@ -229,6 +229,7 @@
         "react-intl-translations-manager": "^5.0.3",
         "react-test-renderer": "^17.0.2",
         "register-service-worker": "^1.7.2",
+        "release-it": "^14.5.0",
         "rimraf": "^3.0.2",
         "speed-measure-webpack-plugin": "^1.5.0",
         "start-server-and-test": "^1.14.0",
