@@ -2,6 +2,7 @@
     "github": {
         "release": true,
         "draft": true,
+		"web": true,
         "releaseName": "${version}"
     },
     "npm": {
