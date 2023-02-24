@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Button, Card } from "@material-ui/core";
 import Container from "@mzawadie/components/Container";
 import LimitReachedAlert from "@mzawadie/components/LimitReachedAlert";

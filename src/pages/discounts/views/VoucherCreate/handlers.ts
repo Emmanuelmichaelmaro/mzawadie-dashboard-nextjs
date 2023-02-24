@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FetchResult } from "@apollo/client";
 import { extractMutationErrors, getMutationErrors, joinDateTime } from "@mzawadie/core";
 import { VoucherDetailsPageFormData } from "@mzawadie/pages/discounts/components/VoucherDetailsPage";

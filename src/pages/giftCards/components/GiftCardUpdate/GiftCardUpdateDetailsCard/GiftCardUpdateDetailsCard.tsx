@@ -2,6 +2,7 @@ import { Card, CardContent, Divider, Typography } from "@material-ui/core";
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import Skeleton from "@mzawadie/components/Skeleton";
+import { VerticalSpacer } from "@mzawadie/pages/apps/components/VerticalSpacer";
 import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";

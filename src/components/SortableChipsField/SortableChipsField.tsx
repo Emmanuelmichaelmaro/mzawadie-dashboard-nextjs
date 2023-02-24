@@ -7,7 +7,7 @@ import React from "react";
 import { SortableContainerProps } from "react-sortable-hoc";
 
 import Skeleton from "../Skeleton";
-import SortableChip from "../SortableChip";
+import SortableChip from "../SortableChip/SortableChip";
 import SortableContainer from "./SortableContainer";
 
 const useStyles = makeStyles(

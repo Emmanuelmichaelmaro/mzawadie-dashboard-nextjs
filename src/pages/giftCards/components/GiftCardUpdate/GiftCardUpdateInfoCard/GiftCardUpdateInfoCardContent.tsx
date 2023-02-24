@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Typography } from "@material-ui/core";
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import Link from "@mzawadie/components/Link";

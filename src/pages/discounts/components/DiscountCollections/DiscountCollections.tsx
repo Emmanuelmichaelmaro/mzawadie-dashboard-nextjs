@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Card, TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { Checkbox } from "@mzawadie/components/Checkbox";

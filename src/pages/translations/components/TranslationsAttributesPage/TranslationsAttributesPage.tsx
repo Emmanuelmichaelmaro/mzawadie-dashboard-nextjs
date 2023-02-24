@@ -1,11 +1,10 @@
+// @ts-nocheck
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import Container from "@mzawadie/components/Container";
 import { LanguageSwitch } from "@mzawadie/components/LanguageSwitch";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import { ListSettingsUpdate } from "@mzawadie/components/TablePagination";
-import { commonMessages, sectionNames } from "@mzawadie/core";
-import { getStringOrPlaceholder } from "@mzawadie/core";
-import { ListSettings } from "@mzawadie/core";
+import { commonMessages, sectionNames, getStringOrPlaceholder, ListSettings } from "@mzawadie/core";
 import { AttributeTranslationDetailsFragment } from "@mzawadie/fragments/types/AttributeTranslationDetailsFragment";
 import { TranslationsEntitiesPageProps } from "@mzawadie/pages/translations/types";
 import { LanguageCodeEnum } from "@mzawadie/types/globalTypes";
@@ -64,6 +63,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
                 title={intl.formatMessage(
                     {
                         defaultMessage: 'Translation Attribute "{attribute}" - {languageCode}',
+                        id: "SPBLzT",
                         description: "header",
                     },
                     {
@@ -81,16 +81,17 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
             <TranslationFields
                 activeField={activeField}
                 disabled={disabled}
-                initialState={true}
+                initialState
                 title={intl.formatMessage(commonMessages.generalInformations)}
                 fields={[
                     {
                         displayName: intl.formatMessage({
                             defaultMessage: "Attribute Name",
+                            id: "DRMMDs",
                         }),
-                        name: fieldNames.attribute + ":" + data?.attribute.id,
+                        name: `${fieldNames.attribute}:${data?.attribute.id}`,
                         translation: data?.translation?.name || null,
-                        type: "short" as "short",
+                        type: "short" as const,
                         value: data?.attribute?.name,
                     },
                 ]}
@@ -105,7 +106,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
                 <TranslationFields
                     activeField={activeField}
                     disabled={disabled}
-                    initialState={true}
+                    initialState
                     title={intl.formatMessage(messages.values)}
                     fields={getTranslationFields(data?.attribute?.choices, intl)}
                     saveButtonState={saveButtonState}

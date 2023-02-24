@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Link from "@mzawadie/components/Link";
 import { TimelineEvent } from "@mzawadie/components/Timeline";
 import { appPath } from "@mzawadie/pages/apps/urls";

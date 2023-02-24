@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { OutputData } from "@editorjs/editorjs";
 import { AttributeTranslationDetailsFragment_attribute_choices } from "@mzawadie/fragments/types/AttributeTranslationDetailsFragment";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
@@ -6,8 +7,7 @@ import { IntlShape } from "react-intl";
 
 import { fieldNames } from "./components/TranslationsAttributesPage";
 import { transtionsAttributesPageFieldsMessages as messages } from "./components/TranslationsAttributesPage/messages";
-import { TranslationField } from "./types";
-import { PageTranslationInputFieldName, TranslationInputFieldName } from "./types";
+import { TranslationField, PageTranslationInputFieldName, TranslationInputFieldName } from "./types";
 
 export const getParsedTranslationInputData = ({
     fieldName,

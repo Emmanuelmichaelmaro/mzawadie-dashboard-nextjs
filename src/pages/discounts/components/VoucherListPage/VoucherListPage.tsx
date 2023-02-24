@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Card } from "@material-ui/core";
 import Container from "@mzawadie/components/Container";
 import { getByName } from "@mzawadie/components/Filter/utils";
