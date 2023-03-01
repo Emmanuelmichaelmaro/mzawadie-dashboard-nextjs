@@ -7,7 +7,7 @@ import useElementScroll, { isScrolledToBottom } from "@mzawadie/hooks/useElement
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import { GetItemPropsOptions } from "downshift";
-import React from "react";
+import React, { ReactElement } from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
 
@@ -18,20 +18,17 @@ const maxMenuItems = 5;
 const offset = 24;
 
 export type ChoiceValue = string;
-
-export interface SingleAutocompleteChoiceType<T extends ChoiceValue = ChoiceValue> {
-    label: string;
-    value: T;
+export interface SingleAutocompleteChoiceType<V extends ChoiceValue = ChoiceValue, L = string> {
+    label: L;
+    value: V;
 }
-
 export interface SingleAutocompleteActionType {
     label: string;
     onClick: () => void;
 }
-
 export interface SingleAutocompleteSelectFieldContentProps extends Partial<FetchMoreProps> {
     add?: SingleAutocompleteActionType;
-    choices: SingleAutocompleteChoiceType[];
+    choices: Array<SingleAutocompleteChoiceType<string, string | JSX.Element>>;
     displayCustomValue: boolean;
     emptyOption: boolean;
     getItemProps: (options: GetItemPropsOptions) => any;
@@ -39,6 +36,7 @@ export interface SingleAutocompleteSelectFieldContentProps extends Partial<Fetch
     inputValue: string;
     isCustomValueSelected: boolean;
     selectedItem: any;
+    style?: React.CSSProperties;
 }
 
 const useStyles = makeStyles(
@@ -59,6 +57,7 @@ const useStyles = makeStyles(
             background:
                 theme.palette.type === "light" ? theme.palette.grey[50] : theme.palette.grey[900],
             bottom: 0,
+            color: theme.palette.primary.main,
             display: "flex",
             height: 30,
             justifyContent: "center",
@@ -87,15 +86,13 @@ const useStyles = makeStyles(
         progressContainer: {
             display: "flex",
             justifyContent: "center",
+            padding: theme.spacing(1, 0),
         },
         root: {
             borderBottomLeftRadius: 8,
             borderBottomRightRadius: 8,
-            left: 0,
-            marginTop: theme.spacing(),
+            margin: theme.spacing(1, 0),
             overflow: "hidden",
-            position: "absolute",
-            right: 0,
             zIndex: 22,
         },
     }),
@@ -133,6 +130,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
         isCustomValueSelected,
         selectedItem,
         onFetchMore,
+        style,
     } = props;
 
     if (!!add && !!displayCustomValue) {
@@ -155,7 +153,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
         } else if (scrolledToBottom && !onFetchMore) {
             setSlice((slice) => slice + sliceSize);
         }
-    }, [calledForMore, onFetchMore, scrolledToBottom]);
+    }, [scrolledToBottom]);
 
     React.useEffect(() => {
         if (!onFetchMore) {
@@ -167,7 +165,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
             });
             setInitialized(true);
         }
-    }, [initialized, onFetchMore]);
+    }, [choices?.length]);
 
     React.useEffect(() => {
         setInitialized(false);
@@ -177,7 +175,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
         if (calledForMore && !loading) {
             setCalledForMore(false);
         }
-    }, [calledForMore, loading]);
+    }, [loading]);
 
     const emptyOptionProps = getItemProps({
         item: "",
@@ -186,15 +184,15 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
     const choicesToDisplay = choices.slice(0, slice);
 
     return (
-        <Paper className={classes.root}>
-            <div className={classes.content} ref={anchor} data-test="autocomplete-dropdown">
+        <Paper className={classes.root} elevation={8} style={style}>
+            <div className={classes.content} ref={anchor} data-test-id="autocomplete-dropdown">
                 {choices.length > 0 || displayCustomValue ? (
                     <>
                         {emptyOption && (
                             <MenuItem
                                 className={classes.menuItem}
                                 component="div"
-                                data-test="singleautocomplete-select-option"
+                                data-test-id="single-autocomplete-select-option"
                                 data-test-type="empty"
                                 {...emptyOptionProps}
                             >
@@ -203,6 +201,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                                 </Typography>
                             </MenuItem>
                         )}
+
                         {add && (
                             <MenuItem
                                 className={classes.menuItem}
@@ -210,7 +209,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                                 {...getItemProps({
                                     item: inputValue,
                                 })}
-                                data-test="singleautocomplete-select-option-add"
+                                data-test-id="single-autocomplete-select-option-add"
                                 data-test-type="add"
                                 onClick={add.onClick}
                             >
@@ -218,6 +217,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                                 <Typography color="primary">{add.label}</Typography>
                             </MenuItem>
                         )}
+
                         {displayCustomValue && (
                             <MenuItem
                                 className={classes.menuItem}
@@ -227,7 +227,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                                 {...getItemProps({
                                     item: inputValue,
                                 })}
-                                data-test="singleautocomplete-select-option"
+                                data-test-id="single-autocomplete-select-option"
                                 data-test-type="custom"
                             >
                                 <FormattedMessage
@@ -240,9 +240,11 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                                 />
                             </MenuItem>
                         )}
+
                         {choices.length > 0 && (!!add || displayCustomValue) && (
                             <Hr className={classes.hr} />
                         )}
+
                         {choicesToDisplay.map((suggestion, index) => {
                             const choiceIndex = getChoiceIndex(
                                 index,
@@ -251,17 +253,23 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                                 !!add
                             );
 
+                            const key = React.isValidElement(suggestion.label)
+                                ? `${index}${suggestion.value}${
+                                      (suggestion as unknown as ReactElement).props
+                                  }`
+                                : JSON.stringify(suggestion);
+
                             return (
                                 <MenuItem
                                     className={classes.menuItem}
-                                    key={JSON.stringify(suggestion)}
+                                    key={key}
                                     selected={selectedItem === suggestion.value}
                                     component="div"
                                     {...getItemProps({
                                         index: choiceIndex,
                                         item: suggestion.value,
                                     })}
-                                    data-test="singleautocomplete-select-option"
+                                    data-test-id="single-autocomplete-select-option"
                                     data-test-value={suggestion.value}
                                     data-test-type="option"
                                 >
@@ -269,6 +277,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                                 </MenuItem>
                             );
                         })}
+
                         {hasMore && (
                             <>
                                 <Hr className={classes.hr} />
@@ -279,11 +288,16 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                         )}
                     </>
                 ) : (
-                    <MenuItem disabled component="div" data-test="singleautocomplete-select-no-options">
+                    <MenuItem
+                        disabled
+                        component="div"
+                        data-test-id="single-autocomplete-select-no-options"
+                    >
                         <FormattedMessage defaultMessage="No results found" id="hX5PAb" />
                     </MenuItem>
                 )}
             </div>
+
             {choices.length > maxMenuItems && (
                 <div className={classes.arrowContainer}>
                     <div
@@ -302,5 +316,4 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
 };
 
 SingleAutocompleteSelectFieldContent.displayName = "SingleAutocompleteSelectFieldContent";
-
 export default SingleAutocompleteSelectFieldContent;

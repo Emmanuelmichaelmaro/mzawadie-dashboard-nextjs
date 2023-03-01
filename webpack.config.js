@@ -61,7 +61,7 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
 
 const environmentPlugin = new webpack.EnvironmentPlugin({
     API_URI: "",
-    APP_MOUNT_URI: "/",
+    APP_MOUNT_URI: "/dashboard/",
     DEMO_MODE: true,
     ENVIRONMENT: "",
     GTM_ID: "",
@@ -122,7 +122,7 @@ module.exports = speedMeasureWrapper((env, argv) => {
 
     if (!devMode) {
         manifestPlugin = new InjectManifest({
-            swSrc: "./src/serviceWorker.js",
+            swSrc: "./src/serviceWorkerRegistration.js",
             swDest: "service-worker.js",
             maximumFileSizeToCacheInBytes: 5000000,
             webpackCompilationPlugins: [checkerPlugin],

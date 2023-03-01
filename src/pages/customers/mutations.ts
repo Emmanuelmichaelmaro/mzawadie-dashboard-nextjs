@@ -4,7 +4,6 @@ import { TypedMutation } from "@mzawadie/core";
 import { fragmentAddress } from "@mzawadie/fragments/address";
 import { customerAddressesFragment, customerDetailsFragment } from "@mzawadie/fragments/customers";
 import { accountErrorFragment } from "@mzawadie/fragments/errors";
-import makeMutation from "@mzawadie/hooks/makeMutation";
 
 import { BulkRemoveCustomers, BulkRemoveCustomersVariables } from "./types/BulkRemoveCustomers";
 import { CreateCustomer, CreateCustomerVariables } from "./types/CreateCustomer";
@@ -32,6 +31,7 @@ const updateCustomer = gql`
         }
     }
 `;
+
 export const TypedUpdateCustomerMutation = TypedMutation<UpdateCustomer, UpdateCustomerVariables>(
     updateCustomer
 );
@@ -51,9 +51,6 @@ const createCustomer = gql`
 `;
 
 export const TypedCreateCustomerMutation = TypedMutation<CreateCustomer, CreateCustomerVariables>(
-    createCustomer
-);
-export const useCreateCustomerMutation = makeMutation<CreateCustomer, CreateCustomerVariables>(
     createCustomer
 );
 

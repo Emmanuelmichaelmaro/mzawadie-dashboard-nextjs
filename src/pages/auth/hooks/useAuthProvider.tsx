@@ -58,7 +58,8 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
             permitCredentialsAPI.current
         ) {
             permitCredentialsAPI.current = false;
-            loginWithCredentialsManagementAPI(handleLogin);
+            // eslint-disable-next-line no-console
+            loginWithCredentialsManagementAPI(handleLogin).then((r) => console.log(r));
         }
     }, [authenticated, authenticating]);
 
@@ -81,12 +82,12 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
         });
 
         if (isCredentialsManagementAPISupported) {
-            navigator.credentials.preventSilentAccess();
+            await navigator.credentials.preventSilentAccess();
         }
 
         // Forget last logged-in user data.
         // On next login, user details query will be re-fetched due to cache-and-network fetch policy.
-        apolloClient.clearStore();
+        await apolloClient.clearStore();
 
         const errors = result?.errors || [];
 
@@ -110,18 +111,18 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
                 password,
             });
 
-            if (result && !result.data.tokenCreate.errors.length) {
+            if (result && !result.data?.tokenCreate?.errors.length) {
                 if (DEMO_MODE) {
                     displayDemoMessage(intl, notify);
                 }
-                saveCredentials(result.data.tokenCreate.user, password);
+                await saveCredentials(result.data?.tokenCreate?.user, password);
             } else {
                 setError("loginError");
             }
 
-            await logoutNonStaffUser(result.data.tokenCreate);
+            await logoutNonStaffUser(result.data?.tokenCreate);
 
-            return result.data.tokenCreate;
+            return result.data?.tokenCreate;
         } catch (error) {
             setError("serverError");
         }
@@ -143,7 +144,7 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
                 input: JSON.stringify(input),
             });
 
-            if (result && !result.data?.externalObtainAccessTokens.errors.length) {
+            if (result && !result.data?.externalObtainAccessTokens?.errors.length) {
                 if (DEMO_MODE) {
                     displayDemoMessage(intl, notify);
                 }
@@ -151,7 +152,7 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
                 setError("externalLoginError");
             }
 
-            await logoutNonStaffUser(result.data.externalObtainAccessTokens);
+            await logoutNonStaffUser(result.data?.externalObtainAccessTokens);
 
             return result?.data?.externalObtainAccessTokens;
         } catch (error) {

@@ -1,15 +1,15 @@
 // @ts-nocheck
-import { IconButton, TextField, Typography } from "@material-ui/core";
+import ArrowDropdownIcon from "@icons/ArrowDropdown";
+import { Popper, TextField, Typography } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import CloseIcon from "@material-ui/icons/Close";
+import Debounce, { DebounceProps } from "@mzawadie/components/Debounce";
 import { FetchMoreProps } from "@mzawadie/core";
-import ArrowDropdownIcon from "@mzawadie/icons/ArrowDropdown";
-import { makeStyles } from "@saleor/macaw-ui";
+import { IconButton, makeStyles } from "@saleor/macaw-ui";
 import Downshift, { ControllerStateAndHelpers } from "downshift";
 import { filter } from "fuzzaldrin";
 import React from "react";
 
-import Debounce, { DebounceProps } from "../Debounce";
 import MultiAutocompleteSelectFieldContent, {
     MultiAutocompleteActionType,
     MultiAutocompleteChoiceType,
@@ -68,6 +68,11 @@ const useStyles = makeStyles(
         adornment: {
             display: "flex",
             alignItems: "center",
+            userSelect: "none",
+            cursor: "pointer",
+            "&:active": {
+                pointerEvents: "none",
+            },
         },
     }),
     { name: "MultiAutocompleteSelectField" }
@@ -121,10 +126,11 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
         ...rest
     } = props;
     const classes = useStyles(props);
+    const anchor = React.useRef<HTMLInputElement | null>(null);
 
     const handleSelect = (item: string, downshiftOpts?: ControllerStateAndHelpers) => {
         if (downshiftOpts) {
-            downshiftOpts.reset({ inputValue: "" });
+            downshiftOpts.reset({ inputValue: "", isOpen: true });
         }
         onChange({
             target: { name, value: item },
@@ -139,8 +145,9 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                         onInputValueChange={(value) => debounceFn(value)}
                         onSelect={handleSelect}
                         itemToString={() => ""}
-                        // this is to prevent unwanted state updates when the dropdown is closed with an empty value,
-                        // which downshift interprets as the value being updated with an empty string, causing side-effects
+                        // this is to prevent unwanted state updates when the dropdown
+                        // is closed with an empty value, which downshift interprets as
+                        // the value being updated with an empty string, causing side effects
                         stateReducer={(state, changes) => {
                             if (changes.isOpen === false && state.inputValue === "") {
                                 delete changes.inputValue;
@@ -175,7 +182,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                                             endAdornment: (
                                                 <div className={classes.adornment}>
                                                     {endAdornment}
-                                                    <ArrowDropdownIcon onClick={() => toggleMenu()} />
+                                                    <ArrowDropdownIcon />
                                                 </div>
                                             ),
                                             id: undefined,
@@ -186,6 +193,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                                                     fetchChoices(inputValue);
                                                 }
                                             },
+                                            ref: anchor,
                                         }}
                                         error={error}
                                         helperText={helperText}
@@ -193,29 +201,40 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                                         fullWidth
                                         disabled={disabled}
                                     />
+
                                     {isOpen && (
-                                        <MultiAutocompleteSelectFieldContent
-                                            add={
-                                                add && {
-                                                    ...add,
-                                                    onClick: () => {
-                                                        add.onClick();
-                                                        closeMenu();
-                                                    },
+                                        <Popper
+                                            anchorEl={anchor.current}
+                                            open={isOpen}
+                                            style={{
+                                                width: anchor.current.clientWidth,
+                                                zIndex: 1301,
+                                            }}
+                                            placement="bottom-end"
+                                        >
+                                            <MultiAutocompleteSelectFieldContent
+                                                add={
+                                                    add && {
+                                                        ...add,
+                                                        onClick: () => {
+                                                            add.onClick();
+                                                            closeMenu();
+                                                        },
+                                                    }
                                                 }
-                                            }
-                                            choices={choices.filter(
-                                                (choice) => !value.includes(choice.value)
-                                            )}
-                                            displayCustomValue={displayCustomValue}
-                                            displayValues={displayValues}
-                                            getItemProps={getItemProps}
-                                            hasMore={hasMore}
-                                            highlightedIndex={highlightedIndex}
-                                            loading={loading}
-                                            inputValue={inputValue}
-                                            onFetchMore={onFetchMore}
-                                        />
+                                                choices={choices.filter(
+                                                    (choice) => !value.includes(choice.value)
+                                                )}
+                                                displayCustomValue={displayCustomValue}
+                                                displayValues={displayValues}
+                                                getItemProps={getItemProps}
+                                                hasMore={hasMore}
+                                                highlightedIndex={highlightedIndex}
+                                                loading={loading}
+                                                inputValue={inputValue}
+                                                onFetchMore={onFetchMore}
+                                            />
+                                        </Popper>
                                     )}
                                 </div>
                             );
@@ -233,7 +252,9 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                             <Typography className={classes.chipLabel}>{value.label}</Typography>
 
                             <IconButton
-                                data-test-id={testId ? `${testId}Remove` : "remove"}
+                                hoverOutline={false}
+                                variant="secondary"
+                                data-test-id={testId ? `${testId}-remove` : "remove"}
                                 className={classes.chipClose}
                                 disabled={value.disabled}
                                 onClick={() => handleSelect(value.value)}

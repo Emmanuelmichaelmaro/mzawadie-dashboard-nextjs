@@ -9,6 +9,7 @@ import { RichTextEditorContentProps, tools } from "./RichTextEditorContent";
 import useStyles from "./styles";
 
 export type RichTextEditorChange = (data: OutputData) => void;
+
 export interface RichTextEditorProps extends RichTextEditorContentProps {
     disabled: boolean;
     error: boolean;
@@ -81,8 +82,10 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             }
 
             await editor.current.isReady;
+
             if (editor.current?.readOnly) {
-                // readOnly.toggle() by itself does not enqueue the events and will result in a broken output if invocations overlap
+                // readOnly.toggle() by itself does not enqueue the events and
+                // will result in a broken output if invocations overlap
                 // Remove this logic when this is fixed in EditorJS
                 togglePromiseQueue.current.add(() => editor.current.readOnly.toggle(disabled));
 

@@ -57,6 +57,7 @@ const RichTextEditorContent: React.FC<RichTextEditorContentProps> = ({ className
 
     const editor = React.useRef<EditorJS>();
     const editorContainer = React.useRef<HTMLDivElement>();
+
     React.useEffect(
         () => {
             if (data !== undefined && !editor.current) {

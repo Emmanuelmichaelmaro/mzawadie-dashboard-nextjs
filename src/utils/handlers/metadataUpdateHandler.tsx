@@ -1,6 +1,8 @@
+// @ts-nocheck
 import { FetchResult } from "@apollo/client";
 import { MetadataFormData } from "@mzawadie/components/Metadata/types";
 import { MetadataErrorFragment } from "@mzawadie/fragments/types/MetadataErrorFragment";
+import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import { MetadataInput } from "@mzawadie/types/globalTypes";
 import { arrayDiff } from "@mzawadie/utils/arrays";
 
@@ -9,6 +11,8 @@ import {
     UpdatePrivateMetadata,
     UpdatePrivateMetadataVariables,
 } from "../metadata/types/UpdatePrivateMetadata";
+import { filterMetadataArray } from "./filterMetadataArray";
+import { areMetadataArraysEqual } from "./metadataUpdateHelpers";
 
 interface ObjectWithMetadata {
     id: string;
@@ -18,7 +22,7 @@ interface ObjectWithMetadata {
 
 function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
     initial: ObjectWithMetadata,
-    update: (data: TData) => Promise<TError[]>,
+    update: (data: TData) => SubmitPromise<TError[]>,
     updateMetadata: (variables: UpdateMetadataVariables) => Promise<FetchResult<UpdateMetadata>>,
     updatePrivateMetadata: (
         variables: UpdatePrivateMetadataVariables
@@ -27,12 +31,19 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
     return async (data: TData): Promise<Array<MetadataErrorFragment | TError>> => {
         const errors = await update(data);
 
+        const hasMetadataChanged = !areMetadataArraysEqual(initial.metadata, data.metadata);
+
+        const hasPrivateMetadataChanged = !areMetadataArraysEqual(
+            initial.privateMetadata,
+            data.privateMetadata
+        );
+
         if (errors.length > 0) {
             return errors;
         }
 
         if (errors.length === 0) {
-            if (data.metadata) {
+            if (data.metadata && hasMetadataChanged) {
                 const initialKeys = initial.metadata.map((m) => m.key);
                 const modifiedKeys = data.metadata.map((m) => m.key);
 
@@ -40,12 +51,13 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
 
                 const updateMetaResult = await updateMetadata({
                     id: initial.id,
-                    input: data.metadata,
+                    input: filterMetadataArray(data.metadata),
                     keysToDelete: keyDiff.removed,
                 });
+
                 const updateMetaErrors = [
-                    ...(updateMetaResult?.data?.deleteMetadata?.errors || []),
-                    ...(updateMetaResult?.data?.updateMetadata?.errors || []),
+                    ...(updateMetaResult.data.deleteMetadata.errors || []),
+                    ...(updateMetaResult.data.updateMetadata.errors || []),
                 ];
 
                 if (updateMetaErrors.length > 0) {
@@ -53,7 +65,7 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
                 }
             }
 
-            if (data.privateMetadata) {
+            if (data.privateMetadata && hasPrivateMetadataChanged) {
                 const initialKeys = initial.privateMetadata.map((m) => m.key);
                 const modifiedKeys = data.privateMetadata.map((m) => m.key);
 
@@ -61,13 +73,13 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
 
                 const updatePrivateMetaResult = await updatePrivateMetadata({
                     id: initial.id,
-                    input: data.privateMetadata,
+                    input: filterMetadataArray(data.privateMetadata),
                     keysToDelete: keyDiff.removed,
                 });
 
                 const updatePrivateMetaErrors = [
-                    ...(updatePrivateMetaResult.data?.deletePrivateMetadata?.errors || []),
-                    ...(updatePrivateMetaResult.data?.updatePrivateMetadata?.errors || []),
+                    ...(updatePrivateMetaResult.data.deletePrivateMetadata.errors || []),
+                    ...(updatePrivateMetaResult.data.updatePrivateMetadata.errors || []),
                 ];
 
                 if (updatePrivateMetaErrors.length > 0) {

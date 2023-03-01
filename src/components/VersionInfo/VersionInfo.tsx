@@ -24,4 +24,5 @@ const VersionInfo: React.FC<VersionInfoProps> = ({ dashboardVersion, coreVersion
 };
 
 VersionInfo.displayName = "VersionInfo";
+
 export default VersionInfo;

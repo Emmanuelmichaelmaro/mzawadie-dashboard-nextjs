@@ -32,7 +32,7 @@
         "url": "https://github.com/Emmanuelmichaelmaro/mzawadie-dashboard/issues",
         "email": "emmanuelmaro733@gmail.com"
     },
-    "homepage": ".",
+    "homepage": "https://mzawadie.co.tz/dashboard/",
     "engines": {
         "node": ">=14 <15",
         "npm": ">=6.11.0 <7"
@@ -304,8 +304,6 @@
         "graphql-generate-types": "rimraf ./src/**/graphql && rimraf ./src/**/types && npm run graphql-build-types && npm run graphql-codegen-generate",
         "start": "webpack-dev-server -d",
         "build": "webpack --mode production --profile --json > stats.json",
-        "serve": "serve -s build -l 5000",
-        "postbuild": "rimraf ./build/**/*.js.map",
         "prebuild": "rimraf ./build && npm run graphql-generate-types && npm run make-both-messages",
         "lint": "npm run eslint && npm run format",
         "eslint": "eslint \"src/**/*.@(tsx|ts|jsx|js)\" -c ./.eslintrc --quiet --fix",

@@ -1,9 +1,8 @@
-/* eslint-disable import/no-cycle */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import chevronDown from "@assets/images/ChevronDown.svg";
 import { CircularProgress, MenuItem, Paper, Typography } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
+import { Checkbox } from "@mzawadie/components/Checkbox";
 import { FetchMoreProps } from "@mzawadie/core";
 import useElementScroll, { isScrolledToBottom } from "@mzawadie/hooks/useElementScroll";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -13,7 +12,6 @@ import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage } from "react-intl";
 
-import { Checkbox } from "../Checkbox";
 import Hr from "../Hr";
 
 const menuItemHeight = 46;
@@ -24,11 +22,13 @@ export interface MultiAutocompleteActionType {
     label: string;
     onClick: () => void;
 }
+
 export interface MultiAutocompleteChoiceType {
     label: string;
     value: any;
     disabled?: boolean;
 }
+
 export interface MultiAutocompleteSelectFieldContentProps extends Partial<FetchMoreProps> {
     add?: MultiAutocompleteActionType;
     choices: MultiAutocompleteChoiceType[];
@@ -97,6 +97,7 @@ const useStyles = makeStyles(
                 color: theme.palette.primary.main,
                 fontWeight: 700,
             },
+            paddingLeft: theme.spacing(1.5),
             borderRadius: 4,
             display: "grid",
             gridColumnGap: theme.spacing(1),
@@ -113,16 +114,13 @@ const useStyles = makeStyles(
         progressContainer: {
             display: "flex",
             justifyContent: "center",
-            padding: `${theme.spacing(1)}px 0`,
+            padding: theme.spacing(1, 0),
         },
         root: {
             borderBottomLeftRadius: 8,
             borderBottomRightRadius: 8,
-            left: 0,
-            marginTop: theme.spacing(),
+            margin: theme.spacing(1, 0),
             overflow: "hidden",
-            position: "absolute",
-            right: 0,
             zIndex: 22,
         },
     }),
@@ -163,13 +161,16 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
         inputValue,
         onFetchMore,
     } = props;
+
     if (!!add && !!displayCustomValue) {
         throw new Error("Add and custom value cannot be displayed simultaneously");
     }
 
     const classes = useStyles(props);
     const anchor = React.useRef<HTMLDivElement>();
+
     const scrollPosition = useElementScroll(anchor);
+
     const [calledForMore, setCalledForMore] = React.useState(false);
 
     const scrolledToBottom = isScrolledToBottom(anchor, scrollPosition, offset);
@@ -179,22 +180,23 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
             onFetchMore();
             setCalledForMore(true);
         }
-    }, [calledForMore, onFetchMore, scrolledToBottom]);
+    }, [scrolledToBottom]);
 
     React.useEffect(() => {
         if (calledForMore && !loading) {
             setCalledForMore(false);
         }
-    }, [calledForMore, loading]);
+    }, [loading]);
 
     const hasValuesToDisplay = displayValues.length > 0 || displayCustomValue || choices.length > 0;
+
     return (
-        <Paper className={classes.root}>
+        <Paper className={classes.root} elevation={8}>
             {hasValuesToDisplay && (
                 <div
                     className={classes.content}
                     ref={anchor}
-                    data-test-id="multiautocomplete-select-content"
+                    data-test-id="multi-autocomplete-select-content"
                 >
                     <>
                         {add && (
@@ -204,13 +206,14 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                                 {...getItemProps({
                                     item: inputValue,
                                 })}
-                                data-test="multiautocomplete-select-option-add"
+                                data-test-id="multi-autocomplete-select-option-add"
                                 onClick={add.onClick}
                             >
                                 <AddIcon color="primary" className={classes.addIcon} />
                                 <Typography color="primary">{add.label}</Typography>
                             </MenuItem>
                         )}
+
                         {displayCustomValue && (
                             <MenuItem
                                 className={classes.menuItem}
@@ -219,7 +222,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                                 {...getItemProps({
                                     item: inputValue,
                                 })}
-                                data-test="multiautocomplete-select-option"
+                                data-test-id="multi-autocomplete-select-option-custom"
                             >
                                 <AddIcon className={classes.addIcon} color="primary" />
                                 <FormattedMessage
@@ -232,9 +235,11 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                                 />
                             </MenuItem>
                         )}
+
                         {(choices.length > 0 || displayValues.length > 0) && displayCustomValue && (
                             <Hr className={classes.hr} />
                         )}
+
                         {displayValues.map((value) => (
                             <MenuItem
                                 className={classes.menuItem}
@@ -245,7 +250,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                                 {...getItemProps({
                                     item: value.value,
                                 })}
-                                data-test="multiautocomplete-select-option"
+                                data-test-id="multi-autocomplete-select-option"
                             >
                                 <Checkbox
                                     className={classes.checkbox}
@@ -256,9 +261,11 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                                 <span className={classes.menuItemLabel}>{value.label}</span>
                             </MenuItem>
                         ))}
+
                         {displayValues.length > 0 && choices.length > 0 && (
                             <Hr className={classes.hr} />
                         )}
+
                         {choices.map((suggestion, index) => {
                             const choiceIndex = getChoiceIndex(
                                 index,
@@ -278,7 +285,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                                         index: choiceIndex,
                                         item: suggestion.value,
                                     })}
-                                    data-test="multiautocomplete-select-option"
+                                    data-test-id="multi-autocomplete-select-option"
                                 >
                                     <Checkbox
                                         checked={false}
@@ -293,11 +300,13 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                     </>
                 </div>
             )}
+
             {!loading && !hasValuesToDisplay && (
-                <MenuItem disabled component="div" data-test="multiautocomplete-select-no-options">
+                <MenuItem disabled component="div" data-test-id="multi-autocomplete-select-no-options">
                     <FormattedMessage defaultMessage="No results found" id="hX5PAb" />
                 </MenuItem>
             )}
+
             {(hasMore || loading) && (
                 <>
                     {hasMore && <Hr className={classes.hr} />}
@@ -306,11 +315,12 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                     </div>
                 </>
             )}
+
             {choices.length > maxMenuItems && (
                 <div className={classes.arrowContainer}>
                     <div
                         className={classNames(classes.arrowInnerContainer, {
-                            // Needs to be explicitely compared to false because
+                            // Needs to be explicitly compared to false because
                             // scrolledToBottom can be either true, false or undefined
                             [classes.hide]: scrolledToBottom !== false,
                         })}

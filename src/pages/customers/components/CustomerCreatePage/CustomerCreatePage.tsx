@@ -52,12 +52,12 @@ const initialForm: CustomerCreatePageFormData & AddressTypeInput = {
 };
 
 export interface CustomerCreatePageProps {
-    countries: CustomerCreateData_shop_countries[];
-    disabled: boolean;
-    errors: AccountErrorFragment[];
-    saveButtonBar: ConfirmButtonTransitionState;
-    onBack: () => void;
-    onSubmit: (data: CustomerCreatePageSubmitData) => SubmitPromise;
+    countries?: CustomerCreateData_shop_countries[];
+    disabled?: boolean;
+    errors?: AccountErrorFragment[];
+    saveButtonBar?: ConfirmButtonTransitionState;
+    onBack?: () => void;
+    onSubmit?: (data: CustomerCreatePageSubmitData) => SubmitPromise;
 }
 
 const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
@@ -71,9 +71,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
     const intl = useIntl();
 
     const [countryDisplayName, setCountryDisplayName] = React.useState("");
-
     const countryChoices = mapCountriesToChoices(countries);
-
     const { errors: validationErrors, submit: handleSubmitWithAddress } = useAddressValidation<
         CustomerCreatePageFormData,
         void
@@ -165,9 +163,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
                                     errors={errors}
                                     onChange={change}
                                 />
-
                                 <CardSpacer />
-
                                 <CustomerCreateAddress
                                     countries={countryChoices}
                                     countryDisplayName={countryDisplayName}
@@ -177,9 +173,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
                                     onChange={change}
                                     onCountryChange={handleCountrySelect}
                                 />
-
                                 <CardSpacer />
-
                                 <CustomerCreateNote
                                     data={data}
                                     disabled={disabled}

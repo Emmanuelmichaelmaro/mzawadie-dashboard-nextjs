@@ -55,7 +55,7 @@ const CustomerAddressesView: React.FC<RouteComponentProps<CustomerAddressesRoute
     return <CustomerAddressesViewComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
 
-const CustomerPage: React.FC<{}> = () => {
+const CustomerPage: React.FC = () => {
     const intl = useIntl();
 
     return (
@@ -63,9 +63,9 @@ const CustomerPage: React.FC<{}> = () => {
             <WindowTitle title={intl.formatMessage(sectionNames.customers)} />
             <Switch>
                 <Route exact path={customerListPath} component={CustomerListView} />
-                <Route path={customerPath(":id")} component={CustomerDetailsView} />
                 <Route exact path={customerAddPath} component={CustomerCreateView} />
                 <Route path={customerAddressesPath(":id")} component={CustomerAddressesView} />
+                <Route path={customerPath(":id")} component={CustomerDetailsView} />
             </Switch>
         </>
     );

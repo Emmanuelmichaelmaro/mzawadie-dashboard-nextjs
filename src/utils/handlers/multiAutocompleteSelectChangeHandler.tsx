@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { MultiAutocompleteChoiceType } from "@mzawadie/components/MultiAutocompleteSelectField";
+import { combinedMultiAutocompleteChoices } from "@mzawadie/core";
 import { ChangeEvent, FormChange } from "@mzawadie/hooks/useForm";
 import { toggle } from "@mzawadie/utils/lists";
 
@@ -19,7 +20,8 @@ function createMultiAutocompleteSelectHandler(
         change(event);
 
         const id = event.target.value;
-        const choice = choices.find((choice) => choice.value === id);
+        const combinedChoices = combinedMultiAutocompleteChoices(selected, choices);
+        const choice = combinedChoices.find((choice) => choice.value === id);
 
         setSelected(toggle(choice, selected, (a, b) => a.value === b.value));
     };

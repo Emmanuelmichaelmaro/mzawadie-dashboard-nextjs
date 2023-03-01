@@ -88,7 +88,7 @@ function makeQuery<TData, TVariables>(query: DocumentNode): UseQueryHook<TData, 
                 if (!!handleError) {
                     handleError(error);
                 } else {
-                    handleQueryAuthError(error, notify, user.logout, intl);
+                    handleQueryAuthError(error, notify, user.logout, intl).then((r) => console.log(r));
                 }
             },
             skip,

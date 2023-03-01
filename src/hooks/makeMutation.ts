@@ -7,6 +7,7 @@ import {
 } from "@apollo/client";
 import { commonMessages, getMutationStatus, MutationResultAdditionalProps } from "@mzawadie/core";
 import { useUser } from "@mzawadie/pages/auth";
+import { isJwtError } from "@mzawadie/pages/auth/errors";
 import { GqlErrors, hasError } from "@mzawadie/utils/api";
 import { DocumentNode } from "graphql";
 import { useIntl } from "react-intl";
@@ -50,7 +51,7 @@ function makeMutation<TData, TVariables>(mutation: DocumentNode): UseMutationHoo
                         text: intl.formatMessage(commonMessages.readOnly),
                     });
                 } else if (err.graphQLErrors.some(isJwtError)) {
-                    user.logout();
+                    user.logout().then((r) => console.log(r));
                     notify({
                         status: "error",
                         text: intl.formatMessage(commonMessages.sessionExpired),
@@ -61,6 +62,7 @@ function makeMutation<TData, TVariables>(mutation: DocumentNode): UseMutationHoo
                         text: intl.formatMessage(commonMessages.somethingWentWrong),
                     });
                 }
+
                 if (onError) {
                     onError(err);
                 }

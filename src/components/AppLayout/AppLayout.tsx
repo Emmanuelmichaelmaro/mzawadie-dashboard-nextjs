@@ -162,7 +162,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             <Navigator visible={isNavigatorVisible} setVisibility={setNavigatorVisibility} />
 
             <div className={classes.root}>
-                {isMdUp && (
+                {isMdUp && (user?.userPermissions !== null || []) && (
                     <Sidebar
                         activeId={activeMenu}
                         menuItems={menuStructure}

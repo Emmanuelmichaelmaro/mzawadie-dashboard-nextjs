@@ -94,7 +94,7 @@ export const CustomerDetailsContent: React.FC<CustomerDetailsContentProps> = ({
                 onDelete={() =>
                     navigate(
                         customerUrl(id, {
-                            action: "remove",
+                          action: "remove"
                         })
                     )
                 }

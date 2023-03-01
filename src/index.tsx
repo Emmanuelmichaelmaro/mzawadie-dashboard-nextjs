@@ -19,7 +19,6 @@ import { AppStateProvider } from "@mzawadie/containers/AppState";
 import { AppStateReducerAction } from "@mzawadie/containers/AppState/reducer";
 import { BackgroundTasksProvider } from "@mzawadie/containers/BackgroundTasks";
 import errorTracker from "@mzawadie/containers/ErrorTracking";
-import { ServiceWorker } from "@mzawadie/containers/ServiceWorker";
 import { API_URI, commonMessages, DEMO_MODE, getAppMountUri } from "@mzawadie/core";
 import themeOverrides from "@mzawadie/core/themeOverrides";
 import result from "@mzawadie/graphql/fragments";
@@ -105,6 +104,7 @@ const apolloClient = new ApolloClient({
         } as TypedTypePolicies,
     }),
     link,
+    connectToDevTools: true,
 });
 
 const saleorClient = createSaleorClient({
@@ -310,7 +310,6 @@ const App: React.FC = () => (
                     <DateProvider>
                         <LocaleProvider>
                             <MessageManagerProvider>
-                                <ServiceWorker />
                                 <BackgroundTasksProvider>
                                     <AppStateProvider>
                                         <AuthProvider>

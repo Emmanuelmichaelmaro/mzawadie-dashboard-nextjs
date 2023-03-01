@@ -1,8 +1,8 @@
 // @ts-nocheck
-import { InputBase, TextField } from "@material-ui/core";
+import ArrowDropdownIcon from "@icons/ArrowDropdown";
+import { InputBase, Popper, TextField } from "@material-ui/core";
 import { InputProps } from "@material-ui/core/Input";
 import { FetchMoreProps } from "@mzawadie/core";
-import ArrowDropdownIcon from "@mzawadie/icons/ArrowDropdown";
 import { ExtendedFormHelperTextProps } from "@mzawadie/pages/channels/components/ChannelForm/types";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
@@ -23,7 +23,13 @@ const useStyles = makeStyles(
             position: "relative",
         },
         nakedInput: {
-            padding: theme.spacing(2, 3),
+            padding: theme.spacing(2, 0),
+        },
+        adornment: {
+            cursor: "pointer",
+            "&:active": {
+                pointerEvents: "none",
+            },
         },
     }),
     { name: "SingleAutocompleteSelectField" }
@@ -36,7 +42,7 @@ export interface SingleAutocompleteSelectFieldProps extends Partial<FetchMorePro
     name: string;
     displayValue: string;
     emptyOption?: boolean;
-    choices: SingleAutocompleteChoiceType[];
+    choices: Array<SingleAutocompleteChoiceType<string, string | JSX.Element>>;
     value: string;
     disabled?: boolean;
     placeholder?: string;
@@ -84,6 +90,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
         ...rest
     } = props;
     const classes = useStyles(props);
+    const anchor = React.useRef<HTMLInputElement | null>(null);
 
     const handleChange = (item: string) => {
         onChange({
@@ -104,8 +111,8 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                     onSelect={handleChange}
                     selectedItem={value || ""}
                     // this is to prevent unwanted state updates when the dropdown
-                    // is closed with an empty value, which downshift interprets as the
-                    // value being updated with an empty string, causing side-effects
+                    // is closed with an empty value, which downshift interprets
+                    // as the value being updated with an empty string, causing side effects
                     stateReducer={(_, changes) => {
                         if (changes.isOpen === false) {
                             delete changes.inputValue;
@@ -143,7 +150,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                             }
 
                             if (isValueInValues && !isValueInLabels) {
-                                reset({ inputValue: choiceFromInputValue.label });
+                                reset({ inputValue: choiceFromInputValue.value });
                                 return;
                             }
 
@@ -159,7 +166,9 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
 
                         const handleBlur = () => {
                             ensureProperValues(true);
-                            onBlur();
+                            if (onBlur) {
+                                onBlur();
+                            }
                             closeMenu();
                         };
 
@@ -171,14 +180,14 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                                 placeholder,
                             }),
                             endAdornment: (
-                                <div>
+                                <div className={classes.adornment}>
                                     <ArrowDropdownIcon />
                                 </div>
                             ),
                             error,
                             id: undefined,
                             onBlur: handleBlur,
-                            onClick: toggleMenu,
+                            onClick: !disabled && toggleMenu,
                             onFocus: () => {
                                 if (fetchOnFocus) {
                                     fetchChoices(inputValue);
@@ -207,30 +216,39 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                                     label={label}
                                     fullWidth
                                     onBlur={onBlur}
+                                    ref={anchor}
                                 />
+
                                 {isOpen && (!!inputValue || !!choices.length) && (
-                                    <SingleAutocompleteSelectFieldContent
-                                        add={
-                                            !!add && {
-                                                ...add,
-                                                onClick: () => {
-                                                    add.onClick();
-                                                    closeMenu();
-                                                },
+                                    <Popper
+                                        anchorEl={anchor.current}
+                                        open={isOpen}
+                                        style={{ width: anchor.current.clientWidth, zIndex: 1301 }}
+                                        placement="bottom-end"
+                                    >
+                                        <SingleAutocompleteSelectFieldContent
+                                            add={
+                                                !!add && {
+                                                    ...add,
+                                                    onClick: () => {
+                                                        add.onClick();
+                                                        closeMenu();
+                                                    },
+                                                }
                                             }
-                                        }
-                                        choices={choices}
-                                        displayCustomValue={displayCustomValue}
-                                        emptyOption={emptyOption}
-                                        getItemProps={getItemProps}
-                                        hasMore={hasMore}
-                                        highlightedIndex={highlightedIndex}
-                                        loading={loading}
-                                        inputValue={inputValue}
-                                        isCustomValueSelected={isCustomValueSelected}
-                                        selectedItem={selectedItem}
-                                        onFetchMore={onFetchMore}
-                                    />
+                                            choices={choices}
+                                            displayCustomValue={displayCustomValue}
+                                            emptyOption={emptyOption}
+                                            getItemProps={getItemProps}
+                                            hasMore={hasMore}
+                                            highlightedIndex={highlightedIndex}
+                                            loading={loading}
+                                            inputValue={inputValue}
+                                            isCustomValueSelected={isCustomValueSelected}
+                                            selectedItem={selectedItem}
+                                            onFetchMore={onFetchMore}
+                                        />
+                                    </Popper>
                                 )}
                             </div>
                         );

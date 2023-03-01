@@ -12,7 +12,6 @@ type CreateFilterHandlers<TFilterKeys extends string> = [
     (query: string) => void
 ];
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 function createFilterHandlers<TFilterKeys extends string, TFilters extends {}>(opts: {
     getFilterQueryParam: GetFilterQueryParam<TFilterKeys, TFilters>;
     navigate: UseNavigatorResult;
