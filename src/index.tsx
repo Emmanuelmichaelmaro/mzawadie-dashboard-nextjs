@@ -24,6 +24,7 @@ import themeOverrides from "@mzawadie/core/themeOverrides";
 import result from "@mzawadie/graphql/fragments";
 import { TypedTypePolicies } from "@mzawadie/graphql/type-policies";
 import { useAppState } from "@mzawadie/hooks/useAppState";
+import AppsPage from "@mzawadie/pages/apps";
 import { ExternalAppProvider } from "@mzawadie/pages/apps/components/ExternalAppContext";
 import AttributePage from "@mzawadie/pages/attributes";
 import Auth, { useUser } from "@mzawadie/pages/auth";
@@ -294,6 +295,12 @@ const Routes: React.FC = () => {
                                 permissions={[PermissionEnum.MANAGE_PLUGINS]}
                                 path="/plugins"
                                 component={PluginsPage}
+                            />
+
+                            <SectionRoute
+                                permissions={[PermissionEnum.MANAGE_APPS]}
+                                path="/apps"
+                                component={AppsPage}
                             />
 
                             <Route component={NotFoundPage} />
