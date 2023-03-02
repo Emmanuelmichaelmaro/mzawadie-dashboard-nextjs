@@ -1,15 +1,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable no-restricted-globals */
-const {
-    CacheableResponsePlugin
-} = require("workbox-cacheable-response/CacheableResponsePlugin");
+const { CacheableResponsePlugin } = require("workbox-cacheable-response/CacheableResponsePlugin");
 const { ExpirationPlugin } = require("workbox-expiration/ExpirationPlugin");
 const { precacheAndRoute } = require("workbox-precaching/precacheAndRoute");
 const { registerRoute } = require("workbox-routing/registerRoute");
 const { CacheFirst } = require("workbox-strategies/CacheFirst");
-const {
-    StaleWhileRevalidate
-} = require("workbox-strategies/StaleWhileRevalidate");
+const { StaleWhileRevalidate } = require("workbox-strategies/StaleWhileRevalidate");
 
 precacheAndRoute(self.__WB_MANIFEST || []);
 
@@ -20,9 +16,9 @@ registerRoute(
         plugins: [
             new ExpirationPlugin({
                 maxEntries: 60,
-                maxAgeSeconds: 30 * 24 * 60 * 60 // 30 Days
-            })
-        ]
+                maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
+            }),
+        ],
     })
 );
 
@@ -30,7 +26,7 @@ const registerFontStyles = (match, name) => {
     registerRoute(
         match,
         new StaleWhileRevalidate({
-            cacheName: name
+            cacheName: name,
         })
     );
 };
@@ -42,27 +38,24 @@ const registerFont = (match, name) => {
             cacheName: name,
             plugins: [
                 new CacheableResponsePlugin({
-                    statuses: [0, 200]
+                    statuses: [0, 200],
                 }),
                 new ExpirationPlugin({
                     maxAgeSeconds: 60 * 60 * 24 * 365,
-                    maxEntries: 30
-                })
-            ]
+                    maxEntries: 30,
+                }),
+            ],
         })
     );
 };
 
-registerFontStyles(
-    /^https:\/\/fonts\.googleapis\.com/,
-    "google-fonts-stylesheets"
-);
+registerFontStyles(/^https:\/\/fonts\.googleapis\.com/, "google-fonts-stylesheets");
 registerFontStyles(/^https:\/\/rsms\.me\/.+\/.+\.css/, "rsms-stylesheet");
 
 registerFont(/^https:\/\/fonts\.gstatic\.com/, "google-fonts-webfonts");
 registerFont(/^https:\/\/rsms\.me\/.+\/font-files.+/, "rsms-webfonts");
 
-self.addEventListener("message", event => {
+self.addEventListener("message", (event) => {
     if (event.data === "update") {
         self.skipWaiting();
     }
@@ -70,7 +63,7 @@ self.addEventListener("message", event => {
 
 self.addEventListener("activate", async () => {
     const tabs = await self.clients.matchAll({ type: "window" });
-    tabs.forEach(tab => {
+    tabs.forEach((tab) => {
         tab.navigate(tab.url);
     });
 });

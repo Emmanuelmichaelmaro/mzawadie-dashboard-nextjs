@@ -308,6 +308,8 @@
         "webpack.config.js",
         "babel.config.js",
         "apollo.config.js",
+        "stats.json",
+        "sw.js",
         "serviceWorker.js",
         "serviceWorkerRegistration.js",
         "serviceWorkerUpdateListener.js",

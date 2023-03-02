@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // @ts-nocheck
 import {
     ApolloError,

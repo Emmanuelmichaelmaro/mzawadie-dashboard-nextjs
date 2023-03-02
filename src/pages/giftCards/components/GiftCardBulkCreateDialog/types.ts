@@ -22,7 +22,7 @@ export const giftCardBulkCreateErrorKeys: GiftCardErrorKey[] = [
     "count",
 ];
 
-export interface GiftCardBulkCreateFormData extends GiftCardCreateCommonFormData {
+export interface GiftCardBulkCreateFormDataInterface extends GiftCardCreateCommonFormData {
     cardsAmount: number;
 }
 
@@ -36,7 +36,7 @@ export interface GiftCardBulkCreateFormCommonProps {
     change: FormChange;
     toggleValue: FormChange;
     errors: GiftCardBulkCreateFormErrors;
-    data: GiftCardBulkCreateFormData;
+    data: GiftCardBulkCreateFormDataInterface;
 }
 
 export interface GiftCardCreateCommonFormData {

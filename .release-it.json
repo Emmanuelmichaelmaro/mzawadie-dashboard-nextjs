@@ -2,8 +2,8 @@
     "github": {
         "release": true,
         "draft": true,
-		"web": true,
-		"autoGenerate": true,
+        "web": true,
+        "autoGenerate": true,
         "releaseName": "${version}"
     },
     "npm": {
