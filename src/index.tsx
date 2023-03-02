@@ -44,6 +44,7 @@ import PageSection from "@mzawadie/pages/pages";
 import PermissionGroupPage from "@mzawadie/pages/permissionGroups";
 import ProductTypesPage from "@mzawadie/pages/productTypes";
 import ProductPage from "@mzawadie/pages/products";
+import PluginsPage from "@mzawadie/pages/plugins";
 import ShippingPage from "@mzawadie/pages/shipping";
 import SiteSettingsPage from "@mzawadie/pages/siteSettings";
 import StaffPage from "@mzawadie/pages/staff";
@@ -287,6 +288,12 @@ const Routes: React.FC = () => {
                                 permissions={[PermissionEnum.MANAGE_TRANSLATIONS]}
                                 path="/translations"
                                 component={TranslationsPage}
+                            />
+
+                            <SectionRoute
+                                permissions={[PermissionEnum.MANAGE_PLUGINS]}
+                                path="/plugins"
+                                component={PluginsPage}
                             />
 
                             <Route component={NotFoundPage} />
