@@ -4,7 +4,7 @@ import {
     shippingMethodWithExcludedProductsFragment,
     shippingZoneFragment,
 } from "@mzawadie/fragments/shipping";
-import makeQuery from "@mzawadie/hooks/makeQuery";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
 import { ChannelShippingZones, ChannelShippingZonesVariables } from "./types/ChannelShippingZones";
 import { ShippingZone, ShippingZoneVariables } from "./types/ShippingZone";

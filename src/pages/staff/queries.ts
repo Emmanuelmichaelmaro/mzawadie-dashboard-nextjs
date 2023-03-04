@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { TypedQuery } from "@mzawadie/core";
 import { staffMemberDetailsFragment, staffMemberFragment } from "@mzawadie/fragments/staff";
-import makeQuery from "@mzawadie/hooks/makeQuery";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
 import { StaffList, StaffListVariables } from "./types/StaffList";
 import { StaffMemberDetails, StaffMemberDetailsVariables } from "./types/StaffMemberDetails";

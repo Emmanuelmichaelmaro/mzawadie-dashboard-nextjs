@@ -7,7 +7,7 @@ import {
     voucherFragment,
 } from "@mzawadie/fragments/discounts";
 import { discountErrorFragment } from "@mzawadie/fragments/errors";
-import makeMutation from "@mzawadie/hooks/makeMutation";
+import makeMutation from "@mzawadie/hooks/graphql/makeMutation";
 
 import { SaleBulkDelete, SaleBulkDeleteVariables } from "./types/SaleBulkDelete";
 import { SaleCataloguesAdd, SaleCataloguesAddVariables } from "./types/SaleCataloguesAdd";

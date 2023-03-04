@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { giftCardSettingsErrorFragment } from "@mzawadie/fragments/errors";
 import { fragmentGiftCardsSettings } from "@mzawadie/fragments/giftCards";
-import makeMutation from "@mzawadie/hooks/makeMutation";
+import makeMutation from "@mzawadie/hooks/graphql/makeMutation";
 
 import {
     GiftCardSettingsUpdate,

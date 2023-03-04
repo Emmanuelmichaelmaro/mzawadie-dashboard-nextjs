@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import { TypedMutation } from "@mzawadie/core";
 import { pageErrorFragment, pageErrorWithAttributesFragment } from "@mzawadie/fragments/errors";
 import { pageDetailsFragment } from "@mzawadie/fragments/pages";
-import makeMutation from "@mzawadie/hooks/makeMutation";
+import makeMutation from "@mzawadie/hooks/graphql/makeMutation";
 
 import { PageBulkPublish, PageBulkPublishVariables } from "./types/PageBulkPublish";
 import { PageBulkRemove, PageBulkRemoveVariables } from "./types/PageBulkRemove";

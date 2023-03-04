@@ -5,7 +5,7 @@ import {
     collectionFragment,
     collectionProductFragment,
 } from "@mzawadie/fragments/collections";
-import makeQuery from "@mzawadie/hooks/makeQuery";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
 import { CollectionDetails, CollectionDetailsVariables } from "./types/CollectionDetails";
 import { CollectionList, CollectionListVariables } from "./types/CollectionList";

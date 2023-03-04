@@ -10,7 +10,7 @@ import {
 } from "@mzawadie/fragments/products";
 import { taxTypeFragment } from "@mzawadie/fragments/taxes";
 import { warehouseFragment } from "@mzawadie/fragments/warehouses";
-import makeQuery from "@mzawadie/hooks/makeQuery";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
 import {
     AvailableInGridAttributes,

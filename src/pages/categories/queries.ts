@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { categoryDetailsFragment, categoryFragment } from "@mzawadie/fragments/categories";
 import { pageInfoFragment } from "@mzawadie/fragments/pageInfo";
-import makeQuery from "@mzawadie/hooks/makeQuery";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
 import { CategoryDetails, CategoryDetailsVariables } from "./types/CategoryDetails";
 import { RootCategories } from "./types/RootCategories";

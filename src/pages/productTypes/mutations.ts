@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { TypedMutation } from "@mzawadie/core";
 import { productTypeDetailsFragment } from "@mzawadie/fragments/productTypes";
-import makeMutation from "@mzawadie/hooks/makeMutation";
+import makeMutation from "@mzawadie/hooks/graphql/makeMutation";
 
 import {
     AssignProductAttribute,

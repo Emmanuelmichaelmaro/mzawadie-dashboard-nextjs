@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { appFragment } from "@mzawadie/fragments/apps";
 import { webhooksFragment } from "@mzawadie/fragments/webhooks";
-import makeQuery from "@mzawadie/hooks/makeQuery";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
 import { App, AppVariables } from "./types/App";
 import { AppsInstallations } from "./types/AppsInstallations";

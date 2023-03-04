@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import { channelDetailsFragment, channelFragment } from "@mzawadie/fragments/channels";
-import makeQuery from "@mzawadie/hooks/makeQuery";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
 import { BaseChannels } from "./types/BaseChannels";
 import { Channel, ChannelVariables } from "./types/Channel";

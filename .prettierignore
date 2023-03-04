@@ -12,6 +12,7 @@ dist
 **/.storybook/*
 
 package-lock.json
+stats.json
 
 .github
 

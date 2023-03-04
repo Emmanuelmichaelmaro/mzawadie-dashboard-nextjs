@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { TypedMutation } from "@mzawadie/core";
 import { countryFragment, shopTaxesFragment } from "@mzawadie/fragments/taxes";
-import makeMutation from "@mzawadie/hooks/makeMutation";
+import makeMutation from "@mzawadie/hooks/graphql/makeMutation";
 
 import { FetchTaxes } from "./types/FetchTaxes";
 import { UpdateTaxSettings, UpdateTaxSettingsVariables } from "./types/UpdateTaxSettings";

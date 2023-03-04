@@ -4,7 +4,7 @@ import {
     warehouseDetailsFragment,
     warehouseWithShippingFragment,
 } from "@mzawadie/fragments/warehouses";
-import makeQuery from "@mzawadie/hooks/makeQuery";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
 import { WarehouseDetails, WarehouseDetailsVariables } from "./types/WarehouseDetails";
 import { WarehouseList, WarehouseListVariables } from "./types/WarehouseList";

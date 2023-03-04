@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { MetadataFormData } from "@mzawadie/components/Metadata";
 import { GiftCardError } from "@mzawadie/fragments/types/GiftCardError";
-import { MutationResultWithOpts } from "@mzawadie/hooks/makeMutation";
+import { MutationResultWithOpts } from "@mzawadie/hooks/graphql/makeMutation";
 import useForm, { FormChange, UseFormResult } from "@mzawadie/hooks/useForm";
 import useHandleFormSubmit from "@mzawadie/hooks/useHandleFormSubmit";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";

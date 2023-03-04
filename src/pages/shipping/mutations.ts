@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import { shippingChannelsErrorFragment, shippingErrorFragment } from "@mzawadie/fragments/errors";
 import { shippingMethodTypeFragment, shippingZoneDetailsFragment } from "@mzawadie/fragments/shipping";
 import { countryFragment } from "@mzawadie/fragments/taxes";
-import makeMutation from "@mzawadie/hooks/makeMutation";
+import makeMutation from "@mzawadie/hooks/graphql/makeMutation";
 
 import {
     BulkDeleteShippingRate,

@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import makeQuery from "@mzawadie/hooks/makeQuery";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
 import { ChannelCurrencies } from "./types/ChannelCurrencies";
 

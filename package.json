@@ -303,7 +303,7 @@
     "scripts": {
         "graphql-build-types": "apollo client:codegen --target=typescript --tagName=gql --globalTypesFile=src/types/globalTypes.ts types",
         "graphql-codegen-generate": "graphql-codegen --config codegen.yml",
-        "graphql-generate-types": "rimraf ./src/**/graphql && rimraf ./src/**/types && npm run graphql-build-types && npm run graphql-codegen-generate",
+        "graphql-generate-types": "npm run graphql-build-types && npm run graphql-codegen-generate",
         "start": "webpack-dev-server -d",
         "build": "webpack --mode production --profile --json > stats.json",
         "prebuild": "rimraf ./build && npm run graphql-generate-types && npm run make-both-messages",
@@ -319,7 +319,7 @@
         "compile": "formatjs compile",
         "compile-messages": "npm run compile -- locale/extracted/defaultMessages.json --ast --out-file locale/compiled/defaultMessages.json",
         "formatjs-extract-compile-messages": "npm run extract-messages && npm run compile-messages",
-        "extract-json-messages": "rimraf build/locale && cross-env NODE_ENV=extract babel src 'src/**/*.{ts,tsx}' -o build/dashboard.bundle.js",
+        "extract-json-messages": "rimraf build/locale && cross-env NODE_ENV=extract babel src 'src/**/*.{ts,tsx}' -o build/dashboard/dashboard.bundle.js",
         "transpile-messages": "node scripts/transpile-tx.js",
         "react-intl-extract-transpile-messages": "npm run extract-json-messages && npm run transpile-messages",
         "make-both-messages": "npm run react-intl-extract-transpile-messages && npm run formatjs-extract-compile-messages",

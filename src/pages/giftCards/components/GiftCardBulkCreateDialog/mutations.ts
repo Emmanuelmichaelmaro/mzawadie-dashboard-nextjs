@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import makeMutation from "@mzawadie/hooks/makeMutation";
+import makeMutation from "@mzawadie/hooks/graphql/makeMutation";
 
 import { GiftCardBulkCreate, GiftCardBulkCreateVariables } from "./types/GiftCardBulkCreate";
 

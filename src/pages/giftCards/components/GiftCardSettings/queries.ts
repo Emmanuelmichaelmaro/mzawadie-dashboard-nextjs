@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import { fragmentGiftCardsSettings } from "@mzawadie/fragments/giftCards";
-import makeQuery from "@mzawadie/hooks/makeQuery";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
 import { GiftCardSettings } from "./types/GiftCardSettings";
 

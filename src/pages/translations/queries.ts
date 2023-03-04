@@ -13,7 +13,7 @@ import {
     shippingMethodTranslationFragment,
     voucherTranslationFragment,
 } from "@mzawadie/fragments/translations";
-import makeQuery from "@mzawadie/hooks/makeQuery";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
 import {
     AttributeTranslationDetails,

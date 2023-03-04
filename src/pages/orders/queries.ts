@@ -10,8 +10,8 @@ import {
 } from "@mzawadie/fragments/orders";
 import { fragmentMoney } from "@mzawadie/fragments/products";
 import { warehouseFragment } from "@mzawadie/fragments/warehouses";
-import makeQuery from "@mzawadie/hooks/makeQuery";
-import makeTopLevelSearch from "@mzawadie/hooks/makeTopLevelSearch";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
+import { makeTopLevelSearch } from "@mzawadie/hooks/makeTopLevelSearch";
 
 import { OrderDetails, OrderDetailsVariables } from "./types/OrderDetails";
 import { OrderDraftList, OrderDraftListVariables } from "./types/OrderDraftList";

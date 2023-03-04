@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 // @ts-nocheck
 import { Button } from "@material-ui/core";
 import { FilterProps } from "@mzawadie/core";
@@ -66,10 +67,11 @@ const FilterBar: React.FC<FilterBarProps> = (props) => {
         <>
             <FilterTabs currentTab={currentTab}>
                 <FilterTab label={allTabLabel} onClick={onAll} />
+
                 {tabs.map((tab, tabIndex) => (
-                    // eslint-disable-next-line react/no-array-index-key
                     <FilterTab onClick={() => onTabChange(tabIndex + 1)} label={tab} key={tabIndex} />
                 ))}
+
                 {isCustom && (
                     <FilterTab
                         onClick={() => undefined}
@@ -89,11 +91,13 @@ const FilterBar: React.FC<FilterBarProps> = (props) => {
                     onFilterAdd={onFilterChange}
                     onFilterAttributeFocus={onFilterAttributeFocus}
                 />
+
                 <SearchInput
                     initialSearch={initialSearch}
                     placeholder={searchPlaceholder}
                     onSearchChange={onSearchChange}
                 />
+
                 {displayTabAction &&
                     (displayTabAction === "save" ? (
                         <Button className={classes.tabActionButton} color="primary" onClick={onTabSave}>

@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import { TypedMutation } from "@mzawadie/core";
 import { accountErrorFragment, staffErrorFragment } from "@mzawadie/fragments/errors";
 import { staffMemberDetailsFragment } from "@mzawadie/fragments/staff";
-import makeMutation from "@mzawadie/hooks/makeMutation";
+import makeMutation from "@mzawadie/hooks/graphql/makeMutation";
 
 import { ChangeStaffPassword, ChangeStaffPasswordVariables } from "./types/ChangeStaffPassword";
 import { StaffAvatarDelete } from "./types/StaffAvatarDelete";

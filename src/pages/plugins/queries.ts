@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import { pluginBaseFragment, pluginsDetailsFragment } from "@mzawadie/fragments/plugins";
-import makeQuery from "@mzawadie/hooks/makeQuery";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
 import { Plugin, PluginVariables } from "./types/Plugin";
 import { Plugins, PluginsVariables } from "./types/Plugins";

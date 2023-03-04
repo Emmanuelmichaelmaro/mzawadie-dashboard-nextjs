@@ -1,17 +1,8 @@
-import {
-    Card,
-    TableBody,
-    TableCell,
-    TableFooter,
-    TableRow,
-    Typography
-} from "@material-ui/core";
+import { Card, TableBody, TableCell, TableFooter, TableRow, Typography } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { TablePagination } from "@mzawadie/components/TablePagination";
-import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
-import { Button, IconButton } from "@saleor/macaw-ui";
-import { renderCollection, stopPropagation } from "@mzawadie/core";
-import { ListProps } from "@mzawadie/core";
+import { renderCollection, stopPropagation, ListProps } from "@mzawadie/core";
+import { DeleteIcon, ResponsiveTable, Button, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -28,18 +19,18 @@ export interface InstalledAppsProps extends ListProps {
 const numberOfColumns = 2;
 
 const InstalledApps: React.FC<InstalledAppsProps> = ({
-                                                         appsList,
-                                                         onRemove,
-                                                         settings,
-                                                         disabled,
-                                                         onNextPage,
-                                                         onPreviousPage,
-                                                         onRowClick,
-                                                         onRowAboutClick,
-                                                         onUpdateListSettings,
-                                                         pageInfo,
-                                                         ...props
-                                                     }) => {
+    appsList,
+    onRemove,
+    settings,
+    disabled,
+    onNextPage,
+    onPreviousPage,
+    onRowClick,
+    onRowAboutClick,
+    onUpdateListSettings,
+    pageInfo,
+    ...props
+}) => {
     const intl = useIntl();
     const classes = useStyles(props);
 
@@ -48,7 +39,8 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
             <CardTitle
                 title={intl.formatMessage({
                     defaultMessage: "Third-party Apps",
-                    description: "section header"
+                    id: "ZeD2TK",
+                    description: "section header",
                 })}
             />
 
@@ -61,9 +53,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                             hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
                             onNextPage={onNextPage}
                             onUpdateListSettings={onUpdateListSettings}
-                            hasPreviousPage={
-                                pageInfo && !disabled ? pageInfo.hasPreviousPage : false
-                            }
+                            hasPreviousPage={pageInfo && !disabled ? pageInfo.hasPreviousPage : false}
                             onPreviousPage={onPreviousPage}
                         />
                     </TableRow>
@@ -80,9 +70,9 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                                     onClick={onRowClick(app.node.id)}
                                 >
                                     <TableCell className={classes.colName}>
-                    <span data-tc="name" className={classes.appName}>
-                      {app.node.name}
-                    </span>
+                                        <span data-tc="name" className={classes.appName}>
+                                            {app.node.name}
+                                        </span>
                                         {!app.node.isActive && (
                                             <div className={classes.statusWrapper}>
                                                 <DeactivatedText />
@@ -91,11 +81,10 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                                     </TableCell>
 
                                     <TableCell className={classes.colAction}>
-                                        <Button
-                                            onClick={stopPropagation(onRowAboutClick(app.node.id))}
-                                        >
+                                        <Button onClick={stopPropagation(onRowAboutClick(app.node.id))}>
                                             <FormattedMessage
                                                 defaultMessage="About"
+                                                id="TBaMo2"
                                                 description="about app"
                                             />
                                         </Button>
@@ -118,6 +107,7 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                                     <Typography className={classes.text} variant="body2">
                                         <FormattedMessage
                                             defaultMessage="You don’t have any installed apps in your dashboard"
+                                            id="9tgY4G"
                                             description="apps content"
                                         />
                                     </Typography>

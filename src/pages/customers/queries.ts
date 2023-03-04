@@ -5,7 +5,7 @@ import {
     customerDetailsFragment,
     customerFragment,
 } from "@mzawadie/fragments/customers";
-import makeQuery from "@mzawadie/hooks/makeQuery";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
 import { CustomerAddresses, CustomerAddressesVariables } from "./types/CustomerAddresses";
 import { CustomerCreateData } from "./types/CustomerCreateData";

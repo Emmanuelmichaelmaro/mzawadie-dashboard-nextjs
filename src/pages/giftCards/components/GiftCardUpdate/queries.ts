@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import { fragmentUserBase } from "@mzawadie/fragments/auth";
 import { metadataFragment } from "@mzawadie/fragments/metadata";
 import { fragmentMoney } from "@mzawadie/fragments/products";
-import makeQuery from "@mzawadie/hooks/makeQuery";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
 import { GiftCardDetails, GiftCardDetailsVariables } from "./types/GiftCardDetails";
 

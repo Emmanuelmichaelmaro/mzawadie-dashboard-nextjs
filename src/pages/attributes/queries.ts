@@ -5,7 +5,7 @@ import {
     attributeValueListFragment,
 } from "@mzawadie/fragments/attributes";
 import { pageInfoFragment } from "@mzawadie/fragments/pageInfo";
-import makeQuery from "@mzawadie/hooks/makeQuery";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
 import { AttributeDetails, AttributeDetailsVariables } from "./types/AttributeDetails";
 import { AttributeList, AttributeListVariables } from "./types/AttributeList";

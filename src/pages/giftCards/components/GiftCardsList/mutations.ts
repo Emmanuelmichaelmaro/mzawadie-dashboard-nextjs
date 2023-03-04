@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import { giftCardErrorFragment } from "@mzawadie/fragments/errors";
-import makeMutation from "@mzawadie/hooks/makeMutation";
+import makeMutation from "@mzawadie/hooks/graphql/makeMutation";
 
 import { BulkDeleteGiftCard, BulkDeleteGiftCardVariables } from "./types/BulkDeleteGiftCard";
 import { DeleteGiftCard, DeleteGiftCardVariables } from "./types/DeleteGiftCard";

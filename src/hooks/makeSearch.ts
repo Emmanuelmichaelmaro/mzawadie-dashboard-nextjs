@@ -3,7 +3,7 @@ import { QueryResult } from "@apollo/client";
 import { DocumentNode } from "graphql";
 import { useState } from "react";
 
-import makeQuery, { UseQueryResult } from "./makeQuery";
+import makeQuery, { UseQueryResult } from "./graphql/makeQuery";
 import useDebounce from "./useDebounce";
 
 export interface SearchVariables {

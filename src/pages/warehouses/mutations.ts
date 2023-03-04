@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { warehouseErrorFragment } from "@mzawadie/fragments/errors";
 import { warehouseDetailsFragment } from "@mzawadie/fragments/warehouses";
-import makeMutation from "@mzawadie/hooks/makeMutation";
+import makeMutation from "@mzawadie/hooks/graphql/makeMutation";
 
 import { WarehouseCreate, WarehouseCreateVariables } from "./types/WarehouseCreate";
 import { WarehouseDelete, WarehouseDeleteVariables } from "./types/WarehouseDelete";

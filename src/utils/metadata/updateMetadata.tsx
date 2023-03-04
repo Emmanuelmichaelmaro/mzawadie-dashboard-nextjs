@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { metadataErrorFragment } from "@mzawadie/fragments/errors";
 import { metadataFragment } from "@mzawadie/fragments/metadata";
-import makeMutation from "@mzawadie/hooks/makeMutation";
+import makeMutation from "@mzawadie/hooks/graphql/makeMutation";
 
 import { UpdateMetadata, UpdateMetadataVariables } from "./types/UpdateMetadata";
 import { UpdatePrivateMetadata, UpdatePrivateMetadataVariables } from "./types/UpdatePrivateMetadata";

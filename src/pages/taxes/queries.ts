@@ -5,7 +5,7 @@ import {
     shopTaxesFragment,
     taxTypeFragment,
 } from "@mzawadie/fragments/taxes";
-import makeQuery from "@mzawadie/hooks/makeQuery";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
 import { CountryList } from "./types/CountryList";
 import { TaxTypeList } from "./types/TaxTypeList";

@@ -6,7 +6,7 @@ import {
     voucherFragment,
 } from "@mzawadie/fragments/discounts";
 import { pageInfoFragment } from "@mzawadie/fragments/pageInfo";
-import makeQuery from "@mzawadie/hooks/makeQuery";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
 import { SaleDetails, SaleDetailsVariables } from "./types/SaleDetails";
 import { SaleList, SaleListVariables } from "./types/SaleList";

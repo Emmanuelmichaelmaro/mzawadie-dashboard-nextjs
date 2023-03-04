@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { categoryDetailsFragment } from "@mzawadie/fragments/categories";
 import { productErrorFragment } from "@mzawadie/fragments/errors";
-import makeMutation from "@mzawadie/hooks/makeMutation";
+import makeMutation from "@mzawadie/hooks/graphql/makeMutation";
 
 import { CategoryBulkDelete, CategoryBulkDeleteVariables } from "./types/CategoryBulkDelete";
 import { CategoryCreate, CategoryCreateVariables } from "./types/CategoryCreate";

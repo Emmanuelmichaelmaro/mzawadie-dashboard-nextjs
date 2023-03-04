@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import { appFragment } from "@mzawadie/fragments/apps";
 import { appErrorFragment } from "@mzawadie/fragments/errors";
 import { webhooksFragment } from "@mzawadie/fragments/webhooks";
-import makeMutation from "@mzawadie/hooks/makeMutation";
+import makeMutation from "@mzawadie/hooks/graphql/makeMutation";
 
 import { AppActivate, AppActivateVariables } from "./types/AppActivate";
 import { AppCreate, AppCreateVariables } from "./types/AppCreate";

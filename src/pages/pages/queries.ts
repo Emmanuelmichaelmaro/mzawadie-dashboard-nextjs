@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { attributeValueListFragment } from "@mzawadie/fragments/attributes";
 import { pageDetailsFragment, pageFragment } from "@mzawadie/fragments/pages";
-import makeQuery from "@mzawadie/hooks/makeQuery";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
 import { PageCount, PageCountVariables } from "./types/PageCount";
 import { PageDetails, PageDetailsVariables } from "./types/PageDetails";

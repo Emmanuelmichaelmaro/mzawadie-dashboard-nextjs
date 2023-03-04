@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { MutationResultWithOpts } from "@mzawadie/hooks/makeMutation";
+import { MutationResultWithOpts } from "@mzawadie/hooks/graphql/makeMutation";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { useIntl } from "react-intl";
 

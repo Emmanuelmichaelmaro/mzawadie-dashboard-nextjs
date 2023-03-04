@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import { TypedQuery } from "@mzawadie/core";
 import { pageInfoFragment } from "@mzawadie/fragments/pageInfo";
 import { productTypeDetailsFragment, productTypeFragment } from "@mzawadie/fragments/productTypes";
-import makeQuery from "@mzawadie/hooks/makeQuery";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
 import { ProductTypeCreateData } from "./types/ProductTypeCreateData";
 import { ProductTypeDetails, ProductTypeDetailsVariables } from "./types/ProductTypeDetails";

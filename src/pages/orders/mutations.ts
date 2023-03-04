@@ -14,7 +14,7 @@ import {
     fulfillmentFragment,
     invoiceFragment,
 } from "@mzawadie/fragments/orders";
-import makeMutation from "@mzawadie/hooks/makeMutation";
+import makeMutation from "@mzawadie/hooks/graphql/makeMutation";
 
 import { FulfillOrder, FulfillOrderVariables } from "./types/FulfillOrder";
 import {

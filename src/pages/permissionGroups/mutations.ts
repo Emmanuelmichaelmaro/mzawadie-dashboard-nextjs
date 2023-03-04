@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { permissionGroupErrorFragment } from "@mzawadie/fragments/errors";
 import { permissionGroupDetailsFragment } from "@mzawadie/fragments/permissionGroups";
-import makeMutation from "@mzawadie/hooks/makeMutation";
+import makeMutation from "@mzawadie/hooks/graphql/makeMutation";
 
 import { PermissionGroupCreate, PermissionGroupCreateVariables } from "./types/PermissionGroupCreate";
 import { PermissionGroupDelete, PermissionGroupDeleteVariables } from "./types/PermissionGroupDelete";

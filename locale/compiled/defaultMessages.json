@@ -1,18 +1,130 @@
 {
-    "'JE0TAx'": [
+    "'+PclgM'": [
         {
             "type": 0,
-            "value": "Values"
+            "value": "Total"
         }
     ],
-    "'UvD+xp'": [
+    "'/BJQIq'": [
         {
             "type": 0,
-            "value": "Value "
+            "value": "Add Tracking Code"
+        }
+    ],
+    "'2W4EBM'": [
+        {
+            "type": 0,
+            "value": "Set maximal quantities"
+        }
+    ],
+    "'5aiFbL'": [
+        {
+            "type": 0,
+            "value": "Price"
+        }
+    ],
+    "'9tgY4G'": [
+        {
+            "type": 0,
+            "value": "You don’t have any installed apps in your dashboard"
+        }
+    ],
+    "'AqXzM2'": [
+        {
+            "type": 0,
+            "value": "Order #"
         },
         {
             "type": 1,
-            "value": "number"
+            "value": "orderNumber"
+        }
+    ],
+    "'B/y6LC'": [
+        {
+            "type": 0,
+            "value": "Unfulfilled Products"
+        }
+    ],
+    "'EHsnZX'": [
+        {
+            "type": 0,
+            "value": "Are you sure you want to approve this fullfillment?"
+        }
+    ],
+    "'FNT4b+'": [
+        {
+            "type": 0,
+            "value": "Product"
+        }
+    ],
+    "'GbBCmr'": [
+        {
+            "type": 0,
+            "value": "Order #"
+        },
+        {
+            "type": 1,
+            "value": "orderNumber"
+        }
+    ],
+    "'Q1Uzbb'": [
+        {
+            "type": 0,
+            "value": "No products found"
+        }
+    ],
+    "'SqhC7g'": [
+        {
+            "type": 0,
+            "value": "Send shipment details to customer"
+        }
+    ],
+    "'TBaMo2'": [
+        {
+            "type": 0,
+            "value": "About"
+        }
+    ],
+    "'Tl+7X4'": [
+        {
+            "type": 0,
+            "value": "Refunded Qty"
+        }
+    ],
+    "'UQu75k'": [
+        {
+            "type": 0,
+            "value": "Approve this fulfillment"
+        }
+    ],
+    "'ZeD2TK'": [
+        {
+            "type": 0,
+            "value": "Third-party Apps"
+        }
+    ],
+    "'aY0HAT'": [
+        {
+            "type": 0,
+            "value": "Sales channel"
+        }
+    ],
+    "'iUIn50'": [
+        {
+            "type": 0,
+            "value": "Unfulfilled products will be restocked"
+        }
+    ],
+    "'xoyCZ/'": [
+        {
+            "type": 0,
+            "value": "Improper value"
+        }
+    ],
+    "'yT/GAp'": [
+        {
+            "type": 0,
+            "value": "Tracking number"
         }
     ],
     "+43JV5": [
@@ -25,10 +137,34 @@
             "value": "categoryName"
         }
     ],
+    "+5HkZN": [
+        {
+            "type": 0,
+            "value": "Mark as paid"
+        }
+    ],
     "+7OsyM": [
         {
             "type": 0,
             "value": "Set as default shipping address"
+        }
+    ],
+    "+8v1ny": [
+        {
+            "type": 0,
+            "value": "Discount"
+        }
+    ],
+    "+B25o/": [
+        {
+            "type": 0,
+            "value": "Mark Order as Paid"
+        }
+    ],
+    "+CeEe3": [
+        {
+            "type": 0,
+            "value": "Shipping"
         }
     ],
     "+G9l7u": [
@@ -59,6 +195,24 @@
             "value": "Fetch taxes"
         }
     ],
+    "+PbHKD": [
+        {
+            "type": 0,
+            "value": "Capture Payment"
+        }
+    ],
+    "+PclgM": [
+        {
+            "type": 0,
+            "value": "Total"
+        }
+    ],
+    "+RjQjs": [
+        {
+            "type": 0,
+            "value": "Return / Replace order"
+        }
+    ],
     "+T0oJ7": [
         {
             "type": 0,
@@ -87,6 +241,12 @@
         {
             "type": 0,
             "value": "Next"
+        }
+    ],
+    "+c/f61": [
+        {
+            "type": 0,
+            "value": "Retry"
         }
     ],
     "+do3gl": [
@@ -129,6 +289,18 @@
         {
             "type": 0,
             "value": "Issued by app"
+        }
+    ],
+    "+sX7yS": [
+        {
+            "type": 0,
+            "value": "Fulfillment successfully approved"
+        }
+    ],
+    "+svQBN": [
+        {
+            "type": 0,
+            "value": "Order limit reached"
         }
     ],
     "+tIkAe": [
@@ -279,6 +451,12 @@
             "value": "emphasis"
         }
     ],
+    "/Xwjww": [
+        {
+            "type": 0,
+            "value": "Fulfill"
+        }
+    ],
     "/Zee1r": [
         {
             "type": 0,
@@ -337,6 +515,30 @@
             "value": "Translation"
         }
     ],
+    "/w919H": [
+        {
+            "type": 0,
+            "value": "Fulfill from Local Stock"
+        }
+    ],
+    "/xXvjF": [
+        {
+            "type": 0,
+            "value": "Unfulfilled"
+        }
+    ],
+    "/z9uo1": [
+        {
+            "type": 0,
+            "value": "Successfully returned products!"
+        }
+    ],
+    "05hqq6": [
+        {
+            "type": 0,
+            "value": "Automatically approve all fulfillments"
+        }
+    ],
     "06bR4Z": [
         {
             "type": 0,
@@ -353,6 +555,12 @@
         {
             "type": 0,
             "value": "Plugin is misconfigured and cannot be activated"
+        }
+    ],
+    "0DRBjg": [
+        {
+            "type": 0,
+            "value": "Token Note"
         }
     ],
     "0DgA8v": [
@@ -379,6 +587,18 @@
             "value": "Country Name"
         }
     ],
+    "0MetrR": [
+        {
+            "type": 0,
+            "value": "This URL will receive webhook POST requests"
+        }
+    ],
+    "0Mg8o5": [
+        {
+            "type": 0,
+            "value": "Tokens"
+        }
+    ],
     "0OfZJA": [
         {
             "type": 0,
@@ -389,6 +609,12 @@
         {
             "type": 0,
             "value": "Create Menu"
+        }
+    ],
+    "0VDwAP": [
+        {
+            "type": 0,
+            "value": "Send shipment details to customer"
         }
     ],
     "0Vyr8h": [
@@ -423,10 +649,30 @@
             "value": "Yes, I want to delete those products types and assigned products"
         }
     ],
+    "0fM/pV": [
+        {
+            "type": 0,
+            "value": "App installed"
+        }
+    ],
     "0iMYc+": [
         {
             "type": 0,
             "value": "(Optional)"
+        }
+    ],
+    "0krqBj": [
+        {
+            "type": 0,
+            "value": "Order no. "
+        },
+        {
+            "type": 1,
+            "value": "orderNumber"
+        },
+        {
+            "type": 0,
+            "value": " - Refund"
         }
     ],
     "0nL1D6": [
@@ -439,6 +685,12 @@
         {
             "type": 0,
             "value": "No product types found"
+        }
+    ],
+    "0oo+BT": [
+        {
+            "type": 0,
+            "value": "Refunded Amount"
         }
     ],
     "0opVvi": [
@@ -471,16 +723,34 @@
             "value": "amount"
         }
     ],
+    "0qg33z": [
+        {
+            "type": 0,
+            "value": "Return"
+        }
+    ],
     "0sd4ez": [
         {
             "type": 0,
             "value": "Customer will be sent the gift card code via this channels email address"
         }
     ],
+    "1+M/52": [
+        {
+            "type": 0,
+            "value": "Webhook Status"
+        }
+    ],
     "1/oG76": [
         {
             "type": 0,
             "value": "Delete Sale"
+        }
+    ],
+    "129wyQ": [
+        {
+            "type": 0,
+            "value": "Change customer shipping address"
         }
     ],
     "142MJn": [
@@ -505,6 +775,12 @@
         {
             "type": 0,
             "value": "weeks after issue"
+        }
+    ],
+    "18wvf7": [
+        {
+            "type": 0,
+            "value": "Order Details"
         }
     ],
     "19/lwV": [
@@ -579,10 +855,22 @@
             "value": "languageCode"
         }
     ],
+    "1Uj0Wd": [
+        {
+            "type": 0,
+            "value": "Total"
+        }
+    ],
     "1div9r": [
         {
             "type": 0,
             "value": "Search Attribute"
+        }
+    ],
+    "1eCau/": [
+        {
+            "type": 0,
+            "value": "Unnamed webhook"
         }
     ],
     "1gzck6": [
@@ -615,6 +903,12 @@
         {
             "type": 0,
             "value": "Group is out of your permission scope"
+        }
+    ],
+    "1qRwgQ": [
+        {
+            "type": 0,
+            "value": "Installing app..."
         }
     ],
     "1shOIS": [
@@ -723,16 +1017,58 @@
             "value": "Choose media"
         }
     ],
+    "2MKBk2": [
+        {
+            "type": 0,
+            "value": "Fulfill Order #"
+        },
+        {
+            "type": 1,
+            "value": "orderNumber"
+        }
+    ],
+    "2MKkgX": [
+        {
+            "type": 0,
+            "value": "Allow fulfillment without payment"
+        }
+    ],
     "2NgTCJ": [
         {
             "type": 0,
             "value": "A product with this SKU already exists"
         }
     ],
+    "2OH46U": [
+        {
+            "type": 0,
+            "value": "Shipping address"
+        }
+    ],
     "2Sx05f": [
         {
             "type": 0,
             "value": "Previous discount value"
+        }
+    ],
+    "2VSP8C": [
+        {
+            "type": 0,
+            "value": "Are you sure you want to delete token "
+        },
+        {
+            "type": 1,
+            "value": "token"
+        },
+        {
+            "type": 0,
+            "value": "?"
+        }
+    ],
+    "2W4EBM": [
+        {
+            "type": 0,
+            "value": "Set maximal quantities"
         }
     ],
     "2Xt+sw": [
@@ -779,6 +1115,12 @@
         {
             "type": 0,
             "value": "Drafts"
+        }
+    ],
+    "2cjt25": [
+        {
+            "type": 0,
+            "value": "Install App"
         }
     ],
     "2gsiR1": [
@@ -887,6 +1229,12 @@
         {
             "type": 1,
             "value": "issuedBy"
+        }
+    ],
+    "32dfzI": [
+        {
+            "type": 0,
+            "value": "Price"
         }
     ],
     "34F7Jk": [
@@ -1061,10 +1409,30 @@
             "value": "Search by collection name, etc..."
         }
     ],
+    "3stu21": [
+        {
+            "type": 0,
+            "value": "Replaced ("
+        },
+        {
+            "type": 1,
+            "value": "quantity"
+        },
+        {
+            "type": 0,
+            "value": ")"
+        }
+    ],
     "3tbL7x": [
         {
             "type": 0,
             "value": "Forgot password?"
+        }
+    ],
+    "3u+4NZ": [
+        {
+            "type": 0,
+            "value": "Invoice email sent"
         }
     ],
     "3ukd9/": [
@@ -1163,6 +1531,12 @@
             "value": "Invite staff member"
         }
     ],
+    "4Jp83O": [
+        {
+            "type": 0,
+            "value": "Contact Information"
+        }
+    ],
     "4Kq3O6": [
         {
             "type": 0,
@@ -1175,6 +1549,16 @@
             "value": "You haven’t defined a gift card product!"
         }
     ],
+    "4PlW0w": [
+        {
+            "type": 0,
+            "value": "Tracking Number: "
+        },
+        {
+            "type": 1,
+            "value": "trackingNumber"
+        }
+    ],
     "4W/CKn": [
         {
             "type": 0,
@@ -1185,6 +1569,12 @@
         {
             "type": 0,
             "value": "Gift Card Timeline"
+        }
+    ],
+    "4Z14xW": [
+        {
+            "type": 0,
+            "value": "Finalize"
         }
     ],
     "4Z6BtA": [
@@ -1243,6 +1633,12 @@
         {
             "type": 0,
             "value": "Account Information"
+        }
+    ],
+    "5+Xcrz": [
+        {
+            "type": 0,
+            "value": "Deactivated"
         }
     ],
     "51HE+Q": [
@@ -1317,6 +1713,18 @@
             "value": "Warehouse limit reached"
         }
     ],
+    "5JT4v2": [
+        {
+            "type": 0,
+            "value": "Send Invoice"
+        }
+    ],
+    "5Jo3C5": [
+        {
+            "type": 0,
+            "value": "does not apply"
+        }
+    ],
     "5LRkEs": [
         {
             "type": 0,
@@ -1385,10 +1793,22 @@
             "value": "No products matching given query"
         }
     ],
+    "5aiFbL": [
+        {
+            "type": 0,
+            "value": "Price"
+        }
+    ],
     "5bJ26s": [
         {
             "type": 0,
             "value": "Successfully created page type"
+        }
+    ],
+    "5blVMu": [
+        {
+            "type": 0,
+            "value": "Customer"
         }
     ],
     "5c2JVF": [
@@ -1445,10 +1865,26 @@
             "value": "Password"
         }
     ],
+    "5t/4um": [
+        {
+            "type": 0,
+            "value": "Couldn’t Install "
+        },
+        {
+            "type": 1,
+            "value": "name"
+        }
+    ],
     "5tMkmJ": [
         {
             "type": 0,
             "value": "Assign Collection"
+        }
+    ],
+    "5te3Tp": [
+        {
+            "type": 0,
+            "value": "Outstanding Balance"
         }
     ],
     "5u7b3V": [
@@ -1599,6 +2035,12 @@
             "value": "Visible"
         }
     ],
+    "6aBkJm": [
+        {
+            "type": 0,
+            "value": "Authorization"
+        }
+    ],
     "6cMkfT": [
         {
             "type": 0,
@@ -1629,6 +2071,12 @@
             "value": "Create New Shipping Zone"
         }
     ],
+    "6hLZNA": [
+        {
+            "type": 0,
+            "value": "Are you sure you want to delete this app?"
+        }
+    ],
     "6iw4VR": [
         {
             "type": 0,
@@ -1647,6 +2095,18 @@
             "value": "Search by name, email, etc..."
         }
     ],
+    "6u4K7e": [
+        {
+            "type": 0,
+            "value": "Order"
+        }
+    ],
+    "6udlH+": [
+        {
+            "type": 0,
+            "value": "Order draft successfully created"
+        }
+    ],
     "6xC/Ls": [
         {
             "type": 0,
@@ -1657,6 +2117,12 @@
         {
             "type": 0,
             "value": "Product Images"
+        }
+    ],
+    "73RU3R": [
+        {
+            "type": 0,
+            "value": "Are you sure you want to disable this app? Your data will be kept until you reactivate the app. You will be still billed for the app."
         }
     ],
     "74Zo/H": [
@@ -1707,10 +2173,28 @@
             "value": "Delete Search"
         }
     ],
+    "7O2EsY": [
+        {
+            "type": 0,
+            "value": "Are you sure you want to disable this app? Your data will be kept until you reactivate the app."
+        }
+    ],
     "7Oorx5": [
         {
             "type": 0,
             "value": "Search in Catalog"
+        }
+    ],
+    "7U8GRy": [
+        {
+            "type": 0,
+            "value": "Shipping method successfully updated"
+        }
+    ],
+    "7UG1Lx": [
+        {
+            "type": 0,
+            "value": "Automatically fulfill non shippable gift cards"
         }
     ],
     "7WEC+G": [
@@ -1723,6 +2207,12 @@
         {
             "type": 0,
             "value": "Inactive"
+        }
+    ],
+    "7a1S4K": [
+        {
+            "type": 0,
+            "value": "All Drafts"
         }
     ],
     "7dhhzL": [
@@ -1783,6 +2273,12 @@
             "value": "This product will act as a payment method"
         }
     ],
+    "7oQUMG": [
+        {
+            "type": 0,
+            "value": "This app has permissions to:"
+        }
+    ],
     "7qsOwa": [
         {
             "type": 0,
@@ -1841,6 +2337,12 @@
             "value": " Global threshold"
         }
     ],
+    "89PSdB": [
+        {
+            "type": 0,
+            "value": "Edit settings"
+        }
+    ],
     "8B8E+3": [
         {
             "type": 0,
@@ -1859,6 +2361,24 @@
             "value": "Filter Countries"
         }
     ],
+    "8F2D1H": [
+        {
+            "type": 0,
+            "value": "Refund "
+        },
+        {
+            "type": 1,
+            "value": "currency"
+        },
+        {
+            "type": 0,
+            "value": " "
+        },
+        {
+            "type": 1,
+            "value": "amount"
+        }
+    ],
     "8HRy+U": [
         {
             "type": 0,
@@ -1875,6 +2395,12 @@
         {
             "type": 0,
             "value": "Please provide range of postal codes you want to add to the include/exclude list."
+        }
+    ],
+    "8J81ri": [
+        {
+            "type": 0,
+            "value": "SKU"
         }
     ],
     "8RnPGF": [
@@ -1913,6 +2439,28 @@
             "value": "You will be able to define availability of product after creating variants."
         }
     ],
+    "8u7els": [
+        {
+            "type": 0,
+            "value": "Assigned to "
+        },
+        {
+            "type": 1,
+            "value": "activeChannelsCount"
+        },
+        {
+            "type": 0,
+            "value": " of "
+        },
+        {
+            "type": 1,
+            "value": "allChannelsCount"
+        },
+        {
+            "type": 0,
+            "value": " channels"
+        }
+    ],
     "8uo4v1": [
         {
             "type": 0,
@@ -1929,6 +2477,12 @@
         {
             "type": 0,
             "value": "Service Accounts"
+        }
+    ],
+    "906uUr": [
+        {
+            "type": 0,
+            "value": "Back to homepage"
         }
     ],
     "95oJ5d": [
@@ -1985,10 +2539,22 @@
             "value": "Create single variant"
         }
     ],
+    "9OtpHt": [
+        {
+            "type": 0,
+            "value": "Order line deleted"
+        }
+    ],
     "9PmyrU": [
         {
             "type": 0,
             "value": "Not stocked"
+        }
+    ],
+    "9RCuN3": [
+        {
+            "type": 0,
+            "value": "Payment successfully captured"
         }
     ],
     "9RvXNg": [
@@ -2037,16 +2603,34 @@
             "value": "Company"
         }
     ],
+    "9Yhddc": [
+        {
+            "type": 0,
+            "value": "Registered events"
+        }
+    ],
     "9Zlogd": [
         {
             "type": 0,
             "value": "Active"
         }
     ],
+    "9ZtJhn": [
+        {
+            "type": 0,
+            "value": "Cancel order"
+        }
+    ],
     "9eC0MZ": [
         {
             "type": 0,
             "value": "Hidden"
+        }
+    ],
+    "9gb9b4": [
+        {
+            "type": 0,
+            "value": "Add new address"
         }
     ],
     "9hab/1": [
@@ -2083,6 +2667,20 @@
         {
             "type": 0,
             "value": "Product Attributes"
+        }
+    ],
+    "9ssWj+": [
+        {
+            "type": 0,
+            "value": "Waiting for approval ("
+        },
+        {
+            "type": 1,
+            "value": "quantity"
+        },
+        {
+            "type": 0,
+            "value": ")"
         }
     ],
     "9uNz+T": [
@@ -2189,6 +2787,12 @@
             "value": "gift card product"
         }
     ],
+    "AKv2BI": [
+        {
+            "type": 0,
+            "value": "Refunded items can't be fulfilled"
+        }
+    ],
     "ANRRpG": [
         {
             "type": 0,
@@ -2199,6 +2803,12 @@
         {
             "type": 0,
             "value": "Search in Catalog"
+        }
+    ],
+    "APcoSA": [
+        {
+            "type": 0,
+            "value": "Delete Daft Order"
         }
     ],
     "AQ+9Ez": [
@@ -2243,10 +2853,22 @@
             "value": "Max value cannot be less than min value"
         }
     ],
+    "Aeq79M": [
+        {
+            "type": 0,
+            "value": "Plugin’s settings are set common across all channels"
+        }
+    ],
     "AgY5Mv": [
         {
             "type": 0,
             "value": "Storefront Properties"
+        }
+    ],
+    "AijtXU": [
+        {
+            "type": 0,
+            "value": "Configuration"
         }
     ],
     "AkyGP2": [
@@ -2361,6 +2983,20 @@
             "value": "No Channels found"
         }
     ],
+    "BBIQxQ": [
+        {
+            "type": 0,
+            "value": "Order no. "
+        },
+        {
+            "type": 1,
+            "value": "orderNumber"
+        },
+        {
+            "type": 0,
+            "value": " - Replace/Return"
+        }
+    ],
     "BBfN0m": [
         {
             "type": 0,
@@ -2383,6 +3019,18 @@
         {
             "type": 0,
             "value": "Skip stock for now"
+        }
+    ],
+    "BL/Lbk": [
+        {
+            "type": 0,
+            "value": "Installing this app will give it following permissions:"
+        }
+    ],
+    "BLX9dz": [
+        {
+            "type": 0,
+            "value": "Fulfill"
         }
     ],
     "BM+zfY": [
@@ -2435,6 +3083,12 @@
             "value": "Activity"
         }
     ],
+    "BZ7BkQ": [
+        {
+            "type": 0,
+            "value": "Capture"
+        }
+    ],
     "BanAhF": [
         {
             "type": 0,
@@ -2451,6 +3105,18 @@
         {
             "type": 0,
             "value": "Create Page Type"
+        }
+    ],
+    "BjxQ3u": [
+        {
+            "type": 0,
+            "value": "add shipping address first"
+        }
+    ],
+    "BkFke9": [
+        {
+            "type": 0,
+            "value": "Unfulfilled Items"
         }
     ],
     "BooQvo": [
@@ -2483,6 +3149,12 @@
         {
             "type": 1,
             "value": "languageCode"
+        }
+    ],
+    "BtErCZ": [
+        {
+            "type": 0,
+            "value": "Search Plugins..."
         }
     ],
     "Bx367s": [
@@ -2523,6 +3195,18 @@
         {
             "type": 0,
             "value": "App is out of your permissions scope"
+        }
+    ],
+    "C50ahv": [
+        {
+            "type": 0,
+            "value": "Add products"
+        }
+    ],
+    "C6bb6x": [
+        {
+            "type": 0,
+            "value": "Refund total amount"
         }
     ],
     "C7I2lg": [
@@ -2577,6 +3261,12 @@
             "value": "Unlimited"
         }
     ],
+    "CG+awx": [
+        {
+            "type": 0,
+            "value": "Which address would you like to use as shipping address for selected customer:"
+        }
+    ],
     "CJEIRC": [
         {
             "type": 0,
@@ -2587,6 +3277,32 @@
         {
             "type": 0,
             "value": "Unassigned"
+        }
+    ],
+    "CJpx4E": [
+        {
+            "type": 0,
+            "value": "Order no. "
+        },
+        {
+            "type": 1,
+            "value": "orderNumber"
+        },
+        {
+            "type": 0,
+            "value": " - Add Fulfillment"
+        }
+    ],
+    "CLB1k9": [
+        {
+            "type": 0,
+            "value": "Refund Products"
+        }
+    ],
+    "CLYlsu": [
+        {
+            "type": 0,
+            "value": "Settings"
         }
     ],
     "CLeDae": [
@@ -2623,6 +3339,18 @@
         {
             "type": 0,
             "value": "No permission groups found"
+        }
+    ],
+    "CYEnGq": [
+        {
+            "type": 0,
+            "value": "Fulfilled Items"
+        }
+    ],
+    "CZmloB": [
+        {
+            "type": 0,
+            "value": "Fulfillment successfully updated"
         }
     ],
     "CcEwXH": [
@@ -2673,6 +3401,12 @@
             "value": "Selected values will be used to create variants for the configurable product."
         }
     ],
+    "Co2U4u": [
+        {
+            "type": 0,
+            "value": "No plugins found"
+        }
+    ],
     "CqestX": [
         {
             "type": 0,
@@ -2695,10 +3429,28 @@
             "value": "Pages"
         }
     ],
+    "D/+84n": [
+        {
+            "type": 0,
+            "value": "App activated"
+        }
+    ],
+    "D0KaT6": [
+        {
+            "type": 0,
+            "value": "Webhook Name"
+        }
+    ],
     "D2qihU": [
         {
             "type": 0,
             "value": "Permission is invalid"
+        }
+    ],
+    "D3E2b5": [
+        {
+            "type": 0,
+            "value": "Activate"
         }
     ],
     "D3WUc/": [
@@ -2715,6 +3467,18 @@
         {
             "type": 0,
             "value": "Status"
+        }
+    ],
+    "D4W/LE": [
+        {
+            "type": 0,
+            "value": "Change customer billing address"
+        }
+    ],
+    "D4nzdD": [
+        {
+            "type": 0,
+            "value": "Grant this app full access to the store"
         }
     ],
     "D8nsBc": [
@@ -2755,6 +3519,16 @@
         {
             "type": 0,
             "value": "Save Search"
+        }
+    ],
+    "DGCzal": [
+        {
+            "type": 0,
+            "value": "This token gives you access to your shop's API, which you'll find here: "
+        },
+        {
+            "type": 1,
+            "value": "url"
         }
     ],
     "DHBlFi": [
@@ -2813,6 +3587,12 @@
         {
             "type": 0,
             "value": "Insufficient permissions"
+        }
+    ],
+    "DP5VOH": [
+        {
+            "type": 0,
+            "value": "Shipping Address"
         }
     ],
     "DP6b8U": [
@@ -2975,6 +3755,12 @@
             "value": "or login using"
         }
     ],
+    "EP+jcU": [
+        {
+            "type": 0,
+            "value": "Refund shipment costs"
+        }
+    ],
     "ER/yBq": [
         {
             "type": 0,
@@ -2999,16 +3785,42 @@
             "value": "Channels A to Z"
         }
     ],
+    "EWD/wU": [
+        {
+            "type": 0,
+            "value": "Deleting "
+        },
+        {
+            "type": 1,
+            "value": "name"
+        },
+        {
+            "type": 0,
+            "value": ", you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
+        }
+    ],
     "Eau5AV": [
         {
             "type": 0,
             "value": "Manage Products Channel Availability"
         }
     ],
+    "EbVf0Z": [
+        {
+            "type": 0,
+            "value": "Transaction reference"
+        }
+    ],
     "Ediw6/": [
         {
             "type": 0,
             "value": "Assign references"
+        }
+    ],
+    "Egyh2T": [
+        {
+            "type": 0,
+            "value": "Plugin Settings"
         }
     ],
     "Eh6KYS": [
@@ -3029,6 +3841,30 @@
             "value": "Hidden"
         }
     ],
+    "EtGDeK": [
+        {
+            "type": 1,
+            "value": "pluginName"
+        },
+        {
+            "type": 0,
+            "value": " Details"
+        }
+    ],
+    "EtkIxE": [
+        {
+            "type": 0,
+            "value": "Cancelled ("
+        },
+        {
+            "type": 1,
+            "value": "quantity"
+        },
+        {
+            "type": 0,
+            "value": ")"
+        }
+    ],
     "Ev6SEF": [
         {
             "type": 0,
@@ -3039,6 +3875,12 @@
         {
             "type": 0,
             "value": "Create new variant using variant details view"
+        }
+    ],
+    "F0AXNs": [
+        {
+            "type": 0,
+            "value": "created"
         }
     ],
     "F3Upht": [
@@ -3083,6 +3925,12 @@
             "value": "Tag"
         }
     ],
+    "FIZvTx": [
+        {
+            "type": 0,
+            "value": "Select method you want to use to change address"
+        }
+    ],
     "FNAZoh": [
         {
             "type": 0,
@@ -3095,6 +3943,12 @@
             "value": "Charge taxes on shipping rates"
         }
     ],
+    "FNT4b+": [
+        {
+            "type": 0,
+            "value": "Product"
+        }
+    ],
     "FNpv6K": [
         {
             "type": 0,
@@ -3105,6 +3959,12 @@
         {
             "type": 0,
             "value": "Min. Order Value"
+        }
+    ],
+    "FOehC/": [
+        {
+            "type": 0,
+            "value": "Manual Amount"
         }
     ],
     "FPzzh7": [
@@ -3259,6 +4119,12 @@
             "value": " items"
         }
     ],
+    "Fn3bE0": [
+        {
+            "type": 0,
+            "value": "Order line updated"
+        }
+    ],
     "FpIcp9": [
         {
             "type": 0,
@@ -3327,6 +4193,12 @@
             "value": "Published"
         }
     ],
+    "G3ay2p": [
+        {
+            "type": 0,
+            "value": "Fulfillment settings"
+        }
+    ],
     "G4g5Ii": [
         {
             "type": 0,
@@ -3367,6 +4239,18 @@
         {
             "type": 0,
             "value": "Order was placed"
+        }
+    ],
+    "GLX9II": [
+        {
+            "type": 0,
+            "value": "Same as shipping address"
+        }
+    ],
+    "GLewww": [
+        {
+            "type": 0,
+            "value": "Events"
         }
     ],
     "GLy2UR": [
@@ -3419,6 +4303,16 @@
         {
             "type": 1,
             "value": "date"
+        }
+    ],
+    "GbBCmr": [
+        {
+            "type": 0,
+            "value": "Order #"
+        },
+        {
+            "type": 1,
+            "value": "orderNumber"
         }
     ],
     "GbhZJ4": [
@@ -3497,10 +4391,28 @@
             "value": "Successfully disabled gift card"
         }
     ],
+    "GjH9uy": [
+        {
+            "type": 0,
+            "value": "Create New App"
+        }
+    ],
+    "Gjb6eq": [
+        {
+            "type": 0,
+            "value": "Get Support"
+        }
+    ],
     "Gjo89T": [
         {
             "type": 0,
             "value": "Warehouses"
+        }
+    ],
+    "Go50v2": [
+        {
+            "type": 0,
+            "value": "View this app’s privacy policy"
         }
     ],
     "GpqEl5": [
@@ -3543,6 +4455,18 @@
         {
             "type": 0,
             "value": "Scheduled to publish"
+        }
+    ],
+    "Gzg8hy": [
+        {
+            "type": 0,
+            "value": "Invoices"
+        }
+    ],
+    "H/f9KR": [
+        {
+            "type": 0,
+            "value": "Fulfillment returned"
         }
     ],
     "H/o4Ex": [
@@ -3635,6 +4559,12 @@
             "value": "Gift Cards"
         }
     ],
+    "HVFq//": [
+        {
+            "type": 0,
+            "value": "Copy token"
+        }
+    ],
     "HVlMK2": [
         {
             "type": 0,
@@ -3661,6 +4591,12 @@
             "value": "Export Variant ID"
         }
     ],
+    "HaQ8cg": [
+        {
+            "type": 0,
+            "value": "Refund"
+        }
+    ],
     "HcQEUk": [
         {
             "type": 0,
@@ -3671,6 +4607,36 @@
         {
             "type": 0,
             "value": "Create variants"
+        }
+    ],
+    "HedXnw": [
+        {
+            "offset": 0,
+            "options": {
+                "=0": {
+                    "value": [
+                        {
+                            "type": 0,
+                            "value": "Deactivated"
+                        }
+                    ]
+                },
+                "other": {
+                    "value": [
+                        {
+                            "type": 0,
+                            "value": "Active in "
+                        },
+                        {
+                            "type": 1,
+                            "value": "activeChannelsCount"
+                        }
+                    ]
+                }
+            },
+            "pluralType": "cardinal",
+            "type": 6,
+            "value": "activeChannelsCount"
         }
     ],
     "Hgz44z": [
@@ -3717,6 +4683,12 @@
             "value": "Content Management"
         }
     ],
+    "HlCkMT": [
+        {
+            "type": 0,
+            "value": "Order line added"
+        }
+    ],
     "HlEpii": [
         {
             "type": 0,
@@ -3739,6 +4711,12 @@
         {
             "type": 0,
             "value": "Successfully fetched tax rates"
+        }
+    ],
+    "HtfL5/": [
+        {
+            "type": 0,
+            "value": "Open App"
         }
     ],
     "HvJPcU": [
@@ -3801,6 +4779,12 @@
             "value": "Inactive"
         }
     ],
+    "I7HyJZ": [
+        {
+            "type": 0,
+            "value": "Max Refund"
+        }
+    ],
     "I8dAAe": [
         {
             "type": 0,
@@ -3811,6 +4795,12 @@
         {
             "type": 0,
             "value": "View pages"
+        }
+    ],
+    "IBCBi1": [
+        {
+            "type": 0,
+            "value": "If you want to disable this webhook please uncheck the box below."
         }
     ],
     "IBw72y": [
@@ -3831,6 +4821,12 @@
             "value": "Create attribute"
         }
     ],
+    "IKvOK+": [
+        {
+            "type": 0,
+            "value": "Amount must be bigger than 0"
+        }
+    ],
     "IN5iJz": [
         {
             "type": 0,
@@ -3841,6 +4837,18 @@
         {
             "type": 0,
             "value": "Partially paid"
+        }
+    ],
+    "ITdIcx": [
+        {
+            "type": 0,
+            "value": "Set plugin as Active"
+        }
+    ],
+    "IUeGzv": [
+        {
+            "type": 0,
+            "value": "Plugin Name"
         }
     ],
     "IVOjqW": [
@@ -3865,6 +4873,16 @@
         {
             "type": 0,
             "value": "Select shipping zones that will be supplied via this channel. You can assign shipping zones to multiple channels."
+        }
+    ],
+    "Id7C0X": [
+        {
+            "type": 0,
+            "value": "You are about to install "
+        },
+        {
+            "type": 1,
+            "value": "name"
         }
     ],
     "IeoGgH": [
@@ -3999,6 +5017,18 @@
             "value": "Subcategories"
         }
     ],
+    "JE0TAx": [
+        {
+            "type": 0,
+            "value": "Values"
+        }
+    ],
+    "JEIN47": [
+        {
+            "type": 0,
+            "value": "Automatic Amount"
+        }
+    ],
     "JFmOfi": [
         {
             "type": 0,
@@ -4059,6 +5089,12 @@
             "value": "Successfully resent code to customer!"
         }
     ],
+    "JRfJD9": [
+        {
+            "type": 0,
+            "value": "The plugin may stop working after this field is cleared. Are you sure you want to proceed?"
+        }
+    ],
     "JTcz2G": [
         {
             "type": 0,
@@ -4077,6 +5113,12 @@
             "value": "Value"
         }
     ],
+    "JVaz1C": [
+        {
+            "type": 0,
+            "value": "Create Webhook"
+        }
+    ],
     "JXRYQg": [
         {
             "type": 0,
@@ -4093,6 +5135,26 @@
         {
             "type": 0,
             "value": "Edit"
+        }
+    ],
+    "Jb1/3V": [
+        {
+            "type": 0,
+            "value": "Add shipping carrier"
+        }
+    ],
+    "JbUg2b": [
+        {
+            "type": 0,
+            "value": "Are you sure you want to activate "
+        },
+        {
+            "type": 1,
+            "value": "name"
+        },
+        {
+            "type": 0,
+            "value": "? Activating will start gathering events."
         }
     ],
     "JfKvrV": [
@@ -4179,6 +5241,12 @@
             "value": "All Warehouses"
         }
     ],
+    "JufWFT": [
+        {
+            "type": 0,
+            "value": "There was a problem during installation"
+        }
+    ],
     "JyQEHU": [
         {
             "type": 0,
@@ -4215,6 +5283,12 @@
         {
             "type": 0,
             "value": "Search Variants"
+        }
+    ],
+    "K//bUK": [
+        {
+            "type": 0,
+            "value": "Refund"
         }
     ],
     "K/gnGg": [
@@ -4257,6 +5331,12 @@
         {
             "type": 0,
             "value": "Discount Type"
+        }
+    ],
+    "KIh25E": [
+        {
+            "type": 0,
+            "value": "No draft orders found"
         }
     ],
     "KKQUMK": [
@@ -4345,10 +5425,22 @@
             "value": "Channel"
         }
     ],
+    "Kg0Fiu": [
+        {
+            "type": 0,
+            "value": "Quantity to fulfill"
+        }
+    ],
     "Kgxlsf": [
         {
             "type": 0,
             "value": "Paid with Gift Card"
+        }
+    ],
+    "KmPicj": [
+        {
+            "type": 0,
+            "value": "Note successfully added"
         }
     ],
     "KqbfFa": [
@@ -4361,6 +5453,12 @@
         {
             "type": 0,
             "value": "Shipment was refunded"
+        }
+    ],
+    "KszPFx": [
+        {
+            "type": 0,
+            "value": "Void Payment"
         }
     ],
     "KupNHw": [
@@ -4417,6 +5515,18 @@
             "value": "count"
         }
     ],
+    "Kxiige": [
+        {
+            "type": 0,
+            "value": "Generated Token"
+        }
+    ],
+    "L/O4LQ": [
+        {
+            "type": 0,
+            "value": "Authorized Amount"
+        }
+    ],
     "L5io1l": [
         {
             "type": 0,
@@ -4441,10 +5551,22 @@
             "value": "Product Rating"
         }
     ],
+    "L87bp7": [
+        {
+            "type": 0,
+            "value": "Order payment successfully voided"
+        }
+    ],
     "LA13a5": [
         {
             "type": 0,
             "value": "Channel"
+        }
+    ],
+    "LATpSE": [
+        {
+            "type": 0,
+            "value": "Discover great free and paid apps in our Saleor Marketplace."
         }
     ],
     "LICZeR": [
@@ -4469,6 +5591,12 @@
         {
             "type": 0,
             "value": "Add search engine title and description to make this product easier to find"
+        }
+    ],
+    "LKpQYh": [
+        {
+            "type": 0,
+            "value": "Miscellaneous Refund"
         }
     ],
     "LOSNq0": [
@@ -4521,6 +5649,26 @@
             "value": "?"
         }
     ],
+    "LshEVn": [
+        {
+            "type": 0,
+            "value": "Create order"
+        }
+    ],
+    "LtqrM8": [
+        {
+            "type": 0,
+            "value": "Deleting "
+        },
+        {
+            "type": 1,
+            "value": "name"
+        },
+        {
+            "type": 0,
+            "value": ", you will delete all the data and webhooks regarding this app. Are you sure you want to do that?"
+        }
+    ],
     "Lx1ima": [
         {
             "type": 0,
@@ -4537,6 +5685,18 @@
         {
             "type": 0,
             "value": "Sorry, login went wrong. Please try again."
+        }
+    ],
+    "M9LXb5": [
+        {
+            "type": 0,
+            "value": "No applicable shipping carriers"
+        }
+    ],
+    "MAsLIT": [
+        {
+            "type": 0,
+            "value": "Key"
         }
     ],
     "MEajfd": [
@@ -4567,6 +5727,20 @@
         {
             "type": 0,
             "value": "Channel threshold"
+        }
+    ],
+    "MPfyne": [
+        {
+            "type": 0,
+            "value": "Are you sure you want to send this invoice: "
+        },
+        {
+            "type": 1,
+            "value": "invoiceNumber"
+        },
+        {
+            "type": 0,
+            "value": " to the customer?"
         }
     ],
     "MQwT1W": [
@@ -4619,6 +5793,12 @@
         {
             "type": 1,
             "value": "date"
+        }
+    ],
+    "MewrtN": [
+        {
+            "type": 0,
+            "value": "Fulfillment"
         }
     ],
     "MgdgpT": [
@@ -4677,6 +5857,12 @@
             "value": "Create variant"
         }
     ],
+    "Myx1Qp": [
+        {
+            "type": 0,
+            "value": "Add Discount"
+        }
+    ],
     "Mz0cx+": [
         {
             "type": 0,
@@ -4729,6 +5915,18 @@
             "value": "Number not set for an invoice"
         }
     ],
+    "N5UuEK": [
+        {
+            "type": 0,
+            "value": "Items ready to ship"
+        }
+    ],
+    "N6lfS/": [
+        {
+            "type": 0,
+            "value": "Authorization Field Delete"
+        }
+    ],
     "N76zUg": [
         {
             "type": 0,
@@ -4745,6 +5943,12 @@
         {
             "type": 0,
             "value": "New Product"
+        }
+    ],
+    "ND5x+V": [
+        {
+            "type": 0,
+            "value": "We’re generating the invoice you requested. Please wait a couple of moments"
         }
     ],
     "NDm2Fe": [
@@ -4773,6 +5977,18 @@
             "value": "Page type deleted"
         }
     ],
+    "NJEe12": [
+        {
+            "type": 0,
+            "value": "Search Draft"
+        }
+    ],
+    "NJbzcP": [
+        {
+            "type": 0,
+            "value": "Cancel Orders"
+        }
+    ],
     "NLNonj": [
         {
             "type": 0,
@@ -4791,10 +6007,22 @@
             "value": "Collections"
         }
     ],
+    "NPfmdK": [
+        {
+            "type": 0,
+            "value": "Secret Key"
+        }
+    ],
     "NUevU9": [
         {
             "type": 0,
             "value": "Swatch"
+        }
+    ],
+    "NWxomz": [
+        {
+            "type": 0,
+            "value": "Fulfillment status"
         }
     ],
     "NXpFlL": [
@@ -4813,6 +6041,12 @@
         {
             "type": 0,
             "value": "Threshold that cannot be exceeded even if per channel thresholds are still available"
+        }
+    ],
+    "Nfh9QM": [
+        {
+            "type": 0,
+            "value": "when activated non-shippable gift cards will be automatically set as fulfilled and sent to customer"
         }
     ],
     "NgCb99": [
@@ -4871,6 +6105,20 @@
             "value": "counter"
         }
     ],
+    "Np7J92": [
+        {
+            "type": 0,
+            "value": "Are you sure you want to disable "
+        },
+        {
+            "type": 1,
+            "value": "name"
+        },
+        {
+            "type": 0,
+            "value": "? Your data will be kept until you reactivate the app."
+        }
+    ],
     "NqxvFh": [
         {
             "type": 0,
@@ -4881,6 +6129,12 @@
         {
             "type": 0,
             "value": "Search by value name, etc..."
+        }
+    ],
+    "NskBjH": [
+        {
+            "type": 0,
+            "value": "Marketplace is coming soon"
         }
     ],
     "NtFVFS": [
@@ -4909,6 +6163,16 @@
             "value": "Gift card was deactivated"
         }
     ],
+    "NxRsHQ": [
+        {
+            "type": 0,
+            "value": "Fulfillment - #"
+        },
+        {
+            "type": 1,
+            "value": "fulfilmentId"
+        }
+    ],
     "NxeDbG": [
         {
             "type": 0,
@@ -4919,6 +6183,12 @@
         {
             "type": 0,
             "value": "Name of your store is shown on tab in web browser"
+        }
+    ],
+    "NzifUg": [
+        {
+            "type": 0,
+            "value": "Fulfill Order"
         }
     ],
     "O1sXAN": [
@@ -4997,10 +6267,26 @@
             "value": "Order was created from draft"
         }
     ],
+    "OPtrMg": [
+        {
+            "type": 1,
+            "value": "webhookName"
+        },
+        {
+            "type": 0,
+            "value": " Details"
+        }
+    ],
     "OTek3r": [
         {
             "type": 0,
             "value": "Variant"
+        }
+    ],
+    "OTpV1t": [
+        {
+            "type": 0,
+            "value": "Name"
         }
     ],
     "OVOU1z": [
@@ -5049,6 +6335,12 @@
         {
             "type": 0,
             "value": "Assign members"
+        }
+    ],
+    "OhdPS1": [
+        {
+            "type": 0,
+            "value": "Amount"
         }
     ],
     "Ol1vso": [
@@ -5111,6 +6403,12 @@
             "value": "Available for purchase"
         }
     ],
+    "P5twxk": [
+        {
+            "type": 0,
+            "value": "Activate"
+        }
+    ],
     "P79U4b": [
         {
             "type": 0,
@@ -5121,6 +6419,18 @@
         {
             "type": 0,
             "value": "Date"
+        }
+    ],
+    "PAqicb": [
+        {
+            "type": 0,
+            "value": "Cancel order"
+        }
+    ],
+    "PBd/e+": [
+        {
+            "type": 0,
+            "value": "Change address for order"
         }
     ],
     "PCoO4D": [
@@ -5135,10 +6445,22 @@
             "value": "Shipping Zones"
         }
     ],
+    "PHUcrU": [
+        {
+            "type": 0,
+            "value": "Date"
+        }
+    ],
     "PJDcQs": [
         {
             "type": 0,
             "value": "Set Balance"
+        }
+    ],
+    "PKJqcq": [
+        {
+            "type": 0,
+            "value": "Invoice is Generating"
         }
     ],
     "PLCwT/": [
@@ -5151,6 +6473,12 @@
         {
             "type": 0,
             "value": "Delete from Shipping Zone"
+        }
+    ],
+    "PRXpBm": [
+        {
+            "type": 0,
+            "value": "Cancel Order"
         }
     ],
     "PRlD0A": [
@@ -5169,6 +6497,12 @@
         {
             "type": 0,
             "value": "Warehouse"
+        }
+    ],
+    "PX2zWy": [
+        {
+            "type": 0,
+            "value": "Not set"
         }
     ],
     "PXatmC": [
@@ -5231,6 +6565,12 @@
         {
             "type": 0,
             "value": "Issue"
+        }
+    ],
+    "PkCmGU": [
+        {
+            "type": 0,
+            "value": "Install App"
         }
     ],
     "Pp/7T7": [
@@ -5339,6 +6679,52 @@
             "value": "Create"
         }
     ],
+    "Q47ovw": [
+        {
+            "type": 0,
+            "value": "Are you sure you want to activate this app? Activating will start gathering events."
+        }
+    ],
+    "Q55cTG": [
+        {
+            "type": 0,
+            "value": "Previously refunded"
+        }
+    ],
+    "Q6VRrE": [
+        {
+            "offset": 0,
+            "options": {
+                "one": {
+                    "value": [
+                        {
+                            "type": 0,
+                            "value": "Are you sure you want to delete this order draft?"
+                        }
+                    ]
+                },
+                "other": {
+                    "value": [
+                        {
+                            "type": 0,
+                            "value": "Are you sure you want to delete "
+                        },
+                        {
+                            "type": 1,
+                            "value": "displayQuantity"
+                        },
+                        {
+                            "type": 0,
+                            "value": " order drafts?"
+                        }
+                    ]
+                }
+            },
+            "pluralType": "cardinal",
+            "type": 6,
+            "value": "counter"
+        }
+    ],
     "Q6wcZ5": [
         {
             "type": 0,
@@ -5387,6 +6773,12 @@
             "value": "Delete Search"
         }
     ],
+    "QEvH8Q": [
+        {
+            "type": 0,
+            "value": "Assign permissions to register asynchronous events for this webhook."
+        }
+    ],
     "QFBjlV": [
         {
             "type": 0,
@@ -5405,6 +6797,12 @@
             "value": "Products"
         }
     ],
+    "QH74y5": [
+        {
+            "type": 0,
+            "value": "Name"
+        }
+    ],
     "QHB48n": [
         {
             "type": 0,
@@ -5413,6 +6811,12 @@
         {
             "type": 1,
             "value": "countryName"
+        }
+    ],
+    "QJG+d/": [
+        {
+            "type": 0,
+            "value": "Staff added"
         }
     ],
     "QLVddq": [
@@ -5507,10 +6911,28 @@
             "value": "Limit number of times this discount can be used in total"
         }
     ],
+    "QkFeOa": [
+        {
+            "type": 0,
+            "value": "Refund"
+        }
+    ],
     "QooeI/": [
         {
             "type": 0,
             "value": "Create Customer"
+        }
+    ],
+    "Qovenh": [
+        {
+            "type": 0,
+            "value": "Anonymous user"
+        }
+    ],
+    "Qph0GE": [
+        {
+            "type": 0,
+            "value": "Add a new address:"
         }
     ],
     "QsuvPU": [
@@ -5529,6 +6951,12 @@
         {
             "type": 0,
             "value": "These are general information about your store. They define what is the URL of your store and what is shown in browsers taskbar."
+        }
+    ],
+    "R98JLZ": [
+        {
+            "type": 0,
+            "value": "Fulfill from All Warehouses"
         }
     ],
     "RBxYJf": [
@@ -5611,6 +7039,12 @@
             "value": "Order address was updated"
         }
     ],
+    "RLYfMF": [
+        {
+            "type": 0,
+            "value": "Automatically confirm all orders"
+        }
+    ],
     "RLZ1jd": [
         {
             "offset": 0,
@@ -5635,6 +7069,12 @@
             "pluralType": "cardinal",
             "type": 6,
             "value": "selectedItemsCount"
+        }
+    ],
+    "RMB6fU": [
+        {
+            "type": 0,
+            "value": "Create Token"
         }
     ],
     "RQUkVW": [
@@ -5731,6 +7171,12 @@
             "value": "Continue"
         }
     ],
+    "RlbhwF": [
+        {
+            "type": 0,
+            "value": "This product is no longer in database so it can’t be replaced, nor returned"
+        }
+    ],
     "RlfqSV": [
         {
             "type": 0,
@@ -5761,6 +7207,24 @@
             "value": "Summary"
         }
     ],
+    "Rsknyh": [
+        {
+            "type": 0,
+            "value": "does not apply"
+        }
+    ],
+    "Ryh3iR": [
+        {
+            "type": 0,
+            "value": "Create Webhook"
+        }
+    ],
+    "RzDYi8": [
+        {
+            "type": 0,
+            "value": "Set the same for billing address"
+        }
+    ],
     "RzsKm8": [
         {
             "type": 0,
@@ -5771,6 +7235,12 @@
         {
             "type": 0,
             "value": "You have unsaved changes on this view. What would you like to do with them?"
+        }
+    ],
+    "S/yAtJ": [
+        {
+            "type": 0,
+            "value": "Total"
         }
     ],
     "S22jIs": [
@@ -5823,6 +7293,12 @@
         {
             "type": 0,
             "value": "Unassign"
+        }
+    ],
+    "SC/eNC": [
+        {
+            "type": 0,
+            "value": "Payment status"
         }
     ],
     "SHm7ee": [
@@ -5993,6 +7469,12 @@
             "value": "No translation yet"
         }
     ],
+    "T/dYnE": [
+        {
+            "type": 0,
+            "value": "Status is not selected"
+        }
+    ],
     "T0Mfxq": [
         {
             "type": 1,
@@ -6039,10 +7521,34 @@
             "value": "End Date"
         }
     ],
+    "T4wa2Y": [
+        {
+            "type": 0,
+            "value": "Global Plugin"
+        }
+    ],
+    "T5nU7u": [
+        {
+            "type": 0,
+            "value": "Create Token"
+        }
+    ],
     "T6dXGG": [
         {
             "type": 0,
             "value": "Create Variant"
+        }
+    ],
+    "T8rvXs": [
+        {
+            "type": 0,
+            "value": "Subtotal"
+        }
+    ],
+    "TC/EOG": [
+        {
+            "type": 0,
+            "value": "Status in channel"
         }
     ],
     "TCR639": [
@@ -6079,6 +7585,16 @@
         {
             "type": 0,
             "value": "This field is required"
+        }
+    ],
+    "TLNf6K": [
+        {
+            "type": 0,
+            "value": "Draft Order #"
+        },
+        {
+            "type": 1,
+            "value": "orderNumber"
         }
     ],
     "TLYeo5": [
@@ -6133,6 +7649,18 @@
         {
             "type": 0,
             "value": "Track Inventory"
+        }
+    ],
+    "TjbB4Y": [
+        {
+            "type": 0,
+            "value": "Asynchronous events"
+        }
+    ],
+    "Tl+7X4": [
+        {
+            "type": 0,
+            "value": "Refunded Qty"
         }
     ],
     "TnTi/a": [
@@ -6223,6 +7751,18 @@
             "value": " to start selling gift cards in your store."
         }
     ],
+    "UCHtG6": [
+        {
+            "type": 0,
+            "value": "About"
+        }
+    ],
+    "UD7/q8": [
+        {
+            "type": 0,
+            "value": "No Products added to Order"
+        }
+    ],
     "UJnqdm": [
         {
             "type": 0,
@@ -6293,6 +7833,12 @@
             "value": "Search Engine Description"
         }
     ],
+    "USO8PB": [
+        {
+            "type": 0,
+            "value": "App deactivated"
+        }
+    ],
     "USS3Q7": [
         {
             "type": 0,
@@ -6323,6 +7869,12 @@
         {
             "type": 0,
             "value": "Create new item"
+        }
+    ],
+    "Uh9R9m": [
+        {
+            "type": 0,
+            "value": "Prepare fulfillment"
         }
     ],
     "UhcALJ": [
@@ -6381,6 +7933,12 @@
             "value": "Send gift card to customer"
         }
     ],
+    "Uo5/Ov": [
+        {
+            "type": 0,
+            "value": "Returned items can't be fulfilled"
+        }
+    ],
     "Uo5MoU": [
         {
             "type": 0,
@@ -6429,6 +7987,16 @@
             "value": "No categories found"
         }
     ],
+    "UvD+xp": [
+        {
+            "type": 0,
+            "value": "Value "
+        },
+        {
+            "type": 1,
+            "value": "number"
+        }
+    ],
     "UxdBmI": [
         {
             "type": 0,
@@ -6453,6 +8021,12 @@
             "value": "Products"
         }
     ],
+    "V+gwx7": [
+        {
+            "type": 0,
+            "value": "Captured amount"
+        }
+    ],
     "V+h02n": [
         {
             "type": 0,
@@ -6463,6 +8037,12 @@
         {
             "type": 0,
             "value": "Attribute deleted"
+        }
+    ],
+    "V/YxJa": [
+        {
+            "type": 0,
+            "value": "Edit Shipping Method"
         }
     ],
     "V1Tj/B": [
@@ -6521,6 +8101,12 @@
         {
             "type": 0,
             "value": "Hidden"
+        }
+    ],
+    "VCzrEZ": [
+        {
+            "type": 0,
+            "value": "View Profile"
         }
     ],
     "VDwkEZ": [
@@ -6587,6 +8173,26 @@
             "value": "Name"
         }
     ],
+    "VSztEE": [
+        {
+            "type": 0,
+            "value": "Cancelling this order will release unfulfilled stocks, so they can be bought by other customers. "
+        },
+        {
+            "children": [
+                {
+                    "type": 0,
+                    "value": "Order will not be refunded when cancelling order - You need to do it manually."
+                }
+            ],
+            "type": 8,
+            "value": "b"
+        },
+        {
+            "type": 0,
+            "value": " Are you sure you want to cancel this order?"
+        }
+    ],
     "VTITVe": [
         {
             "type": 0,
@@ -6629,6 +8235,24 @@
             "value": "This group is last source of that permission"
         }
     ],
+    "VrFy8e": [
+        {
+            "type": 0,
+            "value": "No notes from customer"
+        }
+    ],
+    "VsGcdP": [
+        {
+            "type": 0,
+            "value": "App permissions"
+        }
+    ],
+    "Vu9nol": [
+        {
+            "type": 0,
+            "value": "Order settings"
+        }
+    ],
     "VvA7ai": [
         {
             "type": 0,
@@ -6659,6 +8283,24 @@
         {
             "type": 0,
             "value": "Default Billing Address"
+        }
+    ],
+    "W+AFZY": [
+        {
+            "type": 0,
+            "value": "Deactivate"
+        }
+    ],
+    "W+x5ZI": [
+        {
+            "type": 0,
+            "value": "Webhook is active"
+        }
+    ],
+    "W/Es0H": [
+        {
+            "type": 0,
+            "value": "Order successfully cancelled"
         }
     ],
     "W0kQd+": [
@@ -6703,10 +8345,28 @@
             "value": "Choose countries you want to add to shipping zone from list below"
         }
     ],
+    "WDy0tF": [
+        {
+            "type": 0,
+            "value": "Webhook Information"
+        }
+    ],
+    "WE8IFE": [
+        {
+            "type": 0,
+            "value": "Product"
+        }
+    ],
     "WFG7Zk": [
         {
             "type": 0,
             "value": "Unassign"
+        }
+    ],
+    "WGp+Fw": [
+        {
+            "type": 0,
+            "value": "Shipment Cost"
         }
     ],
     "WHkx+F": [
@@ -6773,6 +8433,12 @@
             "value": "counter"
         }
     ],
+    "WRkCFt": [
+        {
+            "type": 0,
+            "value": "All Orders"
+        }
+    ],
     "WS4ov0": [
         {
             "type": 0,
@@ -6813,6 +8479,12 @@
         {
             "type": 0,
             "value": "Shipment"
+        }
+    ],
+    "WbV1Xm": [
+        {
+            "type": 0,
+            "value": "Order Settings"
         }
     ],
     "Wd8vG7": [
@@ -6873,6 +8545,12 @@
             "value": "Cannot choose a shipping method for an order without the shipping address"
         }
     ],
+    "WnlZMO": [
+        {
+            "type": 0,
+            "value": "There’s a problem with app."
+        }
+    ],
     "WwNtFn": [
         {
             "type": 0,
@@ -6929,6 +8607,12 @@
             "value": "Name"
         }
     ],
+    "X6RMDJ": [
+        {
+            "type": 0,
+            "value": "Could’t refund products"
+        }
+    ],
     "X7fqfM": [
         {
             "type": 0,
@@ -6947,6 +8631,12 @@
             "value": "Inactive"
         }
     ],
+    "X90ElB": [
+        {
+            "type": 0,
+            "value": "Delete Webhook"
+        }
+    ],
     "X90t9n": [
         {
             "type": 0,
@@ -6957,6 +8647,12 @@
         {
             "type": 0,
             "value": "Successfully updated card balance"
+        }
+    ],
+    "XB2Jj9": [
+        {
+            "type": 0,
+            "value": "Create App"
         }
     ],
     "XBfvKN": [
@@ -7055,6 +8751,18 @@
         {
             "type": 0,
             "value": "Eligible Collections"
+        }
+    ],
+    "XQBVEJ": [
+        {
+            "type": 0,
+            "value": "We’ve encountered a problem while refunding the products. Product’s were not refunded. Please try again."
+        }
+    ],
+    "XRf1Bi": [
+        {
+            "type": 0,
+            "value": "Refunded Items"
         }
     ],
     "XT/ZvF": [
@@ -7157,6 +8865,12 @@
             "value": "Original String"
         }
     ],
+    "XwQQ1f": [
+        {
+            "type": 0,
+            "value": "All fulfillments will be automatically approved"
+        }
+    ],
     "XwrKOi": [
         {
             "offset": 0,
@@ -7207,16 +8921,34 @@
             "value": "counter"
         }
     ],
+    "Xy2T+y": [
+        {
+            "type": 0,
+            "value": "Edit Authorization Field"
+        }
+    ],
     "Y1B0PN": [
         {
             "type": 0,
             "value": "There's no payment associated with the order"
         }
     ],
+    "Y299ST": [
+        {
+            "type": 0,
+            "value": "Price"
+        }
+    ],
     "Y4cy0i": [
         {
             "type": 0,
             "value": "Ending preorder"
+        }
+    ],
+    "Y7M1YQ": [
+        {
+            "type": 0,
+            "value": "Customer"
         }
     ],
     "Y7UlMR": [
@@ -7265,6 +8997,18 @@
         {
             "type": 0,
             "value": "Set availability date"
+        }
+    ],
+    "YHNozE": [
+        {
+            "type": 0,
+            "value": "Activate App"
+        }
+    ],
+    "YI6Fhj": [
+        {
+            "type": 0,
+            "value": "Not set"
         }
     ],
     "YJ4TXc": [
@@ -7525,6 +9269,16 @@
             "value": "You have reached your channel limit, you will be no longer able to add channels to your store. If you would like to up your limit, contact your administration staff about raising your limits."
         }
     ],
+    "ZPOyI1": [
+        {
+            "type": 0,
+            "value": "Fulfilled from "
+        },
+        {
+            "type": 1,
+            "value": "warehouseName"
+        }
+    ],
     "ZRz3hM": [
         {
             "type": 0,
@@ -7555,6 +9309,12 @@
             "value": "Unassigned Categories From Sale"
         }
     ],
+    "Zg0dRo": [
+        {
+            "type": 0,
+            "value": "You have changed customer assigned to this order. What would you like to do with the shipping address?"
+        }
+    ],
     "ZhDQel": [
         {
             "type": 0,
@@ -7577,6 +9337,16 @@
         {
             "type": 0,
             "value": "Details"
+        }
+    ],
+    "ZprV2g": [
+        {
+            "type": 1,
+            "value": "name"
+        },
+        {
+            "type": 0,
+            "value": " is ready to be used"
         }
     ],
     "Zptsep": [
@@ -7629,6 +9399,12 @@
             "value": "Select"
         }
     ],
+    "a/QJBx": [
+        {
+            "type": 0,
+            "value": "Action"
+        }
+    ],
     "a1uffz": [
         {
             "type": 0,
@@ -7641,6 +9417,12 @@
             "value": "Created"
         }
     ],
+    "a55zOn": [
+        {
+            "type": 0,
+            "value": "Data privacy"
+        }
+    ],
     "a5msuh": [
         {
             "type": 0,
@@ -7651,6 +9433,12 @@
         {
             "type": 0,
             "value": "Page Types"
+        }
+    ],
+    "aAAxKp": [
+        {
+            "type": 0,
+            "value": "Product"
         }
     ],
     "aCJwVq": [
@@ -7687,6 +9475,12 @@
             "value": "All Products"
         }
     ],
+    "aHc89n": [
+        {
+            "type": 0,
+            "value": "Select Warehouse"
+        }
+    ],
     "aI80kg": [
         {
             "type": 0,
@@ -7697,6 +9491,12 @@
         {
             "type": 0,
             "value": "Countries"
+        }
+    ],
+    "aOelhW": [
+        {
+            "type": 0,
+            "value": "All Plugins"
         }
     ],
     "aPCrsp": [
@@ -7717,6 +9517,12 @@
             "value": "Are you sure you want to delete selected product types? If you remove them you won’t be able to assign them to created products."
         }
     ],
+    "aY0HAT": [
+        {
+            "type": 0,
+            "value": "Sales channel"
+        }
+    ],
     "aYhcie": [
         {
             "type": 0,
@@ -7727,6 +9533,18 @@
         {
             "type": 0,
             "value": "Email address is not set"
+        }
+    ],
+    "ac+Y98": [
+        {
+            "type": 0,
+            "value": "Failed to fetch app settings"
+        }
+    ],
+    "agZQkB": [
+        {
+            "type": 0,
+            "value": "Create App"
         }
     ],
     "aggaJg": [
@@ -7825,6 +9643,12 @@
             "value": "Address"
         }
     ],
+    "bL/Wrc": [
+        {
+            "type": 0,
+            "value": "Status"
+        }
+    ],
     "bNw8PM": [
         {
             "type": 0,
@@ -7851,6 +9675,12 @@
             "value": "Product Type"
         }
     ],
+    "bS7A8u": [
+        {
+            "type": 0,
+            "value": "Add tracking"
+        }
+    ],
     "bVY7j0": [
         {
             "type": 0,
@@ -7875,6 +9705,12 @@
             "value": "Dropdown"
         }
     ],
+    "bb4nSp": [
+        {
+            "type": 0,
+            "value": "Cancel Fulfillment"
+        }
+    ],
     "bcf60I": [
         {
             "type": 0,
@@ -7885,6 +9721,12 @@
         {
             "type": 0,
             "value": "Hidden"
+        }
+    ],
+    "bgO+7G": [
+        {
+            "type": 0,
+            "value": "Return & Replace products"
         }
     ],
     "bh+Keo": [
@@ -7961,6 +9803,18 @@
             "value": "Create Product Type"
         }
     ],
+    "bqAJCT": [
+        {
+            "type": 0,
+            "value": "Refund Order"
+        }
+    ],
+    "bsP4f3": [
+        {
+            "type": 0,
+            "value": "No tokens found"
+        }
+    ],
     "bu/fC1": [
         {
             "type": 0,
@@ -8015,10 +9869,22 @@
             "value": "Availability"
         }
     ],
+    "c4gbXr": [
+        {
+            "type": 0,
+            "value": "Draft order successfully finalized"
+        }
+    ],
     "c5pMZ8": [
         {
             "type": 0,
             "value": "API error"
+        }
+    ],
+    "c7/79+": [
+        {
+            "type": 0,
+            "value": "Billing Address"
         }
     ],
     "c8UT0c": [
@@ -8245,6 +10111,12 @@
             "value": "Visible on Product Page in Storefront"
         }
     ],
+    "cwoN25": [
+        {
+            "type": 0,
+            "value": "Configuration Type"
+        }
+    ],
     "cy8sV7": [
         {
             "type": 0,
@@ -8283,6 +10155,12 @@
             "value": "?"
         }
     ],
+    "dJVXIb": [
+        {
+            "type": 0,
+            "value": "VAT included"
+        }
+    ],
     "dKPMyh": [
         {
             "type": 0,
@@ -8313,6 +10191,12 @@
             "value": "We are currently exporting your requested CSV. As soon as it is available it will be sent to your email address"
         }
     ],
+    "dQdxLT": [
+        {
+            "type": 0,
+            "value": "Synchronous events"
+        }
+    ],
     "dS8Adx": [
         {
             "type": 0,
@@ -8337,6 +10221,12 @@
         {
             "type": 0,
             "value": " units of this variant. Sold units will be allocated at appropriate warehouses. Remember to add remaining threshold stock to warehouses."
+        }
+    ],
+    "dTkmON": [
+        {
+            "type": 0,
+            "value": "Edit tracking"
         }
     ],
     "dWK/Ck": [
@@ -8397,10 +10287,28 @@
             "value": "Current balance"
         }
     ],
+    "e0RKe+": [
+        {
+            "type": 0,
+            "value": "Generate"
+        }
+    ],
+    "e6I39q": [
+        {
+            "type": 0,
+            "value": "There are still fulfillment's created for this order. Cancel the fulfillment's first before you cancel the order."
+        }
+    ],
     "e7Nyu7": [
         {
             "type": 0,
             "value": "Customer History"
+        }
+    ],
+    "e7yOai": [
+        {
+            "type": 0,
+            "value": "Not set"
         }
     ],
     "e822us": [
@@ -8419,6 +10327,20 @@
         {
             "type": 0,
             "value": "Variant currently in preorder"
+        }
+    ],
+    "eCRaHe": [
+        {
+            "type": 0,
+            "value": "Returned ("
+        },
+        {
+            "type": 1,
+            "value": "quantity"
+        },
+        {
+            "type": 0,
+            "value": ")"
         }
     ],
     "eLJQSh": [
@@ -8491,6 +10413,12 @@
             "value": "Invalid password"
         }
     ],
+    "euRfu+": [
+        {
+            "type": 0,
+            "value": "Are you sure you want to void this payment?"
+        }
+    ],
     "exvX+Z": [
         {
             "type": 0,
@@ -8501,6 +10429,12 @@
         {
             "type": 0,
             "value": "Delete Customer"
+        }
+    ],
+    "f/R1Ln": [
+        {
+            "type": 0,
+            "value": "Restocked from:"
         }
     ],
     "f3B4tc": [
@@ -8525,6 +10459,12 @@
             "value": "activatedBy"
         }
     ],
+    "fHopox": [
+        {
+            "type": 0,
+            "value": "Assign permissions to register synchronous events for this webhook."
+        }
+    ],
     "fLhj3a": [
         {
             "type": 0,
@@ -8547,6 +10487,12 @@
         {
             "type": 0,
             "value": "Category Name"
+        }
+    ],
+    "fbH51z": [
+        {
+            "type": 0,
+            "value": "Amount cannot be bigger than max refund"
         }
     ],
     "fdbqIs": [
@@ -8591,6 +10537,12 @@
             "value": "Order was marked as paid"
         }
     ],
+    "flP8Hj": [
+        {
+            "type": 0,
+            "value": "Expand or restrict app permissions to access certain part of Saleor system."
+        }
+    ],
     "fo7nfa": [
         {
             "type": 0,
@@ -8603,10 +10555,22 @@
             "value": "Weight Based Rates"
         }
     ],
+    "foNlhn": [
+        {
+            "type": 0,
+            "value": "App Name"
+        }
+    ],
     "ftcHpD": [
         {
             "type": 0,
             "value": "Customer created"
+        }
+    ],
+    "fw+VAN": [
+        {
+            "type": 0,
+            "value": "SKU"
         }
     ],
     "fyE8BN": [
@@ -8759,10 +10723,22 @@
             "value": "You haven’t assigned any member to this permission group yet."
         }
     ],
+    "gZHmaV": [
+        {
+            "type": 0,
+            "value": "No channels selected"
+        }
+    ],
     "ge/xFX": [
         {
             "type": 0,
             "value": "Quantity"
+        }
+    ],
+    "ghGLbJ": [
+        {
+            "type": 0,
+            "value": "click&collect"
         }
     ],
     "ghje1I": [
@@ -8845,6 +10821,12 @@
             "value": " from staff members?"
         }
     ],
+    "gz9v22": [
+        {
+            "type": 0,
+            "value": "Per channel"
+        }
+    ],
     "h1rPPg": [
         {
             "type": 0,
@@ -8923,6 +10905,18 @@
             "value": "Availability"
         }
     ],
+    "hPB89Y": [
+        {
+            "type": 0,
+            "value": "No invoices to be shown"
+        }
+    ],
+    "hS+ZjH": [
+        {
+            "type": 0,
+            "value": "Are you sure you want to delete this webhook?"
+        }
+    ],
     "hWO1SD": [
         {
             "type": 0,
@@ -8935,10 +10929,28 @@
             "value": "No results found"
         }
     ],
+    "hdcGSJ": [
+        {
+            "type": 0,
+            "value": "Support/FAQ"
+        }
+    ],
     "hjH51x": [
         {
             "type": 0,
             "value": "Change photo"
+        }
+    ],
+    "hkENym": [
+        {
+            "type": 0,
+            "value": "Customer"
+        }
+    ],
+    "hkSkNx": [
+        {
+            "type": 0,
+            "value": "Search Customers"
         }
     ],
     "hnBvH7": [
@@ -8951,6 +10963,12 @@
         {
             "type": 0,
             "value": "Deactivated"
+        }
+    ],
+    "hoV07D": [
+        {
+            "type": 0,
+            "value": "Mzawadie Marketplace"
         }
     ],
     "hpMcW8": [
@@ -9005,10 +11023,50 @@
             "value": "Dashboard"
         }
     ],
+    "i+JSEZ": [
+        {
+            "offset": 0,
+            "options": {
+                "one": {
+                    "value": [
+                        {
+                            "type": 0,
+                            "value": "Are you sure you want to cancel this order?"
+                        }
+                    ]
+                },
+                "other": {
+                    "value": [
+                        {
+                            "type": 0,
+                            "value": "Are you sure you want to cancel "
+                        },
+                        {
+                            "type": 1,
+                            "value": "displayQuantity"
+                        },
+                        {
+                            "type": 0,
+                            "value": " orders?"
+                        }
+                    ]
+                }
+            },
+            "pluralType": "cardinal",
+            "type": 6,
+            "value": "counter"
+        }
+    ],
     "i+Vox0": [
         {
             "type": 0,
             "value": "Invoice Generated"
+        }
+    ],
+    "i/ZhxL": [
+        {
+            "type": 0,
+            "value": "Fulfillment waiting for approval"
         }
     ],
     "i0AcKY": [
@@ -9029,6 +11087,12 @@
             "value": "This variant already exists"
         }
     ],
+    "i56GGQ": [
+        {
+            "type": 0,
+            "value": "Replaced Products Value"
+        }
+    ],
     "iAvKNf": [
         {
             "type": 0,
@@ -9039,6 +11103,26 @@
         {
             "type": 0,
             "value": "Starts"
+        }
+    ],
+    "iEeIhY": [
+        {
+            "type": 0,
+            "value": "Customer"
+        }
+    ],
+    "iJrw63": [
+        {
+            "type": 0,
+            "value": "Fulfilled ("
+        },
+        {
+            "type": 1,
+            "value": "quantity"
+        },
+        {
+            "type": 0,
+            "value": ")"
         }
     ],
     "iMJka8": [
@@ -9107,6 +11191,12 @@
             "value": "save & continue"
         }
     ],
+    "ikM00B": [
+        {
+            "type": 0,
+            "value": "Replace"
+        }
+    ],
     "ikRuLs": [
         {
             "type": 1,
@@ -9121,10 +11211,34 @@
             "value": "max"
         }
     ],
+    "imYxM9": [
+        {
+            "type": 0,
+            "value": "App Information"
+        }
+    ],
+    "isM94c": [
+        {
+            "type": 0,
+            "value": "Create"
+        }
+    ],
+    "iue6mV": [
+        {
+            "type": 0,
+            "value": "Keep address"
+        }
+    ],
     "ivJ1qt": [
         {
             "type": 0,
             "value": "Manage your permission groups and their permissions"
+        }
+    ],
+    "ixjvkM": [
+        {
+            "type": 0,
+            "value": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
         }
     ],
     "j/vV0n": [
@@ -9137,6 +11251,12 @@
         {
             "type": 0,
             "value": "Exchange Rates"
+        }
+    ],
+    "j2fPVo": [
+        {
+            "type": 0,
+            "value": "Order successfully updated"
         }
     ],
     "j2l6cL": [
@@ -9181,6 +11301,12 @@
             "value": "acre-inch"
         }
     ],
+    "jDIRQV": [
+        {
+            "type": 0,
+            "value": "About this app"
+        }
+    ],
     "jDovoJ": [
         {
             "type": 0,
@@ -9209,6 +11335,20 @@
         {
             "type": 0,
             "value": "Rest of the World"
+        }
+    ],
+    "jNSOSu": [
+        {
+            "type": 0,
+            "value": "Refunded and Returned ("
+        },
+        {
+            "type": 1,
+            "value": "quantity"
+        },
+        {
+            "type": 0,
+            "value": ")"
         }
     ],
     "jTifz+": [
@@ -9269,6 +11409,12 @@
             "value": "This variant is not available at any of the channels"
         }
     ],
+    "jqnwW9": [
+        {
+            "type": 0,
+            "value": "Webhooks"
+        }
+    ],
     "jswILH": [
         {
             "type": 0,
@@ -9323,6 +11469,12 @@
             "value": "Distance"
         }
     ],
+    "k0rGBI": [
+        {
+            "type": 0,
+            "value": "Access token is used to authenticate service accounts"
+        }
+    ],
     "k3EI/U": [
         {
             "type": 0,
@@ -9333,6 +11485,12 @@
         {
             "type": 0,
             "value": "SKU"
+        }
+    ],
+    "k5lHFp": [
+        {
+            "type": 0,
+            "value": "Learn more about data privacy"
         }
     ],
     "k6WDZl": [
@@ -9351,6 +11509,12 @@
         {
             "type": 0,
             "value": "No Results"
+        }
+    ],
+    "k9hf7F": [
+        {
+            "type": 0,
+            "value": "Total"
         }
     ],
     "kErneR": [
@@ -9395,6 +11559,22 @@
             "value": "Min Value"
         }
     ],
+    "kPIZ65": [
+        {
+            "type": 0,
+            "value": "Order #"
+        },
+        {
+            "type": 1,
+            "value": "orderNumber"
+        }
+    ],
+    "kQq6/o": [
+        {
+            "type": 0,
+            "value": "No results found"
+        }
+    ],
     "kS5Qgk": [
         {
             "type": 0,
@@ -9429,6 +11609,18 @@
         {
             "type": 0,
             "value": "Filterable in Dashboard"
+        }
+    ],
+    "kak5vT": [
+        {
+            "type": 0,
+            "value": "Selected Products Value"
+        }
+    ],
+    "kbL3CY": [
+        {
+            "type": 0,
+            "value": "You have reached your order limit, you will be billed extra for orders above limit. If you would like to up your limit, contact your administration staff about raising your limits."
         }
     ],
     "kbkjEc": [
@@ -9481,6 +11673,12 @@
         {
             "type": 0,
             "value": "Boolean"
+        }
+    ],
+    "l9ETHu": [
+        {
+            "type": 0,
+            "value": "You will be able to fulfill products without capturing payment for the order."
         }
     ],
     "lCPxtT": [
@@ -9547,6 +11745,12 @@
             "value": "Channel"
         }
     ],
+    "lL1HTg": [
+        {
+            "type": 0,
+            "value": "Order marked as paid"
+        }
+    ],
     "lL3YJO": [
         {
             "type": 0,
@@ -9557,6 +11761,12 @@
         {
             "type": 0,
             "value": "Variants are disabled in this product type"
+        }
+    ],
+    "lOMgms": [
+        {
+            "type": 0,
+            "value": "Fulfilled from:"
         }
     ],
     "lQRnYK": [
@@ -9575,6 +11785,12 @@
         {
             "type": 0,
             "value": "Attribute"
+        }
+    ],
+    "lVwmf5": [
+        {
+            "type": 0,
+            "value": "Total"
         }
     ],
     "lW5uJO": [
@@ -9639,6 +11855,12 @@
             "value": "Warehouse Name"
         }
     ],
+    "llC1q8": [
+        {
+            "type": 0,
+            "value": "App home page"
+        }
+    ],
     "lm9NSK": [
         {
             "type": 0,
@@ -9661,6 +11883,12 @@
         {
             "type": 0,
             "value": "Apply single price to all SKUs"
+        }
+    ],
+    "lrq8O6": [
+        {
+            "type": 0,
+            "value": "Amount"
         }
     ],
     "lw9WIk": [
@@ -9687,6 +11915,12 @@
             "value": "View and update your plugins and their settings."
         }
     ],
+    "m6IBe5": [
+        {
+            "type": 0,
+            "value": "Invoice"
+        }
+    ],
     "m8cjcK": [
         {
             "type": 0,
@@ -9697,6 +11931,12 @@
         {
             "type": 0,
             "value": "Group has full access to the store"
+        }
+    ],
+    "mCP0UD": [
+        {
+            "type": 0,
+            "value": "Date"
         }
     ],
     "mDgOmP": [
@@ -9727,6 +11967,12 @@
         {
             "type": 0,
             "value": "Channel"
+        }
+    ],
+    "mQtoRO": [
+        {
+            "type": 0,
+            "value": "Taxes (VAT included)"
         }
     ],
     "mSLr9d": [
@@ -9763,6 +12009,12 @@
         {
             "type": 0,
             "value": "Search Attributes"
+        }
+    ],
+    "maxT+q": [
+        {
+            "type": 0,
+            "value": "Confirm order"
         }
     ],
     "mbOuGl": [
@@ -9857,6 +12109,26 @@
             "value": "Resend code to customer"
         }
     ],
+    "mxtAFx": [
+        {
+            "type": 0,
+            "value": "Are you sure you want to delete draft #"
+        },
+        {
+            "type": 1,
+            "value": "orderNumber"
+        },
+        {
+            "type": 0,
+            "value": "?"
+        }
+    ],
+    "myyWNp": [
+        {
+            "type": 0,
+            "value": "Add Product"
+        }
+    ],
     "mzASqs": [
         {
             "type": 0,
@@ -9929,6 +12201,12 @@
             "value": "Enter amount"
         }
     ],
+    "nEWp+k": [
+        {
+            "type": 0,
+            "value": "Quantity"
+        }
+    ],
     "nEixpu": [
         {
             "type": 0,
@@ -9953,6 +12231,12 @@
         {
             "type": 0,
             "value": " items"
+        }
+    ],
+    "nIrjSR": [
+        {
+            "type": 0,
+            "value": "Ongoing Installations"
         }
     ],
     "nKjLjT": [
@@ -10101,6 +12385,20 @@
             "value": "Delete Warehouse"
         }
     ],
+    "o5KXAN": [
+        {
+            "type": 0,
+            "value": "Are you sure you want to delete "
+        },
+        {
+            "type": 1,
+            "value": "name"
+        },
+        {
+            "type": 0,
+            "value": "?"
+        }
+    ],
     "o6260f": [
         {
             "type": 0,
@@ -10203,6 +12501,20 @@
             "value": "Address line 2"
         }
     ],
+    "oQhFlK": [
+        {
+            "type": 0,
+            "value": "Refunded ("
+        },
+        {
+            "type": 1,
+            "value": "quantity"
+        },
+        {
+            "type": 0,
+            "value": ")"
+        }
+    ],
     "oUWADl": [
         {
             "type": 0,
@@ -10225,6 +12537,12 @@
         {
             "type": 1,
             "value": "languageCode"
+        }
+    ],
+    "oUcxtP": [
+        {
+            "type": 0,
+            "value": "Mzawadie could’t cancel order"
         }
     ],
     "oVDZUb": [
@@ -10263,6 +12581,12 @@
             "value": "Currency"
         }
     ],
+    "p+UDec": [
+        {
+            "type": 0,
+            "value": "Payment"
+        }
+    ],
     "p/EWEZ": [
         {
             "type": 0,
@@ -10279,6 +12603,12 @@
         {
             "type": 0,
             "value": "Preview"
+        }
+    ],
+    "p4zuQp": [
+        {
+            "type": 0,
+            "value": "Product no longer exists"
         }
     ],
     "pA8Mlv": [
@@ -10405,16 +12735,38 @@
             "value": ")"
         }
     ],
+    "pr513b": [
+        {
+            "type": 1,
+            "value": "quantity"
+        },
+        {
+            "type": 0,
+            "value": " items"
+        }
+    ],
     "ps+h1G": [
         {
             "type": 0,
             "value": "Expiration date will be automatically set, once gift card is issued"
         }
     ],
+    "ps0WUQ": [
+        {
+            "type": 0,
+            "value": "No. of Order"
+        }
+    ],
     "ptPPVk": [
         {
             "type": 0,
             "value": "No languages found"
+        }
+    ],
+    "puALFo": [
+        {
+            "type": 0,
+            "value": "Notes"
         }
     ],
     "puikeb": [
@@ -10435,10 +12787,22 @@
             "value": "Usage Limit"
         }
     ],
+    "q+gCyP": [
+        {
+            "type": 0,
+            "value": "Refunded amount"
+        }
+    ],
     "q8ep2I": [
         {
             "type": 0,
             "value": "Delete Customers"
+        }
+    ],
+    "qCH2eZ": [
+        {
+            "type": 0,
+            "value": "Add Value to Authorization Field"
         }
     ],
     "qDwvZ4": [
@@ -10515,6 +12879,18 @@
             "value": "Notes"
         }
     ],
+    "qT6YYk": [
+        {
+            "type": 0,
+            "value": "Total"
+        }
+    ],
+    "qbmeUI": [
+        {
+            "type": 0,
+            "value": "Delete Order Drafts"
+        }
+    ],
     "qbqMpk": [
         {
             "type": 0,
@@ -10557,6 +12933,12 @@
             "value": "Delete"
         }
     ],
+    "qov29K": [
+        {
+            "type": 0,
+            "value": "Select one of customer addresses or add a new address:"
+        }
+    ],
     "qpQ0uB": [
         {
             "type": 0,
@@ -10587,6 +12969,12 @@
         {
             "type": 0,
             "value": "Yes, I want to delete those pages types and assigned pages"
+        }
+    ],
+    "quV5zH": [
+        {
+            "type": 0,
+            "value": "Delete Token"
         }
     ],
     "r+8q4B": [
@@ -10621,6 +13009,12 @@
         {
             "type": 0,
             "value": "Unassign Attribute from Product Type"
+        }
+    ],
+    "r4g/vD": [
+        {
+            "type": 0,
+            "value": "Billing address"
         }
     ],
     "r86alc": [
@@ -10689,6 +13083,16 @@
             "value": "Active"
         }
     ],
+    "rVIlBs": [
+        {
+            "type": 0,
+            "value": "Order #"
+        },
+        {
+            "type": 1,
+            "value": "orderNumber"
+        }
+    ],
     "rVaB7c": [
         {
             "type": 0,
@@ -10719,10 +13123,22 @@
             "value": "SKUs must be unique"
         }
     ],
+    "ra2O4j": [
+        {
+            "type": 0,
+            "value": "Deleted draft orders"
+        }
+    ],
     "rbkmfG": [
         {
             "type": 0,
             "value": "Delete variant"
+        }
+    ],
+    "reP5Uf": [
+        {
+            "type": 0,
+            "value": "Global plugins are set across all channels in your ecommerce. Only status is shown for those types of plugins"
         }
     ],
     "rfvBAF": [
@@ -10797,6 +13213,12 @@
             "value": "Variant Only"
         }
     ],
+    "rwOx2s": [
+        {
+            "type": 0,
+            "value": "Please provide a transaction reference using the input below:"
+        }
+    ],
     "ryAyPr": [
         {
             "type": 0,
@@ -10857,6 +13279,12 @@
             "value": "Gift Card ordered"
         }
     ],
+    "s6lW8R": [
+        {
+            "type": 0,
+            "value": "Change address"
+        }
+    ],
     "s97tLq": [
         {
             "type": 0,
@@ -10867,6 +13295,12 @@
         {
             "type": 0,
             "value": "OK"
+        }
+    ],
+    "sEjRyz": [
+        {
+            "type": 0,
+            "value": "Voucher"
         }
     ],
     "sG0w22": [
@@ -10943,6 +13377,12 @@
             "value": "Availability"
         }
     ],
+    "sfEbeB": [
+        {
+            "type": 0,
+            "value": "You're going to mark this order as paid."
+        }
+    ],
     "sfErC+": [
         {
             "type": 0,
@@ -10989,6 +13429,12 @@
         {
             "type": 0,
             "value": "Summary"
+        }
+    ],
+    "snUby7": [
+        {
+            "type": 0,
+            "value": "Unnamed Webhook Details"
         }
     ],
     "stjHjY": [
@@ -11055,6 +13501,20 @@
             "value": "Settings"
         }
     ],
+    "t1UYU6": [
+        {
+            "type": 0,
+            "value": "Uninstalling the app will remove all your customer’s personal data stored by "
+        },
+        {
+            "type": 1,
+            "value": "name"
+        },
+        {
+            "type": 0,
+            "value": "."
+        }
+    ],
     "t3aiWF": [
         {
             "type": 0,
@@ -11065,6 +13525,18 @@
         {
             "type": 0,
             "value": "Expired"
+        }
+    ],
+    "t9a9GQ": [
+        {
+            "type": 0,
+            "value": "We’ve created your token. Make sure to copy your new personal access token now. You won’t be able to see it again."
+        }
+    ],
+    "tA5HJx": [
+        {
+            "type": 0,
+            "value": "secret key is used to create a hash signature with each payload. *optional field"
         }
     ],
     "tCxhZT": [
@@ -11227,6 +13699,18 @@
             "value": "Min. Spent"
         }
     ],
+    "tvpAXl": [
+        {
+            "type": 0,
+            "value": "Quantity"
+        }
+    ],
+    "txOXvy": [
+        {
+            "type": 0,
+            "value": "Set the same for shipping address"
+        }
+    ],
     "tzMNF3": [
         {
             "type": 0,
@@ -11237,6 +13721,12 @@
         {
             "type": 0,
             "value": "None"
+        }
+    ],
+    "u0S2be": [
+        {
+            "type": 0,
+            "value": "Discount"
         }
     ],
     "u0V06N": [
@@ -11263,10 +13753,34 @@
             "value": "Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
         }
     ],
+    "u9/vj9": [
+        {
+            "type": 0,
+            "value": "Target URL"
+        }
+    ],
     "uCn/rd": [
         {
             "type": 0,
             "value": "Delete Image"
+        }
+    ],
+    "uD93er": [
+        {
+            "type": 0,
+            "value": "Changed Customer"
+        }
+    ],
+    "uIPD1i": [
+        {
+            "type": 0,
+            "value": "App successfully removed"
+        }
+    ],
+    "uMpv1v": [
+        {
+            "type": 0,
+            "value": "Fulfillment successfully cancelled"
         }
     ],
     "uQk8gB": [
@@ -11301,6 +13815,12 @@
             "value": "Note"
         }
     ],
+    "uUsZ7m": [
+        {
+            "type": 0,
+            "value": "Preauthorized amount"
+        }
+    ],
     "uVssds": [
         {
             "offset": 0,
@@ -11333,6 +13853,12 @@
             "pluralType": "cardinal",
             "type": 6,
             "value": "stockQuantity"
+        }
+    ],
+    "uak0ii": [
+        {
+            "type": 0,
+            "value": "Mzawadie couldn't fetch crucial information regarding installation. Without those System can’t install the app in your Saleor. Please use the button below to get back to system’s dashboard."
         }
     ],
     "ubasgL": [
@@ -11463,6 +13989,12 @@
             "value": "Status"
         }
     ],
+    "uzAPCt": [
+        {
+            "type": 0,
+            "value": "does not apply"
+        }
+    ],
     "v+Pkm+": [
         {
             "type": 0,
@@ -11529,6 +14061,12 @@
             "value": "Category Name"
         }
     ],
+    "vM9quW": [
+        {
+            "type": 0,
+            "value": "Paid with Gift Card"
+        }
+    ],
     "vN3qdA": [
         {
             "type": 0,
@@ -11573,6 +14111,12 @@
         {
             "type": 0,
             "value": "Those permissions are out of your scope"
+        }
+    ],
+    "vW3tb6": [
+        {
+            "type": 0,
+            "value": "Product name"
         }
     ],
     "vWTM6Y": [
@@ -11669,6 +14213,12 @@
             "value": " more"
         }
     ],
+    "vf56In": [
+        {
+            "type": 0,
+            "value": "Use one of customer addresses"
+        }
+    ],
     "vfG+nh": [
         {
             "type": 0,
@@ -11709,6 +14259,12 @@
             "value": "Product removed"
         }
     ],
+    "voRaz3": [
+        {
+            "type": 0,
+            "value": "Your custom-created apps will be shown here."
+        }
+    ],
     "vof5TR": [
         {
             "type": 0,
@@ -11719,6 +14275,12 @@
         {
             "type": 0,
             "value": "Stock"
+        }
+    ],
+    "vwMO04": [
+        {
+            "type": 0,
+            "value": "Created"
         }
     ],
     "vy7fjd": [
@@ -11757,10 +14319,54 @@
             "value": "Search engine title"
         }
     ],
+    "w2eTzO": [
+        {
+            "type": 1,
+            "value": "count"
+        },
+        {
+            "type": 0,
+            "value": "/"
+        },
+        {
+            "type": 1,
+            "value": "max"
+        },
+        {
+            "type": 0,
+            "value": " orders"
+        }
+    ],
+    "w424P4": [
+        {
+            "type": 0,
+            "value": "Plugin Information and Status"
+        }
+    ],
     "w4R/SO": [
         {
             "type": 0,
             "value": "Local Apps"
+        }
+    ],
+    "w6Gau0": [
+        {
+            "type": 0,
+            "value": "Are you sure you want to disable "
+        },
+        {
+            "type": 1,
+            "value": "name"
+        },
+        {
+            "type": 0,
+            "value": "? Your data will be kept until you reactivate the app. You will be still billed for the app."
+        }
+    ],
+    "wDUBLR": [
+        {
+            "type": 0,
+            "value": "Proposed refund amount"
         }
     ],
     "wHdMAX": [
@@ -11799,6 +14405,12 @@
         {
             "type": 0,
             "value": "Add search engine title and description to make this category easier to find"
+        }
+    ],
+    "wTHjt3": [
+        {
+            "type": 0,
+            "value": "Search Orders..."
         }
     ],
     "wWTUrM": [
@@ -11857,10 +14469,22 @@
             "value": "numLocations"
         }
     ],
+    "wbjuR4": [
+        {
+            "type": 0,
+            "value": "No webhooks found"
+        }
+    ],
     "wgA48T": [
         {
             "type": 0,
             "value": "Countries A to Z"
+        }
+    ],
+    "whTEcF": [
+        {
+            "type": 0,
+            "value": "Deactivate"
         }
     ],
     "wjKYSU": [
@@ -11875,6 +14499,12 @@
             "value": "Next"
         }
     ],
+    "wlr0Si": [
+        {
+            "type": 0,
+            "value": "Create Webhook"
+        }
+    ],
     "wmdHhD": [
         {
             "type": 0,
@@ -11887,6 +14517,12 @@
             "value": "This password is too commonly used"
         }
     ],
+    "wpAXKX": [
+        {
+            "type": 0,
+            "value": "All orders will be automatically confirmed and all payments will be captured."
+        }
+    ],
     "wpONQ2": [
         {
             "type": 0,
@@ -11897,6 +14533,12 @@
         {
             "type": 0,
             "value": "create page type"
+        }
+    ],
+    "wxFwUW": [
+        {
+            "type": 0,
+            "value": "Visit Marketplace"
         }
     ],
     "wyvzh9": [
@@ -12021,16 +14663,40 @@
             "value": "?"
         }
     ],
+    "xTIKA/": [
+        {
+            "type": 0,
+            "value": "Global"
+        }
+    ],
+    "xUvWaP": [
+        {
+            "type": 0,
+            "value": "Subtotal"
+        }
+    ],
     "xVn5B0": [
         {
             "type": 0,
             "value": "Added new value"
         }
     ],
+    "xWEFrR": [
+        {
+            "type": 0,
+            "value": "This customer doesn't have any addresses in the address book. Provide address for order:"
+        }
+    ],
     "xZhxBJ": [
         {
             "type": 0,
             "value": "Assign Products"
+        }
+    ],
+    "xco5tZ": [
+        {
+            "type": 0,
+            "value": "Are you sure you want to cancel fulfillment? Canceling a fulfillment will restock products at a selected warehouse."
         }
     ],
     "xfGZsi": [
@@ -12061,6 +14727,12 @@
         {
             "type": 0,
             "value": "Delete category"
+        }
+    ],
+    "xoyCZ/": [
+        {
+            "type": 0,
+            "value": "Improper value"
         }
     ],
     "xqXYF+": [
@@ -12217,6 +14889,12 @@
             "value": "Searchable"
         }
     ],
+    "yMi8I8": [
+        {
+            "type": 0,
+            "value": "Dectivate App"
+        }
+    ],
     "yNb+dT": [
         {
             "type": 0,
@@ -12301,6 +14979,12 @@
             "value": "Shipping method is required for this order"
         }
     ],
+    "ycrTBX": [
+        {
+            "type": 0,
+            "value": "Channel"
+        }
+    ],
     "yhv3HX": [
         {
             "type": 0,
@@ -12311,6 +14995,12 @@
         {
             "type": 0,
             "value": "Refresh page"
+        }
+    ],
+    "yuiyES": [
+        {
+            "type": 0,
+            "value": "General Settings"
         }
     ],
     "yzYXW/": [
@@ -12345,6 +15035,12 @@
         {
             "type": 0,
             "value": "File"
+        }
+    ],
+    "z9wQ/U": [
+        {
+            "type": 0,
+            "value": "No Stock"
         }
     ],
     "zCb8fX": [
@@ -12403,6 +15099,18 @@
             "value": "Select All"
         }
     ],
+    "zQX6xO": [
+        {
+            "type": 0,
+            "value": "Delete App"
+        }
+    ],
+    "zQnYKn": [
+        {
+            "type": 0,
+            "value": "Channel status"
+        }
+    ],
     "zR9Ozi": [
         {
             "type": 0,
@@ -12453,6 +15161,12 @@
             "value": "Assign countries"
         }
     ],
+    "zb4eBO": [
+        {
+            "type": 0,
+            "value": "Total"
+        }
+    ],
     "zbJHl7": [
         {
             "type": 0,
@@ -12489,6 +15203,12 @@
             "value": "languageCode"
         }
     ],
+    "zqarUF": [
+        {
+            "type": 0,
+            "value": "Select an address you want to use from the list below"
+        }
+    ],
     "ztQgD8": [
         {
             "type": 0,
@@ -12509,6 +15229,30 @@
         {
             "type": 1,
             "value": "filterName"
+        }
+    ],
+    "zyceue": [
+        {
+            "type": 1,
+            "value": "count"
+        },
+        {
+            "type": 0,
+            "value": "/"
+        },
+        {
+            "type": 1,
+            "value": "max"
+        },
+        {
+            "type": 0,
+            "value": " orders"
+        }
+    ],
+    "zzfj8H": [
+        {
+            "type": 0,
+            "value": "No refund"
         }
     ]
 }

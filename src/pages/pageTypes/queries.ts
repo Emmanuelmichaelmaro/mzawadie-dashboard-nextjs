@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { pageInfoFragment } from "@mzawadie/fragments/pageInfo";
 import { pageTypeDetailsFragment, pageTypeFragment } from "@mzawadie/fragments/pageTypes";
-import makeQuery from "@mzawadie/hooks/makeQuery";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
 import { PageTypeDetails, PageTypeDetailsVariables } from "./types/PageTypeDetails";
 import { PageTypeList, PageTypeListVariables } from "./types/PageTypeList";

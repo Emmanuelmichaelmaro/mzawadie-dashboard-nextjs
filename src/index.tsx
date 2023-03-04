@@ -40,6 +40,7 @@ import DiscountPage from "@mzawadie/pages/discounts";
 import GiftCardPage from "@mzawadie/pages/giftCards";
 import HomePage from "@mzawadie/pages/home";
 import NavigationPage from "@mzawadie/pages/navigation";
+import OrdersPage from "@mzawadie/pages/orders";
 import PageTypesSection from "@mzawadie/pages/pageTypes";
 import PageSection from "@mzawadie/pages/pages";
 import PermissionGroupPage from "@mzawadie/pages/permissionGroups";
@@ -283,6 +284,12 @@ const Routes: React.FC = () => {
                                 permissions={[PermissionEnum.MANAGE_DISCOUNTS]}
                                 path="/discounts"
                                 component={DiscountPage}
+                            />
+
+                            <SectionRoute
+                                permissions={[PermissionEnum.MANAGE_ORDERS]}
+                                path="/orders"
+                                component={OrdersPage}
                             />
 
                             <SectionRoute

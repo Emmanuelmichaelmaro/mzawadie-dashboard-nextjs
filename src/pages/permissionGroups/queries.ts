@@ -4,7 +4,7 @@ import {
     permissionGroupDetailsFragment,
     permissionGroupFragment,
 } from "@mzawadie/fragments/permissionGroups";
-import makeQuery from "@mzawadie/hooks/makeQuery";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
 import {
     PermissionGroupDetails,

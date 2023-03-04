@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import { attributeDetailsFragment, attributeValueListFragment } from "@mzawadie/fragments/attributes";
 import { attributeErrorFragment } from "@mzawadie/fragments/errors";
 import { pageInfoFragment } from "@mzawadie/fragments/pageInfo";
-import makeMutation from "@mzawadie/hooks/makeMutation";
+import makeMutation from "@mzawadie/hooks/graphql/makeMutation";
 
 import { AttributeBulkDelete, AttributeBulkDeleteVariables } from "./types/AttributeBulkDelete";
 import { AttributeCreate, AttributeCreateVariables } from "./types/AttributeCreate";

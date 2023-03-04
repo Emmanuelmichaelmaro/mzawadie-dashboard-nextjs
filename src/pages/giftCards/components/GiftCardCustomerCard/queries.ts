@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import { fragmentMoney } from "@mzawadie/fragments/products";
-import makeQuery from "@mzawadie/hooks/makeQuery";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
 import { CustomerGiftCardList, CustomerGiftCardListVariables } from "./types/CustomerGiftCardList";
 

@@ -35,7 +35,9 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
     open,
 }) => {
     const intl = useIntl();
+
     const [errors, setErrors] = React.useState(false);
+
     const handleErrors = (data: SaveFilterTabDialogFormData) => {
         if (data.name.length) {
             onSubmit(data);
@@ -79,6 +81,7 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
                             <Button onClick={onClose}>
                                 <FormattedMessage {...buttonMessages.back} />
                             </Button>
+
                             <ConfirmButton
                                 transitionState={confirmButtonState}
                                 color="primary"

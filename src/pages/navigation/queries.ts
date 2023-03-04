@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import { TypedQuery } from "@mzawadie/core";
 import { menuDetailsFragment, menuFragment } from "@mzawadie/fragments/navigation";
 import { pageInfoFragment } from "@mzawadie/fragments/pageInfo";
-import makeQuery from "@mzawadie/hooks/makeQuery";
+import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
 import { MenuDetails, MenuDetailsVariables } from "./types/MenuDetails";
 import { MenuList, MenuListVariables } from "./types/MenuList";

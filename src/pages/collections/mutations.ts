@@ -4,7 +4,7 @@ import {
     collectionChannelListingErrorFragment,
     collectionsErrorFragment,
 } from "@mzawadie/fragments/errors";
-import makeMutation from "@mzawadie/hooks/makeMutation";
+import makeMutation from "@mzawadie/hooks/graphql/makeMutation";
 
 import {
     CollectionAssignProduct,

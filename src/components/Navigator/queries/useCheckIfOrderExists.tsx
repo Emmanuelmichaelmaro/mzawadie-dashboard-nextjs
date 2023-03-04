@@ -1,5 +1,5 @@
 import { gql } from "@apollo/client";
-import makeQuery, { UseQueryResult } from "@mzawadie/hooks/makeQuery";
+import makeQuery, { UseQueryResult } from "@mzawadie/hooks/graphql/makeQuery";
 import useDebounce from "@mzawadie/hooks/useDebounce";
 import { useState } from "react";
 

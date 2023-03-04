@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import { exportErrorFragment } from "@mzawadie/fragments/errors";
-import makeMutation from "@mzawadie/hooks/makeMutation";
+import makeMutation from "@mzawadie/hooks/graphql/makeMutation";
 
 import { ExportGiftCards, ExportGiftCardsVariables } from "./types/ExportGiftCards";
 
