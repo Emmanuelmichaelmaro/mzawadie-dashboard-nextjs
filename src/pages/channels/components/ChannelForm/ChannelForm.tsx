@@ -8,10 +8,9 @@ import {
     SingleAutocompleteChoiceType,
 } from "@mzawadie/components/SingleAutocompleteSelectField";
 import { commonMessages } from "@mzawadie/core";
-import { ChannelErrorFragment } from "@mzawadie/fragments/types/ChannelErrorFragment";
+import { ChannelErrorFragment, CountryCode } from "@mzawadie/graphql";
 import useClipboard from "@mzawadie/hooks/useClipboard";
 import { ChangeEvent, FormChange } from "@mzawadie/hooks/useForm";
-import { CountryCode } from "@mzawadie/types/globalTypes";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getChannelsErrorMessage from "@mzawadie/utils/errors/channels";
 import React from "react";

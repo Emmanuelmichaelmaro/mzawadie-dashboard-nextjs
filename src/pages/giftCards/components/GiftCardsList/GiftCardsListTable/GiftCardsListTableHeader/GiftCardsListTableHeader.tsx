@@ -9,6 +9,8 @@ import {
 import { TableHead } from "@mzawadie/components/TableHead";
 import { TooltipTableCellHeader } from "@mzawadie/components/TooltipTableCellHeader";
 import { commonTooltipMessages } from "@mzawadie/components/TooltipTableCellHeader/messages";
+import { useGiftCardListDialogs } from "@mzawadie/pages/giftCards/components/GiftCardsList/providers/GiftCardListDialogsProvider";
+import { useGiftCardList } from "@mzawadie/pages/giftCards/components/GiftCardsList/providers/GiftCardListProvider";
 import Label, { LabelSizes } from "@mzawadie/pages/orders/components/OrderHistory/Label";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import React from "react";
@@ -16,10 +18,6 @@ import { MessageDescriptor, useIntl } from "react-intl";
 
 import { messages as filterLabels } from "../../GiftCardListSearchAndFilters/filters";
 import { giftCardsListTableMessages as messages } from "../../messages";
-import useGiftCardListDialogs from "../../providers/GiftCardListDialogsProvider/hooks/useGiftCardListDialogs";
-import useGiftCardListSort from "../../providers/GiftCardListDialogsProvider/hooks/useGiftCardListSort";
-import useGiftCardList from "../../providers/GiftCardListProvider/hooks/useGiftCardList";
-import useGiftCardListBulkActions from "../../providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
 import { canBeSorted } from "../../sort";
 import { useTableStyles as useStyles } from "../../styles";
 import { GiftCardUrlSortField } from "../../types";
@@ -40,10 +38,9 @@ const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({ isC
     const intl = useIntl();
     const classes = useStyles({});
 
-    const { giftCards, numberOfColumns, loading } = useGiftCardList();
-    const { toggleAll, listElements } = useGiftCardListBulkActions();
+    const { giftCards, numberOfColumns, loading, toggleAll, listElements } = useGiftCardList();
     const { openDeleteDialog } = useGiftCardListDialogs();
-    const { onSort, sort } = useGiftCardListSort();
+    const { onSort, sort } = useGiftCardList();
 
     const getDirection = (sortField: GiftCardUrlSortField) =>
         sort.sort === sortField ? getArrowDirection(sort.asc) : undefined;

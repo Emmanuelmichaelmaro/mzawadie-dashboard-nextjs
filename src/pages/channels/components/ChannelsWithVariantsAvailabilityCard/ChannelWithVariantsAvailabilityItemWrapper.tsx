@@ -1,12 +1,11 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { ExpansionPanel, ExpansionPanelSummary, Typography } from "@material-ui/core";
 import { Messages } from "@mzawadie/components/ChannelsAvailabilityCard/types";
+import { ProductDetailsVariantFragment } from "@mzawadie/graphql";
 import IconChevronDown from "@mzawadie/icons/ChevronDown";
 import { ChannelData } from "@mzawadie/pages/channels/utils";
 import Label from "@mzawadie/pages/orders/components/OrderHistory/Label";
 import { getById } from "@mzawadie/pages/orders/components/OrderReturnPage/utils";
-import { ProductDetails_product_variants } from "@mzawadie/pages/products/types/ProductDetails";
 import { ChannelsWithVariantsData } from "@mzawadie/pages/products/views/ProductUpdate/types";
 import { areAllChannelVariantsSelected } from "@mzawadie/pages/products/views/ProductUpdate/utils";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -85,7 +84,7 @@ const messages = defineMessages({
 });
 
 interface ChannelAvailabilityItemWrapperProps {
-    variants: ProductDetails_product_variants[];
+    variants: ProductDetailsVariantFragment[];
     channelId: string;
     channels: ChannelData[];
     channelsWithVariantsData: ChannelsWithVariantsData;

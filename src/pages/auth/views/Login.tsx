@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useAvailableExternalAuthenticationsQuery } from "@mzawadie/graphql/hooks";
+import { useAvailableExternalAuthenticationsQuery } from "@mzawadie/graphql";
 import { useLocalStorage, useNavigator } from "@mzawadie/hooks";
 import { getAppMountUriForRedirect } from "@mzawadie/utils/urls";
 import React, { useEffect } from "react";
@@ -23,7 +23,7 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
         useUser();
 
     const { data: externalAuthentications, loading: externalAuthenticationsLoading } =
-        useAvailableExternalAuthenticationsQuery;
+        useAvailableExternalAuthenticationsQuery();
 
     const [requestedExternalPluginId, setRequestedExternalPluginId] = useLocalStorage(
         "requestedExternalPluginId",

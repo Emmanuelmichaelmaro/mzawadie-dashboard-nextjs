@@ -20,7 +20,7 @@ import {
 } from "./urls";
 import CustomerAddressesViewComponent from "./views/CustomerAddresses";
 import CustomerCreateView from "./views/CustomerCreate";
-import { CustomerDetailsViewComponent } from "./views/CustomerDetails";
+import CustomerDetailsViewComponent from "./views/CustomerDetails";
 import { CustomerListViewComponent } from "./views/CustomerList";
 
 const CustomerListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {

@@ -1,10 +1,10 @@
 // @ts-nocheck
 import { DialogProps } from "@mzawadie/core";
+import { GIFT_CARD_LIST_QUERY } from "@mzawadie/pages/giftCards/components/GiftCardsList/queries";
 import React from "react";
 
 import useGiftCardDetails from "../GiftCardUpdate/providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import { GiftCardUpdateDialogsConsumerProps } from "../GiftCardUpdate/providers/GiftCardUpdateDialogsProvider";
-import { GIFT_CARD_LIST_QUERY } from "../GiftCardsList/types";
 import GiftCardDeleteDialogContent from "./GiftCardDeleteDialogContent";
 import useGiftCardSingleDelete from "./useGiftCardSingleDelete";
 

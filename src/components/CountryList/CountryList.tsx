@@ -13,7 +13,7 @@ import { CardTitle } from "@mzawadie/components/CardTitle";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { getStringOrPlaceholder, maybe, renderCollection } from "@mzawadie/core";
-import { CountryFragment } from "@mzawadie/fragments/types/CountryFragment";
+import { CountryFragment } from "@mzawadie/graphql";
 import { DeleteIcon, makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";

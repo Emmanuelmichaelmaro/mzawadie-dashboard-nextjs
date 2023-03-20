@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { Pill } from "@mzawadie/components/ChannelsAvailabilityMenuContent";
-import { PluginConfigurationBaseFragment } from "@mzawadie/fragments/types/PluginConfigurationBaseFragment";
+import { PluginConfigurationBaseFragment } from "@mzawadie/graphql";
 import { PillColor } from "@saleor/macaw-ui";
 import { MessageDescriptor } from "react-intl";
 

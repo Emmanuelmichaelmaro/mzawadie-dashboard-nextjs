@@ -8,11 +8,10 @@ import {
 } from "@material-ui/core";
 import { ConfirmButton } from "@mzawadie/components/ConfirmButton";
 import { buttonMessages } from "@mzawadie/core";
+import { AddressFragment, AddressTypeEnum } from "@mzawadie/graphql";
 import { FormChange } from "@mzawadie/hooks/useForm";
 import { VerticalSpacer } from "@mzawadie/pages/apps/components/VerticalSpacer";
 import { CustomerAddressChoiceCard } from "@mzawadie/pages/customers/components/CustomerAddressChoiceCard";
-import { CustomerAddresses_user_addresses } from "@mzawadie/pages/customers/types/CustomerAddresses";
-import { AddressTypeEnum } from "@mzawadie/types/globalTypes";
 import { Button, ConfirmButtonTransitionState, SearchIcon } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -29,9 +28,9 @@ export interface OrderCustomerAddressesSearchProps {
     openFromCustomerChange: boolean;
     transitionState: ConfirmButtonTransitionState;
     selectedCustomerAddressId: string;
-    customerAddresses: CustomerAddresses_user_addresses[];
-    onChangeCustomerShippingAddress: (customerAddress: CustomerAddresses_user_addresses) => void;
-    onChangeCustomerBillingAddress: (customerAddress: CustomerAddresses_user_addresses) => void;
+    customerAddresses: AddressFragment[];
+    onChangeCustomerShippingAddress: (customerAddress: AddressFragment) => void;
+    onChangeCustomerBillingAddress: (customerAddress: AddressFragment) => void;
     exitSearch();
 }
 

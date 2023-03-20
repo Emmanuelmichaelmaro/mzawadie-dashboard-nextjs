@@ -1,8 +1,7 @@
 // @ts-nocheck
 import { IFilter, IFilterElement } from "@mzawadie/components/Filter";
-import { SearchCustomers_search_edges_node } from "@mzawadie/searches/types/SearchCustomers";
-import { SearchProducts_search_edges_node } from "@mzawadie/searches/types/SearchProducts";
-import { GiftCardFilterInput } from "@mzawadie/types/globalTypes";
+import { RelayToFlat } from "@mzawadie/core";
+import { GiftCardFilterInput, SearchCustomersQuery, SearchProductsQuery } from "@mzawadie/graphql";
 import {
     createFilterTabUtils,
     createFilterUtils,
@@ -39,9 +38,9 @@ interface GiftCardFilterOptsProps {
     params: GiftCardListUrlFilters;
     currencies: string[];
     loadingCurrencies: boolean;
-    products: SearchProducts_search_edges_node[];
+    products: RelayToFlat<SearchProductsQuery["search"]>;
     productSearchProps: SearchWithFetchMoreProps;
-    customers: SearchCustomers_search_edges_node[];
+    customers: RelayToFlat<SearchCustomersQuery["search"]>;
     customerSearchProps: SearchWithFetchMoreProps;
     tags: string[];
     tagSearchProps: SearchWithFetchMoreProps;

@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { Card, TextField } from "@material-ui/core";
 import blue from "@material-ui/core/colors/blue";
@@ -9,10 +8,13 @@ import yellow from "@material-ui/core/colors/yellow";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import Hr from "@mzawadie/components/Hr";
 import { PriceField } from "@mzawadie/components/PriceField";
-import { WarehouseFragment } from "@mzawadie/fragments/types/WarehouseFragment";
+import {
+    BulkProductErrorFragment,
+    ProductFragment,
+    ProductVariantBulkCreateInput,
+    WarehouseFragment,
+} from "@mzawadie/graphql";
 import { ChannelPriceData } from "@mzawadie/pages/channels/utils";
-import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@mzawadie/pages/products/types/ProductVariantBulkCreate";
-import { ProductVariantBulkCreateInput } from "@mzawadie/types/globalTypes";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import { getBulkProductErrorMessage } from "@mzawadie/utils/errors/product";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
@@ -20,14 +22,13 @@ import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ProductDetails_product_productType_variantAttributes } from "../../types/ProductDetails";
 import { Attribute, ChannelPrice, ProductVariantCreateFormData } from "./form";
 
 export interface ProductVariantCreatorSummaryProps {
-    attributes: ProductDetails_product_productType_variantAttributes[];
+    attributes: ProductFragment["productType"]["variantAttributes"];
     channelListings: ChannelPriceData[];
     data: ProductVariantCreateFormData;
-    errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[];
+    errors: BulkProductErrorFragment[];
     warehouses: WarehouseFragment[];
     onVariantSkuChange: (variantIndex: number, value: string) => void;
     onVariantStockDataChange: (variantIndex: number, warehouseId: string, value: string) => void;

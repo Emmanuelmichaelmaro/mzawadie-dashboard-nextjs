@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { Dialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
 import BackButton from "@mzawadie/components/BackButton";
-import { ProductMediaFragment } from "@mzawadie/fragments/types/ProductMediaFragment";
+import { ProductMediaFragment } from "@mzawadie/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";

@@ -10,7 +10,7 @@ import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { commonMessages } from "@mzawadie/core";
-import { ProductMediaType } from "@mzawadie/types/globalTypes";
+import { ProductMediaType } from "@mzawadie/graphql";
 import { Backlink, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";

@@ -1,29 +1,23 @@
 // @ts-nocheck
 import { ListViews } from "@mzawadie/core";
+import {
+    AppDeleteFailedInstallationMutation,
+    AppDeleteMutation,
+    AppSortField,
+    AppTypeEnum,
+    JobStatusEnum,
+    OrderDirection,
+    useAppDeleteFailedInstallationMutation,
+    useAppDeleteMutation,
+    useAppRetryInstallMutation,
+    useAppsInstallationsQuery,
+    useAppsListQuery,
+} from "@mzawadie/graphql";
 import useListSettings from "@mzawadie/hooks/useListSettings";
 import useLocalStorage from "@mzawadie/hooks/useLocalStorage";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import usePaginator, { createPaginationState } from "@mzawadie/hooks/usePaginator";
-import { AppSortField, AppTypeEnum, JobStatusEnum, OrderDirection } from "@mzawadie/types/globalTypes";
-import getAppErrorMessage from "@mzawadie/utils/errors/app";
-import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
-import React, { useEffect, useRef } from "react";
-import { useIntl } from "react-intl";
-
-import { AppDeleteDialog } from "../../components/AppDeleteDialog";
-import { AppInProgressDeleteDialog } from "../../components/AppInProgressDeleteDialog";
-import { AppsListPage } from "../../components/AppsListPage";
-import {
-    useAppDeleteFailedInstallationMutation,
-    useAppDeleteMutation,
-    useAppRetryInstallMutation,
-} from "../../mutations";
-import { useAppsInProgressListQuery, useAppsListQuery } from "../../queries";
-import { AppDelete } from "../../types/AppDelete";
-import { AppDeleteFailedInstallation } from "../../types/AppDeleteFailedInstallation";
-import { AppsInstallations_appsInstallations } from "../../types/AppsInstallations";
-import { AppsList_apps_edges } from "../../types/AppsList";
 import {
     appDetailsUrl,
     AppListUrlDialog,
@@ -32,7 +26,15 @@ import {
     appUrl,
     customAppAddUrl,
     customAppUrl,
-} from "../../urls";
+} from "@mzawadie/pages/apps/urls";
+import getAppErrorMessage from "@mzawadie/utils/errors/app";
+import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
+import React, { useEffect, useRef } from "react";
+import { useIntl } from "react-intl";
+
+import { AppDeleteDialog } from "../../components/AppDeleteDialog";
+import { AppInProgressDeleteDialog } from "../../components/AppInProgressDeleteDialog";
+import { AppsListPage } from "../../components/AppsListPage";
 import { messages } from "./messages";
 
 const getCurrentAppName = (id: string, collection?: AppsList_apps_edges[]) =>
@@ -40,27 +42,34 @@ const getCurrentAppName = (id: string, collection?: AppsList_apps_edges[]) =>
 
 const getAppInProgressName = (id: string, collection?: AppsInstallations_appsInstallations[]) =>
     collection?.find((app) => app.id === id)?.appName;
+
 interface AppsListProps {
     params: AppListUrlQueryParams;
 }
 
 export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     const { action } = params;
+
     const [activeInstallations, setActiveInstallations] = useLocalStorage<
         Array<Record<"id" | "name", string>>
     >("activeInstallations", []);
+
+    const navigate = useNavigator();
     const notify = useNotifier();
     const intl = useIntl();
-    const navigate = useNavigator();
+
     const { updateListSettings, settings } = useListSettings(ListViews.APPS_LIST);
+
     const paginate = usePaginator();
     const paginationState = createPaginationState(settings?.rowNumber, params);
+
     const queryVariables = {
         sort: {
             direction: OrderDirection.DESC,
             field: AppSortField.CREATION_DATE,
         },
     };
+
     const intervalId = useRef<null | number>(null);
 
     const removeInstallation = (id: string) =>
@@ -70,9 +79,10 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
         data: appsInProgressData,
         loading: loadingAppsInProgress,
         refetch: appsInProgressRefetch,
-    } = useAppsInProgressListQuery({
+    } = useAppsInstallationsQuery({
         displayLoader: false,
     });
+
     const { data, loading, refetch } = useAppsListQuery({
         displayLoader: true,
         variables: {
@@ -112,9 +122,11 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
             title: intl.formatMessage(messages.appInstalled),
         });
     };
+
     const [retryInstallApp] = useAppRetryInstallMutation({
         onCompleted: (data) => {
             const { errors } = data.appRetryInstall;
+
             if (!errors.length) {
                 const { appInstallation } = data.appRetryInstall;
                 setActiveInstallations((installations) => [
@@ -128,16 +140,17 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
             }
         },
     });
+
     const [openModal, closeModal] = createDialogActionHandlers<AppListUrlDialog, AppListUrlQueryParams>(
         navigate,
         appsListUrl,
         params
     );
 
-    const onAppRemove = (data: AppDelete) => {
+    const onAppRemove = (data: AppDeleteMutation) => {
         const { errors } = data.appDelete;
         if (errors.length === 0) {
-            if (data.appDelete.app.type === AppTypeEnum.LOCAL) {
+            if (data.appDelete?.app?.type === AppTypeEnum.LOCAL) {
                 customAppsRefetch();
             } else {
                 refetch();
@@ -159,6 +172,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
             onAppRemove(data);
         },
     });
+
     const [deleteInProgressApp, deleteInProgressAppOpts] = useAppDeleteFailedInstallationMutation({
         onCompleted: (data) => {
             onAppInProgressRemove(data);
@@ -167,12 +181,15 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
 
     useEffect(() => {
         const appsInProgress = appsInProgressData?.appsInstallations || [];
+
         if (activeInstallations.length && !!appsInProgressData) {
             if (!intervalId.current) {
                 intervalId.current = window.setInterval(() => appsInProgressRefetch(), 2000);
             }
+
             activeInstallations.forEach((installation) => {
                 const item = appsInProgress?.find((app) => app.id === installation.id);
+
                 if (!item) {
                     removeInstallation(installation.id);
                     installedAppNotify(installation.name);
@@ -193,6 +210,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
                 }
             });
         }
+
         if (!activeInstallations.length && intervalId.current) {
             clearInterval(intervalId.current);
             intervalId.current = null;
@@ -227,7 +245,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
         });
     };
 
-    const onAppInProgressRemove = (data: AppDeleteFailedInstallation) => {
+    const onAppInProgressRemove = (data: AppDeleteFailedInstallationMutation) => {
         const { errors } = data.appDeleteFailedInstallation;
         if (errors.length === 0) {
             removeAppNotify();
@@ -242,9 +260,11 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
             );
         }
     };
+
     const onAppInstallRetry = (id: string) => retryInstallApp({ variables: { id } });
 
     const installedApps = data?.apps?.edges;
+
     const customApps = customAppsData?.apps?.edges;
 
     return (
@@ -260,6 +280,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
                 type={action === "remove-app" ? "EXTERNAL" : "CUSTOM"}
                 open={action === "remove-app" || action === "remove-custom-app"}
             />
+
             <AppInProgressDeleteDialog
                 confirmButtonState={deleteInProgressAppOpts.status}
                 name={getAppInProgressName(params.id, appsInProgressData?.appsInstallations)}
@@ -267,6 +288,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
                 onConfirm={handleRemoveInProgressConfirm}
                 open={action === "remove"}
             />
+
             <AppsListPage
                 installedAppsList={installedApps}
                 customAppsList={customApps}

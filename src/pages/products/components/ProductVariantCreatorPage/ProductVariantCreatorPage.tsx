@@ -4,10 +4,9 @@ import { drawerWidthExpanded } from "@mzawadie/components/AppLayout/consts";
 import Container from "@mzawadie/components/Container";
 import Hr from "@mzawadie/components/Hr";
 import { PageHeader } from "@mzawadie/components/PageHeader";
-import { RefreshLimits_shop_limits } from "@mzawadie/components/Shop/types/RefreshLimits";
+import { ProductVariantBulkCreateInput, RefreshLimitsQuery } from "@mzawadie/graphql";
 import useWizard from "@mzawadie/hooks/useWizard";
 import { validatePrice } from "@mzawadie/pages/products/utils/validation";
-import { ProductVariantBulkCreateInput } from "@mzawadie/types/globalTypes";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
@@ -95,7 +94,7 @@ export interface ProductVariantCreatePageProps
         ProductVariantCreatorContentProps,
         "data" | "dispatchFormDataAction" | "step" | "variantsLeft" | "onStepClick"
     > {
-    limits: RefreshLimits_shop_limits;
+    limits: RefreshLimitsQuery["shop"]["limits"];
     onSubmit: (data: ProductVariantBulkCreateInput[]) => void;
 }
 

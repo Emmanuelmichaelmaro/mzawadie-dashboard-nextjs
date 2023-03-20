@@ -17,8 +17,15 @@ import { ConfirmButton } from "@mzawadie/components/ConfirmButton";
 import FormSpacer from "@mzawadie/components/FormSpacer";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import { TableCellAvatar } from "@mzawadie/components/TableCellAvatar";
-import { maybe, renderCollection, buttonMessages, ChannelProps, FetchMoreProps } from "@mzawadie/core";
-import { OrderErrorFragment } from "@mzawadie/fragments/types/OrderErrorFragment";
+import {
+    maybe,
+    renderCollection,
+    buttonMessages,
+    ChannelProps,
+    FetchMoreProps,
+    RelayToFlat,
+} from "@mzawadie/core";
+import { OrderErrorFragment, SearchOrderVariantQuery } from "@mzawadie/graphql";
 import { useModalDialogErrors } from "@mzawadie/hooks/useModalDialogErrors";
 import { useModalDialogOpen } from "@mzawadie/hooks/useModalDialogOpen";
 import useSearchQuery from "@mzawadie/hooks/useSearchQuery";
@@ -28,10 +35,6 @@ import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import {
-    SearchOrderVariant_search_edges_node,
-    SearchOrderVariant_search_edges_node_variants,
-} from "../../types/SearchOrderVariant";
 import OrderPriceLabel from "../OrderPriceLabel/OrderPriceLabel";
 
 const useStyles = makeStyles(
@@ -89,21 +92,23 @@ const useStyles = makeStyles(
     { name: "OrderProductAddDialog" }
 );
 
-type SetVariantsAction = (data: SearchOrderVariant_search_edges_node_variants[]) => void;
+type SetVariantsAction = (
+    data: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"]
+) => void;
 
 export interface OrderProductAddDialogProps extends FetchMoreProps, ChannelProps {
     confirmButtonState: ConfirmButtonTransitionState;
     errors: OrderErrorFragment[];
     open: boolean;
-    products: SearchOrderVariant_search_edges_node[];
+    products: RelayToFlat<SearchOrderVariantQuery["search"]>;
     onClose: () => void;
     onFetch: (query: string) => void;
-    onSubmit: (data: SearchOrderVariant_search_edges_node_variants[]) => void;
+    onSubmit: (data: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"]) => void;
 }
 
 function hasAllVariantsSelected(
-    productVariants: SearchOrderVariant_search_edges_node_variants[],
-    selectedVariantsToProductsMap: SearchOrderVariant_search_edges_node_variants[]
+    productVariants: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
+    selectedVariantsToProductsMap: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"]
 ): boolean {
     return productVariants.reduce(
         (acc, productVariant) =>
@@ -116,17 +121,17 @@ function hasAllVariantsSelected(
 }
 
 function isVariantSelected(
-    variant: SearchOrderVariant_search_edges_node_variants,
-    selectedVariantsToProductsMap: SearchOrderVariant_search_edges_node_variants[]
+    variant: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0],
+    selectedVariantsToProductsMap: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"]
 ): boolean {
     return !!selectedVariantsToProductsMap.find((selectedVariant) => selectedVariant.id === variant.id);
 }
 
 const onProductAdd = (
-    product: SearchOrderVariant_search_edges_node,
+    product: SearchOrderVariantQuery["search"]["edges"][0]["node"],
     productIndex: number,
     productsWithAllVariantsSelected: boolean[],
-    variants: SearchOrderVariant_search_edges_node_variants[],
+    variants: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
     setVariants: SetVariantsAction
 ) =>
     productsWithAllVariantsSelected[productIndex]
@@ -147,10 +152,10 @@ const onProductAdd = (
           ]);
 
 const onVariantAdd = (
-    variant: SearchOrderVariant_search_edges_node_variants,
+    variant: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0],
     variantIndex: number,
     productIndex: number,
-    variants: SearchOrderVariant_search_edges_node_variants[],
+    variants: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
     selectedVariantsToProductsMap: boolean[][],
     setVariants: SetVariantsAction
 ) =>
@@ -178,14 +183,18 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = (props) => {
     const classes = useStyles(props);
     const intl = useIntl();
     const [query, onQueryChange] = useSearchQuery(onFetch);
-    const [variants, setVariants] = React.useState<SearchOrderVariant_search_edges_node_variants[]>([]);
+    const [variants, setVariants] = React.useState<
+        SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"]
+    >([]);
     const errors = useModalDialogErrors(apiErrors, open);
 
     useModalDialogOpen(open, {
         onClose: () => setVariants([]),
     });
 
-    const isValidVariant = ({ channelListings }: SearchOrderVariant_search_edges_node_variants) => {
+    const isValidVariant = ({
+        channelListings,
+    }: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0]) => {
         const currentListing = channelListings.find(
             (listing) => listing.channel.id === selectedChannelId
         );
@@ -197,8 +206,9 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = (props) => {
         return !!currentListing && isVariantPriceSet;
     };
 
-    const getValidProductVariants = ({ variants }: SearchOrderVariant_search_edges_node) =>
-        variants.filter(isValidVariant);
+    const getValidProductVariants = ({
+        variants,
+    }: SearchOrderVariantQuery["search"]["edges"][0]["node"]) => variants.filter(isValidVariant);
 
     const productChoices =
         products?.filter((product) => getValidProductVariants(product).length > 0) || [];

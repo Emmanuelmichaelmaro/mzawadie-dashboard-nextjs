@@ -1,14 +1,10 @@
-/* eslint-disable sort-keys */
 // @ts-nocheck
 import * as richTextEditorFixtures from "@mzawadie/components/RichTextEditor/fixtures.json";
-import { AttributeInputTypeEnum } from "@mzawadie/types/globalTypes";
-
-import { PageDetails_page } from "./types/PageDetails";
-import { PageList_pages_edges_node } from "./types/PageList";
+import { AttributeInputTypeEnum, PageDetailsFragment, PageFragment } from "@mzawadie/graphql";
 
 const content = richTextEditorFixtures.richTextEditor;
 
-export const pageList: PageList_pages_edges_node[] = [
+export const pageList: PageFragment[] = [
     {
         __typename: "Page",
         id: "Jzx123sEt==",
@@ -38,7 +34,7 @@ export const pageList: PageList_pages_edges_node[] = [
         title: "About",
     },
 ];
-export const page: PageDetails_page = {
+export const page: PageDetailsFragment = {
     __typename: "Page",
     attributes: [
         {

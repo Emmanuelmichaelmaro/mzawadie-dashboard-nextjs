@@ -1,6 +1,6 @@
 // @ts-nocheck
+import { PluginSortField } from "@mzawadie/graphql";
 import { PluginListUrlSortField } from "@mzawadie/pages/plugins/urls";
-import { PluginSortField } from "@mzawadie/types/globalTypes";
 import { createGetSortQueryVariables } from "@mzawadie/utils/sort";
 
 export function getSortQueryField(sort: PluginListUrlSortField): PluginSortField | undefined {

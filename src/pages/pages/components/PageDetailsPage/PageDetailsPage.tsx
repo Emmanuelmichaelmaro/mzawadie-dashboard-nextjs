@@ -10,25 +10,26 @@ import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { SeoForm } from "@mzawadie/components/SeoForm";
 import { VisibilityCard } from "@mzawadie/components/VisibilityCard";
-import { sectionNames, FetchMoreProps } from "@mzawadie/core";
-import { PageErrorWithAttributesFragment } from "@mzawadie/fragments/types/PageErrorWithAttributesFragment";
+import { sectionNames, FetchMoreProps, RelayToFlat } from "@mzawadie/core";
+import {
+    PageDetailsFragment,
+    PageErrorWithAttributesFragment,
+    SearchAttributeValuesQuery,
+    SearchPagesQuery,
+    SearchPageTypesQuery,
+    SearchProductsQuery,
+} from "@mzawadie/graphql";
 import useDateLocalize from "@mzawadie/hooks/useDateLocalize";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import {
     getAttributeValuesFromReferences,
     mergeAttributeValues,
 } from "@mzawadie/pages/attributes/utils/data";
-import { PageType_pageType } from "@mzawadie/pages/pages/types/PageType";
-import { SearchAttributeValues_attribute_choices_edges_node } from "@mzawadie/searches/types/SearchAttributeValues";
-import { SearchPageTypes_search_edges_node } from "@mzawadie/searches/types/SearchPageTypes";
-import { SearchPages_search_edges_node } from "@mzawadie/searches/types/SearchPages";
-import { SearchProducts_search_edges_node } from "@mzawadie/searches/types/SearchProducts";
 import { mapNodeToChoice } from "@mzawadie/utils/maps";
 import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { PageDetails_page } from "../../types/PageDetails";
 import { PageInfo } from "../PageInfo";
 import { PageOrganizeContent } from "../PageOrganizeContent";
 import PageForm, { PageData, PageUpdateHandlers } from "./form";
@@ -36,14 +37,14 @@ import PageForm, { PageData, PageUpdateHandlers } from "./form";
 export interface PageDetailsPageProps {
     loading: boolean;
     errors: PageErrorWithAttributesFragment[];
-    page: PageDetails_page;
-    pageTypes?: SearchPageTypes_search_edges_node[];
-    referencePages?: SearchPages_search_edges_node[];
-    referenceProducts?: SearchProducts_search_edges_node[];
+    page: PageDetailsFragment;
+    pageTypes?: RelayToFlat<SearchPageTypesQuery["search"]>;
+    referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
+    referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
     allowEmptySlug?: boolean;
     saveButtonBarState: ConfirmButtonTransitionState;
-    selectedPageType?: PageType_pageType;
-    attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
+    selectedPageType?: PageDetailsFragment["pageType"];
+    attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
     onBack: () => void;
     onRemove: () => void;
     onSubmit: (data: PageData) => SubmitPromise;

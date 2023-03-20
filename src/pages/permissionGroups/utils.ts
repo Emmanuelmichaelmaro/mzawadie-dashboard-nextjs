@@ -1,17 +1,15 @@
 // @ts-nocheck
-import { ShopInfo_shop_permissions } from "@mzawadie/components/Shop/types/ShopInfo";
-import { User } from "@mzawadie/fragments/types/User";
+import { PermissionFragment, PermissionGroupDetailsFragment, UserFragment } from "@mzawadie/graphql";
 import difference from "lodash/difference";
 
 import { PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";
-import { PermissionGroupDetails_permissionGroup } from "./types/PermissionGroupDetails";
 
 /**
  * Will return true if group has all permissions available in shop assigned.
  */
 export const isGroupFullAccess = (
-    permissionGroup: PermissionGroupDetails_permissionGroup,
-    shopPermissions: ShopInfo_shop_permissions[]
+    permissionGroup: PermissionGroupDetailsFragment,
+    shopPermissions: Array<Omit<PermissionFragment, "__typename">>
 ) => {
     const assignedCodes = extractPermissionCodes(permissionGroup);
 
@@ -31,14 +29,14 @@ export const isGroupFullAccess = (
 /**
  * Return list of codes which are assigned to the permission group.
  */
-export const extractPermissionCodes = (permissionGroup: PermissionGroupDetails_permissionGroup) =>
+export const extractPermissionCodes = (permissionGroup: PermissionGroupDetailsFragment) =>
     permissionGroup?.permissions ? permissionGroup.permissions.map((perm) => perm.code) : [];
 
 /**
  * Return lists of permissions which have to be added and removed from group.
  */
 export const permissionsDiff = (
-    permissionGroup: PermissionGroupDetails_permissionGroup,
+    permissionGroup: PermissionGroupDetailsFragment,
     formData: PermissionGroupDetailsPageFormData
 ) => {
     const newPermissions = formData.permissions;
@@ -54,7 +52,7 @@ export const permissionsDiff = (
  * Return lists of users which have to be added and removed from group.
  */
 export const usersDiff = (
-    permissionGroup: PermissionGroupDetails_permissionGroup,
+    permissionGroup: PermissionGroupDetailsFragment,
     formData: PermissionGroupDetailsPageFormData
 ) => {
     const newUsers = formData.users.map((u) => u.id);
@@ -70,8 +68,8 @@ export const usersDiff = (
  * Permissions are exceeded when group has permission which is not handled by user
  */
 export const arePermissionsExceeded = (
-    permissionGroup: PermissionGroupDetails_permissionGroup,
-    user: User
+    permissionGroup: PermissionGroupDetailsFragment,
+    user: UserFragment
 ) => {
     const groupPermissions = extractPermissionCodes(permissionGroup);
     const userPermissions = user.userPermissions.map((p) => p.code);

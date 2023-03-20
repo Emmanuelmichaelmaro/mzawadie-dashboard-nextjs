@@ -3,16 +3,15 @@ import { Typography } from "@material-ui/core";
 import { Container } from "@mzawadie/components/Container";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import { getStringOrPlaceholder, renderCollection } from "@mzawadie/core";
-import { AddressTypeEnum } from "@mzawadie/types/globalTypes";
+import { AddressTypeEnum, CustomerDetailsFragment } from "@mzawadie/graphql";
 import { Backlink, Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import { CustomerAddresses_user } from "../../types/CustomerAddresses";
 import { CustomerAddress } from "../CustomerAddress";
 
 export interface CustomerAddressListPageProps {
-    customer: CustomerAddresses_user;
+    customer: CustomerDetailsFragment;
     disabled: boolean;
     onAdd: () => void;
     onBack: () => void;

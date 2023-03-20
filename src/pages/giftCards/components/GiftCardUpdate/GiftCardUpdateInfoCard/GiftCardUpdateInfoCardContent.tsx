@@ -3,6 +3,7 @@ import { Typography } from "@material-ui/core";
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import Link from "@mzawadie/components/Link";
 import { getFullName, getStringOrPlaceholder } from "@mzawadie/core";
+import { GiftCardEventsEnum } from "@mzawadie/graphql";
 import useDateLocalize from "@mzawadie/hooks/useDateLocalize";
 import { appUrl } from "@mzawadie/pages/apps/urls";
 import { customerUrl } from "@mzawadie/pages/customers/urls";
@@ -11,7 +12,6 @@ import { getOrderNumberLinkObject } from "@mzawadie/pages/orders/components/Orde
 import { getByType } from "@mzawadie/pages/orders/components/OrderReturnPage/utils";
 import { productUrl } from "@mzawadie/pages/products/urls";
 import { staffMemberDetailsUrl } from "@mzawadie/pages/staff/urls";
-import { GiftCardEventsEnum } from "@mzawadie/types/globalTypes";
 import React from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 

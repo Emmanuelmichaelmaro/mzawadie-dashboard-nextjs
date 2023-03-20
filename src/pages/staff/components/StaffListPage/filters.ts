@@ -1,6 +1,6 @@
 import { IFilter } from "@mzawadie/components/Filter";
 import { FilterOpts } from "@mzawadie/core";
-import { StaffMemberStatus } from "@mzawadie/types/globalTypes";
+import { StaffMemberStatus } from "@mzawadie/graphql";
 import { createOptionsField } from "@mzawadie/utils/filters/fields";
 import { defineMessages, IntlShape } from "react-intl";
 

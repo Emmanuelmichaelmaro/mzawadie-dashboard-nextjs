@@ -3,8 +3,8 @@ import { ActionDialog } from "@mzawadie/components/ActionDialog";
 import { useChannelsSearch } from "@mzawadie/components/ChannelsAvailabilityDialog/utils";
 import { ChannelsAvailabilityDialogWrapper } from "@mzawadie/components/ChannelsAvailabilityDialogContentWrapper";
 import { DialogProps } from "@mzawadie/core";
+import { ProductDetailsVariantFragment } from "@mzawadie/graphql";
 import { useModalDialogOpen } from "@mzawadie/hooks/useModalDialogOpen";
-import { ProductDetails_product_variants } from "@mzawadie/pages/products/types/ProductDetails";
 import { ChannelVariantListing } from "@mzawadie/pages/products/views/ProductUpdate/types";
 import useChannelsWithProductVariants from "@mzawadie/pages/products/views/ProductUpdate/useChannelsWithProductVariants";
 import {
@@ -29,7 +29,7 @@ const messages = defineMessages({
 export interface ChannelsAvailabilityDialogProps extends DialogProps {
     channels: ChannelData[];
     contentType?: string;
-    variants: ProductDetails_product_variants[];
+    variants: ProductDetailsVariantFragment[];
     onConfirm: (listings: ChannelVariantListing) => void;
 }
 

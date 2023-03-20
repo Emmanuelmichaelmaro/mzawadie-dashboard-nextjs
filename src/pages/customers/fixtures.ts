@@ -1,9 +1,11 @@
 // @ts-nocheck
-import { PaymentChargeStatusEnum } from "@mzawadie/types/globalTypes";
-
-import { CustomerAddresses_user } from "./types/CustomerAddresses";
-import { CustomerDetails_user } from "./types/CustomerDetails";
-import { ListCustomers_customers_edges_node } from "./types/ListCustomers";
+import { RelayToFlat } from "@mzawadie/core";
+import {
+    CustomerAddressesQuery,
+    CustomerDetailsQuery,
+    ListCustomersQuery,
+    PaymentChargeStatusEnum,
+} from "@mzawadie/graphql";
 
 export const customers = [
     {
@@ -680,7 +682,7 @@ export const customers = [
     },
 ];
 
-export const customerList: ListCustomers_customers_edges_node[] = [
+export const customerList: RelayToFlat<ListCustomersQuery["customers"]> = [
     {
         __typename: "User",
         email: "Curtis.bailey@example.com",
@@ -946,7 +948,7 @@ export const customerList: ListCustomers_customers_edges_node[] = [
         },
     },
 ];
-export const customer: CustomerDetails_user & CustomerAddresses_user = {
+export const customer: CustomerDetailsQuery["user"] & CustomerAddressesQuery["user"] = {
     __typename: "User",
     addresses: [
         {

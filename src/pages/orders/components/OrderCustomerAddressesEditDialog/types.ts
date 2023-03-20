@@ -1,4 +1,4 @@
-import { AddressInput, AddressTypeEnum } from "@mzawadie/types/globalTypes";
+import { AddressInput, AddressTypeEnum } from "@mzawadie/graphql";
 
 export interface OrderCustomerSearchAddressState {
     open: boolean;

@@ -6,32 +6,24 @@ import { FilterBar } from "@mzawadie/components/FilterBar";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import {
     sectionNames,
-    ChannelProps,
     FilterPageProps,
-    ListActions,
     PageListProps,
     SearchPageProps,
-    SortPage,
     TabPageProps,
 } from "@mzawadie/core";
-import { CollectionListUrlSortField } from "@mzawadie/pages/collections/urls";
 import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { CollectionList_collections_edges_node } from "../../types/CollectionList";
-import CollectionList from "../CollectionList/CollectionList";
+import CollectionList, { CollectionListProps } from "../CollectionList/CollectionList";
 import { CollectionFilterKeys, CollectionListFilterOpts, createFilterStructure } from "./filters";
 
 export interface CollectionListPageProps
     extends PageListProps,
-        ListActions,
         SearchPageProps,
-        SortPage<CollectionListUrlSortField>,
         TabPageProps,
         FilterPageProps<CollectionFilterKeys, CollectionListFilterOpts>,
-        ChannelProps {
-    collections: CollectionList_collections_edges_node[];
+        CollectionListProps {
     channelsCount: number;
 }
 

@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { Card, Popper } from "@material-ui/core";
 import { ChannelsAvailabilityMenuContent } from "@mzawadie/components/ChannelsAvailabilityMenuContent";
-import { PluginBaseFragment } from "@mzawadie/fragments/types/PluginBaseFragment";
+import { PluginBaseFragment } from "@mzawadie/graphql";
 import { isPluginGlobal } from "@mzawadie/pages/plugins/views/utils";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";

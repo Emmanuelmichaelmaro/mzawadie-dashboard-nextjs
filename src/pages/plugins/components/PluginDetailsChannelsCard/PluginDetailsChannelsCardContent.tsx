@@ -2,7 +2,7 @@
 import { CardContent, Typography } from "@material-ui/core";
 import { CollectionWithDividers } from "@mzawadie/components/CollectionWithDividers";
 import Skeleton from "@mzawadie/components/Skeleton";
-import { Plugin_plugin } from "@mzawadie/pages/plugins/types/Plugin";
+import { PluginsDetailsFragment } from "@mzawadie/graphql";
 import { isPluginGlobal } from "@mzawadie/pages/plugins/views/utils";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -30,7 +30,7 @@ const useStyles = makeStyles(
 export interface PluginDetailsChannelsCardProps {
     setSelectedChannelId: (channelId: string) => void;
     selectedChannelId: string;
-    plugin: Plugin_plugin;
+    plugin: PluginsDetailsFragment;
 }
 
 const PluginDetailsChannelsCardContent: React.FC<PluginDetailsChannelsCardProps> = ({

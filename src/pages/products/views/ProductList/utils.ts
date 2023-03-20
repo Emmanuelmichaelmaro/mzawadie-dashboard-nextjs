@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { isInEnum } from "@mzawadie/core";
-import { ProductTypeKindEnum } from "@mzawadie/types/globalTypes";
+import { ProductTypeKindEnum } from "@mzawadie/graphql";
 import { IntlShape } from "react-intl";
 
 import { productKindMessages as messages } from "./messages";

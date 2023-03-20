@@ -1,19 +1,15 @@
 // @ts-nocheck
-import { MutationResultWithOpts } from "@mzawadie/hooks/graphql/makeMutation";
+import { DeleteGiftCardMutation, useDeleteGiftCardMutation } from "@mzawadie/graphql";
+import { MutationResultWithOpts } from "@mzawadie/hooks/makeMutation";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { useIntl } from "react-intl";
 
 import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
-import { useGiftCardDeleteMutation } from "../GiftCardsList/mutations";
-import {
-    DeleteGiftCard,
-    DeleteGiftCard_giftCardDelete_errors,
-} from "../GiftCardsList/types/DeleteGiftCard";
 import { giftCardDeleteDialogMessages as messages } from "./messages";
 
 interface UseGiftCardSingleDeleteProps {
     onDeleteGiftCard: () => void;
-    deleteGiftCardOpts: MutationResultWithOpts<DeleteGiftCard>;
+    deleteGiftCardOpts: MutationResultWithOpts<DeleteGiftCardMutation>;
 }
 
 const useGiftCardSingleDelete = ({
@@ -30,36 +26,34 @@ const useGiftCardSingleDelete = ({
     const notify = useNotifier();
     const intl = useIntl();
 
-    const onCompleted = (data: DeleteGiftCard) => {
-        const errors = data?.giftCardDelete?.errors;
+    const [deleteGiftCard, deleteGiftCardOpts] = useDeleteGiftCardMutation({
+        onCompleted: (data: DeleteGiftCardMutation) => {
+            const errors = data?.giftCardDelete?.errors;
 
-        if (!errors.length) {
-            notify({
-                status: "success",
-                text: intl.formatMessage(messages.deleteSuccessAlertText, {
-                    selectedItemsCount: 1,
-                }),
-            });
+            if (!errors.length) {
+                notify({
+                    status: "success",
+                    text: intl.formatMessage(messages.deleteSuccessAlertText, {
+                        selectedItemsCount: 1,
+                    }),
+                });
 
-            onClose();
+                onClose();
 
-            if (onSuccess) {
-                onSuccess();
+                if (onSuccess) {
+                    onSuccess();
+                }
+
+                return;
             }
 
-            return;
-        }
-
-        errors.map((error: DeleteGiftCard_giftCardDelete_errors) =>
-            notify({
-                status: "error",
-                text: getGiftCardErrorMessage(error, intl),
-            })
-        );
-    };
-
-    const [deleteGiftCard, deleteGiftCardOpts] = useGiftCardDeleteMutation({
-        onCompleted,
+            errors.map((error) =>
+                notify({
+                    status: "error",
+                    text: getGiftCardErrorMessage(error, intl),
+                })
+            );
+        },
         refetchQueries,
     });
 

@@ -9,17 +9,26 @@ import Link from "@mzawadie/components/Link";
 import RequirePermissions from "@mzawadie/components/RequirePermissions";
 import { SingleAutocompleteSelectField } from "@mzawadie/components/SingleAutocompleteSelectField";
 import Skeleton from "@mzawadie/components/Skeleton";
-import { buttonMessages, FetchMoreProps, UserPermissionProps, maybe } from "@mzawadie/core";
+import {
+    buttonMessages,
+    FetchMoreProps,
+    UserPermissionProps,
+    maybe,
+    RelayToFlat,
+} from "@mzawadie/core";
+import {
+    OrderDetailsFragment,
+    PermissionEnum,
+    SearchCustomersQuery,
+    WarehouseClickAndCollectOptionEnum,
+} from "@mzawadie/graphql";
 import useStateFromProps from "@mzawadie/hooks/useStateFromProps";
-import { SearchCustomers_search_edges_node } from "@mzawadie/searches/types/SearchCustomers";
-import { PermissionEnum, WarehouseClickAndCollectOptionEnum } from "@mzawadie/types/globalTypes";
+import { customerUrl } from "@mzawadie/pages/customers/urls";
 import createSingleAutocompleteSelectHandler from "@mzawadie/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { customerUrl } from "../../../customers/urls";
-import { OrderDetails_order } from "../../types/OrderDetails";
 import messages from "./messages";
 
 const useStyles = makeStyles(
@@ -54,8 +63,8 @@ export interface CustomerEditData {
 }
 
 export interface OrderCustomerProps extends Partial<FetchMoreProps>, UserPermissionProps {
-    order: OrderDetails_order;
-    users?: SearchCustomers_search_edges_node[];
+    order: OrderDetailsFragment;
+    users?: RelayToFlat<SearchCustomersQuery["search"]>;
     loading?: boolean;
     canEditAddresses: boolean;
     canEditCustomer: boolean;

@@ -1,5 +1,5 @@
+import { ExportScope } from "@mzawadie/graphql";
 import { ExportSettingsFormData } from "@mzawadie/pages/products/components/ProductExportDialog/types";
-import { ExportScope } from "@mzawadie/types/globalTypes";
 
 interface ExportGiftCardsInputProps {
     ids: string[] | null;

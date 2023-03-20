@@ -1,15 +1,26 @@
 import { gql } from "@apollo/client";
 
+export const taxedMoneyFragment = gql`
+    fragment TaxedMoney on TaxedMoney {
+        net {
+            ...Money
+        }
+        gross {
+            ...Money
+        }
+    }
+`;
+
 export const countryFragment = gql`
-    fragment CountryFragment on CountryDisplay {
+    fragment Country on CountryDisplay {
         country
         code
     }
 `;
+
 export const countryWithTaxesFragment = gql`
-    ${countryFragment}
-    fragment CountryWithTaxesFragment on CountryDisplay {
-        ...CountryFragment
+    fragment CountryWithTaxes on CountryDisplay {
+        ...Country
         vat {
             standardRate
             reducedRates {
@@ -19,15 +30,17 @@ export const countryWithTaxesFragment = gql`
         }
     }
 `;
+
 export const shopTaxesFragment = gql`
-    fragment ShopTaxesFragment on Shop {
+    fragment ShopTaxes on Shop {
         chargeTaxesOnShipping
         includeTaxesInPrices
         displayGrossPrices
     }
 `;
+
 export const taxTypeFragment = gql`
-    fragment TaxTypeFragment on TaxType {
+    fragment TaxType on TaxType {
         description
         taxCode
     }

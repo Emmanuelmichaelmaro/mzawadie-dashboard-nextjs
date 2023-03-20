@@ -1,14 +1,13 @@
+// @ts-nocheck
 import { AccountPermissions } from "@mzawadie/components/AccountPermissions";
 import Container from "@mzawadie/components/Container";
 import { Form } from "@mzawadie/components/Form";
 import { Grid } from "@mzawadie/components/Grid";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
-import { ShopInfo_shop_permissions } from "@mzawadie/components/Shop/types/ShopInfo";
 import { sectionNames } from "@mzawadie/core";
-import { AppErrorFragment } from "@mzawadie/fragments/types/AppErrorFragment";
+import { AppErrorFragment, PermissionEnum, PermissionFragment } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
-import { PermissionEnum } from "@mzawadie/types/globalTypes";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getAppErrorMessage from "@mzawadie/utils/errors/app";
 import { ConfirmButtonTransitionState, Backlink } from "@saleor/macaw-ui";
@@ -25,7 +24,7 @@ export interface CustomAppCreatePageFormData {
 export interface CustomAppCreatePageProps {
     disabled: boolean;
     errors: AppErrorFragment[];
-    permissions: ShopInfo_shop_permissions[];
+    permissions: PermissionFragment[];
     saveButtonBarState: ConfirmButtonTransitionState;
     onBack: () => void;
     onSubmit: (data: CustomAppCreatePageFormData) => SubmitPromise<AppErrorFragment[]>;

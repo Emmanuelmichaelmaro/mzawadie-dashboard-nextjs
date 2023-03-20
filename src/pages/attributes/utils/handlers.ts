@@ -2,19 +2,21 @@
 import { FetchResult } from "@apollo/client";
 import { AttributeInput, AttributeInputData } from "@mzawadie/components/Attributes";
 import { FetchMoreProps, ReorderEvent } from "@mzawadie/core";
-import { FileUpload, FileUploadVariables } from "@mzawadie/files/types/FileUpload";
-import { FormsetAtomicData, FormsetChange, FormsetData } from "@mzawadie/hooks/useFormset";
-import { PageDetails_page_attributes } from "@mzawadie/pages/pages/types/PageDetails";
-import { ProductDetails_product_attributes } from "@mzawadie/pages/products/types/ProductDetails";
-import { ProductVariantDetails_productVariant_nonSelectionAttributes } from "@mzawadie/pages/products/types/ProductVariantDetails";
 import {
     AttributeEntityTypeEnum,
     AttributeInputTypeEnum,
+    AttributeValueDeleteMutation,
+    AttributeValueDeleteMutationVariables,
     AttributeValueInput,
-} from "@mzawadie/types/globalTypes";
+    FileUploadMutation,
+    FileUploadMutationVariables,
+    PageSelectedAttributeFragment,
+    ProductFragment,
+    ProductVariantDetailsQuery,
+} from "@mzawadie/graphql";
+import { FormsetAtomicData, FormsetChange, FormsetData } from "@mzawadie/hooks/useFormset";
 import { move, toggle } from "@mzawadie/utils/lists";
 
-import { AttributeValueDelete, AttributeValueDeleteVariables } from "../types/AttributeValueDelete";
 import { getFileValuesToUploadFromAttributes, isFileValueUnused } from "./data";
 
 export function createAttributeChangeHandler(
@@ -243,7 +245,7 @@ export const prepareAttributesInput = ({
 
 export const handleUploadMultipleFiles = async (
     attributesWithNewFileValue: FormsetData<null, File>,
-    uploadFile: (variables: FileUploadVariables) => Promise<FetchResult<FileUpload>>
+    uploadFile: (variables: FileUploadMutationVariables) => Promise<FetchResult<FileUploadMutation>>
 ) =>
     Promise.all(
         getFileValuesToUploadFromAttributes(attributesWithNewFileValue).map((fileAttribute) =>
@@ -256,13 +258,13 @@ export const handleUploadMultipleFiles = async (
 export const handleDeleteMultipleAttributeValues = async (
     attributesWithNewFileValue: FormsetData<null, File>,
     attributes: Array<
-        | PageDetails_page_attributes
-        | ProductDetails_product_attributes
-        | ProductVariantDetails_productVariant_nonSelectionAttributes
+        | PageSelectedAttributeFragment
+        | ProductFragment["attributes"][0]
+        | ProductVariantDetailsQuery["productVariant"]["nonSelectionAttributes"][0]
     >,
     deleteAttributeValue: (
-        variables: AttributeValueDeleteVariables
-    ) => Promise<FetchResult<AttributeValueDelete>>
+        variables: AttributeValueDeleteMutationVariables
+    ) => Promise<FetchResult<AttributeValueDeleteMutation>>
 ) =>
     Promise.all(
         attributes.map((existingAttribute) => {

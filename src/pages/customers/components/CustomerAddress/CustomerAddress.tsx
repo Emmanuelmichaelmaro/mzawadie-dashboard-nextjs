@@ -4,15 +4,13 @@ import { AddressFormatter } from "@mzawadie/components/AddressFormatter";
 import { CardMenu } from "@mzawadie/components/CardMenu";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import Skeleton from "@mzawadie/components/Skeleton";
-import { AddressTypeEnum } from "@mzawadie/types/globalTypes";
+import { AddressFragment, AddressTypeEnum } from "@mzawadie/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import { CustomerAddresses_user_addresses } from "../../types/CustomerAddresses";
-
 export interface CustomerAddressProps {
-    address: CustomerAddresses_user_addresses;
+    address: AddressFragment;
     disabled: boolean;
     isDefaultBillingAddress: boolean;
     isDefaultShippingAddress: boolean;

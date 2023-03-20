@@ -4,7 +4,7 @@ import { CardTitle } from "@mzawadie/components/CardTitle";
 import { PreviewPill } from "@mzawadie/components/PreviewPill";
 import { RadioGroupField } from "@mzawadie/components/RadioGroupField";
 import { commonMessages, UserError } from "@mzawadie/core";
-import { ProductTypeKindEnum } from "@mzawadie/types/globalTypes";
+import { ProductTypeKindEnum } from "@mzawadie/graphql";
 import { getFieldError } from "@mzawadie/utils/errors";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";

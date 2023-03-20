@@ -1,7 +1,7 @@
 import { IFilter } from "@mzawadie/components/Filter";
 import { MultiAutocompleteChoiceType } from "@mzawadie/components/MultiAutocompleteSelectField";
 import { FilterOpts, MinMax } from "@mzawadie/core";
-import { DiscountStatusEnum, VoucherDiscountType } from "@mzawadie/types/globalTypes";
+import { DiscountStatusEnum, VoucherDiscountType } from "@mzawadie/graphql";
 import { createDateField, createNumberField, createOptionsField } from "@mzawadie/utils/filters/fields";
 import { defineMessages, IntlShape } from "react-intl";
 

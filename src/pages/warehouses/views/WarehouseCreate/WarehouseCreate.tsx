@@ -1,25 +1,24 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
 import { commonMessages, findValueInEnum, getMutationStatus } from "@mzawadie/core";
+import { CountryCode, useWarehouseCreateMutation } from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import useShop from "@mzawadie/hooks/useShop";
 import { WarehouseCreatePage } from "@mzawadie/pages/warehouses/components/WarehouseCreatePage";
-import { useWarehouseCreate } from "@mzawadie/pages/warehouses/mutations";
 import { warehouseListUrl, warehouseUrl } from "@mzawadie/pages/warehouses/urls";
-import { CountryCode } from "@mzawadie/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
 const WarehouseCreate: React.FC = () => {
-    const intl = useIntl();
     const navigate = useNavigator();
     const notify = useNotifier();
     const shop = useShop();
-    const [createWarehouse, createWarehouseOpts] = useWarehouseCreate({
+    const intl = useIntl();
+
+    const [createWarehouse, createWarehouseOpts] = useWarehouseCreateMutation({
         onCompleted: (data) => {
-            if (data.createWarehouse.errors.length === 0) {
+            if (data.createWarehouse?.errors.length === 0) {
                 navigate(warehouseUrl(data.createWarehouse.warehouse.id));
                 notify({
                     status: "success",
@@ -28,6 +27,7 @@ const WarehouseCreate: React.FC = () => {
             }
         },
     });
+
     const createWarehouseTransitionState = getMutationStatus(createWarehouseOpts);
 
     return (
@@ -39,10 +39,11 @@ const WarehouseCreate: React.FC = () => {
                     description: "header",
                 })}
             />
+
             <WarehouseCreatePage
                 countries={shop?.countries || []}
                 disabled={createWarehouseOpts.loading}
-                errors={createWarehouseOpts.data?.createWarehouse.errors || []}
+                errors={createWarehouseOpts.data?.createWarehouse?.errors || []}
                 saveButtonBarState={createWarehouseTransitionState}
                 onBack={() => navigate(warehouseListUrl())}
                 onSubmit={(data) =>

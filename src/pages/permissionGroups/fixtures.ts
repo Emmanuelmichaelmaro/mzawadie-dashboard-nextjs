@@ -1,16 +1,17 @@
 // @ts-nocheck
 import * as avatarImg from "@assets/images/avatars/avatar1.png";
-import { PermissionGroupErrorFragment } from "@mzawadie/fragments/types/PermissionGroupErrorFragment";
-import { StaffMemberDetails_user_permissionGroups } from "@mzawadie/pages/staff/types/StaffMemberDetails";
-import { SearchStaffMembers_search_edges_node } from "@mzawadie/searches/types/SearchStaffMembers";
+import { RelayToFlat } from "@mzawadie/core";
+import {
+    PermissionEnum,
+    PermissionGroupDetailsFragment,
+    PermissionGroupErrorCode,
+    PermissionGroupErrorFragment,
+    PermissionGroupFragment,
+    SearchStaffMembersQuery,
+    StaffMemberDetailsFragment,
+} from "@mzawadie/graphql";
 
-/* eslint-disable sort-keys */
-import { PermissionEnum, PermissionGroupErrorCode } from "@mzawadie/types/globalTypes";
-
-import { PermissionGroupDetails_permissionGroup } from "./types/PermissionGroupDetails";
-import { PermissionGroupList_permissionGroups_edges_node } from "./types/PermissionGroupList";
-
-export const permissionGroups: PermissionGroupList_permissionGroups_edges_node[] = [
+export const permissionGroups: PermissionGroupFragment[] = [
     {
         node: {
             id: "R3JvdXA6Mg==",
@@ -90,7 +91,7 @@ export const permissionGroups: PermissionGroupList_permissionGroups_edges_node[]
     },
 ].map((edge) => edge.node);
 
-export const userPermissionGroups: StaffMemberDetails_user_permissionGroups[] = [
+export const userPermissionGroups: StaffMemberDetailsFragment["permissionGroups"] = [
     {
         id: "R3JvdXA6MQ==",
         name: "Full Access",
@@ -105,7 +106,7 @@ export const userPermissionGroups: StaffMemberDetails_user_permissionGroups[] = 
     },
 ];
 
-export const emptyPermissionGroup: PermissionGroupDetails_permissionGroup = {
+export const emptyPermissionGroup: PermissionGroupDetailsFragment = {
     id: "R3JvdXA6Mw==",
     name: "Editors",
     userCanManage: true,
@@ -124,16 +125,18 @@ export const errorsOfPermissionGroupCreate: PermissionGroupErrorFragment[] = [
     {
         field: "name",
         code: PermissionGroupErrorCode.UNIQUE,
+        message: "Group name has to be uniqe",
         __typename: "PermissionGroupError",
     },
     {
         field: "permissions",
         code: PermissionGroupErrorCode.OUT_OF_SCOPE_PERMISSION,
+        message: "Permissions out of scope",
         __typename: "PermissionGroupError",
     },
 ];
 
-export const permissionGroup: PermissionGroupDetails_permissionGroup = {
+export const permissionGroup: PermissionGroupDetailsFragment = {
     id: "R3JvdXA6Mw==",
     name: "Editors",
     userCanManage: true,
@@ -167,7 +170,7 @@ export const permissionGroup: PermissionGroupDetails_permissionGroup = {
     ],
 };
 
-export const users: SearchStaffMembers_search_edges_node[] = [
+export const users: RelayToFlat<SearchStaffMembersQuery["search"]> = [
     {
         node: {
             id: "VXNlcjoyMQ==",

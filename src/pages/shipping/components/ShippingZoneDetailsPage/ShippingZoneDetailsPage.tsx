@@ -11,13 +11,15 @@ import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
 import { ChannelProps, FetchMoreProps, SearchProps, getStringOrPlaceholder } from "@mzawadie/core";
-import { ShippingErrorFragment } from "@mzawadie/fragments/types/ShippingErrorFragment";
-import { ShippingZoneDetailsFragment_warehouses } from "@mzawadie/fragments/types/ShippingZoneDetailsFragment";
+import {
+    ChannelFragment,
+    ShippingErrorFragment,
+    ShippingZoneDetailsFragment,
+    ShippingZoneQuery,
+    ShippingMethodTypeEnum,
+} from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import useStateFromProps from "@mzawadie/hooks/useStateFromProps";
-import { BaseChannels_channels } from "@mzawadie/pages/channels/types/BaseChannels";
-import { ShippingZone_shippingZone } from "@mzawadie/pages/shipping/types/ShippingZone";
-import { ShippingMethodTypeEnum } from "@mzawadie/types/globalTypes";
 import createMultiAutocompleteSelectHandler from "@mzawadie/utils/handlers/multiAutocompleteSelectChangeHandler";
 import { mapNodeToChoice } from "@mzawadie/utils/maps";
 import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChangeTrigger";
@@ -57,8 +59,8 @@ export interface ShippingZoneDetailsPageProps extends FetchMoreProps, SearchProp
     disabled: boolean;
     errors: ShippingErrorFragment[];
     saveButtonBarState: ConfirmButtonTransitionState;
-    shippingZone: ShippingZone_shippingZone;
-    warehouses: ShippingZoneDetailsFragment_warehouses[];
+    shippingZone: ShippingZoneQuery["shippingZone"];
+    warehouses: ShippingZoneDetailsFragment["warehouses"];
     onBack: () => void;
     onCountryAdd: () => void;
     onCountryRemove: (code: string) => void;
@@ -70,7 +72,7 @@ export interface ShippingZoneDetailsPageProps extends FetchMoreProps, SearchProp
     onWarehouseAdd: () => void;
     onWeightRateAdd: () => void;
     onWeightRateEdit: (id: string) => void;
-    allChannels?: BaseChannels_channels[];
+    allChannels?: ChannelFragment[];
 }
 
 function warehouseToChoice(warehouse: Record<"id" | "name", string>): SingleAutocompleteChoiceType {

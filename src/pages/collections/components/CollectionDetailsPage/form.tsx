@@ -3,10 +3,10 @@ import { OutputData } from "@editorjs/editorjs";
 import { useExitFormDialog } from "@mzawadie/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@mzawadie/components/Metadata";
 import { RichTextEditorChange } from "@mzawadie/components/RichTextEditor";
+import { CollectionDetailsFragment } from "@mzawadie/graphql";
 import useForm, { CommonUseFormResultWithHandlers, FormChange } from "@mzawadie/hooks/useForm";
 import useHandleFormSubmit from "@mzawadie/hooks/useHandleFormSubmit";
 import { ChannelCollectionData } from "@mzawadie/pages/channels/utils";
-import { CollectionDetails_collection } from "@mzawadie/pages/collections/types/CollectionDetails";
 import { createChannelsChangeHandler } from "@mzawadie/pages/collections/utils";
 import { COLLECTION_DETAILS_FORM_ID } from "@mzawadie/pages/collections/views/consts";
 import { mapMetadataItemToInput } from "@mzawadie/utils/maps";
@@ -39,14 +39,14 @@ export type UseCollectionUpdateFormResult = CommonUseFormResultWithHandlers<
 
 export interface CollectionUpdateFormProps {
     children: (props: UseCollectionUpdateFormResult) => React.ReactNode;
-    collection: CollectionDetails_collection;
+    collection: CollectionDetailsFragment;
     currentChannels: ChannelCollectionData[];
     setChannels: (data: ChannelCollectionData[]) => void;
     onSubmit: (data: CollectionUpdateData) => Promise<any[]>;
 }
 
 const getInitialData = (
-    collection: CollectionDetails_collection,
+    collection: CollectionDetailsFragment,
     currentChannels: ChannelCollectionData[]
 ): CollectionUpdateFormData => ({
     backgroundImageAlt: collection?.backgroundImage?.alt || "",
@@ -60,7 +60,7 @@ const getInitialData = (
 });
 
 function useCollectionUpdateForm(
-    collection: CollectionDetails_collection,
+    collection: CollectionDetailsFragment,
     currentChannels: ChannelCollectionData[],
     setChannels: (data: ChannelCollectionData[]) => void,
     onSubmit: (data: CollectionUpdateData) => Promise<any[]>

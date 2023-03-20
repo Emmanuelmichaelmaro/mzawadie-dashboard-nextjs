@@ -2,18 +2,20 @@
 import { NotFoundPage } from "@mzawadie/components/NotFoundPage";
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
 import { commonMessages, extractMutationErrors, getStringOrPlaceholder } from "@mzawadie/core";
+import {
+    WebhookEventTypeAsyncEnum,
+    useWebhookUpdateMutation,
+    useWebhookDetailsQuery,
+    WebhookUpdateMutation,
+} from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { customAppUrl } from "@mzawadie/pages/apps/urls";
-import { WebhookEventTypeAsyncEnum } from "@mzawadie/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { WebhookDetailsPage } from "../components/WebhookDetailsPage";
 import { WebhookFormData } from "../components/WebhooksDetailsPage";
-import { useWebhookUpdateMutation } from "../mutations";
-import { useWebhooksDetailsQuery } from "../queries";
-import { WebhookUpdate } from "../types/WebhookUpdate";
 
 export interface WebhooksDetailsProps {
     id: string;
@@ -24,7 +26,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
     const notify = useNotifier();
     const intl = useIntl();
 
-    const onWebhookUpdate = (data: WebhookUpdate) => {
+    const onWebhookUpdate = (data: WebhookUpdateMutation) => {
         const errors = data.webhookUpdate?.errors;
         const webhook = data.webhookUpdate?.webhook;
 
@@ -40,7 +42,7 @@ export const WebhooksDetails: React.FC<WebhooksDetailsProps> = ({ id }) => {
         onCompleted: onWebhookUpdate,
     });
 
-    const { data: webhookDetails, loading } = useWebhooksDetailsQuery({
+    const { data: webhookDetails, loading } = useWebhookDetailsQuery({
         variables: { id },
     });
 

@@ -1,7 +1,8 @@
+// @ts-nocheck
 import { Card, CardContent, TextField } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { commonMessages } from "@mzawadie/core";
-import { WarehouseErrorFragment } from "@mzawadie/fragments/types/WarehouseErrorFragment";
+import { WarehouseErrorFragment } from "@mzawadie/graphql";
 import { FormChange } from "@mzawadie/hooks/useForm";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getWarehouseErrorMessage from "@mzawadie/utils/errors/warehouse";
@@ -23,6 +24,7 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({ data, disabled, errors, o
     return (
         <Card data-test="generalInformationSection">
             <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
+
             <CardContent>
                 <TextField
                     disabled={disabled}
@@ -48,4 +50,5 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({ data, disabled, errors, o
 };
 
 WarehouseInfo.displayName = "WarehouseInfo";
+
 export default WarehouseInfo;

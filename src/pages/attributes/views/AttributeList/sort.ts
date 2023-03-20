@@ -1,5 +1,5 @@
+import { AttributeSortField } from "@mzawadie/graphql";
 import { AttributeListUrlSortField } from "@mzawadie/pages/attributes/urls";
-import { AttributeSortField } from "@mzawadie/types/globalTypes";
 import { createGetSortQueryVariables } from "@mzawadie/utils/sort";
 
 export function getSortQueryField(sort: AttributeListUrlSortField): AttributeSortField | undefined {

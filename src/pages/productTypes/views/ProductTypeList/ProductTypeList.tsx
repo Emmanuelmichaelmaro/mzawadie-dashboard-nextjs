@@ -1,19 +1,31 @@
 // @ts-nocheck
-import { DeleteFilterTabDialog } from "@mzawadie/components/DeleteFilterTabDialog";
 import {
+    DeleteFilterTabDialog,
     SaveFilterTabDialog,
     SaveFilterTabDialogFormData,
-} from "@mzawadie/components/SaveFilterTabDialog";
-import TypeDeleteWarningDialog from "@mzawadie/components/TypeDeleteWarningDialog/TypeDeleteWarningDialog";
+    TypeDeleteWarningDialog,
+} from "@mzawadie/components";
 import { commonMessages, ListViews, maybe } from "@mzawadie/core";
-import useBulkActions from "@mzawadie/hooks/useBulkActions";
-import useListSettings from "@mzawadie/hooks/useListSettings";
-import useNavigator from "@mzawadie/hooks/useNavigator";
-import { useNotifier } from "@mzawadie/hooks/useNotifier";
-import { usePaginationReset } from "@mzawadie/hooks/usePaginationReset";
-import usePaginator, { createPaginationState } from "@mzawadie/hooks/usePaginator";
+import { useProductTypeBulkDeleteMutation, useProductTypeListQuery } from "@mzawadie/graphql";
+import {
+    useBulkActions,
+    useListSettings,
+    useNavigator,
+    useNotifier,
+    usePaginationReset,
+    createPaginationState,
+    usePaginator,
+} from "@mzawadie/hooks";
 import { configurationMenuUrl } from "@mzawadie/pages/configuration";
+import { ProductTypeListPage } from "@mzawadie/pages/productTypes/components/ProductTypeListPage";
 import { useProductTypeDelete } from "@mzawadie/pages/productTypes/hooks/useProductTypeDelete";
+import {
+    productTypeAddUrl,
+    productTypeListUrl,
+    ProductTypeListUrlDialog,
+    ProductTypeListUrlQueryParams,
+    productTypeUrl,
+} from "@mzawadie/pages/productTypes/urls";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@mzawadie/utils/handlers/filterHandlers";
 import createSortHandler from "@mzawadie/utils/handlers/sortHandler";
@@ -23,17 +35,6 @@ import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import ProductTypeListPage from "../../components/ProductTypeListPage/ProductTypeListPage";
-import { TypedProductTypeBulkDeleteMutation } from "../../mutations";
-import { useProductTypeListQuery } from "../../queries";
-import { ProductTypeBulkDelete } from "../../types/ProductTypeBulkDelete";
-import {
-    productTypeAddUrl,
-    productTypeListUrl,
-    ProductTypeListUrlDialog,
-    ProductTypeListUrlQueryParams,
-    productTypeUrl,
-} from "../../urls";
 import {
     deleteFilterTab,
     getActiveFilters,
@@ -53,6 +54,7 @@ interface ProductTypeListProps {
 export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
     const navigate = useNavigator();
     const notify = useNotifier();
+    const intl = useIntl();
     const paginate = usePaginator();
 
     const {
@@ -64,8 +66,6 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
     } = useBulkActions(params.ids);
 
     const { settings } = useListSettings(ListViews.PRODUCT_LIST);
-
-    const intl = useIntl();
 
     usePaginationReset(productTypeListUrl, params, settings.rowNumber);
 
@@ -129,24 +129,6 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
         params
     );
 
-    const handleProductTypeBulkDelete = (data: ProductTypeBulkDelete) => {
-        if (data.productTypeBulkDelete.errors.length === 0) {
-            notify({
-                status: "success",
-                text: intl.formatMessage(commonMessages.savedChanges),
-            });
-            reset();
-            refetch();
-            navigate(
-                productTypeListUrl({
-                    ...params,
-                    action: undefined,
-                    ids: undefined,
-                })
-            );
-        }
-    };
-
     const handleSort = createSortHandler(navigate, productTypeListUrl, params);
 
     const productTypeDeleteData = useProductTypeDelete({
@@ -156,87 +138,101 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
 
     const productTypesData = mapEdgesToItems(data?.productTypes);
 
-    return (
-        <TypedProductTypeBulkDeleteMutation onCompleted={handleProductTypeBulkDelete}>
-            {(productTypeBulkDelete, productTypeBulkDeleteOpts) => {
-                const onProductTypeBulkDelete = () =>
-                    productTypeBulkDelete({
-                        variables: {
-                            ids: params.ids,
-                        },
-                    });
-
-                return (
-                    <>
-                        <ProductTypeListPage
-                            currentTab={currentTab}
-                            filterOpts={getFilterOpts(params)}
-                            initialSearch={params.query || ""}
-                            onSearchChange={handleSearchChange}
-                            onFilterChange={changeFilters}
-                            onAll={resetFilters}
-                            onTabChange={handleTabChange}
-                            onTabDelete={() => openModal("delete-search")}
-                            onTabSave={() => openModal("save-search")}
-                            tabs={tabs.map((tab) => tab.name)}
-                            disabled={loading}
-                            productTypes={productTypesData}
-                            pageInfo={pageInfo}
-                            onAdd={() => navigate(productTypeAddUrl())}
-                            onBack={() => navigate(configurationMenuUrl)}
-                            onNextPage={loadNextPage}
-                            onPreviousPage={loadPreviousPage}
-                            onRowClick={(id) => () => navigate(productTypeUrl(id))}
-                            onSort={handleSort}
-                            isChecked={isSelected}
-                            selected={selectedProductTypes.length}
-                            sort={getSortParams(params)}
-                            toggle={toggle}
-                            toggleAll={toggleAll}
-                            toolbar={
-                                <IconButton
-                                    variant="secondary"
-                                    color="primary"
-                                    onClick={() =>
-                                        openModal("remove", {
-                                            ids: selectedProductTypes,
-                                        })
-                                    }
-                                >
-                                    <DeleteIcon />
-                                </IconButton>
-                            }
-                        />
-
-                        {productTypesData && (
-                            <TypeDeleteWarningDialog
-                                {...productTypeDeleteData}
-                                typesData={productTypesData}
-                                typesToDelete={selectedProductTypes}
-                                onClose={closeModal}
-                                onDelete={onProductTypeBulkDelete}
-                                deleteButtonState={productTypeBulkDeleteOpts.status}
-                            />
-                        )}
-
-                        <SaveFilterTabDialog
-                            open={params.action === "save-search"}
-                            confirmButtonState="default"
-                            onClose={closeModal}
-                            onSubmit={handleTabSave}
-                        />
-
-                        <DeleteFilterTabDialog
-                            open={params.action === "delete-search"}
-                            confirmButtonState="default"
-                            onClose={closeModal}
-                            onSubmit={handleTabDelete}
-                            tabName={maybe(() => tabs[currentTab - 1].name, "...")}
-                        />
-                    </>
+    const [productTypeBulkDelete, productTypeBulkDeleteOpts] = useProductTypeBulkDeleteMutation({
+        onCompleted: (data) => {
+            if (data.productTypeBulkDelete.errors.length === 0) {
+                notify({
+                    status: "success",
+                    text: intl.formatMessage(commonMessages.savedChanges),
+                });
+                reset();
+                refetch();
+                navigate(
+                    productTypeListUrl({
+                        ...params,
+                        action: undefined,
+                        ids: undefined,
+                    })
                 );
-            }}
-        </TypedProductTypeBulkDeleteMutation>
+            }
+        },
+    });
+
+    const onProductTypeBulkDelete = () =>
+        productTypeBulkDelete({
+            variables: {
+                ids: params.ids,
+            },
+        });
+
+    return (
+        <>
+            <ProductTypeListPage
+                currentTab={currentTab}
+                filterOpts={getFilterOpts(params)}
+                initialSearch={params.query || ""}
+                onSearchChange={handleSearchChange}
+                onFilterChange={changeFilters}
+                onAll={resetFilters}
+                onTabChange={handleTabChange}
+                onTabDelete={() => openModal("delete-search")}
+                onTabSave={() => openModal("save-search")}
+                tabs={tabs.map((tab) => tab.name)}
+                disabled={loading}
+                productTypes={productTypesData}
+                pageInfo={pageInfo}
+                onAdd={() => navigate(productTypeAddUrl())}
+                onBack={() => navigate(configurationMenuUrl)}
+                onNextPage={loadNextPage}
+                onPreviousPage={loadPreviousPage}
+                onRowClick={(id) => () => navigate(productTypeUrl(id))}
+                onSort={handleSort}
+                isChecked={isSelected}
+                selected={selectedProductTypes.length}
+                sort={getSortParams(params)}
+                toggle={toggle}
+                toggleAll={toggleAll}
+                toolbar={
+                    <IconButton
+                        variant="secondary"
+                        color="primary"
+                        onClick={() =>
+                            openModal("remove", {
+                                ids: selectedProductTypes,
+                            })
+                        }
+                    >
+                        <DeleteIcon />
+                    </IconButton>
+                }
+            />
+
+            {productTypesData && (
+                <TypeDeleteWarningDialog
+                    {...productTypeDeleteData}
+                    typesData={productTypesData}
+                    typesToDelete={selectedProductTypes}
+                    onClose={closeModal}
+                    onDelete={onProductTypeBulkDelete}
+                    deleteButtonState={productTypeBulkDeleteOpts.status}
+                />
+            )}
+
+            <SaveFilterTabDialog
+                open={params.action === "save-search"}
+                confirmButtonState="default"
+                onClose={closeModal}
+                onSubmit={handleTabSave}
+            />
+
+            <DeleteFilterTabDialog
+                open={params.action === "delete-search"}
+                confirmButtonState="default"
+                onClose={closeModal}
+                onSubmit={handleTabDelete}
+                tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+            />
+        </>
     );
 };
 

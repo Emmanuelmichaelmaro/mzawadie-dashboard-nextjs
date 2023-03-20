@@ -7,7 +7,7 @@ import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { SeoForm } from "@mzawadie/components/SeoForm";
 import { sectionNames } from "@mzawadie/core";
-import { ProductErrorFragment } from "@mzawadie/fragments/types/ProductErrorFragment";
+import { ProductErrorFragment } from "@mzawadie/graphql";
 import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";

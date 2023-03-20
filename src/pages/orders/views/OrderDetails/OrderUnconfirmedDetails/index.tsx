@@ -7,16 +7,18 @@ import {
     getMutationState,
     getStringOrPlaceholder,
 } from "@mzawadie/core";
+import {
+    FulfillmentStatus,
+    OrderFulfillmentApproveMutation,
+    OrderFulfillmentApproveMutationVariables,
+    OrderUpdateMutation,
+    OrderUpdateMutationVariables,
+    useCustomerAddressesQuery,
+    useWarehouseListQuery,
+} from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useUser } from "@mzawadie/pages/auth";
-import { useCustomerAddressesQuery } from "@mzawadie/pages/customers/queries";
 import { customerUrl } from "@mzawadie/pages/customers/urls";
-import { useOrderVariantSearch } from "@mzawadie/pages/orders/queries";
-import {
-    OrderFulfillmentApprove,
-    OrderFulfillmentApproveVariables,
-} from "@mzawadie/pages/orders/types/OrderFulfillmentApprove";
-import { OrderUpdate, OrderUpdateVariables } from "@mzawadie/pages/orders/types/OrderUpdate";
 import {
     orderFulfillUrl,
     orderListUrl,
@@ -27,7 +29,8 @@ import {
 } from "@mzawadie/pages/orders/urls";
 import { OrderDiscountProvider } from "@mzawadie/pages/products/components/OrderDiscountProviders/OrderDiscountProviders";
 import { OrderLineDiscountProvider } from "@mzawadie/pages/products/components/OrderDiscountProviders/OrderLineDiscountProviders";
-import { useWarehouseList } from "@mzawadie/pages/warehouses/queries";
+import { productUrl } from "@mzawadie/pages/products/urls";
+import { useOrderVariantSearch } from "@mzawadie/searches/useOrderVariantSearch";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -57,7 +60,7 @@ interface OrderUnconfirmedDetailsProps {
     orderLineDelete: any;
     orderInvoiceRequest: any;
     handleSubmit: any;
-    orderUpdate: PartialMutationProviderOutput<OrderUpdate, OrderUpdateVariables>;
+    orderUpdate: PartialMutationProviderOutput<OrderUpdateMutation, OrderUpdateMutationVariables>;
     orderCancel: any;
     orderShippingMethodUpdate: any;
     orderLinesAdd: any;
@@ -65,8 +68,8 @@ interface OrderUnconfirmedDetailsProps {
     orderVoid: any;
     orderPaymentCapture: any;
     orderFulfillmentApprove: PartialMutationProviderOutput<
-        OrderFulfillmentApprove,
-        OrderFulfillmentApproveVariables
+        OrderFulfillmentApproveMutation,
+        OrderFulfillmentApproveMutationVariables
     >;
     orderFulfillmentCancel: any;
     orderFulfillmentUpdateTracking: any;
@@ -114,7 +117,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
     } = useOrderVariantSearch({
         variables: { ...DEFAULT_INITIAL_SEARCH_DATA, channel: order.channel.slug },
     });
-    const warehouses = useWarehouseList({
+    const warehouses = useWarehouseListQuery({
         displayLoader: true,
         variables: {
             first: 30,

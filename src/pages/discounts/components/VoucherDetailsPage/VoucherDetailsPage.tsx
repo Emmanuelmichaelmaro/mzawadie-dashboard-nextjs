@@ -18,7 +18,13 @@ import {
     ListProps,
     TabListActions,
 } from "@mzawadie/core";
-import { DiscountErrorFragment } from "@mzawadie/fragments/types/DiscountErrorFragment";
+import {
+    DiscountErrorFragment,
+    VoucherDetailsFragment,
+    DiscountValueTypeEnum,
+    PermissionEnum,
+    VoucherTypeEnum,
+} from "@mzawadie/graphql";
 import { ChannelVoucherData } from "@mzawadie/pages/channels/utils";
 import {
     createChannelsChangeHandler,
@@ -26,14 +32,12 @@ import {
 } from "@mzawadie/pages/discounts/handlers";
 import { DiscountTypeEnum, RequirementsPicker } from "@mzawadie/pages/discounts/types";
 import { validatePrice } from "@mzawadie/pages/products/utils/validation";
-import { DiscountValueTypeEnum, PermissionEnum, VoucherTypeEnum } from "@mzawadie/types/globalTypes";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@mzawadie/utils/maps";
 import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChangeTrigger";
 import { ConfirmButtonTransitionState, Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { VoucherDetails_voucher } from "../../types/VoucherDetails";
 import { DiscountCategories } from "../DiscountCategories";
 import { DiscountCollections } from "../DiscountCollections";
 import { DiscountDates } from "../DiscountDates";
@@ -78,7 +82,7 @@ export interface VoucherDetailsPageProps
     activeTab: VoucherDetailsPageTab;
     errors: DiscountErrorFragment[];
     saveButtonBarState: ConfirmButtonTransitionState;
-    voucher: VoucherDetails_voucher;
+    voucher: VoucherDetailsFragment;
     allChannelsCount: number;
     channelListings: ChannelVoucherData[];
     hasChannelChanged: boolean;

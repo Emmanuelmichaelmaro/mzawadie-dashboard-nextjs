@@ -1,6 +1,5 @@
 import { commonMessages } from "@mzawadie/core";
-import { ExportErrorFragment } from "@mzawadie/fragments/types/ExportErrorFragment";
-import { ExportErrorCode } from "@mzawadie/types/globalTypes";
+import { ExportErrorFragment, ExportErrorCode } from "@mzawadie/graphql";
 import { IntlShape } from "react-intl";
 
 import commonErrorMessages from "./common";

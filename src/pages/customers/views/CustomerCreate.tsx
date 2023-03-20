@@ -1,17 +1,13 @@
 // @ts-nocheck
-import { WindowTitle } from "@mzawadie/components";
+import { WindowTitle } from "@mzawadie/components/WindowTitle";
 import { extractMutationErrors, maybe } from "@mzawadie/core";
-import { useNavigator, useNotifier } from "@mzawadie/hooks";
-import {
-    CustomerCreatePage,
-    CustomerCreatePageSubmitData,
-} from "@mzawadie/pages/customers/components/CustomerCreatePage";
-import { CreateCustomer } from "@mzawadie/pages/customers/types/CreateCustomer";
+import { useCreateCustomerMutation, useCustomerCreateDataQuery } from "@mzawadie/graphql";
+import useNavigator from "@mzawadie/hooks/useNavigator";
+import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { TypedCreateCustomerMutation } from "../mutations";
-import { TypedCustomerCreateDataQuery } from "../queries";
+import { CustomerCreatePage, CustomerCreatePageSubmitData } from "../components/CustomerCreatePage";
 import { customerListUrl, customerUrl } from "../urls";
 
 export const CustomerCreate: React.FC = () => {
@@ -19,20 +15,26 @@ export const CustomerCreate: React.FC = () => {
     const notify = useNotifier();
     const intl = useIntl();
 
-    const handleCreateCustomerSuccess = (data: CreateCustomer) => {
-        if (data.customerCreate?.errors.length === 0) {
-            notify({
-                status: "success",
-                text: intl.formatMessage({
-                    defaultMessage: "Customer created",
-                    id: "ftcHpD",
-                }),
-            });
-            navigate(customerUrl(data.customerCreate.user?.id));
-        }
-    };
+    const { data, loading } = useCustomerCreateDataQuery({
+        displayLoader: true,
+    });
 
-    const handleSubmit = (createCustomer: CustomerCreatePageSubmitData) => (formData) =>
+    const [createCustomer, createCustomerOpts] = useCreateCustomerMutation({
+        onCompleted: (data) => {
+            if (data.customerCreate?.errors.length === 0) {
+                notify({
+                    status: "success",
+                    text: intl.formatMessage({
+                        defaultMessage: "Customer created",
+                        id: "ftcHpD",
+                    }),
+                });
+                navigate(customerUrl(data.customerCreate.user?.id));
+            }
+        },
+    });
+
+    const handleSubmit = (formData: CustomerCreatePageSubmitData) =>
         extractMutationErrors(
             createCustomer({
                 variables: {
@@ -49,32 +51,23 @@ export const CustomerCreate: React.FC = () => {
         );
 
     return (
-        <TypedCustomerCreateDataQuery displayLoader>
-            {({ data, loading }) => (
-                <TypedCreateCustomerMutation onCompleted={handleCreateCustomerSuccess}>
-                    {(createCustomer, createCustomerOpts) => (
-                        <>
-                            <WindowTitle
-                                title={intl.formatMessage({
-                                    defaultMessage: "Create customer",
-                                    id: "nX2pCU",
-                                    description: "window title",
-                                })}
-                            />
-
-                            <CustomerCreatePage
-                                countries={maybe(() => data.shop.countries, [])}
-                                disabled={loading || createCustomerOpts.loading}
-                                errors={createCustomerOpts.data?.customerCreate.errors || []}
-                                saveButtonBar={createCustomerOpts.status}
-                                onBack={() => navigate(customerListUrl())}
-                                onSubmit={(createCustomer) => handleSubmit(createCustomer)}
-                            />
-                        </>
-                    )}
-                </TypedCreateCustomerMutation>
-            )}
-        </TypedCustomerCreateDataQuery>
+        <>
+            <WindowTitle
+                title={intl.formatMessage({
+                    defaultMessage: "Create customer",
+                    id: "nX2pCU",
+                    description: "window title",
+                })}
+            />
+            <CustomerCreatePage
+                countries={maybe(() => data?.shop.countries, [])}
+                disabled={loading || createCustomerOpts.loading}
+                errors={createCustomerOpts.data?.customerCreate?.errors || []}
+                saveButtonBar={createCustomerOpts.status}
+                onBack={() => navigate(customerListUrl())}
+                onSubmit={handleSubmit}
+            />
+        </>
     );
 };
 

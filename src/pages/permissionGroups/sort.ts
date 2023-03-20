@@ -1,15 +1,11 @@
 // @ts-nocheck
 import { getUserName } from "@mzawadie/core";
+import { StaffMemberFragment } from "@mzawadie/graphql";
 
-import { PermissionGroupDetails_permissionGroup_users } from "./types/PermissionGroupDetails";
 import { MembersListUrlSortField } from "./urls";
 
 export const sortMembers =
-    (sort: string, asc: boolean) =>
-    (
-        a: PermissionGroupDetails_permissionGroup_users,
-        b: PermissionGroupDetails_permissionGroup_users
-    ) => {
+    (sort: string, asc: boolean) => (a: StaffMemberFragment, b: StaffMemberFragment) => {
         let valueA;
         let valueB;
         // eslint-disable-next-line default-case

@@ -1,9 +1,7 @@
 // @ts-nocheck
-import { ChannelFragment } from "@mzawadie/fragments/types/ChannelFragment";
+import { BaseChannelsQuery, ChannelFragment, useBaseChannelsQuery } from "@mzawadie/graphql";
 import useLocalStorage from "@mzawadie/hooks/useLocalStorage";
 import { useUser } from "@mzawadie/pages/auth";
-import { useBaseChannelsList } from "@mzawadie/pages/channels/queries";
-import { BaseChannels_channels } from "@mzawadie/pages/channels/types/BaseChannels";
 import { getById } from "@mzawadie/pages/orders/components/OrderReturnPage/utils";
 import { useSaleorConfig } from "@saleor/sdk";
 import React from "react";
@@ -29,7 +27,7 @@ const AppChannelContext = React.createContext<AppChannelContextData>({
     setPickerActive: () => undefined,
 });
 
-const isValidChannel = (channelId: string, channelList?: BaseChannels_channels[]) => {
+const isValidChannel = (channelId: string, channelList?: BaseChannelsQuery[]) => {
     if (!channelId) {
         return false;
     }
@@ -45,7 +43,7 @@ export const AppChannelProvider: React.FC = ({ children }) => {
 
     const [selectedChannel, setSelectedChannel] = useLocalStorage("channel", "");
 
-    const { data: channelData, refetch } = useBaseChannelsList({
+    const { data: channelData, refetch } = useBaseChannelsQuery({
         skip: !authenticated,
     });
 

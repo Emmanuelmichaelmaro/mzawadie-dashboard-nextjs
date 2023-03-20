@@ -12,29 +12,30 @@ import {
     getStringOrPlaceholder,
     ReorderEvent,
 } from "@mzawadie/core";
-import useBulkActions from "@mzawadie/hooks/useBulkActions";
-import useNavigator from "@mzawadie/hooks/useNavigator";
-import { useNotifier } from "@mzawadie/hooks/useNotifier";
-import { attributeUrl } from "@mzawadie/pages/attributes/urls";
 import {
     useAssignPageAttributeMutation,
     usePageTypeAttributeReorderMutation,
     usePageTypeDeleteMutation,
+    usePageTypeDetailsQuery,
     usePageTypeUpdateMutation,
     useUnassignPageAttributeMutation,
-} from "@mzawadie/pages/pageTypes/mutations";
+    useUpdateMetadataMutation,
+    useUpdatePrivateMetadataMutation,
+} from "@mzawadie/graphql";
+import useBulkActions from "@mzawadie/hooks/useBulkActions";
+import useNavigator from "@mzawadie/hooks/useNavigator";
+import { useNotifier } from "@mzawadie/hooks/useNotifier";
+import { attributeUrl } from "@mzawadie/pages/attributes/urls";
+import { pageTypeListUrl, pageTypeUrl, PageTypeUrlQueryParams } from "@mzawadie/pages/pageTypes/urls";
 import getPageErrorMessage from "@mzawadie/utils/errors/page";
 import createMetadataUpdateHandler from "@mzawadie/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
-import { useMetadataUpdate, usePrivateMetadataUpdate } from "@mzawadie/utils/metadata/updateMetadata";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { PageTypeDetailsPage, PageTypeForm } from "../components/PageTypeDetailsPage";
-import useAvailablePageAttributeSearch from "../hooks/useAvailablePageAttributeSearch";
 import { usePageTypeDelete } from "../hooks/usePageTypeDelete";
-import { usePageTypeDetailsQuery } from "../queries";
-import { pageTypeListUrl, pageTypeUrl, PageTypeUrlQueryParams } from "../urls";
+import useAvailablePageAttributeSearch from "@mzawadie/searches/useAvailablePageAttributeSearch";
 
 interface PageTypeDetailsProps {
     id: string;
@@ -44,8 +45,9 @@ interface PageTypeDetailsProps {
 export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) => {
     const navigate = useNavigator();
     const notify = useNotifier();
-    const attributeListActions = useBulkActions();
     const intl = useIntl();
+
+    const attributeListActions = useBulkActions();
 
     const [updatePageType, updatePageTypeOpts] = usePageTypeUpdateMutation({
         onCompleted: (updateData) => {
@@ -57,6 +59,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
             }
         },
     });
+
     const [deletePageType, deletePageTypeOpts] = usePageTypeDeleteMutation({
         onCompleted: (deleteData) => {
             if (deleteData.pageTypeDelete.errors.length === 0) {
@@ -71,6 +74,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
             }
         },
     });
+
     const [assignAttribute, assignAttributeOpts] = useAssignPageAttributeMutation({
         onCompleted: (data) => {
             if (data.pageAttributeAssign.errors.length === 0) {
@@ -82,6 +86,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
             }
         },
     });
+
     const [unassignAttribute, unassignAttributeOpts] = useUnassignPageAttributeMutation({
         onCompleted: (data) => {
             if (data.pageAttributeUnassign.errors.length === 0) {
@@ -94,10 +99,16 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
             }
         },
     });
+
     const [reorderAttribute] = usePageTypeAttributeReorderMutation({});
 
-    const [updateMetadata] = useMetadataUpdate({});
-    const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+    const pageTypeDeleteData = usePageTypeDelete({
+        singleId: id,
+        params,
+    });
+
+    const [updateMetadata] = useUpdateMetadataMutation({});
+    const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
     const handleBack = () => navigate(pageTypeListUrl());
 
@@ -113,7 +124,9 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
 
         return result.data.pageTypeUpdate.errors;
     };
+
     const handlePageTypeDelete = () => deletePageType({ variables: { id } });
+
     const handleAssignAttribute = () =>
         assignAttribute({
             variables: {
@@ -121,6 +134,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
                 ids: params.ids,
             },
         });
+
     const handleAttributeUnassign = () =>
         unassignAttribute({
             variables: {
@@ -128,6 +142,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
                 ids: [params.id],
             },
         });
+
     const handleBulkAttributeUnassign = () =>
         unassignAttribute({
             variables: {
@@ -135,6 +150,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
                 ids: params.ids,
             },
         });
+
     const handleAttributeReorder = (event: ReorderEvent) =>
         reorderAttribute({
             variables: {
@@ -173,12 +189,6 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
     );
 
     const loading = updatePageTypeOpts.loading || dataLoading;
-
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const pageTypeDeleteData = usePageTypeDelete({
-        singleId: id,
-        params,
-    });
 
     return (
         <>
@@ -317,4 +327,5 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
         </>
     );
 };
+
 export default PageTypeDetails;

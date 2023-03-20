@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { IconButton, TableBody, TableCell, TableFooter, TableHead, TableRow } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
@@ -7,7 +6,7 @@ import Skeleton from "@mzawadie/components/Skeleton";
 import { TableCellHeader } from "@mzawadie/components/TableCellHeader";
 import { TablePagination } from "@mzawadie/components/TablePagination";
 import { ListProps, SortPage, maybe, renderCollection, stopPropagation } from "@mzawadie/core";
-import { WarehouseWithShippingFragment } from "@mzawadie/fragments/types/WarehouseWithShippingFragment";
+import { WarehouseWithShippingFragment } from "@mzawadie/graphql";
 import { WarehouseListUrlSortField } from "@mzawadie/pages/warehouses/urls";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import { getArrowDirection } from "@mzawadie/utils/sort";
@@ -92,14 +91,17 @@ const WarehouseList: React.FC<WarehouseListProps> = (props) => {
                     >
                         <FormattedMessage defaultMessage="Name" id="aCJwVq" description="warehouse" />
                     </TableCellHeader>
+
                     <TableCell className={classes.colZones}>
                         <FormattedMessage defaultMessage="Shipping Zones" id="PFXGaR" />
                     </TableCell>
+
                     <TableCell className={classes.colActions}>
                         <FormattedMessage defaultMessage="Actions" id="wL7VAE" />
                     </TableCell>
                 </TableRow>
             </TableHead>
+
             <TableFooter>
                 <TableRow>
                     <TablePagination
@@ -113,6 +115,7 @@ const WarehouseList: React.FC<WarehouseListProps> = (props) => {
                     />
                 </TableRow>
             </TableFooter>
+
             <TableBody>
                 {renderCollection(
                     warehouses,
@@ -128,6 +131,7 @@ const WarehouseList: React.FC<WarehouseListProps> = (props) => {
                             <TableCell className={classes.colName} data-test="name">
                                 {maybe<React.ReactNode>(() => warehouse.name, <Skeleton />)}
                             </TableCell>
+
                             <TableCell className={classes.colZones} data-test="zones">
                                 {warehouse?.shippingZones === undefined ? (
                                     <Skeleton />
@@ -137,11 +141,13 @@ const WarehouseList: React.FC<WarehouseListProps> = (props) => {
                                         .join(", ") || "-"
                                 )}
                             </TableCell>
+
                             <TableCell className={classes.colActions}>
                                 <div className={classes.actions}>
                                     <IconButton color="primary" data-test="editButton">
                                         <EditIcon />
                                     </IconButton>
+
                                     <IconButton
                                         color="primary"
                                         onClick={stopPropagation(() => onRemove(warehouse.id))}
@@ -166,4 +172,5 @@ const WarehouseList: React.FC<WarehouseListProps> = (props) => {
 };
 
 WarehouseList.displayName = "WarehouseList";
+
 export default WarehouseList;

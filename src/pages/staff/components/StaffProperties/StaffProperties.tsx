@@ -3,15 +3,13 @@ import photoIcon from "@assets/images/photo-icon.svg";
 import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { commonMessages, getUserInitials, maybe } from "@mzawadie/core";
-import { StaffErrorFragment } from "@mzawadie/fragments/types/StaffErrorFragment";
+import { StaffErrorFragment, StaffMemberDetailsFragment } from "@mzawadie/graphql";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getStaffErrorMessage from "@mzawadie/utils/errors/staff";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { StaffMemberDetails_user } from "../../types/StaffMemberDetails";
 
 const useStyles = makeStyles(
     (theme) => ({
@@ -103,7 +101,7 @@ interface StaffPropertiesProps {
     };
     errors: StaffErrorFragment[];
     disabled: boolean;
-    staffMember: StaffMemberDetails_user;
+    staffMember: StaffMemberDetailsFragment;
     onChange: (event: React.ChangeEvent<any>) => void;
     onImageDelete: () => void;
     onImageUpload: (file: File) => void;

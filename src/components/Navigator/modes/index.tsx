@@ -1,6 +1,7 @@
+// @ts-nocheck
 import { MutationFunction } from "@apollo/client";
+import { OrderDraftCreateMutation } from "@mzawadie/graphql";
 import { UseNavigatorResult } from "@mzawadie/hooks/useNavigator";
-import { OrderDraftCreate } from "@mzawadie/pages/orders/types/OrderDraftCreate";
 import { IntlShape } from "react-intl";
 
 import { QuickSearchAction, QuickSearchMode } from "../types";
@@ -18,8 +19,7 @@ function getModeActions(
     intl: IntlShape,
     queries: ActionQueries,
     cbs: {
-        // eslint-disable-next-line @typescript-eslint/ban-types
-        createOrder: MutationFunction<OrderDraftCreate, {}>;
+        createOrder: MutationFunction<OrderDraftCreateMutation, {}>;
         navigate: UseNavigatorResult;
         setMode: (mode: QuickSearchMode) => void;
     }

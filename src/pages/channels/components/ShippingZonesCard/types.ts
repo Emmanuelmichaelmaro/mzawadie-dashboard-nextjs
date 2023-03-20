@@ -1,6 +1,7 @@
-import { FetchMoreProps } from "@mzawadie/core";
+// @ts-nocheck
+import { FetchMoreProps, RelayToFlat } from "@mzawadie/core";
+import { SearchShippingZonesQuery } from "@mzawadie/graphql";
 import { ChannelShippingZones } from "@mzawadie/pages/channels/components/ChannelDetailsPage/types";
-import { SearchShippingZones_search_edges_node } from "@mzawadie/searches/types/SearchShippingZones";
 
 export interface ShippingZonesProps {
     addShippingZone: (id: string) => void;
@@ -8,5 +9,5 @@ export interface ShippingZonesProps {
     searchShippingZones: (searchPhrase: string) => void;
     fetchMoreShippingZones: FetchMoreProps;
     shippingZones: ChannelShippingZones;
-    shippingZonesChoices: SearchShippingZones_search_edges_node[];
+    shippingZonesChoices: RelayToFlat<SearchShippingZonesQuery["search"]>;
 }

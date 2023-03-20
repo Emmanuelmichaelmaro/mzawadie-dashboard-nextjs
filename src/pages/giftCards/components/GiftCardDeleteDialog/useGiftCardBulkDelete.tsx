@@ -1,17 +1,16 @@
 // @ts-nocheck
-import { MutationResultWithOpts } from "@mzawadie/hooks/graphql/makeMutation";
+import { BulkDeleteGiftCardMutation, useBulkDeleteGiftCardMutation } from "@mzawadie/graphql";
+import { MutationResultWithOpts } from "@mzawadie/hooks/makeMutation";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import commonErrorMessages from "@mzawadie/utils/errors/common";
 import { useIntl } from "react-intl";
 
-import { useGiftCardBulkDeleteMutation } from "../GiftCardsList/mutations";
-import useGiftCardListBulkActions from "../GiftCardsList/providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
-import { BulkDeleteGiftCard } from "../GiftCardsList/types/BulkDeleteGiftCard";
 import { giftCardDeleteDialogMessages as messages } from "./messages";
+import { useGiftCardList } from "@mzawadie/pages/giftCards/components/GiftCardsList/providers/GiftCardListProvider";
 
 interface UseGiftCardBulkDeleteProps {
     onBulkDeleteGiftCards: () => void;
-    bulkDeleteGiftCardOpts: MutationResultWithOpts<BulkDeleteGiftCard>;
+    bulkDeleteGiftCardOpts: MutationResultWithOpts<BulkDeleteGiftCardMutation>;
 }
 
 const useGiftCardBulkDelete = ({
@@ -28,32 +27,30 @@ const useGiftCardBulkDelete = ({
         listElements,
         selectedItemsCount,
         reset: resetSelectedItems,
-    } = useGiftCardListBulkActions();
+    } = useGiftCardList();
 
-    const onCompleted = (data: BulkDeleteGiftCard) => {
-        const errors = data?.giftCardBulkDelete?.errors;
+    const [bulkDeleteGiftCard, bulkDeleteGiftCardOpts] = useBulkDeleteGiftCardMutation({
+        onCompleted: (data: BulkDeleteGiftCardMutation) => {
+            const errors = data?.giftCardBulkDelete?.errors;
 
-        if (!errors.length) {
+            if (!errors.length) {
+                notify({
+                    status: "success",
+                    text: intl.formatMessage(messages.deleteSuccessAlertText, {
+                        selectedItemsCount,
+                    }),
+                });
+
+                onClose();
+                resetSelectedItems();
+                return;
+            }
+
             notify({
-                status: "success",
-                text: intl.formatMessage(messages.deleteSuccessAlertText, {
-                    selectedItemsCount,
-                }),
+                status: "error",
+                text: intl.formatMessage(commonErrorMessages.unknownError),
             });
-
-            onClose();
-            resetSelectedItems();
-            return;
-        }
-
-        notify({
-            status: "error",
-            text: intl.formatMessage(commonErrorMessages.unknownError),
-        });
-    };
-
-    const [bulkDeleteGiftCard, bulkDeleteGiftCardOpts] = useGiftCardBulkDeleteMutation({
-        onCompleted,
+        },
         refetchQueries,
     });
 

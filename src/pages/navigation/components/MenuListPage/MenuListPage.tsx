@@ -2,16 +2,16 @@ import { Button } from "@material-ui/core";
 import Container from "@mzawadie/components/Container";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import { sectionNames, ListActions, PageListProps, SortPage } from "@mzawadie/core";
+import { MenuFragment } from "@mzawadie/graphql";
 import { MenuListUrlSortField } from "@mzawadie/pages/navigation/urls";
 import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { MenuList_menus_edges_node } from "../../types/MenuList";
 import { MenuList } from "../MenuList";
 
 export interface MenuListPageProps extends PageListProps, ListActions, SortPage<MenuListUrlSortField> {
-    menus: MenuList_menus_edges_node[];
+    menus: MenuFragment[];
     onBack: () => void;
     onDelete: (id: string) => void;
 }

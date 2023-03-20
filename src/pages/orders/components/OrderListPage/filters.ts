@@ -8,7 +8,7 @@ import {
     FilterOpts,
     MinMax,
 } from "@mzawadie/core";
-import { OrderStatusFilter, PaymentChargeStatusEnum } from "@mzawadie/types/globalTypes";
+import { OrderStatusFilter, PaymentChargeStatusEnum } from "@mzawadie/graphql";
 import {
     createBooleanField,
     createDateField,

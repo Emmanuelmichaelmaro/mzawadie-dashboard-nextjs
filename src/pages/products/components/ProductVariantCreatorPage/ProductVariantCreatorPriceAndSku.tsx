@@ -1,7 +1,6 @@
 import CardSpacer from "@mzawadie/components/CardSpacer";
-import { WarehouseFragment } from "@mzawadie/fragments/types/WarehouseFragment";
+import { ProductVariantAttributesFragment, WarehouseFragment } from "@mzawadie/graphql";
 import { ChannelPriceData } from "@mzawadie/pages/channels/utils";
-import { ProductDetails_product_productType_variantAttributes } from "@mzawadie/pages/products/types/ProductDetails";
 import React from "react";
 
 import ProductVariantCreatorPrices from "./ProductVariantCreatorPrices";
@@ -9,8 +8,9 @@ import ProductVariantCreatorStock from "./ProductVariantCreatorStock";
 import { ProductVariantCreateFormData, VariantCreatorPricesAndSkuMode } from "./form";
 
 export type PriceOrStock = "price" | "stock";
+
 export interface ProductVariantCreatorPriceAndSkuProps {
-    attributes: ProductDetails_product_productType_variantAttributes[];
+    attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"];
     channelListings: ChannelPriceData[];
     data: ProductVariantCreateFormData;
     warehouses: WarehouseFragment[];
@@ -46,7 +46,9 @@ const ProductVariantCreatorPriceAndSku: React.FC<ProductVariantCreatorPriceAndSk
             onAttributeSelect={(id) => onAttributeSelect(id, "price")}
             onAttributeValueChange={onAttributePriceChange}
         />
+
         <CardSpacer />
+
         <ProductVariantCreatorStock
             attributes={attributes}
             data={data}
@@ -61,4 +63,5 @@ const ProductVariantCreatorPriceAndSku: React.FC<ProductVariantCreatorPriceAndSk
 );
 
 ProductVariantCreatorPriceAndSku.displayName = "ProductVariantCreatorPriceAndSku";
+
 export default ProductVariantCreatorPriceAndSku;

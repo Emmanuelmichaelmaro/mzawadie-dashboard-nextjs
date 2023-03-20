@@ -1,6 +1,10 @@
 // @ts-nocheck
 import { getStringOrPlaceholder, ListViews } from "@mzawadie/core";
-import { PermissionGroupErrorFragment } from "@mzawadie/fragments/types/PermissionGroupErrorFragment";
+import {
+    PermissionGroupErrorFragment,
+    usePermissionGroupDeleteMutation,
+    usePermissionGroupListQuery,
+} from "@mzawadie/graphql";
 import useListSettings from "@mzawadie/hooks/useListSettings";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
@@ -8,9 +12,6 @@ import { usePaginationReset } from "@mzawadie/hooks/usePaginationReset";
 import usePaginator, { createPaginationState } from "@mzawadie/hooks/usePaginator";
 import { configurationMenuUrl } from "@mzawadie/pages/configuration";
 import { PermissionGroupDeleteDialog } from "@mzawadie/pages/permissionGroups/components/PermissionGroupDeleteDialog";
-import { usePermissionGroupDelete } from "@mzawadie/pages/permissionGroups/mutations";
-import { usePermissionGroupListQuery } from "@mzawadie/pages/permissionGroups/queries";
-import { PermissionGroupDelete } from "@mzawadie/pages/permissionGroups/types/PermissionGroupDelete";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@mzawadie/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
@@ -74,25 +75,23 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({ params
 
     const [deleteError, setDeleteError] = React.useState<PermissionGroupErrorFragment>();
 
-    const handleDeleteSuccess = (data: PermissionGroupDelete) => {
-        if (data.permissionGroupDelete.errors.length === 0) {
-            notify({
-                status: "success",
-                text: intl.formatMessage({
-                    defaultMessage: "Permission Group Deleted",
-                    id: "DovGIa",
-                }),
-            });
-            refetch();
-            setDeleteError(undefined);
-            closeModal();
-        } else {
-            setDeleteError(data.permissionGroupDelete.errors[0]);
-        }
-    };
-
-    const [permissionGroupDelete] = usePermissionGroupDelete({
-        onCompleted: handleDeleteSuccess,
+    const [permissionGroupDelete] = usePermissionGroupDeleteMutation({
+        onCompleted: (data) => {
+            if (data.permissionGroupDelete.errors.length === 0) {
+                notify({
+                    status: "success",
+                    text: intl.formatMessage({
+                        defaultMessage: "Permission Group Deleted",
+                        id: "DovGIa",
+                    }),
+                });
+                refetch();
+                setDeleteError(undefined);
+                closeModal();
+            } else {
+                setDeleteError(data.permissionGroupDelete.errors[0]);
+            }
+        },
     });
 
     return (

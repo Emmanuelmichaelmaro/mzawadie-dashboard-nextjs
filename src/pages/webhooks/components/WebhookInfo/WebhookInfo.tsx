@@ -1,9 +1,10 @@
+// @ts-nocheck
 import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import FormSpacer from "@mzawadie/components/FormSpacer";
 import Hr from "@mzawadie/components/Hr";
 import { commonMessages } from "@mzawadie/core";
-import { WebhookErrorFragment } from "@mzawadie/fragments/types/WebhookErrorFragment";
+import { WebhookErrorFragment } from "@mzawadie/graphql";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getWebhookErrorMessage from "@mzawadie/utils/errors/webhooks";
 import React from "react";

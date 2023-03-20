@@ -3,10 +3,10 @@ import placeholderImage from "@assets/images/placeholder60x60.png";
 import { Accordion, AccordionSummary, Divider, Typography } from "@material-ui/core";
 import ControlledCheckbox from "@mzawadie/components/ControlledCheckbox";
 import Avatar from "@mzawadie/components/TableCellAvatar/Avatar";
+import { ProductDetailsVariantFragment } from "@mzawadie/graphql";
 import IconChevronDown from "@mzawadie/icons/ChevronDown";
 import Label from "@mzawadie/pages/orders/components/OrderHistory/Label";
 import { getById } from "@mzawadie/pages/orders/components/OrderReturnPage/utils";
-import { ProductDetails_product_variants } from "@mzawadie/pages/products/types/ProductDetails";
 import { ChannelsWithVariantsData } from "@mzawadie/pages/products/views/ProductUpdate/types";
 import {
     areAllChannelVariantsSelected,
@@ -97,7 +97,7 @@ interface ChannelsWithVariantsAvailabilityDialogContentProps {
     toggleAllChannelVariants: (channelId: string) => void;
     isChannelSelected: (channelId: string) => boolean;
     channels: ChannelData[];
-    allVariants: ProductDetails_product_variants[];
+    allVariants: ProductDetailsVariantFragment[];
 }
 
 const ChannelsWithVariantsAvailabilityDialogContent: React.FC<

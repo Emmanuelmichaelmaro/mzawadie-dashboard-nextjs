@@ -1,17 +1,6 @@
 import { gql } from "@apollo/client";
-import { TypedQuery } from "@mzawadie/core";
-import {
-    collectionDetailsFragment,
-    collectionFragment,
-    collectionProductFragment,
-} from "@mzawadie/fragments/collections";
-import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
-
-import { CollectionDetails, CollectionDetailsVariables } from "./types/CollectionDetails";
-import { CollectionList, CollectionListVariables } from "./types/CollectionList";
 
 export const collectionList = gql`
-    ${collectionFragment}
     query CollectionList(
         $first: Int
         $after: String
@@ -32,7 +21,7 @@ export const collectionList = gql`
         ) {
             edges {
                 node {
-                    ...CollectionFragment
+                    ...Collection
                     products {
                         totalCount
                     }
@@ -47,20 +36,15 @@ export const collectionList = gql`
         }
     }
 `;
-export const useCollectionListQuery = makeQuery<CollectionList, CollectionListVariables>(
-    collectionList
-);
 
 export const collectionDetails = gql`
-    ${collectionDetailsFragment}
-    ${collectionProductFragment}
     query CollectionDetails($id: ID!, $first: Int, $after: String, $last: Int, $before: String) {
         collection(id: $id) {
-            ...CollectionDetailsFragment
+            ...CollectionDetails
             products(first: $first, after: $after, before: $before, last: $last) {
                 edges {
                     node {
-                        ...CollectionProductFragment
+                        ...CollectionProduct
                     }
                 }
                 pageInfo {
@@ -73,6 +57,3 @@ export const collectionDetails = gql`
         }
     }
 `;
-export const TypedCollectionDetailsQuery = TypedQuery<CollectionDetails, CollectionDetailsVariables>(
-    collectionDetails
-);

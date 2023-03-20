@@ -1,10 +1,9 @@
-import { SearchCustomers_search_edges_node } from "@mzawadie/searches/types/SearchCustomers";
-
-import { CheckIfOrderExists_order } from "../queries/types/CheckIfOrderExists";
-import { SearchCatalog } from "../queries/types/SearchCatalog";
+// @ts-nocheck
+import { RelayToFlat } from "@mzawadie/core";
+import { CheckIfOrderExistsQuery, SearchCatalogQuery, SearchCustomersQuery } from "@mzawadie/graphql";
 
 export interface ActionQueries {
-    catalog: SearchCatalog | undefined;
-    customers: SearchCustomers_search_edges_node[] | undefined;
-    order: CheckIfOrderExists_order | undefined | null;
+    catalog: SearchCatalogQuery;
+    customers: RelayToFlat<SearchCustomersQuery["search"]>;
+    order: CheckIfOrderExistsQuery["order"];
 }

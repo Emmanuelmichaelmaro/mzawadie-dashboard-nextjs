@@ -10,12 +10,12 @@ import {
 import { Form } from "@mzawadie/components/Form";
 import FormSpacer from "@mzawadie/components/FormSpacer";
 import { buttonMessages } from "@mzawadie/core";
-import { ProductDetails_product } from "@mzawadie/pages/products/types/ProductDetails";
+import { ProductFragment } from "@mzawadie/graphql";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 interface ProductExternalMediaDialogProps {
-    product: ProductDetails_product;
+    product: ProductFragment;
     open: boolean;
     onClose: () => void;
     onSubmit: (mediaUrl: string) => void;

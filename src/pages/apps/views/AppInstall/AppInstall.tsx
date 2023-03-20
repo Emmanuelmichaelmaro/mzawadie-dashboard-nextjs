@@ -1,9 +1,11 @@
 // @ts-nocheck
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
 import { extractMutationErrors } from "@mzawadie/core";
+import { useAppFetchMutation, useAppInstallMutation } from "@mzawadie/graphql";
 import useLocalStorage from "@mzawadie/hooks/useLocalStorage";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
+import { AppInstallUrlQueryParams, appsListUrl, MANIFEST_ATTR } from "@mzawadie/pages/apps/urls";
 import getAppErrorMessage from "@mzawadie/utils/errors/app";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
@@ -11,23 +13,24 @@ import { RouteComponentProps } from "react-router-dom";
 
 import { AppInstallErrorPage } from "../../components/AppInstallErrorPage";
 import { AppInstallPage } from "../../components/AppInstallPage";
-import { useAppInstallMutation, useAppManifestFetchMutation } from "../../mutations";
-import { AppInstallUrlQueryParams, appsListUrl, MANIFEST_ATTR } from "../../urls";
 import { messages } from "./messages";
 
 interface InstallAppCreateProps extends RouteComponentProps {
     params: AppInstallUrlQueryParams;
 }
+
 export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({ params }) => {
     const [, setActiveInstallations] = useLocalStorage("activeInstallations", []);
+
     const navigate = useNavigator();
     const notify = useNotifier();
     const intl = useIntl();
+
     const manifestUrl = params[MANIFEST_ATTR];
 
-    const [fetchManifest, fetchManifestOpts] = useAppManifestFetchMutation({
+    const [fetchManifest, fetchManifestOpts] = useAppFetchMutation({
         onCompleted: (data) => {
-            if (data.appFetchManifest.errors.length) {
+            if (data.appFetchManifest?.errors.length) {
                 data.appFetchManifest.errors.forEach((error) => {
                     notify({
                         status: "error",
@@ -37,17 +40,19 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({ params }) =>
             }
         },
     });
+
     const [installApp] = useAppInstallMutation({
         onCompleted: (data) => {
-            const installationData = data.appInstall.appInstallation;
-            if (data.appInstall.errors.length === 0) {
+            const installationData = data.appInstall?.appInstallation;
+
+            if (data.appInstall?.errors.length === 0) {
                 setActiveInstallations((activeInstallations) => [
                     ...activeInstallations,
                     { id: installationData.id, name: installationData.appName },
                 ]);
                 navigateToAppsList();
             } else {
-                data.appInstall.errors.forEach((error) => {
+                data.appInstall?.errors.forEach((error) => {
                     notify({
                         status: "error",
                         text: getAppErrorMessage(error, intl),

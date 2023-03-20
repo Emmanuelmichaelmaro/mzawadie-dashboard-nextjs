@@ -4,8 +4,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import ControlledSwitch from "@mzawadie/components/ControlledSwitch";
 import { UserError } from "@mzawadie/core";
-import { PluginConfigurationExtendedFragment_configuration } from "@mzawadie/fragments/types/PluginConfigurationExtendedFragment";
-import { ConfigurationTypeFieldEnum } from "@mzawadie/types/globalTypes";
+import { ConfigurationItemFragment, ConfigurationTypeFieldEnum } from "@mzawadie/graphql";
 import { getFieldError } from "@mzawadie/utils/errors";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -18,7 +17,7 @@ interface PluginSettingsProps {
     errors: UserError[];
     disabled: boolean;
     onChange: (event: React.ChangeEvent<any>) => void;
-    fields: PluginConfigurationExtendedFragment_configuration[];
+    fields: ConfigurationItemFragment[];
 }
 
 const useStyles = makeStyles(

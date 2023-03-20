@@ -2,7 +2,7 @@
 import { Card, CardContent, TextField } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { commonMessages } from "@mzawadie/core";
-import { PermissionGroupErrorFragment } from "@mzawadie/fragments/types/PermissionGroupErrorFragment";
+import { PermissionGroupErrorFragment } from "@mzawadie/graphql";
 import { FormChange } from "@mzawadie/hooks/useForm";
 import { getFieldError, getFormErrors } from "@mzawadie/utils/errors";
 import getPermissionGroupErrorMessage from "@mzawadie/utils/errors/permissionGroups";

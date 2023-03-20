@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { BulkAction, Dialog, Pagination, SingleAction } from "@mzawadie/core";
+import { ShippingMethodTypeEnum } from "@mzawadie/graphql";
 import { ChannelsAction } from "@mzawadie/pages/channels/urls";
-import { ShippingMethodTypeEnum } from "@mzawadie/types/globalTypes";
 import { stringifyQs } from "@mzawadie/utils/urls";
 import urlJoin from "url-join";
 
@@ -45,35 +45,20 @@ export type ShippingRateUrlDialog =
 
 export type ShippingRateUrlQueryParams = Dialog<ShippingRateUrlDialog> & SingleAction & BulkAction;
 export type ShippingRateCreateUrlDialog = ZipCodeRangeActions | ChannelsAction;
-export type ShippingRateCreateUrlQueryParams = Dialog<ShippingRateCreateUrlDialog> & SingleAction;
+export type ShippingRateCreateUrlQueryParams = Dialog<ShippingRateCreateUrlDialog> &
+    SingleAction &
+    Partial<{
+        type: ShippingMethodTypeEnum;
+    }>;
 
-export const shippingPriceRatesPath = (id: string) => urlJoin(shippingZonePath(id), "price", "add");
-export const shippingPriceRatesUrl = (id: string, params?: ShippingRateCreateUrlQueryParams) =>
-    `${shippingPriceRatesPath(encodeURIComponent(id))}?${stringifyQs(params)}`;
+export const shippingRateCreatePath = (id: string) => urlJoin(shippingZonePath(id), "add");
+export const shippingRateCreateUrl = (id: string, params?: ShippingRateCreateUrlQueryParams) =>
+    `${shippingRateCreatePath(encodeURIComponent(id))}?${stringifyQs(params)}`;
 
-export const shippingWeightRatesPath = (id: string) => urlJoin(shippingZonePath(id), "weight", "add");
-export const shippingWeightRatesUrl = (id: string, params?: ShippingRateCreateUrlQueryParams) =>
-    `${shippingWeightRatesPath(encodeURIComponent(id))}?${stringifyQs(params)}`;
-
-export const shippingPriceRatesEditPath = (id: string, rateId: string) =>
-    urlJoin(shippingZonePath(id), "price", rateId);
-export const shippingPriceRatesEditUrl = (
-    id: string,
-    rateId: string,
-    params?: ShippingRateUrlQueryParams
-) =>
-    `${shippingPriceRatesEditPath(encodeURIComponent(id), encodeURIComponent(rateId))}?${stringifyQs(
-        params
-    )}`;
-
-export const shippingWeightRatesEditPath = (id: string, rateId: string) =>
-    urlJoin(shippingZonePath(id), "weight", rateId);
-export const shippingWeightRatesEditUrl = (
-    id: string,
-    rateId: string,
-    params?: ShippingRateUrlQueryParams
-) =>
-    `${shippingWeightRatesEditPath(encodeURIComponent(id), encodeURIComponent(rateId))}?${stringifyQs(
+export const shippingRateEditPath = (id: string, rateId: string) =>
+    urlJoin(shippingZonePath(id), rateId);
+export const shippingRateEditUrl = (id: string, rateId: string, params?: ShippingRateUrlQueryParams) =>
+    `${shippingRateEditPath(encodeURIComponent(id), encodeURIComponent(rateId))}?${stringifyQs(
         params
     )}`;
 

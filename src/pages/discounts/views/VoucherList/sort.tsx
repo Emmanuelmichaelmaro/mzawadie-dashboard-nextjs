@@ -1,5 +1,5 @@
+import { VoucherSortField } from "@mzawadie/graphql";
 import { VoucherListUrlSortField } from "@mzawadie/pages/discounts/urls";
-import { VoucherSortField } from "@mzawadie/types/globalTypes";
 import { createGetSortQueryVariables } from "@mzawadie/utils/sort";
 
 export const DEFAULT_SORT_KEY = VoucherListUrlSortField.code;

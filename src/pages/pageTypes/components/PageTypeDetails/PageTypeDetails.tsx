@@ -2,7 +2,7 @@
 import { Card, CardContent, TextField } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { commonMessages } from "@mzawadie/core";
-import { PageErrorFragment } from "@mzawadie/fragments/types/PageErrorFragment";
+import { PageErrorFragment } from "@mzawadie/graphql";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getPageErrorMessage from "@mzawadie/utils/errors/page";
 import React from "react";

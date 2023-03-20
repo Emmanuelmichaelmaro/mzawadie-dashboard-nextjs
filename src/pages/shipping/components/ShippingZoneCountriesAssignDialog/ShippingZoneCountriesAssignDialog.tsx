@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import {
     Button,
@@ -18,8 +17,8 @@ import { Form } from "@mzawadie/components/Form";
 import FormSpacer from "@mzawadie/components/FormSpacer";
 import Hr from "@mzawadie/components/Hr";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
-import { ShopInfo_shop_countries } from "@mzawadie/components/Shop/types/ShopInfo";
 import { buttonMessages } from "@mzawadie/core";
+import { CountryWithCodeFragment } from "@mzawadie/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import { filter } from "fuzzaldrin";
 import React from "react";
@@ -33,7 +32,7 @@ interface FormData {
 
 export interface ShippingZoneCountriesAssignDialogProps {
     confirmButtonState: ConfirmButtonTransitionState;
-    countries: ShopInfo_shop_countries[];
+    countries: CountryWithCodeFragment[];
     initial: string[];
     isDefault: boolean;
     open: boolean;

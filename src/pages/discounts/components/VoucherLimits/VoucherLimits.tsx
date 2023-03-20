@@ -3,7 +3,7 @@ import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { ControlledCheckbox } from "@mzawadie/components/ControlledCheckbox";
 import { Grid } from "@mzawadie/components/Grid";
-import { DiscountErrorFragment } from "@mzawadie/fragments/types/DiscountErrorFragment";
+import { DiscountErrorFragment } from "@mzawadie/graphql";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getDiscountErrorMessage from "@mzawadie/utils/errors/discounts";
 import React from "react";

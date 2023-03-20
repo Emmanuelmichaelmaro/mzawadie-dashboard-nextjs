@@ -51,4 +51,6 @@ export { default as AuthProvider } from "./AuthProvider";
 
 export * from "./utils";
 
+export * from "./errors";
+
 export const useUser = () => useContext(UserContext);

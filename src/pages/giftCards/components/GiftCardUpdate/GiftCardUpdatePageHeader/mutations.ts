@@ -1,14 +1,6 @@
 import { gql } from "@apollo/client";
-import { giftCardErrorFragment } from "@mzawadie/fragments/errors";
-import makeMutation from "@mzawadie/hooks/graphql/makeMutation";
 
-import { giftCardDataFragment } from "../queries";
-import { GiftCardActivate, GiftCardActivateVariables } from "./types/GiftCardActivate";
-import { GiftCardDeactivate, GiftCardDeactivateVariables } from "./types/GiftCardDeactivate";
-
-const giftCardActivate = gql`
-    ${giftCardDataFragment}
-    ${giftCardErrorFragment}
+export const giftCardActivate = gql`
     mutation GiftCardActivate($id: ID!) {
         giftCardActivate(id: $id) {
             errors {
@@ -21,13 +13,7 @@ const giftCardActivate = gql`
     }
 `;
 
-export const useGiftCardActivateMutation = makeMutation<GiftCardActivate, GiftCardActivateVariables>(
-    giftCardActivate
-);
-
-const giftCardDeactivate = gql`
-    ${giftCardDataFragment}
-    ${giftCardErrorFragment}
+export const giftCardDeactivate = gql`
     mutation GiftCardDeactivate($id: ID!) {
         giftCardDeactivate(id: $id) {
             errors {
@@ -39,8 +25,3 @@ const giftCardDeactivate = gql`
         }
     }
 `;
-
-export const useGiftCardDeactivateMutation = makeMutation<
-    GiftCardDeactivate,
-    GiftCardDeactivateVariables
->(giftCardDeactivate);

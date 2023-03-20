@@ -1,11 +1,10 @@
-import { User } from "@mzawadie/fragments/types/User";
-import { PermissionEnum } from "@mzawadie/types/globalTypes";
+import { UserFragment, PermissionEnum } from "@mzawadie/graphql";
 
-export const hasPermission = (permission: PermissionEnum, user: User) =>
+export const hasPermission = (permission: PermissionEnum, user: UserFragment) =>
     user.userPermissions?.map((perm) => perm?.code).includes(permission);
 
-export const hasAnyPermissions = (permissions: PermissionEnum[], user: User) =>
+export const hasAnyPermissions = (permissions: PermissionEnum[], user: UserFragment) =>
     permissions?.some((permission) => hasPermission(permission, user)) || false;
 
-export const hasAllPermissions = (permissions: PermissionEnum[], user: User) =>
+export const hasAllPermissions = (permissions: PermissionEnum[], user: UserFragment) =>
     permissions?.every((permission) => hasPermission(permission, user)) || false;

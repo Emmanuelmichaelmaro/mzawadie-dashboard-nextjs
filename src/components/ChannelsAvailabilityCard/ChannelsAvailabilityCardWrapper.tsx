@@ -4,8 +4,8 @@ import { Button, Card, CardContent, Typography } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import Hr from "@mzawadie/components/Hr";
 import RequirePermissions from "@mzawadie/components/RequirePermissions";
+import { PermissionEnum } from "@mzawadie/graphql";
 import { useUser } from "@mzawadie/pages/auth";
-import { PermissionEnum } from "@mzawadie/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 

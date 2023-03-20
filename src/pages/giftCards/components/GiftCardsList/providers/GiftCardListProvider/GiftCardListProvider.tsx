@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { ApolloError } from "@apollo/client";
 import { ListViews, SortPage } from "@mzawadie/core";
+import { GiftCardListQuery, GiftCardListQueryVariables, useGiftCardListQuery } from "@mzawadie/graphql";
 import useBulkActions, { UseBulkActionsProps } from "@mzawadie/hooks/useBulkActions";
 import useListSettings, { UseListSettings } from "@mzawadie/hooks/useListSettings";
 import useNavigator from "@mzawadie/hooks/useNavigator";
@@ -10,15 +11,13 @@ import { createPaginationState, PageInfo, PaginationState } from "@mzawadie/hook
 import createSortHandler from "@mzawadie/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import { getSortParams } from "@mzawadie/utils/sort";
-import React, { createContext } from "react";
+import React, { createContext, useContext } from "react";
 
 import { giftCardListUrl } from "../../../../urls";
 import { ExtendedGiftCard } from "../../../GiftCardUpdate/providers/GiftCardDetailsProvider/types";
 import { getExtendedGiftCard } from "../../../GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
 import { getFilterVariables } from "../../GiftCardListSearchAndFilters/filters";
-import { useGiftCardListQuery } from "../../queries";
 import { GiftCardListColummns, GiftCardListUrlQueryParams, GiftCardUrlSortField } from "../../types";
-import { GiftCardList_giftCards_edges_node, GiftCardListVariables } from "../../types/GiftCardList";
 import { getSortQueryVariables } from "./sort";
 
 const numberOfColumns = 7;
@@ -28,25 +27,23 @@ interface GiftCardsListProviderProps {
     params: GiftCardListUrlQueryParams;
 }
 
-export interface GiftCardListDataProps extends SortPage<GiftCardUrlSortField> {
-    giftCards: Array<ExtendedGiftCard<GiftCardList_giftCards_edges_node>>;
+export interface GiftCardsListConsumerProps
+    extends UseBulkActionsProps,
+        UseListSettings<GiftCardListColummns>,
+        SortPage<GiftCardUrlSortField> {
+    giftCards: Array<ExtendedGiftCard<GiftCardListQuery["giftCards"]["edges"][0]["node"]>>;
     pageInfo: PageInfo;
     loading: boolean;
     params: GiftCardListUrlQueryParams;
     paginationState: PaginationState;
     numberOfColumns: number;
     totalCount: number;
-}
-
-export interface GiftCardsListConsumerProps
-    extends UseBulkActionsProps,
-        GiftCardListDataProps,
-        UseListSettings<GiftCardListColummns>,
-        SortPage<GiftCardUrlSortField> {
     selectedItemsCount: number;
 }
 
 export const GiftCardsListContext = createContext<GiftCardsListConsumerProps>(null);
+
+export const useGiftCardList = () => useContext(GiftCardsListContext);
 
 export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({ children, params }) => {
     const navigate = useNavigator();
@@ -64,7 +61,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({ ch
 
     const handleSort = createSortHandler(navigate, giftCardListUrl, params);
 
-    const queryVariables = React.useMemo<GiftCardListVariables>(
+    const queryVariables = React.useMemo<GiftCardListQueryVariables>(
         () => ({
             ...paginationState,
             filter: getFilterVariables(params),

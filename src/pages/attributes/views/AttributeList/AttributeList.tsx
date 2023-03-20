@@ -7,6 +7,7 @@ import {
     SaveFilterTabDialogFormData,
 } from "@mzawadie/components/SaveFilterTabDialog";
 import { PAGINATE_BY, maybe } from "@mzawadie/core";
+import { useAttributeBulkDeleteMutation, useAttributeListQuery } from "@mzawadie/graphql";
 import useBulkActions from "@mzawadie/hooks/useBulkActions";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
@@ -32,8 +33,6 @@ import { useIntl } from "react-intl";
 
 import { AttributeBulkDeleteDialog } from "../../components/AttributeBulkDeleteDialog";
 import { AttributeListPage } from "../../components/AttributeListPage";
-import { useAttributeBulkDeleteMutation } from "../../mutations";
-import { useAttributeListQuery } from "../../queries";
 import {
     attributeAddUrl,
     attributeListUrl,

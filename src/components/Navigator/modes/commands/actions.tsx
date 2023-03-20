@@ -1,10 +1,10 @@
 import { MutationFunction } from "@apollo/client";
+import { OrderDraftCreateMutation } from "@mzawadie/graphql";
 import { UseNavigatorResult } from "@mzawadie/hooks/useNavigator";
 import { categoryAddUrl } from "@mzawadie/pages/categories/urls";
 import { collectionAddUrl } from "@mzawadie/pages/collections/urls";
 import { customerAddUrl } from "@mzawadie/pages/customers/urls";
 import { voucherAddUrl } from "@mzawadie/pages/discounts/urls";
-import { OrderDraftCreate } from "@mzawadie/pages/orders/types/OrderDraftCreate";
 import { permissionGroupAddUrl } from "@mzawadie/pages/permissionGroups/urls";
 import { productAddUrl } from "@mzawadie/pages/products/urls";
 import { score } from "fuzzaldrin";
@@ -25,8 +25,7 @@ export function searchInCommands(
     search: string,
     intl: IntlShape,
     navigate: UseNavigatorResult,
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    createOrder: MutationFunction<OrderDraftCreate, {}>,
+    createOrder: MutationFunction<OrderDraftCreateMutation, {}>,
     setMode: (mode: QuickSearchMode) => void
 ): QuickSearchActionInput[] {
     const actions: Command[] = [
@@ -76,7 +75,7 @@ export function searchInCommands(
             label: intl.formatMessage(messages.createOrder),
             onClick: () => {
                 // eslint-disable-next-line @typescript-eslint/no-floating-promises
-                createOrder();
+                createOrder().then();
                 return false;
             },
         },
@@ -103,7 +102,7 @@ function getCommandModeActions(
     intl: IntlShape,
     navigate: UseNavigatorResult,
     // eslint-disable-next-line @typescript-eslint/ban-types
-    createOrder: MutationFunction<OrderDraftCreate, {}>,
+    createOrder: MutationFunction<OrderDraftCreateMutation, {}>,
     setMode: (mode: QuickSearchMode) => void
 ): QuickSearchActionInput[] {
     return [...searchInCommands(query, intl, navigate, createOrder, setMode)]

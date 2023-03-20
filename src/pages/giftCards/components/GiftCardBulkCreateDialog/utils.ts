@@ -1,6 +1,5 @@
 // @ts-nocheck
-import { GiftCardError } from "@mzawadie/fragments/types/GiftCardError";
-import { GiftCardErrorCode } from "@mzawadie/types/globalTypes";
+import { GiftCardErrorCode, GiftCardErrorFragment } from "@mzawadie/graphql";
 import reduce from "lodash/reduce";
 
 import { GiftCardBulkCreateFormData, GiftCardBulkCreateFormErrors } from "./types";
@@ -15,7 +14,7 @@ export const validateField = (
     }: GiftCardBulkCreateFormData,
     value,
     key: keyof GiftCardBulkCreateFormData
-): Pick<GiftCardError, "field" | "code"> | null => {
+): Pick<GiftCardErrorFragment, "field" | "code"> | null => {
     const error = { code: GiftCardErrorCode.INVALID, field: key };
     const expiryDateSelected = expirySelected && expiryType === "EXPIRY_DATE";
     const expiryPeriodSelected = expirySelected && expiryType === "EXPIRY_PERIOD";

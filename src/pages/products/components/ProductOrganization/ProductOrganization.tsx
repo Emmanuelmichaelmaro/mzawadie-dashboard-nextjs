@@ -13,7 +13,7 @@ import {
     SingleAutocompleteChoiceType,
 } from "@mzawadie/components/SingleAutocompleteSelectField";
 import { maybe, FetchMoreProps } from "@mzawadie/core";
-import { ProductErrorFragment } from "@mzawadie/fragments/types/ProductErrorFragment";
+import { ProductErrorFragment } from "@mzawadie/graphql";
 import { ChangeEvent } from "@mzawadie/hooks/useForm";
 import { getFormErrors, getProductErrorMessage } from "@mzawadie/utils/errors";
 import { makeStyles } from "@saleor/macaw-ui";

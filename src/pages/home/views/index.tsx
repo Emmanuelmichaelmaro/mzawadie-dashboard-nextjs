@@ -1,17 +1,15 @@
 // @ts-nocheck
 import useAppChannel from "@mzawadie/components/AppLayout/AppChannelContext";
 import { getDatePeriod, getUserName } from "@mzawadie/core";
+import { OrderStatusFilter, StockAvailability, useHomeQuery } from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useUser } from "@mzawadie/pages/auth";
 import { channelsListUrl } from "@mzawadie/pages/channels/urls";
+import { HomePage } from "@mzawadie/pages/home/components/HomePage";
 import { orderListUrl } from "@mzawadie/pages/orders/urls";
 import { productListUrl, productVariantEditUrl } from "@mzawadie/pages/products/urls";
-import { OrderStatusFilter, StockAvailability } from "@mzawadie/types/globalTypes";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import React from "react";
-
-import { HomePage } from "../components/HomePage";
-import { useHomePage } from "../queries";
 
 const HomeSection = () => {
     const navigate = useNavigator();
@@ -20,7 +18,7 @@ const HomeSection = () => {
 
     const noChannel = !channel && typeof channel !== "undefined";
 
-    const { data } = useHomePage({
+    const { data } = useHomeQuery({
         displayLoader: true,
         skip: noChannel,
         variables: { channel: channel?.slug, datePeriod: getDatePeriod(1) },

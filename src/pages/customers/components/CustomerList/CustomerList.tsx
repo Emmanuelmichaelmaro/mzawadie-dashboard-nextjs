@@ -8,14 +8,21 @@ import {
     TableHead,
     TablePagination,
 } from "@mzawadie/components";
-import { getUserName, maybe, renderCollection, ListActions, ListProps, SortPage } from "@mzawadie/core";
+import {
+    getUserName,
+    maybe,
+    renderCollection,
+    ListActions,
+    ListProps,
+    SortPage,
+    RelayToFlat,
+} from "@mzawadie/core";
+import { ListCustomersQuery } from "@mzawadie/graphql";
 import { CustomerListUrlSortField } from "@mzawadie/pages/customers/urls";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-
-import { ListCustomers_customers_edges_node } from "../../types/ListCustomers";
 
 const useStyles = makeStyles(
     (theme) => ({
@@ -41,7 +48,7 @@ const useStyles = makeStyles(
 );
 
 export interface CustomerListProps extends ListProps, ListActions, SortPage<CustomerListUrlSortField> {
-    customers: ListCustomers_customers_edges_node[];
+    customers: RelayToFlat<ListCustomersQuery["customers"]>;
 }
 
 const numberOfColumns = 4;

@@ -1,13 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import { Button, Card, CardContent, TextField, Typography } from "@material-ui/core";
-import { CollectionErrorFragment } from "@mzawadie/fragments/types/CollectionErrorFragment";
-import { PageErrorFragment } from "@mzawadie/fragments/types/PageErrorFragment";
-import { ProductErrorFragment } from "@mzawadie/fragments/types/ProductErrorFragment";
+import { Card, CardContent, TextField, Typography } from "@material-ui/core";
+import { CollectionErrorFragment, PageErrorFragment, ProductErrorFragment } from "@mzawadie/graphql";
 import { getFieldError, getProductErrorMessage } from "@mzawadie/utils/errors";
 import getPageErrorMessage from "@mzawadie/utils/errors/page";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
@@ -22,8 +18,7 @@ enum SeoField {
     description = "seoDescription",
 }
 
-// eslint-disable-next-line no-useless-escape
-const SLUG_REGEX = /^[a-zA-Z0-9\-\_]+$/;
+const SLUG_REGEX = /^[a-zA-Z0-9\-_]+$/;
 const maxSlugLength = 255;
 const maxTitleLength = 70;
 const maxDescriptionLength = 300;
@@ -90,7 +85,7 @@ interface SeoFormProps {
     slug: string;
     slugPlaceholder?: string;
     titlePlaceholder: string;
-    onChange: (event: any) => any;
+    onChange: (event: any) => void;
     onClick?: () => void;
 }
 
@@ -109,7 +104,6 @@ const SeoForm: React.FC<SeoFormProps> = (props) => {
         titlePlaceholder,
         onChange,
     } = props;
-
     const classes = useStyles(props);
 
     const intl = useIntl();
@@ -164,12 +158,7 @@ const SeoForm: React.FC<SeoFormProps> = (props) => {
                     id: "TGX4T1",
                 })}
                 toolbar={
-                    <Button
-                        color="primary"
-                        variant="text"
-                        onClick={toggleExpansion}
-                        data-test-id="edit-seo"
-                    >
+                    <Button variant="tertiary" onClick={toggleExpansion} data-test-id="edit-seo">
                         <FormattedMessage
                             defaultMessage="Edit website SEO"
                             id="s5Imt5"
@@ -196,6 +185,7 @@ const SeoForm: React.FC<SeoFormProps> = (props) => {
                                     <div className={classes.label}>
                                         <FormattedMessage defaultMessage="Slug" id="IoDlcd" />
                                     </div>
+
                                     {slug?.length > 0 && (
                                         <span>
                                             <FormattedMessage
@@ -219,7 +209,7 @@ const SeoForm: React.FC<SeoFormProps> = (props) => {
                             helperText={getSlugHelperMessage()}
                             value={slug}
                             disabled={loading || disabled}
-                            placeholder={slug || slugify(slugPlaceholder as string, { lower: true })}
+                            placeholder={slug || slugify(slugPlaceholder, { lower: true })}
                             onChange={handleSlugChange}
                             fullWidth
                         />
@@ -246,7 +236,7 @@ const SeoForm: React.FC<SeoFormProps> = (props) => {
                                                 description="character limit"
                                                 values={{
                                                     maxCharacters: maxTitleLength,
-                                                    numberOfCharacters: title?.length,
+                                                    numberOfCharacters: title.length,
                                                 }}
                                             />
                                         </span>
@@ -288,7 +278,7 @@ const SeoForm: React.FC<SeoFormProps> = (props) => {
                                                 description="character limit"
                                                 values={{
                                                     maxCharacters: maxDescriptionLength,
-                                                    numberOfCharacters: description?.length,
+                                                    numberOfCharacters: description.length,
                                                 }}
                                             />
                                         </span>

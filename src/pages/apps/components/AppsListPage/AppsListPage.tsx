@@ -1,21 +1,21 @@
+// @ts-nocheck
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import Container from "@mzawadie/components/Container";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import { sectionNames, ListProps } from "@mzawadie/core";
+import { AppsInstallationsQuery, AppsListQuery } from "@mzawadie/graphql";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { AppsInstallations } from "../../types/AppsInstallations";
-import { AppsList_apps_edges } from "../../types/AppsList";
 import AppsInProgress from "../AppsInProgress/AppsInProgress";
 import CustomApps from "../CustomApps/CustomApps";
 import InstalledApps from "../InstalledApps/InstalledApps";
 import Marketplace from "../Marketplace/Marketplace";
 
 export interface AppsListPageProps extends ListProps {
-    installedAppsList: AppsList_apps_edges[];
-    customAppsList: AppsList_apps_edges[];
-    appsInProgressList?: AppsInstallations;
+    installedAppsList: AppsListQuery["apps"]["edges"];
+    customAppsList: AppsListQuery["apps"]["edges"];
+    appsInProgressList?: AppsInstallationsQuery;
     loadingAppsInProgress: boolean;
     navigateToCustomApp: (id: string) => () => void;
     navigateToCustomAppCreate: () => void;

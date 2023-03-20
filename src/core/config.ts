@@ -1,4 +1,4 @@
-/* eslint-disable prefer-destructuring */
+/* eslint-disable prefer-destructuring,radix */
 // @ts-nocheck
 import { SearchVariables } from "@mzawadie/hooks";
 
@@ -11,15 +11,14 @@ export const getAppMountUri = () => window.__MZAWADIE_CONFIG__.APP_MOUNT_URI || 
 
 export const getApiUrl = () => window.__MZAWADIE_CONFIG__.API_URL;
 
-export const APP_MOUNT_URI = process.env.APP_MOUNT_URI;
+export const APP_MOUNT_URI = process.env.APP_MOUNT_URI || "/";
 
 export const APP_DEFAULT_URI = "/";
 
-export const API_URI = process.env.API_URI;
+export const API_URI = "http://localhost:8000/graphql/";
 
 export const APP_VERSION = packageInfo.version;
 
-// eslint-disable-next-line radix
 export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL, 0);
 
 export const CHANNEL_SLUG = process.env.MZAWADIE_CHANNEL_SLUG;
@@ -27,6 +26,8 @@ export const CHANNEL_SLUG = process.env.MZAWADIE_CHANNEL_SLUG;
 export const IS_CLOUD_INSTANCE = process.env.IS_CLOUD_INSTANCE === "true";
 
 export const DEMO_MODE = process.env.DEMO_MODE === "true";
+
+export const GTM_ID = process.env.GTM_ID;
 
 export const DEFAULT_NOTIFICATION_SHOW_TIME = 3000;
 
@@ -45,7 +46,7 @@ export const PAGINATE_BY = 20;
 
 export const VALUES_PAGINATE_BY = 10;
 
-export type ProductListColumns = "productType" | "availability" | "price";
+export type ProductListColumns = "productType" | "availability" | "price" | "date";
 
 export interface AppListViewSettings {
     [ListViews.APPS_LIST]: ListSettings;
@@ -102,7 +103,7 @@ export const defaultListSettings: AppListViewSettings = {
         rowNumber: PAGINATE_BY,
     },
     [ListViews.PRODUCT_LIST]: {
-        columns: ["availability", "price", "productType"],
+        columns: ["availability", "price", "productType", "date"],
         rowNumber: PAGINATE_BY,
     },
     [ListViews.SALES_LIST]: {

@@ -1,10 +1,11 @@
 // @ts-nocheck
-import { ChannelErrorFragment } from "@mzawadie/fragments/types/ChannelErrorFragment";
-import { ProductDetails_product_channelListings } from "@mzawadie/pages/products/types/ProductDetails";
-import { ChannelErrorCode } from "@mzawadie/types/globalTypes";
-
-import { Channel_channel } from "./types/Channel";
-import { Channels_channels } from "./types/Channels";
+import {
+    ChannelDetailsFragment,
+    ChannelErrorCode,
+    ChannelErrorFragment,
+    ProductFragment,
+} from "@mzawadie/graphql";
+import { Money } from "@saleor/sdk/dist/apollo/types";
 
 export const channelCreateErrors: ChannelErrorFragment[] = [
     {
@@ -15,7 +16,7 @@ export const channelCreateErrors: ChannelErrorFragment[] = [
     },
 ];
 
-export const channelsList: Channels_channels[] = [
+export const channelsList: ChannelDetailsFragment[] = [
     {
         __typename: "Channel",
         currencyCode: "euro",
@@ -116,7 +117,7 @@ export const channelsList: Channels_channels[] = [
     },
 ];
 
-export const channel: Channel_channel = {
+export const channel: ChannelDetailsFragment = {
     __typename: "Channel",
     currencyCode: "zl",
     hasOrders: false,
@@ -131,7 +132,20 @@ export const channel: Channel_channel = {
     },
 };
 
-export const productChannels: ProductDetails_product_channelListings[] = [
+type ProductChannelsWithPricing = ProductFragment["channelListings"][0] & {
+    pricing: {
+        priceRange: {
+            start: {
+                net: Money;
+            };
+            stop: {
+                net: Money;
+            };
+        };
+    };
+};
+
+export const productChannels: ProductChannelsWithPricing[] = [
     {
         __typename: "ProductChannelListing",
         availableForPurchase: null,
@@ -144,21 +158,15 @@ export const productChannels: ProductDetails_product_channelListings[] = [
         isAvailableForPurchase: false,
         isPublished: true,
         pricing: {
-            __typename: "ProductPricingInfo",
             priceRange: {
-                __typename: "TaxedMoneyRange",
                 start: {
-                    __typename: "TaxedMoney",
                     net: {
-                        __typename: "Money",
                         amount: 1.2,
                         currency: "USD",
                     },
                 },
                 stop: {
-                    __typename: "TaxedMoney",
                     net: {
-                        __typename: "Money",
                         amount: 3.5,
                         currency: "USD",
                     },
@@ -180,21 +188,15 @@ export const productChannels: ProductDetails_product_channelListings[] = [
         isAvailableForPurchase: false,
         isPublished: false,
         pricing: {
-            __typename: "ProductPricingInfo",
             priceRange: {
-                __typename: "TaxedMoneyRange",
                 start: {
-                    __typename: "TaxedMoney",
                     net: {
-                        __typename: "Money",
                         amount: 2.2,
                         currency: "USD",
                     },
                 },
                 stop: {
-                    __typename: "TaxedMoney",
                     net: {
-                        __typename: "Money",
                         amount: 7.1,
                         currency: "USD",
                     },
@@ -216,21 +218,15 @@ export const productChannels: ProductDetails_product_channelListings[] = [
         isAvailableForPurchase: false,
         isPublished: false,
         pricing: {
-            __typename: "ProductPricingInfo",
             priceRange: {
-                __typename: "TaxedMoneyRange",
                 start: {
-                    __typename: "TaxedMoney",
                     net: {
-                        __typename: "Money",
                         amount: 30.1,
                         currency: "USD",
                     },
                 },
                 stop: {
-                    __typename: "TaxedMoney",
                     net: {
-                        __typename: "Money",
                         amount: 44.9,
                         currency: "USD",
                     },

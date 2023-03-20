@@ -1,6 +1,6 @@
 // @ts-nocheck
+import { MetadataInput } from "@mzawadie/graphql";
 import { ChangeEvent } from "@mzawadie/hooks/useForm";
-import { MetadataInput } from "@mzawadie/types/globalTypes";
 import { removeAtIndex, updateAtIndex } from "@mzawadie/utils/lists";
 import React from "react";
 

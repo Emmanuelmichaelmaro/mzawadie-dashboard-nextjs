@@ -8,18 +8,19 @@ import Skeleton from "@mzawadie/components/Skeleton";
 import { TableCellAvatar } from "@mzawadie/components/TableCellAvatar";
 import { TableHead } from "@mzawadie/components/TableHead";
 import { TablePagination } from "@mzawadie/components/TablePagination";
-import { maybe, renderCollection, ListActions, ListProps } from "@mzawadie/core";
+import { maybe, renderCollection, ListActions, ListProps, RelayToFlat } from "@mzawadie/core";
+import { SaleDetailsFragment, VoucherDetailsFragment } from "@mzawadie/graphql";
 import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { SaleDetails_sale_products_edges_node } from "../../types/SaleDetails";
-import { VoucherDetails_voucher_products_edges_node } from "../../types/VoucherDetails";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
 export interface SaleProductsProps extends ListProps, ListActions {
-    products: SaleDetails_sale_products_edges_node[] | VoucherDetails_voucher_products_edges_node[];
+    products:
+        | RelayToFlat<SaleDetailsFragment["products"]>
+        | RelayToFlat<VoucherDetailsFragment["products"]>;
     onProductAssign: () => void;
     onProductUnassign: (id: string) => void;
 }

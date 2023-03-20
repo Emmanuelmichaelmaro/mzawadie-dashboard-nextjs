@@ -1,13 +1,14 @@
+// @ts-nocheck
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
 import { flatten } from "@mzawadie/core";
-import { AccountErrorFragment } from "@mzawadie/fragments/types/AccountErrorFragment";
-import { OrderErrorFragment } from "@mzawadie/fragments/types/OrderErrorFragment";
-import { FormChange } from "@mzawadie/hooks/useForm";
 import {
-    CustomerAddresses_user_addresses,
-    CustomerAddresses_user_defaultShippingAddress,
-} from "@mzawadie/pages/customers/types/CustomerAddresses";
-import { AddressTypeEnum } from "@mzawadie/types/globalTypes";
+    AccountErrorFragment,
+    AddressFragment,
+    OrderErrorFragment,
+    AddressTypeEnum,
+} from "@mzawadie/graphql";
+import { FormChange } from "@mzawadie/hooks/useForm";
+import React from "react";
 
 import { getById } from "../OrderReturnPage/utils";
 import { OrderCustomerAddressEditProps } from "./OrderCustomerAddressEdit";
@@ -18,23 +19,23 @@ interface AddressEditCommonProps {
     showCard: boolean;
     loading: boolean;
     countryChoices: SingleAutocompleteChoiceType[];
-    customerAddresses: CustomerAddresses_user_addresses[];
+    customerAddresses: AddressFragment[];
 }
 
-export const stringifyAddress = (address: Partial<CustomerAddresses_user_addresses>): string => {
+export const stringifyAddress = (address: Partial<AddressFragment>): string => {
     const { id, ...addressWithoutId } = address;
     return Object.values(flatten(addressWithoutId)).join(" ");
 };
 
 export const parseQuery = (query: string) => query.replace(/([.?*+\-=:^$\\[\]<>(){}|])/g, "\\$&");
 
-export function validateDefaultAddress<T extends CustomerAddresses_user_defaultShippingAddress>(
-    defaultAddress: CustomerAddresses_user_defaultShippingAddress,
+export function validateDefaultAddress<T extends AddressFragment>(
+    defaultAddress: Node,
     customerAddresses: T[]
-): CustomerAddresses_user_defaultShippingAddress {
+): Node {
     const fallbackAddress = {
         id: customerAddresses[0]?.id,
-    } as CustomerAddresses_user_defaultShippingAddress;
+    } as AddressFragment;
     if (!defaultAddress) {
         return fallbackAddress;
     }

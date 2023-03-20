@@ -2,6 +2,7 @@
 import { Card, CardContent } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { maybe } from "@mzawadie/core";
+import { OrderDetailsFragment } from "@mzawadie/graphql";
 import {
     OrderDiscountContext,
     OrderDiscountContextConsumerProps,
@@ -10,7 +11,6 @@ import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderDetails_order } from "../../types/OrderDetails";
 import {
     OrderDraftDetailsProducts,
     FormData as OrderDraftDetailsProductsFormData,
@@ -18,7 +18,7 @@ import {
 import { OrderDraftDetailsSummary } from "../OrderDraftDetailsSummary";
 
 interface OrderDraftDetailsProps {
-    order: OrderDetails_order;
+    order: OrderDetailsFragment;
     onOrderLineAdd: () => void;
     onOrderLineChange: (id: string, data: OrderDraftDetailsProductsFormData) => void;
     onOrderLineRemove: (id: string) => void;

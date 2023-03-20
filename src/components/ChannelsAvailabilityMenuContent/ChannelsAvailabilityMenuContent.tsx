@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-redeclare, no-redeclare */
 // @ts-nocheck
 import { Typography } from "@material-ui/core";
+import { CollectionFragment } from "@mzawadie/graphql";
 import { HorizontalSpacer } from "@mzawadie/pages/apps/components/HorizontalSpacer";
-import { CollectionList_collections_edges_node_channelListings_channel } from "@mzawadie/pages/collections/types/CollectionList";
 import ScrollableContent from "@mzawadie/pages/plugins/components/PluginsList/PluginAvailabilityStatusPopup/ScrollableContent";
 import { Pill, PillColor } from "@saleor/macaw-ui";
 import React from "react";
@@ -16,7 +16,7 @@ export interface ChannelsAvailabilityMenuContentProps {
 }
 
 export interface Pill {
-    channel: CollectionList_collections_edges_node_channelListings_channel;
+    channel: CollectionFragment["channelListings"][0]["channel"];
     color: PillColor;
     label: MessageDescriptor;
 }

@@ -1,16 +1,16 @@
 // @ts-nocheck
 import { FetchResult } from "@apollo/client";
 import { joinDateTime } from "@mzawadie/core";
+import {
+    DiscountValueTypeEnum,
+    SaleDetailsFragment,
+    SaleType,
+    SaleUpdateMutation,
+    SaleUpdateMutationVariables,
+} from "@mzawadie/graphql";
 import { ChannelSaleData } from "@mzawadie/pages/channels/utils";
 import { SaleDetailsPageFormData } from "@mzawadie/pages/discounts/components/SaleDetailsPage";
 import { getSaleChannelsVariables } from "@mzawadie/pages/discounts/handlers";
-import {
-    SaleChannelListingUpdate,
-    SaleChannelListingUpdateVariables,
-} from "@mzawadie/pages/discounts/types/SaleChannelListingUpdate";
-import { SaleDetails_sale } from "@mzawadie/pages/discounts/types/SaleDetails";
-import { SaleUpdate, SaleUpdateVariables } from "@mzawadie/pages/discounts/types/SaleUpdate";
-import { DiscountValueTypeEnum, SaleType } from "@mzawadie/types/globalTypes";
 
 function discountValueTypeEnum(type: SaleType): DiscountValueTypeEnum {
     return type.toString() === DiscountValueTypeEnum.FIXED
@@ -19,12 +19,9 @@ function discountValueTypeEnum(type: SaleType): DiscountValueTypeEnum {
 }
 
 export function createUpdateHandler(
-    sale: SaleDetails_sale,
+    sale: SaleDetailsFragment,
     saleChannelsChoices: ChannelSaleData[],
-    updateSale: (variables: SaleUpdateVariables) => Promise<FetchResult<SaleUpdate>>,
-    updateChannels: (options: {
-        variables: SaleChannelListingUpdateVariables;
-    }) => Promise<FetchResult<SaleChannelListingUpdate>>
+    updateSale: (variables: SaleUpdateMutationVariables) => Promise<FetchResult<SaleUpdateMutation>>
 ) {
     return async (formData: SaleDetailsPageFormData) => {
         const { id } = sale;
@@ -39,11 +36,12 @@ export function createUpdateHandler(
                     startDate: joinDateTime(formData.startDate, formData.startTime),
                     type: discountValueTypeEnum(formData.type),
                 },
-            }).then(({ data }) => data?.saleUpdate?.errors ?? []),
-
-            updateChannels({
-                variables: getSaleChannelsVariables(id, formData, saleChannelsChoices),
-            }).then(({ data }) => data?.saleChannelListingUpdate?.errors ?? []),
+                channelInput: getSaleChannelsVariables(
+                    id,
+                    formData,
+                    saleChannelsChoices.map((channel) => channel.id)
+                ).input,
+            }).then(({ data }) => data?.saleUpdate.errors ?? []),
         ]);
 
         return errors.flat();

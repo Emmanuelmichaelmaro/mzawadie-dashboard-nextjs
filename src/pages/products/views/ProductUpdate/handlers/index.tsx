@@ -1,17 +1,33 @@
 // @ts-nocheck
 import { FetchResult } from "@apollo/client";
 import { VALUES_PAGINATE_BY, ReorderEvent } from "@mzawadie/core";
-import { FileUpload, FileUploadVariables } from "@mzawadie/files/types/FileUpload";
-import { AttributeErrorFragment } from "@mzawadie/fragments/types/AttributeErrorFragment";
-import { BulkStockErrorFragment } from "@mzawadie/fragments/types/BulkStockErrorFragment";
-import { ProductChannelListingErrorFragment } from "@mzawadie/fragments/types/ProductChannelListingErrorFragment";
-import { ProductErrorFragment } from "@mzawadie/fragments/types/ProductErrorFragment";
-import { StockErrorFragment } from "@mzawadie/fragments/types/StockErrorFragment";
-import { UploadErrorFragment } from "@mzawadie/fragments/types/UploadErrorFragment";
 import {
-    AttributeValueDelete,
-    AttributeValueDeleteVariables,
-} from "@mzawadie/pages/attributes/types/AttributeValueDelete";
+    AttributeErrorFragment,
+    AttributeValueDeleteMutation,
+    AttributeValueDeleteMutationVariables,
+    BulkStockErrorFragment,
+    FileUploadMutation,
+    FileUploadMutationVariables,
+    Node,
+    ProductChannelListingErrorFragment,
+    ProductChannelListingUpdateMutation,
+    ProductChannelListingUpdateMutationVariables,
+    ProductErrorFragment,
+    ProductFragment,
+    ProductMediaCreateMutationVariables,
+    ProductMediaReorderMutationVariables,
+    ProductUpdateMutation,
+    ProductUpdateMutationVariables,
+    ProductVariantChannelListingUpdateMutation,
+    ProductVariantChannelListingUpdateMutationVariables,
+    ProductVariantReorderMutationVariables,
+    SimpleProductUpdateMutation,
+    SimpleProductUpdateMutationVariables,
+    StockErrorFragment,
+    UploadErrorFragment,
+    VariantCreateMutation,
+    VariantCreateMutationVariables,
+} from "@mzawadie/graphql";
 import {
     getAttributesAfterFileAttributesUpdate,
     mergeAttributeValueDeleteErrors,
@@ -24,29 +40,6 @@ import {
 } from "@mzawadie/pages/attributes/utils/handlers";
 import { ChannelData } from "@mzawadie/pages/channels/utils";
 import { ProductUpdatePageSubmitData } from "@mzawadie/pages/products/components/ProductUpdatePage";
-import {
-    ProductChannelListingUpdate,
-    ProductChannelListingUpdateVariables,
-} from "@mzawadie/pages/products/types/ProductChannelListingUpdate";
-import {
-    ProductDetails_product,
-    ProductDetails_product_variants,
-} from "@mzawadie/pages/products/types/ProductDetails";
-import { ProductMediaCreateVariables } from "@mzawadie/pages/products/types/ProductMediaCreate";
-import { ProductMediaReorderVariables } from "@mzawadie/pages/products/types/ProductMediaReorder";
-import { ProductUpdate, ProductUpdateVariables } from "@mzawadie/pages/products/types/ProductUpdate";
-import {
-    ProductVariantChannelListingUpdate,
-    ProductVariantChannelListingUpdateVariables,
-} from "@mzawadie/pages/products/types/ProductVariantChannelListingUpdate";
-import { ProductVariantCreateData_product } from "@mzawadie/pages/products/types/ProductVariantCreateData";
-import { ProductVariantDetails_productVariant_product } from "@mzawadie/pages/products/types/ProductVariantDetails";
-import { ProductVariantReorderVariables } from "@mzawadie/pages/products/types/ProductVariantReorder";
-import {
-    SimpleProductUpdate,
-    SimpleProductUpdateVariables,
-} from "@mzawadie/pages/products/types/SimpleProductUpdate";
-import { VariantCreate, VariantCreateVariables } from "@mzawadie/pages/products/types/VariantCreate";
 import { mapFormsetStockToStockInput } from "@mzawadie/pages/products/utils/data";
 import { move } from "@mzawadie/utils/lists";
 import { getParsedDataForJsonStringField } from "@mzawadie/utils/richText/misc";
@@ -70,25 +63,27 @@ type SubmitErrors = Array<
 >;
 
 export function createUpdateHandler(
-    product: ProductDetails_product,
+    product: ProductFragment,
     allChannels: ChannelData[],
-    uploadFile: (variables: FileUploadVariables) => Promise<FetchResult<FileUpload>>,
-    updateProduct: (variables: ProductUpdateVariables) => Promise<FetchResult<ProductUpdate>>,
+    uploadFile: (variables: FileUploadMutationVariables) => Promise<FetchResult<FileUploadMutation>>,
+    updateProduct: (
+        variables: ProductUpdateMutationVariables
+    ) => Promise<FetchResult<ProductUpdateMutation>>,
     updateSimpleProduct: (
-        variables: SimpleProductUpdateVariables
-    ) => Promise<FetchResult<SimpleProductUpdate>>,
+        variables: SimpleProductUpdateMutationVariables
+    ) => Promise<FetchResult<SimpleProductUpdateMutation>>,
     updateChannels: (options: {
-        variables: ProductChannelListingUpdateVariables;
-    }) => Promise<FetchResult<ProductChannelListingUpdate>>,
+        variables: ProductChannelListingUpdateMutationVariables;
+    }) => Promise<FetchResult<ProductChannelListingUpdateMutation>>,
     updateVariantChannels: (options: {
-        variables: ProductVariantChannelListingUpdateVariables;
-    }) => Promise<FetchResult<ProductVariantChannelListingUpdate>>,
+        variables: ProductVariantChannelListingUpdateMutationVariables;
+    }) => Promise<FetchResult<ProductVariantChannelListingUpdateMutation>>,
     productVariantCreate: (options: {
-        variables: VariantCreateVariables;
-    }) => Promise<FetchResult<VariantCreate>>,
+        variables: VariantCreateMutationVariables;
+    }) => Promise<FetchResult<VariantCreateMutation>>,
     deleteAttributeValue: (
-        variables: AttributeValueDeleteVariables
-    ) => Promise<FetchResult<AttributeValueDelete>>
+        variables: AttributeValueDeleteMutationVariables
+    ) => Promise<FetchResult<AttributeValueDeleteMutation>>
 ) {
     return async (data: ProductUpdatePageSubmitData) => {
         let errors: SubmitErrors = [];
@@ -114,7 +109,7 @@ export function createUpdateHandler(
             uploadFilesResult
         );
 
-        const productVariables: ProductUpdateVariables = {
+        const productVariables: ProductUpdateMutationVariables = {
             id: product.id,
             input: {
                 attributes: prepareAttributesInput({
@@ -157,6 +152,7 @@ export function createUpdateHandler(
                     },
                 },
             });
+
             errors = [...errors, ...productVariantResult.data.productVariantCreate.errors];
 
             const variantId = productVariantResult.data.productVariantCreate?.productVariant?.id;
@@ -180,6 +176,7 @@ export function createUpdateHandler(
             const result = await updateSimpleProduct(
                 getSimpleProductVariables(productVariables, data, product.variants[0].id)
             );
+
             errors = [...errors, ...getSimpleProductErrors(result.data)];
 
             await updateChannels(getSimpleChannelsVariables(data, product));
@@ -198,7 +195,7 @@ export function createUpdateHandler(
 
 export function createImageUploadHandler(
     id: string,
-    createProductImage: (variables: ProductMediaCreateVariables) => void
+    createProductImage: (variables: ProductMediaCreateMutationVariables) => void
 ) {
     return (file: File) =>
         createProductImage({
@@ -209,8 +206,8 @@ export function createImageUploadHandler(
 }
 
 export function createImageReorderHandler(
-    product: ProductDetails_product,
-    reorderProductImages: (variables: ProductMediaReorderVariables) => void
+    product: ProductFragment,
+    reorderProductImages: (variables: ProductMediaReorderMutationVariables) => void
 ) {
     return ({ newIndex, oldIndex }: ReorderEvent) => {
         let ids = product.media.map((image) => image.id);
@@ -222,22 +219,24 @@ export function createImageReorderHandler(
     };
 }
 
-function areVariantsEqual(a: ProductDetails_product_variants, b: ProductDetails_product_variants) {
+function areVariantsEqual(a: Node, b: Node) {
     return a.id === b.id;
 }
 
-export function createVariantReorderHandler(
-    product:
-        | ProductDetails_product
-        | ProductVariantDetails_productVariant_product
-        | ProductVariantCreateData_product,
-    reorderProductVariants: (variables: ProductVariantReorderVariables) => void
+export function createVariantReorderHandler<T extends { id: string; variants: any[] }>(
+    product: T,
+    reorderProductVariants: (variables: ProductVariantReorderMutationVariables) => void
 ) {
     return ({ newIndex, oldIndex }: ReorderEvent) => {
         const oldVariantOrder = [...product.variants];
 
         product.variants = [
-            ...move(product.variants[oldIndex], product.variants, areVariantsEqual, newIndex),
+            ...move<T["variants"][0]>(
+                product.variants[oldIndex],
+                product.variants,
+                areVariantsEqual,
+                newIndex
+            ),
         ];
 
         reorderProductVariants({

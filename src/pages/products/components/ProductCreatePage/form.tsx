@@ -6,7 +6,14 @@ import { MetadataFormData } from "@mzawadie/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@mzawadie/components/MultiAutocompleteSelectField";
 import { RichTextEditorChange } from "@mzawadie/components/RichTextEditor";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
-import { FetchMoreProps, ReorderEvent, errorMessages } from "@mzawadie/core";
+import { FetchMoreProps, ReorderEvent, errorMessages, RelayToFlat } from "@mzawadie/core";
+import {
+    ProductTypeQuery,
+    SearchPagesQuery,
+    SearchProductsQuery,
+    SearchProductTypesQuery,
+    SearchWarehousesQuery,
+} from "@mzawadie/graphql";
 import useForm, {
     CommonUseFormResultWithHandlers,
     FormChange,
@@ -26,7 +33,6 @@ import {
     createFetchReferencesHandler,
 } from "@mzawadie/pages/attributes/utils/handlers";
 import { ChannelData, ChannelPriceArgs } from "@mzawadie/pages/channels/utils";
-import { ProductType_productType } from "@mzawadie/pages/products/types/ProductType";
 import { getAttributeInputFromProductType, ProductType } from "@mzawadie/pages/products/utils/data";
 import {
     createChannelsChangeHandler,
@@ -36,10 +42,6 @@ import {
 } from "@mzawadie/pages/products/utils/handlers";
 import { validateCostPrice, validatePrice } from "@mzawadie/pages/products/utils/validation";
 import { PRODUCT_CREATE_FORM_ID } from "@mzawadie/pages/products/views/ProductCreate/consts";
-import { SearchPages_search_edges_node } from "@mzawadie/searches/types/SearchPages";
-import { SearchProductTypes_search_edges_node } from "@mzawadie/searches/types/SearchProductTypes";
-import { SearchProducts_search_edges_node } from "@mzawadie/searches/types/SearchProducts";
-import { SearchWarehouses_search_edges_node } from "@mzawadie/searches/types/SearchWarehouses";
 import createMultiAutocompleteSelectHandler from "@mzawadie/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@mzawadie/utils/handlers/singleAutocompleteSelectChangeHandler";
 import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChangeTrigger";
@@ -119,17 +121,17 @@ export interface UseProductCreateFormOpts
     setSelectedTaxType: React.Dispatch<React.SetStateAction<string>>;
     setChannels: (channels: ChannelData[]) => void;
     selectedCollections: MultiAutocompleteChoiceType[];
-    productTypes: SearchProductTypes_search_edges_node[];
-    warehouses: SearchWarehouses_search_edges_node[];
+    productTypes: RelayToFlat<SearchProductTypesQuery["search"]>;
+    warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
     currentChannels: ChannelData[];
-    referencePages: SearchPages_search_edges_node[];
-    referenceProducts: SearchProducts_search_edges_node[];
+    referencePages: RelayToFlat<SearchPagesQuery["search"]>;
+    referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
     fetchReferencePages?: (data: string) => void;
     fetchMoreReferencePages?: FetchMoreProps;
     fetchReferenceProducts?: (data: string) => void;
     fetchMoreReferenceProducts?: FetchMoreProps;
     assignReferencesAttributeId?: string;
-    selectedProductType?: ProductType_productType;
+    selectedProductType?: ProductTypeQuery["productType"];
     onSelectProductType: (productTypeId: string) => void;
 }
 

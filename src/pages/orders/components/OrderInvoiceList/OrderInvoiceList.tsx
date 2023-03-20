@@ -1,10 +1,11 @@
+// @ts-nocheck
 import { Card, CardContent, TableBody, TableCell, TableRow, Typography } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { Date } from "@mzawadie/components/Date";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { buttonMessages } from "@mzawadie/core";
-import { InvoiceFragment } from "@mzawadie/fragments/types/InvoiceFragment";
+import { InvoiceFragment } from "@mzawadie/graphql";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";

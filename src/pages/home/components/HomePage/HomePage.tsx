@@ -1,17 +1,12 @@
 // @ts-nocheck
 import { CardSpacer, Container, Grid, Money, RequirePermissions, Skeleton } from "@mzawadie/components";
-import { UserPermissionProps } from "@mzawadie/core";
+import { RelayToFlat, UserPermissionProps } from "@mzawadie/core";
+import { HomeQuery, PermissionEnum } from "@mzawadie/graphql";
 import Orders from "@mzawadie/icons/Orders";
 import Sales from "@mzawadie/icons/Sales";
-import { PermissionEnum } from "@mzawadie/types/globalTypes";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
-import {
-    Home_activities_edges_node,
-    Home_productTopToday_edges_node,
-    Home_salesToday_gross,
-} from "../../types/Home";
 import { HomeActivityCard } from "../HomeActivityCard";
 import { HomeAnalyticsCard } from "../HomeAnalyticsCard";
 import { HomeHeader } from "../HomeHeader";
@@ -41,13 +36,13 @@ const useStyles = makeStyles(
 );
 
 export interface HomePageProps extends UserPermissionProps {
-    activities: Home_activities_edges_node[];
+    activities: RelayToFlat<HomeQuery["activities"]>;
     orders: number | null;
     ordersToCapture: number | null;
     ordersToFulfill: number | null;
     productsOutOfStock: number;
-    sales: Home_salesToday_gross;
-    topProducts: Home_productTopToday_edges_node[] | null;
+    sales: HomeQuery["salesToday"]["gross"];
+    topProducts: RelayToFlat<HomeQuery["productTopToday"]> | null;
     userName: string;
     onCreateNewChannelClick: () => void;
     onOrdersToCaptureClick: () => void;

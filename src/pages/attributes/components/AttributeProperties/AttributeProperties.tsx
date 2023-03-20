@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import CardSpacer from "@mzawadie/components/CardSpacer";
@@ -8,9 +7,8 @@ import ControlledSwitch from "@mzawadie/components/ControlledSwitch";
 import FormSpacer from "@mzawadie/components/FormSpacer";
 import Hr from "@mzawadie/components/Hr";
 import { commonMessages } from "@mzawadie/core";
-import { AttributeErrorFragment } from "@mzawadie/fragments/types/AttributeErrorFragment";
+import { AttributeErrorFragment, AttributeTypeEnum } from "@mzawadie/graphql";
 import { ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION } from "@mzawadie/pages/attributes/utils/data";
-import { AttributeTypeEnum } from "@mzawadie/types/globalTypes";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getAttributeErrorMessage from "@mzawadie/utils/errors/attribute";
 import React from "react";

@@ -1,11 +1,10 @@
-import { WarehouseFilterInput } from "@mzawadie/types/globalTypes";
-
-import { createFilterTabUtils, createFilterUtils } from "../../../../utils/filters";
+import { WarehouseFilterInput } from "@mzawadie/graphql";
 import {
     WarehouseListUrlFilters,
     WarehouseListUrlFiltersEnum,
     WarehouseListUrlQueryParams,
-} from "../../urls";
+} from "@mzawadie/pages/warehouses/urls";
+import { createFilterTabUtils, createFilterUtils } from "@mzawadie/utils/filters";
 
 export const WAREHOUSE_FILTERS_KEY = "warehouseFilters";
 

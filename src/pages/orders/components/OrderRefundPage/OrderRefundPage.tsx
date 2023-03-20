@@ -4,10 +4,8 @@ import Container from "@mzawadie/components/Container";
 import { Grid } from "@mzawadie/components/Grid";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import { renderCollection } from "@mzawadie/core";
-import { OrderErrorFragment } from "@mzawadie/fragments/types/OrderErrorFragment";
+import { OrderErrorFragment, FulfillmentStatus, OrderRefundDataQuery } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
-import { OrderRefundData_order } from "@mzawadie/pages/orders/types/OrderRefundData";
-import { FulfillmentStatus } from "@mzawadie/types/globalTypes";
 import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -29,7 +27,7 @@ export const refundFulfilledStatuses = [
 ];
 
 export interface OrderRefundPageProps {
-    order: OrderRefundData_order | null | undefined;
+    order: OrderRefundDataQuery["order"] | null | undefined;
     defaultType?: OrderRefundType;
     disabled: boolean;
     errors: OrderErrorFragment[];

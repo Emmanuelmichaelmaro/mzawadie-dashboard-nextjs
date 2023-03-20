@@ -4,7 +4,7 @@ import {
     SaveFilterTabDialog,
     SaveFilterTabDialogFormData,
 } from "@mzawadie/components/SaveFilterTabDialog";
-import { useShopLimitsQuery } from "@mzawadie/components/Shop/query";
+import { useShopLimitsQuery } from "@mzawadie/components/Shop/queries";
 import {
     APP_MOUNT_URI,
     DEFAULT_INITIAL_SEARCH_DATA,
@@ -12,6 +12,7 @@ import {
     getStringOrPlaceholder,
     ListViews,
 } from "@mzawadie/core";
+import { useStaffListQuery, useStaffMemberAddMutation } from "@mzawadie/graphql";
 import useListSettings from "@mzawadie/hooks/useListSettings";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
@@ -31,8 +32,6 @@ import urlJoin from "url-join";
 
 import { AddMemberFormData, StaffAddMemberDialog } from "../../components/StaffAddMemberDialog";
 import { StaffListPage } from "../../components/StaffListPage";
-import { useStaffMemberAddMutation } from "../../mutations";
-import { useStaffListQuery } from "../../queries";
 import {
     staffListUrl,
     StaffListUrlDialog,
@@ -58,9 +57,10 @@ interface StaffListProps {
 export const StaffList: React.FC<StaffListProps> = ({ params }) => {
     const navigate = useNavigator();
     const notify = useNotifier();
-    const paginate = usePaginator();
-    const { updateListSettings, settings } = useListSettings(ListViews.STAFF_MEMBERS_LIST);
     const intl = useIntl();
+    const paginate = usePaginator();
+
+    const { updateListSettings, settings } = useListSettings(ListViews.STAFF_MEMBERS_LIST);
 
     usePaginationReset(staffListUrl, params, settings.rowNumber);
 

@@ -1,8 +1,6 @@
 // @ts-nocheck
 import * as richTextEditorFixtures from "@mzawadie/components/RichTextEditor/fixtures.json";
-import { CategoryFragment } from "@mzawadie/fragments/types/CategoryFragment";
-
-import { CategoryDetails_category } from "./types/CategoryDetails";
+import { CategoryDetailsQuery, CategoryFragment } from "@mzawadie/graphql";
 
 const content = richTextEditorFixtures.richTextEditor;
 
@@ -86,7 +84,8 @@ export const categories: CategoryFragment[] = [
         },
     },
 ];
-export const category: (placeholderImage: string) => CategoryDetails_category = (
+
+export const category: (placeholderImage: string) => CategoryDetailsQuery["category"] = (
     placeholderImage: string
 ) => ({
     __typename: "Category",
@@ -642,7 +641,6 @@ export const category: (placeholderImage: string) => CategoryDetails_category = 
                                 name: "Channel1",
                             },
                             currency: "USD",
-                            isAvailableForPurchase: false,
                             isPublished: false,
                             pricing: {
                                 __typename: "ProductPricingInfo",
@@ -652,6 +650,7 @@ export const category: (placeholderImage: string) => CategoryDetails_category = 
                                         __typename: "TaxedMoney",
                                         net: {
                                             __typename: "Money",
+                                            isAvailableForPurchase: false,
                                             amount: 30.1,
                                             currency: "USD",
                                         },

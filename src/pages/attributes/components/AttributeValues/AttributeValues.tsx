@@ -5,16 +5,21 @@ import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { SortableTableBody, SortableTableRow } from "@mzawadie/components/SortableTable";
 import { TablePagination } from "@mzawadie/components/TablePagination";
-import { renderCollection, stopPropagation, ListProps, ReorderAction } from "@mzawadie/core";
-import { AttributeValueListFragment_edges_node } from "@mzawadie/fragments/types/AttributeValueListFragment";
-import { AttributeInputTypeEnum } from "@mzawadie/types/globalTypes";
+import {
+    renderCollection,
+    stopPropagation,
+    ListProps,
+    ReorderAction,
+    RelayToFlat,
+} from "@mzawadie/core";
+import { AttributeValueListFragment, AttributeInputTypeEnum } from "@mzawadie/graphql";
 import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface AttributeValuesProps extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">> {
     disabled: boolean;
-    values: AttributeValueListFragment_edges_node[];
+    values: RelayToFlat<AttributeValueListFragment>;
     onValueAdd: () => void;
     onValueDelete: (id: string) => void;
     onValueReorder: ReorderAction;

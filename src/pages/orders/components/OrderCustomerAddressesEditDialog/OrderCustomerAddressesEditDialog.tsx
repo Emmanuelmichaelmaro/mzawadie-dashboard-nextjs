@@ -10,20 +10,19 @@ import {
 import { Checkbox } from "@mzawadie/components/Checkbox";
 import { ConfirmButton } from "@mzawadie/components/ConfirmButton";
 import FormSpacer from "@mzawadie/components/FormSpacer";
-import { ShopInfo_shop_countries } from "@mzawadie/components/Shop/types/ShopInfo";
 import { buttonMessages, transformAddressToAddressInput } from "@mzawadie/core";
-import { OrderErrorFragment } from "@mzawadie/fragments/types/OrderErrorFragment";
+import {
+    AddressFragment,
+    CountryWithCodeFragment,
+    OrderErrorFragment,
+    AddressInput,
+    AddressTypeEnum,
+} from "@mzawadie/graphql";
 import useAddressValidation from "@mzawadie/hooks/useAddressValidation";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import { useModalDialogErrors } from "@mzawadie/hooks/useModalDialogErrors";
 import { VerticalSpacer } from "@mzawadie/pages/apps/components/VerticalSpacer";
 import { AddressTypeInput } from "@mzawadie/pages/customers/types";
-import {
-    CustomerAddresses_user_addresses,
-    CustomerAddresses_user_defaultBillingAddress,
-    CustomerAddresses_user_defaultShippingAddress,
-} from "@mzawadie/pages/customers/types/CustomerAddresses";
-import { AddressInput, AddressTypeEnum } from "@mzawadie/types/globalTypes";
 import { mapCountriesToChoices } from "@mzawadie/utils/maps";
 import { ConfirmButtonTransitionState, DialogHeader } from "@saleor/macaw-ui";
 import React from "react";
@@ -53,10 +52,10 @@ export interface OrderCustomerAddressesEditDialogProps {
     errors: OrderErrorFragment[];
     orderShippingAddress?: AddressTypeInput;
     orderBillingAddress?: AddressTypeInput;
-    countries?: ShopInfo_shop_countries[];
-    customerAddresses?: CustomerAddresses_user_addresses[];
-    defaultShippingAddress?: CustomerAddresses_user_defaultShippingAddress;
-    defaultBillingAddress?: CustomerAddresses_user_defaultBillingAddress;
+    countries?: CountryWithCodeFragment[];
+    customerAddresses?: AddressFragment[];
+    defaultShippingAddress?: Node;
+    defaultBillingAddress?: Node;
     onClose();
     onConfirm(data: Partial<OrderCustomerAddressesEditDialogOutput>): SubmitPromise<any[]>;
 }

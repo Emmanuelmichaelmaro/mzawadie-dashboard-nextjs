@@ -1,9 +1,8 @@
 /* eslint-disable sort-keys */
 // @ts-nocheck
-import { OrderRefundData_order } from "@mzawadie/pages/orders/types/OrderRefundData";
-import { FulfillmentStatus } from "@mzawadie/types/globalTypes";
+import { FulfillmentStatus, OrderRefundDataQuery } from "@mzawadie/graphql";
 
-export const orderToRefund = (placeholder: string): OrderRefundData_order => ({
+export const orderToRefund = (placeholder: string): OrderRefundDataQuery["order"] => ({
     __typename: "Order",
     id: "ifgdfuhdfdf",
     number: "22",

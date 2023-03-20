@@ -1,9 +1,8 @@
 // @ts-nocheck
 import { TimelineEvent } from "@mzawadie/components/Timeline";
 import { TitleElement } from "@mzawadie/components/Timeline/TimelineEventHeader";
-import { OrderDetails_order_events } from "@mzawadie/pages/orders/types/OrderDetails";
+import { OrderEventFragment, OrderEventsEnum } from "@mzawadie/graphql";
 import { orderUrl } from "@mzawadie/pages/orders/urls";
-import { OrderEventsEnum } from "@mzawadie/types/globalTypes";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -36,7 +35,7 @@ export const discountRemovedMessages = defineMessages({
 });
 
 interface LinkedTimelineEventProps {
-    event: OrderDetails_order_events;
+    event: OrderEventFragment;
 }
 
 const LinkedTimelineEvent: React.FC<LinkedTimelineEventProps> = ({ event }) => {

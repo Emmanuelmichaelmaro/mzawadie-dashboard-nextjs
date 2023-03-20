@@ -8,6 +8,7 @@ import { TableCellHeader } from "@mzawadie/components/TableCellHeader";
 import { TableHead } from "@mzawadie/components/TableHead";
 import { TablePagination } from "@mzawadie/components/TablePagination";
 import { maybe, renderCollection, ListActions, ListProps, SortPage } from "@mzawadie/core";
+import { MenuFragment } from "@mzawadie/graphql";
 import { MenuListUrlSortField } from "@mzawadie/pages/navigation/urls";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import { getFooterColSpanWithBulkActions } from "@mzawadie/utils/tables";
@@ -15,10 +16,8 @@ import { DeleteIcon, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { MenuList_menus_edges_node } from "../../types/MenuList";
-
 export interface MenuListProps extends ListProps, ListActions, SortPage<MenuListUrlSortField> {
-    menus: MenuList_menus_edges_node[];
+    menus: MenuFragment[];
     onDelete: (id: string) => void;
 }
 

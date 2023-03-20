@@ -5,7 +5,7 @@ import ControlledCheckbox from "@mzawadie/components/ControlledCheckbox";
 import Hr from "@mzawadie/components/Hr";
 import { SingleAutocompleteSelectField } from "@mzawadie/components/SingleAutocompleteSelectField";
 import { sectionNames } from "@mzawadie/core";
-import { TaxTypeFragment } from "@mzawadie/fragments/types/TaxTypeFragment";
+import { TaxTypeFragment } from "@mzawadie/graphql";
 import { FormChange } from "@mzawadie/hooks/useForm";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";

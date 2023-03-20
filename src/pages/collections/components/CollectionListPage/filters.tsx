@@ -1,7 +1,7 @@
 import { IFilter } from "@mzawadie/components/Filter";
 import { MultiAutocompleteChoiceType } from "@mzawadie/components/MultiAutocompleteSelectField";
 import { commonMessages, FilterOpts } from "@mzawadie/core";
-import { CollectionPublished } from "@mzawadie/types/globalTypes";
+import { CollectionPublished } from "@mzawadie/graphql";
 import { createOptionsField } from "@mzawadie/utils/filters/fields";
 import { defineMessages, IntlShape } from "react-intl";
 

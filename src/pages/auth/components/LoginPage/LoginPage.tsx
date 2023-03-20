@@ -2,9 +2,9 @@
 import { CircularProgress, Divider, TextField, Typography } from "@material-ui/core";
 import { FormSpacer } from "@mzawadie/components/FormSpacer";
 import { commonMessages } from "@mzawadie/core";
+import { AvailableExternalAuthenticationsQuery } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import { UserContextError } from "@mzawadie/pages/auth/types";
-import { AvailableExternalAuthentications_shop_availableExternalAuthentications } from "@mzawadie/pages/auth/types/AvailableExternalAuthentications";
 import { Button, EyeIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -17,7 +17,7 @@ export interface LoginCardProps {
     error?: UserContextError;
     disabled: boolean;
     loading: boolean;
-    externalAuthentications?: AvailableExternalAuthentications_shop_availableExternalAuthentications[];
+    externalAuthentications?: AvailableExternalAuthenticationsQuery["shop"]["availableExternalAuthentications"];
     onExternalAuthentication: (pluginId: string) => void;
     onPasswordRecovery: () => void;
     onSubmit?: (event: LoginFormData) => SubmitPromise;

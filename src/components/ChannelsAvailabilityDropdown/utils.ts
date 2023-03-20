@@ -1,4 +1,5 @@
-import { CollectionList_collections_edges_node_channelListings } from "@mzawadie/pages/collections/types/CollectionList";
+// @ts-nocheck
+import { CollectionFragment } from "@mzawadie/graphql";
 import { PillColor } from "@saleor/macaw-ui";
 import { MessageDescriptor } from "react-intl";
 
@@ -6,10 +7,10 @@ import { Pill } from "../ChannelsAvailabilityMenuContent";
 import { channelStatusMessages } from "./messages";
 
 export type CollectionChannels = Pick<
-    CollectionList_collections_edges_node_channelListings,
+    CollectionFragment["channelListings"][0],
     "isPublished" | "publicationDate" | "channel"
 >;
-export type Channels = Pick<CollectionList_collections_edges_node_channelListings, "channel">;
+export type Channels = Pick<CollectionFragment["channelListings"][0], "channel">;
 
 export const isActive = (channelData: CollectionChannels) => channelData?.isPublished;
 export const isScheduled = (channelData: CollectionChannels) =>

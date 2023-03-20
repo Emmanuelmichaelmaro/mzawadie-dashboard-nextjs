@@ -1,18 +1,17 @@
 import { TableCell, TableRow, Typography } from "@material-ui/core";
 import { getStringOrPlaceholder } from "@mzawadie/core";
-import { FulfillmentStatus } from "@mzawadie/types/globalTypes";
+import { FulfillmentStatus, OrderDetailsFragment } from "@mzawadie/graphql";
 import classNames from "classnames";
 import React from "react";
 import { useIntl, FormattedMessage } from "react-intl";
 
-import { OrderDetails_order_fulfillments } from "../../types/OrderDetails";
 import { extraInfoMessages } from "./messages";
 import useStyles from "./styles";
 
 const NUMBER_OF_COLUMNS = 5;
 
 interface ExtraInfoLinesProps {
-    fulfillment?: OrderDetails_order_fulfillments;
+    fulfillment?: OrderDetailsFragment["fulfillments"][0];
 }
 
 const ExtraInfoLines: React.FC<ExtraInfoLinesProps> = ({ fulfillment }) => {

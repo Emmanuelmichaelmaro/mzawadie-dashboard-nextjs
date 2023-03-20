@@ -4,12 +4,12 @@ import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { TablePagination } from "@mzawadie/components/TablePagination";
 import { renderCollection, ListProps, SortPage } from "@mzawadie/core";
+import { PluginBaseFragment } from "@mzawadie/graphql";
 import { PluginListUrlSortField } from "@mzawadie/pages/plugins/urls";
 import { EditIcon, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { Plugins_plugins_edges_node } from "../../types/Plugins";
 import PluginChannelAvailabilityCell from "./PluginChannelAvailabilityCell";
 import PluginChannelConfigurationCell from "./PluginChannelConfigurationCell";
 import PluginListTableHead from "./PluginListTableHead";
@@ -24,7 +24,7 @@ export const useStyles = makeStyles(
 );
 
 export interface PluginListProps extends ListProps, SortPage<PluginListUrlSortField> {
-    plugins: Plugins_plugins_edges_node[];
+    plugins: PluginBaseFragment[];
 }
 
 const totalColSpan = 10;

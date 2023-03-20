@@ -1,11 +1,13 @@
 // @ts-nocheck
-import { useShopLimitsQuery } from "@mzawadie/components/Shop/query";
+import { useShopLimitsQuery } from "@mzawadie/components/Shop/queries";
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@mzawadie/core";
+import {
+    useCreateMultipleVariantsDataQuery,
+    useProductVariantBulkCreateMutation,
+} from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
-import { useProductVariantBulkCreateMutation } from "@mzawadie/pages/products/mutations";
-import { useCreateMultipleVariantsData } from "@mzawadie/pages/products/queries";
 import { productUrl } from "@mzawadie/pages/products/urls";
 import useAttributeValueSearchHandler from "@mzawadie/utils/handlers/attributeValueSearchHandler";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
@@ -23,7 +25,7 @@ const ProductVariantCreator: React.FC<ProductVariantCreatorProps> = ({ id }) => 
     const notify = useNotifier();
     const intl = useIntl();
 
-    const { data } = useCreateMultipleVariantsData({
+    const { data } = useCreateMultipleVariantsDataQuery({
         displayLoader: true,
         variables: {
             id,

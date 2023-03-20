@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { Button, Card } from "@material-ui/core";
 import Container from "@mzawadie/components/Container";
@@ -12,12 +11,12 @@ import {
     TabPageProps,
     sectionNames,
 } from "@mzawadie/core";
+import { AttributeFragment } from "@mzawadie/graphql";
 import { AttributeListUrlSortField } from "@mzawadie/pages/attributes/urls";
 import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { AttributeList_attributes_edges_node } from "../../types/AttributeList";
 import { AttributeList } from "../AttributeList";
 import { AttributeFilterKeys, AttributeListFilterOpts, createFilterStructure } from "./filters";
 
@@ -27,7 +26,7 @@ export interface AttributeListPageProps
         FilterPageProps<AttributeFilterKeys, AttributeListFilterOpts>,
         SortPage<AttributeListUrlSortField>,
         TabPageProps {
-    attributes: AttributeList_attributes_edges_node[];
+    attributes: AttributeFragment[];
     onBack: () => void;
 }
 

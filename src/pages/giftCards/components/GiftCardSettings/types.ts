@@ -1,4 +1,4 @@
-import { TimePeriodTypeEnum } from "@mzawadie/types/globalTypes";
+import { TimePeriodTypeEnum } from "@mzawadie/graphql";
 
 export interface GiftCardSettingsFormData {
     expiryPeriodActive: boolean;

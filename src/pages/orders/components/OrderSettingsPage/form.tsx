@@ -1,5 +1,4 @@
-import { OrderSettingsFragment } from "@mzawadie/fragments/types/OrderSettingsFragment";
-import { ShopOrderSettingsFragment } from "@mzawadie/fragments/types/ShopOrderSettingsFragment";
+import { OrderSettingsFragment, ShopOrderSettingsFragment } from "@mzawadie/graphql";
 import useForm, { FormChange, SubmitPromise } from "@mzawadie/hooks/useForm";
 import useHandleFormSubmit from "@mzawadie/hooks/useHandleFormSubmit";
 import React from "react";

@@ -5,13 +5,12 @@ import { Hr } from "@mzawadie/components/Hr";
 import { Money } from "@mzawadie/components/Money";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { maybe, transformPaymentStatus } from "@mzawadie/core";
+import { OrderAction, OrderDetailsFragment, OrderDiscountType, OrderStatus } from "@mzawadie/graphql";
 import { HorizontalSpacer } from "@mzawadie/pages/apps/components/HorizontalSpacer";
-import { OrderAction, OrderDiscountType, OrderStatus } from "@mzawadie/types/globalTypes";
 import { Button, makeStyles, Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderDetails_order } from "../../types/OrderDetails";
 import { orderPaymentMessages, paymentButtonMessages } from "./messages";
 import {
     extractOrderGiftCardUsedAmount,
@@ -44,7 +43,7 @@ const useStyles = makeStyles(
 );
 
 interface OrderPaymentProps {
-    order: OrderDetails_order;
+    order: OrderDetailsFragment;
     onCapture: () => void;
     onMarkAsPaid: () => void;
     onRefund: () => void;

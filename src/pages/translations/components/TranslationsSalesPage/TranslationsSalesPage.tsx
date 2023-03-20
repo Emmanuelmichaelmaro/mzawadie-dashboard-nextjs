@@ -3,7 +3,7 @@ import Container from "@mzawadie/components/Container";
 import { LanguageSwitch } from "@mzawadie/components/LanguageSwitch";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import { commonMessages, sectionNames, getStringOrPlaceholder } from "@mzawadie/core";
-import { SaleTranslationFragment } from "@mzawadie/fragments/types/SaleTranslationFragment";
+import { LanguageCodeEnum, SaleTranslationFragment } from "@mzawadie/graphql";
 import { TranslationsEntitiesPageProps } from "@mzawadie/pages/translations/types";
 import { Backlink } from "@saleor/macaw-ui";
 import React from "react";

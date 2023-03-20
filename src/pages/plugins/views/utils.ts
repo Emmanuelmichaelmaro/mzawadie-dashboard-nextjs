@@ -1,4 +1,4 @@
-import { PluginConfigurationBaseFragment } from "@mzawadie/fragments/types/PluginConfigurationBaseFragment";
+import { PluginConfigurationBaseFragment } from "@mzawadie/graphql";
 
 export const isPluginGlobal = (globalConfiguration: PluginConfigurationBaseFragment) =>
     !!globalConfiguration;

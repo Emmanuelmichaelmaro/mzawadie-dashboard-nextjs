@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import {
     Button,
@@ -16,7 +15,7 @@ import Skeleton from "@mzawadie/components/Skeleton";
 import { TableHead } from "@mzawadie/components/TableHead";
 import { TablePagination } from "@mzawadie/components/TablePagination";
 import { maybe, renderCollection, ListActions, ListProps } from "@mzawadie/core";
-import { ShippingZoneFragment } from "@mzawadie/fragments/types/ShippingZoneFragment";
+import { ShippingZoneFragment } from "@mzawadie/graphql";
 import { getFooterColSpanWithBulkActions } from "@mzawadie/utils/tables";
 import { DeleteIcon, makeStyles } from "@saleor/macaw-ui";
 import React from "react";

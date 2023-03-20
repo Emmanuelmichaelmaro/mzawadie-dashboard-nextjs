@@ -6,20 +6,22 @@ import { Grid } from "@mzawadie/components/Grid";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { sectionNames, getStringOrPlaceholder } from "@mzawadie/core";
-import { PluginErrorFragment } from "@mzawadie/fragments/types/PluginErrorFragment";
+import {
+    PluginConfigurationExtendedFragment,
+    PluginErrorFragment,
+    PluginsDetailsFragment,
+    ConfigurationItemInput,
+} from "@mzawadie/graphql";
 import { ChangeEvent, SubmitPromise } from "@mzawadie/hooks/useForm";
 import { isSecretField } from "@mzawadie/pages/plugins/utils";
-import { ConfigurationItemInput } from "@mzawadie/types/globalTypes";
 import { ConfirmButtonTransitionState, Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { Plugin_plugin } from "../../types/Plugin";
 import { PluginAuthorization } from "../PluginAuthorization";
 import { PluginDetailsChannelsCard } from "../PluginDetailsChannelsCard";
 import { PluginInfo } from "../PluginInfo";
 import { PluginSettings } from "../PluginSettings";
-import { PluginConfiguration } from "./types";
 
 export interface PluginDetailsPageFormData {
     active: boolean;
@@ -29,13 +31,13 @@ export interface PluginDetailsPageFormData {
 export interface PluginsDetailsPageProps {
     disabled: boolean;
     errors: PluginErrorFragment[];
-    plugin?: Plugin_plugin;
+    plugin?: PluginsDetailsFragment;
     saveButtonBarState: ConfirmButtonTransitionState;
     onBack: () => void;
     onClear: (field: string) => void;
     onEdit: (field: string) => void;
     onSubmit: (data: PluginDetailsPageFormData) => SubmitPromise;
-    selectedConfig?: PluginConfiguration;
+    selectedConfig?: PluginConfigurationExtendedFragment;
     setSelectedChannelId: (channelId: string) => void;
 }
 

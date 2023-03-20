@@ -2,6 +2,7 @@
 import { IFilterElement } from "@mzawadie/components/Filter";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
 import { findValueInEnum, joinDateTime, maybe } from "@mzawadie/core";
+import { DiscountStatusEnum, DiscountValueTypeEnum, SaleFilterInput } from "@mzawadie/graphql";
 import { SaleFilterKeys, SaleListFilterOpts } from "@mzawadie/pages/discounts/components/SaleListPage";
 import {
     SaleListUrlFilters,
@@ -9,11 +10,6 @@ import {
     SaleListUrlFiltersWithMultipleValues,
     SaleListUrlQueryParams,
 } from "@mzawadie/pages/discounts/urls";
-import {
-    DiscountStatusEnum,
-    DiscountValueTypeEnum,
-    SaleFilterInput,
-} from "@mzawadie/types/globalTypes";
 import {
     createFilterTabUtils,
     createFilterUtils,
@@ -107,7 +103,7 @@ export function getFilterQueryParam(filter: IFilterElement<SaleFilterKeys>): Sal
 export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
     createFilterTabUtils<SaleListUrlFilters>(SALE_FILTERS_KEY);
 
-export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
+export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
     SaleListUrlQueryParams,
     SaleListUrlFilters
 >({

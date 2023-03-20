@@ -1,11 +1,9 @@
 // @ts-nocheck
 import avatarImage from "@assets/images/avatars/avatar1.png";
-import { permissions } from "@mzawadie/core";
+import { permissions, RelayToFlat } from "@mzawadie/core";
+import { StaffListQuery, StaffMemberDetailsFragment } from "@mzawadie/graphql";
 
-import { StaffList_staffUsers_edges_node } from "./types/StaffList";
-import { StaffMemberDetails_user } from "./types/StaffMemberDetails";
-
-export const staffMembers: StaffList_staffUsers_edges_node[] = [
+export const staffMembers: RelayToFlat<StaffListQuery["staffUsers"]> = [
     {
         avatar: {
             __typename: "Image" as const,
@@ -139,7 +137,7 @@ export const staffMembers: StaffList_staffUsers_edges_node[] = [
         lastName: "Smith",
     },
 ].map((staffMember) => ({ __typename: "User" as const, ...staffMember }));
-export const staffMember: StaffMemberDetails_user = {
+export const staffMember: StaffMemberDetailsFragment = {
     __typename: "User",
     avatar: { __typename: "Image" as const, url: avatarImage },
     email: "admin@example.com",

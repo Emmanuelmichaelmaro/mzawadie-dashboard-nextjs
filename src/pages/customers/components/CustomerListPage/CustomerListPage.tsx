@@ -8,13 +8,16 @@ import {
     PageListProps,
     SortPage,
     TabPageProps,
+    RelayToFlat,
 } from "@mzawadie/core";
+import { ListCustomersQuery } from "@mzawadie/graphql";
+import { useUser } from "@mzawadie/pages/auth";
+import { useUserPermissions } from "@mzawadie/pages/auth/hooks/useUserPermissions";
 import { CustomerListUrlSortField } from "@mzawadie/pages/customers/urls";
 import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ListCustomers_customers_edges_node } from "../../types/ListCustomers";
 import { CustomerList } from "../CustomerList";
 import { createFilterStructure, CustomerFilterKeys, CustomerListFilterOpts } from "./filters";
 
@@ -24,7 +27,7 @@ export interface CustomerListPageProps
         FilterPageProps<CustomerFilterKeys, CustomerListFilterOpts>,
         SortPage<CustomerListUrlSortField>,
         TabPageProps {
-    customers: ListCustomers_customers_edges_node[];
+    customers: RelayToFlat<ListCustomersQuery["customers"]>;
 }
 
 const CustomerListPage: React.FC<CustomerListPageProps> = ({
@@ -42,8 +45,10 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
     ...customerListProps
 }) => {
     const intl = useIntl();
+	
+	const userPermissions = useUserPermissions();
 
-    const structure = createFilterStructure(intl, filterOpts);
+    const structure = createFilterStructure(intl, filterOpts, userPermissions);
 
     return (
         <Container>
@@ -56,7 +61,8 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
                     />
                 </Button>
             </PageHeader>
-            <Card>
+    
+			<Card>
                 <FilterBar
                     allTabLabel={intl.formatMessage({
                         defaultMessage: "All Customers",

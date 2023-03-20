@@ -13,12 +13,8 @@ import { Money } from "@mzawadie/components/Money";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { TableCellAvatar } from "@mzawadie/components/TableCellAvatar";
 import { renderCollection } from "@mzawadie/core";
-import { OrderErrorFragment } from "@mzawadie/fragments/types/OrderErrorFragment";
+import { OrderDetailsFragment, OrderErrorFragment, OrderLineFragment } from "@mzawadie/graphql";
 import { FormsetChange } from "@mzawadie/hooks/useFormset";
-import {
-    OrderDetails_order,
-    OrderDetails_order_lines,
-} from "@mzawadie/pages/orders/types/OrderDetails";
 import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
 import React, { CSSProperties } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
@@ -95,8 +91,8 @@ interface OrderReturnRefundLinesCardProps {
     fulfilmentId?: string;
     canReplace?: boolean;
     errors: OrderErrorFragment[];
-    lines: OrderDetails_order_lines[];
-    order: OrderDetails_order;
+    lines: OrderLineFragment[];
+    order: OrderDetailsFragment;
     itemsSelections: FormsetReplacementData;
     itemsQuantities: FormsetQuantityData;
     onChangeSelected: FormsetChange<boolean>;

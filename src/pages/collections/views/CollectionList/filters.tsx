@@ -2,23 +2,22 @@
 import { IFilterElement } from "@mzawadie/components/Filter";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
 import { findValueInEnum, maybe } from "@mzawadie/core";
+import { CollectionFilterInput, CollectionPublished } from "@mzawadie/graphql";
 import {
     CollectionFilterKeys,
     CollectionListFilterOpts,
 } from "@mzawadie/pages/collections/components/CollectionListPage";
-import { CollectionFilterInput, CollectionPublished } from "@mzawadie/types/globalTypes";
+import {
+    CollectionListUrlFilters,
+    CollectionListUrlFiltersEnum,
+    CollectionListUrlQueryParams,
+} from "@mzawadie/pages/collections/urls";
 import {
     createFilterTabUtils,
     createFilterUtils,
     getSingleEnumValueQueryParam,
     getSingleValueQueryParam,
 } from "@mzawadie/utils/filters";
-
-import {
-    CollectionListUrlFilters,
-    CollectionListUrlFiltersEnum,
-    CollectionListUrlQueryParams,
-} from "../../urls";
 
 export const COLLECTION_FILTERS_KEY = "collectionFilters";
 

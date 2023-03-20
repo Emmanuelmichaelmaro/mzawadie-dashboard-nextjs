@@ -1,9 +1,12 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { transformFormToAddressInput } from "@mzawadie/core";
-import { AccountErrorFragment } from "@mzawadie/fragments/types/AccountErrorFragment";
+import {
+    AccountErrorFragment,
+    AccountErrorCode,
+    AddressInput,
+    AddressTypeEnum,
+} from "@mzawadie/graphql";
 import { AddressTypeInput } from "@mzawadie/pages/customers/types";
-import { AccountErrorCode, AddressInput, AddressTypeEnum } from "@mzawadie/types/globalTypes";
 import { add, remove } from "@mzawadie/utils/lists";
 import { useState } from "react";
 

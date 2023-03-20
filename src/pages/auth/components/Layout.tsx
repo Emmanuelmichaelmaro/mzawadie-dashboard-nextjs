@@ -1,17 +1,13 @@
 // @ts-nocheck
 import backgroundArt from "@assets/images/login-background.svg";
-import saleorDarkLogo from "@assets/images/logo-dark.svg";
-import saleorLightLogo from "@assets/images/logo-light.svg";
+import mzawadieDarkLogo from "@assets/images/mzawadie-logo-dark.svg";
+import mzawadieLightLogo from "@assets/images/mzawadie-logo-light.svg";
 import { useTheme, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import SVG from "react-inlinesvg";
 
 const useStyles = makeStyles(
     (theme) => ({
-        footer: {
-            position: "absolute",
-            bottom: theme.spacing(4),
-        },
         logo: {
             display: "block",
             height: 40,
@@ -85,14 +81,12 @@ const Layout: React.FC = (props) => {
     return (
         <div className={classes.root}>
             <div className={classes.mainPanel}>
-                {/* <SVG*/}
-                {/*    className={classes.logo}*/}
-                {/*    src={themeType === "dark" ? saleorDarkLogo : saleorLightLogo}*/}
-                {/*/ >*/}
+                <SVG
+                    className={classes.logo}
+                    src={themeType === "dark" ? mzawadieDarkLogo : mzawadieLightLogo}
+                />
 
                 <div className={classes.mainPanelContent}>{children}</div>
-
-                <footer className={classes.footer}>©2023 Adullam Commerce. All rights reserved</footer>
             </div>
 
             <div className={classes.sidebar}>

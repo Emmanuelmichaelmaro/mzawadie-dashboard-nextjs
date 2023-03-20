@@ -2,7 +2,7 @@
 import { Card, CardContent, InputAdornment, TextField } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { Grid } from "@mzawadie/components/Grid";
-import { ProductErrorFragment } from "@mzawadie/fragments/types/ProductErrorFragment";
+import { ProductErrorFragment } from "@mzawadie/graphql";
 import { getFormErrors, getProductErrorMessage } from "@mzawadie/utils/errors";
 import createNonNegativeValueChangeHandler from "@mzawadie/utils/handlers/nonNegativeValueChangeHandler";
 import React from "react";

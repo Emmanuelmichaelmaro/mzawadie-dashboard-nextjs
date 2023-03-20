@@ -1,4 +1,5 @@
-import { GiftCardSettingsErrorFragment } from "@mzawadie/fragments/types/GiftCardSettingsErrorFragment";
+// @ts-nocheck
+import { GiftCardSettingsErrorFragment } from "@mzawadie/graphql";
 import { getCommonFormFieldErrorMessage } from "@mzawadie/utils/errors/common";
 import { defineMessages, IntlShape } from "react-intl";
 

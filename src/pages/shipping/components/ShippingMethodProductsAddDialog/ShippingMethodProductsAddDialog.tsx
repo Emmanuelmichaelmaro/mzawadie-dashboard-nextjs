@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FetchResult } from "@apollo/client";
 import {
     Button,
@@ -16,10 +17,9 @@ import { ConfirmButton, ConfirmButtonTransitionState } from "@mzawadie/component
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { TableCellAvatar } from "@mzawadie/components/TableCellAvatar";
-import { buttonMessages, renderCollection, FetchMoreProps } from "@mzawadie/core";
+import { buttonMessages, renderCollection, FetchMoreProps, RelayToFlat } from "@mzawadie/core";
+import { SearchProductsQuery, ShippingPriceExcludeProductMutation } from "@mzawadie/graphql";
 import useSearchQuery from "@mzawadie/hooks/useSearchQuery";
-import { ShippingPriceExcludeProduct } from "@mzawadie/pages/shipping/types/ShippingPriceExcludeProduct";
-import { SearchProducts_search_edges_node } from "@mzawadie/searches/types/SearchProducts";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -60,17 +60,17 @@ const useStyles = makeStyles(
 export interface ShippingMethodProductsAddDialogProps extends FetchMoreProps {
     confirmButtonState: ConfirmButtonTransitionState;
     open: boolean;
-    products: SearchProducts_search_edges_node[];
+    products: RelayToFlat<SearchProductsQuery["search"]>;
     onClose: () => void;
     onFetch: (query: string) => void;
-    onSubmit: (ids: string[]) => Promise<FetchResult<ShippingPriceExcludeProduct>>;
+    onSubmit: (ids: string[]) => Promise<FetchResult<ShippingPriceExcludeProductMutation>>;
 }
 
 const handleProductAssign = (
-    product: SearchProducts_search_edges_node,
+    product: RelayToFlat<SearchProductsQuery["search"]>[0],
     isSelected: boolean,
-    selectedProducts: SearchProducts_search_edges_node[],
-    setSelectedProducts: (data: SearchProducts_search_edges_node[]) => void
+    selectedProducts: RelayToFlat<SearchProductsQuery["search"]>,
+    setSelectedProducts: (data: RelayToFlat<SearchProductsQuery["search"]>) => void
 ) => {
     if (isSelected) {
         setSelectedProducts(
@@ -99,13 +99,14 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
     const classes = useStyles(props);
     const intl = useIntl();
     const [query, onQueryChange, resetQuery] = useSearchQuery(onFetch);
-    const [selectedProducts, setSelectedProducts] = React.useState<SearchProducts_search_edges_node[]>(
-        []
-    );
+
+    const [selectedProducts, setSelectedProducts] = React.useState<
+        RelayToFlat<SearchProductsQuery["search"]>
+    >([]);
 
     const handleSubmit = () => {
         // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        onSubmit(selectedProducts.map((product) => product.id)).then(() => {
+        onSubmit(selectedProducts.map((product) => product?.id)).then(() => {
             setSelectedProducts([]);
             resetQuery();
         });
@@ -132,6 +133,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
                     description="dialog header"
                 />
             </DialogTitle>
+
             <DialogContent className={classes.overflow}>
                 <TextField
                     name="query"
@@ -152,6 +154,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
                     }}
                 />
             </DialogContent>
+
             <DialogContent className={classes.content} id={scrollableTargetId}>
                 <InfiniteScroll
                     dataLength={products?.length}
@@ -173,6 +176,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
                                     const isSelected = selectedProducts.some(
                                         (selectedProduct) => selectedProduct.id === product?.id
                                     );
+
                                     return (
                                         <React.Fragment
                                             key={product ? product.id : `skeleton-${productIndex}`}
@@ -223,10 +227,12 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
                     </ResponsiveTable>
                 </InfiniteScroll>
             </DialogContent>
+
             <DialogActions>
                 <Button onClick={handleClose}>
                     <FormattedMessage {...buttonMessages.back} />
                 </Button>
+
                 <ConfirmButton
                     transitionState={confirmButtonState}
                     color="primary"
@@ -241,5 +247,7 @@ const ShippingMethodProductsAddDialog: React.FC<ShippingMethodProductsAddDialogP
         </Dialog>
     );
 };
+
 ShippingMethodProductsAddDialog.displayName = "ShippingMethodProductsAddDialog";
+
 export default ShippingMethodProductsAddDialog;

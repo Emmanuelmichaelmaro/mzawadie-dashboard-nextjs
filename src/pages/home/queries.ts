@@ -1,9 +1,6 @@
 import { gql } from "@apollo/client";
-import { makeQuery } from "@mzawadie/hooks";
 
-import { Home, HomeVariables } from "./types/Home";
-
-const home = gql`
+export const home = gql`
     query Home(
         $channel: String!
         $datePeriod: DateRangeInput!
@@ -83,5 +80,3 @@ const home = gql`
         }
     }
 `;
-
-export const useHomePage = makeQuery<Home, HomeVariables>(home);

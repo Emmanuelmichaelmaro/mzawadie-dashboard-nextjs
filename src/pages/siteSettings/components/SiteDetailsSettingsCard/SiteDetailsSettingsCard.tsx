@@ -1,8 +1,9 @@
+// @ts-nocheck
 import { Card, CardContent, TextField } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import FormSpacer from "@mzawadie/components/FormSpacer";
 import { IS_CLOUD_INSTANCE, commonMessages } from "@mzawadie/core";
-import { ShopErrorFragment } from "@mzawadie/fragments/types/ShopErrorFragment";
+import { ShopErrorFragment } from "@mzawadie/graphql";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getShopErrorMessage from "@mzawadie/utils/errors/shop";
 import React from "react";

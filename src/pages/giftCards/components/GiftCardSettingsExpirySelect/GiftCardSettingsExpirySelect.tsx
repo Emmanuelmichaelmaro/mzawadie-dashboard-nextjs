@@ -1,9 +1,8 @@
 import { Typography } from "@material-ui/core";
 import ControlledCheckbox from "@mzawadie/components/ControlledCheckbox";
-import { GiftCardSettingsErrorFragment } from "@mzawadie/fragments/types/GiftCardSettingsErrorFragment";
+import { GiftCardSettingsErrorFragment, TimePeriodTypeEnum } from "@mzawadie/graphql";
 import { FormChange } from "@mzawadie/hooks/useForm";
 import { VerticalSpacer } from "@mzawadie/pages/apps/components/VerticalSpacer";
-import { TimePeriodTypeEnum } from "@mzawadie/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

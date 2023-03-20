@@ -1,21 +1,22 @@
+// @ts-nocheck
 import { Typography } from "@material-ui/core";
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import Container from "@mzawadie/components/Container";
 import { Grid } from "@mzawadie/components/Grid";
 import Hr from "@mzawadie/components/Hr";
 import { sectionNames } from "@mzawadie/core";
+import { AppQuery } from "@mzawadie/graphql";
 import { Backlink, Button } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { App_app } from "../../types/App";
 import { AppFrame } from "../AppFrame";
 import { useStyles } from "./styles";
 import useSettingsBreadcrumbs from "./useSettingsBreadcrumbs";
 
 export interface AppPageProps {
-    data: App_app;
+    data: AppQuery["app"];
     url: string;
     navigateToAbout: () => void;
     onBack: () => void;
@@ -96,7 +97,7 @@ export const AppPage: React.FC<AppPageProps> = ({ data, url, navigateToAbout, on
             <CardSpacer />
 
             <div className={classes.iframeContainer}>
-                {url && <AppFrame src={url} appToken={data.accessToken} onError={onError} />}
+                {url && <AppFrame src={url} appToken={data?.accessToken} onError={onError} />}
             </div>
 
             <CardSpacer />

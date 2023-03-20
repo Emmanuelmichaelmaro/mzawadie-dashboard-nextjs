@@ -1,30 +1,28 @@
 // @ts-nocheck
 import { IFilterElement } from "@mzawadie/components/Filter";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
-import { findValueInEnum, maybe } from "@mzawadie/core";
+import { findValueInEnum, maybe, RelayToFlat } from "@mzawadie/core";
+import {
+    InitialProductFilterAttributesQuery,
+    InitialProductFilterCategoriesQuery,
+    InitialProductFilterCollectionsQuery,
+    InitialProductFilterProductTypesQuery,
+    ProductFilterInput,
+    SearchAttributeValuesQuery,
+    SearchAttributeValuesQueryVariables,
+    SearchCategoriesQuery,
+    SearchCategoriesQueryVariables,
+    SearchCollectionsQuery,
+    SearchCollectionsQueryVariables,
+    SearchProductTypesQuery,
+    SearchProductTypesQueryVariables,
+    StockAvailability,
+} from "@mzawadie/graphql";
 import { UseSearchResult } from "@mzawadie/hooks/makeSearch";
 import {
     ProductFilterKeys,
     ProductListFilterOpts,
 } from "@mzawadie/pages/products/components/ProductListPage";
-import { InitialProductFilterAttributes_attributes_edges_node } from "@mzawadie/pages/products/types/InitialProductFilterAttributes";
-import { InitialProductFilterCategories_categories_edges_node } from "@mzawadie/pages/products/types/InitialProductFilterCategories";
-import { InitialProductFilterCollections_collections_edges_node } from "@mzawadie/pages/products/types/InitialProductFilterCollections";
-import { InitialProductFilterProductTypes_productTypes_edges_node } from "@mzawadie/pages/products/types/InitialProductFilterProductTypes";
-import {
-    SearchAttributeValues,
-    SearchAttributeValuesVariables,
-} from "@mzawadie/searches/types/SearchAttributeValues";
-import { SearchCategories, SearchCategoriesVariables } from "@mzawadie/searches/types/SearchCategories";
-import {
-    SearchCollections,
-    SearchCollectionsVariables,
-} from "@mzawadie/searches/types/SearchCollections";
-import {
-    SearchProductTypes,
-    SearchProductTypesVariables,
-} from "@mzawadie/searches/types/SearchProductTypes";
-import { ProductFilterInput, StockAvailability } from "@mzawadie/types/globalTypes";
 import {
     createFilterTabUtils,
     createFilterUtils,
@@ -53,19 +51,22 @@ export const PRODUCT_FILTERS_KEY = "productFilters";
 
 export function getFilterOpts(
     params: ProductListUrlFilters,
-    attributes: InitialProductFilterAttributes_attributes_edges_node[],
-    focusedAttributeChoices: UseSearchResult<SearchAttributeValues, SearchAttributeValuesVariables>,
+    attributes: RelayToFlat<InitialProductFilterAttributesQuery["attributes"]>,
+    focusedAttributeChoices: UseSearchResult<
+        SearchAttributeValuesQuery,
+        SearchAttributeValuesQueryVariables
+    >,
     categories: {
-        initial: InitialProductFilterCategories_categories_edges_node[];
-        search: UseSearchResult<SearchCategories, SearchCategoriesVariables>;
+        initial: RelayToFlat<InitialProductFilterCategoriesQuery["categories"]>;
+        search: UseSearchResult<SearchCategoriesQuery, SearchCategoriesQueryVariables>;
     },
     collections: {
-        initial: InitialProductFilterCollections_collections_edges_node[];
-        search: UseSearchResult<SearchCollections, SearchCollectionsVariables>;
+        initial: RelayToFlat<InitialProductFilterCollectionsQuery["collections"]>;
+        search: UseSearchResult<SearchCollectionsQuery, SearchCollectionsQueryVariables>;
     },
     productTypes: {
-        initial: InitialProductFilterProductTypes_productTypes_edges_node[];
-        search: UseSearchResult<SearchProductTypes, SearchProductTypesVariables>;
+        initial: RelayToFlat<InitialProductFilterProductTypesQuery["productTypes"]>;
+        search: UseSearchResult<SearchProductTypesQuery, SearchProductTypesQueryVariables>;
     },
     productKind: SingleAutocompleteChoiceType[],
     channels: SingleAutocompleteChoiceType[]

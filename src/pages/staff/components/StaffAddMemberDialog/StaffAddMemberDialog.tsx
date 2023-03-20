@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
     Button,
     Dialog,
@@ -9,10 +10,15 @@ import {
 import { ConfirmButton, ConfirmButtonTransitionState } from "@mzawadie/components/ConfirmButton";
 import { Form } from "@mzawadie/components/Form";
 import FormSpacer from "@mzawadie/components/FormSpacer";
-import { buttonMessages, commonMessages, FetchMoreProps, SearchPageProps } from "@mzawadie/core";
-import { StaffErrorFragment } from "@mzawadie/fragments/types/StaffErrorFragment";
+import {
+    buttonMessages,
+    commonMessages,
+    FetchMoreProps,
+    RelayToFlat,
+    SearchPageProps,
+} from "@mzawadie/core";
+import { SearchPermissionGroupsQuery, StaffErrorFragment } from "@mzawadie/graphql";
 import { useModalDialogErrors } from "@mzawadie/hooks/useModalDialogErrors";
-import { SearchPermissionGroups_search_edges_node } from "@mzawadie/searches/types/SearchPermissionGroups";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getStaffErrorMessage from "@mzawadie/utils/errors/staff";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -56,7 +62,7 @@ const useStyles = makeStyles(
 );
 
 interface StaffAddMemberDialogProps extends SearchPageProps {
-    availablePermissionGroups: SearchPermissionGroups_search_edges_node[];
+    availablePermissionGroups: RelayToFlat<SearchPermissionGroupsQuery["search"]>;
     confirmButtonState: ConfirmButtonTransitionState;
     disabled: boolean;
     errors: StaffErrorFragment[];

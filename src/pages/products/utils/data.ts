@@ -3,9 +3,16 @@ import { AttributeInput, VariantAttributeScope } from "@mzawadie/components/Attr
 import { MetadataFormData } from "@mzawadie/components/Metadata/types";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
 import { maybe } from "@mzawadie/core";
-import { ProductVariant } from "@mzawadie/fragments/types/ProductVariant";
-import { SelectedVariantAttributeFragment } from "@mzawadie/fragments/types/SelectedVariantAttributeFragment";
-import { VariantAttributeFragment } from "@mzawadie/fragments/types/VariantAttributeFragment";
+import {
+    ProductDetailsVariantFragment,
+    ProductFragment,
+    ProductTypeQuery,
+    ProductVariantCreateDataQuery,
+    ProductVariantFragment,
+    SelectedVariantAttributeFragment,
+    StockInput,
+    VariantAttributeFragment,
+} from "@mzawadie/graphql";
 import { FormsetAtomicData } from "@mzawadie/hooks/useFormset";
 import {
     getDefaultAttributeValues,
@@ -13,18 +20,10 @@ import {
     mergeChoicesWithValues,
 } from "@mzawadie/pages/attributes/utils/data";
 import { ChannelData } from "@mzawadie/pages/channels/utils";
-import {
-    ProductDetails_product,
-    ProductDetails_product_collections,
-    ProductDetails_product_variants,
-} from "@mzawadie/pages/products/types/ProductDetails";
-import { StockInput } from "@mzawadie/types/globalTypes";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@mzawadie/utils/maps";
 import moment from "moment";
 
 import { ProductStockInput } from "../components/ProductStocks";
-import { ProductType_productType_productAttributes } from "../types/ProductType";
-import { ProductVariantCreateData_product } from "../types/ProductVariantCreateData";
 import { ChannelsWithVariantsData } from "../views/ProductUpdate/types";
 
 export interface Collection {
@@ -41,10 +40,10 @@ export interface ProductType {
     hasVariants: boolean;
     id: string;
     name: string;
-    productAttributes: ProductType_productType_productAttributes[];
+    productAttributes: ProductTypeQuery["productType"]["productAttributes"];
 }
 
-export function getAttributeInputFromProduct(product: ProductDetails_product): AttributeInput[] {
+export function getAttributeInputFromProduct(product: ProductFragment): AttributeInput[] {
     return (
         product?.attributes?.map((attribute) => ({
             data: {
@@ -116,7 +115,7 @@ export function getAttributeInputFromSelectedAttributes(
     }));
 }
 
-export function getAttributeInputFromVariant(variant: ProductVariant): AttributeInput[] {
+export function getAttributeInputFromVariant(variant: ProductVariantFragment): AttributeInput[] {
     const selectionAttributeInput = getAttributeInputFromSelectedAttributes(
         variant?.selectionAttributes,
         VariantAttributeScope.VARIANT_SELECTION
@@ -130,7 +129,7 @@ export function getAttributeInputFromVariant(variant: ProductVariant): Attribute
 }
 
 export function getVariantAttributeInputFromProduct(
-    product: ProductVariantCreateData_product
+    product: ProductVariantCreateDataQuery["product"]
 ): AttributeInput[] {
     const selectionAttributeInput = getAttributeInputFromAttributes(
         product?.productType?.selectionVariantAttributes,
@@ -145,7 +144,7 @@ export function getVariantAttributeInputFromProduct(
     return selectionAttributeInput?.concat(nonSelectionAttributeInput ?? []) ?? [];
 }
 
-export function getStockInputFromVariant(variant: ProductVariant): ProductStockInput[] {
+export function getStockInputFromVariant(variant: ProductVariantFragment): ProductStockInput[] {
     return (
         variant?.stocks.map((stock) => ({
             data: {
@@ -158,7 +157,7 @@ export function getStockInputFromVariant(variant: ProductVariant): ProductStockI
     );
 }
 
-export function getStockInputFromProduct(product: ProductDetails_product): ProductStockInput[] {
+export function getStockInputFromProduct(product: ProductFragment): ProductStockInput[] {
     return product?.variants[0]?.stocks.map((stock) => ({
         data: {
             quantityAllocated: stock?.quantityAllocated,
@@ -169,9 +168,7 @@ export function getStockInputFromProduct(product: ProductDetails_product): Produ
     }));
 }
 
-export function getCollectionInput(
-    productCollections: ProductDetails_product_collections[]
-): Collection[] {
+export function getCollectionInput(productCollections: ProductFragment["collections"]): Collection[] {
     return maybe(
         () =>
             productCollections.map((collection) => ({
@@ -219,8 +216,8 @@ export interface ProductUpdatePageFormData extends MetadataFormData {
 }
 
 export function getProductUpdatePageFormData(
-    product: ProductDetails_product,
-    variants: ProductDetails_product_variants[],
+    product: ProductFragment,
+    variants: ProductDetailsVariantFragment[],
     currentChannels: ChannelData[],
     channelsData: ChannelData[],
     channelsWithVariants: ChannelsWithVariantsData

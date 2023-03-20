@@ -2,11 +2,11 @@
 // @ts-nocheck
 import { IFilterElement } from "@mzawadie/components/Filter";
 import { maybe } from "@mzawadie/core";
+import { CustomerFilterInput } from "@mzawadie/graphql";
 import {
     CustomerFilterKeys,
     CustomerListFilterOpts,
 } from "@mzawadie/pages/customers/components/CustomerListPage";
-import { CustomerFilterInput } from "@mzawadie/types/globalTypes";
 import {
     createFilterTabUtils,
     createFilterUtils,

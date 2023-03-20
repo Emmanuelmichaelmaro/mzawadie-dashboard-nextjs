@@ -5,10 +5,10 @@ import {
     MultiAutocompleteSelectField,
     MultiAutocompleteChoiceType,
 } from "@mzawadie/components/MultiAutocompleteSelectField";
+import { WebhookEventTypeAsyncEnum, WebhookEventTypeSyncEnum } from "@mzawadie/graphql";
 import { ChangeEvent } from "@mzawadie/hooks/useForm";
 import { VerticalSpacer } from "@mzawadie/pages/apps/components/VerticalSpacer";
 import { mapAsyncEventsToChoices, mapSyncEventsToChoices } from "@mzawadie/pages/webhooks/utils";
-import { WebhookEventTypeAsyncEnum, WebhookEventTypeSyncEnum } from "@mzawadie/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

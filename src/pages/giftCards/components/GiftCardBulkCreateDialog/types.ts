@@ -1,6 +1,5 @@
-import { GiftCardError } from "@mzawadie/fragments/types/GiftCardError";
+import { GiftCardErrorFragment, TimePeriodTypeEnum } from "@mzawadie/graphql";
 import { FormChange } from "@mzawadie/hooks/useForm";
-import { TimePeriodTypeEnum } from "@mzawadie/types/globalTypes";
 
 import { GiftCardExpiryType } from "../GiftCardCreateDialog/types";
 
@@ -26,7 +25,7 @@ export interface GiftCardBulkCreateFormDataInterface extends GiftCardCreateCommo
     cardsAmount: number;
 }
 
-export type GiftCardBulkCreateFormError = Pick<GiftCardError, "code" | "field">;
+export type GiftCardBulkCreateFormError = Pick<GiftCardErrorFragment, "code" | "field">;
 
 export type GiftCardBulkCreateFormErrors = Partial<
     Record<GiftCardErrorKey, GiftCardBulkCreateFormError>

@@ -1,7 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import { SearchCatalog } from "@mzawadie/components/Navigator/queries/types/SearchCatalog";
 import { QuickSearchAction, QuickSearchActionInput } from "@mzawadie/components/Navigator/types";
+import { SearchCatalogQuery } from "@mzawadie/graphql";
 import { UseNavigatorResult } from "@mzawadie/hooks/useNavigator";
 import { categoryUrl } from "@mzawadie/pages/categories/urls";
 import { collectionUrl } from "@mzawadie/pages/collections/urls";
@@ -19,7 +18,7 @@ export function searchInCatalog(
     search: string,
     intl: IntlShape,
     navigate: UseNavigatorResult,
-    catalog: SearchCatalog | undefined
+    catalog: SearchCatalogQuery
 ): QuickSearchAction[] {
     const categories: QuickSearchActionInput[] = (mapEdgesToItems(catalog?.categories) || [])
         .map<QuickSearchActionInput>((category) => ({
@@ -82,7 +81,7 @@ function getCatalogModeActions(
     query: string,
     intl: IntlShape,
     navigate: UseNavigatorResult,
-    catalog: SearchCatalog | undefined
+    catalog: SearchCatalogQuery
 ): QuickSearchAction[] {
     return searchInCatalog(query, intl, navigate, catalog);
 }

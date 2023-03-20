@@ -2,30 +2,32 @@
 import { Dialog, DialogTitle } from "@material-ui/core";
 import { IMessage } from "@mzawadie/components/Messages";
 import { DialogProps } from "@mzawadie/core";
+import {
+    GiftCardBulkCreateInput,
+    GiftCardBulkCreateMutation,
+    useChannelCurrenciesQuery,
+    useGiftCardBulkCreateMutation,
+} from "@mzawadie/graphql";
 import useCurrentDate from "@mzawadie/hooks/useCurrentDate";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
-import { GiftCardBulkCreateInput } from "@mzawadie/types/globalTypes";
+import { GIFT_CARD_LIST_QUERY } from "@mzawadie/pages/giftCards/components/GiftCardsList/queries";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import ContentWithProgress from "../GiftCardCreateDialog/ContentWithProgress";
 import GiftCardBulkCreateSuccessDialog from "../GiftCardCreateDialog/GiftCardBulkCreateSuccessDialog";
-import { useChannelCurrencies } from "../GiftCardCreateDialog/queries";
 import {
     getGiftCardCreateOnCompletedMessage,
     getGiftCardExpiryInputData,
 } from "../GiftCardCreateDialog/utils";
-import { GIFT_CARD_LIST_QUERY } from "../GiftCardsList/types";
 import GiftCardBulkCreateDialogForm from "./GiftCardBulkCreateDialogForm";
 import { giftCardBulkCreateDialogMessages as messages } from "./messages";
-import { useGiftCardBulkCreateMutation } from "./mutations";
 import {
     giftCardBulkCreateErrorKeys,
     GiftCardBulkCreateFormData,
     GiftCardBulkCreateFormErrors,
 } from "./types";
-import { GiftCardBulkCreate } from "./types/GiftCardBulkCreate";
 import { validateForm } from "./utils";
 
 const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
@@ -37,9 +39,9 @@ const GiftCardBulkCreateDialog: React.FC<DialogProps> = ({ onClose, open }) => {
 
     const onIssueSuccessDialogClose = () => setOpenIssueSuccessDialog(false);
 
-    const { loading: loadingChannelCurrencies } = useChannelCurrencies({});
+    const { loading: loadingChannelCurrencies } = useChannelCurrenciesQuery({});
 
-    const onCompleted = (data: GiftCardBulkCreate) => {
+    const onCompleted = (data: GiftCardBulkCreateMutation) => {
         const errors = data?.giftCardBulkCreate?.errors;
         const cardsAmount = data?.giftCardBulkCreate?.giftCards?.length || 0;
 

@@ -13,15 +13,13 @@ import FormSpacer from "@mzawadie/components/FormSpacer";
 import { Money } from "@mzawadie/components/Money";
 import { SingleSelectField } from "@mzawadie/components/SingleSelectField";
 import { buttonMessages } from "@mzawadie/core";
-import { OrderErrorFragment } from "@mzawadie/fragments/types/OrderErrorFragment";
+import { OrderDetailsFragment, OrderErrorFragment } from "@mzawadie/graphql";
 import { useModalDialogErrors } from "@mzawadie/hooks/useModalDialogErrors";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getOrderErrorMessage from "@mzawadie/utils/errors/order";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { OrderDetails_order_shippingMethods } from "../../types/OrderDetails";
 
 export interface FormData {
     shippingMethod: string;
@@ -63,7 +61,7 @@ export interface OrderShippingMethodEditDialogProps {
     errors: OrderErrorFragment[];
     open: boolean;
     shippingMethod: string;
-    shippingMethods?: OrderDetails_order_shippingMethods[];
+    shippingMethods?: OrderDetailsFragment["shippingMethods"];
     onClose();
     onSubmit?(data: FormData);
 }

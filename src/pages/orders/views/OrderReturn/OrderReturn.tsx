@@ -1,13 +1,15 @@
 // @ts-nocheck
 import { commonMessages, extractMutationErrors } from "@mzawadie/core";
+import {
+    OrderErrorCode,
+    useFulfillmentReturnProductsMutation,
+    useOrderDetailsQuery,
+} from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { OrderReturnPage } from "@mzawadie/pages/orders/components/OrderReturnPage";
 import { OrderReturnFormData } from "@mzawadie/pages/orders/components/OrderReturnPage/form";
-import { useOrderReturnCreateMutation } from "@mzawadie/pages/orders/mutations";
-import { useOrderQuery } from "@mzawadie/pages/orders/queries";
 import { orderUrl } from "@mzawadie/pages/orders/urls";
-import { OrderErrorCode } from "@mzawadie/types/globalTypes";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -41,14 +43,14 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
     const notify = useNotifier();
     const intl = useIntl();
 
-    const { data, loading } = useOrderQuery({
+    const { data, loading } = useOrderDetailsQuery({
         displayLoader: true,
         variables: {
             id: orderId,
         },
     });
 
-    const [returnCreate, returnCreateOpts] = useOrderReturnCreateMutation({
+    const [returnCreate, returnCreateOpts] = useFulfillmentReturnProductsMutation({
         onCompleted: ({ orderFulfillmentReturnProducts: { errors, replaceOrder } }) => {
             if (!errors.length) {
                 notify({

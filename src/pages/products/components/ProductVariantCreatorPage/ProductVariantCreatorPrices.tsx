@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { Card, CardContent, FormControlLabel, Radio, RadioGroup, Typography } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
@@ -7,8 +6,8 @@ import { Grid } from "@mzawadie/components/Grid";
 import Hr from "@mzawadie/components/Hr";
 import { PriceField } from "@mzawadie/components/PriceField";
 import { SingleSelectField } from "@mzawadie/components/SingleSelectField";
+import { ProductVariantAttributesFragment } from "@mzawadie/graphql";
 import { ChannelPriceData } from "@mzawadie/pages/channels/utils";
-import { ProductDetails_product_productType_variantAttributes } from "@mzawadie/pages/products/types/ProductDetails";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -49,7 +48,7 @@ const useStyles = makeStyles(
 );
 
 export interface ProductVariantCreatorPricesProps {
-    attributes: ProductDetails_product_productType_variantAttributes[];
+    attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"];
     channelListings: ChannelPriceData[];
     data: ProductVariantCreateFormData;
     onApplyToAllChange: (applyToAll: VariantCreatorPricesAndSkuMode) => void;
@@ -68,13 +67,16 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
         onAttributeSelect,
         onAttributeValueChange,
     } = props;
+
     const classes = useStyles(props);
+
     const intl = useIntl();
 
     const attributeChoices = attributes.map((attribute) => ({
         label: attribute.name,
         value: attribute.id,
     }));
+
     const priceAttributeValues = getPriceAttributeValues(data, attributes);
 
     return (
@@ -86,6 +88,7 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
                     description: "variant price, header",
                 })}
             />
+
             <CardContent>
                 <RadioGroup className={classes.container} value={data.price.mode}>
                     <FormControlLabel
@@ -97,15 +100,18 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
                         })}
                         onChange={() => onApplyToAllChange("all")}
                     />
+
                     {data.price.mode === "all" && (
                         <>
                             <FormSpacer />
+
                             <div className={classes.inputsContainer}>
                                 {channelListings?.map((listing) => (
                                     <div key={listing.id}>
                                         <Typography variant="caption" className={classes.channelName}>
                                             {listing.name}
                                         </Typography>
+
                                         <PriceField
                                             name={`${listing.id}-variant-channel-price`}
                                             value={
@@ -128,7 +134,9 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
                             </div>
                         </>
                     )}
+
                     <FormSpacer />
+
                     <FormControlLabel
                         value="attribute"
                         control={<Radio color="primary" />}
@@ -138,9 +146,11 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
                         })}
                         onChange={() => onApplyToAllChange("attribute")}
                     />
+
                     {data.price.mode === "attribute" && (
                         <>
                             <FormSpacer />
+
                             <Grid variant="uniform">
                                 <div className={classes.label}>
                                     <Typography>
@@ -151,6 +161,7 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
                                         />
                                     </Typography>
                                 </div>
+
                                 <div>
                                     <SingleSelectField
                                         choices={attributeChoices}
@@ -164,19 +175,24 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
                                     />
                                 </div>
                             </Grid>
+
                             {priceAttributeValues &&
                                 priceAttributeValues.map((attributeValue) => {
                                     const attributesChannels = data.price.values.find(
                                         (value) => value.slug === attributeValue.slug
                                     ).value;
+
                                     return (
                                         <React.Fragment key={attributeValue.id}>
                                             <Hr className={classes.hrAttribute} />
+
                                             <FormSpacer />
+
                                             <div className={classes.attrInputsContainer}>
                                                 <div className={classes.label}>
                                                     <Typography>{attributeValue.name}</Typography>
                                                 </div>
+
                                                 {channelListings?.map((listing) => (
                                                     <div key={listing.id}>
                                                         <Typography
@@ -185,6 +201,7 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
                                                         >
                                                             {listing.name}
                                                         </Typography>
+
                                                         <PriceField
                                                             label={intl.formatMessage({
                                                                 defaultMessage: "Price",
@@ -215,7 +232,9 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
                                 })}
                         </>
                     )}
+
                     <FormSpacer />
+
                     <FormControlLabel
                         value="skip"
                         control={<Radio color="primary" />}
@@ -232,4 +251,5 @@ const ProductVariantCreatorPrices: React.FC<ProductVariantCreatorPricesProps> = 
 };
 
 ProductVariantCreatorPrices.displayName = "ProductVariantCreatorPrices";
+
 export default ProductVariantCreatorPrices;

@@ -7,7 +7,7 @@ import {
     SaveFilterTabDialog,
     SaveFilterTabDialogFormData,
 } from "@mzawadie/components/SaveFilterTabDialog";
-import { useShopLimitsQuery } from "@mzawadie/components/Shop/query";
+import { useShopLimitsQuery } from "@mzawadie/components/Shop/queries";
 import { Task } from "@mzawadie/containers/BackgroundTasks/types";
 import {
     DEFAULT_INITIAL_PAGINATION_DATA,
@@ -18,6 +18,20 @@ import {
     maybe,
     ListViews,
 } from "@mzawadie/core";
+import {
+    ProductListQueryVariables,
+    useAvailableInGridAttributesQuery,
+    useGridAttributesQuery,
+    useInitialProductFilterAttributesQuery,
+    useInitialProductFilterCategoriesQuery,
+    useInitialProductFilterCollectionsQuery,
+    useInitialProductFilterProductTypesQuery,
+    useProductBulkDeleteMutation,
+    useProductCountQuery,
+    useProductExportMutation,
+    useProductListQuery,
+    useWarehouseListQuery,
+} from "@mzawadie/graphql";
 import useBackgroundTask from "@mzawadie/hooks/useBackgroundTask";
 import useBulkActions from "@mzawadie/hooks/useBulkActions";
 import useListSettings from "@mzawadie/hooks/useListSettings";
@@ -26,17 +40,6 @@ import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { usePaginationReset } from "@mzawadie/hooks/usePaginationReset";
 import usePaginator, { createPaginationState } from "@mzawadie/hooks/usePaginator";
 import {
-    useAvailableInGridAttributesQuery,
-    useGridAttributesQuery,
-    useInitialProductFilterAttributesQuery,
-    useInitialProductFilterCategoriesQuery,
-    useInitialProductFilterCollectionsQuery,
-    useInitialProductFilterProductTypesQuery,
-    useProductCountQuery,
-    useProductListQuery,
-} from "@mzawadie/pages/products/queries";
-import { ProductListVariables } from "@mzawadie/pages/products/types/ProductList";
-import {
     productAddUrl,
     productListUrl,
     ProductListUrlDialog,
@@ -44,7 +47,6 @@ import {
     ProductListUrlSortField,
     productUrl,
 } from "@mzawadie/pages/products/urls";
-import { useWarehouseList } from "@mzawadie/pages/warehouses/queries";
 import useAttributeSearch from "@mzawadie/searches/useAttributeSearch";
 import useAttributeValueSearch from "@mzawadie/searches/useAttributeValueSearch";
 import useCategorySearch from "@mzawadie/searches/useCategorySearch";
@@ -64,7 +66,6 @@ import {
     getAttributeIdFromColumnValue,
     isAttributeColumnValue,
 } from "../../components/ProductListPage/utils";
-import { useProductBulkDeleteMutation, useProductExport } from "../../mutations";
 import {
     deleteFilterTab,
     getActiveFilters,
@@ -163,7 +164,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         skip: !focusedAttribute,
     });
 
-    const warehouses = useWarehouseList({
+    const warehouses = useWarehouseListQuery({
         variables: {
             first: 100,
         },
@@ -195,7 +196,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         skip: params.action !== "export",
     });
 
-    const [exportProducts, exportProductsOpts] = useProductExport({
+    const [exportProducts, exportProductsOpts] = useProductExportMutation({
         onCompleted: (data) => {
             if (data.exportProducts.errors.length === 0) {
                 notify({
@@ -290,7 +291,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     const filter = getFilterVariables(params, !!selectedChannel);
     const sort = getSortQueryVariables(params, !!selectedChannel);
 
-    const queryVariables = React.useMemo<ProductListVariables>(
+    const queryVariables = React.useMemo<ProductListQueryVariables>(
         () => ({
             ...paginationState,
             filter,

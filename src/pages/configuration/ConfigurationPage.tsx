@@ -5,8 +5,7 @@ import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { Container, PageHeader, VersionInfo } from "@mzawadie/components";
 import { sectionNames } from "@mzawadie/core";
-import { User } from "@mzawadie/fragments/types/User";
-import { PermissionEnum } from "@mzawadie/types/globalTypes";
+import { PermissionEnum, UserFragment } from "@mzawadie/graphql";
 import { NavigationCard, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -80,7 +79,7 @@ const useStyles = makeStyles(
 
 export interface ConfigurationPageProps {
     menu: MenuSection[];
-    user: User;
+    user: UserFragment;
     versionInfo: VersionInfoInterface;
 }
 

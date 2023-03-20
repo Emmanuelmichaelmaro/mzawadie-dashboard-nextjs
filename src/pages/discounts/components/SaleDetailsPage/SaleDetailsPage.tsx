@@ -16,19 +16,22 @@ import {
     ListProps,
     TabListActions,
 } from "@mzawadie/core";
-import { DiscountErrorFragment } from "@mzawadie/fragments/types/DiscountErrorFragment";
+import {
+    DiscountErrorFragment,
+    SaleDetailsFragment,
+    PermissionEnum,
+    SaleType as SaleTypeEnum,
+} from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import { ChannelSaleData, validateSalePrice } from "@mzawadie/pages/channels/utils";
 import { createSaleChannelsChangeHandler } from "@mzawadie/pages/discounts/handlers";
 import { SALE_UPDATE_FORM_ID } from "@mzawadie/pages/discounts/views/SaleDetails/types";
-import { PermissionEnum, SaleType as SaleTypeEnum } from "@mzawadie/types/globalTypes";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@mzawadie/utils/maps";
 import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChangeTrigger";
 import { ConfirmButtonTransitionState, Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { SaleDetails_sale } from "../../types/SaleDetails";
 import { DiscountCategories } from "../DiscountCategories";
 import { DiscountCollections } from "../DiscountCollections";
 import { DiscountDates } from "../DiscountDates";
@@ -73,7 +76,7 @@ export interface SaleDetailsPageProps
         ChannelProps {
     activeTab: SaleDetailsPageTab;
     errors: DiscountErrorFragment[];
-    sale: SaleDetails_sale;
+    sale: SaleDetailsFragment;
     allChannelsCount: number;
     channelListings: ChannelSaleFormData[];
     hasChannelChanged: boolean;

@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { NotFoundPage } from "@mzawadie/components/NotFoundPage";
+import { useAppQuery } from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { appMessages } from "@mzawadie/pages/apps/messages";
@@ -7,7 +8,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { AppPage } from "../../components/AppPage";
-import { useAppDetails } from "../../queries";
 import { appDetailsUrl, appsListPath } from "../../urls";
 
 interface AppSettingsProps {
@@ -15,7 +15,7 @@ interface AppSettingsProps {
 }
 
 export const AppSettings: React.FC<AppSettingsProps> = ({ id }) => {
-    const { data } = useAppDetails({
+    const { data } = useAppQuery({
         displayLoader: true,
         variables: { id },
     });

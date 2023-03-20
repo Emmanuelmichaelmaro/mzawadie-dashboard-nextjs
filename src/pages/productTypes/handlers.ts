@@ -1,5 +1,5 @@
+import { ProductTypeKindEnum } from "@mzawadie/graphql";
 import { FormChange } from "@mzawadie/hooks/useForm";
-import { ProductTypeKindEnum } from "@mzawadie/types/globalTypes";
 
 export const makeProductTypeKindChangeHandler =
     (onChange: FormChange, onKindChange: (kind: ProductTypeKindEnum) => void) =>

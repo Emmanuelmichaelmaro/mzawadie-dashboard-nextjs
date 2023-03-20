@@ -10,6 +10,7 @@ import {
     Typography,
 } from "@material-ui/core";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
+import { useProductVariantListQuery } from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import {
     languageEntityUrl,
@@ -20,8 +21,6 @@ import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { useProductVariantList } from "../../queries";
 
 export interface ProductContextSwitcherProps {
     productId: string;
@@ -76,11 +75,13 @@ const ProductContextSwitcher: React.FC<ProductContextSwitcherProps> = ({
     const classes = useStyles();
     const navigate = useNavigator();
     const intl = useIntl();
-    const { data } = useProductVariantList({
+
+    const { data } = useProductVariantListQuery({
         variables: { id: productId },
     });
 
     const [isExpanded, setExpandedState] = React.useState(false);
+
     const anchor = React.useRef();
 
     const items = [
@@ -102,6 +103,7 @@ const ProductContextSwitcher: React.FC<ProductContextSwitcherProps> = ({
             <Typography className={classes.label}>
                 <FormattedMessage defaultMessage="Translating" id="tUlsq+" />:
             </Typography>
+
             <div ref={anchor}>
                 <Card className={classes.menuContainer} onClick={() => setExpandedState(!isExpanded)}>
                     <Typography>
@@ -113,6 +115,7 @@ const ProductContextSwitcher: React.FC<ProductContextSwitcherProps> = ({
                         })}
                     />
                 </Card>
+
                 <Popper
                     className={classes.popover}
                     open={isExpanded}

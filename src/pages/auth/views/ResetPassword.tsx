@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { APP_MOUNT_URI, commonMessages, extractMutationErrors } from "@mzawadie/core";
-import { useRequestPasswordResetMutation } from "@mzawadie/graphql/hooks";
+import { useRequestPasswordResetMutation } from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { getAppMountUriForRedirect } from "@mzawadie/utils/urls";
 import React from "react";
@@ -17,9 +17,9 @@ const ResetPasswordView: React.FC = () => {
 
     const [requestPasswordReset, requestPasswordResetOpts] = useRequestPasswordResetMutation({
         onCompleted: (data) => {
-            if (data.requestPasswordReset.errors.length === 0) {
+            if (data.requestPasswordReset?.errors.length === 0) {
                 navigate(passwordResetSuccessUrl);
-            } else if (data.requestPasswordReset.errors.find((err) => err.field === "email")) {
+            } else if (data.requestPasswordReset?.errors.find((err) => err.field === "email")) {
                 setError(
                     intl.formatMessage({
                         id: "C0JLNW",

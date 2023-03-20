@@ -1,8 +1,10 @@
 import { commonMessages } from "@mzawadie/core";
-import { BulkProductErrorFragment } from "@mzawadie/fragments/types/BulkProductErrorFragment";
-import { CollectionErrorFragment } from "@mzawadie/fragments/types/CollectionErrorFragment";
-import { ProductErrorFragment } from "@mzawadie/fragments/types/ProductErrorFragment";
-import { ProductErrorCode } from "@mzawadie/types/globalTypes";
+import {
+    BulkProductErrorFragment,
+    CollectionErrorFragment,
+    ProductErrorFragment,
+    ProductErrorCode,
+} from "@mzawadie/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 import commonErrorMessages from "./common";

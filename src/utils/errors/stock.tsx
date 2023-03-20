@@ -1,7 +1,5 @@
 import { commonMessages } from "@mzawadie/core";
-import { BulkStockErrorFragment } from "@mzawadie/fragments/types/BulkStockErrorFragment";
-import { StockErrorFragment } from "@mzawadie/fragments/types/StockErrorFragment";
-import { StockErrorCode } from "@mzawadie/types/globalTypes";
+import { BulkStockErrorFragment, StockErrorFragment, StockErrorCode } from "@mzawadie/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 import commonErrorMessages from "./common";

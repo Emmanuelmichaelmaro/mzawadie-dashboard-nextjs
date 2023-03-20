@@ -1,8 +1,8 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
+import { RelayToFlat } from "@mzawadie/core";
+import { SearchCustomersQuery } from "@mzawadie/graphql";
 import { UseNavigatorResult } from "@mzawadie/hooks/useNavigator";
 import { customerUrl } from "@mzawadie/pages/customers/urls";
-import { SearchCustomers_search_edges_node } from "@mzawadie/searches/types/SearchCustomers";
 import { IntlShape } from "react-intl";
 
 import { QuickSearchAction } from "../types";
@@ -11,7 +11,7 @@ import messages from "./messages";
 export function searchInCustomers(
     intl: IntlShape,
     navigate: UseNavigatorResult,
-    customers: [] | undefined
+    customers: RelayToFlat<SearchCustomersQuery["search"]>
 ): QuickSearchAction[] {
     return customers.map((customer) => ({
         caption: customer.email,
@@ -34,7 +34,7 @@ export function searchInCustomers(
 function getCustomersModeActions(
     intl: IntlShape,
     navigate: UseNavigatorResult,
-    customers: SearchCustomers_search_edges_node[] | undefined
+    customers: RelayToFlat<SearchCustomersQuery["search"]>
 ): QuickSearchAction[] {
     return searchInCustomers(intl, navigate, customers);
 }

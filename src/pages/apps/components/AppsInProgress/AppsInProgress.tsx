@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
     Card,
     CircularProgress as Progress,
@@ -10,17 +11,16 @@ import {
 import ErrorIcon from "@material-ui/icons/Error";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { renderCollection, stopPropagation } from "@mzawadie/core";
-import { JobStatusEnum } from "@mzawadie/types/globalTypes";
+import { AppsInstallationsQuery, JobStatusEnum } from "@mzawadie/graphql";
 import { DeleteIcon, ResponsiveTable, Button, IconButton } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "../../styles";
-import { AppsInstallations_appsInstallations } from "../../types/AppsInstallations";
 
 export interface AppsInProgressProps {
-    appsList: AppsInstallations_appsInstallations[];
+    appsList: AppsInstallationsQuery["appsInstallations"];
     disabled: boolean;
     onAppInstallRetry: (id: string) => void;
     onRemove: (id: string) => void;

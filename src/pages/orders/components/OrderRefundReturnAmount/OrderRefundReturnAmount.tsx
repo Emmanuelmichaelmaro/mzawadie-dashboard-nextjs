@@ -4,9 +4,7 @@ import CardSpacer from "@mzawadie/components/CardSpacer";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import ControlledCheckbox from "@mzawadie/components/ControlledCheckbox";
 import Hr from "@mzawadie/components/Hr";
-import { OrderErrorFragment } from "@mzawadie/fragments/types/OrderErrorFragment";
-import { OrderDetails_order } from "@mzawadie/pages/orders/types/OrderDetails";
-import { OrderRefundData_order } from "@mzawadie/pages/orders/types/OrderRefundData";
+import { OrderDetailsFragment, OrderErrorFragment, OrderRefundDataQuery } from "@mzawadie/graphql";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
@@ -77,7 +75,7 @@ const messages = defineMessages({
 
 interface OrderRefundAmountProps {
     data: OrderRefundFormData | OrderReturnFormData;
-    order: OrderRefundData_order | OrderDetails_order;
+    order: OrderRefundDataQuery["order"] | OrderDetailsFragment;
     disabled: boolean;
     disableSubmitButton?: boolean;
     isReturn?: boolean;

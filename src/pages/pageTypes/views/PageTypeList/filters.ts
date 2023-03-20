@@ -1,11 +1,10 @@
-import { PageTypeFilterInput } from "@mzawadie/types/globalTypes";
-import { createFilterTabUtils, createFilterUtils } from "@mzawadie/utils/filters";
-
+import { PageTypeFilterInput } from "@mzawadie/graphql";
 import {
     PageTypeListUrlFilters,
     PageTypeListUrlFiltersEnum,
     PageTypeListUrlQueryParams,
-} from "../../urls";
+} from "@mzawadie/pages/pageTypes/urls";
+import { createFilterTabUtils, createFilterUtils } from "@mzawadie/utils/filters";
 
 export const PAGE_TYPE_FILTERS_KEY = "pageTypeFilters";
 

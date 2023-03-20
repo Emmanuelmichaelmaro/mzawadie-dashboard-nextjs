@@ -5,12 +5,11 @@ import { DateTime } from "@mzawadie/components/Date";
 import { Money } from "@mzawadie/components/Money";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
-import { maybe, renderCollection, transformPaymentStatus } from "@mzawadie/core";
+import { maybe, RelayToFlat, renderCollection, transformPaymentStatus } from "@mzawadie/core";
+import { CustomerDetailsQuery } from "@mzawadie/graphql";
 import { Button, makeStyles, Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { CustomerDetails_user_orders_edges_node } from "../../types/CustomerDetails";
 
 const useStyles = makeStyles(
     {
@@ -25,7 +24,7 @@ const useStyles = makeStyles(
 );
 
 export interface CustomerOrdersProps {
-    orders: CustomerDetails_user_orders_edges_node[];
+    orders: RelayToFlat<CustomerDetailsQuery["user"]["orders"]>;
     onViewAllOrdersClick: () => void;
     onRowClick: (id: string) => void;
 }

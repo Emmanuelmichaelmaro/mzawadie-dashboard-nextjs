@@ -3,12 +3,11 @@ import Container from "@mzawadie/components/Container";
 import { LanguageSwitch } from "@mzawadie/components/LanguageSwitch";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import { commonMessages, sectionNames, getStringOrPlaceholder } from "@mzawadie/core";
-import { ShippingMethodTranslationFragment } from "@mzawadie/fragments/types/ShippingMethodTranslationFragment";
+import { ShippingMethodTranslationFragment, LanguageCodeEnum } from "@mzawadie/graphql";
 import {
     TranslationInputFieldName,
     TranslationsEntitiesPageProps,
 } from "@mzawadie/pages/translations/types";
-import { LanguageCodeEnum } from "@mzawadie/types/globalTypes";
 import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";

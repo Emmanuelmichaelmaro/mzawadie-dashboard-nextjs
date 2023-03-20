@@ -1,5 +1,5 @@
 import { FetchMoreProps, Search, SearchProps } from "@mzawadie/core";
-import { Channel_channel } from "@mzawadie/pages/channels/types/Channel";
+import { ChannelDetailsFragment } from "@mzawadie/graphql";
 import { filter } from "fuzzaldrin";
 import React from "react";
 
@@ -11,5 +11,5 @@ export const useChannelsSearch = function <T extends { name: string }>(channels:
 };
 
 export interface ChannelsWithLoadMoreProps extends FetchMoreProps, Search, SearchProps {
-    channels: Channel_channel[];
+    channels: ChannelDetailsFragment[];
 }

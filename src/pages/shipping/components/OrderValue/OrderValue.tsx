@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { Card, CardContent, TableBody, TableCell, TableRow, Typography } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
@@ -6,7 +5,7 @@ import ControlledCheckbox from "@mzawadie/components/ControlledCheckbox";
 import { PriceField } from "@mzawadie/components/PriceField";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import { TableHead } from "@mzawadie/components/TableHead";
-import { ShippingChannelsErrorFragment } from "@mzawadie/fragments/types/ShippingChannelsErrorFragment";
+import { ShippingChannelsErrorFragment } from "@mzawadie/graphql";
 import { ChangeEvent } from "@mzawadie/hooks/useForm";
 import { ChannelShippingData } from "@mzawadie/pages/channels/utils";
 import { getFormChannelError, getFormChannelErrors } from "@mzawadie/utils/errors";

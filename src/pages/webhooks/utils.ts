@@ -1,6 +1,9 @@
 import { MultiAutocompleteChoiceType } from "@mzawadie/components/MultiAutocompleteSelectField";
-import { WebhookFragment } from "@mzawadie/fragments/types/WebhookFragment";
-import { WebhookEventTypeAsyncEnum, WebhookEventTypeSyncEnum } from "@mzawadie/types/globalTypes";
+import {
+    WebhookFragment,
+    WebhookEventTypeAsyncEnum,
+    WebhookEventTypeSyncEnum,
+} from "@mzawadie/graphql";
 
 export function isUnnamed(webhook: WebhookFragment): boolean {
     return ["", null].includes(webhook?.name);

@@ -2,16 +2,16 @@ import { Card, CardContent, IconButton, Typography } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { CardTitle, Hr } from "@mzawadie/components";
 import { FetchMoreProps } from "@mzawadie/core";
-import { AttributeValueFragment } from "@mzawadie/fragments/types/AttributeValueFragment";
-import { PageErrorWithAttributesFragment } from "@mzawadie/fragments/types/PageErrorWithAttributesFragment";
-import { ProductErrorWithAttributesFragment } from "@mzawadie/fragments/types/ProductErrorWithAttributesFragment";
-import { FormsetAtomicData } from "@mzawadie/hooks";
-import { AttributeReference } from "@mzawadie/pages/attributes/utils/data";
 import {
+    AttributeValueFragment,
+    PageErrorWithAttributesFragment,
+    ProductErrorWithAttributesFragment,
     AttributeEntityTypeEnum,
     AttributeInputTypeEnum,
     MeasurementUnitsEnum,
-} from "@mzawadie/types/globalTypes";
+} from "@mzawadie/graphql";
+import { FormsetAtomicData } from "@mzawadie/hooks";
+import { AttributeReference } from "@mzawadie/pages/attributes/utils/data";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";

@@ -25,13 +25,13 @@ import {
     ListActions,
     ListProps,
     SortPage,
+    RelayToFlat,
 } from "@mzawadie/core";
+import { GridAttributesQuery, ProductListQuery } from "@mzawadie/graphql";
 import {
     getAttributeIdFromColumnValue,
     isAttributeColumnValue,
 } from "@mzawadie/pages/products/components/ProductListPage/utils";
-import { GridAttributes_grid_edges_node } from "@mzawadie/pages/products/types/GridAttributes";
-import { ProductList_products_edges_node } from "@mzawadie/pages/products/types/ProductList";
 import { ProductListUrlSortField } from "@mzawadie/pages/products/urls";
 import { canBeSorted } from "@mzawadie/pages/products/views/ProductList/sort";
 import TDisplayColumn, { DisplayColumnProps } from "@mzawadie/utils/columns/DisplayColumn";
@@ -113,8 +113,8 @@ interface ProductListProps
         SortPage<ProductListUrlSortField>,
         ChannelProps {
     activeAttributeSortId: string;
-    gridAttributes: GridAttributes_grid_edges_node[];
-    products: ProductList_products_edges_node[];
+    gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
+    products: RelayToFlat<ProductListQuery["products"]>;
     loading: boolean;
 }
 

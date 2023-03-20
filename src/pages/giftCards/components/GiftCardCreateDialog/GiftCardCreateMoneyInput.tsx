@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { TextWithSelectField } from "@mzawadie/components/TextWithSelectField";
+import { useChannelCurrenciesQuery } from "@mzawadie/graphql";
 import { ChangeEvent, FormChange } from "@mzawadie/hooks/useForm";
 import useLocalStorage from "@mzawadie/hooks/useLocalStorage";
 import { mapSingleValueNodeToChoice } from "@mzawadie/utils/maps";
@@ -13,7 +14,6 @@ import {
 } from "../GiftCardBulkCreateDialog/types";
 import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
 import { giftCardCreateMessages as messages } from "./messages";
-import { useChannelCurrencies } from "./queries";
 import { useGiftCardCreateFormStyles as useStyles } from "./styles";
 
 interface GiftCardCreateMoneyInputProps {
@@ -32,7 +32,7 @@ const GiftCardCreateMoneyInput: React.FC<GiftCardCreateMoneyInputProps> = ({
     const intl = useIntl();
     const classes = useStyles({});
 
-    const { data: channelCurrenciesData } = useChannelCurrencies({});
+    const { data: channelCurrenciesData } = useChannelCurrenciesQuery({});
 
     const { channelCurrencies } = channelCurrenciesData?.shop;
 

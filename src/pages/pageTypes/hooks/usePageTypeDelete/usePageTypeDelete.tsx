@@ -1,7 +1,6 @@
 // @ts-nocheck
+import { PageCountQueryVariables, usePageCountQuery } from "@mzawadie/graphql";
 import { PageTypeListUrlQueryParams, PageTypeUrlQueryParams } from "@mzawadie/pages/pageTypes/urls";
-import { usePageCountQuery } from "@mzawadie/pages/pages/queries";
-import { PageCountVariables } from "@mzawadie/pages/pages/types/PageCount";
 import { pageListUrl } from "@mzawadie/pages/pages/urls";
 import React from "react";
 
@@ -20,7 +19,7 @@ function usePageTypeDelete({
 
     const isDeleteDialogOpen = params.action === "remove";
 
-    const pagesAssignedToSelectedTypesQueryVars = React.useMemo<PageCountVariables>(
+    const pagesAssignedToSelectedTypesQueryVars = React.useMemo<PageCountQueryVariables>(
         () => ({
             filter: {
                 pageTypes,

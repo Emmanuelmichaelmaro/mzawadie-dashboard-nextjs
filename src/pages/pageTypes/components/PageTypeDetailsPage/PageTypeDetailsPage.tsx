@@ -11,9 +11,7 @@ import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
 import { commonMessages, sectionNames, ListActions, ReorderEvent } from "@mzawadie/core";
-import { PageErrorFragment } from "@mzawadie/fragments/types/PageErrorFragment";
-import { PageTypeDetails_pageType } from "@mzawadie/pages/pageTypes/types/PageTypeDetails";
-import { AttributeTypeEnum } from "@mzawadie/types/globalTypes";
+import { PageErrorFragment, PageTypeDetailsFragment, AttributeTypeEnum } from "@mzawadie/graphql";
 import { mapMetadataItemToInput } from "@mzawadie/utils/maps";
 import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChangeTrigger";
 import { Backlink, makeStyles } from "@saleor/macaw-ui";
@@ -30,7 +28,7 @@ export interface PageTypeForm extends MetadataFormData {
 
 export interface PageTypeDetailsPageProps {
     errors: PageErrorFragment[];
-    pageType: PageTypeDetails_pageType;
+    pageType: PageTypeDetailsFragment;
     disabled: boolean;
     pageTitle: string;
     attributeList: ListActions;

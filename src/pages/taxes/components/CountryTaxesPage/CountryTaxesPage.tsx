@@ -6,11 +6,10 @@ import { PageHeader } from "@mzawadie/components/PageHeader";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { sectionNames, maybe, renderCollection } from "@mzawadie/core";
+import { CountryListQuery } from "@mzawadie/graphql";
 import { Backlink, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { CountryList_shop_countries_vat_reducedRates } from "../../types/CountryList";
 
 const useStyles = makeStyles(
     {
@@ -23,7 +22,7 @@ const useStyles = makeStyles(
 
 export interface CountryTaxesPageProps {
     countryName: string;
-    taxCategories: CountryList_shop_countries_vat_reducedRates[];
+    taxCategories: CountryListQuery["shop"]["countries"][0]["vat"]["reducedRates"];
     onBack: () => void;
 }
 

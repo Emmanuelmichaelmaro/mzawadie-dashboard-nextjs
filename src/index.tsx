@@ -21,8 +21,7 @@ import { BackgroundTasksProvider } from "@mzawadie/containers/BackgroundTasks";
 import errorTracker from "@mzawadie/containers/ErrorTracking";
 import { API_URI, commonMessages, DEMO_MODE, getAppMountUri } from "@mzawadie/core";
 import themeOverrides from "@mzawadie/core/themeOverrides";
-import result from "@mzawadie/graphql/fragments";
-import { TypedTypePolicies } from "@mzawadie/graphql/type-policies";
+import { TypedTypePolicies, PermissionEnum, introspectionQueryResultData } from "@mzawadie/graphql";
 import { useAppState } from "@mzawadie/hooks/useAppState";
 import AppsPage from "@mzawadie/pages/apps";
 import { ExternalAppProvider } from "@mzawadie/pages/apps/components/ExternalAppContext";
@@ -53,7 +52,6 @@ import StaffPage from "@mzawadie/pages/staff";
 import TaxesPage from "@mzawadie/pages/taxes";
 import TranslationsPage from "@mzawadie/pages/translations";
 import WarehousePage from "@mzawadie/pages/warehouses";
-import { PermissionEnum } from "@mzawadie/types/globalTypes";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { createFetch, createSaleorClient, SaleorProvider } from "@saleor/sdk";
 import { createUploadLink } from "apollo-upload-client";
@@ -87,7 +85,7 @@ const link = ApolloLink.split((operation) => operation.getContext().useBatching,
 
 const apolloClient = new ApolloClient({
     cache: new InMemoryCache({
-        possibleTypes: result.possibleTypes,
+        possibleTypes: introspectionQueryResultData.possibleTypes,
         typePolicies: {
             CountryDisplay: {
                 keyFields: ["code"],

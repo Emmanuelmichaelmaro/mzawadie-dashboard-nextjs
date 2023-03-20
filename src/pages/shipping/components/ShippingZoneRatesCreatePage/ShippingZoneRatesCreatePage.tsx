@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { OutputData } from "@editorjs/editorjs";
 import CardSpacer from "@mzawadie/components/CardSpacer";
@@ -9,17 +8,17 @@ import { Form } from "@mzawadie/components/Form";
 import { Grid } from "@mzawadie/components/Grid";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
-import { ShippingChannelsErrorFragment } from "@mzawadie/fragments/types/ShippingChannelsErrorFragment";
-import { ShippingErrorFragment } from "@mzawadie/fragments/types/ShippingErrorFragment";
-import { ShippingMethodTypeFragment_postalCodeRules } from "@mzawadie/fragments/types/ShippingMethodTypeFragment";
-import { ChannelShippingData } from "@mzawadie/pages/channels/utils";
-import { validatePrice } from "@mzawadie/pages/products/utils/validation";
-import { createChannelsChangeHandler } from "@mzawadie/pages/shipping/handlers";
 import {
+    ShippingChannelsErrorFragment,
+    ShippingErrorFragment,
     PermissionEnum,
     PostalCodeRuleInclusionTypeEnum,
     ShippingMethodTypeEnum,
-} from "@mzawadie/types/globalTypes";
+    ShippingMethodTypeFragment,
+} from "@mzawadie/graphql";
+import { ChannelShippingData } from "@mzawadie/pages/channels/utils";
+import { validatePrice } from "@mzawadie/pages/products/utils/validation";
+import { createChannelsChangeHandler } from "@mzawadie/pages/shipping/handlers";
 import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -47,7 +46,7 @@ export interface ShippingZoneRatesCreatePageProps {
     shippingChannels: ChannelShippingData[];
     disabled: boolean;
     hasChannelChanged?: boolean;
-    postalCodes?: ShippingMethodTypeFragment_postalCodeRules[];
+    postalCodes?: ShippingMethodTypeFragment["postalCodeRules"];
     channelErrors: ShippingChannelsErrorFragment[];
     errors: ShippingErrorFragment[];
     saveButtonBarState: ConfirmButtonTransitionState;

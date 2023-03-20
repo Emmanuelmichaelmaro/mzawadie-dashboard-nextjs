@@ -2,12 +2,12 @@
 import { CircularProgress, DialogContentText, Typography } from "@material-ui/core";
 import { ActionDialog, ActionDialogProps } from "@mzawadie/components/ActionDialog";
 import DeleteWarningDialogConsentContent from "@mzawadie/components/TypeDeleteWarningDialog/DeleteWarningDialogConsentContent";
+import { GiftCardDataFragment } from "@mzawadie/graphql";
 import { getById } from "@mzawadie/pages/orders/components/OrderReturnPage/utils";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { ExtendedGiftCard } from "../GiftCardUpdate/providers/GiftCardDetailsProvider/types";
-import { GiftCardDetails_giftCard } from "../GiftCardUpdate/types/GiftCardDetails";
 import { UseGiftCardListProps } from "../GiftCardsList/providers/GiftCardListProvider/hooks/useGiftCardList";
 import { UseGiftCardListBulkActionsProps } from "../GiftCardsList/providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
 import { giftCardDeleteDialogMessages as messages } from "./messages";
@@ -16,7 +16,7 @@ import { useGiftCardDeleteDialogContentStyles as useStyles } from "./styles";
 export const SINGLE = 1;
 
 type DeleteDialogContentGiftCard = Pick<
-    ExtendedGiftCard<GiftCardDetails_giftCard>,
+    ExtendedGiftCard<GiftCardDataFragment>,
     "currentBalance" | "id"
 >;
 

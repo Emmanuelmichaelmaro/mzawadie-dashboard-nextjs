@@ -4,21 +4,20 @@ import Container from "@mzawadie/components/Container";
 import LimitReachedAlert from "@mzawadie/components/LimitReachedAlert";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
-import { RefreshLimits_shop_limits } from "@mzawadie/components/Shop/types/RefreshLimits";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { TableCellHeader } from "@mzawadie/components/TableCellHeader";
 import { sectionNames, renderCollection, stopPropagation } from "@mzawadie/core";
+import { ChannelDetailsFragment, RefreshLimitsQuery } from "@mzawadie/graphql";
 import { hasLimits, isLimitReached } from "@mzawadie/utils/limits";
 import { Backlink, Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { Channels_channels } from "../../types/Channels";
 import { useStyles } from "./styles";
 
 export interface ChannelsListPageProps {
-    channelsList: Channels_channels[] | undefined;
-    limits: RefreshLimits_shop_limits;
+    channelsList: ChannelDetailsFragment[] | undefined;
+    limits: RefreshLimitsQuery["shop"]["limits"];
     navigateToChannelCreate: () => void;
     onBack: () => void;
     onRowClick: (id: string) => () => void;

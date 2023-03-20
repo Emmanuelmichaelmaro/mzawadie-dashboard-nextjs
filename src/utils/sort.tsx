@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { TableCellHeaderArrowDirection } from "@mzawadie/components";
 import { findValueInEnum, parseBoolean, Sort } from "@mzawadie/core";
-import { OrderDirection } from "@mzawadie/types/globalTypes";
+import { OrderDirection } from "@mzawadie/graphql";
 
 export function getSortUrlVariables<TSortKey extends string>(
     field: TSortKey,

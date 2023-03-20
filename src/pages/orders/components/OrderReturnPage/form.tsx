@@ -1,10 +1,9 @@
 // @ts-nocheck
 import { useExitFormDialog } from "@mzawadie/components/Form/useExitFormDialog";
+import { FulfillmentStatus, OrderDetailsFragment } from "@mzawadie/graphql";
 import useForm, { CommonUseFormResultWithHandlers, SubmitPromise } from "@mzawadie/hooks/useForm";
 import useFormset, { FormsetChange, FormsetData } from "@mzawadie/hooks/useFormset";
 import useHandleFormSubmit from "@mzawadie/hooks/useHandleFormSubmit";
-import { OrderDetails_order } from "@mzawadie/pages/orders/types/OrderDetails";
-import { FulfillmentStatus } from "@mzawadie/types/globalTypes";
 import React, { useEffect } from "react";
 
 import { OrderRefundAmountCalculationMode } from "../OrderRefundPage/form";
@@ -61,7 +60,7 @@ export type UseOrderRefundFormResult = CommonUseFormResultWithHandlers<
 
 interface OrderReturnProps {
     children: (props: UseOrderRefundFormResult) => React.ReactNode;
-    order: OrderDetails_order;
+    order: OrderDetailsFragment;
     onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
 
@@ -72,7 +71,7 @@ const getOrderRefundPageFormData = (): OrderReturnData => ({
 });
 
 function useOrderReturnForm(
-    order: OrderDetails_order,
+    order: OrderDetailsFragment,
     onSubmit: (data: OrderRefundSubmitData) => SubmitPromise
 ): UseOrderRefundFormResult {
     const {

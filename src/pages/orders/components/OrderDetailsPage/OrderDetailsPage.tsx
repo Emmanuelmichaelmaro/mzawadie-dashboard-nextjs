@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Typography } from "@material-ui/core";
 import { CardMenu } from "@mzawadie/components/CardMenu";
 import { CardSpacer } from "@mzawadie/components/CardSpacer";
@@ -10,15 +11,15 @@ import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { sectionNames, UserPermissionProps, getMutationErrors, maybe } from "@mzawadie/core";
+import { OrderDetailsFragment, OrderDetailsQuery, OrderStatus } from "@mzawadie/graphql";
+import { SubmitPromise } from "@mzawadie/hooks";
 import { OrderChannelSectionCard } from "@mzawadie/pages/orders/components/OrderChannelSectionCard";
-import { OrderStatus } from "@mzawadie/types/globalTypes";
 import { mapMetadataItemToInput } from "@mzawadie/utils/maps";
 import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChangeTrigger";
 import { ConfirmButtonTransitionState, Backlink, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import { OrderDetails_order, OrderDetails_shop } from "../../types/OrderDetails";
 import { OrderCustomer } from "../OrderCustomer";
 import { OrderCustomerNote } from "../OrderCustomerNote";
 import { OrderDraftDetails } from "../OrderDraftDetails";
@@ -48,8 +49,8 @@ const useStyles = makeStyles(
 );
 
 export interface OrderDetailsPageProps extends UserPermissionProps {
-    order: OrderDetails_order;
-    shop: OrderDetails_shop;
+    order: OrderDetailsFragment;
+    shop: OrderDetailsQuery["shop"];
     shippingMethods?: Array<{
         id: string;
         name: string;

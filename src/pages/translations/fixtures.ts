@@ -1,7 +1,7 @@
-import { ShopInfo_shop_languages } from "@mzawadie/components/Shop/types/ShopInfo";
-import { LanguageCodeEnum } from "@mzawadie/types/globalTypes";
+// @ts-nocheck
+import { LanguageCodeEnum, LanguageFragment } from "@mzawadie/graphql";
 
-export const languages: ShopInfo_shop_languages[] = [
+export const languages: LanguageFragment[] = [
     {
         __typename: "LanguageDisplay",
         code: LanguageCodeEnum.DE,

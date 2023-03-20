@@ -10,25 +10,23 @@ import Metadata from "@mzawadie/components/Metadata/Metadata";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { ListActions, ListProps } from "@mzawadie/core";
-import { ShippingChannelsErrorFragment } from "@mzawadie/fragments/types/ShippingChannelsErrorFragment";
-import { ShippingErrorFragment } from "@mzawadie/fragments/types/ShippingErrorFragment";
-import { ShippingMethodTypeFragment_postalCodeRules } from "@mzawadie/fragments/types/ShippingMethodTypeFragment";
+import {
+    ShippingChannelsErrorFragment,
+    ShippingErrorFragment,
+    PermissionEnum,
+    PostalCodeRuleInclusionTypeEnum,
+    ShippingMethodTypeEnum,
+    ShippingMethodTypeFragment,
+    ShippingZoneQuery,
+} from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import { ChannelShippingData } from "@mzawadie/pages/channels/utils";
 import { validatePrice } from "@mzawadie/pages/products/utils/validation";
 import { createChannelsChangeHandler } from "@mzawadie/pages/shipping/handlers";
-import {
-    ShippingZone_shippingZone_shippingMethods,
-    ShippingZone_shippingZone_shippingMethods_postalCodeRules,
-} from "@mzawadie/pages/shipping/types/ShippingZone";
-import {
-    PermissionEnum,
-    PostalCodeRuleInclusionTypeEnum,
-    ShippingMethodTypeEnum,
-} from "@mzawadie/types/globalTypes";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@mzawadie/utils/maps";
 import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChangeTrigger";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Backlink } from "@saleor/macaw-ui/dist";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -49,17 +47,17 @@ export interface ShippingZoneRatesPageProps
     disabled: boolean;
     hasChannelChanged?: boolean;
     havePostalCodesChanged?: boolean;
-    rate: ShippingZone_shippingZone_shippingMethods;
+    rate: ShippingZoneQuery["shippingZone"]["shippingMethods"][0];
     channelErrors: ShippingChannelsErrorFragment[];
     errors: ShippingErrorFragment[];
     saveButtonBarState: ConfirmButtonTransitionState;
-    postalCodeRules: ShippingZone_shippingZone_shippingMethods_postalCodeRules[];
+    postalCodeRules: ShippingZoneQuery["shippingZone"]["shippingMethods"][0]["postalCodeRules"];
     onBack: () => void;
     onDelete?: () => void;
     onSubmit: (data: ShippingZoneRateUpdateFormData) => SubmitPromise;
     onPostalCodeInclusionChange: (inclusion: PostalCodeRuleInclusionTypeEnum) => void;
     onPostalCodeAssign: () => void;
-    onPostalCodeUnassign: (code: ShippingMethodTypeFragment_postalCodeRules) => void;
+    onPostalCodeUnassign: (code: ShippingMethodTypeFragment["postalCodeRules"][0]) => void;
     onChannelsChange: (data: ChannelShippingData[]) => void;
     openChannelsModal: () => void;
     onProductAssign: () => void;

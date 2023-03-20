@@ -3,9 +3,8 @@ import { Typography } from "@material-ui/core";
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import { TimelineEvent } from "@mzawadie/components/Timeline";
 import { TitleElement } from "@mzawadie/components/Timeline/TimelineEventHeader";
+import { OrderEventFragment, OrderEventsEnum } from "@mzawadie/graphql";
 import { HorizontalSpacer } from "@mzawadie/pages/apps/components/HorizontalSpacer";
-import { OrderDetails_order_events } from "@mzawadie/pages/orders/types/OrderDetails";
-import { OrderEventsEnum } from "@mzawadie/types/globalTypes";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -35,7 +34,7 @@ export const messages = defineMessages({
 });
 
 interface ExtendedTimelineEventProps {
-    event: OrderDetails_order_events;
+    event: OrderEventFragment;
     titleElements: TitleElement[];
 }
 

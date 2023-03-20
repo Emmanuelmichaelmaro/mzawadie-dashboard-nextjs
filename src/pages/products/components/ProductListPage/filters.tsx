@@ -8,7 +8,7 @@ import {
     FilterOpts,
     MinMax,
 } from "@mzawadie/core";
-import { AttributeInputTypeEnum, StockAvailability } from "@mzawadie/types/globalTypes";
+import { AttributeInputTypeEnum, StockAvailability } from "@mzawadie/graphql";
 import {
     createAutocompleteField,
     createBooleanField,

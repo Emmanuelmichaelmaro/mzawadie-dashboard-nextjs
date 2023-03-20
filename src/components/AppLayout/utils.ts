@@ -1,8 +1,8 @@
 // @ts-nocheck
+import { AppExtensionMountEnum } from "@mzawadie/graphql";
 import { getDashboardUrFromAppCompleteUrl } from "@mzawadie/pages/apps/urls";
 import { Extension } from "@mzawadie/pages/apps/useExtensions";
 import { orderDraftListUrl, orderListUrl } from "@mzawadie/pages/orders/urls";
-import { AppExtensionMountEnum } from "@mzawadie/types/globalTypes";
 import { SidebarMenuItem } from "@saleor/macaw-ui";
 import { matchPath } from "react-router";
 

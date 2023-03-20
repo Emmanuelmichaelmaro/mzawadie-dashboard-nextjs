@@ -1,19 +1,18 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import { AttributeValueFragment } from "@mzawadie/fragments/types/AttributeValueFragment";
-import { getById } from "@mzawadie/pages/orders/components/OrderReturnPage/utils";
+import { RelayToFlat } from "@mzawadie/core";
 import {
-    ProductDetails_product_productType_variantAttributes,
-    ProductDetails_product_productType_variantAttributes_choices_edges_node,
-} from "@mzawadie/pages/products/types/ProductDetails";
-import { SearchAttributeValues_attribute_choices_edges_node } from "@mzawadie/searches/types/SearchAttributeValues";
+    AttributeValueFragment,
+    ProductVariantAttributesFragment,
+    SearchAttributeValuesQuery,
+} from "@mzawadie/graphql";
+import { getById } from "@mzawadie/pages/orders/components/OrderReturnPage/utils";
 
 import { AttributeValue, ProductVariantCreateFormData } from "./form";
 
 export function getPriceAttributeValues(
     data: ProductVariantCreateFormData,
-    attributes: ProductDetails_product_productType_variantAttributes[]
-): ProductDetails_product_productType_variantAttributes_choices_edges_node[] {
+    attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"]
+): AttributeValueFragment[] {
     return data.price.mode === "all"
         ? null
         : data.price.attribute
@@ -30,8 +29,8 @@ export function getPriceAttributeValues(
 
 export function getStockAttributeValues(
     data: ProductVariantCreateFormData,
-    attributes: ProductDetails_product_productType_variantAttributes[]
-): ProductDetails_product_productType_variantAttributes_choices_edges_node[] {
+    attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"]
+): AttributeValueFragment[] {
     return data.stock.mode === "all"
         ? null
         : data.stock.attribute
@@ -63,7 +62,7 @@ export const getBooleanAttributeValue = (
 export const getBasicAttributeValue = (
     attributeId: string,
     attributeValue: string,
-    attributeValues: SearchAttributeValues_attribute_choices_edges_node[],
+    attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>,
     data: ProductVariantCreateFormData
 ): AttributeValue<Partial<AttributeValueFragment>> => {
     const dataAttribute = data.attributes.find(getById(attributeId));

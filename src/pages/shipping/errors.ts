@@ -1,6 +1,6 @@
 // @ts-nocheck
-import { ShippingErrorFragment } from "@mzawadie/fragments/types/ShippingErrorFragment";
-import { ShippingErrorCode } from "@mzawadie/types/globalTypes";
+import { ShippingErrorCode } from "@mzawadie/graphql";
+import { ShippingErrorFragment } from "@mzawadie/graphqlShippingErrorFragment";
 import getShippingErrorMessage from "@mzawadie/utils/errors/shipping";
 import { defineMessages, IntlShape } from "react-intl";
 

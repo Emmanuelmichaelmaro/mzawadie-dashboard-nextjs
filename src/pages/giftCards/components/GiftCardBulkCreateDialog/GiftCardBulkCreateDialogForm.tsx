@@ -2,8 +2,12 @@
 import { DialogContent, Divider, TextField, Typography } from "@material-ui/core";
 import DialogButtons from "@mzawadie/components/ActionDialog/DialogButtons";
 import CardSpacer from "@mzawadie/components/CardSpacer";
+import {
+    GiftCardSettingsExpiryTypeEnum,
+    TimePeriodTypeEnum,
+    useGiftCardSettingsQuery,
+} from "@mzawadie/graphql";
 import useForm from "@mzawadie/hooks/useForm";
-import { GiftCardSettingsExpiryTypeEnum, TimePeriodTypeEnum } from "@mzawadie/types/globalTypes";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -13,7 +17,6 @@ import GiftCardCreateMoneyInput from "../GiftCardCreateDialog/GiftCardCreateMone
 import GiftCardCreateRequiresActivationSection from "../GiftCardCreateDialog/GiftCardCreateRequiresActivationSection";
 import { giftCardCreateMessages as messages } from "../GiftCardCreateDialog/messages";
 import { useGiftCardCreateFormStyles as useStyles } from "../GiftCardCreateDialog/styles";
-import { useGiftCardSettingsQuery } from "../GiftCardSettings/queries";
 import { GiftCardTagInput } from "../GiftCardTagInput";
 import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
 import {

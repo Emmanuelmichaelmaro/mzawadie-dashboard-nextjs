@@ -8,14 +8,13 @@ import { Grid } from "@mzawadie/components/Grid";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import Skeleton from "@mzawadie/components/Skeleton";
-import { sectionNames, FetchMoreProps, UserPermissionProps } from "@mzawadie/core";
+import { sectionNames, FetchMoreProps, UserPermissionProps, RelayToFlat } from "@mzawadie/core";
+import { OrderDetailsFragment, SearchCustomersQuery } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks";
-import { SearchCustomers_search_edges_node } from "@mzawadie/searches/types/SearchCustomers";
 import { ConfirmButtonTransitionState, Backlink, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { OrderDetails_order } from "../../types/OrderDetails";
 import { DraftOrderChannelSectionCard } from "../DraftOrderChannelSectionCard";
 import { CustomerEditData, OrderCustomer } from "../OrderCustomer";
 import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
@@ -37,8 +36,8 @@ const useStyles = makeStyles(
 
 export interface OrderDraftPageProps extends FetchMoreProps, UserPermissionProps {
     disabled: boolean;
-    order: OrderDetails_order;
-    users: SearchCustomers_search_edges_node[];
+    order: OrderDetailsFragment;
+    users: RelayToFlat<SearchCustomersQuery["search"]>;
     usersLoading: boolean;
     saveButtonBarState: ConfirmButtonTransitionState;
     fetchUsers: (query: string) => void;

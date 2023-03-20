@@ -8,7 +8,7 @@ import { Metadata, MetadataFormData } from "@mzawadie/components/Metadata";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { commonMessages, sectionNames } from "@mzawadie/core";
-import { PageErrorFragment } from "@mzawadie/fragments/types/PageErrorFragment";
+import { PageErrorFragment } from "@mzawadie/graphql";
 import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChangeTrigger";
 import { Backlink, makeStyles } from "@saleor/macaw-ui";
 import React from "react";

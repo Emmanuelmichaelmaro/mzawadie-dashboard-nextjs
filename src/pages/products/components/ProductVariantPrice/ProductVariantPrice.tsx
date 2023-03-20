@@ -13,7 +13,7 @@ import { PriceField } from "@mzawadie/components/PriceField";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { renderCollection } from "@mzawadie/core";
-import { ProductChannelListingErrorFragment } from "@mzawadie/fragments/types/ProductChannelListingErrorFragment";
+import { ProductChannelListingErrorFragment } from "@mzawadie/graphql";
 import { ChannelData, ChannelPriceArgs } from "@mzawadie/pages/channels/utils";
 import { getFormChannelError, getFormChannelErrors } from "@mzawadie/utils/errors";
 import getProductErrorMessage from "@mzawadie/utils/errors/product";

@@ -3,7 +3,7 @@
 import DefaultPhotoUrl from "@assets/images/avatars/avatar12.png";
 import { FormControlLabel, Switch } from "@material-ui/core";
 import { getUserInitials, getUserName } from "@mzawadie/core";
-import { User } from "@mzawadie/fragments/types/User";
+import { UserFragment } from "@mzawadie/graphql";
 import { makeStyles, UserChipMenu, UserChipMenuItem } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -23,7 +23,7 @@ const useStyles = makeStyles(
 
 export interface UserChipProperties {
     isDarkThemeEnabled: boolean;
-    user: User;
+    user: UserFragment;
     onLogout: () => void;
     onProfileClick: () => void;
     onThemeToggle: () => void;

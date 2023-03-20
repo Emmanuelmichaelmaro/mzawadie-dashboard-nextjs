@@ -3,15 +3,14 @@ import { Button, Card, CardContent, Typography } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import Hr from "@mzawadie/components/Hr";
 import { buttonMessages } from "@mzawadie/core";
-import { PluginConfigurationExtendedFragment_configuration } from "@mzawadie/fragments/types/PluginConfigurationExtendedFragment";
+import { ConfigurationItemFragment, ConfigurationTypeFieldEnum } from "@mzawadie/graphql";
 import { isSecretField } from "@mzawadie/pages/plugins/utils";
-import { ConfigurationTypeFieldEnum } from "@mzawadie/types/globalTypes";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 interface PluginAuthorizationProps {
-    fields: PluginConfigurationExtendedFragment_configuration[];
+    fields: ConfigurationItemFragment;
     onClear: (field: string) => void;
     onEdit: (field: string) => void;
 }

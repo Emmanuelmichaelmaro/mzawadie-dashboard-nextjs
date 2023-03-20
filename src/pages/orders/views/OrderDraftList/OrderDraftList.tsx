@@ -4,11 +4,16 @@ import { ActionDialog } from "@mzawadie/components/ActionDialog";
 import useAppChannel from "@mzawadie/components/AppLayout/AppChannelContext";
 import { DeleteFilterTabDialog } from "@mzawadie/components/DeleteFilterTabDialog";
 import {
-    SaveFilterTabDialog,
     SaveFilterTabDialogFormData,
+    SaveFilterTabDialog,
 } from "@mzawadie/components/SaveFilterTabDialog";
-import { useShopLimitsQuery } from "@mzawadie/components/Shop/query";
+import { useShopLimitsQuery } from "@mzawadie/components/Shop/queries";
 import { maybe, ListViews } from "@mzawadie/core";
+import {
+    useOrderDraftBulkCancelMutation,
+    useOrderDraftCreateMutation,
+    useOrderDraftListQuery,
+} from "@mzawadie/graphql";
 import useBulkActions from "@mzawadie/hooks/useBulkActions";
 import useListSettings from "@mzawadie/hooks/useListSettings";
 import useNavigator from "@mzawadie/hooks/useNavigator";
@@ -16,6 +21,13 @@ import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { usePaginationReset } from "@mzawadie/hooks/usePaginationReset";
 import usePaginator, { createPaginationState } from "@mzawadie/hooks/usePaginator";
 import { ChannelPickerDialog } from "@mzawadie/pages/channels/components/ChannelPickerDialog";
+import { OrderDraftListPage } from "@mzawadie/pages/orders/components/OrderDraftListPage";
+import {
+    orderDraftListUrl,
+    OrderDraftListUrlDialog,
+    OrderDraftListUrlQueryParams,
+    orderUrl,
+} from "@mzawadie/pages/orders/urls";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@mzawadie/utils/handlers/filterHandlers";
 import createSortHandler from "@mzawadie/utils/handlers/sortHandler";
@@ -25,17 +37,6 @@ import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderDraftListPage } from "../../components/OrderDraftListPage";
-import { TypedOrderDraftBulkCancelMutation, useOrderDraftCreateMutation } from "../../mutations";
-import { useOrderDraftListQuery } from "../../queries";
-import { OrderDraftBulkCancel } from "../../types/OrderDraftBulkCancel";
-import { OrderDraftCreate } from "../../types/OrderDraftCreate";
-import {
-    orderDraftListUrl,
-    OrderDraftListUrlDialog,
-    OrderDraftListUrlQueryParams,
-    orderUrl,
-} from "../../urls";
 import {
     deleteFilterTab,
     getActiveFilters,
@@ -55,31 +56,45 @@ interface OrderDraftListProps {
 export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     const navigate = useNavigator();
     const notify = useNotifier();
-    const intl = useIntl();
     const paginate = usePaginator();
-
     const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
     const { updateListSettings, settings } = useListSettings(ListViews.DRAFT_LIST);
 
     usePaginationReset(orderDraftListUrl, params, settings.rowNumber);
 
-    const handleCreateOrderCreateSuccess = (data: OrderDraftCreate) => {
-        notify({
-            status: "success",
-            text: intl.formatMessage({
-                defaultMessage: "Order draft successfully created",
-                id: "6udlH+",
-            }),
-        });
-        navigate(orderUrl(data.draftOrderCreate.order.id));
-    };
+    const intl = useIntl();
+
+    const [orderDraftBulkDelete, orderDraftBulkDeleteOpts] = useOrderDraftBulkCancelMutation({
+        onCompleted: (data) => {
+            if (data.draftOrderBulkDelete.errors.length === 0) {
+                notify({
+                    status: "success",
+                    text: intl.formatMessage({
+                        defaultMessage: "Deleted draft orders",
+                        id: "ra2O4j",
+                    }),
+                });
+                refetch();
+                reset();
+                closeModal();
+            }
+        },
+    });
 
     const [createOrder] = useOrderDraftCreateMutation({
-        onCompleted: handleCreateOrderCreateSuccess,
+        onCompleted: (data) => {
+            notify({
+                status: "success",
+                text: intl.formatMessage({
+                    defaultMessage: "Order draft successfully created",
+                    id: "6udlH+",
+                }),
+            });
+            navigate(orderUrl(data.draftOrderCreate.order.id));
+        },
     });
 
     const { channel, availableChannels } = useAppChannel(false);
-
     const limitOpts = useShopLimitsQuery({
         variables: {
             orders: true,
@@ -125,7 +140,6 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     };
 
     const paginationState = createPaginationState(settings.rowNumber, params);
-
     const queryVariables = React.useMemo(
         () => ({
             ...paginationState,
@@ -134,7 +148,6 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         }),
         [params, settings.rowNumber]
     );
-
     const { data, loading, refetch } = useOrderDraftListQuery({
         displayLoader: true,
         variables: queryVariables,
@@ -146,138 +159,109 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         params
     );
 
-    const handleOrderDraftBulkCancel = (data: OrderDraftBulkCancel) => {
-        if (data.draftOrderBulkDelete.errors.length === 0) {
-            notify({
-                status: "success",
-                text: intl.formatMessage({
-                    defaultMessage: "Deleted draft orders",
-                    id: "ra2O4j",
-                }),
-            });
-            refetch();
-            reset();
-            closeModal();
-        }
-    };
-
     const handleSort = createSortHandler(navigate, orderDraftListUrl, params);
+
+    const onOrderDraftBulkDelete = () =>
+        orderDraftBulkDelete({
+            variables: {
+                ids: params.ids,
+            },
+        });
 
     return (
         <>
-            <TypedOrderDraftBulkCancelMutation onCompleted={handleOrderDraftBulkCancel}>
-                {(orderDraftBulkDelete, orderDraftBulkDeleteOpts) => {
-                    const onOrderDraftBulkDelete = () =>
-                        orderDraftBulkDelete({
-                            variables: {
-                                ids: params.ids,
-                            },
-                        });
-
-                    return (
-                        <>
-                            <OrderDraftListPage
-                                currentTab={currentTab}
-                                filterOpts={getFilterOpts(params)}
-                                limits={limitOpts.data?.shop.limits}
-                                initialSearch={params.query || ""}
-                                onSearchChange={handleSearchChange}
-                                onFilterChange={changeFilters}
-                                onAll={resetFilters}
-                                onTabChange={handleTabChange}
-                                onTabDelete={() => openModal("delete-search")}
-                                onTabSave={() => openModal("save-search")}
-                                tabs={tabs.map((tab) => tab.name)}
-                                disabled={loading}
-                                settings={settings}
-                                orders={mapEdgesToItems(data?.draftOrders)}
-                                pageInfo={pageInfo}
-                                onAdd={() => openModal("create-order")}
-                                onNextPage={loadNextPage}
-                                onPreviousPage={loadPreviousPage}
-                                onRowClick={(id) => () => navigate(orderUrl(id))}
-                                onSort={handleSort}
-                                onUpdateListSettings={updateListSettings}
-                                isChecked={isSelected}
-                                selected={listElements.length}
-                                sort={getSortParams(params)}
-                                toggle={toggle}
-                                toggleAll={toggleAll}
-                                toolbar={
-                                    <IconButton
-                                        variant="secondary"
-                                        color="primary"
-                                        onClick={() =>
-                                            openModal("remove", {
-                                                ids: listElements,
-                                            })
-                                        }
-                                    >
-                                        <DeleteIcon />
-                                    </IconButton>
-                                }
-                            />
-
-                            <ActionDialog
-                                confirmButtonState={orderDraftBulkDeleteOpts.status}
-                                onClose={closeModal}
-                                onConfirm={onOrderDraftBulkDelete}
-                                open={params.action === "remove"}
-                                title={intl.formatMessage({
-                                    defaultMessage: "Delete Order Drafts",
-                                    id: "qbmeUI",
-                                    description: "dialog header",
-                                })}
-                                variant="delete"
-                            >
-                                <DialogContentText>
-                                    <FormattedMessage
-                                        defaultMessage="{counter,plural,one{Are you sure you want to delete this order draft?} other{Are you sure you want to delete {displayQuantity} order drafts?}}"
-                                        id="Q6VRrE"
-                                        description="dialog content"
-                                        values={{
-                                            counter: maybe(() => params.ids.length),
-                                            displayQuantity: (
-                                                <strong>{maybe(() => params.ids.length)}</strong>
-                                            ),
-                                        }}
-                                    />
-                                </DialogContentText>
-                            </ActionDialog>
-
-                            <SaveFilterTabDialog
-                                open={params.action === "save-search"}
-                                confirmButtonState="default"
-                                onClose={closeModal}
-                                onSubmit={handleTabSave}
-                            />
-
-                            <DeleteFilterTabDialog
-                                open={params.action === "delete-search"}
-                                confirmButtonState="default"
-                                onClose={closeModal}
-                                onSubmit={handleTabDelete}
-                                tabName={maybe(() => tabs[currentTab - 1].name, "...")}
-                            />
-
-                            <ChannelPickerDialog
-                                channelsChoices={mapNodeToChoice(availableChannels)}
-                                confirmButtonState="success"
-                                defaultChoice={channel?.id}
-                                open={params.action === "create-order"}
-                                onClose={closeModal}
-                                onConfirm={(channelId) =>
-                                    createOrder({
-                                        variables: {
-                                            input: { channelId },
-                                        },
-                                    })
-                                }
-                            />
-                        </>
-                    );
-                }}
-            </TypedOrderDraftBulkCancelMutation>
+            <OrderDraftListPage
+                currentTab={currentTab}
+                filterOpts={getFilterOpts(params)}
+                limits={limitOpts.data?.shop.limits}
+                initialSearch={params.query || ""}
+                onSearchChange={handleSearchChange}
+                onFilterChange={changeFilters}
+                onAll={resetFilters}
+                onTabChange={handleTabChange}
+                onTabDelete={() => openModal("delete-search")}
+                onTabSave={() => openModal("save-search")}
+                tabs={tabs.map((tab) => tab.name)}
+                disabled={loading}
+                settings={settings}
+                orders={mapEdgesToItems(data?.draftOrders)}
+                pageInfo={pageInfo}
+                onAdd={() => openModal("create-order")}
+                onNextPage={loadNextPage}
+                onPreviousPage={loadPreviousPage}
+                onRowClick={(id) => () => navigate(orderUrl(id))}
+                onSort={handleSort}
+                onUpdateListSettings={updateListSettings}
+                isChecked={isSelected}
+                selected={listElements.length}
+                sort={getSortParams(params)}
+                toggle={toggle}
+                toggleAll={toggleAll}
+                toolbar={
+                    <IconButton
+                        variant="secondary"
+                        color="primary"
+                        onClick={() =>
+                            openModal("remove", {
+                                ids: listElements,
+                            })
+                        }
+                    >
+                        <DeleteIcon />
+                    </IconButton>
+                }
+            />
+            <ActionDialog
+                confirmButtonState={orderDraftBulkDeleteOpts.status}
+                onClose={closeModal}
+                onConfirm={onOrderDraftBulkDelete}
+                open={params.action === "remove"}
+                title={intl.formatMessage({
+                    defaultMessage: "Delete Order Drafts",
+                    id: "qbmeUI",
+                    description: "dialog header",
+                })}
+                variant="delete"
+            >
+                <DialogContentText>
+                    <FormattedMessage
+                        defaultMessage="{counter,plural,one{Are you sure you want to delete this order draft?} other{Are you sure you want to delete {displayQuantity} order drafts?}}"
+                        id="Q6VRrE"
+                        description="dialog content"
+                        values={{
+                            counter: maybe(() => params.ids.length),
+                            displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>,
+                        }}
+                    />
+                </DialogContentText>
+            </ActionDialog>
+            <SaveFilterTabDialog
+                open={params.action === "save-search"}
+                confirmButtonState="default"
+                onClose={closeModal}
+                onSubmit={handleTabSave}
+            />
+            <DeleteFilterTabDialog
+                open={params.action === "delete-search"}
+                confirmButtonState="default"
+                onClose={closeModal}
+                onSubmit={handleTabDelete}
+                tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+            />
+            <ChannelPickerDialog
+                channelsChoices={mapNodeToChoice(availableChannels)}
+                confirmButtonState="success"
+                defaultChoice={channel?.id}
+                open={params.action === "create-order"}
+                onClose={closeModal}
+                onConfirm={(channelId) =>
+                    createOrder({
+                        variables: {
+                            input: { channelId },
+                        },
+                    })
+                }
+            />
         </>
     );
 };

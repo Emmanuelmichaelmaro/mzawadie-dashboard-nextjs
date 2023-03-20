@@ -7,13 +7,11 @@ import Skeleton from "@mzawadie/components/Skeleton";
 import { SortableTableBody, SortableTableRow } from "@mzawadie/components/SortableTable";
 import { TableCellAvatar } from "@mzawadie/components/TableCellAvatar";
 import { renderCollection, ReorderAction } from "@mzawadie/core";
+import { ProductVariantCreateDataQuery, ProductVariantDetailsQuery } from "@mzawadie/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { ProductVariantCreateData_product_variants } from "../../types/ProductVariantCreateData";
-import { ProductVariantDetails_productVariant } from "../../types/ProductVariantDetails";
 
 const useStyles = makeStyles(
     (theme) => ({
@@ -58,7 +56,9 @@ interface ProductVariantNavigationProps {
     current?: string;
     defaultVariantId?: string;
     fallbackThumbnail: string;
-    variants: ProductVariantDetails_productVariant[] | ProductVariantCreateData_product_variants[];
+    variants:
+        | Array<ProductVariantDetailsQuery["productVariant"]>
+        | ProductVariantCreateDataQuery["product"]["variants"];
     onAdd?: () => void;
     onRowClick: (variantId: string) => void;
     onReorder: ReorderAction;

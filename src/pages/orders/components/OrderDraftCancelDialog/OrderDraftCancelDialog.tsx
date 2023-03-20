@@ -1,7 +1,7 @@
 import { DialogContentText } from "@material-ui/core";
 import { ActionDialog } from "@mzawadie/components/ActionDialog";
 import FormSpacer from "@mzawadie/components/FormSpacer";
-import { OrderErrorFragment } from "@mzawadie/fragments/types/OrderErrorFragment";
+import { OrderErrorFragment } from "@mzawadie/graphql";
 import { useModalDialogErrors } from "@mzawadie/hooks/useModalDialogErrors";
 import getOrderErrorMessage from "@mzawadie/utils/errors/order";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";

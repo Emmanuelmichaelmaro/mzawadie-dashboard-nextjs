@@ -1,6 +1,5 @@
 import { commonMessages } from "@mzawadie/core";
-import { ShopErrorFragment } from "@mzawadie/fragments/types/ShopErrorFragment";
-import { ShopErrorCode } from "@mzawadie/types/globalTypes";
+import { ShopErrorFragment, ShopErrorCode } from "@mzawadie/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 import commonErrorMessages from "./common";

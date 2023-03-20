@@ -17,23 +17,21 @@ import {
     ListProps,
     SortPage,
 } from "@mzawadie/core";
+import { DiscountValueTypeEnum, VoucherFragment } from "@mzawadie/graphql";
 import { VoucherListUrlSortField } from "@mzawadie/pages/discounts/urls";
 import { canBeSorted } from "@mzawadie/pages/discounts/views/VoucherList/sort";
-import { DiscountValueTypeEnum } from "@mzawadie/types/globalTypes";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import { getFooterColSpanWithBulkActions } from "@mzawadie/utils/tables";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { VoucherList_vouchers_edges_node } from "../../types/VoucherList";
-
 export interface VoucherListProps
     extends ListProps,
         ListActions,
         SortPage<VoucherListUrlSortField>,
         ChannelProps {
-    vouchers: VoucherList_vouchers_edges_node[];
+    vouchers: VoucherFragment[];
 }
 
 const useStyles = makeStyles(

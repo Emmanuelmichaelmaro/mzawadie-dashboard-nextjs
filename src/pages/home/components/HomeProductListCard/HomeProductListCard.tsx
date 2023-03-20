@@ -1,13 +1,12 @@
 // @ts-nocheck
 import { Card, TableBody, TableCell, TableRow, Typography } from "@material-ui/core";
 import { CardTitle, Money, ResponsiveTable, Skeleton, TableCellAvatar } from "@mzawadie/components";
-import { maybe, renderCollection } from "@mzawadie/core";
+import { maybe, RelayToFlat, renderCollection } from "@mzawadie/core";
+import { HomeQuery } from "@mzawadie/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { Home_productTopToday_edges_node } from "../../types/Home";
 
 const useStyles = makeStyles(
     (theme) => ({
@@ -40,7 +39,7 @@ const useStyles = makeStyles(
 
 interface HomeProductListProps {
     testId?: string;
-    topProducts: Home_productTopToday_edges_node[];
+    topProducts: RelayToFlat<HomeQuery["productTopToday"]>;
     onRowClick: (productId: string, variantId: string) => void;
 }
 

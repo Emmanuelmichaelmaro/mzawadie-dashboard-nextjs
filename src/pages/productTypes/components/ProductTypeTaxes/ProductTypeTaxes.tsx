@@ -3,7 +3,7 @@ import { Card, CardContent } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { SingleAutocompleteSelectField } from "@mzawadie/components/SingleAutocompleteSelectField";
 import { maybe } from "@mzawadie/core";
-import { ProductTypeDetails_taxTypes } from "@mzawadie/pages/productTypes/types/ProductTypeDetails";
+import { ProductTypeDetailsQuery } from "@mzawadie/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -15,7 +15,7 @@ interface ProductTypeTaxesProps {
         taxType: string;
     };
     taxTypeDisplayName: string;
-    taxTypes: ProductTypeDetails_taxTypes[];
+    taxTypes: ProductTypeDetailsQuery["taxTypes"];
     disabled: boolean;
     onChange: (event: React.ChangeEvent<any>) => void;
 }

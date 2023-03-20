@@ -12,15 +12,15 @@ import {
     renderCollection,
     ListProps,
     SortPage,
+    RelayToFlat,
 } from "@mzawadie/core";
+import { StaffListQuery } from "@mzawadie/graphql";
 import { StaffListUrlSortField } from "@mzawadie/pages/staff/urls";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { StaffList_staffUsers_edges_node } from "../../types/StaffList";
 
 const useStyles = makeStyles(
     (theme) => ({
@@ -66,7 +66,7 @@ const useStyles = makeStyles(
 );
 
 interface StaffListProps extends ListProps, SortPage<StaffListUrlSortField> {
-    staffMembers: StaffList_staffUsers_edges_node[];
+    staffMembers: RelayToFlat<StaffListQuery["staffUsers"]>;
 }
 
 const numberOfColumns = 2;

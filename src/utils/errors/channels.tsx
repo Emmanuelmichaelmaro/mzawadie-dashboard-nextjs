@@ -1,6 +1,5 @@
 import { commonMessages } from "@mzawadie/core";
-import { ChannelErrorFragment } from "@mzawadie/fragments/types/ChannelErrorFragment";
-import { ChannelErrorCode } from "@mzawadie/types/globalTypes";
+import { ChannelErrorFragment, ChannelErrorCode } from "@mzawadie/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 import commonErrorMessages from "./common";

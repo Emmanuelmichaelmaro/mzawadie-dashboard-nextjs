@@ -1,6 +1,6 @@
 // @ts-nocheck
-import { useShopCountries } from "@mzawadie/components/Shop/query";
 import { commonMessages, extractMutationErrors } from "@mzawadie/core";
+import { useCreateShippingZoneMutation, useShopCountriesQuery } from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import useShop from "@mzawadie/hooks/useShop";
@@ -12,7 +12,6 @@ import {
     ShippingZoneCreatePage,
     ShippingZoneCreateFormData,
 } from "../components/ShippingZoneCreatePage";
-import { useShippingZoneCreate } from "../mutations";
 import { shippingZonesListUrl, shippingZoneUrl } from "../urls";
 
 const ShippingZoneCreate: React.FC<{}> = () => {
@@ -21,7 +20,7 @@ const ShippingZoneCreate: React.FC<{}> = () => {
     const shop = useShop();
     const intl = useIntl();
 
-    const { data: restWorldCountries } = useShopCountries({
+    const { data: restWorldCountries } = useShopCountriesQuery({
         variables: {
             filter: {
                 attachedToShippingZones: false,
@@ -29,7 +28,7 @@ const ShippingZoneCreate: React.FC<{}> = () => {
         },
     });
 
-    const [createShippingZone, createShippingZoneOpts] = useShippingZoneCreate({
+    const [createShippingZone, createShippingZoneOpts] = useCreateShippingZoneMutation({
         onCompleted: (data) => {
             if (data.shippingZoneCreate.errors.length === 0) {
                 notify({
@@ -62,4 +61,5 @@ const ShippingZoneCreate: React.FC<{}> = () => {
         />
     );
 };
+
 export default ShippingZoneCreate;

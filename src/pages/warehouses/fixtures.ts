@@ -1,12 +1,14 @@
 // @ts-nocheck
 import { address } from "@mzawadie/core";
-import { WarehouseClickAndCollectOptionEnum } from "@mzawadie/types/globalTypes";
+import {
+    WarehouseClickAndCollectOptionEnum,
+    WarehouseDetailsFragment,
+    WarehouseWithShippingFragment,
+} from "@mzawadie/graphql";
 
 import { shippingZones } from "../shipping/fixtures";
-import { WarehouseDetails_warehouse } from "./types/WarehouseDetails";
-import { WarehouseList_warehouses_edges_node } from "./types/WarehouseList";
 
-export const warehouseList: WarehouseList_warehouses_edges_node[] = [
+export const warehouseList: WarehouseWithShippingFragment[] = [
     {
         __typename: "Warehouse",
         id: "V2FyZWhvdXNlOmEzMThmMGZlLTcwMmYtNDNjYy1hYmFjLWZmZmMzN2Y3ZTliYw==",
@@ -57,14 +59,14 @@ export const warehouseList: WarehouseList_warehouses_edges_node[] = [
     },
 ];
 
-export const warehouse: WarehouseDetails_warehouse = {
+export const warehouse: WarehouseDetailsFragment = {
     ...warehouseList[0],
     isPrivate: true,
     clickAndCollectOption: WarehouseClickAndCollectOptionEnum.DISABLED,
     address,
 };
 
-export const warehouseForPickup: WarehouseDetails_warehouse = {
+export const warehouseForPickup: WarehouseDetailsFragment = {
     ...warehouseList[0],
     isPrivate: false,
     clickAndCollectOption: WarehouseClickAndCollectOptionEnum.ALL,

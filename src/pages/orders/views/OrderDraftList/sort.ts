@@ -1,6 +1,6 @@
 // @ts-nocheck
+import { OrderSortField } from "@mzawadie/graphql";
 import { OrderDraftListUrlSortField } from "@mzawadie/pages/orders/urls";
-import { OrderSortField } from "@mzawadie/types/globalTypes";
 import { createGetSortQueryVariables } from "@mzawadie/utils/sort";
 
 export function getSortQueryField(sort: OrderDraftListUrlSortField): OrderSortField {

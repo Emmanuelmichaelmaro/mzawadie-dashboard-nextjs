@@ -1,4 +1,4 @@
-import { WarehouseFragment } from "@mzawadie/fragments/types/WarehouseFragment";
+import { WarehouseFragment } from "@mzawadie/graphql";
 import { ChannelPriceData } from "@mzawadie/pages/channels/utils";
 
 import { createVariants } from "./createVariants";

@@ -1,6 +1,6 @@
 // @ts-nocheck
+import { PageSortField } from "@mzawadie/graphql";
 import { PageListUrlSortField } from "@mzawadie/pages/pages/urls";
-import { PageSortField } from "@mzawadie/types/globalTypes";
 import { createGetSortQueryVariables } from "@mzawadie/utils/sort";
 
 export function getSortQueryField(sort: PageListUrlSortField): PageSortField | undefined {

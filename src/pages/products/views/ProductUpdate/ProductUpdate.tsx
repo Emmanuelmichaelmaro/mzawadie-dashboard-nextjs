@@ -6,7 +6,7 @@ import useAppChannel from "@mzawadie/components/AppLayout/AppChannelContext";
 import { AttributeInput } from "@mzawadie/components/Attributes";
 import { ChannelsAvailabilityDialog } from "@mzawadie/components/ChannelsAvailabilityDialog";
 import { NotFoundPage } from "@mzawadie/components/NotFoundPage";
-import { useShopLimitsQuery } from "@mzawadie/components/Shop/query";
+import { useShopLimitsQuery } from "@mzawadie/components/Shop/queries";
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
 import {
     DEFAULT_INITIAL_SEARCH_DATA,
@@ -15,7 +15,28 @@ import {
     errorMessages,
     getMutationState,
 } from "@mzawadie/core";
-import { useFileUploadMutation } from "@mzawadie/files/mutations";
+import {
+    ProductMediaCreateMutationVariables,
+    ProductUpdateMutation,
+    useAttributeValueDeleteMutation,
+    useFileUploadMutation,
+    useProductChannelListingUpdateMutation,
+    useProductDetailsQuery,
+    useProductDeleteMutation,
+    useProductMediaCreateMutation,
+    useProductMediaDeleteMutation,
+    useProductUpdateMutation,
+    useProductVariantBulkDeleteMutation,
+    useProductVariantPreorderDeactivateMutation,
+    useProductVariantReorderMutation,
+    useSimpleProductUpdateMutation,
+    useVariantCreateMutation,
+    useProductMediaReorderMutation,
+    useProductVariantChannelListingUpdateMutation,
+    useUpdateMetadataMutation,
+    useUpdatePrivateMetadataMutation,
+    useWarehouseListQuery,
+} from "@mzawadie/graphql";
 import { getSearchFetchMoreProps } from "@mzawadie/hooks/makeTopLevelSearch/utils";
 import useBulkActions from "@mzawadie/hooks/useBulkActions";
 import useChannels from "@mzawadie/hooks/useChannels";
@@ -24,28 +45,12 @@ import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import useOnSetDefaultVariant from "@mzawadie/hooks/useOnSetDefaultVariant";
 import useShop from "@mzawadie/hooks/useShop";
 import useStateFromProps from "@mzawadie/hooks/useStateFromProps";
-import { useAttributeValueDeleteMutation } from "@mzawadie/pages/attributes/mutations";
 import { ChannelsWithVariantsAvailabilityDialog } from "@mzawadie/pages/channels/components/ChannelsWithVariantsAvailabilityDialog";
 import {
     ChannelData,
     createChannelsDataWithPrice,
     createSortedChannelsDataFromProduct,
 } from "@mzawadie/pages/channels/utils";
-import {
-    useProductChannelListingUpdate,
-    useProductDeleteMutation,
-    useProductMediaCreateMutation,
-    useProductMediaDeleteMutation,
-    useProductMediaReorder,
-    useProductUpdateMutation,
-    useProductVariantBulkDeleteMutation,
-    useProductVariantChannelListingUpdate,
-    useProductVariantPreorderDeactivateMutation,
-    useProductVariantReorderMutation,
-    useSimpleProductUpdateMutation,
-    useVariantCreateMutation,
-} from "@mzawadie/pages/products/mutations";
-import { useWarehouseList } from "@mzawadie/pages/warehouses/queries";
 import { warehouseAddPath } from "@mzawadie/pages/warehouses/urls";
 import useCategorySearch from "@mzawadie/searches/useCategorySearch";
 import useCollectionSearch from "@mzawadie/searches/useCollectionSearch";
@@ -56,7 +61,6 @@ import useAttributeValueSearchHandler from "@mzawadie/utils/handlers/attributeVa
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@mzawadie/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
-import { useMetadataUpdate, usePrivateMetadataUpdate } from "@mzawadie/utils/metadata/updateMetadata";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
@@ -64,9 +68,6 @@ import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import { ProductUpdatePage } from "../../components/ProductUpdatePage";
 import { ProductVariantCreateDialog } from "../../components/ProductVariantCreateDialog";
 import { ProductVariantEndPreorderDialog } from "../../components/ProductVariantEndPreorderDialog";
-import { useProductDetails } from "../../queries";
-import { ProductMediaCreateVariables } from "../../types/ProductMediaCreate";
-import { ProductUpdate as ProductUpdateMutationResult } from "../../types/ProductUpdate";
 import {
     productImageUrl,
     productListUrl,
@@ -162,7 +163,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         reset: searchAttributeReset,
     } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
-    const warehouses = useWarehouseList({
+    const warehouses = useWarehouseListQuery({
         displayLoader: true,
         variables: {
             first: 50,
@@ -171,11 +172,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
     const shop = useShop();
 
-    const [updateMetadata] = useMetadataUpdate({});
-    const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+    const [updateMetadata] = useUpdateMetadataMutation({});
+    const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
     const [productVariantCreate, productVariantCreateOpts] = useVariantCreateMutation({});
 
-    const { data, loading, refetch } = useProductDetails({
+    const { data, loading, refetch } = useProductDetailsQuery({
         displayLoader: true,
         variables: {
             id,
@@ -195,8 +196,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
     const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
 
-    const handleUpdate = (data: ProductUpdateMutationResult) => {
-        if (data.productUpdate.errors.length === 0) {
+    const handleUpdate = (data: ProductUpdateMutation) => {
+        if (data.productUpdate?.errors.length === 0) {
             notify({
                 status: "success",
                 text: intl.formatMessage(commonMessages.savedChanges),
@@ -212,7 +213,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onCompleted: handleUpdate,
     });
 
-    const [reorderProductImages, reorderProductImagesOpts] = useProductMediaReorder({});
+    const [reorderProductImages, reorderProductImagesOpts] = useProductMediaReorderMutation({});
 
     const [deleteProduct, deleteProductOpts] = useProductDeleteMutation({
         onCompleted: () => {
@@ -229,8 +230,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
     const [createProductImage, createProductImageOpts] = useProductMediaCreateMutation({
         onCompleted: (data) => {
-            const imageError = data.productMediaCreate.errors.find(
-                (error) => error.field === ("image" as keyof ProductMediaCreateVariables)
+            const imageError = data.productMediaCreate?.errors.find(
+                (error) => error.field === ("image" as keyof ProductMediaCreateMutationVariables)
             );
             if (imageError) {
                 notify({
@@ -253,7 +254,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     const [bulkProductVariantDelete, bulkProductVariantDeleteOpts] =
         useProductVariantBulkDeleteMutation({
             onCompleted: (data) => {
-                if (data.productVariantBulkDelete.errors.length === 0) {
+                if (data.productVariantBulkDelete?.errors.length === 0) {
                     closeModal();
                     reset();
                     refetch();
@@ -277,6 +278,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     );
 
     const [channelsData, setChannelsData] = useStateFromProps(allChannels);
+
     const {
         channels: updatedChannels,
         channelsWithVariantsData,
@@ -307,9 +309,9 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         { formId: PRODUCT_UPDATE_FORM_ID }
     );
 
-    const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({
+    const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdateMutation({
         onCompleted: (data) => {
-            if (!!data.productChannelListingUpdate.errors.length) {
+            if (!!data.productChannelListingUpdate?.errors.length) {
                 data.productChannelListingUpdate.errors.forEach((error) =>
                     notify({
                         status: "error",
@@ -320,9 +322,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         },
     });
 
-    const [updateVariantChannels, updateVariantChannelsOpts] = useProductVariantChannelListingUpdate(
-        {}
-    );
+    const [updateVariantChannels, updateVariantChannelsOpts] =
+        useProductVariantChannelListingUpdateMutation({});
 
     const [createProductMedia, createProductMediaOpts] = useProductMediaCreateMutation({
         onCompleted: (data) => {
@@ -393,6 +394,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     const handleImageUpload = createImageUploadHandler(id, (variables) =>
         createProductImage({ variables })
     );
+
     const handleImageReorder = createImageReorderHandler(product, (variables) =>
         reorderProductImages({ variables })
     );
@@ -450,9 +452,9 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
 
     const errors = [
-        ...(updateProductOpts.data?.productUpdate.errors || []),
-        ...(updateSimpleProductOpts.data?.productUpdate.errors || []),
-        ...(productVariantCreateOpts.data?.productVariantCreate.errors || []),
+        ...(updateProductOpts.data?.productUpdate?.errors || []),
+        ...(updateSimpleProductOpts.data?.productUpdate?.errors || []),
+        ...(productVariantCreateOpts.data?.productVariantCreate?.errors || []),
     ];
 
     const channelsErrors = [

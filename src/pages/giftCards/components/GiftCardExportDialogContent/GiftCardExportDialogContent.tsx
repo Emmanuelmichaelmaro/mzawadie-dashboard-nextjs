@@ -3,9 +3,15 @@ import { DialogActions, DialogContent, DialogTitle, Typography } from "@material
 import { ConfirmButton } from "@mzawadie/components/ConfirmButton";
 import { Task } from "@mzawadie/containers/BackgroundTasks/types";
 import { DialogProps } from "@mzawadie/core";
+import {
+    ExportGiftCardsMutation,
+    useExportGiftCardsMutation,
+    useGiftCardTotalCountQuery,
+} from "@mzawadie/graphql";
 import useBackgroundTask from "@mzawadie/hooks/useBackgroundTask";
 import useForm from "@mzawadie/hooks/useForm";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
+import { useGiftCardList } from "@mzawadie/pages/giftCards/components/GiftCardsList/providers/GiftCardListProvider";
 import ExportDialogSettings from "@mzawadie/pages/products/components/ProductExportDialog/ExportDialogSettings";
 import {
     ExportSettingsFormData,
@@ -16,13 +22,8 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ContentWithProgress from "../GiftCardCreateDialog/ContentWithProgress";
-import useGiftCardList from "../GiftCardsList/providers/GiftCardListProvider/hooks/useGiftCardList";
-import useGiftCardListBulkActions from "../GiftCardsList/providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
-import { useGiftCardTotalCountQuery } from "../GiftCardsList/queries";
 import { giftCardExportDialogMessages as messages } from "./messages";
-import { useGiftCardExportMutation } from "./mutations";
 import useStyles from "./styles";
-import { ExportGiftCards } from "./types/ExportGiftCards";
 import { getExportGiftCardsInput } from "./utils";
 
 const GiftCardExportDialog: React.FC<
@@ -37,9 +38,11 @@ const GiftCardExportDialog: React.FC<
 
     const hasIdsToExport = !!idsToExport?.length;
 
-    const { loading: loadingGiftCardList, totalCount: filteredGiftCardsCount } = useGiftCardList();
-
-    const { listElements } = useGiftCardListBulkActions();
+    const {
+        loading: loadingGiftCardList,
+        totalCount: filteredGiftCardsCount,
+        listElements,
+    } = useGiftCardList();
 
     const selectedIds = idsToExport ?? listElements;
 
@@ -47,7 +50,7 @@ const GiftCardExportDialog: React.FC<
 
     const loading = loadingGiftCardList || loadingGiftCardCount;
 
-    const handleSubmitComplete = (data: ExportGiftCards) => {
+    const handleSubmitComplete = (data: ExportGiftCardsMutation) => {
         const errors = data?.exportGiftCards?.errors;
 
         if (!errors.length) {
@@ -64,7 +67,7 @@ const GiftCardExportDialog: React.FC<
         }
     };
 
-    const [exportGiftCards, exportGiftCardsOpts] = useGiftCardExportMutation({
+    const [exportGiftCards, exportGiftCardsOpts] = useExportGiftCardsMutation({
         onCompleted: handleSubmitComplete,
     });
 
@@ -83,6 +86,7 @@ const GiftCardExportDialog: React.FC<
         hasIdsToExport ? exportSettingsInitialFormDataWithIds : exportSettingsInitialFormData,
         handleSubmit
     );
+
     const allGiftCardsCount = allGiftCardsCountData?.giftCards?.totalCount;
 
     const exportScopeLabels = {
@@ -113,6 +117,7 @@ const GiftCardExportDialog: React.FC<
             <DialogTitle>
                 <FormattedMessage {...messages.title} />
             </DialogTitle>
+
             <DialogContent>
                 <ContentWithProgress>
                     {!loading && (
@@ -136,6 +141,7 @@ const GiftCardExportDialog: React.FC<
                     )}
                 </ContentWithProgress>
             </DialogContent>
+
             <DialogActions>
                 <ConfirmButton
                     transitionState={exportGiftCardsOpts.status}

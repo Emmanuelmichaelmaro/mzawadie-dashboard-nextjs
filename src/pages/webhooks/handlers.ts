@@ -1,5 +1,6 @@
+// @ts-nocheck
+import { WebhookEventTypeAsyncEnum, WebhookEventTypeSyncEnum } from "@mzawadie/graphql";
 import { ChangeEvent } from "@mzawadie/hooks/useForm";
-import { WebhookEventTypeAsyncEnum, WebhookEventTypeSyncEnum } from "@mzawadie/types/globalTypes";
 import { toggle } from "@mzawadie/utils/lists";
 
 import { filterSelectedAsyncEvents } from "./utils";

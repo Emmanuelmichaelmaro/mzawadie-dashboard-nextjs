@@ -1,7 +1,7 @@
 import { OutputData } from "@editorjs/editorjs";
 import { MetadataFormData } from "@mzawadie/components/Metadata";
+import { ShippingMethodTypeEnum } from "@mzawadie/graphql";
 import { ChannelShippingData } from "@mzawadie/pages/channels/utils";
-import { ShippingMethodTypeEnum } from "@mzawadie/types/globalTypes";
 
 export interface ShippingZoneRateCommonFormData {
     channelListings: ChannelShippingData[];

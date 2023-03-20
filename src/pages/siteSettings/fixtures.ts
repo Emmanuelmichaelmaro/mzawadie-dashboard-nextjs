@@ -1,13 +1,13 @@
 // @ts-nocheck
-import { SiteSettings_shop } from "./types/SiteSettings";
+import { SiteSettingsQuery } from "@mzawadie/graphql";
 
-export const shop: SiteSettings_shop = {
+export const shop: SiteSettingsQuery["shop"] = {
     __typename: "Shop",
     companyAddress: {
         __typename: "Address",
         city: "Kenstad",
         cityArea: "Alabama",
-        companyName: "Mzawadie Commerce",
+        companyName: "Saleor e-commerce",
         country: {
             __typename: "CountryDisplay",
             code: "UA",
@@ -31,13 +31,13 @@ export const shop: SiteSettings_shop = {
     ],
     customerSetPasswordUrl: "https://example.com/reset-password",
     defaultMailSenderAddress: "noreply@example.com",
-    defaultMailSenderName: "Mzawadie",
+    defaultMailSenderName: "Saleor",
     description: "Lorem ipsum dolor sit amet",
     domain: {
         __typename: "Domain",
         host: "localhost:8000",
     },
-    name: "Mzawadie e-commerce",
+    name: "Saleor e-commerce",
     reserveStockDurationAnonymousUser: 10,
     reserveStockDurationAuthenticatedUser: 10,
     limitQuantityPerCheckout: 50,

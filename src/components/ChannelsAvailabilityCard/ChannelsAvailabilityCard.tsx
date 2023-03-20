@@ -3,9 +3,9 @@
 import { Typography } from "@material-ui/core";
 import Hr from "@mzawadie/components/Hr";
 import { RequireOnlyOne } from "@mzawadie/core";
+import { PermissionEnum } from "@mzawadie/graphql";
 import useDateLocalize from "@mzawadie/hooks/useDateLocalize";
 import { Channel as ChannelList, ChannelData } from "@mzawadie/pages/channels/utils";
-import { PermissionEnum } from "@mzawadie/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 

@@ -4,9 +4,8 @@ import Container from "@mzawadie/components/Container";
 import { Grid } from "@mzawadie/components/Grid";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import { renderCollection } from "@mzawadie/core";
-import { OrderErrorFragment } from "@mzawadie/fragments/types/OrderErrorFragment";
+import { OrderDetailsFragment, OrderErrorFragment } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
-import { OrderDetails_order } from "@mzawadie/pages/orders/types/OrderDetails";
 import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -36,7 +35,7 @@ const messages = defineMessages({
 });
 
 export interface OrderReturnPageProps {
-    order: OrderDetails_order;
+    order: OrderDetailsFragment;
     loading: boolean;
     errors?: OrderErrorFragment[];
     onBack: () => void;

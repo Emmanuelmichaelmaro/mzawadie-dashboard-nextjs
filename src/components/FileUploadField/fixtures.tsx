@@ -1,4 +1,4 @@
-import { FileFragment } from "@mzawadie/fragments/types/FileFragment";
+import { FileFragment } from "@mzawadie/graphql";
 
 export const UPLOADED_FILE: FileFragment = {
     __typename: "File",

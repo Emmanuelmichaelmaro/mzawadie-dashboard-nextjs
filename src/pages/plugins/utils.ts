@@ -1,6 +1,6 @@
 // @ts-nocheck
-import { PluginConfigurationExtendedFragment_configuration } from "@mzawadie/fragments/types/PluginConfigurationExtendedFragment";
-import { ConfigurationTypeFieldEnum } from "@mzawadie/types/globalTypes";
+import { ConfigurationTypeFieldEnum } from "@mzawadie/graphql";
+import { PluginConfigurationExtendedFragment_configuration } from "@mzawadie/graphqlPluginConfigurationExtendedFragment";
 
 export function isSecretField(
     config: PluginConfigurationExtendedFragment_configuration[],

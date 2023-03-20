@@ -5,7 +5,7 @@ import Skeleton from "@mzawadie/components/Skeleton";
 import { TableCellHeader } from "@mzawadie/components/TableCellHeader";
 import { TablePagination } from "@mzawadie/components/TablePagination";
 import { maybe, renderCollection, stopPropagation, ListProps, SortPage } from "@mzawadie/core";
-import { PermissionGroupList_permissionGroups_edges_node } from "@mzawadie/pages/permissionGroups/types/PermissionGroupList";
+import { PermissionGroupFragment } from "@mzawadie/graphql";
 import { PermissionGroupListUrlSortField } from "@mzawadie/pages/permissionGroups/urls";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
@@ -48,7 +48,7 @@ const useStyles = makeStyles(
 const numberOfColumns = 3;
 
 interface PermissionGroupListProps extends ListProps, SortPage<PermissionGroupListUrlSortField> {
-    permissionGroups: PermissionGroupList_permissionGroups_edges_node[];
+    permissionGroups: PermissionGroupFragment[];
     onDelete: (id: string) => void;
 }
 

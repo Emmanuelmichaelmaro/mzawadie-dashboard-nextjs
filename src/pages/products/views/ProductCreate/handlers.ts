@@ -1,9 +1,23 @@
 // @ts-nocheck
 import { FetchResult } from "@apollo/client";
 import { weight } from "@mzawadie/core";
-import { FileUpload, FileUploadVariables } from "@mzawadie/files/types/FileUpload";
-import { AttributeErrorFragment } from "@mzawadie/fragments/types/AttributeErrorFragment";
-import { UploadErrorFragment } from "@mzawadie/fragments/types/UploadErrorFragment";
+import {
+    AttributeErrorFragment,
+    FileUploadMutation,
+    FileUploadMutationVariables,
+    ProductChannelListingUpdateMutation,
+    ProductChannelListingUpdateMutationVariables,
+    ProductCreateMutation,
+    ProductCreateMutationVariables,
+    ProductDeleteMutation,
+    ProductDeleteMutationVariables,
+    ProductTypeQuery,
+    ProductVariantChannelListingUpdateMutation,
+    ProductVariantChannelListingUpdateMutationVariables,
+    UploadErrorFragment,
+    VariantCreateMutation,
+    VariantCreateMutationVariables,
+} from "@mzawadie/graphql";
 import {
     getAttributesAfterFileAttributesUpdate,
     mergeFileUploadErrors,
@@ -14,18 +28,6 @@ import {
 } from "@mzawadie/pages/attributes/utils/handlers";
 import { ChannelData } from "@mzawadie/pages/channels/utils";
 import { ProductCreateData } from "@mzawadie/pages/products/components/ProductCreatePage/form";
-import {
-    ProductChannelListingUpdate,
-    ProductChannelListingUpdateVariables,
-} from "@mzawadie/pages/products/types/ProductChannelListingUpdate";
-import { ProductCreate, ProductCreateVariables } from "@mzawadie/pages/products/types/ProductCreate";
-import { ProductDelete, ProductDeleteVariables } from "@mzawadie/pages/products/types/ProductDelete";
-import { ProductType_productType } from "@mzawadie/pages/products/types/ProductType";
-import {
-    ProductVariantChannelListingUpdate,
-    ProductVariantChannelListingUpdateVariables,
-} from "@mzawadie/pages/products/types/ProductVariantChannelListingUpdate";
-import { VariantCreate, VariantCreateVariables } from "@mzawadie/pages/products/types/VariantCreate";
 import { getAvailabilityVariables } from "@mzawadie/pages/products/utils/handlers";
 import { getParsedDataForJsonStringField } from "@mzawadie/utils/richText/misc";
 
@@ -60,19 +62,23 @@ const getSimpleProductVariables = (formData: ProductCreateData, productId: strin
 });
 
 export function createHandler(
-    productType: ProductType_productType,
-    uploadFile: (variables: FileUploadVariables) => Promise<FetchResult<FileUpload>>,
-    productCreate: (variables: ProductCreateVariables) => Promise<FetchResult<ProductCreate>>,
-    productVariantCreate: (variables: VariantCreateVariables) => Promise<FetchResult<VariantCreate>>,
+    productType: ProductTypeQuery["productType"],
+    uploadFile: (variables: FileUploadMutationVariables) => Promise<FetchResult<FileUploadMutation>>,
+    productCreate: (
+        variables: ProductCreateMutationVariables
+    ) => Promise<FetchResult<ProductCreateMutation>>,
+    productVariantCreate: (
+        variables: VariantCreateMutationVariables
+    ) => Promise<FetchResult<VariantCreateMutation>>,
     updateChannels: (options: {
-        variables: ProductChannelListingUpdateVariables;
-    }) => Promise<FetchResult<ProductChannelListingUpdate>>,
+        variables: ProductChannelListingUpdateMutationVariables;
+    }) => Promise<FetchResult<ProductChannelListingUpdateMutation>>,
     updateVariantChannels: (options: {
-        variables: ProductVariantChannelListingUpdateVariables;
-    }) => Promise<FetchResult<ProductVariantChannelListingUpdate>>,
+        variables: ProductVariantChannelListingUpdateMutationVariables;
+    }) => Promise<FetchResult<ProductVariantChannelListingUpdateMutation>>,
     productDelete: (options: {
-        variables: ProductDeleteVariables;
-    }) => Promise<FetchResult<ProductDelete>>
+        variables: ProductDeleteMutationVariables;
+    }) => Promise<FetchResult<ProductDeleteMutation>>
 ) {
     return async (formData: ProductCreateData) => {
         let errors: Array<AttributeErrorFragment | UploadErrorFragment> = [];
@@ -83,12 +89,13 @@ export function createHandler(
         );
 
         errors = [...errors, ...mergeFileUploadErrors(uploadFilesResult)];
+
         const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
             formData.attributesWithNewFileValue,
             uploadFilesResult
         );
 
-        const productVariables: ProductCreateVariables = {
+        const productVariables: ProductCreateMutationVariables = {
             input: {
                 attributes: prepareAttributesInput({
                     attributes: formData.attributes,

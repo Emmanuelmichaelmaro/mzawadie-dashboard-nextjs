@@ -1,75 +1,6 @@
 import { gql } from "@apollo/client";
-import { TypedQuery } from "@mzawadie/core";
-import { pageInfoFragment } from "@mzawadie/fragments/pageInfo";
-import {
-    attributeTranslationDetailsFragment,
-    attributeTranslationFragment,
-    categoryTranslationFragment,
-    collectionTranslationFragment,
-    pageTranslationFragment,
-    productTranslationFragment,
-    productVariantTranslationFragment,
-    saleTranslationFragment,
-    shippingMethodTranslationFragment,
-    voucherTranslationFragment,
-} from "@mzawadie/fragments/translations";
-import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
-import {
-    AttributeTranslationDetails,
-    AttributeTranslationDetailsVariables,
-} from "./types/AttributeTranslationDetails";
-import { AttributeTranslations, AttributeTranslationsVariables } from "./types/AttributeTranslations";
-import {
-    CategoryTranslationDetails,
-    CategoryTranslationDetailsVariables,
-} from "./types/CategoryTranslationDetails";
-import { CategoryTranslations, CategoryTranslationsVariables } from "./types/CategoryTranslations";
-import {
-    CollectionTranslationDetails,
-    CollectionTranslationDetailsVariables,
-} from "./types/CollectionTranslationDetails";
-import {
-    CollectionTranslations,
-    CollectionTranslationsVariables,
-} from "./types/CollectionTranslations";
-import {
-    PageTranslationDetails,
-    PageTranslationDetailsVariables,
-} from "./types/PageTranslationDetails";
-import { PageTranslations, PageTranslationsVariables } from "./types/PageTranslations";
-import {
-    ProductTranslationDetails,
-    ProductTranslationDetailsVariables,
-} from "./types/ProductTranslationDetails";
-import { ProductTranslations, ProductTranslationsVariables } from "./types/ProductTranslations";
-import { ProductVariantList, ProductVariantListVariables } from "./types/ProductVariantList";
-import {
-    ProductVariantTranslationDetails,
-    ProductVariantTranslationDetailsVariables,
-} from "./types/ProductVariantTranslationDetails";
-import {
-    SaleTranslationDetails,
-    SaleTranslationDetailsVariables,
-} from "./types/SaleTranslationDetails";
-import { SaleTranslations, SaleTranslationsVariables } from "./types/SaleTranslations";
-import {
-    ShippingMethodTranslationDetails,
-    ShippingMethodTranslationDetailsVariables,
-} from "./types/ShippingMethodTranslationDetails";
-import {
-    ShippingMethodTranslations,
-    ShippingMethodTranslationsVariables,
-} from "./types/ShippingMethodTranslations";
-import {
-    VoucherTranslationDetails,
-    VoucherTranslationDetailsVariables,
-} from "./types/VoucherTranslationDetails";
-import { VoucherTranslations, VoucherTranslationsVariables } from "./types/VoucherTranslations";
-
-const categoryTranslations = gql`
-    ${pageInfoFragment}
-    ${categoryTranslationFragment}
+export const categoryTranslations = gql`
     query CategoryTranslations(
         $language: LanguageCodeEnum!
         $first: Int
@@ -80,23 +11,17 @@ const categoryTranslations = gql`
         translations(kind: CATEGORY, before: $before, after: $after, first: $first, last: $last) {
             edges {
                 node {
-                    ...CategoryTranslationFragment
+                    ...CategoryTranslation
                 }
             }
             pageInfo {
-                ...PageInfoFragment
+                ...PageInfo
             }
         }
     }
 `;
-export const TypedCategoryTranslations = TypedQuery<
-    CategoryTranslations,
-    CategoryTranslationsVariables
->(categoryTranslations);
 
-const collectionTranslations = gql`
-    ${pageInfoFragment}
-    ${collectionTranslationFragment}
+export const collectionTranslations = gql`
     query CollectionTranslations(
         $language: LanguageCodeEnum!
         $first: Int
@@ -107,23 +32,17 @@ const collectionTranslations = gql`
         translations(kind: COLLECTION, before: $before, after: $after, first: $first, last: $last) {
             edges {
                 node {
-                    ...CollectionTranslationFragment
+                    ...CollectionTranslation
                 }
             }
             pageInfo {
-                ...PageInfoFragment
+                ...PageInfo
             }
         }
     }
 `;
-export const TypedCollectionTranslations = TypedQuery<
-    CollectionTranslations,
-    CollectionTranslationsVariables
->(collectionTranslations);
 
-const productTranslations = gql`
-    ${pageInfoFragment}
-    ${productTranslationFragment}
+export const productTranslations = gql`
     query ProductTranslations(
         $language: LanguageCodeEnum!
         $first: Int
@@ -134,22 +53,17 @@ const productTranslations = gql`
         translations(kind: PRODUCT, before: $before, after: $after, first: $first, last: $last) {
             edges {
                 node {
-                    ...ProductTranslationFragment
+                    ...ProductTranslation
                 }
             }
             pageInfo {
-                ...PageInfoFragment
+                ...PageInfo
             }
         }
     }
 `;
-export const TypedProductTranslations = TypedQuery<ProductTranslations, ProductTranslationsVariables>(
-    productTranslations
-);
 
-const pageTranslations = gql`
-    ${pageInfoFragment}
-    ${pageTranslationFragment}
+export const pageTranslations = gql`
     query PageTranslations(
         $language: LanguageCodeEnum!
         $first: Int
@@ -160,22 +74,17 @@ const pageTranslations = gql`
         translations(kind: PAGE, before: $before, after: $after, first: $first, last: $last) {
             edges {
                 node {
-                    ...PageTranslationFragment
+                    ...PageTranslation
                 }
             }
             pageInfo {
-                ...PageInfoFragment
+                ...PageInfo
             }
         }
     }
 `;
-export const TypedPageTranslations = TypedQuery<PageTranslations, PageTranslationsVariables>(
-    pageTranslations
-);
 
-const voucherTranslations = gql`
-    ${pageInfoFragment}
-    ${voucherTranslationFragment}
+export const voucherTranslations = gql`
     query VoucherTranslations(
         $language: LanguageCodeEnum!
         $first: Int
@@ -186,22 +95,17 @@ const voucherTranslations = gql`
         translations(kind: VOUCHER, before: $before, after: $after, first: $first, last: $last) {
             edges {
                 node {
-                    ...VoucherTranslationFragment
+                    ...VoucherTranslation
                 }
             }
             pageInfo {
-                ...PageInfoFragment
+                ...PageInfo
             }
         }
     }
 `;
-export const TypedVoucherTranslations = TypedQuery<VoucherTranslations, VoucherTranslationsVariables>(
-    voucherTranslations
-);
 
-const saleTranslations = gql`
-    ${pageInfoFragment}
-    ${saleTranslationFragment}
+export const saleTranslations = gql`
     query SaleTranslations(
         $language: LanguageCodeEnum!
         $first: Int
@@ -212,22 +116,17 @@ const saleTranslations = gql`
         translations(kind: SALE, before: $before, after: $after, first: $first, last: $last) {
             edges {
                 node {
-                    ...SaleTranslationFragment
+                    ...SaleTranslation
                 }
             }
             pageInfo {
-                ...PageInfoFragment
+                ...PageInfo
             }
         }
     }
 `;
-export const TypedSaleTranslations = TypedQuery<SaleTranslations, SaleTranslationsVariables>(
-    saleTranslations
-);
 
-const attributeTranslations = gql`
-    ${pageInfoFragment}
-    ${attributeTranslationFragment}
+export const attributeTranslations = gql`
     query AttributeTranslations(
         $language: LanguageCodeEnum!
         $first: Int
@@ -238,23 +137,17 @@ const attributeTranslations = gql`
         translations(kind: ATTRIBUTE, before: $before, after: $after, first: $first, last: $last) {
             edges {
                 node {
-                    ...AttributeTranslationFragment
+                    ...AttributeTranslation
                 }
             }
             pageInfo {
-                ...PageInfoFragment
+                ...PageInfo
             }
         }
     }
 `;
-export const TypedAttributeTranslations = TypedQuery<
-    AttributeTranslations,
-    AttributeTranslationsVariables
->(attributeTranslations);
 
-const shippingMethodTranslations = gql`
-    ${pageInfoFragment}
-    ${shippingMethodTranslationFragment}
+export const shippingMethodTranslations = gql`
     query ShippingMethodTranslations(
         $language: LanguageCodeEnum!
         $first: Int
@@ -271,34 +164,25 @@ const shippingMethodTranslations = gql`
         ) {
             edges {
                 node {
-                    ...ShippingMethodTranslationFragment
+                    ...ShippingMethodTranslation
                 }
             }
             pageInfo {
-                ...PageInfoFragment
+                ...PageInfo
             }
         }
     }
 `;
-export const TypedShippingMethodTranslations = TypedQuery<
-    ShippingMethodTranslations,
-    ShippingMethodTranslationsVariables
->(shippingMethodTranslations);
 
-const productTranslationDetails = gql`
-    ${productTranslationFragment}
+export const productTranslationDetails = gql`
     query ProductTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
         translation(kind: PRODUCT, id: $id) {
-            ...ProductTranslationFragment
+            ...ProductTranslation
         }
     }
 `;
-export const useProductTranslationDetails = makeQuery<
-    ProductTranslationDetails,
-    ProductTranslationDetailsVariables
->(productTranslationDetails);
 
-const productVariantList = gql`
+export const productVariantList = gql`
     query ProductVariantList($id: ID!) {
         product(id: $id) {
             id
@@ -310,90 +194,56 @@ const productVariantList = gql`
         }
     }
 `;
-export const useProductVariantList = makeQuery<ProductVariantList, ProductVariantListVariables>(
-    productVariantList
-);
 
-const productVariantTranslationDetails = gql`
-    ${productVariantTranslationFragment}
+export const productVariantTranslationDetails = gql`
     query ProductVariantTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
         translation(kind: VARIANT, id: $id) {
-            ...ProductVariantTranslationFragment
+            ...ProductVariantTranslation
         }
     }
 `;
-export const useProductVariantTranslationDetails = makeQuery<
-    ProductVariantTranslationDetails,
-    ProductVariantTranslationDetailsVariables
->(productVariantTranslationDetails);
 
-const categoryTranslationDetails = gql`
-    ${categoryTranslationFragment}
+export const categoryTranslationDetails = gql`
     query CategoryTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
         translation(kind: CATEGORY, id: $id) {
-            ...CategoryTranslationFragment
+            ...CategoryTranslation
         }
     }
 `;
-export const useCategoryTranslationDetails = makeQuery<
-    CategoryTranslationDetails,
-    CategoryTranslationDetailsVariables
->(categoryTranslationDetails);
 
-const collectionTranslationDetails = gql`
-    ${collectionTranslationFragment}
+export const collectionTranslationDetails = gql`
     query CollectionTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
         translation(id: $id, kind: COLLECTION) {
-            ...CollectionTranslationFragment
+            ...CollectionTranslation
         }
     }
 `;
-export const useCollectionTranslationDetails = makeQuery<
-    CollectionTranslationDetails,
-    CollectionTranslationDetailsVariables
->(collectionTranslationDetails);
 
-const pageTranslationDetails = gql`
-    ${pageTranslationFragment}
+export const pageTranslationDetails = gql`
     query PageTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
         translation(id: $id, kind: PAGE) {
-            ...PageTranslationFragment
+            ...PageTranslation
         }
     }
 `;
-export const usePageTranslationDetails = makeQuery<
-    PageTranslationDetails,
-    PageTranslationDetailsVariables
->(pageTranslationDetails);
 
-const saleTranslationDetails = gql`
-    ${saleTranslationFragment}
+export const saleTranslationDetails = gql`
     query SaleTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
         translation(kind: SALE, id: $id) {
-            ...SaleTranslationFragment
+            ...SaleTranslation
         }
     }
 `;
-export const useSaleTranslationDetails = makeQuery<
-    SaleTranslationDetails,
-    SaleTranslationDetailsVariables
->(saleTranslationDetails);
 
-const voucherTranslationDetails = gql`
-    ${voucherTranslationFragment}
+export const voucherTranslationDetails = gql`
     query VoucherTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
         translation(kind: VOUCHER, id: $id) {
-            ...VoucherTranslationFragment
+            ...VoucherTranslation
         }
     }
 `;
-export const useVoucherTranslationDetails = makeQuery<
-    VoucherTranslationDetails,
-    VoucherTranslationDetailsVariables
->(voucherTranslationDetails);
 
-const attributeTranslationDetails = gql`
-    ${attributeTranslationDetailsFragment}
+export const attributeTranslationDetails = gql`
     query AttributeTranslationDetails(
         $id: ID!
         $language: LanguageCodeEnum!
@@ -403,24 +253,15 @@ const attributeTranslationDetails = gql`
         $beforeValues: String
     ) {
         translation(kind: ATTRIBUTE, id: $id) {
-            ...AttributeTranslationDetailsFragment
+            ...AttributeTranslationDetails
         }
     }
 `;
-export const useAttributeTranslationDetails = makeQuery<
-    AttributeTranslationDetails,
-    AttributeTranslationDetailsVariables
->(attributeTranslationDetails);
 
-const shippingMethodTranslationDetails = gql`
-    ${shippingMethodTranslationFragment}
+export const shippingMethodTranslationDetails = gql`
     query ShippingMethodTranslationDetails($id: ID!, $language: LanguageCodeEnum!) {
         translation(kind: SHIPPING_METHOD, id: $id) {
-            ...ShippingMethodTranslationFragment
+            ...ShippingMethodTranslation
         }
     }
 `;
-export const useShippingMethodTranslationDetails = makeQuery<
-    ShippingMethodTranslationDetails,
-    ShippingMethodTranslationDetailsVariables
->(shippingMethodTranslationDetails);

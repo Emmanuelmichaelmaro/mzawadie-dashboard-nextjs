@@ -1,15 +1,11 @@
 // @ts-nocheck
 import { IFilterElement } from "@mzawadie/components/Filter";
 import { findValueInEnum, maybe } from "@mzawadie/core";
+import { ProductTypeConfigurable, ProductTypeEnum, ProductTypeFilterInput } from "@mzawadie/graphql";
 import {
     ProductTypeFilterKeys,
     ProductTypeListFilterOpts,
 } from "@mzawadie/pages/productTypes/components/ProductTypeListPage";
-import {
-    ProductTypeConfigurable,
-    ProductTypeEnum,
-    ProductTypeFilterInput,
-} from "@mzawadie/types/globalTypes";
 import {
     createFilterTabUtils,
     createFilterUtils,

@@ -1,8 +1,9 @@
+// @ts-nocheck
 import { Card, CardContent, TextField } from "@material-ui/core";
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { commonMessages } from "@mzawadie/core";
-import { ShippingErrorFragment } from "@mzawadie/fragments/types/ShippingErrorFragment";
+import { ShippingErrorFragment } from "@mzawadie/graphql";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getShippingErrorMessage from "@mzawadie/utils/errors/shipping";
 import { makeStyles } from "@saleor/macaw-ui";

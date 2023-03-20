@@ -4,9 +4,8 @@ import Container from "@mzawadie/components/Container";
 import LimitReachedAlert from "@mzawadie/components/LimitReachedAlert";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import { SearchBar } from "@mzawadie/components/SearchBar";
-import { RefreshLimits_shop_limits } from "@mzawadie/components/Shop/types/RefreshLimits";
 import { PageListProps, SearchPageProps, SortPage, TabPageProps, sectionNames } from "@mzawadie/core";
-import { WarehouseWithShippingFragment } from "@mzawadie/fragments/types/WarehouseWithShippingFragment";
+import { RefreshLimitsQuery, WarehouseWithShippingFragment } from "@mzawadie/graphql";
 import { WarehouseListUrlSortField } from "@mzawadie/pages/warehouses/urls";
 import { hasLimits, isLimitReached } from "@mzawadie/utils/limits";
 import { Backlink } from "@saleor/macaw-ui";
@@ -20,7 +19,7 @@ export interface WarehouseListPageProps
         SearchPageProps,
         SortPage<WarehouseListUrlSortField>,
         TabPageProps {
-    limits: RefreshLimits_shop_limits;
+    limits: RefreshLimitsQuery["shop"]["limits"];
     warehouses: WarehouseWithShippingFragment[];
     onBack: () => void;
     onRemove: (id: string) => void;
@@ -58,6 +57,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
             <Backlink onClick={onBack}>
                 <FormattedMessage {...sectionNames.configuration} />
             </Backlink>
+
             <PageHeader
                 title={intl.formatMessage(sectionNames.warehouses)}
                 limitText={
@@ -89,6 +89,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
                     />
                 </Button>
             </PageHeader>
+
             {limitReached && (
                 <LimitReachedAlert
                     title={intl.formatMessage({
@@ -103,6 +104,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
                     />
                 </LimitReachedAlert>
             )}
+
             <Card>
                 <SearchBar
                     allTabLabel={intl.formatMessage({
@@ -123,6 +125,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
                     onTabDelete={onTabDelete}
                     onTabSave={onTabSave}
                 />
+
                 <WarehouseList
                     warehouses={warehouses}
                     disabled={disabled}

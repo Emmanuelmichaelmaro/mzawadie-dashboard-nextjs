@@ -14,14 +14,14 @@ import {
     transformPaymentStatus,
     ListProps,
     SortPage,
+    RelayToFlat,
 } from "@mzawadie/core";
+import { OrderListQuery } from "@mzawadie/graphql";
 import { OrderListUrlSortField } from "@mzawadie/pages/orders/urls";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import { makeStyles, Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { OrderList_orders_edges_node } from "../../types/OrderList";
 
 const useStyles = makeStyles(
     (theme) => {
@@ -68,7 +68,7 @@ const useStyles = makeStyles(
 );
 
 interface OrderListProps extends ListProps, SortPage<OrderListUrlSortField> {
-    orders: OrderList_orders_edges_node[];
+    orders: RelayToFlat<OrderListQuery["orders"]>;
 }
 
 const numberOfColumns = 6;

@@ -4,7 +4,7 @@ import Container from "@mzawadie/components/Container";
 import { LanguageSwitch } from "@mzawadie/components/LanguageSwitch";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import { commonMessages, sectionNames, getStringOrPlaceholder } from "@mzawadie/core";
-import { ProductVariantTranslationFragment } from "@mzawadie/fragments/types/ProductVariantTranslationFragment";
+import { LanguageCodeEnum, ProductVariantTranslationFragment } from "@mzawadie/graphql";
 import {
     TranslationInputFieldName,
     TranslationsEntitiesPageProps,

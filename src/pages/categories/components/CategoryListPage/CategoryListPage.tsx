@@ -11,7 +11,7 @@ import {
     SortPage,
     TabPageProps,
 } from "@mzawadie/core";
-import { CategoryFragment } from "@mzawadie/fragments/types/CategoryFragment";
+import { CategoryFragment } from "@mzawadie/graphql";
 import { CategoryListUrlSortField } from "@mzawadie/pages/categories/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

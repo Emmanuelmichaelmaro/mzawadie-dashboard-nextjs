@@ -1,8 +1,9 @@
+// @ts-nocheck
 import { Card, CardContent } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { Grid } from "@mzawadie/components/Grid";
 import { RadioGroupField } from "@mzawadie/components/RadioGroupField";
-import { DiscountErrorFragment } from "@mzawadie/fragments/types/DiscountErrorFragment";
+import { DiscountErrorFragment } from "@mzawadie/graphql";
 import { DiscountTypeEnum } from "@mzawadie/pages/discounts/types";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getDiscountErrorMessage from "@mzawadie/utils/errors/discounts";

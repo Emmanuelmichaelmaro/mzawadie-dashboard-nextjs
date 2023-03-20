@@ -1,13 +1,6 @@
 import { gql } from "@apollo/client";
-import { giftCardErrorFragment } from "@mzawadie/fragments/errors";
-import makeMutation from "@mzawadie/hooks/graphql/makeMutation";
 
-import { giftCardDataFragment } from "../queries";
-import { GiftCardResend, GiftCardResendVariables } from "./types/GiftCardResend";
-
-const giftCardResend = gql`
-    ${giftCardDataFragment}
-    ${giftCardErrorFragment}
+export const giftCardResend = gql`
     mutation GiftCardResend($input: GiftCardResendInput!) {
         giftCardResend(input: $input) {
             errors {
@@ -19,7 +12,3 @@ const giftCardResend = gql`
         }
     }
 `;
-
-export const useGiftCardResendCodeMutation = makeMutation<GiftCardResend, GiftCardResendVariables>(
-    giftCardResend
-);

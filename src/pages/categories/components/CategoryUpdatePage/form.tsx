@@ -1,10 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { OutputData } from "@editorjs/editorjs";
 import { MetadataFormData } from "@mzawadie/components/Metadata";
 import { RichTextEditorChange } from "@mzawadie/components/RichTextEditor";
+import { CategoryDetailsFragment } from "@mzawadie/graphql";
 import useForm, { FormChange } from "@mzawadie/hooks/useForm";
-import { CategoryDetails_category } from "@mzawadie/pages/categories/types/CategoryDetails";
 import handleFormSubmit from "@mzawadie/utils/handlers/handleFormSubmit";
 import { mapMetadataItemToInput } from "@mzawadie/utils/maps";
 import getMetadata from "@mzawadie/utils/metadata/getMetadata";
@@ -19,6 +18,7 @@ export interface CategoryUpdateFormData extends MetadataFormData {
     seoTitle: string;
     seoDescription: string;
 }
+
 export interface CategoryUpdateData extends CategoryUpdateFormData {
     description: OutputData;
 }
@@ -37,15 +37,16 @@ export interface UseCategoryUpdateFormResult {
 
 export interface CategoryUpdateFormProps {
     children: (props: UseCategoryUpdateFormResult) => React.ReactNode;
-    category: CategoryDetails_category;
+    category: CategoryDetailsFragment;
     onSubmit: (data: CategoryUpdateData) => Promise<any[]>;
 }
 
 function useCategoryUpdateForm(
-    category: CategoryDetails_category,
+    category: CategoryDetailsFragment,
     onSubmit: (data: CategoryUpdateData) => Promise<any[]>
 ): UseCategoryUpdateFormResult {
     const [changed, setChanged] = React.useState(false);
+
     const triggerChange = () => setChanged(true);
 
     const form = useForm<CategoryUpdateFormData>({
@@ -57,6 +58,7 @@ function useCategoryUpdateForm(
         seoTitle: category?.seoTitle || "",
         slug: category?.slug || "",
     });
+
     const [description, changeDescription] = useRichText({
         initial: category?.description,
         triggerChange,
@@ -72,6 +74,7 @@ function useCategoryUpdateForm(
         form.change(event, cb);
         triggerChange();
     };
+
     const changeMetadata = makeMetadataChangeHandler(handleChange);
 
     // Need to make it function to always have description.current up to date
@@ -107,4 +110,5 @@ const CategoryUpdateForm: React.FC<CategoryUpdateFormProps> = ({ children, categ
 };
 
 CategoryUpdateForm.displayName = "CategoryUpdateForm";
+
 export default CategoryUpdateForm;

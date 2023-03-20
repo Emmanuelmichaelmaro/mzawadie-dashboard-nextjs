@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { Card, CardContent } from "@material-ui/core";
 import { getMultiChoices } from "@mzawadie/components/Attributes/utils";
@@ -7,17 +6,19 @@ import { CardTitle } from "@mzawadie/components/CardTitle";
 import LimitReachedAlert from "@mzawadie/components/LimitReachedAlert";
 import { MultiAutocompleteSelectField } from "@mzawadie/components/MultiAutocompleteSelectField";
 import Skeleton from "@mzawadie/components/Skeleton";
-import { commonMessages, FetchMoreProps } from "@mzawadie/core";
-import { AttributeValueFragment } from "@mzawadie/fragments/types/AttributeValueFragment";
+import { commonMessages, FetchMoreProps, RelayToFlat } from "@mzawadie/core";
+import {
+    AttributeInputTypeEnum,
+    AttributeValueFragment,
+    ProductVariantAttributesFragment,
+    SearchAttributeValuesQuery,
+} from "@mzawadie/graphql";
 import { getMeasurementUnitMessage } from "@mzawadie/pages/attributes/components/AttributeDetails/utils";
 import { getById } from "@mzawadie/pages/orders/components/OrderReturnPage/utils";
 import {
     getBasicAttributeValue,
     getBooleanAttributeValue,
 } from "@mzawadie/pages/products/components/ProductVariantCreatorPage/utils";
-import { ProductDetails_product_productType_variantAttributes } from "@mzawadie/pages/products/types/ProductDetails";
-import { SearchAttributeValues_attribute_choices_edges_node } from "@mzawadie/searches/types/SearchAttributeValues";
-import { AttributeInputTypeEnum } from "@mzawadie/types/globalTypes";
 import React from "react";
 import { defineMessages, FormattedMessage, IntlShape, useIntl } from "react-intl";
 
@@ -37,14 +38,14 @@ export function getVariantsNumber(data: ProductVariantCreateFormData): number {
 
 export function getMultiValues(
     attributes: Attribute[],
-    attribute: ProductDetails_product_productType_variantAttributes
+    attribute: ProductVariantAttributesFragment["productType"]["variantAttributes"][0]
 ) {
     return attributes.find(getById(attribute.id))?.values?.map((value) => value.slug);
 }
 
 export function getMultiDisplayValues(
     attributes: Attribute[],
-    attribute: ProductDetails_product_productType_variantAttributes
+    attribute: ProductVariantAttributesFragment["productType"]["variantAttributes"][0]
 ) {
     return attributes.find(getById(attribute.id))?.values.map((value) => ({
         label: value.value?.name,
@@ -78,8 +79,8 @@ const getBooleanChoices = (
 };
 
 export interface ProductVariantCreatorValuesProps {
-    attributes: ProductDetails_product_productType_variantAttributes[];
-    attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
+    attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"];
+    attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
     fetchAttributeValues: (query: string, attributeId: string) => void;
     fetchMoreAttributeValues?: FetchMoreProps;
     data: ProductVariantCreateFormData;

@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { DEFAULT_INITIAL_SEARCH_DATA, extractMutationErrors, commonMessages } from "@mzawadie/core";
+import { usePermissionGroupDetailsQuery, usePermissionGroupUpdateMutation } from "@mzawadie/graphql";
 import useBulkActions from "@mzawadie/hooks/useBulkActions";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
@@ -27,9 +28,6 @@ import {
     PermissionGroupDetailsPageFormData,
 } from "../../components/PermissionGroupDetailsPage";
 import { UnassignMembersDialog } from "../../components/UnassignMembersDialog";
-import { usePermissionGroupUpdate } from "../../mutations";
-import { usePermissionGroupDetailsQuery } from "../../queries";
-import { PermissionGroupUpdate } from "../../types/PermissionGroupUpdate";
 import {
     permissionGroupDetailsUrl,
     PermissionGroupDetailsUrlDialog,
@@ -66,23 +64,21 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({ 
         variables: DEFAULT_INITIAL_SEARCH_DATA,
     });
 
-    const handleUpdateSuccess = (data: PermissionGroupUpdate) => {
-        if (data.permissionGroupUpdate.errors.length === 0) {
-            notify({
-                status: "success",
-                text: intl.formatMessage(commonMessages.savedChanges),
-            });
-            refetch();
-            closeModal();
-        } else if (data.permissionGroupUpdate.errors.some((e) => e.field === "removeUsers")) {
-            openModal("unassignError");
-        }
-    };
-
     const { isSelected, listElements, toggle, toggleAll } = useBulkActions(params.ids);
 
-    const [permissionGroupUpdate, permissionGroupUpdateResult] = usePermissionGroupUpdate({
-        onCompleted: handleUpdateSuccess,
+    const [permissionGroupUpdate, permissionGroupUpdateResult] = usePermissionGroupUpdateMutation({
+        onCompleted: (data) => {
+            if (data.permissionGroupUpdate.errors.length === 0) {
+                notify({
+                    status: "success",
+                    text: intl.formatMessage(commonMessages.savedChanges),
+                });
+                refetch();
+                closeModal();
+            } else if (data.permissionGroupUpdate.errors.some((e) => e.field === "removeUsers")) {
+                openModal("unassignError");
+            }
+        },
     });
 
     const [openModal, closeModal] = createDialogActionHandlers<

@@ -1,4 +1,9 @@
 import { extractMutationErrors } from "@mzawadie/core";
+import {
+    useOrderFulfillmentRefundProductsMutation,
+    useOrderRefundDataQuery,
+    useOrderRefundMutation,
+} from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { OrderRefundPage } from "@mzawadie/pages/orders/components/OrderRefundPage";
@@ -7,11 +12,6 @@ import {
     OrderRefundSubmitData,
     OrderRefundType,
 } from "@mzawadie/pages/orders/components/OrderRefundPage/form";
-import {
-    useOrderFulfillmentRefundProductsMutation,
-    useOrderRefundMutation,
-} from "@mzawadie/pages/orders/mutations";
-import { useOrderRefundData } from "@mzawadie/pages/orders/queries";
 import { orderUrl } from "@mzawadie/pages/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -58,7 +58,7 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
     const notify = useNotifier();
     const intl = useIntl();
 
-    const { data, loading } = useOrderRefundData({
+    const { data, loading } = useOrderRefundDataQuery({
         displayLoader: true,
         variables: {
             orderId,

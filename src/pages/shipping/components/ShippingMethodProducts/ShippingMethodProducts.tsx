@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import {
     Button,
@@ -17,8 +16,8 @@ import Skeleton from "@mzawadie/components/Skeleton";
 import { TableCellAvatar } from "@mzawadie/components/TableCellAvatar";
 import { TableHead } from "@mzawadie/components/TableHead";
 import { TablePagination } from "@mzawadie/components/TablePagination";
-import { renderCollection, ListActions, ListProps } from "@mzawadie/core";
-import { ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node } from "@mzawadie/pages/shipping/types/ShippingZone";
+import { renderCollection, ListActions, ListProps, RelayToFlat } from "@mzawadie/core";
+import { ShippingZoneQuery } from "@mzawadie/graphql";
 import { DeleteIcon, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -48,7 +47,7 @@ const useStyles = makeStyles(
 export interface ShippingMethodProductsProps
     extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">>,
         ListActions {
-    products: ShippingZone_shippingZone_shippingMethods_excludedProducts_edges_node[];
+    products: RelayToFlat<ShippingZoneQuery["shippingZone"]["shippingMethods"][0]["excludedProducts"]>;
     onProductAssign: () => void;
     onProductUnassign: (ids: string[]) => void;
 }

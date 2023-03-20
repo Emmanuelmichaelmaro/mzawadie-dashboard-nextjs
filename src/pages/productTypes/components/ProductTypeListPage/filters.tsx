@@ -1,6 +1,6 @@
 import { IFilter } from "@mzawadie/components/Filter";
 import { FilterOpts, commonMessages } from "@mzawadie/core";
-import { ProductTypeConfigurable, ProductTypeEnum } from "@mzawadie/types/globalTypes";
+import { ProductTypeConfigurable, ProductTypeEnum } from "@mzawadie/graphql";
 import { createOptionsField } from "@mzawadie/utils/filters/fields";
 import { defineMessages, IntlShape } from "react-intl";
 

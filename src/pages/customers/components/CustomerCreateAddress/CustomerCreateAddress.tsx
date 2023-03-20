@@ -4,7 +4,7 @@ import { AddressEdit } from "@mzawadie/components/AddressEdit";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { FormSpacer } from "@mzawadie/components/FormSpacer";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
-import { AccountErrorFragment } from "@mzawadie/fragments/types/AccountErrorFragment";
+import { AccountErrorFragment } from "@mzawadie/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

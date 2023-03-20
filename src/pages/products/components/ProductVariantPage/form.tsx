@@ -2,8 +2,13 @@
 import { AttributeInput } from "@mzawadie/components/Attributes";
 import { useExitFormDialog } from "@mzawadie/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@mzawadie/components/Metadata";
-import { errorMessages, FetchMoreProps, ReorderEvent } from "@mzawadie/core";
-import { ProductVariant } from "@mzawadie/fragments/types/ProductVariant";
+import { errorMessages, FetchMoreProps, RelayToFlat, ReorderEvent } from "@mzawadie/core";
+import {
+    ProductVariantFragment,
+    SearchPagesQuery,
+    SearchProductsQuery,
+    SearchWarehousesQuery,
+} from "@mzawadie/graphql";
 import useForm, {
     CommonUseFormResultWithHandlers,
     FormChange,
@@ -35,9 +40,6 @@ import {
     getChannelsInput,
 } from "@mzawadie/pages/products/utils/handlers";
 import { validateCostPrice, validatePrice } from "@mzawadie/pages/products/utils/validation";
-import { SearchPages_search_edges_node } from "@mzawadie/searches/types/SearchPages";
-import { SearchProducts_search_edges_node } from "@mzawadie/searches/types/SearchProducts";
-import { SearchWarehouses_search_edges_node } from "@mzawadie/searches/types/SearchWarehouses";
 import { arrayDiff } from "@mzawadie/utils/arrays";
 import { mapMetadataItemToInput } from "@mzawadie/utils/maps";
 import getMetadata from "@mzawadie/utils/metadata/getMetadata";
@@ -58,11 +60,13 @@ export interface ProductVariantUpdateFormData extends MetadataFormData {
     hasPreorderEndDate: boolean;
     preorderEndDateTime?: string;
 }
+
 export interface ProductVariantUpdateData extends ProductVariantUpdateFormData {
     channelListings: FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>;
     attributes: AttributeInput[];
     stocks: ProductStockInput[];
 }
+
 export interface ProductVariantUpdateSubmitData extends ProductVariantUpdateFormData {
     attributes: AttributeInput[];
     attributesWithNewFileValue: FormsetData<null, File>;
@@ -73,10 +77,10 @@ export interface ProductVariantUpdateSubmitData extends ProductVariantUpdateForm
 }
 
 export interface UseProductVariantUpdateFormOpts {
-    warehouses: SearchWarehouses_search_edges_node[];
+    warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
     currentChannels: ChannelPriceAndPreorderData[];
-    referencePages: SearchPages_search_edges_node[];
-    referenceProducts: SearchProducts_search_edges_node[];
+    referencePages: RelayToFlat<SearchPagesQuery["search"]>;
+    referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
     fetchReferencePages?: (data: string) => void;
     fetchMoreReferencePages?: FetchMoreProps;
     fetchReferenceProducts?: (data: string) => void;
@@ -107,12 +111,12 @@ export interface UseProductVariantUpdateFormResult
 
 export interface ProductVariantUpdateFormProps extends UseProductVariantUpdateFormOpts {
     children: (props: UseProductVariantUpdateFormResult) => React.ReactNode;
-    variant: ProductVariant;
+    variant: ProductVariantFragment;
     onSubmit: (data: ProductVariantUpdateSubmitData) => SubmitPromise;
 }
 
 function useProductVariantUpdateForm(
-    variant: ProductVariant,
+    variant: ProductVariantFragment,
     onSubmit: (data: ProductVariantUpdateSubmitData) => SubmitPromise,
     opts: UseProductVariantUpdateFormOpts
 ): UseProductVariantUpdateFormResult {

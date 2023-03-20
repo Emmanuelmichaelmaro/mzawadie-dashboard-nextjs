@@ -1,12 +1,7 @@
 import { gql } from "@apollo/client";
 
-import { attributeValueFragment, attributeValueListFragment } from "./attributes";
-import { metadataFragment } from "./metadata";
-import { taxTypeFragment } from "./taxes";
-import { weightFragment } from "./weight";
-
 export const stockFragment = gql`
-    fragment StockFragment on Stock {
+    fragment Stock on Stock {
         id
         quantity
         quantityAllocated
@@ -25,7 +20,7 @@ export const fragmentMoney = gql`
 `;
 
 export const fragmentPreorder = gql`
-    fragment PreorderFragment on PreorderData {
+    fragment Preorder on PreorderData {
         globalThreshold
         globalSoldUnits
         endDate
@@ -33,8 +28,7 @@ export const fragmentPreorder = gql`
 `;
 
 export const priceRangeFragment = gql`
-    ${fragmentMoney}
-    fragment PriceRangeFragment on TaxedMoneyRange {
+    fragment PriceRange on TaxedMoneyRange {
         start {
             net {
                 ...Money
@@ -49,7 +43,7 @@ export const priceRangeFragment = gql`
 `;
 
 export const fragmentProductMedia = gql`
-    fragment ProductMediaFragment on ProductMedia {
+    fragment ProductMedia on ProductMedia {
         id
         alt
         sortOrder
@@ -60,7 +54,7 @@ export const fragmentProductMedia = gql`
 `;
 
 export const channelListingProductWithoutPricingFragment = gql`
-    fragment ChannelListingProductWithoutPricingFragment on ProductChannelListing {
+    fragment ChannelListingProductWithoutPricing on ProductChannelListing {
         isPublished
         publicationDate
         isAvailableForPurchase
@@ -74,21 +68,18 @@ export const channelListingProductWithoutPricingFragment = gql`
     }
 `;
 export const channelListingProductFragment = gql`
-    ${priceRangeFragment}
-    ${channelListingProductWithoutPricingFragment}
-    fragment ChannelListingProductFragment on ProductChannelListing {
-        ...ChannelListingProductWithoutPricingFragment
+    fragment ChannelListingProduct on ProductChannelListing {
+        ...ChannelListingProductWithoutPricing
         pricing {
             priceRange {
-                ...PriceRangeFragment
+                ...PriceRange
             }
         }
     }
 `;
 
 export const channelListingProductVariantFragment = gql`
-    ${fragmentMoney}
-    fragment ChannelListingProductVariantFragment on ProductVariantChannelListing {
+    fragment ChannelListingProductVariant on ProductVariantChannelListing {
         channel {
             id
             name
@@ -108,8 +99,7 @@ export const channelListingProductVariantFragment = gql`
 `;
 
 export const productFragment = gql`
-    ${channelListingProductFragment}
-    fragment ProductFragment on Product {
+    fragment ProductWithChannelListings on Product {
         id
         name
         thumbnail {
@@ -121,16 +111,18 @@ export const productFragment = gql`
             hasVariants
         }
         channelListings {
-            ...ChannelListingProductFragment
+            ...ChannelListingProductWithoutPricing
+            pricing @include(if: $hasChannel) {
+                priceRange {
+                    ...PriceRange
+                }
+            }
         }
     }
 `;
 
 export const productVariantAttributesFragment = gql`
-    ${priceRangeFragment}
-    ${attributeValueFragment}
-    ${attributeValueListFragment}
-    fragment ProductVariantAttributesFragment on Product {
+    fragment ProductVariantAttributes on Product {
         id
         attributes {
             attribute {
@@ -147,11 +139,11 @@ export const productVariantAttributesFragment = gql`
                     last: $lastValues
                     before: $beforeValues
                 ) {
-                    ...AttributeValueListFragment
+                    ...AttributeValueList
                 }
             }
             values {
-                ...AttributeValueFragment
+                ...AttributeValueDetails
             }
         }
         productType {
@@ -168,7 +160,7 @@ export const productVariantAttributesFragment = gql`
                     last: $lastValues
                     before: $beforeValues
                 ) {
-                    ...AttributeValueListFragment
+                    ...AttributeValueList
                 }
             }
         }
@@ -178,28 +170,37 @@ export const productVariantAttributesFragment = gql`
                 name
                 currencyCode
             }
-            pricing {
-                priceRange {
-                    ...PriceRangeFragment
-                }
-            }
         }
     }
 `;
 
+export const productDetailsVariant = gql`
+    fragment ProductDetailsVariant on ProductVariant {
+        id
+        sku
+        name
+        margin
+        media {
+            url(size: 200)
+        }
+        stocks {
+            ...Stock
+        }
+        trackInventory
+        preorder {
+            ...Preorder
+        }
+        channelListings {
+            ...ChannelListingProductVariant
+        }
+        quantityLimitPerCustomer
+    }
+`;
+
 export const productFragmentDetails = gql`
-    ${fragmentPreorder}
-    ${fragmentProductMedia}
-    ${productVariantAttributesFragment}
-    ${stockFragment}
-    ${weightFragment}
-    ${metadataFragment}
-    ${taxTypeFragment}
-    ${channelListingProductFragment}
-    ${channelListingProductVariantFragment}
     fragment Product on Product {
-        ...ProductVariantAttributesFragment
-        ...MetadataFragment
+        ...ProductVariantAttributes
+        ...Metadata
         name
         slug
         description
@@ -219,52 +220,34 @@ export const productFragmentDetails = gql`
         }
         chargeTaxes
         channelListings {
-            ...ChannelListingProductFragment
+            ...ChannelListingProductWithoutPricing
         }
         media {
-            ...ProductMediaFragment
+            ...ProductMedia
         }
         isAvailable
         variants {
-            id
-            sku
-            name
-            margin
-            media {
-                url(size: 200)
-            }
-            stocks {
-                ...StockFragment
-            }
-            trackInventory
-            preorder {
-                ...PreorderFragment
-            }
-            channelListings {
-                ...ChannelListingProductVariantFragment
-            }
-            quantityLimitPerCustomer
+            ...ProductDetailsVariant
         }
         productType {
             id
             name
             hasVariants
             taxType {
-                ...TaxTypeFragment
+                ...TaxType
             }
         }
         weight {
-            ...WeightFragment
+            ...Weight
         }
         taxType {
-            ...TaxTypeFragment
+            ...TaxType
         }
     }
 `;
 
 export const variantAttributeFragment = gql`
-    ${attributeValueListFragment}
-    fragment VariantAttributeFragment on Attribute {
+    fragment VariantAttribute on Attribute {
         id
         name
         slug
@@ -273,42 +256,31 @@ export const variantAttributeFragment = gql`
         valueRequired
         unit
         choices(first: $firstValues, after: $afterValues, last: $lastValues, before: $beforeValues) {
-            ...AttributeValueListFragment
+            ...AttributeValueList
         }
     }
 `;
 
 export const selectedVariantAttributeFragment = gql`
-    ${attributeValueFragment}
-    ${variantAttributeFragment}
-    fragment SelectedVariantAttributeFragment on SelectedAttribute {
+    fragment SelectedVariantAttribute on SelectedAttribute {
         attribute {
-            ...VariantAttributeFragment
+            ...VariantAttribute
         }
         values {
-            ...AttributeValueFragment
+            ...AttributeValueDetails
         }
     }
 `;
 
 export const fragmentVariant = gql`
-    ${fragmentPreorder}
-    ${fragmentProductMedia}
-    ${selectedVariantAttributeFragment}
-    ${priceRangeFragment}
-    ${fragmentProductMedia}
-    ${stockFragment}
-    ${weightFragment}
-    ${metadataFragment}
-    ${channelListingProductVariantFragment}
     fragment ProductVariant on ProductVariant {
         id
-        ...MetadataFragment
+        ...Metadata
         selectionAttributes: attributes(variantSelection: VARIANT_SELECTION) {
-            ...SelectedVariantAttributeFragment
+            ...SelectedVariantAttribute
         }
         nonSelectionAttributes: attributes(variantSelection: NOT_VARIANT_SELECTION) {
-            ...SelectedVariantAttributeFragment
+            ...SelectedVariantAttribute
         }
         media {
             id
@@ -323,7 +295,7 @@ export const fragmentVariant = gql`
                 id
             }
             media {
-                ...ProductMediaFragment
+                ...ProductMedia
             }
             name
             thumbnail {
@@ -336,11 +308,6 @@ export const fragmentVariant = gql`
                     id
                     name
                     currencyCode
-                }
-                pricing {
-                    priceRange {
-                        ...PriceRangeFragment
-                    }
                 }
             }
             variants {
@@ -359,25 +326,25 @@ export const fragmentVariant = gql`
             }
         }
         channelListings {
-            ...ChannelListingProductVariantFragment
+            ...ChannelListingProductVariant
         }
         sku
         stocks {
-            ...StockFragment
+            ...Stock
         }
         trackInventory
         preorder {
-            ...PreorderFragment
+            ...Preorder
         }
         weight {
-            ...WeightFragment
+            ...Weight
         }
         quantityLimitPerCustomer
     }
 `;
 
 export const exportFileFragment = gql`
-    fragment ExportFileFragment on ExportFile {
+    fragment ExportFile on ExportFile {
         id
         status
         url

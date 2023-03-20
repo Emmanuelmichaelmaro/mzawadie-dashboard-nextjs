@@ -2,7 +2,7 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import Skeleton from "@mzawadie/components/Skeleton";
-import { ProductMediaFragment } from "@mzawadie/fragments/types/ProductMediaFragment";
+import { ProductMediaFragment } from "@mzawadie/graphql";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";

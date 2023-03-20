@@ -1,15 +1,15 @@
 // @ts-nocheck
 import { Card, TableBody, TableCell, TableHead, TableRow } from "@material-ui/core";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
-import { ShopInfo_shop_languages } from "@mzawadie/components/Shop/types/ShopInfo";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { maybe, renderCollection } from "@mzawadie/core";
+import { LanguageFragment } from "@mzawadie/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 export interface TranslationsLanguageListProps {
-    languages: ShopInfo_shop_languages[];
+    languages: LanguageFragment[];
     onRowClick: (code: string) => void;
 }
 

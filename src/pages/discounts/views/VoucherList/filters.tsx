@@ -3,15 +3,11 @@
 import { IFilterElement } from "@mzawadie/components/Filter";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
 import { findValueInEnum, joinDateTime, maybe } from "@mzawadie/core";
+import { DiscountStatusEnum, VoucherDiscountType, VoucherFilterInput } from "@mzawadie/graphql";
 import {
     VoucherFilterKeys,
     VoucherListFilterOpts,
 } from "@mzawadie/pages/discounts/components/VoucherListPage";
-import {
-    DiscountStatusEnum,
-    VoucherDiscountType,
-    VoucherFilterInput,
-} from "@mzawadie/types/globalTypes";
 import {
     createFilterTabUtils,
     createFilterUtils,

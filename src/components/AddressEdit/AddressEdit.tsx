@@ -1,7 +1,7 @@
+// @ts-nocheck
 import { TextField } from "@material-ui/core";
 import { commonMessages } from "@mzawadie/core";
-import { AccountErrorFragment } from "@mzawadie/fragments/types/AccountErrorFragment";
-import { OrderErrorFragment } from "@mzawadie/fragments/types/OrderErrorFragment";
+import { AccountErrorFragment, OrderErrorFragment } from "@mzawadie/graphql";
 import { AddressTypeInput } from "@mzawadie/pages/customers/types";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getAccountErrorMessage from "@mzawadie/utils/errors/account";

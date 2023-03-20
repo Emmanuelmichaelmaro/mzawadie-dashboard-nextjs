@@ -3,7 +3,7 @@ import { ColorPicker } from "@mzawadie/components/ColorPicker";
 import { FileUploadField } from "@mzawadie/components/FileUploadField";
 import { RadioGroupField } from "@mzawadie/components/RadioGroupField";
 import { errorMessages } from "@mzawadie/core";
-import { useFileUploadMutation } from "@mzawadie/files/mutations";
+import { useFileUploadMutation } from "@mzawadie/graphql";
 import { UseFormResult } from "@mzawadie/hooks/useForm";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { VerticalSpacer } from "@mzawadie/pages/apps/components/VerticalSpacer";

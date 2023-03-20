@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { IMoney } from "@mzawadie/components/Money";
 import { PriceField } from "@mzawadie/components/PriceField";
-import { OrderErrorFragment } from "@mzawadie/fragments/types/OrderErrorFragment";
+import { OrderErrorFragment } from "@mzawadie/graphql";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getOrderErrorMessage from "@mzawadie/utils/errors/order";
 import { makeStyles } from "@saleor/macaw-ui";

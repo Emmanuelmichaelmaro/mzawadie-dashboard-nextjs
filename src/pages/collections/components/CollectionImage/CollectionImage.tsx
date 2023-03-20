@@ -6,11 +6,10 @@ import { ImageUpload } from "@mzawadie/components/ImageUpload";
 import { MediaTile } from "@mzawadie/components/MediaTile";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { commonMessages } from "@mzawadie/core";
+import { CollectionDetailsFragment } from "@mzawadie/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { CollectionDetails_collection_backgroundImage } from "../../types/CollectionDetails";
 
 const useStyles = makeStyles(
     (theme) => ({
@@ -53,7 +52,7 @@ export interface CollectionImageProps {
     data: {
         backgroundImageAlt: string;
     };
-    image: CollectionDetails_collection_backgroundImage;
+    image: CollectionDetailsFragment["backgroundImage"];
     onChange: (event: React.ChangeEvent<any>) => void;
     onImageDelete: () => void;
     onImageUpload: (file: File) => void;

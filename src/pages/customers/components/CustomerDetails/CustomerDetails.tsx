@@ -1,15 +1,14 @@
+// @ts-nocheck
 import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import { CardTitle, ControlledCheckbox, Skeleton } from "@mzawadie/components";
 import { maybe } from "@mzawadie/core";
-import { AccountErrorFragment } from "@mzawadie/fragments/types/AccountErrorFragment";
+import { AccountErrorFragment, CustomerDetailsQuery } from "@mzawadie/graphql";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getAccountErrorMessage from "@mzawadie/utils/errors/account";
 import { makeStyles } from "@saleor/macaw-ui";
 import moment from "moment-timezone";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { CustomerDetails_user } from "../../types/CustomerDetails";
 
 const useStyles = makeStyles(
     (theme) => ({
@@ -30,7 +29,7 @@ const useStyles = makeStyles(
 );
 
 export interface CustomerDetailsProps {
-    customer: CustomerDetails_user;
+    customer: CustomerDetailsQuery["user"];
     data: {
         isActive: boolean;
         note: string;

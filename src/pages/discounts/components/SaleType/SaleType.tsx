@@ -1,8 +1,8 @@
 import { Card, CardContent } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { RadioGroupField, RadioGroupFieldChoice } from "@mzawadie/components/RadioGroupField";
+import { SaleType as SaleTypeEnum } from "@mzawadie/graphql";
 import { FormChange } from "@mzawadie/hooks/useForm";
-import { SaleType as SaleTypeEnum } from "@mzawadie/types/globalTypes";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";

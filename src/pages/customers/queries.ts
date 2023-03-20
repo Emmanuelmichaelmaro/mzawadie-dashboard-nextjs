@@ -1,19 +1,6 @@
 import { gql } from "@apollo/client";
-import { TypedQuery } from "@mzawadie/core";
-import {
-    customerAddressesFragment,
-    customerDetailsFragment,
-    customerFragment,
-} from "@mzawadie/fragments/customers";
-import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
-import { CustomerAddresses, CustomerAddressesVariables } from "./types/CustomerAddresses";
-import { CustomerCreateData } from "./types/CustomerCreateData";
-import { CustomerDetails, CustomerDetailsVariables } from "./types/CustomerDetails";
-import { ListCustomers, ListCustomersVariables } from "./types/ListCustomers";
-
-const customerList = gql`
-    ${customerFragment}
+export const customerList = gql`
     query ListCustomers(
         $after: String
         $before: String
@@ -21,6 +8,7 @@ const customerList = gql`
         $last: Int
         $filter: CustomerFilterInput
         $sort: UserSortingInput
+        $PERMISSION_MANAGE_ORDERS: Boolean!
     ) {
         customers(
             after: $after
@@ -32,8 +20,8 @@ const customerList = gql`
         ) {
             edges {
                 node {
-                    ...CustomerFragment
-                    orders {
+                    ...Customer
+                    orders @include(if: $PERMISSION_MANAGE_ORDERS) {
                         totalCount
                     }
                 }
@@ -48,14 +36,11 @@ const customerList = gql`
     }
 `;
 
-export const useCustomerListQuery = makeQuery<ListCustomers, ListCustomersVariables>(customerList);
-
-const customerDetails = gql`
-    ${customerDetailsFragment}
-    query CustomerDetails($id: ID!) {
+export const customerDetails = gql`
+    query CustomerDetails($id: ID!, $PERMISSION_MANAGE_ORDERS: Boolean!) {
         user(id: $id) {
-            ...CustomerDetailsFragment
-            orders(last: 5) {
+            ...CustomerDetails
+            orders(last: 5) @include(if: $PERMISSION_MANAGE_ORDERS) {
                 edges {
                     node {
                         id
@@ -71,7 +56,7 @@ const customerDetails = gql`
                     }
                 }
             }
-            lastPlacedOrder: orders(last: 1) {
+            lastPlacedOrder: orders(last: 1) @include(if: $PERMISSION_MANAGE_ORDERS) {
                 edges {
                     node {
                         id
@@ -83,25 +68,15 @@ const customerDetails = gql`
     }
 `;
 
-export const useCustomerDetails = makeQuery<CustomerDetails, CustomerDetailsVariables>(customerDetails);
-
-const customerAddresses = gql`
-    ${customerAddressesFragment}
+export const customerAddresses = gql`
     query CustomerAddresses($id: ID!) {
         user(id: $id) {
-            ...CustomerAddressesFragment
+            ...CustomerAddresses
         }
     }
 `;
 
-export const TypedCustomerAddressesQuery = TypedQuery<CustomerAddresses, CustomerAddressesVariables>(
-    customerAddresses
-);
-export const useCustomerAddressesQuery = makeQuery<CustomerAddresses, CustomerAddressesVariables>(
-    customerAddresses
-);
-
-const customerCreateData = gql`
+export const customerCreateData = gql`
     query CustomerCreateData {
         shop {
             countries {
@@ -111,6 +86,3 @@ const customerCreateData = gql`
         }
     }
 `;
-
-export const TypedCustomerCreateDataQuery = TypedQuery<CustomerCreateData, {}>(customerCreateData);
-export const useCustomerCreateDataQuery = makeQuery<CustomerCreateData, {}>(customerCreateData);

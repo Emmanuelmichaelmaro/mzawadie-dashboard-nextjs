@@ -1,17 +1,18 @@
+// @ts-nocheck
 import { Card, TableBody, TableCell, TableHead, TableRow } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { renderCollection } from "@mzawadie/core";
+import { AppUpdateMutation } from "@mzawadie/graphql";
 import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { AppUpdate_appUpdate_app_tokens } from "../../types/AppUpdate";
 import { useStyles } from "./styles";
 
 export interface CustomAppTokensProps {
-    tokens: Array<AppUpdate_appUpdate_app_tokens | null> | null;
+    tokens: Array<AppUpdateMutation["appUpdate"]["app"]["tokens"] | null> | null;
     onCreate: () => void;
     onDelete: (id: string) => void;
 }

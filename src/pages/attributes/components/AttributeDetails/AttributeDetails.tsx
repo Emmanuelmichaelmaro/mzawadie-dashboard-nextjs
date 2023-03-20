@@ -1,13 +1,17 @@
+// @ts-nocheck
 import { Card, CardContent, TextField } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import ControlledCheckbox from "@mzawadie/components/ControlledCheckbox";
 import FormSpacer from "@mzawadie/components/FormSpacer";
 import { SingleSelectField } from "@mzawadie/components/SingleSelectField";
 import { commonMessages } from "@mzawadie/core";
-import { AttributeErrorFragment } from "@mzawadie/fragments/types/AttributeErrorFragment";
+import {
+    AttributeErrorFragment,
+    AttributeEntityTypeEnum,
+    AttributeInputTypeEnum,
+} from "@mzawadie/graphql";
 import { UseFormResult } from "@mzawadie/hooks/useForm";
 import { NumericUnits } from "@mzawadie/pages/attributes/components/AttributeDetails/NumericUnits";
-import { AttributeEntityTypeEnum, AttributeInputTypeEnum } from "@mzawadie/types/globalTypes";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getAttributeErrorMessage from "@mzawadie/utils/errors/attribute";
 import { makeStyles } from "@saleor/macaw-ui";

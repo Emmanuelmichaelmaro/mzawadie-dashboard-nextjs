@@ -1,17 +1,18 @@
 // @ts-nocheck
 import { commonMessages } from "@mzawadie/core";
+import {
+    MenuDeleteMutation,
+    MenuItemCreateMutation,
+    MenuItemUpdateMutation,
+    MenuUpdateMutation,
+} from "@mzawadie/graphql";
 import { UseNavigatorResult } from "@mzawadie/hooks/useNavigator";
 import { UseNotifierResult } from "@mzawadie/hooks/useNotifier";
+import { menuListUrl, menuUrl } from "@mzawadie/pages/navigation/urls";
 import { IntlShape } from "react-intl";
 
-import { MenuDelete } from "../../types/MenuDelete";
-import { MenuItemCreate } from "../../types/MenuItemCreate";
-import { MenuItemUpdate } from "../../types/MenuItemUpdate";
-import { MenuUpdate } from "../../types/MenuUpdate";
-import { menuListUrl, menuUrl } from "../../urls";
-
 export function handleItemCreate(
-    data: MenuItemCreate,
+    data: MenuItemCreateMutation,
     notify: UseNotifierResult,
     closeModal: () => void,
     intl: IntlShape
@@ -26,7 +27,7 @@ export function handleItemCreate(
 }
 
 export function handleItemUpdate(
-    data: MenuItemUpdate,
+    data: MenuItemUpdateMutation,
     id: string,
     navigate: UseNavigatorResult,
     notify: UseNotifierResult,
@@ -47,7 +48,7 @@ export function handleItemUpdate(
 }
 
 export function handleDelete(
-    data: MenuDelete,
+    data: MenuDeleteMutation,
     navigate: UseNavigatorResult,
     notify: UseNotifierResult,
     intl: IntlShape
@@ -62,7 +63,7 @@ export function handleDelete(
 }
 
 export function handleUpdate(
-    data: MenuUpdate,
+    data: MenuUpdateMutation,
     notify: UseNotifierResult,
     refetch: () => void,
     intl: IntlShape

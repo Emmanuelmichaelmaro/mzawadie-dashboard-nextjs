@@ -3,8 +3,7 @@ import { Grid } from "@mzawadie/components/Grid";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import RequirePermissions from "@mzawadie/components/RequirePermissions";
 import { sectionNames, ListActions, PageListProps, UserPermissionProps } from "@mzawadie/core";
-import { ShippingZoneFragment } from "@mzawadie/fragments/types/ShippingZoneFragment";
-import { PermissionEnum, WeightUnitsEnum } from "@mzawadie/types/globalTypes";
+import { ShippingZoneFragment, PermissionEnum, WeightUnitsEnum } from "@mzawadie/graphql";
 import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -33,6 +32,7 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
     return (
         <Container>
             <Backlink onClick={onBack}>{intl.formatMessage(sectionNames.configuration)}</Backlink>
+
             <PageHeader
                 title={intl.formatMessage({
                     defaultMessage: "Shipping",
@@ -40,10 +40,12 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
                     description: "header",
                 })}
             />
+
             <Grid>
                 <div>
                     <ShippingZonesList disabled={disabled} {...listProps} />
                 </div>
+
                 <div>
                     <RequirePermissions
                         userPermissions={userPermissions}
@@ -60,5 +62,7 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
         </Container>
     );
 };
+
 ShippingZonesListPage.displayName = "ShippingZonesListPage";
+
 export default ShippingZonesListPage;

@@ -3,11 +3,13 @@ import Container from "@mzawadie/components/Container";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, sectionNames } from "@mzawadie/core";
+import { ChannelCreateMutation, useChannelCreateMutation } from "@mzawadie/graphql";
 import { getSearchFetchMoreProps } from "@mzawadie/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@mzawadie/hooks/useNotifier/utils";
 import useShop from "@mzawadie/hooks/useShop";
+import { channelPath, channelsListUrl } from "@mzawadie/pages/channels/urls";
 import useShippingZonesSearch from "@mzawadie/searches/useShippingZonesSearch";
 import { Backlink } from "@saleor/macaw-ui";
 import currencyCodes from "currency-codes";
@@ -16,9 +18,6 @@ import { useIntl } from "react-intl";
 
 import { ChannelDetailsPage } from "../../components/ChannelDetailsPage";
 import { FormData } from "../../components/ChannelForm/ChannelForm";
-import { useChannelCreateMutation } from "../../mutations";
-import { ChannelCreate } from "../../types/ChannelCreate";
-import { channelPath, channelsListUrl } from "../../urls";
 
 export function ChannelCreateView() {
     const navigate = useNavigator();
@@ -29,7 +28,7 @@ export function ChannelCreateView() {
     const handleBack = () => navigate(channelsListUrl());
 
     const [createChannel, createChannelOpts] = useChannelCreateMutation({
-        onCompleted: ({ channelCreate: { errors, channel } }: ChannelCreate) => {
+        onCompleted: ({ channelCreate: { errors, channel } }: ChannelCreateMutation) => {
             notify(getDefaultNotifierSuccessErrorData(errors, intl));
 
             if (!errors.length) {

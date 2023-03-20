@@ -7,9 +7,11 @@ import { FileChoiceType } from "@mzawadie/components/FileUploadField";
 import { MultiAutocompleteChoiceType } from "@mzawadie/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
 import { SortableChipsFieldValueType } from "@mzawadie/components/SortableChipsField";
-import { AttributeValueFragment } from "@mzawadie/fragments/types/AttributeValueFragment";
-import { PageErrorWithAttributesFragment } from "@mzawadie/fragments/types/PageErrorWithAttributesFragment";
-import { ProductErrorWithAttributesFragment } from "@mzawadie/fragments/types/ProductErrorWithAttributesFragment";
+import {
+    AttributeValueFragment,
+    PageErrorWithAttributesFragment,
+    ProductErrorWithAttributesFragment,
+} from "@mzawadie/graphql";
 import { getProductErrorMessage } from "@mzawadie/utils/errors";
 import getPageErrorMessage from "@mzawadie/utils/errors/page";
 import { IntlShape } from "react-intl";

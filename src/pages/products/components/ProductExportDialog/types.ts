@@ -1,4 +1,4 @@
-import { ExportScope, FileTypesEnum } from "@mzawadie/types/globalTypes";
+import { ExportScope, FileTypesEnum } from "@mzawadie/graphql";
 
 export interface ExportSettingsInput {
     scope: ExportScope;

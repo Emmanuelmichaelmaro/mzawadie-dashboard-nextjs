@@ -1,4 +1,4 @@
-import { MetadataInput } from "@mzawadie/types/globalTypes";
+import { MetadataInput } from "@mzawadie/graphql";
 
 export enum EventDataAction {
     add = "add",

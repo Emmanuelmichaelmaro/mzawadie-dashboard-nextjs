@@ -1,17 +1,21 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands,radix */
 // @ts-nocheck
 import { ListViews, ReorderEvent, getStringOrPlaceholder } from "@mzawadie/core";
-import { AttributeErrorFragment } from "@mzawadie/fragments/types/AttributeErrorFragment";
+import {
+    AttributeErrorFragment,
+    useAttributeCreateMutation,
+    useUpdateMetadataMutation,
+    useUpdatePrivateMetadataMutation,
+    AttributeErrorCode,
+} from "@mzawadie/graphql";
 import useListSettings from "@mzawadie/hooks/useListSettings";
 import useLocalPageInfo, { getMaxPage } from "@mzawadie/hooks/useLocalPageInfo";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { getAttributeData } from "@mzawadie/pages/attributes/utils/data";
-import { AttributeErrorCode } from "@mzawadie/types/globalTypes";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@mzawadie/utils/handlers/metadataCreateHandler";
 import { add, isSelected, move, remove, updateAtIndex } from "@mzawadie/utils/lists";
-import { useMetadataUpdate, usePrivateMetadataUpdate } from "@mzawadie/utils/metadata/updateMetadata";
 import React from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
@@ -22,7 +26,6 @@ import {
     AttributeValueEditDialog,
     AttributeValueEditDialogFormData,
 } from "../../components/AttributeValueEditDialog";
-import { useAttributeCreateMutation } from "../../mutations";
 import {
     attributeAddUrl,
     AttributeAddUrlDialog,
@@ -74,8 +77,9 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ params }) => {
             }
         },
     });
-    const [updateMetadata] = useMetadataUpdate({});
-    const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+
+    const [updateMetadata] = useUpdateMetadataMutation({});
+    const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
     const id = params.id ? parseInt(params.id, 0) + pageInfo.startCursor : undefined;
 

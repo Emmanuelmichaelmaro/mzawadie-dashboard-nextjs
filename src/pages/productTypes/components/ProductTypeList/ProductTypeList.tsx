@@ -7,13 +7,12 @@ import { TableCellHeader } from "@mzawadie/components/TableCellHeader";
 import { TableHead } from "@mzawadie/components/TableHead";
 import { TablePagination } from "@mzawadie/components/TablePagination";
 import { ListActions, ListProps, SortPage, maybe, renderCollection } from "@mzawadie/core";
+import { ProductTypeFragment } from "@mzawadie/graphql";
 import { ProductTypeListUrlSortField } from "@mzawadie/pages/productTypes/urls";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { ProductTypeList_productTypes_edges_node } from "../../types/ProductTypeList";
 
 const useStyles = makeStyles(
     (theme) => ({
@@ -39,7 +38,7 @@ const useStyles = makeStyles(
 );
 
 interface ProductTypeListProps extends ListProps, ListActions, SortPage<ProductTypeListUrlSortField> {
-    productTypes: ProductTypeList_productTypes_edges_node[];
+    productTypes: ProductTypeFragment[];
 }
 
 const numberOfColumns = 4;

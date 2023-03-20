@@ -1,4 +1,4 @@
-import { CategoryFilterInput } from "@mzawadie/types/globalTypes";
+import { CategoryFilterInput } from "@mzawadie/graphql";
 import { createFilterTabUtils, createFilterUtils } from "@mzawadie/utils/filters";
 
 import {

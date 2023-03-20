@@ -11,18 +11,26 @@ import { Grid } from "@mzawadie/components/Grid";
 import { MultiAutocompleteChoiceType } from "@mzawadie/components/MultiAutocompleteSelectField";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
-import { sectionNames, getUserName, FetchMoreProps, SearchPageProps } from "@mzawadie/core";
-import { StaffErrorFragment } from "@mzawadie/fragments/types/StaffErrorFragment";
+import {
+    sectionNames,
+    getUserName,
+    FetchMoreProps,
+    SearchPageProps,
+    RelayToFlat,
+} from "@mzawadie/core";
+import {
+    SearchPermissionGroupsQuery,
+    StaffErrorFragment,
+    StaffMemberDetailsFragment,
+} from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import useLocale from "@mzawadie/hooks/useLocale";
 import useStateFromProps from "@mzawadie/hooks/useStateFromProps";
-import { SearchPermissionGroups_search_edges_node } from "@mzawadie/searches/types/SearchPermissionGroups";
 import createMultiAutocompleteSelectHandler from "@mzawadie/utils/handlers/multiAutocompleteSelectChangeHandler";
 import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { StaffMemberDetails_user } from "../../types/StaffMemberDetails";
 import StaffPassword from "../StaffPassword/StaffPassword";
 import { StaffPreferences } from "../StaffPreferences";
 import StaffProperties from "../StaffProperties/StaffProperties";
@@ -36,7 +44,7 @@ export interface StaffDetailsFormData {
 }
 
 export interface StaffDetailsPageProps extends SearchPageProps {
-    availablePermissionGroups: SearchPermissionGroups_search_edges_node[];
+    availablePermissionGroups: RelayToFlat<SearchPermissionGroupsQuery["search"]>;
     canEditAvatar: boolean;
     canEditPreferences: boolean;
     canEditStatus: boolean;
@@ -44,7 +52,7 @@ export interface StaffDetailsPageProps extends SearchPageProps {
     disabled: boolean;
     fetchMorePermissionGroups: FetchMoreProps;
     saveButtonBarState: ConfirmButtonTransitionState;
-    staffMember: StaffMemberDetails_user;
+    staffMember: StaffMemberDetailsFragment;
     errors: StaffErrorFragment[];
     onBack: () => void;
     onChangePassword: () => void;

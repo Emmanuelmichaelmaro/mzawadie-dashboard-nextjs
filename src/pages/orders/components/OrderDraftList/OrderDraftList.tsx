@@ -16,14 +16,14 @@ import {
     ListActions,
     ListProps,
     SortPage,
+    RelayToFlat,
 } from "@mzawadie/core";
+import { OrderDraftListQuery } from "@mzawadie/graphql";
 import { OrderDraftListUrlSortField } from "@mzawadie/pages/orders/urls";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { OrderDraftList_draftOrders_edges_node } from "../../types/OrderDraftList";
 
 const useStyles = makeStyles(
     (theme) => ({
@@ -55,7 +55,7 @@ const useStyles = makeStyles(
 );
 
 interface OrderDraftListProps extends ListProps, ListActions, SortPage<OrderDraftListUrlSortField> {
-    orders: OrderDraftList_draftOrders_edges_node[];
+    orders: RelayToFlat<OrderDraftListQuery["draftOrders"]>;
 }
 
 export const OrderDraftList: React.FC<OrderDraftListProps> = (props) => {

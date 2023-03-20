@@ -3,7 +3,7 @@ import {
     AttributeEntityTypeEnum,
     AttributeInputTypeEnum,
     MeasurementUnitsEnum,
-} from "@mzawadie/types/globalTypes";
+} from "@mzawadie/graphql";
 
 import { AttributeInput } from "./Attributes";
 

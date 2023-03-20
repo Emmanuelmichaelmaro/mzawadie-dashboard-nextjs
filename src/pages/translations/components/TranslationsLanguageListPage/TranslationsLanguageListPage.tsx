@@ -1,15 +1,15 @@
 import Container from "@mzawadie/components/Container";
 import { PageHeader } from "@mzawadie/components/PageHeader";
-import { ShopInfo_shop_languages } from "@mzawadie/components/Shop/types/ShopInfo";
+import { LanguageFragment } from "@mzawadie/graphql";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { TranslationsLanguageList } from "../TranslationsLanguageList";
 
 export interface TranslationsLanguageListPageProps {
-    languages: ShopInfo_shop_languages[];
-    //   onAdd: () => void;
+    languages: LanguageFragment[];
     onRowClick: (code: string) => void;
+    // onAdd: () => void;
 }
 
 const TranslationsLanguageListPage: React.FC<TranslationsLanguageListPageProps> = ({
@@ -27,12 +27,8 @@ const TranslationsLanguageListPage: React.FC<TranslationsLanguageListPageProps> 
                 })}
             >
                 {/* <Button color="primary" variant="contained" onClick={onAdd}>
-        <FormattedMessage
-      defaultMessage="Add Language"
-      description="button"
-    />
-
-      </Button> */}
+                    <FormattedMessage defaultMessage="Add Language" id="crvD6X" description="button" />
+                </Button> */}
             </PageHeader>
             <TranslationsLanguageList languages={languages} onRowClick={onRowClick} />
         </Container>

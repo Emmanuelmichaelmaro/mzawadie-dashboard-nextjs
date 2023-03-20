@@ -5,12 +5,20 @@ import {
     SaveFilterTabDialogFormData,
 } from "@mzawadie/components/SaveFilterTabDialog";
 import { maybe, ListViews } from "@mzawadie/core";
+import { usePluginsQuery } from "@mzawadie/graphql";
 import { useChannelsSearchWithLoadMore } from "@mzawadie/hooks/useChannelsSearchWithLoadMore";
 import useListSettings from "@mzawadie/hooks/useListSettings";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { usePaginationReset } from "@mzawadie/hooks/usePaginationReset";
 import usePaginator, { createPaginationState } from "@mzawadie/hooks/usePaginator";
 import { configurationMenuUrl } from "@mzawadie/pages/configuration";
+import { PluginsListPage } from "@mzawadie/pages/plugins/components/PluginsListPage";
+import {
+    pluginListUrl,
+    PluginListUrlDialog,
+    PluginListUrlQueryParams,
+    pluginUrl,
+} from "@mzawadie/pages/plugins/urls";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@mzawadie/utils/handlers/filterHandlers";
 import createSortHandler from "@mzawadie/utils/handlers/sortHandler";
@@ -18,9 +26,6 @@ import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import { getSortParams } from "@mzawadie/utils/sort";
 import React from "react";
 
-import PluginsListPage from "../../components/PluginsListPage/PluginsListPage";
-import { usePluginsListQuery } from "../../queries";
-import { pluginListUrl, PluginListUrlDialog, PluginListUrlQueryParams, pluginUrl } from "../../urls";
 import {
     deleteFilterTab,
     getActiveFilters,
@@ -40,11 +45,13 @@ interface PluginsListProps {
 export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
     const navigate = useNavigator();
     const paginate = usePaginator();
+
     const { updateListSettings, settings } = useListSettings(ListViews.PLUGINS_LIST);
 
     usePaginationReset(pluginListUrl, params, settings.rowNumber);
 
     const paginationState = createPaginationState(settings.rowNumber, params);
+
     const queryVariables = React.useMemo(
         () => ({
             ...paginationState,
@@ -53,7 +60,8 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
         }),
         [params, settings.rowNumber]
     );
-    const { data, loading } = usePluginsListQuery({
+
+    const { data, loading } = usePluginsQuery({
         displayLoader: true,
         variables: queryVariables,
     });
@@ -100,6 +108,7 @@ export const PluginsList: React.FC<PluginsListProps> = ({ params }) => {
     );
 
     const handleSort = createSortHandler(navigate, pluginListUrl, params);
+
     const channelsSearchWithLoadMoreProps = useChannelsSearchWithLoadMore();
 
     const filterOpts = getFilterOpts(params, channelsSearchWithLoadMoreProps);

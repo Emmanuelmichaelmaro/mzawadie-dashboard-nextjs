@@ -11,14 +11,16 @@ import {
 import { AutocompleteSelectMenu } from "@mzawadie/components/AutocompleteSelectMenu";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@mzawadie/components/ConfirmButton";
 import FormSpacer from "@mzawadie/components/FormSpacer";
-import { buttonMessages, sectionNames } from "@mzawadie/core";
-import { MenuErrorFragment } from "@mzawadie/fragments/types/MenuErrorFragment";
+import { buttonMessages, RelayToFlat, sectionNames } from "@mzawadie/core";
+import {
+    MenuErrorFragment,
+    SearchCategoriesQuery,
+    SearchCollectionsQuery,
+    SearchPagesQuery,
+} from "@mzawadie/graphql";
 import { useModalDialogErrors } from "@mzawadie/hooks/useModalDialogErrors";
 import { useModalDialogOpen } from "@mzawadie/hooks/useModalDialogOpen";
 import useStateFromProps from "@mzawadie/hooks/useStateFromProps";
-import { SearchCategories_search_edges_node } from "@mzawadie/searches/types/SearchCategories";
-import { SearchCollections_search_edges_node } from "@mzawadie/searches/types/SearchCollections";
-import { SearchPages_search_edges_node } from "@mzawadie/searches/types/SearchPages";
 import { getFieldError, getFormErrors } from "@mzawadie/utils/errors";
 import getMenuErrorMessage from "@mzawadie/utils/errors/menu";
 import { getMenuItemByValue, IMenu } from "@mzawadie/utils/menu";
@@ -44,9 +46,9 @@ export interface MenuItemDialogProps {
     initialDisplayValue?: string;
     loading: boolean;
     open: boolean;
-    collections: SearchCollections_search_edges_node[];
-    categories: SearchCategories_search_edges_node[];
-    pages: SearchPages_search_edges_node[];
+    collections: RelayToFlat<SearchCollectionsQuery["search"]>;
+    categories: RelayToFlat<SearchCategoriesQuery["search"]>;
+    pages: RelayToFlat<SearchPagesQuery["search"]>;
     onClose: () => void;
     onSubmit: (data: MenuItemDialogFormData) => void;
     onQueryChange: (query: string) => void;

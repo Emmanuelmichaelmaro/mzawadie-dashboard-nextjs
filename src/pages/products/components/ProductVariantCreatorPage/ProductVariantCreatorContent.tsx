@@ -1,9 +1,12 @@
-import { FetchMoreProps } from "@mzawadie/core";
-import { WarehouseFragment } from "@mzawadie/fragments/types/WarehouseFragment";
+// @ts-nocheck
+import { FetchMoreProps, RelayToFlat } from "@mzawadie/core";
+import {
+    BulkProductErrorFragment,
+    ProductVariantAttributesFragment,
+    SearchAttributeValuesQuery,
+    WarehouseFragment,
+} from "@mzawadie/graphql";
 import { ChannelPriceData } from "@mzawadie/pages/channels/utils";
-import { ProductDetails_product_productType_variantAttributes } from "@mzawadie/pages/products/types/ProductDetails";
-import { ProductVariantBulkCreate_productVariantBulkCreate_errors } from "@mzawadie/pages/products/types/ProductVariantBulkCreate";
-import { SearchAttributeValues_attribute_choices_edges_node } from "@mzawadie/searches/types/SearchAttributeValues";
 import { isSelected } from "@mzawadie/utils/lists";
 import React from "react";
 
@@ -15,12 +18,12 @@ import { ProductVariantCreateReducerAction, ProductVariantCreateReducerActionTyp
 import { ProductVariantCreatorStep } from "./types";
 
 export interface ProductVariantCreatorContentProps {
-    attributes: ProductDetails_product_productType_variantAttributes[];
-    attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
+    attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"];
+    attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
     channelListings: ChannelPriceData[];
     data: ProductVariantCreateFormData;
     dispatchFormDataAction: React.Dispatch<ProductVariantCreateReducerAction>;
-    errors: ProductVariantBulkCreate_productVariantBulkCreate_errors[];
+    errors: BulkProductErrorFragment[];
     step: ProductVariantCreatorStep;
     variantsLeft: number | null;
     warehouses: WarehouseFragment[];

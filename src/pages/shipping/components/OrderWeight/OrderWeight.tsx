@@ -1,7 +1,7 @@
 import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import ControlledCheckbox from "@mzawadie/components/ControlledCheckbox";
-import { ShippingErrorFragment } from "@mzawadie/fragments/types/ShippingErrorFragment";
+import { ShippingErrorFragment } from "@mzawadie/graphql";
 import { ChangeEvent } from "@mzawadie/hooks/useForm";
 import { getShippingWeightRateErrorMessage } from "@mzawadie/pages/shipping/errors";
 import { getFormErrors } from "@mzawadie/utils/errors";

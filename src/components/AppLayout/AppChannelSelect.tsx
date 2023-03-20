@@ -1,5 +1,5 @@
 import { ChannelProps } from "@mzawadie/core";
-import { ChannelFragment } from "@mzawadie/fragments/types/ChannelFragment";
+import { ChannelFragment } from "@mzawadie/graphql";
 import { mapNodeToChoice } from "@mzawadie/utils/maps";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";

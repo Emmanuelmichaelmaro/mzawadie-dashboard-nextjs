@@ -1,8 +1,13 @@
+// @ts-nocheck
 import Hr from "@mzawadie/components/Hr";
 import { RadioGroupField, RadioGroupFieldChoice } from "@mzawadie/components/RadioGroupField";
-import { ExportErrorFragment } from "@mzawadie/fragments/types/ExportErrorFragment";
+import {
+    ExportErrorFragment,
+    ExportProductsInput,
+    ExportScope,
+    FileTypesEnum,
+} from "@mzawadie/graphql";
 import { ChangeEvent } from "@mzawadie/hooks/useForm";
-import { ExportProductsInput, ExportScope, FileTypesEnum } from "@mzawadie/types/globalTypes";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getExportErrorMessage from "@mzawadie/utils/errors/export";
 import { makeStyles } from "@saleor/macaw-ui";

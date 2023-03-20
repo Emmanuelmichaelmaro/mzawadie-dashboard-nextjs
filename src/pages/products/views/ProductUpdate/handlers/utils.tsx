@@ -1,26 +1,26 @@
 // @ts-nocheck
 import { weight } from "@mzawadie/core";
+import {
+    ProductChannelListingAddInput,
+    ProductDetailsVariantFragment,
+    ProductFragment,
+    ProductUpdateMutationVariables,
+    SimpleProductUpdateMutation,
+} from "@mzawadie/graphql";
 import { ChannelData, createSortedChannelsDataFromProduct } from "@mzawadie/pages/channels/utils";
 import { getById } from "@mzawadie/pages/orders/components/OrderReturnPage/utils";
 import { ProductUpdatePageSubmitData } from "@mzawadie/pages/products/components/ProductUpdatePage";
 import { ProductUpdateSubmitData } from "@mzawadie/pages/products/components/ProductUpdatePage/form";
-import {
-    ProductDetails_product,
-    ProductDetails_product_variants,
-} from "@mzawadie/pages/products/types/ProductDetails";
 import { mapFormsetStockToStockInput } from "@mzawadie/pages/products/utils/data";
 import { getAvailabilityVariables } from "@mzawadie/pages/products/utils/handlers";
-import { ProductChannelListingAddInput } from "@mzawadie/types/globalTypes";
 import { arrayDiff } from "@mzawadie/utils/arrays";
 import isEqual from "lodash/isEqual";
 
-import { ProductUpdateVariables } from "../../../types/ProductUpdate";
-import { SimpleProductUpdate } from "../../../types/SimpleProductUpdate";
 import { ChannelsWithVariantsData, ChannelWithVariantData } from "../types";
 import { getParsedChannelsWithVariantsDataFromChannels } from "../utils";
 
 export const getSimpleProductVariables = (
-    productVariables: ProductUpdateVariables,
+    productVariables: ProductUpdateMutationVariables,
     data: ProductUpdatePageSubmitData,
     productId: string
 ) => ({
@@ -39,7 +39,7 @@ export const getSimpleProductVariables = (
     updateStocks: data.updateStocks.map(mapFormsetStockToStockInput),
 });
 
-export const getSimpleProductErrors = (data: SimpleProductUpdate) => [
+export const getSimpleProductErrors = (data: SimpleProductUpdateMutation) => [
     ...data.productUpdate.errors,
     ...data.productVariantStocksCreate.errors,
     ...data.productVariantStocksDelete.errors,
@@ -85,19 +85,19 @@ const getParsedChannelsData = (
     );
 
 const shouldRemoveChannel =
-    (allVariants: ProductDetails_product_variants[]) =>
+    (allVariants: ProductDetailsVariantFragment[]) =>
     ({ removeVariants }: ProductChannelListingAddInput) =>
         isRemovingAllVariants(allVariants, removeVariants);
 
 const isRemovingAllVariants = (
-    allVariants: ProductDetails_product_variants[],
+    allVariants: ProductDetailsVariantFragment[],
     removeVariants: string[]
 ) => !!removeVariants.length && removeVariants.length === allVariants.length;
 
 const shouldUpdateChannel =
     (
         initialChannelWithVariantData,
-        allVariants: ProductDetails_product_variants[],
+        allVariants: ProductDetailsVariantFragment[],
         allChannels: ChannelData[]
     ) =>
     ({ removeVariants, addVariants, channelId, ...rest }: ProductChannelListingAddInput) => {
@@ -118,7 +118,7 @@ const shouldUpdateChannel =
     };
 
 export const getChannelsVariables = (
-    { id, variants }: ProductDetails_product,
+    { id, variants }: ProductFragment,
     allChannels: ChannelData[],
     { channelsWithVariants, channelsData }: ProductUpdateSubmitData
 ) => {
@@ -151,7 +151,7 @@ export const getChannelsVariables = (
 
 export const getSimpleChannelsVariables = (
     data: ProductUpdatePageSubmitData,
-    product: ProductDetails_product
+    product: ProductFragment
 ) => {
     const productChannels = createSortedChannelsDataFromProduct(product);
     const existingChannelIDs = productChannels.map((channel) => channel.id);

@@ -7,6 +7,12 @@ import {
     getMutationStatus,
     getStringOrPlaceholder,
 } from "@mzawadie/core";
+import {
+    CountryCode,
+    useWarehouseDeleteMutation,
+    useWarehouseDetailsQuery,
+    useWarehouseUpdateMutation,
+} from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import useShop from "@mzawadie/hooks/useShop";
@@ -16,14 +22,11 @@ import {
     WarehouseDetailsPage,
     WarehouseDetailsPageFormData,
 } from "@mzawadie/pages/warehouses/components/WarehouseDetailsPage";
-import { useWarehouseDelete, useWarehouseUpdate } from "@mzawadie/pages/warehouses/mutations";
-import { useWarehouseDetails } from "@mzawadie/pages/warehouses/queries";
 import {
     warehouseListUrl,
     warehouseUrl,
     WarehouseUrlQueryParams,
 } from "@mzawadie/pages/warehouses/urls";
-import { CountryCode } from "@mzawadie/types/globalTypes";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -34,17 +37,19 @@ export interface WarehouseDetailsProps {
 }
 
 const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
-    const intl = useIntl();
     const navigate = useNavigator();
     const notify = useNotifier();
     const shop = useShop();
-    const { data, loading } = useWarehouseDetails({
+    const intl = useIntl();
+
+    const { data, loading } = useWarehouseDetailsQuery({
         displayLoader: true,
         variables: { id },
     });
-    const [updateWarehouse, updateWarehouseOpts] = useWarehouseUpdate({
+
+    const [updateWarehouse, updateWarehouseOpts] = useWarehouseUpdateMutation({
         onCompleted: (data) => {
-            if (data.updateWarehouse.errors.length === 0) {
+            if (data.updateWarehouse?.errors.length === 0) {
                 notify({
                     status: "success",
                     text: intl.formatMessage(commonMessages.savedChanges),
@@ -52,11 +57,12 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
             }
         },
     });
+
     const updateWarehouseTransitionState = getMutationStatus(updateWarehouseOpts);
 
-    const [deleteWarehouse, deleteWarehouseOpts] = useWarehouseDelete({
+    const [deleteWarehouse, deleteWarehouseOpts] = useWarehouseDeleteMutation({
         onCompleted: (data) => {
-            if (data.deleteWarehouse.errors.length === 0) {
+            if (data.deleteWarehouse?.errors.length === 0) {
                 notify({
                     status: "success",
                     text: intl.formatMessage(commonMessages.savedChanges),
@@ -65,6 +71,7 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
             }
         },
     });
+
     const deleteWarehouseTransitionState = getMutationStatus(deleteWarehouseOpts);
 
     const [openModal, closeModal] = createDialogActionHandlers(
@@ -98,15 +105,17 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
             },
         });
 
-        return result.data.updateWarehouse.errors;
+        return result.data?.updateWarehouse?.errors;
     };
+
     return (
         <>
             <WindowTitle title={data?.warehouse?.name} />
+
             <WarehouseDetailsPage
                 countries={shop?.countries || []}
                 disabled={loading || updateWarehouseOpts.loading}
-                errors={updateWarehouseOpts.data?.updateWarehouse.errors || []}
+                errors={updateWarehouseOpts.data?.updateWarehouse?.errors || []}
                 saveButtonBarState={updateWarehouseTransitionState}
                 warehouse={data?.warehouse}
                 onBack={() => navigate(warehouseListUrl())}
@@ -114,6 +123,7 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
                 onShippingZoneClick={(id) => navigate(shippingZoneUrl(id))}
                 onSubmit={handleSubmit}
             />
+
             <WarehouseDeleteDialog
                 confirmButtonState={deleteWarehouseTransitionState}
                 name={getStringOrPlaceholder(data?.warehouse?.name)}
@@ -130,4 +140,5 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
 };
 
 WarehouseDetails.displayName = "WarehouseDetails";
+
 export default WarehouseDetails;

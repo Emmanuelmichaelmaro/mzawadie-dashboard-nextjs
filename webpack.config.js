@@ -156,6 +156,7 @@ module.exports = speedMeasureWrapper((env, argv) => {
                         resolve("node_modules"),
                         resolve("public/assets/fonts"),
                         resolve("public/assets/images"),
+                        resolve("public/assets/icons"),
                         resolve("public/assets/favicons"),
                     ],
                     loader: fileLoaderPath,

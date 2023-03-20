@@ -6,19 +6,22 @@ import {
     getMutationState,
     getStringOrPlaceholder,
 } from "@mzawadie/core";
+import {
+    FulfillmentStatus,
+    OrderFulfillmentApproveMutation,
+    OrderFulfillmentApproveMutationVariables,
+    OrderUpdateMutation,
+    OrderUpdateMutationVariables,
+    useCustomerAddressesQuery,
+    useWarehouseListQuery,
+} from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useUser } from "@mzawadie/pages/auth";
-import { useCustomerAddressesQuery } from "@mzawadie/pages/customers/queries";
 import { customerUrl } from "@mzawadie/pages/customers/urls";
 import { OrderCannotCancelOrderDialog } from "@mzawadie/pages/orders/components/OrderCannotCancelOrderDialog";
 import { OrderCustomerAddressesEditDialogOutput } from "@mzawadie/pages/orders/components/OrderCustomerAddressesEditDialog/types";
 import { OrderFulfillmentApproveDialog } from "@mzawadie/pages/orders/components/OrderFulfillmentApproveDialog";
 import { OrderInvoiceEmailSendDialog } from "@mzawadie/pages/orders/components/OrderInvoiceEmailSendDialog";
-import {
-    OrderFulfillmentApprove,
-    OrderFulfillmentApproveVariables,
-} from "@mzawadie/pages/orders/types/OrderFulfillmentApprove";
-import { OrderUpdate, OrderUpdateVariables } from "@mzawadie/pages/orders/types/OrderUpdate";
 import {
     orderFulfillUrl,
     orderListUrl,
@@ -28,8 +31,6 @@ import {
     OrderUrlQueryParams,
 } from "@mzawadie/pages/orders/urls";
 import { productUrl } from "@mzawadie/pages/products/urls";
-import { useWarehouseList } from "@mzawadie/pages/warehouses/queries";
-import { FulfillmentStatus } from "@mzawadie/types/globalTypes";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -51,14 +52,14 @@ interface OrderNormalDetailsProps {
     orderAddNote: any;
     orderInvoiceRequest: any;
     handleSubmit: any;
-    orderUpdate: PartialMutationProviderOutput<OrderUpdate, OrderUpdateVariables>;
+    orderUpdate: PartialMutationProviderOutput<OrderUpdateMutation, OrderUpdateMutationVariables>;
     orderCancel: any;
     orderPaymentMarkAsPaid: any;
     orderVoid: any;
     orderPaymentCapture: any;
     orderFulfillmentApprove: PartialMutationProviderOutput<
-        OrderFulfillmentApprove,
-        OrderFulfillmentApproveVariables
+        OrderFulfillmentApproveMutation,
+        OrderFulfillmentApproveMutationVariables
     >;
     orderFulfillmentCancel: any;
     orderFulfillmentUpdateTracking: any;
@@ -95,7 +96,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
     const navigate = useNavigator();
     const { user } = useUser();
 
-    const warehouses = useWarehouseList({
+    const warehouses = useWarehouseListQuery({
         displayLoader: true,
         variables: {
             first: 30,

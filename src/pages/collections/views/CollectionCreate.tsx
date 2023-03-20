@@ -3,12 +3,18 @@ import useAppChannel from "@mzawadie/components/AppLayout/AppChannelContext";
 import { ChannelsAvailabilityDialog } from "@mzawadie/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
 import { commonMessages, getMutationErrors } from "@mzawadie/core";
+import {
+    CollectionCreateInput,
+    useCollectionChannelListingUpdateMutation,
+    useCreateCollectionMutation,
+    useUpdateMetadataMutation,
+    useUpdatePrivateMetadataMutation,
+} from "@mzawadie/graphql";
 import useChannels from "@mzawadie/hooks/useChannels";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { ChannelsAction } from "@mzawadie/pages/channels/urls";
 import { createCollectionChannels } from "@mzawadie/pages/channels/utils";
-import { CollectionCreateInput } from "@mzawadie/types/globalTypes";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@mzawadie/utils/handlers/metadataCreateHandler";
 import { useMetadataUpdate, usePrivateMetadataUpdate } from "@mzawadie/utils/metadata/updateMetadata";
@@ -35,15 +41,16 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) =>
     const navigate = useNavigator();
     const notify = useNotifier();
     const intl = useIntl();
-    const [updateMetadata] = useMetadataUpdate({});
-    const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+
+    const [updateMetadata] = useUpdateMetadataMutation({});
+    const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
+    const [updateChannels, updateChannelsOpts] = useCollectionChannelListingUpdateMutation({});
 
     const [openModal, closeModal] = createDialogActionHandlers<
         ChannelsAction,
         CollectionCreateUrlQueryParams
     >(navigate, (params) => collectionAddUrl(params), params);
 
-    const [updateChannels, updateChannelsOpts] = useCollectionChannelListingUpdate({});
     const { availableChannels } = useAppChannel(false);
 
     const allChannels = createCollectionChannels(availableChannels)?.sort((channel, nextChannel) =>
@@ -68,7 +75,7 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) =>
         { formId: COLLECTION_CREATE_FORM_ID }
     );
 
-    const [createCollection, createCollectionOpts] = useCollectionCreateMutation({
+    const [createCollection, createCollectionOpts] = useCreateCollectionMutation({
         onCompleted: (data) => {
             if (data.collectionCreate.errors.length === 0) {
                 notify({
@@ -107,6 +114,7 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) =>
         });
 
         const id = result.data?.collectionCreate.collection?.id || null;
+
         if (id) {
             updateChannels({
                 variables: {
@@ -141,6 +149,7 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) =>
                     description: "window title",
                 })}
             />
+
             {!!allChannels?.length && (
                 <ChannelsAvailabilityDialog
                     isSelected={isChannelSelected}
@@ -159,6 +168,7 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) =>
                     toggleAll={toggleAllChannels}
                 />
             )}
+
             <CollectionCreatePage
                 errors={createCollectionOpts.data?.collectionCreate.errors || []}
                 channelsErrors={updateChannelsOpts?.data?.collectionChannelListingUpdate.errors || []}

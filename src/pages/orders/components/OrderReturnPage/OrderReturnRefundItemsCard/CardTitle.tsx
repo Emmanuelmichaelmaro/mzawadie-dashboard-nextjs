@@ -2,7 +2,7 @@
 import { Typography } from "@material-ui/core";
 import { CardTitle as DefaultCardTitle } from "@mzawadie/components/CardTitle";
 import { StatusType } from "@mzawadie/core";
-import { FulfillmentStatus } from "@mzawadie/types/globalTypes";
+import { FulfillmentStatus } from "@mzawadie/graphql";
 import { makeStyles, Pill } from "@saleor/macaw-ui";
 import camelCase from "lodash/camelCase";
 import React from "react";

@@ -1,8 +1,10 @@
 // @ts-nocheck
-import { ShopInfo_shop_permissions } from "@mzawadie/components/Shop/types/ShopInfo";
-import { ShopLimitFragment_limits } from "@mzawadie/fragments/types/ShopLimitFragment";
-import { User_userPermissions } from "@mzawadie/fragments/types/User";
-import { PermissionEnum } from "@mzawadie/types/globalTypes";
+import {
+    PermissionEnum,
+    ShopInfoQuery,
+    ShopLimitFragment,
+    UserPermissionFragment,
+} from "@mzawadie/graphql";
 
 import {
     FetchMoreProps,
@@ -18,6 +20,7 @@ const pageInfo = {
     hasNextPage: true,
     hasPreviousPage: false,
 };
+
 export const pageListProps: { [key: string]: PageListProps } = {
     default: {
         disabled: false,
@@ -38,6 +41,7 @@ export const pageListProps: { [key: string]: PageListProps } = {
         settings: undefined,
     },
 };
+
 export const listActionsProps: ListActions = {
     isChecked: () => undefined,
     selected: 0,
@@ -329,7 +333,7 @@ export const sortPageProps: SortPage<string> = {
     },
 };
 
-export const permissions: ShopInfo_shop_permissions[] = [
+export const permissions: ShopInfoQuery["shop"]["permissions"] = [
     {
         code: PermissionEnum.MANAGE_DISCOUNTS,
         name: "Manage sales and vouchers.",
@@ -392,7 +396,7 @@ export const date = {
     to: "2019-12-38",
 };
 
-export const adminUserPermissions: User_userPermissions[] = [
+export const adminUserPermissions: UserPermissionFragment[] = [
     {
         __typename: "UserPermission",
         code: PermissionEnum.MANAGE_CHECKOUTS,
@@ -510,7 +514,7 @@ export const address = {
     streetAddress2: "0238 Cremin Freeway",
 };
 
-export const limits: ShopLimitFragment_limits = {
+export const limits: ShopLimitFragment = {
     __typename: "LimitInfo",
     allowedUsage: {
         __typename: "Limits",
@@ -529,7 +533,8 @@ export const limits: ShopLimitFragment_limits = {
         warehouses: 1,
     },
 };
-export const limitsReached: ShopLimitFragment_limits = {
+
+export const limitsReached: ShopLimitFragment = {
     __typename: "LimitInfo",
     allowedUsage: {
         __typename: "Limits",

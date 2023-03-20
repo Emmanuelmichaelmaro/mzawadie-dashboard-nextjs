@@ -1,14 +1,13 @@
+// @ts-nocheck
 import { gql } from "@apollo/client";
-import { pageInfoFragment } from "@mzawadie/fragments/pageInfo";
+import {
+    SearchPermissionGroupsDocument,
+    SearchPermissionGroupsQuery,
+    SearchPermissionGroupsQueryVariables,
+} from "@mzawadie/graphql";
 import { makeTopLevelSearch } from "@mzawadie/hooks";
 
-import {
-    SearchPermissionGroups,
-    SearchPermissionGroupsVariables,
-} from "./types/SearchPermissionGroups";
-
 export const searchPermissionGroups = gql`
-    ${pageInfoFragment}
     query SearchPermissionGroups($after: String, $first: Int!, $query: String!) {
         search: permissionGroups(after: $after, first: $first, filter: { search: $query }) {
             edges {
@@ -19,13 +18,12 @@ export const searchPermissionGroups = gql`
                 }
             }
             pageInfo {
-                ...PageInfoFragment
+                ...PageInfo
             }
         }
     }
 `;
 
-// @ts-ignore
-export default makeTopLevelSearch<SearchPermissionGroups, SearchPermissionGroupsVariables>(
-    searchPermissionGroups
+export default makeTopLevelSearch<SearchPermissionGroupsQuery, SearchPermissionGroupsQueryVariables>(
+    SearchPermissionGroupsDocument
 );

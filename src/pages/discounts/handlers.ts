@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { RequireOnlyOne } from "@mzawadie/core";
+import { SaleType, VoucherTypeEnum } from "@mzawadie/graphql";
 import { ChangeEvent, FormChange } from "@mzawadie/hooks/useForm";
 import { ChannelVoucherData } from "@mzawadie/pages/channels/utils";
 import {
@@ -8,7 +9,6 @@ import {
 } from "@mzawadie/pages/discounts/components/SaleDetailsPage";
 import { VoucherDetailsPageFormData } from "@mzawadie/pages/discounts/components/VoucherDetailsPage";
 import { DiscountTypeEnum, RequirementsPicker } from "@mzawadie/pages/discounts/types";
-import { SaleType, VoucherTypeEnum } from "@mzawadie/types/globalTypes";
 import { arrayDiff } from "@mzawadie/utils/arrays";
 
 export interface ChannelArgs {

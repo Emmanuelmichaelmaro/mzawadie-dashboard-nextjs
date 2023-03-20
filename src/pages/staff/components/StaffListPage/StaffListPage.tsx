@@ -4,15 +4,21 @@ import { Container } from "@mzawadie/components/Container";
 import { FilterBar } from "@mzawadie/components/FilterBar";
 import LimitReachedAlert from "@mzawadie/components/LimitReachedAlert";
 import { PageHeader } from "@mzawadie/components/PageHeader";
-import { RefreshLimits_shop_limits } from "@mzawadie/components/Shop/types/RefreshLimits";
-import { sectionNames, FilterPageProps, ListProps, SortPage, TabPageProps } from "@mzawadie/core";
+import {
+    sectionNames,
+    FilterPageProps,
+    ListProps,
+    SortPage,
+    TabPageProps,
+    RelayToFlat,
+} from "@mzawadie/core";
+import { RefreshLimitsQuery, StaffListQuery } from "@mzawadie/graphql";
 import { StaffListUrlSortField } from "@mzawadie/pages/staff/urls";
 import { hasLimits, isLimitReached } from "@mzawadie/utils/limits";
 import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { StaffList_staffUsers_edges_node } from "../../types/StaffList";
 import { StaffList } from "../StaffList";
 import { createFilterStructure, StaffFilterKeys, StaffListFilterOpts } from "./filters";
 
@@ -21,8 +27,8 @@ export interface StaffListPageProps
         FilterPageProps<StaffFilterKeys, StaffListFilterOpts>,
         SortPage<StaffListUrlSortField>,
         TabPageProps {
-    limits: RefreshLimits_shop_limits;
-    staffMembers: StaffList_staffUsers_edges_node[];
+    limits: RefreshLimitsQuery["shop"]["limits"];
+    staffMembers: RelayToFlat<StaffListQuery["staffUsers"]>;
     onAdd: () => void;
     onBack: () => void;
 }

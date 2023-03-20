@@ -1,29 +1,30 @@
-/* eslint-disable @typescript-eslint/no-redeclare, no-redeclare */
-// @ts-nocheck
-import Draggable from "@mzawadie/icons/Draggable";
-import { makeStyles } from "@saleor/macaw-ui";
-import classNames from "classnames";
+import { TableCell } from "@material-ui/core";
+import { DragIcon, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { SortableHandle as SortableHandleHoc } from "react-sortable-hoc";
 
 const useStyles = makeStyles(
-    {
-        drag: {
+    (theme) => ({
+        columnDrag: {
+            "&&&": {
+                paddingLeft: theme.spacing(3),
+                paddingRight: theme.spacing(2),
+            },
             cursor: "grab",
+            width: `calc(48px + ${theme.spacing(1.5)})`,
         },
-    },
+    }),
     { name: "SortableHandle" }
 );
 
-interface SortableHandle {
-    className?: string;
-}
+const SortableHandle = SortableHandleHoc(() => {
+    const classes = useStyles({});
 
-const SortableHandle = SortableHandleHoc((props: any) => {
-    const { className, ...restProps } = props;
-    const classes = useStyles(props);
-
-    return <Draggable className={classNames(classes.drag, className)} {...restProps} />;
+    return (
+        <TableCell className={classes.columnDrag}>
+            <DragIcon color="primary" css={undefined} />
+        </TableCell>
+    );
 });
 
 export default SortableHandle;

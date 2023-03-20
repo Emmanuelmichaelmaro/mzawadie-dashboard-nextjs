@@ -15,7 +15,7 @@ import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { TableHead } from "@mzawadie/components/TableHead";
 import { renderCollection } from "@mzawadie/core";
-import { DiscountErrorFragment } from "@mzawadie/fragments/types/DiscountErrorFragment";
+import { DiscountErrorFragment } from "@mzawadie/graphql";
 import { ChannelInput } from "@mzawadie/pages/discounts/handlers";
 import { RequirementsPicker } from "@mzawadie/pages/discounts/types";
 import { getFormErrors } from "@mzawadie/utils/errors";

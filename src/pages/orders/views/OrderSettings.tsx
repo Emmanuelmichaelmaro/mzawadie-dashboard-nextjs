@@ -1,12 +1,11 @@
 // @ts-nocheck
 import { commonMessages, extractMutationErrors, getMutationState } from "@mzawadie/core";
+import { useOrderSettingsQuery, useOrderSettingsUpdateMutation } from "@mzawadie/graphql";
 import { useNavigator, useNotifier } from "@mzawadie/hooks";
 import {
     OrderSettingsPage,
     OrderSettingsFormData,
 } from "@mzawadie/pages/orders/components/OrderSettingsPage";
-import { useOrderSettingsUpdateMutation } from "@mzawadie/pages/orders/mutations";
-import { useOrderSettingsQuery } from "@mzawadie/pages/orders/queries";
 import { orderListUrl } from "@mzawadie/pages/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";

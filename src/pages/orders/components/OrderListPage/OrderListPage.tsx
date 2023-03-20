@@ -4,8 +4,8 @@ import { CardMenu } from "@mzawadie/components/CardMenu";
 import Container from "@mzawadie/components/Container";
 import { FilterBar } from "@mzawadie/components/FilterBar";
 import { PageHeader } from "@mzawadie/components/PageHeader";
-import { RefreshLimits_shop_limits } from "@mzawadie/components/Shop/types/RefreshLimits";
-import { sectionNames, FilterPageProps, PageListProps, SortPage } from "@mzawadie/core";
+import { sectionNames, FilterPageProps, PageListProps, SortPage, RelayToFlat } from "@mzawadie/core";
+import { OrderListQuery, RefreshLimitsQuery } from "@mzawadie/graphql";
 import { OrderList } from "@mzawadie/pages/orders/components/OrderList";
 import { OrderListUrlSortField } from "@mzawadie/pages/orders/urls";
 import { hasLimits, isLimitReached } from "@mzawadie/utils/limits";
@@ -13,7 +13,6 @@ import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderList_orders_edges_node } from "../../types/OrderList";
 import OrderLimitReached from "../OrderLimitReached";
 import { createFilterStructure, OrderFilterKeys, OrderListFilterOpts } from "./filters";
 
@@ -21,8 +20,8 @@ export interface OrderListPageProps
     extends PageListProps,
         FilterPageProps<OrderFilterKeys, OrderListFilterOpts>,
         SortPage<OrderListUrlSortField> {
-    limits: RefreshLimits_shop_limits;
-    orders: OrderList_orders_edges_node[];
+    limits: RefreshLimitsQuery["shop"]["limits"];
+    orders: RelayToFlat<OrderListQuery["orders"]>;
     onSettingsOpen: () => void;
 }
 

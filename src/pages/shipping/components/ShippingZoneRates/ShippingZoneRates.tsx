@@ -9,14 +9,14 @@ import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { WeightRange } from "@mzawadie/components/WeightRange";
 import { ChannelProps, maybe, renderCollection } from "@mzawadie/core";
-import { ShippingZoneDetailsFragment_shippingMethods } from "@mzawadie/fragments/types/ShippingZoneDetailsFragment";
+import { ShippingZoneDetailsFragment } from "@mzawadie/graphql";
 import { DeleteIcon, makeStyles, ICONBUTTON_SIZE } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface ShippingZoneRatesProps extends ChannelProps {
     disabled: boolean;
-    rates: ShippingZoneDetailsFragment_shippingMethods[];
+    rates: ShippingZoneDetailsFragment["shippingMethods"];
     variant: "price" | "weight";
     testId?: string;
     onRateAdd: () => void;

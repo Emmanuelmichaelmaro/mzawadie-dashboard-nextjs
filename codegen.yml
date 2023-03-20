@@ -1,61 +1,57 @@
 overwrite: true
 watch: false
-schema:
-    - schema.graphql
-documents: ["src/**/*.{ts,tsx}"]
+schema: ./introspection.json
 hooks:
     afterAllFileWrite:
         - prettier --write
 generates:
-    # Get schemas from server
-    src/graphql/schemas.ts:
-        plugins:
-            - typescript
-
-    # Create operations based on queries
-    src/graphql/operations.ts:
-        preset: import-types
-        presetConfig:
-            typesPath: ./schemas
-        plugins:
-            - typescript-operations
-        config:
-            flattenGeneratedTypes: true
-
-    # Create hooks based on queries
-    src/graphql/hooks.ts:
-        preset: import-types
-        presetConfig:
-            typesPath: ./operations
-        plugins:
-            - typescript-react-apollo
-        config:
-            withHooks: true
-            withHOC: false
-            withComponent: false
-            flattenGeneratedTypes: true
-            withRefetchFn: true
-
-    # Create fragments based on queries
-    src/graphql/fragments.ts:
+    ./src/graphql/fragmentTypes.ts:
         plugins:
             - add:
                   content: /* eslint-disable */
             - fragment-matcher
         config:
-            apolloClientVersion: 3
             minify: false
-
-    # Create policy types based on queries
-    src/graphql/type-policies.ts:
+            apolloClientVersion: 3
+    ./src/graphql/typePolicies.ts:
         plugins:
             - add:
                   content: /* eslint-disable */
             - typescript-apollo-client-helpers
-#    # Get schema in graphql Format
-#    src/graphql/schema.graphql:
-#        plugins:
-#            - schema-ast
-#        config:
-#            includeDirectives: true
-#            flattenGeneratedTypes: true
+    ./src/graphql/globalTypes.ts:
+        documents:
+            - ./src/**/queries.ts
+            - ./src/**/mutations.ts
+            - ./src/**/fragments/*.ts
+            - ./src/searches/*.ts
+        config:
+            nonOptionalTypename: true
+            avoidOptionals:
+                field: true
+                inputValue: false
+                object: false
+                defaultValue: false
+            namingConvention:
+                enumValues: change-case-all#upperCase
+            onlyOperationTypes: true
+        plugins:
+            - add:
+                  content: /* eslint-disable */
+            - typescript
+            - typescript-operations
+    ./src/graphql/hooks.ts:
+        documents:
+            - ./src/**/queries.ts
+            - ./src/**/mutations.ts
+            - ./src/**/fragments/*.ts
+            - ./src/searches/*.ts
+        preset: import-types
+        presetConfig:
+            typesPath: ./globalTypes
+        config:
+            withHooks: true
+            apolloReactHooksImportFrom: "@mzawadie/hooks/graphql"
+        plugins:
+            - add:
+                  content: /* eslint-disable */
+            - typescript-react-apollo

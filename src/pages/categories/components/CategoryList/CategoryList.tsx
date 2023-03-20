@@ -7,7 +7,7 @@ import { TableCellHeader } from "@mzawadie/components/TableCellHeader";
 import { TableHead } from "@mzawadie/components/TableHead";
 import { TablePagination } from "@mzawadie/components/TablePagination";
 import { maybe, renderCollection, ListActions, ListProps, SortPage } from "@mzawadie/core";
-import { CategoryFragment } from "@mzawadie/fragments/types/CategoryFragment";
+import { CategoryFragment } from "@mzawadie/graphql";
 import { CategoryListUrlSortField } from "@mzawadie/pages/categories/urls";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import { makeStyles } from "@saleor/macaw-ui";

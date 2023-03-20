@@ -1,12 +1,6 @@
 import { gql } from "@apollo/client";
-import { giftCardErrorFragment } from "@mzawadie/fragments/errors";
-import makeMutation from "@mzawadie/hooks/graphql/makeMutation";
 
-import { BulkDeleteGiftCard, BulkDeleteGiftCardVariables } from "./types/BulkDeleteGiftCard";
-import { DeleteGiftCard, DeleteGiftCardVariables } from "./types/DeleteGiftCard";
-
-const deleteGiftCard = gql`
-    ${giftCardErrorFragment}
+export const deleteGiftCard = gql`
     mutation DeleteGiftCard($id: ID!) {
         giftCardDelete(id: $id) {
             errors {
@@ -16,12 +10,7 @@ const deleteGiftCard = gql`
     }
 `;
 
-export const useGiftCardDeleteMutation = makeMutation<DeleteGiftCard, DeleteGiftCardVariables>(
-    deleteGiftCard
-);
-
-const bulkDeleteGiftCard = gql`
-    ${giftCardErrorFragment}
+export const bulkDeleteGiftCard = gql`
     mutation BulkDeleteGiftCard($ids: [ID]!) {
         giftCardBulkDelete(ids: $ids) {
             errors {
@@ -30,8 +19,3 @@ const bulkDeleteGiftCard = gql`
         }
     }
 `;
-
-export const useGiftCardBulkDeleteMutation = makeMutation<
-    BulkDeleteGiftCard,
-    BulkDeleteGiftCardVariables
->(bulkDeleteGiftCard);

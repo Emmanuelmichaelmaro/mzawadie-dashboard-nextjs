@@ -10,12 +10,11 @@ import { AVATAR_MARGIN } from "@mzawadie/components/TableCellAvatar/Avatar";
 import { TableHead } from "@mzawadie/components/TableHead";
 import { TablePagination } from "@mzawadie/components/TablePagination";
 import { maybe, renderCollection, ListActions, PageListProps } from "@mzawadie/core";
+import { CollectionDetailsQuery } from "@mzawadie/graphql";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { CollectionDetails_collection } from "../../types/CollectionDetails";
 
 const useStyles = makeStyles(
     (theme) => ({
@@ -47,7 +46,7 @@ const useStyles = makeStyles(
 );
 
 export interface CollectionProductsProps extends PageListProps, ListActions {
-    collection: CollectionDetails_collection;
+    collection: CollectionDetailsQuery["collection"];
     onProductUnassign: (id: string, event: React.MouseEvent<any>) => void;
 }
 

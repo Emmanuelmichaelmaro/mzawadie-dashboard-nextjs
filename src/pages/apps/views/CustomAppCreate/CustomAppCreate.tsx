@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
 import { commonMessages, extractMutationErrors } from "@mzawadie/core";
+import { AppCreateMutation, useAppCreateMutation } from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import useShop from "@mzawadie/hooks/useShop";
@@ -8,8 +9,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { CustomAppCreatePage, CustomAppCreatePageFormData } from "../../components/CustomAppCreatePage";
-import { useAppCreateMutation } from "../../mutations";
-import { AppCreate } from "../../types/AppCreate";
 import { appsListUrl, customAppUrl } from "../../urls";
 import { messages } from "./messages";
 
@@ -22,7 +21,7 @@ export const CustomAppCreate: React.FC<CustomAppCreateProps> = ({ setToken }) =>
     const intl = useIntl();
     const shop = useShop();
 
-    const onSubmit = (data: AppCreate) => {
+    const onSubmit = (data: AppCreateMutation) => {
         if (data.appCreate?.errors.length === 0) {
             notify({
                 status: "success",

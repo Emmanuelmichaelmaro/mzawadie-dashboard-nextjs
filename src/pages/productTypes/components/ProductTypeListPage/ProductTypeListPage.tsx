@@ -1,8 +1,6 @@
 // @ts-nocheck
 import { Card } from "@material-ui/core";
-import Container from "@mzawadie/components/Container";
-import { FilterBar } from "@mzawadie/components/FilterBar";
-import { PageHeader } from "@mzawadie/components/PageHeader";
+import { Container, FilterBar, PageHeader } from "@mzawadie/components";
 import {
     sectionNames,
     FilterPageProps,
@@ -11,12 +9,12 @@ import {
     SortPage,
     TabPageProps,
 } from "@mzawadie/core";
+import { ProductTypeFragment } from "@mzawadie/graphql";
 import { ProductTypeListUrlSortField } from "@mzawadie/pages/productTypes/urls";
 import { Backlink, Button } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ProductTypeList_productTypes_edges_node } from "../../types/ProductTypeList";
 import ProductTypeList from "../ProductTypeList/ProductTypeList";
 import { createFilterStructure, ProductTypeFilterKeys, ProductTypeListFilterOpts } from "./filters";
 
@@ -26,7 +24,7 @@ export interface ProductTypeListPageProps
         FilterPageProps<ProductTypeFilterKeys, ProductTypeListFilterOpts>,
         SortPage<ProductTypeListUrlSortField>,
         TabPageProps {
-    productTypes: ProductTypeList_productTypes_edges_node[];
+    productTypes: ProductTypeFragment[];
     onBack: () => void;
 }
 

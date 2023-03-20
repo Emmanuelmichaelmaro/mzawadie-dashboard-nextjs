@@ -1,9 +1,9 @@
 /* eslint-disable no-else-return */
 // @ts-nocheck
+import { MenuDetailsFragment } from "@mzawadie/graphql";
 import { getPatch } from "fast-array-diff";
 import { TreeItem } from "react-sortable-tree";
 
-import { MenuDetails_menu_items } from "../../types/MenuDetails";
 import { MenuItemType } from "../MenuItemDialog";
 
 export type TreeOperationType = "move" | "remove";
@@ -35,7 +35,7 @@ function treeToMap(tree: TreeItem[], parent: string): Record<string, string[]> {
     };
 }
 
-export function getItemType(item: MenuDetails_menu_items): MenuItemType {
+export function getItemType(item: MenuDetailsFragment["items"][0]): MenuItemType {
     if (item.category) {
         return "category";
     } else if (item.collection) {
@@ -49,7 +49,7 @@ export function getItemType(item: MenuDetails_menu_items): MenuItemType {
     }
 }
 
-export function getItemId(item: MenuDetails_menu_items): string {
+export function getItemId(item: MenuDetailsFragment["items"][0]): string {
     if (item.category) {
         return item.category.id;
     } else if (item.collection) {
@@ -91,7 +91,7 @@ export function getDiff(originalTree: TreeItem[], newTree: TreeItem[]): TreeOper
 }
 
 export function getNodeData(
-    item: MenuDetails_menu_items,
+    item: MenuDetailsFragment["items"][0],
     onChange: (operation: TreeOperation) => void,
     onClick: (id: string, type: MenuItemType) => void,
     onEdit: (id: string) => void
@@ -107,6 +107,6 @@ export function getNodeData(
     };
 }
 
-export function getNodeQuantity(items: MenuDetails_menu_items[]): number {
+export function getNodeQuantity(items: MenuDetailsFragment["items"][0]): number {
     return items.reduce((acc, curr) => acc + getNodeQuantity(curr.children), items.length);
 }

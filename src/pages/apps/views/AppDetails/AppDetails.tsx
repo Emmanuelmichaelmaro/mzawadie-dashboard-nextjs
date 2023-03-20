@@ -1,8 +1,16 @@
 // @ts-nocheck
 import { NotFoundPage } from "@mzawadie/components/NotFoundPage";
+import { useAppActivateMutation, useAppDeactivateMutation, useAppQuery } from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { appMessages } from "@mzawadie/pages/apps/messages";
+import {
+    AppDetailsUrlDialog,
+    AppDetailsUrlQueryParams,
+    appSettingsUrl,
+    appsListPath,
+    appUrl,
+} from "@mzawadie/pages/apps/urls";
 import getAppErrorMessage from "@mzawadie/utils/errors/app";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import React from "react";
@@ -11,15 +19,6 @@ import { useIntl } from "react-intl";
 import { AppActivateDialog } from "../../components/AppActivateDialog";
 import { AppDeactivateDialog } from "../../components/AppDeactivateDialog";
 import { AppDetailsPage } from "../../components/AppDetailsPage";
-import { useAppActivateMutation, useAppDeactivateMutation } from "../../mutations";
-import { useAppDetails } from "../../queries";
-import {
-    AppDetailsUrlDialog,
-    AppDetailsUrlQueryParams,
-    appSettingsUrl,
-    appsListPath,
-    appUrl,
-} from "../../urls";
 
 interface AppDetailsProps {
     id: string;
@@ -27,7 +26,7 @@ interface AppDetailsProps {
 }
 
 export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
-    const { data, loading, refetch } = useAppDetails({
+    const { data, loading, refetch } = useAppQuery({
         displayLoader: true,
         variables: { id },
     });
@@ -43,6 +42,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
     const [activateApp, activateAppResult] = useAppActivateMutation({
         onCompleted: (data) => {
             const errors = data?.appActivate?.errors;
+
             if (errors?.length === 0) {
                 notify({
                     status: "success",

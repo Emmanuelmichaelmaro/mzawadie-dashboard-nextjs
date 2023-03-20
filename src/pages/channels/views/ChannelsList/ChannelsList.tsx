@@ -1,7 +1,15 @@
 // @ts-nocheck
-import { useShopLimitsQuery } from "@mzawadie/components/Shop/query";
+import { useShopLimitsQuery } from "@mzawadie/components/Shop/queries";
+import { ChannelDeleteMutation, useChannelDeleteMutation, useChannelsQuery } from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
+import {
+    channelAddUrl,
+    channelsListUrl,
+    ChannelsListUrlDialog,
+    ChannelsListUrlQueryParams,
+    channelUrl,
+} from "@mzawadie/pages/channels/urls";
 import { getChannelsCurrencyChoices } from "@mzawadie/pages/channels/utils";
 import { configurationMenuUrl } from "@mzawadie/pages/configuration";
 import getChannelsErrorMessage from "@mzawadie/utils/errors/channels";
@@ -11,16 +19,6 @@ import { useIntl } from "react-intl";
 
 import { ChannelDeleteDialog } from "../../components/ChannelDeleteDialog";
 import { ChannelsListPage } from "../../components/ChannelsListPage";
-import { useChannelDeleteMutation } from "../../mutations";
-import { useChannelsList } from "../../queries";
-import { ChannelDelete } from "../../types/ChannelDelete";
-import {
-    channelAddUrl,
-    channelsListUrl,
-    ChannelsListUrlDialog,
-    ChannelsListUrlQueryParams,
-    channelUrl,
-} from "../../urls";
 
 interface ChannelsListProps {
     params: ChannelsListUrlQueryParams;
@@ -31,7 +29,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
     const notify = useNotifier();
     const intl = useIntl();
 
-    const { data, refetch } = useChannelsList({ displayLoader: true });
+    const { data, refetch } = useChannelsQuery({ displayLoader: true });
 
     const limitOpts = useShopLimitsQuery({
         variables: {
@@ -46,7 +44,7 @@ export const ChannelsList: React.FC<ChannelsListProps> = ({ params }) => {
         ChannelsListUrlQueryParams
     >(navigate, channelsListUrl, params);
 
-    const onCompleted = (data: ChannelDelete) => {
+    const onCompleted = (data: ChannelDeleteMutation) => {
         const { errors } = data.channelDelete;
 
         if (errors.length === 0) {

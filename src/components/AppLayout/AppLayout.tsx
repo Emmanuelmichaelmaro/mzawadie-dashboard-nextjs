@@ -1,4 +1,5 @@
 // @ts-nocheck
+import logo from "@assets/images/mzawadie-logo-light.svg";
 import { LinearProgress, useMediaQuery } from "@material-ui/core";
 import { isDarkTheme } from "@mzawadie/core";
 import useAppState from "@mzawadie/hooks/useAppState";
@@ -167,6 +168,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                         activeId={activeMenu}
                         menuItems={menuStructure}
                         onMenuItemClick={handleMenuItemClick}
+                        logoHref={logo}
                     />
                 )}
 

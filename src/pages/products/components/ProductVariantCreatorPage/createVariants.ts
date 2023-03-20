@@ -1,6 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import { ProductVariantBulkCreateInput } from "@mzawadie/types/globalTypes";
+import { ProductVariantBulkCreateInput } from "@mzawadie/graphql";
 
 import { Attribute, ChannelPrice, Price, ProductVariantCreateFormData, Stock } from "./form";
 

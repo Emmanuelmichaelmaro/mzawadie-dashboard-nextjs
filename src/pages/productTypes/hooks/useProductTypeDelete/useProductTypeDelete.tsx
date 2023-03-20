@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 // @ts-nocheck
+import { ProductCountQueryVariables, useProductCountQuery } from "@mzawadie/graphql";
 import {
     UseTypeDeleteData,
     UseTypeDeleteProps,
@@ -8,8 +8,6 @@ import {
     ProductTypeListUrlQueryParams,
     ProductTypeUrlQueryParams,
 } from "@mzawadie/pages/productTypes/urls";
-import { useProductCountQuery } from "@mzawadie/pages/products/queries";
-import { ProductCountVariables } from "@mzawadie/pages/products/types/ProductCount";
 import { productListUrl } from "@mzawadie/pages/products/urls";
 import React from "react";
 
@@ -27,7 +25,7 @@ function useProductTypeDelete({
 
     const isDeleteDialogOpen = params.action === "remove";
 
-    const productsAssignedToSelectedTypesQueryVars = React.useMemo<ProductCountVariables>(
+    const productsAssignedToSelectedTypesQueryVars = React.useMemo<ProductCountQueryVariables>(
         () => ({
             filter: {
                 productTypes,

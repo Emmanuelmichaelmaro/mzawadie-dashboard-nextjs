@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { Plugins_plugins_edges_node } from "@mzawadie/pages/plugins/types/Plugins";
+import { PluginBaseFragment } from "@mzawadie/graphql";
 import { isPluginGlobal } from "@mzawadie/pages/plugins/views/utils";
 import { Pill } from "@saleor/macaw-ui";
 import React from "react";
@@ -9,7 +9,7 @@ import { pluginStatusMessages, pluginAvailabilityStatusMessages as messages } fr
 import { getActiveChannelConfigsCount } from "./utils";
 
 interface PluginAvailabilityStatusProps {
-    plugin: Plugins_plugins_edges_node;
+    plugin: PluginBaseFragment;
 }
 
 const PluginAvailabilityStatus: React.FC<PluginAvailabilityStatusProps> = ({

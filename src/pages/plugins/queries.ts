@@ -1,12 +1,6 @@
 import { gql } from "@apollo/client";
-import { pluginBaseFragment, pluginsDetailsFragment } from "@mzawadie/fragments/plugins";
-import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
-import { Plugin, PluginVariables } from "./types/Plugin";
-import { Plugins, PluginsVariables } from "./types/Plugins";
-
-const pluginsList = gql`
-    ${pluginBaseFragment}
+export const pluginsList = gql`
     query Plugins(
         $first: Int
         $after: String
@@ -25,7 +19,7 @@ const pluginsList = gql`
         ) {
             edges {
                 node {
-                    ...PluginBaseFragment
+                    ...PluginBase
                 }
             }
             pageInfo {
@@ -37,15 +31,11 @@ const pluginsList = gql`
         }
     }
 `;
-export const usePluginsListQuery = makeQuery<Plugins, PluginsVariables>(pluginsList);
 
-const pluginsDetails = gql`
-    ${pluginsDetailsFragment}
+export const pluginsDetails = gql`
     query Plugin($id: ID!) {
         plugin(id: $id) {
-            ...PluginsDetailsFragment
+            ...PluginsDetails
         }
     }
 `;
-
-export const usePluginDetails = makeQuery<Plugin, PluginVariables>(pluginsDetails);

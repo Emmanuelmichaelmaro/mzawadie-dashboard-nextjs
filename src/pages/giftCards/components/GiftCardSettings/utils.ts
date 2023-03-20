@@ -1,8 +1,5 @@
 // @ts-nocheck
-import {
-    GiftCardSettingsExpiryTypeEnum,
-    GiftCardSettingsUpdateInput,
-} from "@mzawadie/types/globalTypes";
+import { GiftCardSettingsExpiryTypeEnum, GiftCardSettingsUpdateInput } from "@mzawadie/graphql";
 
 import { GiftCardSettingsFormData } from "./types";
 

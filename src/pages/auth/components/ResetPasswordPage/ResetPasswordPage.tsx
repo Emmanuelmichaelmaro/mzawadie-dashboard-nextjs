@@ -2,8 +2,8 @@
 import { TextField, Typography } from "@material-ui/core";
 import { Form, FormSpacer } from "@mzawadie/components";
 import { commonMessages } from "@mzawadie/core";
+import { RequestPasswordResetMutation } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks";
-import { RequestPasswordReset_requestPasswordReset_errors } from "@mzawadie/pages/auth/types/RequestPasswordReset";
 import { ArrowRightIcon, Button, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -20,7 +20,7 @@ export interface ResetPasswordPageProps {
     onBack: () => void;
     onSubmit: (
         data: ResetPasswordPageFormData
-    ) => SubmitPromise<RequestPasswordReset_requestPasswordReset_errors[]>;
+    ) => SubmitPromise<RequestPasswordResetMutation["requestPasswordReset"]["errors"]>;
 }
 
 const ResetPasswordPage: React.FC<ResetPasswordPageProps> = (props) => {

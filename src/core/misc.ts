@@ -3,23 +3,25 @@
 import { FetchResult, MutationFunction, MutationResult } from "@apollo/client";
 import { MultiAutocompleteChoiceType } from "@mzawadie/components/MultiAutocompleteSelectField";
 import {
+    errorMessages,
     MutationResultAdditionalProps,
     PartialMutationProviderOutput,
     StatusType,
     UserError,
 } from "@mzawadie/core";
-import { AddressType, AddressTypeInput } from "@mzawadie/pages/customers/types";
-import { OrderDetails_order_shippingAddress } from "@mzawadie/pages/orders/types/OrderDetails";
 import {
     AddressInput,
+    AddressFragment,
     CountryCode,
     DateRangeInput,
     OrderStatus,
     PaymentChargeStatusEnum,
-} from "@mzawadie/types/globalTypes";
+} from "@mzawadie/graphql";
+import { AddressType, AddressTypeInput } from "@mzawadie/pages/customers/types";
 import { ConfirmButtonTransitionState, ThemeType } from "@saleor/macaw-ui";
 import uniqBy from "lodash/uniqBy";
 import moment from "moment-timezone";
+import { IntlShape } from "react-intl";
 
 import { commonStatusMessages, orderStatusMessages, paymentStatusMessages } from "./intl";
 
@@ -271,6 +273,24 @@ export function getMutationProviderData<TData, TVariables>(
     };
 }
 
+export const parseLogMessage = ({
+    intl,
+    code,
+    field,
+}: {
+    intl: IntlShape;
+    code: string;
+    field?: string;
+}) =>
+    intl.formatMessage(errorMessages.baseCodeErrorMessage, {
+        errorCode: code,
+        fieldError:
+            field &&
+            intl.formatMessage(errorMessages.codeErrorFieldMessage, {
+                fieldName: field,
+            }),
+    });
+
 interface User {
     email: string;
     firstName?: string;
@@ -299,6 +319,7 @@ export function getUserInitials(user?: User) {
 interface AnyEvent {
     stopPropagation: () => void;
 }
+
 export function stopPropagation(cb: (event?: AnyEvent) => void) {
     return (event: AnyEvent) => {
         event.stopPropagation();
@@ -358,9 +379,7 @@ export function findInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
     throw new Error(`Key ${needle} not found in enum`);
 }
 
-export function addressToAddressInput<T>(
-    address: T & OrderDetails_order_shippingAddress
-): AddressInput {
+export function addressToAddressInput<T>(address: T & AddressFragment): AddressInput {
     const { id, __typename, ...rest } = address;
     return {
         ...rest,

@@ -3,8 +3,8 @@ import { Card, CardContent, Divider } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { MultiAutocompleteChoiceType } from "@mzawadie/components/MultiAutocompleteSelectField";
 import Skeleton from "@mzawadie/components/Skeleton";
+import { ChannelFragment } from "@mzawadie/graphql";
 import { FormChange } from "@mzawadie/hooks/useForm";
-import { BaseChannels_channels } from "@mzawadie/pages/channels/types/BaseChannels";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
@@ -31,7 +31,7 @@ export interface ShippingZoneSettingsCardProps {
     onWarehousesSearchChange: (query: string) => void;
     channelsDisplayValues: MultiAutocompleteChoiceType[];
     onChannelChange: FormChange;
-    allChannels?: BaseChannels_channels[];
+    allChannels?: ChannelFragment[];
     loading: boolean;
 }
 

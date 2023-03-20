@@ -1,13 +1,6 @@
 import { gql } from "@apollo/client";
-import { TypedQuery } from "@mzawadie/core";
-import { staffMemberDetailsFragment, staffMemberFragment } from "@mzawadie/fragments/staff";
-import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
-import { StaffList, StaffListVariables } from "./types/StaffList";
-import { StaffMemberDetails, StaffMemberDetailsVariables } from "./types/StaffMemberDetails";
-
-const staffList = gql`
-    ${staffMemberFragment}
+export const staffList = gql`
     query StaffList(
         $first: Int
         $after: String
@@ -27,7 +20,7 @@ const staffList = gql`
             edges {
                 cursor
                 node {
-                    ...StaffMemberFragment
+                    ...StaffMember
                     avatar(size: 48) {
                         url
                     }
@@ -42,16 +35,11 @@ const staffList = gql`
         }
     }
 `;
-export const useStaffListQuery = makeQuery<StaffList, StaffListVariables>(staffList);
 
 export const staffMemberDetails = gql`
-    ${staffMemberDetailsFragment}
     query StaffMemberDetails($id: ID!) {
         user(id: $id) {
-            ...StaffMemberDetailsFragment
+            ...StaffMemberDetails
         }
     }
 `;
-export const TypedStaffMemberDetailsQuery = TypedQuery<StaffMemberDetails, StaffMemberDetailsVariables>(
-    staffMemberDetails
-);

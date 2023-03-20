@@ -1,21 +1,25 @@
 // @ts-nocheck
 import { FetchResult } from "@apollo/client";
 import { extractMutationErrors, getMutationErrors, joinDateTime } from "@mzawadie/core";
+import {
+    DiscountValueTypeEnum,
+    VoucherChannelListingUpdateMutation,
+    VoucherChannelListingUpdateMutationVariables,
+    VoucherCreateMutation,
+    VoucherCreateMutationVariables,
+    VoucherTypeEnum,
+} from "@mzawadie/graphql";
 import { VoucherDetailsPageFormData } from "@mzawadie/pages/discounts/components/VoucherDetailsPage";
 import { getChannelsVariables } from "@mzawadie/pages/discounts/handlers";
 import { DiscountTypeEnum, RequirementsPicker } from "@mzawadie/pages/discounts/types";
-import {
-    VoucherChannelListingUpdate,
-    VoucherChannelListingUpdateVariables,
-} from "@mzawadie/pages/discounts/types/VoucherChannelListingUpdate";
-import { VoucherCreate, VoucherCreateVariables } from "@mzawadie/pages/discounts/types/VoucherCreate";
-import { DiscountValueTypeEnum, VoucherTypeEnum } from "@mzawadie/types/globalTypes";
 
 export function createHandler(
-    voucherCreate: (variables: VoucherCreateVariables) => Promise<FetchResult<VoucherCreate>>,
+    voucherCreate: (
+        variables: VoucherCreateMutationVariables
+    ) => Promise<FetchResult<VoucherCreateMutation>>,
     updateChannels: (options: {
-        variables: VoucherChannelListingUpdateVariables;
-    }) => Promise<FetchResult<VoucherChannelListingUpdate>>
+        variables: VoucherChannelListingUpdateMutationVariables;
+    }) => Promise<FetchResult<VoucherChannelListingUpdateMutation>>
 ) {
     return async (formData: VoucherDetailsPageFormData) => {
         const response = await voucherCreate({

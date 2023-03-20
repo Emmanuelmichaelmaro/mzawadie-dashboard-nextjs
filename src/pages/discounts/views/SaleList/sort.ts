@@ -1,6 +1,6 @@
 // @ts-nocheck
+import { SaleSortField } from "@mzawadie/graphql";
 import { SaleListUrlSortField } from "@mzawadie/pages/discounts/urls";
-import { SaleSortField } from "@mzawadie/types/globalTypes";
 import { createGetSortQueryVariables } from "@mzawadie/utils/sort";
 
 export const DEFAULT_SORT_KEY = SaleListUrlSortField.name;

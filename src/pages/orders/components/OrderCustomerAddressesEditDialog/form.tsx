@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { useExitFormDialog } from "@mzawadie/components/Form/useExitFormDialog";
-import { ShopInfo_shop_countries } from "@mzawadie/components/Shop/types/ShopInfo";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
+import { AddressFragment, CountryWithCodeFragment } from "@mzawadie/graphql";
 import useForm, {
     CommonUseFormResultWithHandlers,
     FormChange,
@@ -9,11 +9,6 @@ import useForm, {
 } from "@mzawadie/hooks/useForm";
 import useHandleFormSubmit from "@mzawadie/hooks/useHandleFormSubmit";
 import { AddressTypeInput } from "@mzawadie/pages/customers/types";
-import {
-    CustomerAddresses_user_addresses,
-    CustomerAddresses_user_defaultBillingAddress,
-    CustomerAddresses_user_defaultShippingAddress,
-} from "@mzawadie/pages/customers/types/CustomerAddresses";
 import createSingleAutocompleteSelectHandler from "@mzawadie/utils/handlers/singleAutocompleteSelectChangeHandler";
 import React, { useEffect, useState } from "react";
 
@@ -26,8 +21,8 @@ export interface OrderCustomerAddressesEditFormData {
     cloneAddress: boolean;
     shippingAddressInputOption: AddressInputOptionEnum;
     billingAddressInputOption: AddressInputOptionEnum;
-    customerShippingAddress: CustomerAddresses_user_defaultShippingAddress;
-    customerBillingAddress: CustomerAddresses_user_defaultBillingAddress;
+    customerShippingAddress: Node;
+    customerBillingAddress: Node;
     shippingAddress: AddressTypeInput;
     billingAddress: AddressTypeInput;
 }
@@ -43,7 +38,7 @@ export interface OrderCustomerAddressesEditHandlers {
         addressType: "shippingAddress" | "billingAddress"
     ) => void;
     changeCustomerAddress: (
-        customerAddress: CustomerAddresses_user_addresses,
+        customerAddress: AddressFragment,
         addressType: "customerShippingAddress" | "customerBillingAddress"
     ) => void;
     selectShippingCountry: FormChange;
@@ -60,9 +55,9 @@ interface UseOrderCustomerAddressesEditFormResult
 
 interface UseOrderCustomerAddressesEditFormOpts {
     countryChoices: SingleAutocompleteChoiceType[];
-    countries: ShopInfo_shop_countries[];
-    defaultShippingAddress: CustomerAddresses_user_defaultShippingAddress;
-    defaultBillingAddress: CustomerAddresses_user_defaultBillingAddress;
+    countries: CountryWithCodeFragment[];
+    defaultShippingAddress: Node;
+    defaultBillingAddress: Node;
     defaultCloneAddress: boolean;
 }
 
@@ -132,7 +127,7 @@ function useOrderCustomerAddressesEditForm(
             },
         });
     const handleCustomerAddressChange = (
-        customerAddress: CustomerAddresses_user_addresses,
+        customerAddress: AddressFragment,
         addressType: "customerShippingAddress" | "customerBillingAddress"
     ) =>
         change({

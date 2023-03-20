@@ -1,7 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import { AttributeValueFragment } from "@mzawadie/fragments/types/AttributeValueFragment";
-import { StockInput } from "@mzawadie/types/globalTypes";
+import { AttributeValueFragment, StockInput } from "@mzawadie/graphql";
 import { add, remove, removeAtIndex, toggle, update, updateAtIndex } from "@mzawadie/utils/lists";
 
 import { createVariants } from "./createVariants";

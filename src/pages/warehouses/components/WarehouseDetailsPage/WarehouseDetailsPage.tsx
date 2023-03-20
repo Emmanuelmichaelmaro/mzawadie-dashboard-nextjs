@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import { CompanyAddressInput } from "@mzawadie/components/CompanyAddressInput";
@@ -8,33 +7,36 @@ import { Form } from "@mzawadie/components/Form";
 import { Grid } from "@mzawadie/components/Grid";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
-import { ShopInfo_shop_countries } from "@mzawadie/components/Shop/types/ShopInfo";
 import { findValueInEnum, maybe, sectionNames } from "@mzawadie/core";
-import { WarehouseErrorFragment } from "@mzawadie/fragments/types/WarehouseErrorFragment";
+import {
+    WarehouseDetailsFragment,
+    WarehouseErrorFragment,
+    CountryCode,
+    CountryWithCodeFragment,
+} from "@mzawadie/graphql";
 import useAddressValidation from "@mzawadie/hooks/useAddressValidation";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import useStateFromProps from "@mzawadie/hooks/useStateFromProps";
 import { AddressTypeInput } from "@mzawadie/pages/customers/types";
-import { CountryCode } from "@mzawadie/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@mzawadie/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices, mapEdgesToItems } from "@mzawadie/utils/maps";
 import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { WarehouseDetails_warehouse } from "../../types/WarehouseDetails";
 import { WarehouseInfo } from "../WarehouseInfo";
 import { WarehouseZones } from "../WarehouseZones";
 
 export interface WarehouseDetailsPageFormData extends AddressTypeInput {
     name: string;
 }
+
 export interface WarehouseDetailsPageProps {
-    countries: ShopInfo_shop_countries[];
+    countries: CountryWithCodeFragment;
     disabled: boolean;
     errors: WarehouseErrorFragment[];
     saveButtonBarState: ConfirmButtonTransitionState;
-    warehouse: WarehouseDetails_warehouse;
+    warehouse: WarehouseDetailsFragment;
     onBack: () => void;
     onDelete: () => void;
     onShippingZoneClick: (id: string) => void;
@@ -53,6 +55,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
     onSubmit,
 }) => {
     const intl = useIntl();
+
     const [displayCountry, setDisplayCountry] = useStateFromProps(
         warehouse?.address?.country.country || ""
     );
@@ -75,6 +78,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
         <Form initial={initialForm} onSubmit={handleSubmit}>
             {({ change, data, hasChanged, submit }) => {
                 const countryChoices = mapCountriesToChoices(countries);
+
                 const handleCountryChange = createSingleAutocompleteSelectHandler(
                     change,
                     setDisplayCountry,
@@ -86,7 +90,9 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
                         <Backlink onClick={onBack}>
                             <FormattedMessage {...sectionNames.warehouses} />
                         </Backlink>
+
                         <PageHeader title={warehouse?.name} />
+
                         <Grid>
                             <div>
                                 <WarehouseInfo
@@ -95,7 +101,9 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
                                     errors={errors}
                                     onChange={change}
                                 />
+
                                 <CardSpacer />
+
                                 <CompanyAddressInput
                                     countries={countryChoices}
                                     data={data}
@@ -111,6 +119,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
                                     onCountryChange={handleCountryChange}
                                 />
                             </div>
+
                             <div>
                                 <WarehouseZones
                                     zones={mapEdgesToItems(warehouse?.shippingZones)}
@@ -118,6 +127,7 @@ const WarehouseDetailsPage: React.FC<WarehouseDetailsPageProps> = ({
                                 />
                             </div>
                         </Grid>
+
                         <Savebar
                             disabled={disabled || !hasChanged}
                             onCancel={onBack}

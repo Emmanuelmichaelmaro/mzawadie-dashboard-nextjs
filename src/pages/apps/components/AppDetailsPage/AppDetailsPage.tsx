@@ -10,6 +10,7 @@ import { ExternalLink } from "@mzawadie/components/ExternalLink";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { sectionNames } from "@mzawadie/core";
+import { AppQuery } from "@mzawadie/graphql";
 import { Backlink, Button } from "@saleor/macaw-ui";
 import React from "react";
 import SVG from "react-inlinesvg";
@@ -17,12 +18,11 @@ import { FormattedMessage, useIntl } from "react-intl";
 import ReactMarkdown from "react-markdown";
 
 import { useStyles } from "../../styles";
-import { App_app } from "../../types/App";
 import { DeactivatedText } from "../DeactivatedText";
 
 export interface AppDetailsPageProps {
     loading: boolean;
-    data: App_app;
+    data: AppQuery["app"];
     navigateToApp: () => void;
     navigateToAppSettings: () => void;
     onAppActivateOpen: () => void;

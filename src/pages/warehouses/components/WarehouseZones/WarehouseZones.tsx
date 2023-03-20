@@ -1,17 +1,16 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import Link from "@mzawadie/components/Link";
 import Skeleton from "@mzawadie/components/Skeleton";
-import { maybe, renderCollection } from "@mzawadie/core";
-import { WarehouseDetails_warehouse_shippingZones_edges_node } from "@mzawadie/pages/warehouses/types/WarehouseDetails";
+import { maybe, RelayToFlat, renderCollection } from "@mzawadie/core";
+import { WarehouseWithShippingFragment } from "@mzawadie/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface WarehouseInfoProps {
-    zones: WarehouseDetails_warehouse_shippingZones_edges_node[];
+    zones: RelayToFlat<WarehouseWithShippingFragment["shippingZones"]>;
     onShippingZoneClick: (id: string) => void;
 }
 
@@ -41,6 +40,7 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({ zones, onShippingZoneClic
                     description: "zones that warehouse sends to",
                 })}
             />
+
             <CardContent>
                 {renderCollection(
                     zones,

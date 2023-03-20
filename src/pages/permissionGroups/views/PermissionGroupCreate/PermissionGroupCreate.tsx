@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
 import { extractMutationErrors } from "@mzawadie/core";
+import { usePermissionGroupCreateMutation } from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import useShop from "@mzawadie/hooks/useShop";
@@ -13,8 +14,6 @@ import {
     PermissionGroupCreatePage,
     PermissionGroupCreateFormData,
 } from "../../components/PermissionGroupCreatePage";
-import { usePermissionGroupCreate } from "../../mutations";
-import { PermissionGroupCreate } from "../../types/PermissionGroupCreate";
 import { permissionGroupDetailsUrl, permissionGroupListUrl } from "../../urls";
 
 const PermissionGroupCreateView: React.FC = () => {
@@ -24,21 +23,19 @@ const PermissionGroupCreateView: React.FC = () => {
     const shop = useShop();
     const user = useUser();
 
-    const handleSuccess = (data: PermissionGroupCreate) => {
-        if (data?.permissionGroupCreate?.errors.length === 0) {
-            notify({
-                status: "success",
-                text: intl.formatMessage({
-                    defaultMessage: "Permission group created",
-                    id: "eUjFjW",
-                }),
-            });
-            navigate(permissionGroupDetailsUrl(data.permissionGroupCreate.group.id));
-        }
-    };
-
-    const [createPermissionGroup, createPermissionGroupResult] = usePermissionGroupCreate({
-        onCompleted: handleSuccess,
+    const [createPermissionGroup, createPermissionGroupResult] = usePermissionGroupCreateMutation({
+        onCompleted: (data) => {
+            if (data?.permissionGroupCreate?.errors.length === 0) {
+                notify({
+                    status: "success",
+                    text: intl.formatMessage({
+                        defaultMessage: "Permission group created",
+                        id: "eUjFjW",
+                    }),
+                });
+                navigate(permissionGroupDetailsUrl(data.permissionGroupCreate.group.id));
+            }
+        },
     });
 
     const errors = createPermissionGroupResult?.data?.permissionGroupCreate?.errors || [];

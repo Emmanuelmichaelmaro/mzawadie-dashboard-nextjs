@@ -6,9 +6,8 @@ import { Form } from "@mzawadie/components/Form";
 import { Grid } from "@mzawadie/components/Grid";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
-import { ShopInfo_shop_countries } from "@mzawadie/components/Shop/types/ShopInfo";
 import { sectionNames } from "@mzawadie/core";
-import { WarehouseErrorFragment } from "@mzawadie/fragments/types/WarehouseErrorFragment";
+import { CountryWithCodeFragment, WarehouseErrorFragment } from "@mzawadie/graphql";
 import useAddressValidation from "@mzawadie/hooks/useAddressValidation";
 import useStateFromProps from "@mzawadie/hooks/useStateFromProps";
 import { AddressTypeInput } from "@mzawadie/pages/customers/types";
@@ -23,8 +22,9 @@ import { WarehouseInfo } from "../WarehouseInfo";
 export interface WarehouseCreatePageFormData extends AddressTypeInput {
     name: string;
 }
+
 export interface WarehouseCreatePageProps {
-    countries: ShopInfo_shop_countries[];
+    countries: CountryWithCodeFragment;
     disabled: boolean;
     errors: WarehouseErrorFragment[];
     saveButtonBarState: ConfirmButtonTransitionState;
@@ -53,6 +53,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
     onSubmit,
 }) => {
     const intl = useIntl();
+
     const [displayCountry, setDisplayCountry] = useStateFromProps("");
 
     const { errors: validationErrors, submit: handleSubmit } = useAddressValidation(onSubmit);
@@ -61,6 +62,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
         <Form initial={initialForm} onSubmit={handleSubmit}>
             {({ change, data, submit }) => {
                 const countryChoices = mapCountriesToChoices(countries);
+
                 const handleCountryChange = createSingleAutocompleteSelectHandler(
                     change,
                     setDisplayCountry,
@@ -72,6 +74,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
                         <Backlink onClick={onBack}>
                             <FormattedMessage {...sectionNames.warehouses} />
                         </Backlink>
+
                         <PageHeader
                             title={intl.formatMessage({
                                 defaultMessage: "Create Warehouse",
@@ -79,6 +82,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
                                 description: "header",
                             })}
                         />
+
                         <Grid>
                             <div>
                                 <WarehouseInfo
@@ -87,7 +91,9 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
                                     errors={errors}
                                     onChange={change}
                                 />
+
                                 <CardSpacer />
+
                                 <CompanyAddressInput
                                     countries={countryChoices}
                                     data={data}
@@ -104,6 +110,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
                                 />
                             </div>
                         </Grid>
+
                         <Savebar
                             disabled={disabled}
                             onCancel={onBack}
@@ -118,4 +125,5 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
 };
 
 WarehouseCreatePage.displayName = "WarehouseCreatePage";
+
 export default WarehouseCreatePage;

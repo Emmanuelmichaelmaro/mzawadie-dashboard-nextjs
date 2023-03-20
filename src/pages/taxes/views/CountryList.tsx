@@ -1,51 +1,56 @@
-// @ts-nocheck
 import { commonMessages, extractMutationErrors, maybe } from "@mzawadie/core";
-import useNavigator from "@mzawadie/hooks/useNavigator";
-import { useNotifier } from "@mzawadie/hooks/useNotifier";
+import {
+    useCountryListQuery,
+    useFetchTaxesMutation,
+    useUpdateTaxSettingsMutation,
+} from "@mzawadie/graphql";
+import { useNavigator, useNotifier } from "@mzawadie/hooks";
+import { configurationMenuUrl } from "@mzawadie/pages/configuration";
+import {
+    CountryListPage,
+    TaxesConfigurationFormData,
+} from "@mzawadie/pages/taxes/components/CountryListPage";
+import { countryTaxRatesUrl } from "@mzawadie/pages/taxes/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { configurationMenuUrl } from "../../configuration";
-import { CountryListPage, TaxesConfigurationFormData } from "../components/CountryListPage";
-import { TypedFetchTaxes, useTaxSettingsUpdateMutation } from "../mutations";
-import { TypedCountryListQuery } from "../queries";
-import { FetchTaxes } from "../types/FetchTaxes";
-import { UpdateTaxSettings } from "../types/UpdateTaxSettings";
-import { countryTaxRatesUrl } from "../urls";
-
 export const CountryList: React.FC = () => {
-    const intl = useIntl();
     const navigate = useNavigator();
     const notify = useNotifier();
+    const intl = useIntl();
 
-    const handleUpdateTaxSettings = (data: UpdateTaxSettings) => {
-        if (data.shopSettingsUpdate.errors.length === 0) {
-            notify({
-                status: "success",
-                text: intl.formatMessage(commonMessages.savedChanges),
-            });
-        }
-    };
+    const { data, loading } = useCountryListQuery({
+        displayLoader: true,
+    });
 
-    const handleFetchTaxes = (data: FetchTaxes) => {
-        if (data.shopFetchTaxRates.errors.length === 0) {
-            notify({
-                status: "success",
-                text: intl.formatMessage({
-                    defaultMessage: "Successfully fetched tax rates",
-                    id: "HtQGEH",
-                }),
-            });
-        } else {
-            notify({
-                status: "error",
-                text: intl.formatMessage(commonMessages.somethingWentWrong),
-            });
-        }
-    };
+    const [fetchTaxes, fetchTaxesOpts] = useFetchTaxesMutation({
+        onCompleted: (data) => {
+            if (data.shopFetchTaxRates?.errors.length === 0) {
+                notify({
+                    status: "success",
+                    text: intl.formatMessage({
+                        defaultMessage: "Successfully fetched tax rates",
+                        id: "HtQGEH",
+                    }),
+                });
+            } else {
+                notify({
+                    status: "error",
+                    text: intl.formatMessage(commonMessages.somethingWentWrong),
+                });
+            }
+        },
+    });
 
-    const [updateTaxSettings, updateTaxSettingsOpts] = useTaxSettingsUpdateMutation({
-        onCompleted: handleUpdateTaxSettings,
+    const [updateTaxSettings, updateTaxSettingsOpts] = useUpdateTaxSettingsMutation({
+        onCompleted: (data) => {
+            if (data.shopSettingsUpdate?.errors.length === 0) {
+                notify({
+                    status: "success",
+                    text: intl.formatMessage(commonMessages.savedChanges),
+                });
+            }
+        },
     });
 
     const handleSubmit = (data: TaxesConfigurationFormData) =>
@@ -62,28 +67,18 @@ export const CountryList: React.FC = () => {
         );
 
     return (
-        <TypedFetchTaxes onCompleted={handleFetchTaxes}>
-            {(fetchTaxes, fetchTaxesOpts) => (
-                <TypedCountryListQuery displayLoader>
-                    {({ data, loading }) => (
-                        <CountryListPage
-                            disabled={
-                                loading || fetchTaxesOpts.loading || updateTaxSettingsOpts.loading
-                            }
-                            onBack={() => navigate(configurationMenuUrl)}
-                            onRowClick={(code) => navigate(countryTaxRatesUrl(code))}
-                            onSubmit={handleSubmit}
-                            onTaxFetch={fetchTaxes}
-                            saveButtonBarState={updateTaxSettingsOpts.status}
-                            shop={maybe(() => ({
-                                ...data.shop,
-                                countries: data.shop.countries.filter((country) => country.vat),
-                            }))}
-                        />
-                    )}
-                </TypedCountryListQuery>
-            )}
-        </TypedFetchTaxes>
+        <CountryListPage
+            disabled={loading || fetchTaxesOpts.loading || updateTaxSettingsOpts.loading}
+            onBack={() => navigate(configurationMenuUrl)}
+            onRowClick={(code) => navigate(countryTaxRatesUrl(code))}
+            onSubmit={handleSubmit}
+            onTaxFetch={fetchTaxes}
+            saveButtonBarState={updateTaxSettingsOpts.status}
+            shop={maybe(() => ({
+                ...data?.shop,
+                countries: data?.shop.countries.filter((country) => country.vat),
+            }))}
+        />
     );
 };
 

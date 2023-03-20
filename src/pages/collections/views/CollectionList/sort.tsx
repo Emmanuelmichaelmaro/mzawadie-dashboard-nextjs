@@ -1,6 +1,6 @@
 // @ts-nocheck
+import { CollectionSortField } from "@mzawadie/graphql";
 import { CollectionListUrlSortField } from "@mzawadie/pages/collections/urls";
-import { CollectionSortField } from "@mzawadie/types/globalTypes";
 import { createGetSortQueryVariables } from "@mzawadie/utils/sort";
 
 export const DEFAULT_SORT_KEY = CollectionListUrlSortField.name;

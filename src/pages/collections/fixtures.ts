@@ -1,10 +1,8 @@
 // @ts-nocheck
 import * as richTextEditorFixtures from "@mzawadie/components/RichTextEditor/fixtures.json";
-import { CollectionPublished } from "@mzawadie/types/globalTypes";
-
-import { CollectionListFilterOpts } from "./components/CollectionListPage";
-import { CollectionDetails_collection } from "./types/CollectionDetails";
-import { CollectionList_collections_edges_node } from "./types/CollectionList";
+import { RelayToFlat } from "@mzawadie/core";
+import { CollectionDetailsQuery, CollectionListQuery, CollectionPublished } from "@mzawadie/graphql";
+import { CollectionListFilterOpts } from "@mzawadie/pages/collections/components/CollectionListPage";
 
 const content = richTextEditorFixtures.richTextEditor;
 
@@ -25,7 +23,7 @@ export const collectionListFilterOpts: CollectionListFilterOpts = {
     },
 };
 
-export const collections: CollectionList_collections_edges_node[] = [
+export const collections: RelayToFlat<CollectionListQuery["collections"]> = [
     {
         __typename: "Collection",
         channelListings: [
@@ -156,7 +154,7 @@ export const collections: CollectionList_collections_edges_node[] = [
 export const collection: (
     placeholderCollectionImage: string,
     placeholderProductImage: string
-) => CollectionDetails_collection = (placeholderCollectionImage, placeholderImage) => ({
+) => CollectionDetailsQuery["collection"] = (placeholderCollectionImage, placeholderImage) => ({
     __typename: "Collection",
     backgroundImage: {
         __typename: "Image",

@@ -2,7 +2,7 @@
 import { IFilter, IFilterElement } from "@mzawadie/components/Filter";
 import { statusLabelMessages } from "@mzawadie/components/StatusLabel/messages";
 import { sectionNames, AutocompleteFilterOpts, FilterOpts } from "@mzawadie/core";
-import { PluginConfigurationType } from "@mzawadie/types/globalTypes";
+import { PluginConfigurationType } from "@mzawadie/graphql";
 import {
     createAutocompleteField,
     createBooleanField,

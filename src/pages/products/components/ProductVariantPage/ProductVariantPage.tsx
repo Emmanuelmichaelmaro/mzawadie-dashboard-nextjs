@@ -8,20 +8,21 @@ import { MetadataFormData } from "@mzawadie/components/Metadata";
 import Metadata from "@mzawadie/components/Metadata/Metadata";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
-import { FetchMoreProps, ReorderAction, maybe } from "@mzawadie/core";
-import { ProductChannelListingErrorFragment } from "@mzawadie/fragments/types/ProductChannelListingErrorFragment";
-import { ProductErrorWithAttributesFragment } from "@mzawadie/fragments/types/ProductErrorWithAttributesFragment";
-import { ProductVariant } from "@mzawadie/fragments/types/ProductVariant";
-import { WarehouseFragment } from "@mzawadie/fragments/types/WarehouseFragment";
+import { FetchMoreProps, ReorderAction, maybe, RelayToFlat } from "@mzawadie/core";
+import {
+    ProductChannelListingErrorFragment,
+    SearchAttributeValuesQuery,
+    SearchPagesQuery,
+    SearchProductsQuery,
+    ProductErrorWithAttributesFragment,
+    ProductVariantFragment,
+    WarehouseFragment,
+} from "@mzawadie/graphql";
 import {
     getAttributeValuesFromReferences,
     mergeAttributeValues,
 } from "@mzawadie/pages/attributes/utils/data";
 import { ChannelPriceData } from "@mzawadie/pages/channels/utils";
-import { VariantUpdate_productVariantUpdate_errors } from "@mzawadie/pages/products/types/VariantUpdate";
-import { SearchAttributeValues_attribute_choices_edges_node } from "@mzawadie/searches/types/SearchAttributeValues";
-import { SearchPages_search_edges_node } from "@mzawadie/searches/types/SearchPages";
-import { SearchProducts_search_edges_node } from "@mzawadie/searches/types/SearchProducts";
 import { ConfirmButtonTransitionState, Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -74,18 +75,18 @@ interface ProductVariantPageProps {
     assignReferencesAttributeId?: string;
     defaultVariantId?: string;
     defaultWeightUnit: string;
-    errors: ProductErrorWithAttributesFragment[] | VariantUpdate_productVariantUpdate_errors[];
+    errors: ProductErrorWithAttributesFragment[];
     header: string;
     channels: ChannelPriceData[];
     channelErrors: ProductChannelListingErrorFragment[];
     loading?: boolean;
     placeholderImage?: string;
     saveButtonBarState: ConfirmButtonTransitionState;
-    variant?: ProductVariant;
+    variant?: ProductVariantFragment;
     warehouses: WarehouseFragment[];
-    referencePages?: SearchPages_search_edges_node[];
-    referenceProducts?: SearchProducts_search_edges_node[];
-    attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
+    referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
+    referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
+    attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
     fetchMoreReferencePages?: FetchMoreProps;
     fetchMoreReferenceProducts?: FetchMoreProps;
     fetchMoreAttributeValues?: FetchMoreProps;

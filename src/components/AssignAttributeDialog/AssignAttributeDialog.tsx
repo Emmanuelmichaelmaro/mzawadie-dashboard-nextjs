@@ -17,7 +17,7 @@ import { Checkbox } from "@mzawadie/components/Checkbox";
 import { ConfirmButton, ConfirmButtonTransitionState } from "@mzawadie/components/ConfirmButton";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import { FetchMoreProps, buttonMessages, maybe, renderCollection } from "@mzawadie/core";
-import { AvailableAttributeFragment } from "@mzawadie/fragments/types/AvailableAttributeFragment";
+import { AvailableAttributeFragment } from "@mzawadie/graphql";
 import useElementScroll, { isScrolledToBottom } from "@mzawadie/hooks/useElementScroll";
 import { useModalDialogErrors } from "@mzawadie/hooks/useModalDialogErrors";
 import { useModalDialogOpen } from "@mzawadie/hooks/useModalDialogOpen";

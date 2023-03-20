@@ -2,7 +2,7 @@
 import { Card, CardContent, TextField } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { commonMessages } from "@mzawadie/core";
-import { DiscountErrorFragment } from "@mzawadie/fragments/types/DiscountErrorFragment";
+import { DiscountErrorFragment } from "@mzawadie/graphql";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getDiscountErrorMessage from "@mzawadie/utils/errors/discounts";
 import React from "react";

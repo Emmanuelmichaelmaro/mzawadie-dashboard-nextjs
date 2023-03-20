@@ -2,15 +2,15 @@
 import { Button, Card } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
-import { ChannelProps, ListActions, PageListProps } from "@mzawadie/core";
+import { ChannelProps, ListActions, PageListProps, RelayToFlat } from "@mzawadie/core";
+import { CategoryDetailsQuery } from "@mzawadie/graphql";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { CategoryDetails_category_products_edges_node } from "../../types/CategoryDetails";
 import { CategoryProductList } from "../CategoryProductList";
 
 interface CategoryProductsProps extends PageListProps, ListActions, ChannelProps {
-    products: CategoryDetails_category_products_edges_node[];
+    products: RelayToFlat<CategoryDetailsQuery["category"]["products"]>;
     channelChoices: SingleAutocompleteChoiceType[];
     channelsCount: number;
     categoryName: string;

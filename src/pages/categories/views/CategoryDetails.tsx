@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-floating-promises,react-hooks/rules-of-hooks */
 // @ts-nocheck
 import { DialogContentText } from "@material-ui/core";
 import { ActionDialog } from "@mzawadie/components/ActionDialog";
@@ -7,36 +6,37 @@ import { NotFoundPage } from "@mzawadie/components/NotFoundPage";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
 import { PAGINATE_BY, commonMessages, errorMessages, maybe } from "@mzawadie/core";
+import {
+    CategoryBulkDeleteMutation,
+    CategoryDeleteMutation,
+    CategoryInput,
+    CategoryUpdateMutation,
+    useCategoryBulkDeleteMutation,
+    useCategoryDeleteMutation,
+    useCategoryDetailsQuery,
+    useCategoryUpdateMutation,
+    useProductBulkDeleteMutation,
+    useUpdateMetadataMutation,
+    useUpdatePrivateMetadataMutation,
+} from "@mzawadie/graphql";
 import useBulkActions from "@mzawadie/hooks/useBulkActions";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import usePaginator, { createPaginationState } from "@mzawadie/hooks/usePaginator";
-import { CategoryInput } from "@mzawadie/types/globalTypes";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@mzawadie/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@mzawadie/utils/maps";
-import { useMetadataUpdate, usePrivateMetadataUpdate } from "@mzawadie/utils/metadata/updateMetadata";
 import { getParsedDataForJsonStringField } from "@mzawadie/utils/richText/misc";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { useProductBulkDeleteMutation } from "../../products/mutations";
 import { productAddUrl, productUrl } from "../../products/urls";
 import {
     CategoryPageTab,
     CategoryUpdatePage,
 } from "../components/CategoryUpdatePage/CategoryUpdatePage";
 import { CategoryUpdateData } from "../components/CategoryUpdatePage/form";
-import {
-    useCategoryBulkDeleteMutation,
-    useCategoryDeleteMutation,
-    useCategoryUpdateMutation,
-} from "../mutations";
-import { useCategoryDetailsQuery } from "../queries";
-import { CategoryBulkDelete } from "../types/CategoryBulkDelete";
-import { CategoryDelete } from "../types/CategoryDelete";
-import { CategoryUpdate } from "../types/CategoryUpdate";
 import {
     categoryAddUrl,
     categoryListUrl,
@@ -57,13 +57,16 @@ export function getActiveTab(tabName: string): CategoryPageTab {
 export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) => {
     const navigate = useNavigator();
     const notify = useNotifier();
-    const paginate = usePaginator();
-    const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
     const intl = useIntl();
-    const [updateMetadata] = useMetadataUpdate({});
-    const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+    const paginate = usePaginator();
+
+    const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
+
+    const [updateMetadata] = useUpdateMetadataMutation({});
+    const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
     const paginationState = createPaginationState(PAGINATE_BY, params);
+
     const { data, loading, refetch } = useCategoryDetailsQuery({
         displayLoader: true,
         variables: { ...paginationState, id },
@@ -79,7 +82,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
         return <NotFoundPage onBack={() => navigate(categoryListUrl())} />;
     }
 
-    const handleCategoryDelete = (data: CategoryDelete) => {
+    const handleCategoryDelete = (data: CategoryDeleteMutation) => {
         if (data.categoryDelete?.errors.length === 0) {
             notify({
                 status: "success",
@@ -96,7 +99,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
         onCompleted: handleCategoryDelete,
     });
 
-    const handleCategoryUpdate = (data: CategoryUpdate) => {
+    const handleCategoryUpdate = (data: CategoryUpdateMutation) => {
         if (data.categoryUpdate?.errors?.length > 0) {
             const backgroundImageError = data.categoryUpdate?.errors.find(
                 (error) => error.field === ("backgroundImage" as keyof CategoryInput)
@@ -115,7 +118,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
         onCompleted: handleCategoryUpdate,
     });
 
-    const handleBulkCategoryDelete = (data: CategoryBulkDelete) => {
+    const handleBulkCategoryDelete = (data: CategoryBulkDeleteMutation) => {
         if (data.categoryBulkDelete?.errors.length === 0) {
             closeModal();
             notify({
@@ -185,6 +188,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
 
         return result.data?.categoryUpdate?.errors;
     };
+
     const handleSubmit = createMetadataUpdateHandler(
         data?.category,
         handleUpdate,
@@ -199,6 +203,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
     return (
         <>
             <WindowTitle title={maybe(() => data?.category?.name)} />
+
             <CategoryUpdatePage
                 channelsCount={availableChannels.length}
                 channelChoices={channelChoices}
@@ -273,6 +278,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
                 toggle={toggle}
                 toggleAll={toggleAll}
             />
+
             <ActionDialog
                 confirmButtonState={deleteResult.status}
                 onClose={closeModal}
@@ -294,6 +300,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
                         }}
                     />
                 </DialogContentText>
+
                 <DialogContentText>
                     <FormattedMessage
                         defaultMessage="Remember this will also unpin all products assigned to this category, making them unavailable in storefront."
@@ -301,6 +308,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
                     />
                 </DialogContentText>
             </ActionDialog>
+
             <ActionDialog
                 open={params.action === "delete-categories" && maybe(() => params.ids?.length > 0)}
                 confirmButtonState={categoryBulkDeleteOpts.status}
@@ -327,6 +335,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
                         }}
                     />
                 </DialogContentText>
+
                 <DialogContentText>
                     <FormattedMessage
                         defaultMessage="Remember this will also delete all products assigned to this category."
@@ -334,6 +343,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
                     />
                 </DialogContentText>
             </ActionDialog>
+
             <ActionDialog
                 open={params.action === "delete-products"}
                 confirmButtonState={productBulkDeleteOpts.status}

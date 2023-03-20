@@ -1,4 +1,4 @@
-import { FulfillmentStatus } from "@mzawadie/types/globalTypes";
+import { FulfillmentStatus } from "@mzawadie/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 export const messages = defineMessages({

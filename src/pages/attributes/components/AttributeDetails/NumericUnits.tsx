@@ -1,11 +1,10 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import ControlledCheckbox from "@mzawadie/components/ControlledCheckbox";
 import { SingleSelectField } from "@mzawadie/components/SingleSelectField";
 import { commonMessages } from "@mzawadie/core";
+import { MeasurementUnitsEnum } from "@mzawadie/graphql";
 import { UseFormResult } from "@mzawadie/hooks/useForm";
 import { AttributePageFormData } from "@mzawadie/pages/attributes/components/AttributePage";
-import { MeasurementUnitsEnum } from "@mzawadie/types/globalTypes";
 import { makeStyles } from "@saleor/macaw-ui";
 import React, { useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";

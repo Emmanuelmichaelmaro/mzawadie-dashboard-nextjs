@@ -1,5 +1,6 @@
+// @ts-nocheck
+import { UserSortField } from "@mzawadie/graphql";
 import { CustomerListUrlSortField } from "@mzawadie/pages/customers/urls";
-import { UserSortField } from "@mzawadie/types/globalTypes";
 import { createGetSortQueryVariables } from "@mzawadie/utils/sort";
 
 export function getSortQueryField(sort: CustomerListUrlSortField): UserSortField | undefined {
@@ -15,6 +16,4 @@ export function getSortQueryField(sort: CustomerListUrlSortField): UserSortField
     }
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 export const getSortQueryVariables = createGetSortQueryVariables(getSortQueryField);

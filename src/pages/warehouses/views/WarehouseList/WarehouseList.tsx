@@ -5,9 +5,10 @@ import {
     SaveFilterTabDialog,
     SaveFilterTabDialogFormData,
 } from "@mzawadie/components/SaveFilterTabDialog";
-import { useShopLimitsQuery } from "@mzawadie/components/Shop/query";
+import { useShopLimitsQuery } from "@mzawadie/components/Shop/queries";
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
 import { commonMessages, getMutationStatus, maybe, sectionNames, ListViews } from "@mzawadie/core";
+import { useWarehouseDeleteMutation, useWarehouseListQuery } from "@mzawadie/graphql";
 import useListSettings from "@mzawadie/hooks/useListSettings";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
@@ -16,8 +17,6 @@ import { configurationMenuUrl } from "@mzawadie/pages/configuration";
 import { getById } from "@mzawadie/pages/orders/components/OrderReturnPage/utils";
 import { WarehouseDeleteDialog } from "@mzawadie/pages/warehouses/components/WarehouseDeleteDialog";
 import { WarehouseListPage } from "@mzawadie/pages/warehouses/components/WarehouseListPage";
-import { useWarehouseDelete } from "@mzawadie/pages/warehouses/mutations";
-import { useWarehouseList } from "@mzawadie/pages/warehouses/queries";
 import {
     warehouseAddUrl,
     warehouseListUrl,
@@ -51,10 +50,12 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
     const navigate = useNavigator();
     const notify = useNotifier();
     const paginate = usePaginator();
-    const { updateListSettings, settings } = useListSettings(ListViews.SALES_LIST);
     const intl = useIntl();
 
+    const { updateListSettings, settings } = useListSettings(ListViews.SALES_LIST);
+
     const paginationState = createPaginationState(settings.rowNumber, params);
+
     const queryVariables = React.useMemo(
         () => ({
             ...paginationState,
@@ -63,16 +64,19 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
         }),
         [paginationState, params]
     );
-    const { data, loading, refetch } = useWarehouseList({
+
+    const { data, loading, refetch } = useWarehouseListQuery({
         displayLoader: true,
         variables: queryVariables,
     });
+
     const limitOpts = useShopLimitsQuery({
         variables: {
             warehouses: true,
         },
     });
-    const [deleteWarehouse, deleteWarehouseOpts] = useWarehouseDelete({
+
+    const [deleteWarehouse, deleteWarehouseOpts] = useWarehouseDeleteMutation({
         onCompleted: (data) => {
             if (data.deleteWarehouse?.errors.length === 0) {
                 notify({
@@ -162,6 +166,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
                 onRowClick={(id) => () => navigate(warehouseUrl(id))}
                 sort={getSortParams(params)}
             />
+
             <WarehouseDeleteDialog
                 confirmButtonState={deleteTransitionState}
                 name={mapEdgesToItems(data?.warehouses)?.find(getById(params.id))?.name}
@@ -175,12 +180,14 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
                     })
                 }
             />
+
             <SaveFilterTabDialog
                 open={params.action === "save-search"}
                 confirmButtonState="default"
                 onClose={closeModal}
                 onSubmit={handleTabSave}
             />
+
             <DeleteFilterTabDialog
                 open={params.action === "delete-search"}
                 confirmButtonState="default"
@@ -193,4 +200,5 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
 };
 
 WarehouseList.displayName = "WarehouseList";
+
 export default WarehouseList;

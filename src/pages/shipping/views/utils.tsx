@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { MinMax } from "@mzawadie/core";
-import { PostalCodeRuleInclusionTypeEnum } from "@mzawadie/types/globalTypes";
+import { PostalCodeRuleInclusionTypeEnum } from "@mzawadie/graphql";
 
 export const filterPostalCodes = (postalCodes, codeToFilterOut) =>
     postalCodes.filter(

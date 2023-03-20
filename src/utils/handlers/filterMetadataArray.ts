@@ -1,4 +1,4 @@
-import { MetadataInput } from "@mzawadie/types/globalTypes";
+import { MetadataInput } from "@mzawadie/graphql";
 
 export const filterMetadataArray = (metadataInputs: MetadataInput[]) =>
     metadataInputs.filter((input) => !!input.key);

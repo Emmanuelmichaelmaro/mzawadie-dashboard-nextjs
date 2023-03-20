@@ -7,13 +7,12 @@ import { Form } from "@mzawadie/components/Form";
 import { Grid } from "@mzawadie/components/Grid";
 import Savebar from "@mzawadie/components/Savebar";
 import { sectionNames, maybe } from "@mzawadie/core";
-import { MenuErrorFragment } from "@mzawadie/fragments/types/MenuErrorFragment";
+import { MenuDetailsFragment, MenuErrorFragment } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { MenuDetails_menu } from "../../types/MenuDetails";
 import { MenuItemType } from "../MenuItemDialog";
 import { MenuItems, TreeOperation } from "../MenuItems";
 import { MenuProperties } from "../MenuProperties";
@@ -31,7 +30,7 @@ export interface MenuDetailsPageProps {
     saveButtonState: ConfirmButtonTransitionState;
     disabled: boolean;
     errors: MenuErrorFragment[];
-    menu: MenuDetails_menu;
+    menu: MenuDetailsFragment;
     onBack: () => void;
     onDelete: () => void;
     onItemAdd: () => void;

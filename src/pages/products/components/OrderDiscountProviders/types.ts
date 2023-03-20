@@ -1,11 +1,10 @@
-import { Money } from "@mzawadie/fragments/types/Money";
+import { MoneyFragment, TaxedMoneyFragment } from "@mzawadie/graphql";
 import { OrderDiscountCommonInput } from "@mzawadie/pages/orders/components/OrderDiscountCommonModal/types";
-import { OrderDetails_order_lines_undiscountedUnitPrice } from "@mzawadie/pages/orders/types/OrderDetails";
 
 import { OrderLineDiscountContextConsumerProps } from "./OrderLineDiscountProviders";
 
 export interface OrderDiscountData extends OrderDiscountCommonInput {
-    amount: Money;
+    amount: MoneyFragment;
 }
 
 export type GetOrderLineDiscountContextConsumerProps = (
@@ -13,16 +12,16 @@ export type GetOrderLineDiscountContextConsumerProps = (
 ) => OrderLineDiscountContextConsumerProps;
 
 export interface OrderLineDiscountData extends OrderDiscountCommonInput {
-    moneyValue: Money;
-    undiscountedPrice: OrderDetails_order_lines_undiscountedUnitPrice;
+    moneyValue: MoneyFragment;
+    undiscountedPrice: TaxedMoneyFragment;
 }
 
 export interface OrderDiscountConsumerCommonProps {
     openDialog: () => void;
     closeDialog: () => void;
     isDialogOpen: boolean;
-    undiscountedPrice: Money;
-    discountedPrice: Money;
+    undiscountedPrice: MoneyFragment;
+    discountedPrice: MoneyFragment;
 }
 
 export interface OrderLineDiscountConsumerProps {

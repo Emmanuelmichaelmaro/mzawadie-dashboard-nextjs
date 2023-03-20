@@ -24,12 +24,14 @@ import { RichTextEditor } from "@mzawadie/components/RichTextEditor";
 import { SingleAutocompleteSelectField } from "@mzawadie/components/SingleAutocompleteSelectField";
 import { SortableChipsField } from "@mzawadie/components/SortableChipsField";
 import { commonMessages, FetchMoreProps, ReorderEvent } from "@mzawadie/core";
-import { AttributeValueFragment } from "@mzawadie/fragments/types/AttributeValueFragment";
-import { PageErrorWithAttributesFragment } from "@mzawadie/fragments/types/PageErrorWithAttributesFragment";
-import { ProductErrorWithAttributesFragment } from "@mzawadie/fragments/types/ProductErrorWithAttributesFragment";
+import {
+    AttributeValueFragment,
+    PageErrorWithAttributesFragment,
+    ProductErrorWithAttributesFragment,
+    AttributeInputTypeEnum,
+} from "@mzawadie/graphql";
 import { FormsetChange } from "@mzawadie/hooks/useFormset";
 import { getMeasurementUnitMessage } from "@mzawadie/pages/attributes/components/AttributeDetails/utils";
-import { AttributeInputTypeEnum } from "@mzawadie/types/globalTypes";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

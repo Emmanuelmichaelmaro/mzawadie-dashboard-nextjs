@@ -2,16 +2,16 @@ import { Button } from "@material-ui/core";
 import Container from "@mzawadie/components/Container";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import { sectionNames, ListActions, PageListProps, SortPage } from "@mzawadie/core";
+import { PageFragment } from "@mzawadie/graphql";
 import { PageListUrlSortField } from "@mzawadie/pages/pages/urls";
 import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { PageList_pages_edges_node } from "../../types/PageList";
 import { PageList } from "../PageList";
 
 export interface PageListPageProps extends PageListProps, ListActions, SortPage<PageListUrlSortField> {
-    pages: PageList_pages_edges_node[];
+    pages: PageFragment[];
     onBack: () => void;
 }
 

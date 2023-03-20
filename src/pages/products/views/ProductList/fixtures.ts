@@ -1,11 +1,11 @@
 // @ts-nocheck
 import { fetchMoreProps, searchPageProps } from "@mzawadie/core";
+import { StockAvailability } from "@mzawadie/graphql";
 import { attributes } from "@mzawadie/pages/attributes/fixtures";
 import { categories } from "@mzawadie/pages/categories/fixtures";
 import { collections } from "@mzawadie/pages/collections/fixtures";
 import { productTypes } from "@mzawadie/pages/productTypes/fixtures";
 import { ProductListFilterOpts } from "@mzawadie/pages/products/components/ProductListPage";
-import { StockAvailability } from "@mzawadie/types/globalTypes";
 import { mapEdgesToItems, mapSlugNodeToChoice } from "@mzawadie/utils/maps";
 
 export const productListFilterOpts: ProductListFilterOpts = {

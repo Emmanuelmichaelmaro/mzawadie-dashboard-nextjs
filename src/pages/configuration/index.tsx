@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
 import { APP_VERSION as dashboardVersion, sectionNames, maybe } from "@mzawadie/core";
+import { PermissionEnum } from "@mzawadie/graphql";
 import useShop from "@mzawadie/hooks/useShop";
 import Attributes from "@mzawadie/icons/Attributes";
 import Channels from "@mzawadie/icons/Channels";
@@ -27,7 +28,6 @@ import { siteSettingsUrl } from "@mzawadie/pages/siteSettings/urls";
 import { staffListUrl } from "@mzawadie/pages/staff/urls";
 import { taxSection } from "@mzawadie/pages/taxes/urls";
 import { warehouseSection } from "@mzawadie/pages/warehouses/urls";
-import { PermissionEnum } from "@mzawadie/types/globalTypes";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 

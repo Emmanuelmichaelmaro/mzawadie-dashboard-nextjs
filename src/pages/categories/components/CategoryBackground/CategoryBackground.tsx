@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { Button, Card, CardContent, TextField } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
@@ -7,11 +6,11 @@ import { ImageUpload } from "@mzawadie/components/ImageUpload";
 import { MediaTile } from "@mzawadie/components/MediaTile";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { commonMessages } from "@mzawadie/core";
+import { CategoryDetailsFragment } from "@mzawadie/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { CategoryDetails_category_backgroundImage } from "../../types/CategoryDetails";
 import { CategoryUpdateData } from "../CategoryUpdatePage/form";
 
 const useStyles = makeStyles(
@@ -42,7 +41,7 @@ const useStyles = makeStyles(
 
 export interface CategoryBackgroundProps {
     data: CategoryUpdateData;
-    image: CategoryDetails_category_backgroundImage | null | undefined;
+    image: CategoryDetailsFragment["backgroundImage"];
     onChange: (event: React.ChangeEvent<any>) => void;
     onImageDelete: () => void;
     onImageUpload: (file: File) => void;

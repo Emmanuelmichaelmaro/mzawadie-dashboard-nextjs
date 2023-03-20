@@ -1,6 +1,6 @@
 import { TableCell } from "@material-ui/core";
 import Skeleton from "@mzawadie/components/Skeleton";
-import { PluginBaseFragment } from "@mzawadie/fragments/types/PluginBaseFragment";
+import { PluginBaseFragment } from "@mzawadie/graphql";
 import React, { useRef, useState } from "react";
 
 import PluginAvailabilityStatus from "./PluginAvailabilityStatus";

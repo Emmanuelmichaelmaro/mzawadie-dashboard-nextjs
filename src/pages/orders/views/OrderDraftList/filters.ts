@@ -1,11 +1,11 @@
 // @ts-nocheck
 import { IFilterElement } from "@mzawadie/components/Filter";
 import { maybe } from "@mzawadie/core";
+import { OrderDraftFilterInput } from "@mzawadie/graphql";
 import {
     OrderDraftFilterKeys,
     OrderDraftListFilterOpts,
 } from "@mzawadie/pages/orders/components/OrderDraftListPage";
-import { OrderDraftFilterInput } from "@mzawadie/types/globalTypes";
 import {
     createFilterTabUtils,
     createFilterUtils,

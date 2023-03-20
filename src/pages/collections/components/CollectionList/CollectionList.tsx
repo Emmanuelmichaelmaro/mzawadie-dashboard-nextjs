@@ -20,15 +20,15 @@ import {
     ListActions,
     ListProps,
     SortPage,
+    RelayToFlat,
 } from "@mzawadie/core";
+import { CollectionListQuery } from "@mzawadie/graphql";
 import { CollectionListUrlSortField } from "@mzawadie/pages/collections/urls";
 import { canBeSorted } from "@mzawadie/pages/collections/views/CollectionList/sort";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import { makeStyles, Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { CollectionList_collections_edges_node } from "../../types/CollectionList";
 
 const useStyles = makeStyles(
     (theme) => ({
@@ -55,12 +55,12 @@ const useStyles = makeStyles(
     { name: "CollectionList" }
 );
 
-interface CollectionListProps
+export interface CollectionListProps
     extends ListProps,
         ListActions,
         SortPage<CollectionListUrlSortField>,
         ChannelProps {
-    collections: CollectionList_collections_edges_node[];
+    collections: RelayToFlat<CollectionListQuery["collections"]>;
 }
 
 const numberOfColumns = 4;

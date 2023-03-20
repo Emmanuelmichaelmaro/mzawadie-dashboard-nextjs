@@ -8,7 +8,7 @@ import { PageHeader } from "@mzawadie/components/PageHeader";
 import { PageSectionHeader } from "@mzawadie/components/PageSectionHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { commonMessages, sectionNames } from "@mzawadie/core";
-import { ShopErrorFragment } from "@mzawadie/fragments/types/ShopErrorFragment";
+import { ShopErrorFragment, SiteSettingsQuery } from "@mzawadie/graphql";
 import useAddressValidation from "@mzawadie/hooks/useAddressValidation";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import useStateFromProps from "@mzawadie/hooks/useStateFromProps";
@@ -18,7 +18,6 @@ import { ConfirmButtonTransitionState, Backlink, makeStyles } from "@saleor/maca
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { SiteSettings_shop } from "../../types/SiteSettings";
 import { SiteCheckoutSettingsCard } from "../SiteCheckoutSettingsCard";
 import { SiteDetailsSettingsCard } from "../SiteDetailsSettingsCard";
 import { messages } from "./messages";
@@ -46,7 +45,7 @@ export interface SiteSettingsPageFormData extends SiteSettingsPageAddressFormDat
 export interface SiteSettingsPageProps {
     disabled: boolean;
     errors: ShopErrorFragment[];
-    shop: SiteSettings_shop;
+    shop: SiteSettingsQuery["shop"];
     saveButtonBarState: ConfirmButtonTransitionState;
     onBack: () => void;
     onSubmit: (data: SiteSettingsPageFormData) => SubmitPromise;

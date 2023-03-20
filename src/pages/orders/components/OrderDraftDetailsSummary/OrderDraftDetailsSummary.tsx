@@ -2,15 +2,14 @@
 import { Typography } from "@material-ui/core";
 import Link from "@mzawadie/components/Link";
 import { Money } from "@mzawadie/components/Money";
+import { DiscountValueTypeEnum, OrderDetailsFragment } from "@mzawadie/graphql";
 import { HorizontalSpacer } from "@mzawadie/pages/apps/components/HorizontalSpacer";
 import { OrderDiscountContextConsumerProps } from "@mzawadie/pages/products/components/OrderDiscountProviders/OrderDiscountProviders";
 import { OrderDiscountData } from "@mzawadie/pages/products/components/OrderDiscountProviders/types";
-import { DiscountValueTypeEnum } from "@mzawadie/types/globalTypes";
 import { makeStyles } from "@saleor/macaw-ui";
 import React, { useRef } from "react";
 import { useIntl } from "react-intl";
 
-import { OrderDetails_order } from "../../types/OrderDetails";
 import { OrderDiscountCommonModal } from "../OrderDiscountCommonModal";
 import { ORDER_DISCOUNT } from "../OrderDiscountCommonModal/types";
 import { messages } from "./messages";
@@ -51,7 +50,7 @@ const PRICE_PLACEHOLDER = "---";
 
 interface OrderDraftDetailsSummaryProps extends OrderDiscountContextConsumerProps {
     disabled?: boolean;
-    order: OrderDetails_order;
+    order: OrderDetailsFragment;
     onShippingMethodEdit: () => void;
 }
 

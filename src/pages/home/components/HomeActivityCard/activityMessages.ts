@@ -1,7 +1,6 @@
-import { OrderEventsEnum } from "@mzawadie/types/globalTypes";
+// @ts-nocheck
+import { HomeQuery, OrderEventsEnum } from "@mzawadie/graphql";
 import { defineMessages, IntlShape } from "react-intl";
-
-import { Home_activities_edges_node } from "../../types/Home";
 
 const messages = defineMessages({
     draft: {
@@ -22,7 +21,10 @@ const messages = defineMessages({
     },
 });
 
-export const getActivityMessage = (activity: Home_activities_edges_node, intl: IntlShape) => {
+export const getActivityMessage = (
+    activity: HomeQuery["activities"]["edges"][0]["node"],
+    intl: IntlShape
+) => {
     switch (activity.type) {
         case OrderEventsEnum.ORDER_FULLY_PAID:
             return intl.formatMessage(messages.paid, {

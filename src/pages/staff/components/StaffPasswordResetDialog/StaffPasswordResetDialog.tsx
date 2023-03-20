@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
     Button,
     Dialog,
@@ -10,7 +11,7 @@ import { ConfirmButton, ConfirmButtonTransitionState } from "@mzawadie/component
 import { Form } from "@mzawadie/components/Form";
 import FormSpacer from "@mzawadie/components/FormSpacer";
 import { buttonMessages, DialogProps } from "@mzawadie/core";
-import { AccountErrorFragment } from "@mzawadie/fragments/types/AccountErrorFragment";
+import { AccountErrorFragment } from "@mzawadie/graphql";
 import { useModalDialogErrors } from "@mzawadie/hooks/useModalDialogErrors";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getAccountErrorMessage from "@mzawadie/utils/errors/account";

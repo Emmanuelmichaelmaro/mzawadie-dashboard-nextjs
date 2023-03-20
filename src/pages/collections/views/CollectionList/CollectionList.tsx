@@ -8,6 +8,7 @@ import {
     SaveFilterTabDialogFormData,
 } from "@mzawadie/components/SaveFilterTabDialog";
 import { commonMessages, maybe, ListViews } from "@mzawadie/core";
+import { useCollectionBulkDeleteMutation, useCollectionListQuery } from "@mzawadie/graphql";
 import useBulkActions from "@mzawadie/hooks/useBulkActions";
 import useListSettings from "@mzawadie/hooks/useListSettings";
 import useNavigator from "@mzawadie/hooks/useNavigator";
@@ -24,8 +25,6 @@ import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CollectionListPage from "../../components/CollectionListPage/CollectionListPage";
-import { useCollectionBulkDelete } from "../../mutations";
-import { useCollectionListQuery } from "../../queries";
 import {
     collectionAddUrl,
     collectionListUrl,
@@ -51,10 +50,12 @@ interface CollectionListProps {
 
 export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     const navigate = useNavigator();
-    const intl = useIntl();
     const notify = useNotifier();
+    const intl = useIntl();
     const paginate = usePaginator();
+
     const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
+
     const { updateListSettings, settings } = useListSettings(ListViews.COLLECTION_LIST);
 
     usePaginationReset(collectionListUrl, params, settings.rowNumber);
@@ -74,6 +75,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     const selectedChannel = availableChannels.find((channel) => channel.slug === params.channel);
 
     const paginationState = createPaginationState(settings.rowNumber, params);
+
     const queryVariables = React.useMemo(
         () => ({
             ...paginationState,
@@ -83,12 +85,13 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         }),
         [params, settings.rowNumber]
     );
+
     const { data, loading, refetch } = useCollectionListQuery({
         displayLoader: true,
         variables: queryVariables,
     });
 
-    const [collectionBulkDelete, collectionBulkDeleteOpts] = useCollectionBulkDelete({
+    const [collectionBulkDelete, collectionBulkDeleteOpts] = useCollectionBulkDeleteMutation({
         onCompleted: (data) => {
             if (data.collectionBulkDelete.errors.length === 0) {
                 notify({

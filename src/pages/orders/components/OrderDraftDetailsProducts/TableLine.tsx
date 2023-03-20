@@ -5,11 +5,11 @@ import { Money } from "@mzawadie/components/Money";
 import { TableCellAvatar } from "@mzawadie/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@mzawadie/components/TableCellAvatar/Avatar";
 import { maybe } from "@mzawadie/core";
+import { OrderLineFragment } from "@mzawadie/graphql";
 import { OrderLineDiscountContextConsumerProps } from "@mzawadie/pages/products/components/OrderDiscountProviders/OrderLineDiscountProviders";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import React, { useRef } from "react";
 
-import { OrderDetails_order_lines } from "../../types/OrderDetails";
 import { OrderDiscountCommonModal } from "../OrderDiscountCommonModal";
 import { ORDER_LINE_DISCOUNT } from "../OrderDiscountCommonModal/types";
 import TableLineForm, { FormData } from "./TableLineForm";
@@ -52,7 +52,7 @@ const useStyles = makeStyles(
 );
 
 interface TableLineProps extends OrderLineDiscountContextConsumerProps {
-    line: OrderDetails_order_lines;
+    line: OrderLineFragment;
     onOrderLineChange: (id: string, data: FormData) => void;
     onOrderLineRemove: (id: string) => void;
 }

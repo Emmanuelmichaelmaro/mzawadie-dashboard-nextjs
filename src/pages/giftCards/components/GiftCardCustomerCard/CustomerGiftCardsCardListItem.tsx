@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { CardMenu, CardMenuItem } from "@mzawadie/components/CardMenu";
+import { CustomerGiftCardFragment } from "@mzawadie/graphql";
 import * as React from "react";
 import { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -12,10 +13,9 @@ import { bulkEnableDisableSectionMessages } from "../GiftCardsList/GiftCardsList
 import { giftCardsListTableMessages } from "../GiftCardsList/messages";
 import { CUSTOMER_GIFT_CARD_LIST_QUERY } from "./queries";
 import { useListWrapperStyles } from "./styles";
-import { CustomerGiftCardList_giftCards_edges_node } from "./types/CustomerGiftCardList";
 
 interface CustomerGiftCardsCardListItemProps {
-    giftCard: ExtendedGiftCard<CustomerGiftCardList_giftCards_edges_node>;
+    giftCard: ExtendedGiftCard<CustomerGiftCardFragment>;
 }
 
 const CustomerGiftCardsCardListItem: React.FC<CustomerGiftCardsCardListItemProps> = ({ giftCard }) => {

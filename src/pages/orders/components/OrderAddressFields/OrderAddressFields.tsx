@@ -1,13 +1,12 @@
 // @ts-nocheck
 import { transformAddressToForm } from "@mzawadie/core";
-import { OrderErrorFragment } from "@mzawadie/fragments/types/OrderErrorFragment";
-import { SubmitPromise } from "@mzawadie/hooks/useForm";
-import { CustomerAddresses_user } from "@mzawadie/pages/customers/types/CustomerAddresses";
 import {
-    OrderDetails_order_billingAddress,
-    OrderDetails_order_shippingAddress,
-    OrderDetails_shop_countries,
-} from "@mzawadie/pages/orders/types/OrderDetails";
+    AddressFragment,
+    CustomerAddressesQuery,
+    OrderDetailsQuery,
+    OrderErrorFragment,
+} from "@mzawadie/graphql";
+import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 
@@ -24,14 +23,14 @@ interface OrderAddressFieldsProps {
     action: string;
     isDraft: boolean;
     customerAddressesLoading: boolean;
-    customer: CustomerAddresses_user;
-    countries: OrderDetails_shop_countries[];
+    customer: CustomerAddressesQuery["user"];
+    countries: OrderDetailsQuery["shop"]["countries"];
     onClose: () => void;
     onConfirm: (data: OrderCustomerAddressesEditDialogOutput) => SubmitPromise;
     confirmButtonState: ConfirmButtonTransitionState;
     errors: OrderErrorFragment[];
-    orderShippingAddress: OrderDetails_order_shippingAddress;
-    orderBillingAddress: OrderDetails_order_billingAddress;
+    orderShippingAddress: AddressFragment;
+    orderBillingAddress: AddressFragment;
 }
 
 const OrderAddressFields: React.FC<OrderAddressFieldsProps> = ({

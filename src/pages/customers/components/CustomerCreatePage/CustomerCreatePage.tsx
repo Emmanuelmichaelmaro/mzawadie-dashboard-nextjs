@@ -6,10 +6,9 @@ import { Grid } from "@mzawadie/components/Grid";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { sectionNames, extractMutationErrors } from "@mzawadie/core";
-import { AccountErrorFragment } from "@mzawadie/fragments/types/AccountErrorFragment";
+import { AccountErrorFragment, CustomerCreateDataQuery, AddressInput } from "@mzawadie/graphql";
 import useAddressValidation from "@mzawadie/hooks/useAddressValidation";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
-import { AddressInput } from "@mzawadie/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@mzawadie/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@mzawadie/utils/maps";
 import { ConfirmButtonTransitionState, Backlink } from "@saleor/macaw-ui";
@@ -17,7 +16,6 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { AddressTypeInput } from "../../types";
-import { CustomerCreateData_shop_countries } from "../../types/CustomerCreateData";
 import { CustomerCreateAddress } from "../CustomerCreateAddress";
 import { CustomerCreateDetails } from "../CustomerCreateDetails";
 import { CustomerCreateNote } from "../CustomerCreateNote";
@@ -52,7 +50,7 @@ const initialForm: CustomerCreatePageFormData & AddressTypeInput = {
 };
 
 export interface CustomerCreatePageProps {
-    countries?: CustomerCreateData_shop_countries[];
+    countries?: CustomerCreateDataQuery["shop"]["countries"];
     disabled?: boolean;
     errors?: AccountErrorFragment[];
     saveButtonBar?: ConfirmButtonTransitionState;

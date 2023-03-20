@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
     Dialog,
     DialogActions,
@@ -9,7 +10,7 @@ import BackButton from "@mzawadie/components/BackButton";
 import { ConfirmButton } from "@mzawadie/components/ConfirmButton";
 import FormSpacer from "@mzawadie/components/FormSpacer";
 import { buttonMessages } from "@mzawadie/core";
-import { OrderErrorFragment } from "@mzawadie/fragments/types/OrderErrorFragment";
+import { OrderErrorFragment } from "@mzawadie/graphql";
 import { useModalDialogErrors } from "@mzawadie/hooks/useModalDialogErrors";
 import getOrderErrorMessage from "@mzawadie/utils/errors/order";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";

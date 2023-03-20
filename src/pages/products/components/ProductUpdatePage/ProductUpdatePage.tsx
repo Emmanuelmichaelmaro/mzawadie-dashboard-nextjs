@@ -11,7 +11,6 @@ import Metadata from "@mzawadie/components/Metadata/Metadata";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { SeoForm } from "@mzawadie/components/SeoForm";
-import { RefreshLimits_shop_limits } from "@mzawadie/components/Shop/types/RefreshLimits";
 import {
     sectionNames,
     maybe,
@@ -19,11 +18,23 @@ import {
     FetchMoreProps,
     ListActions,
     ReorderAction,
+    RelayToFlat,
 } from "@mzawadie/core";
-import { ProductChannelListingErrorFragment } from "@mzawadie/fragments/types/ProductChannelListingErrorFragment";
-import { ProductErrorWithAttributesFragment } from "@mzawadie/fragments/types/ProductErrorWithAttributesFragment";
-import { TaxTypeFragment } from "@mzawadie/fragments/types/TaxTypeFragment";
-import { WarehouseFragment } from "@mzawadie/fragments/types/WarehouseFragment";
+import {
+    PermissionEnum,
+    ProductChannelListingErrorFragment,
+    ProductDetailsVariantFragment,
+    ProductErrorWithAttributesFragment,
+    ProductFragment,
+    RefreshLimitsQuery,
+    SearchAttributeValuesQuery,
+    SearchCategoriesQuery,
+    SearchCollectionsQuery,
+    SearchPagesQuery,
+    SearchProductsQuery,
+    TaxTypeFragment,
+    WarehouseFragment,
+} from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import { FormsetData } from "@mzawadie/hooks/useFormset";
 import useStateFromProps from "@mzawadie/hooks/useStateFromProps";
@@ -39,21 +50,10 @@ import {
 import ChannelsWithVariantsAvailabilityCard from "@mzawadie/pages/channels/components/ChannelsWithVariantsAvailabilityCard/ChannelsWithVariantsAvailabilityCard";
 import { ChannelData } from "@mzawadie/pages/channels/utils";
 import { ChannelsWithVariantsData } from "@mzawadie/pages/products/views/ProductUpdate/types";
-import { SearchAttributeValues_attribute_choices_edges_node } from "@mzawadie/searches/types/SearchAttributeValues";
-import { SearchCategories_search_edges_node } from "@mzawadie/searches/types/SearchCategories";
-import { SearchCollections_search_edges_node } from "@mzawadie/searches/types/SearchCollections";
-import { SearchPages_search_edges_node } from "@mzawadie/searches/types/SearchPages";
-import { SearchProducts_search_edges_node } from "@mzawadie/searches/types/SearchProducts";
-import { PermissionEnum } from "@mzawadie/types/globalTypes";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import {
-    ProductDetails_product,
-    ProductDetails_product_media,
-    ProductDetails_product_variants,
-} from "../../types/ProductDetails";
 import { getChoices, ProductUpdatePageFormData } from "../../utils/data";
 import { ProductDetailsForm } from "../ProductDetailsForm";
 import { ProductExternalMediaDialog } from "../ProductExternalMediaDialog";
@@ -77,24 +77,24 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
     defaultWeightUnit: string;
     errors: ProductErrorWithAttributesFragment[];
     placeholderImage: string;
-    collections: SearchCollections_search_edges_node[];
-    categories: SearchCategories_search_edges_node[];
-    attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
+    collections: RelayToFlat<SearchCollectionsQuery["search"]>;
+    categories: RelayToFlat<SearchCategoriesQuery["search"]>;
+    attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
     disabled: boolean;
     fetchMoreCategories: FetchMoreProps;
     fetchMoreCollections: FetchMoreProps;
     isMediaUrlModalVisible?: boolean;
-    limits: RefreshLimits_shop_limits;
-    variants: ProductDetails_product_variants[];
-    media: ProductDetails_product_media[];
+    limits: RefreshLimitsQuery["shop"]["limits"];
+    variants: ProductDetailsVariantFragment[];
+    media: ProductFragment["media"];
     hasChannelChanged: boolean;
-    product: ProductDetails_product;
+    product: ProductFragment;
     header: string;
     saveButtonBarState: ConfirmButtonTransitionState;
     warehouses: WarehouseFragment[];
     taxTypes: TaxTypeFragment[];
-    referencePages?: SearchPages_search_edges_node[];
-    referenceProducts?: SearchProducts_search_edges_node[];
+    referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
+    referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
     assignReferencesAttributeId?: string;
     fetchMoreReferencePages?: FetchMoreProps;
     fetchMoreReferenceProducts?: FetchMoreProps;
@@ -123,7 +123,7 @@ export interface ProductUpdatePageProps extends ListActions, ChannelProps {
     onMediaUrlUpload(mediaUrl: string);
     onSeoClick?();
     onVariantAdd?();
-    onSetDefaultVariant(variant: ProductDetails_product_variants);
+    onSetDefaultVariant(variant: ProductDetailsVariantFragment);
     onWarehouseConfigure();
 }
 

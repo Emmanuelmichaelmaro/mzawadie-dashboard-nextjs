@@ -1,5 +1,5 @@
 import { TextField } from "@material-ui/core";
-import { SaleType } from "@mzawadie/types/globalTypes";
+import { SaleType } from "@mzawadie/graphql";
 import React from "react";
 import { useIntl } from "react-intl";
 

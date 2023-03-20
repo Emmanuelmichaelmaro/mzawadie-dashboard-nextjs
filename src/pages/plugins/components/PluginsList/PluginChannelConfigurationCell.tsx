@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { TableCell } from "@material-ui/core";
-import { PluginBaseFragment } from "@mzawadie/fragments/types/PluginBaseFragment";
+import { PluginBaseFragment } from "@mzawadie/graphql";
 import { isPluginGlobal } from "@mzawadie/pages/plugins/views/utils";
 import React from "react";
 import { FormattedMessage } from "react-intl";

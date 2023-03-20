@@ -10,13 +10,22 @@ import {
     getStringOrPlaceholder,
     maybe,
 } from "@mzawadie/core";
-import { useFileUploadMutation } from "@mzawadie/files/mutations";
-import { AttributeErrorFragment } from "@mzawadie/fragments/types/AttributeErrorFragment";
-import { PageErrorFragment } from "@mzawadie/fragments/types/PageErrorFragment";
-import { UploadErrorFragment } from "@mzawadie/fragments/types/UploadErrorFragment";
+import {
+    AttributeErrorFragment,
+    AttributeValueInput,
+    PageErrorFragment,
+    PageInput,
+    UploadErrorFragment,
+    useAttributeValueDeleteMutation,
+    useFileUploadMutation,
+    usePageDetailsQuery,
+    usePageRemoveMutation,
+    usePageUpdateMutation,
+    useUpdateMetadataMutation,
+    useUpdatePrivateMetadataMutation,
+} from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
-import { useAttributeValueDeleteMutation } from "@mzawadie/pages/attributes/mutations";
 import {
     getAttributesAfterFileAttributesUpdate,
     mergeAttributeValueDeleteErrors,
@@ -29,20 +38,15 @@ import {
 } from "@mzawadie/pages/attributes/utils/handlers";
 import usePageSearch from "@mzawadie/searches/usePageSearch";
 import useProductSearch from "@mzawadie/searches/useProductSearch";
-import { AttributeValueInput, PageInput } from "@mzawadie/types/globalTypes";
 import useAttributeValueSearchHandler from "@mzawadie/utils/handlers/attributeValueSearchHandler";
 import createMetadataUpdateHandler from "@mzawadie/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
-import { useMetadataUpdate, usePrivateMetadataUpdate } from "@mzawadie/utils/metadata/updateMetadata";
 import { getParsedDataForJsonStringField } from "@mzawadie/utils/richText/misc";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { PageDetailsPage } from "../components/PageDetailsPage";
 import { PageData, PageSubmitData } from "../components/PageDetailsPage/form";
-import { usePageRemoveMutation, usePageUpdateMutation } from "../mutations";
-import { usePageDetailsQuery } from "../queries";
-import { PageRemove } from "../types/PageRemove";
 import { pageListUrl, pageUrl, PageUrlQueryParams } from "../urls";
 
 export interface PageDetailsProps {
@@ -70,8 +74,9 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     const navigate = useNavigator();
     const notify = useNotifier();
     const intl = useIntl();
-    const [updateMetadata] = useMetadataUpdate({});
-    const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+
+    const [updateMetadata] = useUpdateMetadataMutation({});
+    const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
     const pageDetails = usePageDetailsQuery({
         variables: {
@@ -87,7 +92,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     const [deleteAttributeValue, deleteAttributeValueOpts] = useAttributeValueDeleteMutation({});
 
     const [pageRemove, pageRemoveOpts] = usePageRemoveMutation({
-        onCompleted: (data: PageRemove) => {
+        onCompleted: (data) => {
             if (data.pageDelete.errors.length === 0) {
                 notify({
                     status: "success",

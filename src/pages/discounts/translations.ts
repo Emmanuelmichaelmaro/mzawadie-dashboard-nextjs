@@ -1,4 +1,4 @@
-import { VoucherTypeEnum } from "@mzawadie/types/globalTypes";
+import { VoucherTypeEnum } from "@mzawadie/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 const messages = defineMessages({

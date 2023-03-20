@@ -1,4 +1,4 @@
-// @ts-check
+// @ts-nocheck
 import saleorDarkLogoSmall from "@assets/images/logo-dark-small.svg";
 import plusIcon from "@assets/images/plus-icon.svg";
 import { Card, CardContent, Grid, Typography } from "@material-ui/core";
@@ -8,21 +8,20 @@ import Container from "@mzawadie/components/Container";
 import Hr from "@mzawadie/components/Hr";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { buttonMessages } from "@mzawadie/core";
+import { AppFetchMutation, AppInstallMutation } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
-import { AppInstall_appInstall_errors } from "@mzawadie/pages/apps/types/AppInstall";
 import { Button } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "../../styles";
-import { AppFetch_appFetchManifest_manifest } from "../../types/AppFetch";
 
 export interface AppInstallPageProps {
-    data: AppFetch_appFetchManifest_manifest;
+    data: AppFetchMutation["appFetchManifest"]["manifest"];
     loading: boolean;
     navigateToAppsList: () => void;
-    onSubmit: () => SubmitPromise<AppInstall_appInstall_errors[]>;
+    onSubmit: () => SubmitPromise<AppInstallMutation["appInstall"]["errors"]>;
 }
 
 export const AppInstallPage: React.FC<AppInstallPageProps> = ({

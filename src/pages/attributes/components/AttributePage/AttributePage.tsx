@@ -10,16 +10,16 @@ import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { ListSettingsUpdate } from "@mzawadie/components/TablePagination";
 import { sectionNames, maybe, ListSettings, ReorderAction } from "@mzawadie/core";
-import { AttributeDetailsFragment } from "@mzawadie/fragments/types/AttributeDetailsFragment";
-import { AttributeErrorFragment } from "@mzawadie/fragments/types/AttributeErrorFragment";
-import { AttributeDetails_attribute_choices } from "@mzawadie/pages/attributes/types/AttributeDetails";
-import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@mzawadie/pages/attributes/utils/data";
 import {
+    AttributeDetailsFragment,
+    AttributeErrorFragment,
+    AttributeDetailsQuery,
     AttributeEntityTypeEnum,
     AttributeInputTypeEnum,
     AttributeTypeEnum,
     MeasurementUnitsEnum,
-} from "@mzawadie/types/globalTypes";
+} from "@mzawadie/graphql";
+import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@mzawadie/pages/attributes/utils/data";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@mzawadie/utils/maps";
 import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChangeTrigger";
 import { Backlink } from "@saleor/macaw-ui";
@@ -37,7 +37,7 @@ export interface AttributePageProps {
     disabled: boolean;
     errors: AttributeErrorFragment[];
     saveButtonBarState: ConfirmButtonTransitionState;
-    values: AttributeDetails_attribute_choices;
+    values: AttributeDetailsQuery["attribute"]["choices"];
     onBack: () => void;
     onDelete: () => void;
     onSubmit: (data: AttributePageFormData) => void;

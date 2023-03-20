@@ -1,10 +1,10 @@
 // @ts-nocheck
 import { maybe, transformOrderStatus } from "@mzawadie/core";
+import { CheckIfOrderExistsQuery } from "@mzawadie/graphql";
 import { UseNavigatorResult } from "@mzawadie/hooks/useNavigator";
 import { orderUrl } from "@mzawadie/pages/orders/urls";
 import { IntlShape } from "react-intl";
 
-import { CheckIfOrderExists_order } from "../queries/types/CheckIfOrderExists";
 import { QuickSearchAction } from "../types";
 import messages from "./messages";
 
@@ -21,7 +21,7 @@ function getOrdersModeActions(
     query: string,
     intl: IntlShape,
     navigate: UseNavigatorResult,
-    order: CheckIfOrderExists_order | undefined | null
+    order: CheckIfOrderExistsQuery["order"]
 ): QuickSearchAction[] {
     const gqlId = getGqlOrderId(query);
 

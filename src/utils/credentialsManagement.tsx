@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { User } from "@mzawadie/fragments/types/User";
+import { UserFragment } from "@mzawadie/graphql";
 
 export const isSupported = !!(typeof window !== "undefined"
     ? navigator?.credentials?.preventSilentAccess() && window.PasswordCredential
@@ -21,11 +21,10 @@ export async function login<T>(loginFunction: (id: string, password: string) => 
         result = null;
     }
 
-    // @ts-ignore
     return result;
 }
 
-export function saveCredentials(user: User, password: string): Promise<Credential | null> {
+export function saveCredentials(user: UserFragment, password: string): Promise<Credential | null> {
     let result: Promise<Credential | null>;
 
     if (isSupported) {

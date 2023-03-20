@@ -16,8 +16,8 @@ import {
     Typography,
 } from "@material-ui/core";
 import ToggleIcon from "@material-ui/icons/ArrowDropDown";
+import { MetadataInput } from "@mzawadie/graphql";
 import { FormChange } from "@mzawadie/hooks/useForm";
-import { MetadataInput } from "@mzawadie/types/globalTypes";
 import { DeleteIcon } from "@saleor/macaw-ui";
 import React, { useEffect } from "react";
 import SVG from "react-inlinesvg";

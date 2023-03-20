@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import {
     CardContent,
@@ -8,7 +7,7 @@ import {
     Typography,
 } from "@material-ui/core";
 import Skeleton from "@mzawadie/components/Skeleton";
-import { ProductVariant } from "@mzawadie/fragments/types/ProductVariant";
+import { ProductVariantFragment } from "@mzawadie/graphql";
 import useDateLocalize from "@mzawadie/hooks/useDateLocalize";
 import IconChevronDown from "@mzawadie/icons/ChevronDown";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -69,7 +68,7 @@ const useSummaryStyles = makeStyles(
 );
 
 interface VariantDetailsChannelsAvailabilityCardProps {
-    variant: ProductVariant;
+    variant: ProductVariantFragment;
 }
 
 const VariantDetailsChannelsAvailabilityCard: React.FC<VariantDetailsChannelsAvailabilityCardProps> = ({

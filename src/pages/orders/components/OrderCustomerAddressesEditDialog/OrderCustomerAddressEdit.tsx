@@ -5,12 +5,10 @@ import CardSpacer from "@mzawadie/components/CardSpacer";
 import FormSpacer from "@mzawadie/components/FormSpacer";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
 import Skeleton from "@mzawadie/components/Skeleton";
-import { AccountErrorFragment } from "@mzawadie/fragments/types/AccountErrorFragment";
-import { OrderErrorFragment } from "@mzawadie/fragments/types/OrderErrorFragment";
+import { AccountErrorFragment, AddressFragment, OrderErrorFragment } from "@mzawadie/graphql";
 import { FormChange } from "@mzawadie/hooks/useForm";
 import { CustomerAddressChoiceCard } from "@mzawadie/pages/customers/components/CustomerAddressChoiceCard";
 import { AddressTypeInput } from "@mzawadie/pages/customers/types";
-import { CustomerAddresses_user_addresses } from "@mzawadie/pages/customers/types/CustomerAddresses";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -21,7 +19,7 @@ import { useStyles } from "./styles";
 
 export interface OrderCustomerAddressEditProps {
     loading: boolean;
-    customerAddresses: CustomerAddresses_user_addresses[];
+    customerAddresses: AddressFragment[];
     countryChoices: SingleAutocompleteChoiceType[];
     addressInputOption: AddressInputOptionEnum;
     addressInputName: string;

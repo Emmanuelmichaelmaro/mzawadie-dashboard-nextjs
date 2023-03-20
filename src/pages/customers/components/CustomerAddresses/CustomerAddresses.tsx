@@ -4,11 +4,10 @@ import { AddressFormatter } from "@mzawadie/components/AddressFormatter";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { Hr } from "@mzawadie/components/Hr";
 import { buttonMessages, maybe } from "@mzawadie/core";
+import { CustomerDetailsFragment } from "@mzawadie/graphql";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { CustomerDetails_user } from "../../types/CustomerDetails";
 
 const useStyles = makeStyles(
     (theme) => ({
@@ -21,7 +20,7 @@ const useStyles = makeStyles(
 );
 
 export interface CustomerAddressesProps {
-    customer: CustomerDetails_user;
+    customer: CustomerDetailsFragment;
     disabled: boolean;
     onAddressManageClick: () => void;
 }

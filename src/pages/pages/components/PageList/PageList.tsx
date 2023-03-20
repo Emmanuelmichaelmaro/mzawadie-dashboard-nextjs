@@ -8,16 +8,15 @@ import { TableCellHeader } from "@mzawadie/components/TableCellHeader";
 import { TableHead } from "@mzawadie/components/TableHead";
 import { TablePagination } from "@mzawadie/components/TablePagination";
 import { maybe, renderCollection, ListActions, ListProps, SortPage } from "@mzawadie/core";
+import { PageFragment } from "@mzawadie/graphql";
 import { PageListUrlSortField } from "@mzawadie/pages/pages/urls";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { PageList_pages_edges_node } from "../../types/PageList";
-
 export interface PageListProps extends ListProps, ListActions, SortPage<PageListUrlSortField> {
-    pages: PageList_pages_edges_node[];
+    pages: PageFragment[];
 }
 
 const useStyles = makeStyles(

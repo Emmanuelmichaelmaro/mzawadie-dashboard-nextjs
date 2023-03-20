@@ -7,21 +7,23 @@ import { Grid } from "@mzawadie/components/Grid";
 import { Metadata } from "@mzawadie/components/Metadata";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
-import { FetchMoreProps, ReorderAction } from "@mzawadie/core";
-import { ProductErrorWithAttributesFragment } from "@mzawadie/fragments/types/ProductErrorWithAttributesFragment";
+import { FetchMoreProps, RelayToFlat, ReorderAction } from "@mzawadie/core";
+import {
+    ProductErrorWithAttributesFragment,
+    ProductVariantCreateDataQuery,
+    SearchAttributeValuesQuery,
+    SearchPagesQuery,
+    SearchProductsQuery,
+    SearchWarehousesQuery,
+} from "@mzawadie/graphql";
 import {
     getAttributeValuesFromReferences,
     mergeAttributeValues,
 } from "@mzawadie/pages/attributes/utils/data";
-import { SearchAttributeValues_attribute_choices_edges_node } from "@mzawadie/searches/types/SearchAttributeValues";
-import { SearchPages_search_edges_node } from "@mzawadie/searches/types/SearchPages";
-import { SearchProducts_search_edges_node } from "@mzawadie/searches/types/SearchProducts";
-import { SearchWarehouses_search_edges_node } from "@mzawadie/searches/types/SearchWarehouses";
 import { ConfirmButtonTransitionState, Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import { ProductVariantCreateData_product } from "../../types/ProductVariantCreateData";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import { ProductStocks } from "../ProductStocks";
 import { ProductVariantCheckoutSettings } from "../ProductVariantCheckoutSettings";
@@ -65,13 +67,13 @@ interface ProductVariantCreatePageProps {
     disabled: boolean;
     errors: ProductErrorWithAttributesFragment[];
     header: string;
-    product: ProductVariantCreateData_product;
+    product: ProductVariantCreateDataQuery["product"];
     saveButtonBarState: ConfirmButtonTransitionState;
-    warehouses: SearchWarehouses_search_edges_node[];
+    warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
     weightUnit: string;
-    referencePages?: SearchPages_search_edges_node[];
-    referenceProducts?: SearchProducts_search_edges_node[];
-    attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
+    referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
+    referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
+    attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
     onBack: () => void;
     onSubmit: (data: ProductVariantCreateData) => void;
     onVariantClick: (variantId: string) => void;

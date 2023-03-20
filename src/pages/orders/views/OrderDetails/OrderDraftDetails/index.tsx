@@ -6,9 +6,14 @@ import {
     extractMutationErrors,
     getStringOrPlaceholder,
 } from "@mzawadie/core";
+import {
+    OrderDetailsQuery,
+    OrderDraftUpdateMutation,
+    OrderDraftUpdateMutationVariables,
+    useCustomerAddressesQuery,
+} from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useUser } from "@mzawadie/pages/auth";
-import { useCustomerAddressesQuery } from "@mzawadie/pages/customers/queries";
 import { customerUrl } from "@mzawadie/pages/customers/urls";
 import { CustomerEditData } from "@mzawadie/pages/orders/components/OrderCustomer";
 import { OrderCustomerAddressesEditDialogOutput } from "@mzawadie/pages/orders/components/OrderCustomerAddressesEditDialog/types";
@@ -17,18 +22,13 @@ import {
     CustomerChangeActionEnum,
     OrderCustomerChangeData,
 } from "@mzawadie/pages/orders/components/OrderCustomerChangeDialog/form";
-import { useOrderVariantSearch } from "@mzawadie/pages/orders/queries";
-import { OrderDetails } from "@mzawadie/pages/orders/types/OrderDetails";
-import {
-    OrderDraftUpdate,
-    OrderDraftUpdateVariables,
-} from "@mzawadie/pages/orders/types/OrderDraftUpdate";
 import { OrderUrlDialog, OrderUrlQueryParams, orderDraftListUrl } from "@mzawadie/pages/orders/urls";
 import { getVariantSearchAddress } from "@mzawadie/pages/orders/utils/data";
 import { OrderDiscountProvider } from "@mzawadie/pages/products/components/OrderDiscountProviders/OrderDiscountProviders";
 import { OrderLineDiscountProvider } from "@mzawadie/pages/products/components/OrderDiscountProviders/OrderLineDiscountProviders";
 import { productUrl } from "@mzawadie/pages/products/urls";
 import useCustomerSearch from "@mzawadie/searches/useCustomerSearch";
+import { useOrderVariantSearch } from "@mzawadie/searches/useOrderVariantSearch";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -43,13 +43,16 @@ interface OrderDraftDetailsProps {
     id: string;
     params: OrderUrlQueryParams;
     loading: any;
-    data: OrderDetails;
+    data: OrderDetailsQuery;
     orderAddNote: any;
     orderLineUpdate: any;
     orderLineDelete: any;
     orderShippingMethodUpdate: any;
     orderLinesAdd: any;
-    orderDraftUpdate: PartialMutationProviderOutput<OrderDraftUpdate, OrderDraftUpdateVariables>;
+    orderDraftUpdate: PartialMutationProviderOutput<
+        OrderDraftUpdateMutation,
+        OrderDraftUpdateMutationVariables
+    >;
     orderDraftCancel: any;
     orderDraftFinalize: any;
     openModal: (action: OrderUrlDialog, newParams?: OrderUrlQueryParams) => void;

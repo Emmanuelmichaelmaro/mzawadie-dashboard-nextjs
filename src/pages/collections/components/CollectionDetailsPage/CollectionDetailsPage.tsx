@@ -8,16 +8,18 @@ import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { SeoForm } from "@mzawadie/components/SeoForm";
 import { sectionNames, ChannelProps, ListActions, PageListProps } from "@mzawadie/core";
-import { CollectionChannelListingErrorFragment } from "@mzawadie/fragments/types/CollectionChannelListingErrorFragment";
-import { CollectionErrorFragment } from "@mzawadie/fragments/types/CollectionErrorFragment";
+import {
+    CollectionChannelListingErrorFragment,
+    CollectionErrorFragment,
+    CollectionDetailsQuery,
+    PermissionEnum,
+} from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import { ChannelCollectionData } from "@mzawadie/pages/channels/utils";
-import { PermissionEnum } from "@mzawadie/types/globalTypes";
 import { ConfirmButtonTransitionState, Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { CollectionDetails_collection } from "../../types/CollectionDetails";
 import CollectionDetails from "../CollectionDetails/CollectionDetails";
 import { CollectionImage } from "../CollectionImage/CollectionImage";
 import CollectionProducts from "../CollectionProducts/CollectionProducts";
@@ -26,7 +28,7 @@ import CollectionUpdateForm, { CollectionUpdateData } from "./form";
 export interface CollectionDetailsPageProps extends PageListProps, ListActions, ChannelProps {
     channelsCount: number;
     channelsErrors: CollectionChannelListingErrorFragment[];
-    collection: CollectionDetails_collection;
+    collection: CollectionDetailsQuery["collection"];
     currentChannels: ChannelCollectionData[];
     errors: CollectionErrorFragment[];
     hasChannelChanged: boolean;

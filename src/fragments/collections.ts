@@ -1,10 +1,7 @@
 import { gql } from "@apollo/client";
-import { channelListingProductWithoutPricingFragment } from "@mzawadie/fragments/products";
-
-import { metadataFragment } from "./metadata";
 
 export const collectionFragment = gql`
-    fragment CollectionFragment on Collection {
+    fragment Collection on Collection {
         id
         name
         channelListings {
@@ -19,11 +16,9 @@ export const collectionFragment = gql`
 `;
 
 export const collectionDetailsFragment = gql`
-    ${collectionFragment}
-    ${metadataFragment}
-    fragment CollectionDetailsFragment on Collection {
-        ...CollectionFragment
-        ...MetadataFragment
+    fragment CollectionDetails on Collection {
+        ...Collection
+        ...Metadata
         backgroundImage {
             alt
             url
@@ -40,8 +35,7 @@ export const collectionDetailsFragment = gql`
 // https://github.com/apollographql/apollo-client/issues/2496
 // https://github.com/apollographql/apollo-client/issues/3468
 export const collectionProductFragment = gql`
-    ${channelListingProductWithoutPricingFragment}
-    fragment CollectionProductFragment on Product {
+    fragment CollectionProduct on Product {
         id
         name
         productType {
@@ -52,7 +46,7 @@ export const collectionProductFragment = gql`
             url
         }
         channelListings {
-            ...ChannelListingProductWithoutPricingFragment
+            ...ChannelListingProductWithoutPricing
         }
     }
 `;

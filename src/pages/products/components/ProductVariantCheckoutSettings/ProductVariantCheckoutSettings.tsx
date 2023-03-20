@@ -1,7 +1,8 @@
+// @ts-nocheck
 import { Card, CardContent, TextField } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { PreviewPill } from "@mzawadie/components/PreviewPill";
-import { ProductErrorFragment } from "@mzawadie/fragments/types/ProductErrorFragment";
+import { ProductErrorFragment } from "@mzawadie/graphql";
 import { FormChange } from "@mzawadie/hooks/useForm";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import React from "react";

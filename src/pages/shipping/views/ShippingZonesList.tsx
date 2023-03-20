@@ -8,6 +8,12 @@ import {
     maybe,
     ListViews,
 } from "@mzawadie/core";
+import {
+    useBulkDeleteShippingZoneMutation,
+    useDeleteShippingZoneMutation,
+    useShippingZonesQuery,
+    useUpdateDefaultWeightUnitMutation,
+} from "@mzawadie/graphql";
 import useBulkActions from "@mzawadie/hooks/useBulkActions";
 import useListSettings from "@mzawadie/hooks/useListSettings";
 import useNavigator from "@mzawadie/hooks/useNavigator";
@@ -26,12 +32,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { ShippingZonesListPage } from "../components/ShippingZonesListPage";
 import {
-    useDefaultWeightUnitUpdate,
-    useShippingZoneBulkDelete,
-    useShippingZoneDelete,
-} from "../mutations";
-import { useShippingZoneList } from "../queries";
-import {
     shippingZoneAddUrl,
     shippingZonesListUrl,
     ShippingZonesListUrlDialog,
@@ -49,7 +49,9 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({ params }) 
     const paginate = usePaginator();
     const shop = useShop();
     const { user } = useUser();
+
     const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
+
     const { updateListSettings, settings } = useListSettings(ListViews.SHIPPING_METHODS_LIST);
 
     usePaginationReset(shippingZonesListUrl, params, settings.rowNumber);
@@ -70,12 +72,12 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({ params }) 
         ShippingZonesListUrlQueryParams
     >(navigate, shippingZonesListUrl, params);
 
-    const { data, loading, refetch } = useShippingZoneList({
+    const { data, loading, refetch } = useShippingZonesQuery({
         displayLoader: true,
         variables: queryVariables,
     });
 
-    const [deleteShippingZone, deleteShippingZoneOpts] = useShippingZoneDelete({
+    const [deleteShippingZone, deleteShippingZoneOpts] = useDeleteShippingZoneMutation({
         onCompleted: (data) => {
             if (data.shippingZoneDelete.errors.length === 0) {
                 notify({
@@ -88,7 +90,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({ params }) 
         },
     });
 
-    const [updateDefaultWeightUnit, updateDefaultWeightUnitOpts] = useDefaultWeightUnitUpdate({
+    const [updateDefaultWeightUnit, updateDefaultWeightUnitOpts] = useUpdateDefaultWeightUnitMutation({
         onCompleted: (data) => {
             if (data.shopSettingsUpdate.errors.length === 0) {
                 notify({
@@ -99,7 +101,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({ params }) 
         },
     });
 
-    const [bulkDeleteShippingZone, bulkDeleteShippingZoneOpts] = useShippingZoneBulkDelete({
+    const [bulkDeleteShippingZone, bulkDeleteShippingZoneOpts] = useBulkDeleteShippingZoneMutation({
         onCompleted: (data) => {
             if (data.shippingZoneBulkDelete.errors.length === 0) {
                 notify({
@@ -201,6 +203,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({ params }) 
                     />
                 </DialogContentText>
             </ActionDialog>
+
             <ActionDialog
                 open={params.action === "remove-many"}
                 confirmButtonState={bulkDeleteShippingZoneOpts.status}

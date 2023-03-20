@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 // @ts-nocheck
+import { ProductTypeSortField } from "@mzawadie/graphql";
 import { ProductTypeListUrlSortField } from "@mzawadie/pages/productTypes/urls";
-import { ProductTypeSortField } from "@mzawadie/types/globalTypes";
 import { createGetSortQueryVariables } from "@mzawadie/utils/sort";
 
 export function getSortQueryField(sort: ProductTypeListUrlSortField): ProductTypeSortField {

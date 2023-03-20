@@ -3,13 +3,13 @@ import Container from "@mzawadie/components/Container";
 import { LanguageSwitch } from "@mzawadie/components/LanguageSwitch";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import { commonMessages, sectionNames, getStringOrPlaceholder } from "@mzawadie/core";
-import { VoucherTranslationFragment } from "@mzawadie/fragments/types/VoucherTranslationFragment";
+import { LanguageCodeEnum, VoucherTranslationFragment } from "@mzawadie/graphql";
+import { TranslationsEntitiesPageProps } from "@mzawadie/pages/translations/types";
 import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { TranslationFields } from "../TranslationFields";
-import { TranslationsEntitiesPageProps } from "../types";
 
 export interface TranslationsVouchersPageProps extends TranslationsEntitiesPageProps {
     data: VoucherTranslationFragment;
@@ -37,6 +37,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
     return (
         <Container>
             <Backlink onClick={onBack}>{intl.formatMessage(sectionNames.translations)}</Backlink>
+
             <PageHeader
                 title={intl.formatMessage(
                     {
@@ -56,6 +57,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
                     onLanguageChange={onLanguageChange}
                 />
             </PageHeader>
+
             <TranslationFields
                 activeField={activeField}
                 disabled={disabled}

@@ -4,7 +4,19 @@ import { AttributeInput } from "@mzawadie/components/Attributes";
 import { ChannelsAvailabilityDialog } from "@mzawadie/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@mzawadie/core";
-import { useFileUploadMutation } from "@mzawadie/files/mutations";
+import {
+    useFileUploadMutation,
+    useProductChannelListingUpdateMutation,
+    useProductCreateMutation,
+    useProductDeleteMutation,
+    useProductTypeQuery,
+    useProductVariantChannelListingUpdateMutation,
+    useTaxTypeListQuery,
+    useUpdateMetadataMutation,
+    useUpdatePrivateMetadataMutation,
+    useVariantCreateMutation,
+    useWarehouseListQuery,
+} from "@mzawadie/graphql";
 import useChannels from "@mzawadie/hooks/useChannels";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
@@ -15,22 +27,12 @@ import {
     ProductCreateData,
 } from "@mzawadie/pages/products/components/ProductCreatePage";
 import {
-    useProductChannelListingUpdate,
-    useProductDeleteMutation,
-    useProductVariantChannelListingUpdate,
-    useVariantCreateMutation,
-    useProductCreateMutation,
-} from "@mzawadie/pages/products/mutations";
-import { useProductTypeQuery } from "@mzawadie/pages/products/queries";
-import {
     productAddUrl,
     ProductCreateUrlDialog,
     ProductCreateUrlQueryParams,
     productListUrl,
     productUrl,
 } from "@mzawadie/pages/products/urls";
-import { useTaxTypeList } from "@mzawadie/pages/taxes/queries";
-import { useWarehouseList } from "@mzawadie/pages/warehouses/queries";
 import { warehouseAddPath } from "@mzawadie/pages/warehouses/urls";
 import useCategorySearch from "@mzawadie/searches/useCategorySearch";
 import useCollectionSearch from "@mzawadie/searches/useCollectionSearch";
@@ -42,7 +44,6 @@ import useAttributeValueSearchHandler from "@mzawadie/utils/handlers/attributeVa
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@mzawadie/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
-import { useMetadataUpdate, usePrivateMetadataUpdate } from "@mzawadie/utils/metadata/updateMetadata";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -58,7 +59,9 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     const notify = useNotifier();
     const shop = useShop();
     const intl = useIntl();
+
     const [productCreateComplete, setProductCreateComplete] = React.useState(false);
+
     const [selectedProductTypeId, setSelectedProductTypeId] = React.useState<string>();
 
     const [openModal, closeModal] = createDialogActionHandlers<
@@ -73,6 +76,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     } = useCategorySearch({
         variables: DEFAULT_INITIAL_SEARCH_DATA,
     });
+
     const {
         loadMore: loadMoreCollections,
         search: searchCollection,
@@ -80,6 +84,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     } = useCollectionSearch({
         variables: DEFAULT_INITIAL_SEARCH_DATA,
     });
+
     const {
         loadMore: loadMoreProductTypes,
         search: searchProductTypes,
@@ -87,6 +92,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     } = useProductTypeSearch({
         variables: DEFAULT_INITIAL_SEARCH_DATA,
     });
+
     const {
         loadMore: loadMorePages,
         search: searchPages,
@@ -94,6 +100,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     } = usePageSearch({
         variables: DEFAULT_INITIAL_SEARCH_DATA,
     });
+
     const {
         loadMore: loadMoreProducts,
         search: searchProducts,
@@ -101,21 +108,26 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     } = useProductSearch({
         variables: DEFAULT_INITIAL_SEARCH_DATA,
     });
+
     const {
         loadMore: loadMoreAttributeValues,
         search: searchAttributeValues,
         result: searchAttributeValuesOpts,
         reset: searchAttributeReset,
     } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
-    const warehouses = useWarehouseList({
+
+    const warehouses = useWarehouseListQuery({
         displayLoader: true,
         variables: {
             first: 50,
         },
     });
-    const [updateMetadata] = useMetadataUpdate({});
-    const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
-    const taxTypes = useTaxTypeList({});
+
+    const [updateMetadata] = useUpdateMetadataMutation({});
+    const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
+
+    const taxTypes = useTaxTypeListQuery({});
+
     const { data: selectedProductType } = useProductTypeQuery({
         variables: {
             id: selectedProductTypeId,
@@ -127,6 +139,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     const productTypes = mapEdgesToItems(searchProductTypesOpts?.data?.search) || [];
 
     const { availableChannels } = useAppChannel(false);
+
     const allChannels: ChannelData[] = createSortedChannelsData(availableChannels);
 
     const {
@@ -165,15 +178,17 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
 
     const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
 
-    const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdate({});
-    const [updateVariantChannels, updateVariantChannelsOpts] = useProductVariantChannelListingUpdate(
-        {}
-    );
+    const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdateMutation({});
+
+    const [updateVariantChannels, updateVariantChannelsOpts] =
+        useProductVariantChannelListingUpdateMutation({});
 
     const handleBack = () => navigate(productListUrl());
 
     const [productCreate, productCreateOpts] = useProductCreateMutation({});
+
     const [deleteProduct] = useProductDeleteMutation({});
+
     const [productVariantCreate, productVariantCreateOpts] = useVariantCreateMutation({
         onCompleted: (data) => {
             const { errors } = data.productVariantCreate;
@@ -231,26 +246,31 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         loading: searchProductTypesOpts.loading,
         onFetchMore: loadMoreProductTypes,
     };
+
     const fetchMoreCollections = {
         hasMore: searchCollectionOpts.data?.search?.pageInfo?.hasNextPage,
         loading: searchCollectionOpts.loading,
         onFetchMore: loadMoreCollections,
     };
+
     const fetchMoreCategories = {
         hasMore: searchCategoryOpts.data?.search?.pageInfo?.hasNextPage,
         loading: searchCategoryOpts.loading,
         onFetchMore: loadMoreCategories,
     };
+
     const fetchMoreReferencePages = {
         hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
         loading: searchPagesOpts.loading,
         onFetchMore: loadMorePages,
     };
+
     const fetchMoreReferenceProducts = {
         hasMore: searchProductsOpts.data?.search?.pageInfo?.hasNextPage,
         loading: searchProductsOpts.loading,
         onFetchMore: loadMoreProducts,
     };
+
     const fetchMoreAttributeValues = {
         hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
         loading: !!searchAttributeValuesOpts.loading,
@@ -298,15 +318,15 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
                 categories={mapEdgesToItems(searchCategoryOpts?.data?.search) || []}
                 collections={mapEdgesToItems(searchCollectionOpts?.data?.search) || []}
                 attributeValues={
-                    mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || []
+                    mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute?.choices) || []
                 }
                 loading={loading}
                 channelsErrors={
                     updateVariantChannelsOpts.data?.productVariantChannelListingUpdate?.errors
                 }
                 errors={[
-                    ...(productCreateOpts.data?.productCreate.errors || []),
-                    ...(productVariantCreateOpts.data?.productVariantCreate.errors || []),
+                    ...(productCreateOpts.data?.productCreate?.errors || []),
+                    ...(productVariantCreateOpts.data?.productVariantCreate?.errors || []),
                 ]}
                 fetchCategories={searchCategory}
                 fetchCollections={searchCollection}

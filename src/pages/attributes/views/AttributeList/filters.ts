@@ -1,11 +1,11 @@
 // @ts-nocheck
 import { IFilterElement } from "@mzawadie/components/Filter";
 import { maybe, parseBoolean } from "@mzawadie/core";
+import { AttributeFilterInput } from "@mzawadie/graphql";
 import {
     AttributeFilterKeys,
     AttributeListFilterOpts,
 } from "@mzawadie/pages/attributes/components/AttributeListPage";
-import { AttributeFilterInput } from "@mzawadie/types/globalTypes";
 import {
     createFilterTabUtils,
     createFilterUtils,

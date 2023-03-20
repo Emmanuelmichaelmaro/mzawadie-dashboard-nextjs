@@ -1,11 +1,15 @@
-import { AppTypeEnum, JobStatusEnum, PermissionEnum } from "@mzawadie/types/globalTypes";
+// @ts-nocheck
+import {
+    AppFetchMutation,
+    AppQuery,
+    AppsInstallationsQuery,
+    AppsListQuery,
+    AppTypeEnum,
+    JobStatusEnum,
+    PermissionEnum,
+} from "@mzawadie/graphql";
 
-import { App_app } from "./types/App";
-import { AppFetch_appFetchManifest_manifest } from "./types/AppFetch";
-import { AppsInstallations_appsInstallations } from "./types/AppsInstallations";
-import { AppsList_apps_edges } from "./types/AppsList";
-
-export const appsList: AppsList_apps_edges[] = [
+export const appsList: AppsListQuery["apps"]["edges"] = [
     {
         __typename: "AppCountableEdge",
         node: {
@@ -28,7 +32,7 @@ export const appsList: AppsList_apps_edges[] = [
     },
 ];
 
-export const customAppsList: AppsList_apps_edges[] = [
+export const customAppsList: AppsListQuery["apps"]["edges"] = [
     {
         __typename: "AppCountableEdge",
         node: {
@@ -41,7 +45,7 @@ export const customAppsList: AppsList_apps_edges[] = [
     },
 ];
 
-export const appsInProgress: AppsInstallations_appsInstallations[] = [
+export const appsInProgress: AppsInstallationsQuery["appsInstallations"] = [
     {
         __typename: "AppInstallation",
         appName: "app",
@@ -68,7 +72,7 @@ export const appsInProgress: AppsInstallations_appsInstallations[] = [
     },
 ];
 
-export const appDetails: App_app = {
+export const appDetails: AppQuery["app"] = {
     __typename: "App",
     aboutApp: "Lorem ipsum",
     accessToken: "token",
@@ -102,9 +106,8 @@ export const appDetails: App_app = {
     webhooks: [],
 };
 
-export const installApp: AppFetch_appFetchManifest_manifest = {
+export const installApp: AppFetchMutation["appFetchManifest"]["manifest"] = {
     __typename: "Manifest",
-
     about: "Lorem ipsum",
     appUrl: null,
     configurationUrl: null,

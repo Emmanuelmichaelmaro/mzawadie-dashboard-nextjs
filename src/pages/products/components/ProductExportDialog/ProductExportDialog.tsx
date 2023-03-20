@@ -3,16 +3,18 @@ import { Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@
 import { ConfirmButton } from "@mzawadie/components/ConfirmButton";
 import { makeCreatorSteps, Step } from "@mzawadie/components/CreatorSteps";
 import { MultiAutocompleteChoiceType } from "@mzawadie/components/MultiAutocompleteSelectField";
-import { buttonMessages, DialogProps, FetchMoreProps } from "@mzawadie/core";
-import { ChannelFragment } from "@mzawadie/fragments/types/ChannelFragment";
-import { ExportErrorFragment } from "@mzawadie/fragments/types/ExportErrorFragment";
+import { buttonMessages, DialogProps, FetchMoreProps, RelayToFlat } from "@mzawadie/core";
+import {
+    ChannelFragment,
+    SearchAttributesQuery,
+    WarehouseFragment,
+    ExportErrorFragment,
+    ExportProductsInput,
+} from "@mzawadie/graphql";
 import useForm, { FormChange } from "@mzawadie/hooks/useForm";
 import { useModalDialogErrors } from "@mzawadie/hooks/useModalDialogErrors";
 import { useModalDialogOpen } from "@mzawadie/hooks/useModalDialogOpen";
 import useWizard from "@mzawadie/hooks/useWizard";
-import { WarehouseList_warehouses_edges_node } from "@mzawadie/pages/warehouses/types/WarehouseList";
-import { SearchAttributes_search_edges_node } from "@mzawadie/searches/types/SearchAttributes";
-import { ExportProductsInput } from "@mzawadie/types/globalTypes";
 import getExportErrorMessage from "@mzawadie/utils/errors/export";
 import { toggle } from "@mzawadie/utils/lists";
 import { mapNodeToChoice } from "@mzawadie/utils/maps";
@@ -69,13 +71,13 @@ const initialForm: ExportProductsInput = {
 const ProductExportSteps = makeCreatorSteps<ProductExportStep>();
 
 export interface ProductExportDialogProps extends DialogProps, FetchMoreProps {
-    attributes: SearchAttributes_search_edges_node[];
+    attributes: RelayToFlat<SearchAttributesQuery["search"]>;
     channels: ChannelFragment[];
     confirmButtonState: ConfirmButtonTransitionState;
     errors: ExportErrorFragment[];
     productQuantity: ExportItemsQuantity;
     selectedProducts: number;
-    warehouses: WarehouseList_warehouses_edges_node[];
+    warehouses: WarehouseFragment[];
     onFetch: (query: string) => void;
     onSubmit: (data: ExportProductsInput) => void;
 }

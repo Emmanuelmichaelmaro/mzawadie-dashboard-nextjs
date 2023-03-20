@@ -1,11 +1,13 @@
+// @ts-nocheck
 import { gql } from "@apollo/client";
-import { pageInfoFragment } from "@mzawadie/fragments/pageInfo";
+import {
+    SearchShippingZonesDocument,
+    SearchShippingZonesQuery,
+    SearchShippingZonesQueryVariables,
+} from "@mzawadie/graphql";
 import { makeTopLevelSearch } from "@mzawadie/hooks";
 
-import { SearchShippingZones, SearchShippingZonesVariables } from "./types/SearchShippingZones";
-
-const searchShippingZones = gql`
-    ${pageInfoFragment}
+export const searchShippingZones = gql`
     query SearchShippingZones(
         $query: String!
         $first: Int!
@@ -28,13 +30,12 @@ const searchShippingZones = gql`
                 }
             }
             pageInfo {
-                ...PageInfoFragment
+                ...PageInfo
             }
         }
     }
 `;
 
-// @ts-ignore
-export default makeTopLevelSearch<SearchShippingZones, SearchShippingZonesVariables>(
-    searchShippingZones
+export default makeTopLevelSearch<SearchShippingZonesQuery, SearchShippingZonesQueryVariables>(
+    SearchShippingZonesDocument
 );

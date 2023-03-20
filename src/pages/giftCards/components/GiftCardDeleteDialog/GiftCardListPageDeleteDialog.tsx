@@ -1,11 +1,10 @@
 import { ActionDialogProps } from "@mzawadie/components/ActionDialog";
 import { DialogProps } from "@mzawadie/core";
+import { useGiftCardListDialogs } from "@mzawadie/pages/giftCards/components/GiftCardsList/providers/GiftCardListDialogsProvider";
+import { useGiftCardList } from "@mzawadie/pages/giftCards/components/GiftCardsList/providers/GiftCardListProvider";
+import { GIFT_CARD_LIST_QUERY } from "@mzawadie/pages/giftCards/components/GiftCardsList/queries";
 import React from "react";
 
-import useGiftCardListDialogs from "../GiftCardsList/providers/GiftCardListDialogsProvider/hooks/useGiftCardListDialogs";
-import useGiftCardList from "../GiftCardsList/providers/GiftCardListProvider/hooks/useGiftCardList";
-import useGiftCardListBulkActions from "../GiftCardsList/providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
-import { GIFT_CARD_LIST_QUERY } from "../GiftCardsList/types";
 import GiftCardDeleteDialogContent, { SINGLE } from "./GiftCardDeleteDialogContent";
 import useGiftCardBulkDelete from "./useGiftCardBulkDelete";
 import useGiftCardSingleDelete from "./useGiftCardSingleDelete";
@@ -19,10 +18,9 @@ const GiftCardDeleteDialog: React.FC<GiftCardDeleteDialogProps> = ({
     onClose,
     refetchQueries = [],
 }) => {
-    const giftCardBulkActionsProps = useGiftCardListBulkActions();
-    const { selectedItemsCount } = giftCardBulkActionsProps;
+    const listProps = useGiftCardList();
 
-    const { giftCards, loading } = useGiftCardList();
+    const { giftCards, loading, selectedItemsCount } = listProps;
 
     const { id } = useGiftCardListDialogs();
 
@@ -51,14 +49,14 @@ const GiftCardDeleteDialog: React.FC<GiftCardDeleteDialogProps> = ({
 
     return (
         <GiftCardDeleteDialogContent
+            {...listProps}
+            {...dialogProps}
             id={id}
             open={open}
             onClose={onClose}
             singleDeletion={singleDeletion}
             giftCards={giftCards}
             loading={loading}
-            {...giftCardBulkActionsProps}
-            {...dialogProps}
         />
     );
 };

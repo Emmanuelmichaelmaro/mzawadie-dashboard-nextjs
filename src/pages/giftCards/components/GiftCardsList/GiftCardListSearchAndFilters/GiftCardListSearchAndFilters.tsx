@@ -6,9 +6,14 @@ import {
     SaveFilterTabDialogFormData,
 } from "@mzawadie/components/SaveFilterTabDialog";
 import { DEFAULT_INITIAL_SEARCH_DATA, maybe } from "@mzawadie/core";
+import { useGiftCardCurrenciesQuery } from "@mzawadie/graphql";
 import { getSearchFetchMoreProps } from "@mzawadie/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@mzawadie/hooks/useNavigator";
+import { useGiftCardListDialogs } from "@mzawadie/pages/giftCards/components/GiftCardsList/providers/GiftCardListDialogsProvider";
+import { useGiftCardList } from "@mzawadie/pages/giftCards/components/GiftCardsList/providers/GiftCardListProvider";
+import { giftCardListUrl } from "@mzawadie/pages/giftCards/urls";
 import useCustomerSearch from "@mzawadie/searches/useCustomerSearch";
+import useGiftCardTagsSearch from "@mzawadie/searches/useGiftCardTagsSearch";
 import useProductSearch from "@mzawadie/searches/useProductSearch";
 import createFilterHandlers from "@mzawadie/utils/handlers/filterHandlers";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
@@ -16,11 +21,6 @@ import compact from "lodash/compact";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { giftCardListUrl } from "../../../urls";
-import useGiftCardTagsSearch from "../../GiftCardTagInput/useGiftCardTagsSearch";
-import useGiftCardListDialogs from "../providers/GiftCardListDialogsProvider/hooks/useGiftCardListDialogs";
-import useGiftCardList from "../providers/GiftCardListProvider/hooks/useGiftCardList";
-import useGiftCardListBulkActions from "../providers/GiftCardListProvider/hooks/useGiftCardListBulkActions";
 import { GiftCardListActionParamsEnum } from "../types";
 import {
     createFilterStructure,
@@ -36,14 +36,12 @@ import {
     giftCardListFilterErrorMessages as errorMessages,
     giftCardListSearchAndFiltersMessages as messages,
 } from "./messages";
-import { useGiftCardCurrenciesQuery } from "./queries";
 
 const GiftCardListSearchAndFilters: React.FC = () => {
     const navigate = useNavigator();
     const intl = useIntl();
 
-    const { params } = useGiftCardList();
-    const { reset } = useGiftCardListBulkActions();
+    const { reset, params } = useGiftCardList();
 
     const { onClose, openSearchDeleteDialog, openSearchSaveDialog } = useGiftCardListDialogs();
 

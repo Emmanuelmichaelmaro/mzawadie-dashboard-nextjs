@@ -1,6 +1,6 @@
 import { TextWithSelectField } from "@mzawadie/components/TextWithSelectField";
+import { TimePeriodTypeEnum } from "@mzawadie/graphql";
 import { FormChange } from "@mzawadie/hooks/useForm";
-import { TimePeriodTypeEnum } from "@mzawadie/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 

@@ -12,9 +12,8 @@ import { ConfirmButton, ConfirmButtonTransitionState } from "@mzawadie/component
 import { Form } from "@mzawadie/components/Form";
 import FormSpacer from "@mzawadie/components/FormSpacer";
 import Hr from "@mzawadie/components/Hr";
-import { ShopInfo_shop_countries } from "@mzawadie/components/Shop/types/ShopInfo";
 import { buttonMessages, DialogProps } from "@mzawadie/core";
-import { WarehouseErrorFragment } from "@mzawadie/fragments/types/WarehouseErrorFragment";
+import { CountryWithCodeFragment, WarehouseErrorFragment } from "@mzawadie/graphql";
 import useAddressValidation from "@mzawadie/hooks/useAddressValidation";
 import { useModalDialogErrors } from "@mzawadie/hooks/useModalDialogErrors";
 import { useModalDialogOpen } from "@mzawadie/hooks/useModalDialogOpen";
@@ -31,7 +30,7 @@ export interface ShippingZoneAddWarehouseDialogSubmitData extends AddressTypeInp
 }
 export interface ShippingZoneAddWarehouseDialogProps extends DialogProps {
     confirmButtonState: ConfirmButtonTransitionState;
-    countries: ShopInfo_shop_countries[];
+    countries: CountryWithCodeFragment[];
     disabled: boolean;
     errors: WarehouseErrorFragment[];
     onSubmit: (data: ShippingZoneAddWarehouseDialogSubmitData) => void;

@@ -13,7 +13,6 @@ import {
     TextField,
     Typography,
 } from "@material-ui/core";
-import { SearchStaffMembers_search_edges_node } from "@mzawadie//searches/types/SearchStaffMembers";
 import BackButton from "@mzawadie/components/BackButton";
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import { ConfirmButton } from "@mzawadie/components/ConfirmButton";
@@ -27,7 +26,9 @@ import {
     DialogProps,
     FetchMoreProps,
     SearchPageProps,
+    RelayToFlat,
 } from "@mzawadie/core";
+import { SearchStaffMembersQuery } from "@mzawadie/graphql";
 import useElementScroll, { isScrolledToBottom } from "@mzawadie/hooks/useElementScroll";
 import useSearchQuery from "@mzawadie/hooks/useSearchQuery";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
@@ -123,17 +124,17 @@ const useStyles = makeStyles(
 export interface AssignMembersDialogProps extends DialogProps, FetchMoreProps, SearchPageProps {
     confirmButtonState: ConfirmButtonTransitionState;
     disabled: boolean;
-    staffMembers: SearchStaffMembers_search_edges_node[];
+    staffMembers: RelayToFlat<SearchStaffMembersQuery["search"]>;
     hasMore: boolean;
     onFetchMore: () => void;
-    onSubmit: (data: SearchStaffMembers_search_edges_node[]) => void;
+    onSubmit: (data: RelayToFlat<SearchStaffMembersQuery["search"]>) => void;
 }
 
 function handleStaffMemberAssign(
-    member: SearchStaffMembers_search_edges_node,
+    member: RelayToFlat<SearchStaffMembersQuery["search"]>[0],
     isSelected: boolean,
-    selectedMembers: SearchStaffMembers_search_edges_node[],
-    setSelectedMembers: (data: SearchStaffMembers_search_edges_node[]) => void
+    selectedMembers: RelayToFlat<SearchStaffMembersQuery["search"]>,
+    setSelectedMembers: (data: RelayToFlat<SearchStaffMembersQuery["search"]>) => void
 ) {
     if (isSelected) {
         setSelectedMembers(selectedMembers.filter((selectedMember) => selectedMember.id !== member.id));
@@ -161,7 +162,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
     const [query, onQueryChange] = useSearchQuery(onSearchChange);
 
     const [selectedMembers, setSelectedMembers] = React.useState<
-        SearchStaffMembers_search_edges_node[]
+        RelayToFlat<SearchStaffMembersQuery["search"]>
     >([]);
 
     const anchor = React.useRef<HTMLDivElement>();

@@ -1,7 +1,7 @@
 import Link from "@mzawadie/components/Link";
+import { ProductTypeKindEnum } from "@mzawadie/graphql";
 import { productTypeAddUrl } from "@mzawadie/pages/productTypes/urls";
 import { productAddUrl } from "@mzawadie/pages/products/urls";
-import { ProductTypeKindEnum } from "@mzawadie/types/globalTypes";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 

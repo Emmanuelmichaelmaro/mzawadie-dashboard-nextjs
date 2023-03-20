@@ -5,11 +5,10 @@ import { DateTime } from "@mzawadie/components/Date";
 import { Hr } from "@mzawadie/components/Hr";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { maybe } from "@mzawadie/core";
+import { CustomerDetailsQuery } from "@mzawadie/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { CustomerDetails_user } from "../../types/CustomerDetails";
 
 const useStyles = makeStyles(
     (theme) => ({
@@ -24,7 +23,7 @@ const useStyles = makeStyles(
 );
 
 export interface CustomerStatsProps {
-    customer: CustomerDetails_user;
+    customer: CustomerDetailsQuery["user"];
 }
 
 const CustomerStats: React.FC<CustomerStatsProps> = (props) => {

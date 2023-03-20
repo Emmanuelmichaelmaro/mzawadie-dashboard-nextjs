@@ -12,7 +12,7 @@ import { CardTitle } from "@mzawadie/components/CardTitle";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { renderCollection } from "@mzawadie/core";
-import { DiscountErrorFragment } from "@mzawadie/fragments/types/DiscountErrorFragment";
+import { DiscountErrorFragment } from "@mzawadie/graphql";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getDiscountErrorMessage from "@mzawadie/utils/errors/discounts";
 import * as React from "react";

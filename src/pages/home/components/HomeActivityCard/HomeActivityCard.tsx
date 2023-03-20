@@ -1,12 +1,12 @@
 // @ts-nocheck
 import { Card, List, ListItem, ListItemText, Typography } from "@material-ui/core";
 import { CardTitle, DateTime, Skeleton } from "@mzawadie/components";
-import { renderCollection } from "@mzawadie/core";
+import { RelayToFlat, renderCollection } from "@mzawadie/core";
+import { HomeQuery } from "@mzawadie/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { Home_activities_edges_node } from "../../types/Home";
 import { getActivityMessage } from "./activityMessages";
 
 const useStyles = makeStyles(
@@ -24,7 +24,7 @@ const useStyles = makeStyles(
 );
 
 interface HomeActivityCardProps {
-    activities: Home_activities_edges_node[];
+    activities: RelayToFlat<HomeQuery["activities"]>;
     testId?: string;
 }
 

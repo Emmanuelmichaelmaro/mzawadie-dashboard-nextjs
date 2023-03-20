@@ -1,6 +1,5 @@
 import { commonMessages } from "@mzawadie/core";
-import { DiscountErrorFragment } from "@mzawadie/fragments/types/DiscountErrorFragment";
-import { DiscountErrorCode } from "@mzawadie/types/globalTypes";
+import { DiscountErrorFragment, DiscountErrorCode } from "@mzawadie/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 import commonErrorMessages from "./common";

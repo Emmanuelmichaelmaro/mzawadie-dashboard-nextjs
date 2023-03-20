@@ -8,7 +8,7 @@ import { Metadata } from "@mzawadie/components/Metadata";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { sectionNames } from "@mzawadie/core";
-import { DiscountErrorFragment } from "@mzawadie/fragments/types/DiscountErrorFragment";
+import { DiscountErrorFragment, PermissionEnum, VoucherTypeEnum } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import { ChannelVoucherData } from "@mzawadie/pages/channels/utils";
 import {
@@ -17,7 +17,6 @@ import {
 } from "@mzawadie/pages/discounts/handlers";
 import { VOUCHER_CREATE_FORM_ID } from "@mzawadie/pages/discounts/views/VoucherCreate/types";
 import { validatePrice } from "@mzawadie/pages/products/utils/validation";
-import { PermissionEnum, VoucherTypeEnum } from "@mzawadie/types/globalTypes";
 import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChangeTrigger";
 import { ConfirmButtonTransitionState, Backlink } from "@saleor/macaw-ui";
 import React from "react";

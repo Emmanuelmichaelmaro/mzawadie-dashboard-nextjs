@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Typography } from "@material-ui/core";
 import Container from "@mzawadie/components/Container";
 import { Form } from "@mzawadie/components/Form";
@@ -5,8 +6,13 @@ import { Grid } from "@mzawadie/components/Grid";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { sectionNames } from "@mzawadie/core";
+import {
+    GiftCardSettingsExpiryTypeEnum,
+    TimePeriodTypeEnum,
+    useGiftCardSettingsQuery,
+    useGiftCardSettingsUpdateMutation,
+} from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
-import { GiftCardSettingsExpiryTypeEnum, TimePeriodTypeEnum } from "@mzawadie/types/globalTypes";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
@@ -16,8 +22,6 @@ import { giftCardsListPath } from "../../urls";
 import { GiftCardExpirySettingsCard } from "./GiftCardExpirySettingsCard";
 import { giftCardExpirySettingsCard as expirySettingsMessages } from "./GiftCardExpirySettingsCard/messages";
 import { giftCardSettingsPageMessages as messages } from "./messages";
-import { useGiftCardSettingsUpdateMutation } from "./mutations";
-import { useGiftCardSettingsQuery } from "./queries";
 import { GiftCardSettingsFormData } from "./types";
 import { getGiftCardSettingsInputData } from "./utils";
 

@@ -7,7 +7,7 @@ import { TableCellHeader } from "@mzawadie/components/TableCellHeader";
 import { TableHead } from "@mzawadie/components/TableHead";
 import { TablePagination } from "@mzawadie/components/TablePagination";
 import { renderCollection, ListActions, ListProps, SortPage } from "@mzawadie/core";
-import { PageTypeList_pageTypes_edges_node } from "@mzawadie/pages/pageTypes/types/PageTypeList";
+import { PageTypeFragment } from "@mzawadie/graphql";
 import { PageTypeListUrlSortField } from "@mzawadie/pages/pageTypes/urls";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -27,7 +27,7 @@ const useStyles = makeStyles(
 );
 
 interface PageTypeListProps extends ListProps, ListActions, SortPage<PageTypeListUrlSortField> {
-    pageTypes: PageTypeList_pageTypes_edges_node[];
+    pageTypes: PageTypeFragment[];
 }
 
 const numberOfColumns = 2;

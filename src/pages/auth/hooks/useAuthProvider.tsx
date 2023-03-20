@@ -1,7 +1,8 @@
 // @ts-nocheck
-import { ApolloClient, useQuery } from "@apollo/client";
+import { ApolloClient } from "@apollo/client";
 import { IMessageContext } from "@mzawadie/components/Messages";
 import { APP_DEFAULT_URI, APP_MOUNT_URI, DEMO_MODE, commonMessages } from "@mzawadie/core";
+import { useUserDetailsQuery } from "@mzawadie/graphql";
 import { useLocalStorage, useNavigator } from "@mzawadie/hooks";
 import {
     isSupported as isCredentialsManagementAPISupported,
@@ -13,7 +14,6 @@ import { useEffect, useRef, useState } from "react";
 import { IntlShape } from "react-intl";
 import urlJoin from "url-join";
 
-import { userDetailsQuery } from "../queries";
 import {
     ExternalLoginInput,
     RequestExternalLoginInput,
@@ -21,7 +21,6 @@ import {
     UserContext,
     UserContextError,
 } from "../types";
-import { UserDetails } from "../types/UserDetails";
 import { displayDemoMessage } from "../utils";
 
 export interface UseAuthProviderOpts {
@@ -63,7 +62,7 @@ export function useAuthProvider({ intl, notify, apolloClient }: UseAuthProviderO
         }
     }, [authenticated, authenticating]);
 
-    const userDetails = useQuery<UserDetails>(userDetailsQuery, {
+    const userDetails = useUserDetailsQuery({
         client: apolloClient,
         skip: !authenticated,
         // Don't change this to 'network-only' - update of intl provider's

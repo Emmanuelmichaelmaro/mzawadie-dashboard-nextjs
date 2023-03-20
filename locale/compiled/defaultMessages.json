@@ -1,132 +1,4 @@
 {
-    "'+PclgM'": [
-        {
-            "type": 0,
-            "value": "Total"
-        }
-    ],
-    "'/BJQIq'": [
-        {
-            "type": 0,
-            "value": "Add Tracking Code"
-        }
-    ],
-    "'2W4EBM'": [
-        {
-            "type": 0,
-            "value": "Set maximal quantities"
-        }
-    ],
-    "'5aiFbL'": [
-        {
-            "type": 0,
-            "value": "Price"
-        }
-    ],
-    "'9tgY4G'": [
-        {
-            "type": 0,
-            "value": "You don’t have any installed apps in your dashboard"
-        }
-    ],
-    "'AqXzM2'": [
-        {
-            "type": 0,
-            "value": "Order #"
-        },
-        {
-            "type": 1,
-            "value": "orderNumber"
-        }
-    ],
-    "'B/y6LC'": [
-        {
-            "type": 0,
-            "value": "Unfulfilled Products"
-        }
-    ],
-    "'EHsnZX'": [
-        {
-            "type": 0,
-            "value": "Are you sure you want to approve this fullfillment?"
-        }
-    ],
-    "'FNT4b+'": [
-        {
-            "type": 0,
-            "value": "Product"
-        }
-    ],
-    "'GbBCmr'": [
-        {
-            "type": 0,
-            "value": "Order #"
-        },
-        {
-            "type": 1,
-            "value": "orderNumber"
-        }
-    ],
-    "'Q1Uzbb'": [
-        {
-            "type": 0,
-            "value": "No products found"
-        }
-    ],
-    "'SqhC7g'": [
-        {
-            "type": 0,
-            "value": "Send shipment details to customer"
-        }
-    ],
-    "'TBaMo2'": [
-        {
-            "type": 0,
-            "value": "About"
-        }
-    ],
-    "'Tl+7X4'": [
-        {
-            "type": 0,
-            "value": "Refunded Qty"
-        }
-    ],
-    "'UQu75k'": [
-        {
-            "type": 0,
-            "value": "Approve this fulfillment"
-        }
-    ],
-    "'ZeD2TK'": [
-        {
-            "type": 0,
-            "value": "Third-party Apps"
-        }
-    ],
-    "'aY0HAT'": [
-        {
-            "type": 0,
-            "value": "Sales channel"
-        }
-    ],
-    "'iUIn50'": [
-        {
-            "type": 0,
-            "value": "Unfulfilled products will be restocked"
-        }
-    ],
-    "'xoyCZ/'": [
-        {
-            "type": 0,
-            "value": "Improper value"
-        }
-    ],
-    "'yT/GAp'": [
-        {
-            "type": 0,
-            "value": "Tracking number"
-        }
-    ],
     "+43JV5": [
         {
             "type": 0,
@@ -377,6 +249,12 @@
         {
             "type": 0,
             "value": "Creation"
+        }
+    ],
+    "/BJQIq": [
+        {
+            "type": 0,
+            "value": "Add Tracking Code"
         }
     ],
     "/JENWS": [
@@ -2683,6 +2561,12 @@
             "value": ")"
         }
     ],
+    "9tgY4G": [
+        {
+            "type": 0,
+            "value": "You don’t have any installed apps in your dashboard"
+        }
+    ],
     "9uNz+T": [
         {
             "type": 0,
@@ -2889,6 +2773,16 @@
             "value": "Provided email address"
         }
     ],
+    "AqXzM2": [
+        {
+            "type": 0,
+            "value": "Order #"
+        },
+        {
+            "type": 1,
+            "value": "orderNumber"
+        }
+    ],
     "ArctEg": [
         {
             "type": 0,
@@ -2957,6 +2851,12 @@
         {
             "type": 0,
             "value": "Published pages"
+        }
+    ],
+    "B/y6LC": [
+        {
+            "type": 0,
+            "value": "Unfulfilled Products"
         }
     ],
     "B0PaVS": [
@@ -3715,6 +3615,12 @@
         {
             "type": 0,
             "value": "Apply unique prices by attribute to each SKU"
+        }
+    ],
+    "EHsnZX": [
+        {
+            "type": 0,
+            "value": "Are you sure you want to approve this fullfillment?"
         }
     ],
     "EIULpW": [
@@ -7457,6 +7363,12 @@
             "value": "Manage Channel Availability"
         }
     ],
+    "SqhC7g": [
+        {
+            "type": 0,
+            "value": "Send shipment details to customer"
+        }
+    ],
     "Sx7QVu": [
         {
             "type": 0,
@@ -7543,6 +7455,12 @@
         {
             "type": 0,
             "value": "Subtotal"
+        }
+    ],
+    "TBaMo2": [
+        {
+            "type": 0,
+            "value": "About"
         }
     ],
     "TC/EOG": [
@@ -7825,6 +7743,12 @@
         {
             "type": 0,
             "value": "Search Staff Members"
+        }
+    ],
+    "UQu75k": [
+        {
+            "type": 0,
+            "value": "Approve this fulfillment"
         }
     ],
     "US3IPU": [
@@ -9309,6 +9233,12 @@
             "value": "Unassigned Categories From Sale"
         }
     ],
+    "ZeD2TK": [
+        {
+            "type": 0,
+            "value": "Third-party Apps"
+        }
+    ],
     "Zg0dRo": [
         {
             "type": 0,
@@ -10355,12 +10285,6 @@
             "value": "Done"
         }
     ],
-    "eR3vfw": [
-        {
-            "type": 0,
-            "value": "Manage Channels Availability"
-        }
-    ],
     "eUjFjW": [
         {
             "type": 0,
@@ -10577,6 +10501,12 @@
         {
             "type": 0,
             "value": "Organization"
+        }
+    ],
+    "fyZmI1": [
+        {
+            "type": 0,
+            "value": "You have reached your order limit, you will be billed extra for orders above limit. If you would like to up your limit, contact your administration staff about raising your limits."
         }
     ],
     "fzDI3A": [
@@ -11149,6 +11079,12 @@
             "value": "Content Attributes"
         }
     ],
+    "iUIn50": [
+        {
+            "type": 0,
+            "value": "Unfulfilled products will be restocked"
+        }
+    ],
     "iUy2dx": [
         {
             "type": 0,
@@ -11615,12 +11551,6 @@
         {
             "type": 0,
             "value": "Selected Products Value"
-        }
-    ],
-    "kbL3CY": [
-        {
-            "type": 0,
-            "value": "You have reached your order limit, you will be billed extra for orders above limit. If you would like to up your limit, contact your administration staff about raising your limits."
         }
     ],
     "kbkjEc": [
@@ -14919,6 +14849,12 @@
         {
             "type": 0,
             "value": "Assign variants"
+        }
+    ],
+    "yT/GAp": [
+        {
+            "type": 0,
+            "value": "Tracking number"
         }
     ],
     "yT5zvU": [

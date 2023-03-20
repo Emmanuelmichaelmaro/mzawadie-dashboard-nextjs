@@ -6,7 +6,13 @@ import { MetadataFormData } from "@mzawadie/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@mzawadie/components/MultiAutocompleteSelectField";
 import { RichTextEditorChange } from "@mzawadie/components/RichTextEditor";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
-import { errorMessages, FetchMoreProps, ReorderEvent } from "@mzawadie/core";
+import { errorMessages, FetchMoreProps, RelayToFlat, ReorderEvent } from "@mzawadie/core";
+import {
+    ProductFragment,
+    SearchPagesQuery,
+    SearchProductsQuery,
+    SearchWarehousesQuery,
+} from "@mzawadie/graphql";
 import useForm, {
     CommonUseFormResultWithHandlers,
     FormChange,
@@ -26,7 +32,6 @@ import {
     createFetchReferencesHandler,
 } from "@mzawadie/pages/attributes/utils/handlers";
 import { ChannelData, ChannelPreorderArgs, ChannelPriceArgs } from "@mzawadie/pages/channels/utils";
-import { ProductDetails_product } from "@mzawadie/pages/products/types/ProductDetails";
 import {
     getAttributeInputFromProduct,
     getProductUpdatePageFormData,
@@ -41,9 +46,6 @@ import {
 import { validateCostPrice, validatePrice } from "@mzawadie/pages/products/utils/validation";
 import { PRODUCT_UPDATE_FORM_ID } from "@mzawadie/pages/products/views/ProductUpdate/consts";
 import { ChannelsWithVariantsData } from "@mzawadie/pages/products/views/ProductUpdate/types";
-import { SearchPages_search_edges_node } from "@mzawadie/searches/types/SearchPages";
-import { SearchProducts_search_edges_node } from "@mzawadie/searches/types/SearchProducts";
-import { SearchWarehouses_search_edges_node } from "@mzawadie/searches/types/SearchWarehouses";
 import { arrayDiff } from "@mzawadie/utils/arrays";
 import createMultiAutocompleteSelectHandler from "@mzawadie/utils/handlers/multiAutocompleteSelectChangeHandler";
 import createSingleAutocompleteSelectHandler from "@mzawadie/utils/handlers/singleAutocompleteSelectChangeHandler";
@@ -136,14 +138,14 @@ export interface UseProductUpdateFormOpts
     setSelectedCollections: React.Dispatch<React.SetStateAction<MultiAutocompleteChoiceType[]>>;
     setSelectedTaxType: React.Dispatch<React.SetStateAction<string>>;
     selectedCollections: MultiAutocompleteChoiceType[];
-    warehouses: SearchWarehouses_search_edges_node[];
+    warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
     channelsData: ChannelData[];
     hasVariants: boolean;
     currentChannels: ChannelData[];
     setChannels: (data: ChannelData[]) => void;
     setChannelsData: (data: ChannelData[]) => void;
-    referencePages: SearchPages_search_edges_node[];
-    referenceProducts: SearchProducts_search_edges_node[];
+    referencePages: RelayToFlat<SearchPagesQuery["search"]>;
+    referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
     fetchReferencePages?: (data: string) => void;
     fetchMoreReferencePages?: FetchMoreProps;
     fetchReferenceProducts?: (data: string) => void;
@@ -155,12 +157,12 @@ export interface UseProductUpdateFormOpts
 
 export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
     children: (props: UseProductUpdateFormResult) => React.ReactNode;
-    product: ProductDetails_product;
+    product: ProductFragment;
     onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise;
 }
 
 const getStocksData = (
-    product: ProductDetails_product,
+    product: ProductFragment,
     stocks: FormsetData<ProductStockFormsetData, string>
 ) => {
     if (product?.productType?.hasVariants) {
@@ -183,7 +185,7 @@ const getStocksData = (
 };
 
 function useProductUpdateForm(
-    product: ProductDetails_product,
+    product: ProductFragment,
     onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise,
     opts: UseProductUpdateFormOpts
 ): UseProductUpdateFormResult {

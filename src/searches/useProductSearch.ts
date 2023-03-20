@@ -1,11 +1,13 @@
+// @ts-nocheck
 import { gql } from "@apollo/client";
-import { pageInfoFragment } from "@mzawadie/fragments/pageInfo";
+import {
+    SearchProductsDocument,
+    SearchProductsQuery,
+    SearchProductsQueryVariables,
+} from "@mzawadie/graphql";
 import { makeTopLevelSearch } from "@mzawadie/hooks";
 
-import { SearchProducts, SearchProductsVariables } from "./types/SearchProducts";
-
 export const searchProducts = gql`
-    ${pageInfoFragment}
     query SearchProducts($after: String, $first: Int!, $query: String!) {
         search: products(after: $after, first: $first, filter: { search: $query }) {
             edges {
@@ -35,11 +37,12 @@ export const searchProducts = gql`
                 }
             }
             pageInfo {
-                ...PageInfoFragment
+                ...PageInfo
             }
         }
     }
 `;
 
-// @ts-ignore
-export default makeTopLevelSearch<SearchProducts, SearchProductsVariables>(searchProducts);
+export default makeTopLevelSearch<SearchProductsQuery, SearchProductsQueryVariables>(
+    SearchProductsDocument
+);

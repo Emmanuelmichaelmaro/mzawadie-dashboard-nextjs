@@ -4,6 +4,7 @@ import { ActionDialog } from "@mzawadie/components/ActionDialog";
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import { IMessage } from "@mzawadie/components/Messages";
 import { DialogProps } from "@mzawadie/core";
+import { GiftCardUpdateMutation, useGiftCardUpdateMutation } from "@mzawadie/graphql";
 import useForm from "@mzawadie/hooks/useForm";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import commonErrorMessages from "@mzawadie/utils/errors/common";
@@ -13,9 +14,7 @@ import { useIntl } from "react-intl";
 import { giftCardsListTableMessages as tableMessages } from "../../GiftCardsList/messages";
 import { useDialogFormReset } from "../GiftCardResendCodeDialog/utils";
 import { getGiftCardErrorMessage } from "../messages";
-import { useGiftCardUpdateMutation } from "../mutations";
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
-import { GiftCardUpdate } from "../types/GiftCardUpdate";
 import { giftCardUpdateBalanceDialogMessages as messages } from "./messages";
 import { useUpdateBalanceDialogStyles as useStyles } from "./styles";
 
@@ -39,7 +38,7 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({ open, onClose }) =
         balanceAmount: amount,
     };
 
-    const onCompleted = (data: GiftCardUpdate) => {
+    const onCompleted = (data: GiftCardUpdateMutation) => {
         const errors = data?.giftCardUpdate?.errors;
 
         const notifierData: IMessage = !!errors?.length

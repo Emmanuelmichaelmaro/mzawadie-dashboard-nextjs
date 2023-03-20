@@ -1,11 +1,9 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { DEFAULT_INITIAL_SEARCH_DATA, maybe } from "@mzawadie/core";
+import { useOrderDraftCreateMutation } from "@mzawadie/graphql";
 import { ChangeEvent, FormChange } from "@mzawadie/hooks/useForm";
 import { useModalDialogOpen } from "@mzawadie/hooks/useModalDialogOpen";
 import useNavigator from "@mzawadie/hooks/useNavigator";
-import { useOrderDraftCreateMutation } from "@mzawadie/pages/orders/mutations";
 import { orderUrl } from "@mzawadie/pages/orders/urls";
 import useCustomerSearch from "@mzawadie/searches/useCustomerSearch";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";

@@ -1,14 +1,9 @@
 import { gql } from "@apollo/client";
-import { webhooksFragment } from "@mzawadie/fragments/webhooks";
-import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
 
-import { WebhookDetails, WebhookDetailsVariables } from "./types/WebhookDetails";
-
-const webhooksDetails = gql`
-    ${webhooksFragment}
+export const webhooksDetails = gql`
     query WebhookDetails($id: ID!) {
         webhook(id: $id) {
-            ...WebhookFragment
+            ...Webhook
             syncEvents {
                 eventType
             }
@@ -20,7 +15,3 @@ const webhooksDetails = gql`
         }
     }
 `;
-
-export const useWebhooksDetailsQuery = makeQuery<WebhookDetails, WebhookDetailsVariables>(
-    webhooksDetails
-);

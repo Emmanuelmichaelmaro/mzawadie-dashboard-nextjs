@@ -3,7 +3,7 @@ import { Card, TableBody, TableCell, TableRow, Typography } from "@material-ui/c
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import { RequirePermissions, ResponsiveTable, Skeleton } from "@mzawadie/components";
 import { UserPermissionProps } from "@mzawadie/core";
-import { PermissionEnum } from "@mzawadie/types/globalTypes";
+import { PermissionEnum } from "@mzawadie/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";

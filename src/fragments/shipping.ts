@@ -1,12 +1,8 @@
 import { gql } from "@apollo/client";
-import { fragmentMoney } from "@mzawadie/fragments/products";
-
-import { metadataFragment } from "./metadata";
 
 export const shippingZoneFragment = gql`
-    ${metadataFragment}
-    fragment ShippingZoneFragment on ShippingZone {
-        ...MetadataFragment
+    fragment ShippingZone on ShippingZone {
+        ...Metadata
         id
         countries {
             code
@@ -18,7 +14,7 @@ export const shippingZoneFragment = gql`
 `;
 
 export const shippingMethodWithPostalCodesFragment = gql`
-    fragment ShippingMethodWithPostalCodesFragment on ShippingMethodType {
+    fragment ShippingMethodWithPostalCodes on ShippingMethodType {
         id
         postalCodeRules {
             id
@@ -28,13 +24,11 @@ export const shippingMethodWithPostalCodesFragment = gql`
         }
     }
 `;
+
 export const shippingMethodTypeFragment = gql`
-    ${metadataFragment}
-    ${fragmentMoney}
-    ${shippingMethodWithPostalCodesFragment}
-    fragment ShippingMethodTypeFragment on ShippingMethodType {
-        ...ShippingMethodWithPostalCodesFragment
-        ...MetadataFragment
+    fragment ShippingMethodType on ShippingMethodType {
+        ...ShippingMethodWithPostalCodes
+        ...Metadata
         minimumOrderWeight {
             unit
             value
@@ -67,11 +61,10 @@ export const shippingMethodTypeFragment = gql`
         }
     }
 `;
+
 export const shippingMethodWithExcludedProductsFragment = gql`
-    ${fragmentMoney}
-    ${shippingMethodTypeFragment}
-    fragment ShippingMethodWithExcludedProductsFragment on ShippingMethodType {
-        ...ShippingMethodTypeFragment
+    fragment ShippingMethodWithExcludedProducts on ShippingMethodType {
+        ...ShippingMethodType
         excludedProducts(before: $before, after: $after, first: $first, last: $last) {
             pageInfo {
                 hasNextPage
@@ -93,12 +86,10 @@ export const shippingMethodWithExcludedProductsFragment = gql`
 `;
 
 export const shippingZoneDetailsFragment = gql`
-    ${shippingZoneFragment}
-    ${shippingMethodTypeFragment}
-    fragment ShippingZoneDetailsFragment on ShippingZone {
-        ...ShippingZoneFragment
+    fragment ShippingZoneDetails on ShippingZone {
+        ...ShippingZone
         shippingMethods {
-            ...ShippingMethodTypeFragment
+            ...ShippingMethodType
         }
         warehouses {
             id

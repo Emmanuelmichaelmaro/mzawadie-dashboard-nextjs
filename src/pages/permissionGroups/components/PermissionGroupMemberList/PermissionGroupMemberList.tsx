@@ -15,8 +15,8 @@ import {
     ListActions,
     SortPage,
 } from "@mzawadie/core";
+import { PermissionGroupMemberFragment } from "@mzawadie/graphql";
 import { sortMembers } from "@mzawadie/pages/permissionGroups/sort";
-import { PermissionGroupDetails_permissionGroup_users } from "@mzawadie/pages/permissionGroups/types/PermissionGroupDetails";
 import { MembersListUrlSortField } from "@mzawadie/pages/permissionGroups/urls";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
@@ -79,7 +79,7 @@ const useStyles = makeStyles(
 const numberOfColumns = 4;
 
 interface PermissionGroupProps extends ListActions, SortPage<MembersListUrlSortField> {
-    users: PermissionGroupDetails_permissionGroup_users[];
+    users: PermissionGroupMemberFragment[];
     disabled: boolean;
     onUnassign: (ida: string[]) => void;
     onAssign: () => void;

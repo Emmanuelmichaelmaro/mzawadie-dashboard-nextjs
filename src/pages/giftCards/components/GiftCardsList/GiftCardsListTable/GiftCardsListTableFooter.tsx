@@ -2,9 +2,8 @@
 import { TableFooter, TableRow } from "@material-ui/core";
 import { TablePagination } from "@mzawadie/components/TablePagination";
 import usePaginator from "@mzawadie/hooks/usePaginator";
+import { useGiftCardList } from "@mzawadie/pages/giftCards/components/GiftCardsList/providers/GiftCardListProvider";
 import React from "react";
-
-import useGiftCardList from "../providers/GiftCardListProvider/hooks/useGiftCardList";
 
 const GiftCardsListTableFooter: React.FC = () => {
     const paginate = usePaginator();

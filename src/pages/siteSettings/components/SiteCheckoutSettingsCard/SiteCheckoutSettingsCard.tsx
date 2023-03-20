@@ -1,7 +1,8 @@
+// @ts-nocheck
 import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import FormSpacer from "@mzawadie/components/FormSpacer";
-import { ShopErrorFragment } from "@mzawadie/fragments/types/ShopErrorFragment";
+import { ShopErrorFragment } from "@mzawadie/graphql";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

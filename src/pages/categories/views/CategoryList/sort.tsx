@@ -1,5 +1,5 @@
+import { CategorySortField } from "@mzawadie/graphql";
 import { CategoryListUrlSortField } from "@mzawadie/pages/categories/urls";
-import { CategorySortField } from "@mzawadie/types/globalTypes";
 import { createGetSortQueryVariables } from "@mzawadie/utils/sort";
 
 export function getSortQueryField(sort: CategoryListUrlSortField): CategorySortField | undefined {

@@ -4,14 +4,16 @@ import { Form } from "@mzawadie/components/Form";
 import Hr from "@mzawadie/components/Hr";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { Timeline, TimelineAddNote, TimelineNote } from "@mzawadie/components/Timeline";
+import {
+    GiftCardAddNoteMutation,
+    GiftCardEventsEnum,
+    useGiftCardAddNoteMutation,
+} from "@mzawadie/graphql";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
-import { GiftCardEventsEnum } from "@mzawadie/types/globalTypes";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { useGiftCardTimelineNoteAddMutation } from "../mutations";
 import { GIFT_CARD_DETAILS_QUERY } from "../queries";
-import { GiftCardAddNote } from "../types/GiftCardAddNote";
 import GiftCardTimelineEvent from "./GiftCardTimelineEvent";
 import useGiftCardHistoryEvents from "./hooks/useGiftCardHistoryEvents";
 import { giftCardHistoryMessages as messages } from "./messages";
@@ -27,7 +29,7 @@ const GiftCardHistory: React.FC = () => {
     const { id, events } = useGiftCardHistoryEvents();
     const classes = useStyles();
 
-    const onTimelineNoteAddCompleted = ({ giftCardAddNote }: GiftCardAddNote) => {
+    const onTimelineNoteAddCompleted = ({ giftCardAddNote }: GiftCardAddNoteMutation) => {
         const { errors } = giftCardAddNote;
 
         if (errors.length > 0) {
@@ -43,7 +45,7 @@ const GiftCardHistory: React.FC = () => {
         }
     };
 
-    const [addTimelineNote, { loading }] = useGiftCardTimelineNoteAddMutation({
+    const [addTimelineNote, { loading }] = useGiftCardAddNoteMutation({
         refetchQueries: [GIFT_CARD_DETAILS_QUERY],
         onCompleted: onTimelineNoteAddCompleted,
     });
@@ -58,7 +60,9 @@ const GiftCardHistory: React.FC = () => {
             <Typography className={classes.header} color="textSecondary">
                 <FormattedMessage {...messages.historyHeaderTitle} />
             </Typography>
+
             <Hr />
+
             <Timeline>
                 {events ? (
                     <>
@@ -73,6 +77,7 @@ const GiftCardHistory: React.FC = () => {
                                 />
                             )}
                         </Form>
+
                         {events
                             .slice()
                             .reverse()

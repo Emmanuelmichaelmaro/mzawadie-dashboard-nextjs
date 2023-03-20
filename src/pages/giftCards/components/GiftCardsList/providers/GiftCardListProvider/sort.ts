@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { GiftCardSortField } from "@mzawadie/types/globalTypes";
+import { GiftCardSortField } from "@mzawadie/graphql";
 import { createGetSortQueryVariables } from "@mzawadie/utils/sort";
 
 import { GiftCardUrlSortField } from "../../types";

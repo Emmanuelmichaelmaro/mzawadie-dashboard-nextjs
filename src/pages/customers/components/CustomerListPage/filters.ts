@@ -1,5 +1,8 @@
+// @ts-nocheck
 import { IFilter } from "@mzawadie/components/Filter";
+import { hasPermissions } from "@mzawadie/components/RequirePermissions";
 import { FilterOpts, MinMax } from "@mzawadie/core";
+import { PermissionEnum, UserFragment } from "@mzawadie/graphql";
 import { createDateField, createNumberField } from "@mzawadie/utils/filters/fields";
 import { defineMessages, IntlShape } from "react-intl";
 
@@ -27,7 +30,8 @@ const messages = defineMessages({
 
 export function createFilterStructure(
     intl: IntlShape,
-    opts: CustomerListFilterOpts
+    opts: CustomerListFilterOpts,
+    userPermissions: UserFragment["userPermissions"]
 ): IFilter<CustomerFilterKeys> {
     return [
         {
@@ -45,6 +49,7 @@ export function createFilterStructure(
                 opts.numberOfOrders.value
             ),
             active: opts.numberOfOrders.active,
+            permissions: [PermissionEnum.MANAGE_ORDERS],
         },
-    ];
+    ].filter((filter) => hasPermissions(userPermissions, filter.permissions ?? []));
 }

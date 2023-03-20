@@ -1,12 +1,12 @@
 // @ts-nocheck
 import { IFilterElement } from "@mzawadie/components/Filter";
 import { maybe, parseBoolean } from "@mzawadie/core";
+import { PluginConfigurationType, PluginFilterInput } from "@mzawadie/graphql";
 import { ChannelsWithLoadMoreProps } from "@mzawadie/hooks/useChannelsSearch";
 import {
     PluginFilterKeys,
     PluginListFilterOpts,
 } from "@mzawadie/pages/plugins/components/PluginsListPage";
-import { PluginConfigurationType, PluginFilterInput } from "@mzawadie/types/globalTypes";
 import {
     createFilterTabUtils,
     createFilterUtils,

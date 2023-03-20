@@ -2,11 +2,11 @@ import { Card, CardActions, TableBody, Typography } from "@material-ui/core";
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import { commonMessages, renderCollection } from "@mzawadie/core";
+import { OrderLineFragment } from "@mzawadie/graphql";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { OrderDetails_order_lines } from "../../types/OrderDetails";
 import TableHeader from "../OrderProductsCardElements/OrderProductsCardHeader";
 import TableLine from "../OrderProductsCardElements/OrderProductsTableRow";
 import CardTitle from "../OrderReturnPage/OrderReturnRefundItemsCard/CardTitle";
@@ -33,7 +33,7 @@ const useStyles = makeStyles(
 interface OrderUnfulfilledProductsCardProps {
     showFulfillmentAction: boolean;
     notAllowedToFulfillUnpaid: boolean;
-    lines: OrderDetails_order_lines[];
+    lines: OrderLineFragment[];
     onFulfill: () => void;
 }
 

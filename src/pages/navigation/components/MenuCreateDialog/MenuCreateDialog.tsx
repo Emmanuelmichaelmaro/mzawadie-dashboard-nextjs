@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
     Button,
     Dialog,
@@ -9,7 +10,7 @@ import {
 import { ConfirmButton, ConfirmButtonTransitionState } from "@mzawadie/components/ConfirmButton";
 import { Form } from "@mzawadie/components/Form";
 import { buttonMessages } from "@mzawadie/core";
-import { MenuErrorFragment } from "@mzawadie/fragments/types/MenuErrorFragment";
+import { MenuErrorFragment } from "@mzawadie/graphql";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getMenuErrorMessage from "@mzawadie/utils/errors/menu";
 import React from "react";

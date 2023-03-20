@@ -9,7 +9,7 @@ import {
     Sort,
     TabActionDialog,
 } from "@mzawadie/core";
-import { ProductTypeKindEnum } from "@mzawadie/types/globalTypes";
+import { ProductTypeKindEnum } from "@mzawadie/graphql";
 import { stringifyQs } from "@mzawadie/utils/urls";
 import urlJoin from "url-join";
 

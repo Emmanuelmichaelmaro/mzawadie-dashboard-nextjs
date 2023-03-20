@@ -6,9 +6,7 @@ import {
     SingleAutocompleteSelectField,
     SingleAutocompleteChoiceType,
 } from "@mzawadie/components/SingleAutocompleteSelectField";
-import { AccountErrorFragment } from "@mzawadie/fragments/types/AccountErrorFragment";
-import { ShopErrorFragment } from "@mzawadie/fragments/types/ShopErrorFragment";
-import { WarehouseErrorFragment } from "@mzawadie/fragments/types/WarehouseErrorFragment";
+import { AccountErrorFragment, ShopErrorFragment, WarehouseErrorFragment } from "@mzawadie/graphql";
 import { ChangeEvent } from "@mzawadie/hooks/useForm";
 import { AddressTypeInput } from "@mzawadie/pages/customers/types";
 import { getFormErrors } from "@mzawadie/utils/errors";

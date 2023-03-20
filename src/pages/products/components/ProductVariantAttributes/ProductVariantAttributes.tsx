@@ -9,11 +9,7 @@ import {
 } from "@mzawadie/components/SingleAutocompleteSelectField";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { commonMessages } from "@mzawadie/core";
-import { ProductErrorWithAttributesFragment } from "@mzawadie/fragments/types/ProductErrorWithAttributesFragment";
-import {
-    ProductVariant_nonSelectionAttributes_attribute_choices_edges,
-    ProductVariant_selectionAttributes_attribute_choices_edges,
-} from "@mzawadie/fragments/types/ProductVariant";
+import { ProductErrorWithAttributesFragment, ProductVariantFragment } from "@mzawadie/graphql";
 import { FormsetAtomicData, FormsetChange } from "@mzawadie/hooks/useFormset";
 import { getProductVariantAttributeErrorMessage } from "@mzawadie/utils/errors/product";
 import React from "react";
@@ -21,8 +17,8 @@ import { useIntl } from "react-intl";
 
 export interface VariantAttributeInputData {
     values: Array<
-        | ProductVariant_selectionAttributes_attribute_choices_edges
-        | ProductVariant_nonSelectionAttributes_attribute_choices_edges
+        | ProductVariantFragment["selectionAttributes"][0]["attribute"]["choices"]["edges"][0]
+        | ProductVariantFragment["nonSelectionAttributes"][0]["attribute"]["choices"]["edges"][0]
     >;
 }
 

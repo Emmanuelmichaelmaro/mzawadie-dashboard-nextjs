@@ -3,6 +3,7 @@ import { MultiAutocompleteSelectField } from "@mzawadie/components/MultiAutocomp
 import { SingleAutocompleteSelectFieldProps } from "@mzawadie/components/SingleAutocompleteSelectField";
 import { DEFAULT_INITIAL_SEARCH_DATA, commonMessages } from "@mzawadie/core";
 import { FormChange } from "@mzawadie/hooks/useForm";
+import useGiftCardTagsSearch from "@mzawadie/searches/useGiftCardTagsSearch";
 import { mapEdgesToItems, mapMultiValueNodeToChoice } from "@mzawadie/utils/maps";
 import compact from "lodash/compact";
 import uniq from "lodash/uniq";
@@ -12,7 +13,6 @@ import { useIntl } from "react-intl";
 import { GiftCardBulkCreateFormError } from "../GiftCardBulkCreateDialog/types";
 import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
 import { giftCardTagInputMessages as messages } from "./messages";
-import useGiftCardTagsSearch from "./useGiftCardTagsSearch";
 import { getMultiChoices } from "./utils";
 
 interface GiftCardTagInputProps extends Pick<SingleAutocompleteSelectFieldProps, "name"> {

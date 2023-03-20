@@ -9,16 +9,15 @@ import { Money } from "@mzawadie/components/Money";
 import { Percent } from "@mzawadie/components/Percent";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { commonMessages, ChannelProps, maybe } from "@mzawadie/core";
-import { DiscountValueTypeEnum } from "@mzawadie/types/globalTypes";
+import { DiscountValueTypeEnum, VoucherDetailsFragment } from "@mzawadie/graphql";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { translateVoucherTypes } from "../../translations";
-import { VoucherDetails_voucher } from "../../types/VoucherDetails";
 import useStyles from "./styles";
 
 export interface VoucherSummaryProps extends ChannelProps {
-    voucher: VoucherDetails_voucher;
+    voucher: VoucherDetailsFragment;
 }
 
 const VoucherSummary: React.FC<VoucherSummaryProps> = ({ selectedChannelId, voucher }) => {

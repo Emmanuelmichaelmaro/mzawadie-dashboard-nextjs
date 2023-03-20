@@ -10,17 +10,15 @@ import {
     Typography,
 } from "@material-ui/core";
 import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
+import { LanguageCodeEnum, LanguageFragment } from "@mzawadie/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { LanguageCodeEnum } from "../../types/globalTypes";
-import { ShopInfo_shop_languages } from "../Shop/types/ShopInfo";
-
 export interface LanguageSwitchProps {
     currentLanguage: LanguageCodeEnum;
-    languages: ShopInfo_shop_languages[];
+    languages: LanguageFragment[];
     onLanguageChange: (lang: LanguageCodeEnum) => void;
 }
 

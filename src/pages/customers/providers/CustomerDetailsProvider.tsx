@@ -1,22 +1,20 @@
 // @ts-nocheck
+import { CustomerDetailsQuery, useCustomerDetailsQuery } from "@mzawadie/graphql";
 import React, { createContext } from "react";
-
-import { useCustomerDetails } from "../queries";
-import { CustomerDetails } from "../types/CustomerDetails";
 
 export interface CustomerDetailsProviderProps {
     id: string;
 }
 
 export interface CustomerDetailsConsumerProps {
-    customer: CustomerDetails | null;
+    customer: CustomerDetailsQuery | null;
     loading: boolean | null;
 }
 
 export const CustomerDetailsContext = createContext<CustomerDetailsConsumerProps>(null);
 
 export const CustomerDetailsProvider: React.FC<CustomerDetailsProviderProps> = ({ children, id }) => {
-    const { data, loading } = useCustomerDetails({
+    const { data, loading } = useCustomerDetailsQuery({
         displayLoader: true,
         variables: {
             id,

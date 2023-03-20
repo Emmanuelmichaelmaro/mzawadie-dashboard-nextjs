@@ -1,6 +1,6 @@
 // @ts-nocheck
+import { ProductOrder, ProductOrderField } from "@mzawadie/graphql";
 import { ProductListUrlQueryParams, ProductListUrlSortField } from "@mzawadie/pages/products/urls";
-import { ProductOrder, ProductOrderField } from "@mzawadie/types/globalTypes";
 import { getOrderDirection } from "@mzawadie/utils/sort";
 
 export const DEFAULT_SORT_KEY = ProductListUrlSortField.name;

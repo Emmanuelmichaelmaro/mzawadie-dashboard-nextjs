@@ -2,16 +2,32 @@
 import Container from "@mzawadie/components/Container";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA, sectionNames } from "@mzawadie/core";
-import { ChannelErrorFragment } from "@mzawadie/fragments/types/ChannelErrorFragment";
+import { DEFAULT_INITIAL_SEARCH_DATA, extractMutationErrors, sectionNames } from "@mzawadie/core";
+import {
+    ChannelDeleteMutation,
+    ChannelErrorFragment,
+    ChannelUpdateMutation,
+    useChannelActivateMutation,
+    useChannelDeactivateMutation,
+    useChannelDeleteMutation,
+    useChannelQuery,
+    useChannelShippingZonesQuery,
+    useChannelsQuery,
+    useChannelUpdateMutation,
+} from "@mzawadie/graphql";
+import { useShop } from "@mzawadie/hooks";
 import { getSearchFetchMoreProps } from "@mzawadie/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@mzawadie/hooks/useNotifier/utils";
 import { FormData } from "@mzawadie/pages/channels/components/ChannelForm/ChannelForm";
-import { ChannelDelete } from "@mzawadie/pages/channels/types/ChannelDelete";
+import {
+    channelsListUrl,
+    channelUrl,
+    ChannelUrlDialog,
+    ChannelUrlQueryParams,
+} from "@mzawadie/pages/channels/urls";
 import { getChannelsCurrencyChoices } from "@mzawadie/pages/channels/utils";
-import { useChannelShippingZones } from "@mzawadie/pages/shipping/queries";
 import useShippingZonesSearch from "@mzawadie/searches/useShippingZonesSearch";
 import getChannelsErrorMessage from "@mzawadie/utils/errors/channels";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
@@ -21,15 +37,6 @@ import { useIntl } from "react-intl";
 
 import { ChannelDeleteDialog } from "../../components/ChannelDeleteDialog";
 import { ChannelDetailsPage } from "../../components/ChannelDetailsPage";
-import {
-    useChannelActivateMutation,
-    useChannelDeactivateMutation,
-    useChannelDeleteMutation,
-    useChannelUpdateMutation,
-} from "../../mutations";
-import { useChannelDetails, useChannelsList } from "../../queries";
-import { ChannelUpdate } from "../../types/ChannelUpdate";
-import { channelsListUrl, channelUrl, ChannelUrlDialog, ChannelUrlQueryParams } from "../../urls";
 
 interface ChannelDetailsProps {
     id: string;
@@ -44,7 +51,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id, params }) =>
 
     const handleBack = () => navigate(channelsListUrl());
 
-    const channelsListData = useChannelsList({ displayLoader: true });
+    const channelsListData = useChannelsQuery({ displayLoader: true });
 
     const [openModal, closeModal] = createDialogActionHandlers<ChannelUrlDialog, ChannelUrlQueryParams>(
         navigate,
@@ -53,11 +60,11 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id, params }) =>
     );
 
     const [updateChannel, updateChannelOpts] = useChannelUpdateMutation({
-        onCompleted: ({ channelUpdate: { errors } }: ChannelUpdate) =>
+        onCompleted: ({ channelUpdate: { errors } }: ChannelUpdateMutation) =>
             notify(getDefaultNotifierSuccessErrorData(errors, intl)),
     });
 
-    const { data, loading } = useChannelDetails({
+    const { data, loading } = useChannelQuery({
         displayLoader: true,
         variables: { id },
     });
@@ -109,7 +116,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id, params }) =>
             })
         );
 
-    const onDeleteCompleted = (data: ChannelDelete) => {
+    const onDeleteCompleted = (data: ChannelDeleteMutation) => {
         const { errors } = data.channelDelete;
 
         if (errors.length === 0) {
@@ -148,7 +155,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({ id, params }) =>
     };
 
     const { data: channelShippingZonesData, loading: channelsShippingZonesLoading } =
-        useChannelShippingZones({
+        useChannelShippingZonesQuery({
             variables: {
                 filter: {
                     channels: [id],

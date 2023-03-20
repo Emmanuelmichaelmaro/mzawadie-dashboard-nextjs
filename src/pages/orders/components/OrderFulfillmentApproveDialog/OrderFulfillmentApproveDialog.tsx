@@ -10,7 +10,7 @@ import ControlledCheckbox from "@mzawadie/components/ControlledCheckbox";
 import { Form } from "@mzawadie/components/Form";
 import FormSpacer from "@mzawadie/components/FormSpacer";
 import { buttonMessages } from "@mzawadie/core";
-import { OrderErrorFragment } from "@mzawadie/fragments/types/OrderErrorFragment";
+import { OrderErrorFragment } from "@mzawadie/graphql";
 import getOrderErrorMessage from "@mzawadie/utils/errors/order";
 import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";

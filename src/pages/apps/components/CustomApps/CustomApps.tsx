@@ -2,17 +2,17 @@
 import { Card, TableBody, TableCell, TableRow, Typography } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { commonMessages, renderCollection, stopPropagation } from "@mzawadie/core";
+import { AppsListQuery } from "@mzawadie/graphql";
 import { DeleteIcon, ResponsiveTable, Button, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl, FormattedMessage } from "react-intl";
 
 import { useStyles } from "../../styles";
-import { AppsList_apps_edges } from "../../types/AppsList";
 import { AppsSkeleton } from "../AppsSkeleton";
 import { DeactivatedText } from "../DeactivatedText";
 
 export interface CustomAppsProps {
-    appsList: AppsList_apps_edges[];
+    appsList: AppsListQuery["apps"]["edges"];
     navigateToCustomApp: (id: string) => () => void;
     navigateToCustomAppCreate?: () => void;
     onRemove: (id: string) => void;

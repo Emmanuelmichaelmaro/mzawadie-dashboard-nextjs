@@ -1,11 +1,13 @@
+// @ts-nocheck
 import { gql } from "@apollo/client";
-import { pageInfoFragment } from "@mzawadie/fragments/pageInfo";
+import {
+    SearchCustomersDocument,
+    SearchCustomersQuery,
+    SearchCustomersQueryVariables,
+} from "@mzawadie/graphql";
 import { makeTopLevelSearch } from "@mzawadie/hooks";
 
-import { SearchCustomers, SearchCustomersVariables } from "./types/SearchCustomers";
-
 export const searchCustomers = gql`
-    ${pageInfoFragment}
     query SearchCustomers($after: String, $first: Int!, $query: String!) {
         search: customers(after: $after, first: $first, filter: { search: $query }) {
             edges {
@@ -17,11 +19,12 @@ export const searchCustomers = gql`
                 }
             }
             pageInfo {
-                ...PageInfoFragment
+                ...PageInfo
             }
         }
     }
 `;
 
-// @ts-ignore
-export default makeTopLevelSearch<SearchCustomers, SearchCustomersVariables>(searchCustomers);
+export default makeTopLevelSearch<SearchCustomersQuery, SearchCustomersQueryVariables>(
+    SearchCustomersDocument
+);

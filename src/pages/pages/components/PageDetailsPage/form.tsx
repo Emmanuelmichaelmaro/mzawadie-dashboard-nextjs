@@ -3,7 +3,13 @@ import { OutputData } from "@editorjs/editorjs";
 import { AttributeInput } from "@mzawadie/components/Attributes";
 import { MetadataFormData } from "@mzawadie/components/Metadata";
 import { RichTextEditorChange } from "@mzawadie/components/RichTextEditor";
-import { FetchMoreProps, ReorderEvent } from "@mzawadie/core";
+import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@mzawadie/core";
+import {
+    PageDetailsFragment,
+    SearchPagesQuery,
+    SearchPageTypesQuery,
+    SearchProductsQuery,
+} from "@mzawadie/graphql";
 import useForm, { FormChange, SubmitPromise } from "@mzawadie/hooks/useForm";
 import useFormset, { FormsetChange, FormsetData } from "@mzawadie/hooks/useFormset";
 import { getAttributesDisplayData } from "@mzawadie/pages/attributes/utils/data";
@@ -16,16 +22,11 @@ import {
     createFetchMoreReferencesHandler,
     createFetchReferencesHandler,
 } from "@mzawadie/pages/attributes/utils/handlers";
-import { PageDetails_page, PageDetails_page_pageType } from "@mzawadie/pages/pages/types/PageDetails";
-import { PageType_pageType } from "@mzawadie/pages/pages/types/PageType";
 import {
     getAttributeInputFromPage,
     getAttributeInputFromPageType,
 } from "@mzawadie/pages/pages/utils/data";
 import { createPageTypeSelectHandler } from "@mzawadie/pages/pages/utils/handlers";
-import { SearchPageTypes_search_edges_node } from "@mzawadie/searches/types/SearchPageTypes";
-import { SearchPages_search_edges_node } from "@mzawadie/searches/types/SearchPages";
-import { SearchProducts_search_edges_node } from "@mzawadie/searches/types/SearchProducts";
 import getPublicationData from "@mzawadie/utils/data/getPublicationData";
 import handleFormSubmit from "@mzawadie/utils/handlers/handleFormSubmit";
 import { mapMetadataItemToInput } from "@mzawadie/utils/maps";
@@ -41,8 +42,9 @@ export interface PageFormData extends MetadataFormData {
     seoTitle: string;
     slug: string;
     title: string;
-    pageType: PageType_pageType | PageDetails_page_pageType;
+    pageType: PageDetailsFragment["pageType"];
 }
+
 export interface PageData extends PageFormData {
     attributes: AttributeInput[];
     content: OutputData;
@@ -76,26 +78,26 @@ export interface UsePageUpdateFormResult {
 }
 
 export interface UsePageFormOpts {
-    pageTypes?: SearchPageTypes_search_edges_node[];
-    referencePages: SearchPages_search_edges_node[];
-    referenceProducts: SearchProducts_search_edges_node[];
+    pageTypes?: RelayToFlat<SearchPageTypesQuery["search"]>;
+    referencePages: RelayToFlat<SearchPagesQuery["search"]>;
+    referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
     fetchReferencePages?: (data: string) => void;
     fetchMoreReferencePages?: FetchMoreProps;
     fetchReferenceProducts?: (data: string) => void;
     fetchMoreReferenceProducts?: FetchMoreProps;
     assignReferencesAttributeId?: string;
-    selectedPageType?: PageType_pageType;
+    selectedPageType?: PageDetailsFragment["pageType"];
     onSelectPageType: (pageTypeId: string) => void;
 }
 
 export interface PageFormProps extends UsePageFormOpts {
     children: (props: UsePageUpdateFormResult) => React.ReactNode;
-    page: PageDetails_page;
+    page: PageDetailsFragment;
     onSubmit: (data: PageData) => SubmitPromise;
 }
 
 function usePageForm(
-    page: PageDetails_page,
+    page: PageDetailsFragment,
     onSubmit: (data: PageData) => SubmitPromise,
     opts: UsePageFormOpts
 ): UsePageUpdateFormResult {
@@ -111,6 +113,7 @@ function usePageForm(
             ? getAttributeInputFromPageType(opts.selectedPageType)
             : []
     );
+
     const attributesWithNewFileValue = useFormset<null, File>([]);
 
     const form = useForm<PageFormData>({
@@ -124,6 +127,7 @@ function usePageForm(
         slug: page?.slug || "",
         title: page?.title || "",
     });
+
     const [content, changeContent] = useRichText({
         initial: pageExists ? page?.content : null,
         triggerChange,
@@ -139,6 +143,7 @@ function usePageForm(
         form.change(event, cb);
         triggerChange();
     };
+
     const changeMetadata = makeMetadataChangeHandler(handleChange);
     const handlePageTypeSelect = createPageTypeSelectHandler(opts.onSelectPageType, triggerChange);
     const handleAttributeChange = createAttributeChangeHandler(attributes.change, triggerChange);

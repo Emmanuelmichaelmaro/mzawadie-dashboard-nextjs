@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { PermissionEnum } from "@mzawadie/types/globalTypes";
+import { PermissionEnum } from "@mzawadie/graphql";
 import { IntlShape } from "react-intl";
 
 import { createConfigurationMenu } from ".";

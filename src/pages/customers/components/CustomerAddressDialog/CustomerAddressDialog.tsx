@@ -3,13 +3,16 @@ import { AddressEdit } from "@mzawadie/components/AddressEdit";
 import BackButton from "@mzawadie/components/BackButton";
 import { ConfirmButton } from "@mzawadie/components/ConfirmButton";
 import { Form } from "@mzawadie/components/Form";
-import { ShopInfo_shop_countries } from "@mzawadie/components/Shop/types/ShopInfo";
 import { buttonMessages } from "@mzawadie/core";
-import { AccountErrorFragment } from "@mzawadie/fragments/types/AccountErrorFragment";
+import {
+    AccountErrorFragment,
+    AddressFragment,
+    CountryWithCodeFragment,
+    AddressInput,
+} from "@mzawadie/graphql";
 import useAddressValidation from "@mzawadie/hooks/useAddressValidation";
 import { useModalDialogErrors } from "@mzawadie/hooks/useModalDialogErrors";
 import useStateFromProps from "@mzawadie/hooks/useStateFromProps";
-import { AddressInput } from "@mzawadie/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@mzawadie/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@mzawadie/utils/maps";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
@@ -17,12 +20,11 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { AddressTypeInput } from "../../types";
-import { CustomerAddresses_user_addresses } from "../../types/CustomerAddresses";
 
 export interface CustomerAddressDialogProps {
-    address: CustomerAddresses_user_addresses;
+    address: AddressFragment;
     confirmButtonState: ConfirmButtonTransitionState;
-    countries: ShopInfo_shop_countries[];
+    countries: CountryWithCodeFragment[];
     errors: AccountErrorFragment[];
     open: boolean;
     variant: "create" | "edit";

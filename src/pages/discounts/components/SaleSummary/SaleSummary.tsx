@@ -9,14 +9,14 @@ import { Money } from "@mzawadie/components/Money";
 import { Percent } from "@mzawadie/components/Percent";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { commonMessages, ChannelProps, maybe } from "@mzawadie/core";
+import { SaleDetailsFragment } from "@mzawadie/graphql";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { SaleDetails_sale } from "../../types/SaleDetails";
 import useStyles from "./styles";
 
 export interface SaleSummaryProps extends ChannelProps {
-    sale: SaleDetails_sale;
+    sale: SaleDetailsFragment;
 }
 
 const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannelId, sale }) => {

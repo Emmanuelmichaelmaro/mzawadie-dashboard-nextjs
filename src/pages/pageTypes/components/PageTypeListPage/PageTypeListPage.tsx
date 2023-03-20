@@ -10,7 +10,7 @@ import {
     SortPage,
     TabPageProps,
 } from "@mzawadie/core";
-import { PageTypeList_pageTypes_edges_node } from "@mzawadie/pages/pageTypes/types/PageTypeList";
+import { PageTypeFragment } from "@mzawadie/graphql";
 import { PageTypeListUrlSortField } from "@mzawadie/pages/pageTypes/urls";
 import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
@@ -24,7 +24,7 @@ export interface PageTypeListPageProps
         SearchPageProps,
         SortPage<PageTypeListUrlSortField>,
         TabPageProps {
-    pageTypes: PageTypeList_pageTypes_edges_node[];
+    pageTypes: PageTypeFragment[];
     onBack: () => void;
 }
 

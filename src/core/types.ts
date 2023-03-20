@@ -1,6 +1,6 @@
-import { FetchResult, MutationResult } from "@apollo/client";
+import { FetchResult, MutationResult, ServerError } from "@apollo/client";
 import { IFilter, IFilterElement, MultiAutocompleteChoiceType } from "@mzawadie/components";
-import { User_userPermissions } from "@mzawadie/fragments/types/User";
+import { UserPermissionFragment } from "@mzawadie/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 
 export interface UserError {
@@ -183,7 +183,7 @@ export interface FetchMoreProps {
 export type TabActionDialog = "save-search" | "delete-search";
 
 export interface UserPermissionProps {
-    userPermissions: User_userPermissions[];
+    userPermissions: UserPermissionFragment[];
 }
 
 export interface MutationResultAdditionalProps {
@@ -210,3 +210,7 @@ export enum StatusType {
     WARNING = "warning",
     SUCCESS = "success",
 }
+
+export type RelayToFlat<T extends { edges: Array<{ node: any }> }> = Array<T["edges"][0]["node"]>;
+
+export type ServerErrorWithName = ServerError & { operationName: string };

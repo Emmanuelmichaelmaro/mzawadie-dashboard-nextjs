@@ -7,18 +7,17 @@ import Skeleton from "@mzawadie/components/Skeleton";
 import { TableHead } from "@mzawadie/components/TableHead";
 import { TablePagination } from "@mzawadie/components/TablePagination";
 import { maybe, renderCollection, ListActions, ListProps } from "@mzawadie/core";
+import { SaleDetailsFragment, VoucherDetailsFragment } from "@mzawadie/graphql";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { SaleDetails_sale } from "../../types/SaleDetails";
-import { VoucherDetails_voucher } from "../../types/VoucherDetails";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
 export interface DiscountCategoriesProps extends ListProps, ListActions {
-    discount: SaleDetails_sale | VoucherDetails_voucher;
+    discount: SaleDetailsFragment | VoucherDetailsFragment;
     onCategoryAssign: () => void;
     onCategoryUnassign: (id: string) => void;
 }

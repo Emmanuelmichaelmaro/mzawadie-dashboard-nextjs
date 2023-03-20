@@ -1,9 +1,8 @@
 // @ts-nocheck
-import { OrderEventsEnum } from "@mzawadie/types/globalTypes";
+import { HomeQuery, OrderEventsEnum } from "@mzawadie/graphql";
 
-import { Home } from "./types/Home";
-
-export const shop: (placeholderImage: string) => Home = (placeholderImage: string) => ({
+export const shop: (placeholderImage: string) => HomeQuery = (placeholderImage: string) => ({
+    __typename: "Query",
     activities: {
         __typename: "OrderEventCountableConnection",
         edges: [

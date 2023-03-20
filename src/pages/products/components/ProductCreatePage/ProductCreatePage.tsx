@@ -10,10 +10,21 @@ import { MultiAutocompleteChoiceType } from "@mzawadie/components/MultiAutocompl
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { SeoForm } from "@mzawadie/components/SeoForm";
-import { sectionNames, FetchMoreProps } from "@mzawadie/core";
-import { ProductChannelListingErrorFragment } from "@mzawadie/fragments/types/ProductChannelListingErrorFragment";
-import { ProductErrorWithAttributesFragment } from "@mzawadie/fragments/types/ProductErrorWithAttributesFragment";
-import { TaxTypeFragment } from "@mzawadie/fragments/types/TaxTypeFragment";
+import { sectionNames, FetchMoreProps, RelayToFlat } from "@mzawadie/core";
+import {
+    ProductChannelListingErrorFragment,
+    ProductErrorWithAttributesFragment,
+    TaxTypeFragment,
+    PermissionEnum,
+    ProductTypeQuery,
+    SearchAttributeValuesQuery,
+    SearchCategoriesQuery,
+    SearchCollectionsQuery,
+    SearchPagesQuery,
+    SearchProductsQuery,
+    SearchProductTypesQuery,
+    SearchWarehousesQuery,
+} from "@mzawadie/graphql";
 import useStateFromProps from "@mzawadie/hooks/useStateFromProps";
 import {
     getAttributeValuesFromReferences,
@@ -21,16 +32,7 @@ import {
 } from "@mzawadie/pages/attributes/utils/data";
 import CannotDefineChannelsAvailabilityCard from "@mzawadie/pages/channels/components/CannotDefineChannelsAvailabilityCard/CannotDefineChannelsAvailabilityCard";
 import { ChannelData } from "@mzawadie/pages/channels/utils";
-import { ProductType_productType } from "@mzawadie/pages/products/types/ProductType";
 import { getChoices } from "@mzawadie/pages/products/utils/data";
-import { SearchAttributeValues_attribute_choices_edges_node } from "@mzawadie/searches/types/SearchAttributeValues";
-import { SearchCategories_search_edges_node } from "@mzawadie/searches/types/SearchCategories";
-import { SearchCollections_search_edges_node } from "@mzawadie/searches/types/SearchCollections";
-import { SearchPages_search_edges_node } from "@mzawadie/searches/types/SearchPages";
-import { SearchProductTypes_search_edges_node } from "@mzawadie/searches/types/SearchProductTypes";
-import { SearchProducts_search_edges_node } from "@mzawadie/searches/types/SearchProducts";
-import { SearchWarehouses_search_edges_node } from "@mzawadie/searches/types/SearchWarehouses";
-import { PermissionEnum } from "@mzawadie/types/globalTypes";
 import { ConfirmButtonTransitionState, Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -52,24 +54,24 @@ interface ProductCreatePageProps {
     channelsErrors: ProductChannelListingErrorFragment[];
     allChannelsCount: number;
     currentChannels: ChannelData[];
-    collections: SearchCollections_search_edges_node[];
-    categories: SearchCategories_search_edges_node[];
-    attributeValues: SearchAttributeValues_attribute_choices_edges_node[];
+    collections: RelayToFlat<SearchCollectionsQuery["search"]>;
+    categories: RelayToFlat<SearchCategoriesQuery["search"]>;
+    attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
     loading: boolean;
     fetchMoreCategories: FetchMoreProps;
     fetchMoreCollections: FetchMoreProps;
     fetchMoreProductTypes: FetchMoreProps;
     fetchMoreAttributeValues?: FetchMoreProps;
     initial?: Partial<ProductCreateFormData>;
-    productTypes?: SearchProductTypes_search_edges_node[];
-    referencePages?: SearchPages_search_edges_node[];
-    referenceProducts?: SearchProducts_search_edges_node[];
+    productTypes?: RelayToFlat<SearchProductTypesQuery["search"]>;
+    referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
+    referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
     header: string;
     saveButtonBarState: ConfirmButtonTransitionState;
     weightUnit: string;
-    warehouses: SearchWarehouses_search_edges_node[];
+    warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
     taxTypes: TaxTypeFragment[];
-    selectedProductType?: ProductType_productType;
+    selectedProductType?: ProductTypeQuery["productType"];
     fetchCategories: (data: string) => void;
     fetchCollections: (data: string) => void;
     fetchProductTypes: (data: string) => void;

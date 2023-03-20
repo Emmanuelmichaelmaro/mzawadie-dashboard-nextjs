@@ -1,4 +1,4 @@
-import { GiftCardError } from "@mzawadie/fragments/types/GiftCardError";
+import { GiftCardErrorFragment } from "@mzawadie/graphql";
 import { FormChange } from "@mzawadie/hooks/useForm";
 
 import { GiftCardCreateFormData } from "./GiftCardCreateDialogForm";
@@ -12,11 +12,11 @@ export interface GiftCardCreateFormCustomer {
 
 export type GiftCardCreateCommonFormErrors = Record<
     "tags" | "expiryDate" | "currency" | "amount" | "balance",
-    GiftCardError
+    GiftCardErrorFragment
 >;
 
 export type GiftCardCreateFormErrors = GiftCardCreateCommonFormErrors &
-    Record<"customer", GiftCardError>;
+    Record<"customer", GiftCardErrorFragment>;
 
 export interface GiftCardCreateFormCommonProps {
     change: FormChange;

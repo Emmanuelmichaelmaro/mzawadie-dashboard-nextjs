@@ -3,13 +3,13 @@ import { PageHeader } from "@mzawadie/components/PageHeader";
 import { sectionNames } from "@mzawadie/core";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { HorizontalSpacer } from "@mzawadie/pages/apps/components/HorizontalSpacer";
+import { useGiftCardListDialogs } from "@mzawadie/pages/giftCards/components/GiftCardsList/providers/GiftCardListDialogsProvider";
 import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardSettingsUrl } from "../../../urls";
 import { giftCardsListHeaderMenuItemsMessages as messages } from "../messages";
-import useGiftCardListDialogs from "../providers/GiftCardListDialogsProvider/hooks/useGiftCardListDialogs";
 import GiftCardsListHeaderAlert from "./GiftCardsListHeaderAlert";
 
 const GiftCardsListHeader: React.FC = () => {

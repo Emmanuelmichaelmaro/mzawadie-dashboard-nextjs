@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { PageInfoFragment } from "@mzawadie/fragments/types/PageInfoFragment";
+import { PageInfoFragment } from "@mzawadie/graphql";
 import { DocumentNode } from "graphql";
 
 import makeSearch, { SearchVariables, UseSearchHook } from "../makeSearch";

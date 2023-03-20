@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { Choice } from "@mzawadie/components/SingleSelectField";
-import { MeasurementUnitsEnum } from "@mzawadie/types/globalTypes";
+import { MeasurementUnitsEnum } from "@mzawadie/graphql";
 import React from "react";
 import { IntlShape, MessageDescriptor } from "react-intl";
 

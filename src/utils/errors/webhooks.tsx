@@ -1,6 +1,5 @@
 import { commonMessages } from "@mzawadie/core";
-import { WebhookErrorFragment } from "@mzawadie/fragments/types/WebhookErrorFragment";
-import { WebhookErrorCode } from "@mzawadie/types/globalTypes";
+import { WebhookErrorFragment, WebhookErrorCode } from "@mzawadie/graphql";
 import { IntlShape } from "react-intl";
 
 import commonErrorMessages from "./common";

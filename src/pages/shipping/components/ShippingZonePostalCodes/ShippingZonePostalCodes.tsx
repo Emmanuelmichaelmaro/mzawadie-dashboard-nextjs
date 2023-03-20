@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import {
     Button,
@@ -16,9 +15,8 @@ import { RadioGroupField } from "@mzawadie/components/RadioGroupField";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { renderCollection } from "@mzawadie/core";
-import { ShippingMethodTypeFragment_postalCodeRules } from "@mzawadie/fragments/types/ShippingMethodTypeFragment";
+import { PostalCodeRuleInclusionTypeEnum, ShippingMethodTypeFragment } from "@mzawadie/graphql";
 import ArrowDropdown from "@mzawadie/icons/ArrowDropdown";
-import { PostalCodeRuleInclusionTypeEnum } from "@mzawadie/types/globalTypes";
 import { DeleteIcon, makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
@@ -27,9 +25,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 export interface ShippingZonePostalCodesProps {
     disabled: boolean;
     initialExpanded?: boolean;
-    postalCodes: ShippingMethodTypeFragment_postalCodeRules[] | undefined;
+    postalCodes: ShippingMethodTypeFragment["postalCodeRules"] | undefined;
     onPostalCodeInclusionChange: (inclusion: PostalCodeRuleInclusionTypeEnum) => void;
-    onPostalCodeDelete: (code: ShippingMethodTypeFragment_postalCodeRules) => void;
+    onPostalCodeDelete: (code: ShippingMethodTypeFragment["postalCodeRules"][0]) => void;
     onPostalCodeRangeAdd: () => void;
 }
 
@@ -87,7 +85,9 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
         onPostalCodeInclusionChange(value);
     };
 
-    const getPostalCodeRangeLabel = (postalCodeRange: ShippingMethodFragment_postalCodeRules) => {
+    const getPostalCodeRangeLabel = (
+        postalCodeRange: ShippingMethodTypeFragment["postalCodeRules"][0]
+    ) => {
         if (!postalCodeRange?.start) {
             return <Skeleton />;
         }

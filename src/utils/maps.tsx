@@ -5,11 +5,13 @@ import {
     MultiAutocompleteChoiceType,
     SingleAutocompleteChoiceType,
 } from "@mzawadie/components";
-import { ShopInfo_shop_countries } from "@mzawadie/components/Shop/types/ShopInfo";
-import { getFullName, Node, SlugNode, TagNode } from "@mzawadie/core";
-import { MetadataItem } from "@mzawadie/fragments/types/MetadataItem";
-import { SearchPages_search_edges_node } from "@mzawadie/searches/types/SearchPages";
-import { MetadataInput } from "@mzawadie/types/globalTypes";
+import { getFullName, Node, RelayToFlat, SlugNode, TagNode } from "@mzawadie/core";
+import {
+    CountryWithCodeFragment,
+    MetadataInput,
+    MetadataItemFragment,
+    SearchPagesQuery,
+} from "@mzawadie/graphql";
 
 interface Edge<T> {
     node: T;
@@ -22,18 +24,18 @@ export function mapEdgesToItems<T>(data: Connection<T> | undefined): T[] | undef
     return data?.edges?.map(({ node }) => node);
 }
 
-export function mapCountriesToCountriesCodes(countries?: ShopInfo_shop_countries[]) {
+export function mapCountriesToCountriesCodes(countries?: CountryWithCodeFragment[]) {
     return countries?.map((country) => country.code);
 }
 
-export function mapCountriesToChoices(countries: ShopInfo_shop_countries[]) {
+export function mapCountriesToChoices(countries: CountryWithCodeFragment[]) {
     return countries.map((country) => ({
         label: country.country,
         value: country.code,
     }));
 }
 
-export function mapPagesToChoices(pages: SearchPages_search_edges_node[]) {
+export function mapPagesToChoices(pages: RelayToFlat<SearchPagesQuery["search"]>) {
     return pages.map((page) => ({
         label: page.title,
         value: page.id,
@@ -71,7 +73,7 @@ export function mapTagNodeToChoice(nodes: Array<Node & TagNode>): SingleAutocomp
     return mapNodeToChoice(nodes, (node) => node.tag);
 }
 
-export function mapMetadataItemToInput(item: MetadataItem): MetadataInput {
+export function mapMetadataItemToInput(item: MetadataItemFragment): MetadataInput {
     return {
         key: item.key,
         value: item.value,

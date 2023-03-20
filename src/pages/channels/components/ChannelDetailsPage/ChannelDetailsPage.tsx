@@ -4,22 +4,24 @@ import { Form } from "@mzawadie/components/Form";
 import { Grid } from "@mzawadie/components/Grid";
 import Savebar from "@mzawadie/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
-import { FetchMoreProps } from "@mzawadie/core";
-import { ChannelErrorFragment } from "@mzawadie/fragments/types/ChannelErrorFragment";
-import { CountryFragment } from "@mzawadie/fragments/types/CountryFragment";
+import { FetchMoreProps, RelayToFlat } from "@mzawadie/core";
+import {
+    ChannelErrorFragment,
+    CountryFragment,
+    SearchShippingZonesQuery,
+    CountryCode,
+    ChannelDetailsFragment,
+} from "@mzawadie/graphql";
 import { SearchData } from "@mzawadie/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@mzawadie/hooks/makeTopLevelSearch/utils";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import useStateFromProps from "@mzawadie/hooks/useStateFromProps";
 import { getById, getByUnmatchingId } from "@mzawadie/pages/orders/components/OrderReturnPage/utils";
-import { SearchShippingZones_search_edges_node } from "@mzawadie/searches/types/SearchShippingZones";
-import { CountryCode } from "@mzawadie/types/globalTypes";
 import createSingleAutocompleteSelectHandler from "@mzawadie/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@mzawadie/utils/maps";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React, { useState } from "react";
 
-import { Channel_channel } from "../../types/Channel";
 import { ChannelForm, FormData } from "../ChannelForm";
 import { ChannelStatus } from "../ChannelStatus";
 import { ShippingZonesCard } from "../ShippingZonesCard";
@@ -27,7 +29,7 @@ import { ChannelShippingZones } from "./types";
 import { getUpdatedIdsWithNewId, getUpdatedIdsWithoutNewId } from "./utils";
 
 export interface ChannelDetailsPageProps<TErrors> {
-    channel?: Channel_channel;
+    channel?: ChannelDetailsFragment;
     currencyCodes?: SingleAutocompleteChoiceType[];
     disabled: boolean;
     disabledStatus?: boolean;
@@ -82,7 +84,9 @@ const ChannelDetailsPage = function <TErrors>({
         ...formData,
     };
 
-    const getFilteredShippingZonesChoices = (): SearchShippingZones_search_edges_node[] =>
+    const getFilteredShippingZonesChoices = (): Array<
+        RelayToFlat<SearchShippingZonesQuery["search"]>
+    > =>
         getParsedSearchData({ data: searchShippingZonesData }).filter(
             ({ id: searchedZoneId }) => !shippingZonesToDisplay.some(({ id }) => id === searchedZoneId)
         );

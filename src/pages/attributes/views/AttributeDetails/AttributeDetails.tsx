@@ -1,6 +1,17 @@
 /* eslint-disable radix */
 // @ts-nocheck
 import { ListViews, ReorderEvent, commonMessages, maybe } from "@mzawadie/core";
+import {
+    useAttributeDeleteMutation,
+    useAttributeUpdateMutation,
+    useAttributeValueCreateMutation,
+    useAttributeValueDeleteMutation,
+    useAttributeValueReorderMutation,
+    useAttributeValueUpdateMutation,
+    useUpdateMetadataMutation,
+    useUpdatePrivateMetadataMutation,
+    useAttributeDetailsQuery,
+} from "@mzawadie/graphql";
 import useListSettings from "@mzawadie/hooks/useListSettings";
 import useLocalPaginator, { useLocalPaginationState } from "@mzawadie/hooks/useLocalPaginator";
 import useNavigator from "@mzawadie/hooks/useNavigator";
@@ -9,7 +20,6 @@ import getAttributeErrorMessage from "@mzawadie/utils/errors/attribute";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@mzawadie/utils/handlers/metadataUpdateHandler";
 import { move } from "@mzawadie/utils/lists";
-import { useMetadataUpdate, usePrivateMetadataUpdate } from "@mzawadie/utils/metadata/updateMetadata";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -17,15 +27,6 @@ import { AttributeDeleteDialog } from "../../components/AttributeDeleteDialog";
 import { AttributePage, AttributePageFormData } from "../../components/AttributePage";
 import { AttributeValueDeleteDialog } from "../../components/AttributeValueDeleteDialog";
 import { AttributeValueEditDialog } from "../../components/AttributeValueEditDialog";
-import {
-    useAttributeDeleteMutation,
-    useAttributeUpdateMutation,
-    useAttributeValueCreateMutation,
-    useAttributeValueDeleteMutation,
-    useAttributeValueReorderMutation,
-    useAttributeValueUpdateMutation,
-} from "../../mutations";
-import { useAttributeDetailsQuery } from "../../queries";
 import {
     attributeListUrl,
     attributeUrl,
@@ -42,8 +43,9 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
     const navigate = useNavigator();
     const notify = useNotifier();
     const intl = useIntl();
-    const [updateMetadata] = useMetadataUpdate({});
-    const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+
+    const [updateMetadata] = useUpdateMetadataMutation({});
+    const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
     const [openModal, closeModal] = createDialogActionHandlers<
         AttributeUrlDialog,
@@ -68,6 +70,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
     });
 
     const paginateValues = useLocalPaginator(setValuesPaginationState);
+
     const { loadNextPage, loadPreviousPage, pageInfo } = paginateValues(
         data?.attribute?.choices?.pageInfo,
         valuesPaginationState
@@ -157,6 +160,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
     const handleValueReorder = ({ newIndex, oldIndex }: ReorderEvent) =>
         attributeValueReorder({
             optimisticResponse: {
+                __typename: "Mutation",
                 attributeReorderValues: {
                     __typename: "AttributeReorderValues",
                     attribute: {

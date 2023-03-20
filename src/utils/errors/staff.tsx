@@ -1,4 +1,4 @@
-import { StaffErrorFragment } from "@mzawadie/fragments/types/StaffErrorFragment";
+import { StaffErrorFragment } from "@mzawadie/graphql";
 import { IntlShape } from "react-intl";
 
 import getAccountErrorMessage from "./account";

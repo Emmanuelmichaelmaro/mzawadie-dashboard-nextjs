@@ -4,7 +4,7 @@ import { CardTitle } from "@mzawadie/components/CardTitle";
 import FormSpacer from "@mzawadie/components/FormSpacer";
 import { RichTextEditor, RichTextEditorChange } from "@mzawadie/components/RichTextEditor";
 import { commonMessages } from "@mzawadie/core";
-import { PageErrorFragment } from "@mzawadie/fragments/types/PageErrorFragment";
+import { PageErrorFragment } from "@mzawadie/graphql";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getPageErrorMessage from "@mzawadie/utils/errors/page";
 import { makeStyles } from "@saleor/macaw-ui";

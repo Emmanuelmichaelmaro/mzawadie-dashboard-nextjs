@@ -1,13 +1,16 @@
 // @ts-nocheck
+import {
+    GiftCardActivateMutation,
+    GiftCardDeactivateMutation,
+    useGiftCardActivateMutation,
+    useGiftCardDeactivateMutation,
+} from "@mzawadie/graphql";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import commonErrorMessages from "@mzawadie/utils/errors/common";
 import { useIntl } from "react-intl";
 
 import { GIFT_CARD_DETAILS_QUERY } from "../../queries";
 import { giftCardEnableDisableSectionMessages as messages } from "../messages";
-import { useGiftCardActivateMutation, useGiftCardDeactivateMutation } from "../mutations";
-import { GiftCardActivate } from "../types/GiftCardActivate";
-import { GiftCardDeactivate } from "../types/GiftCardDeactivate";
 
 interface useGiftCardActivateToggleProps {
     onActivateActionComplete?: () => void | undefined;
@@ -23,7 +26,7 @@ const useGiftCardActivateToggle = ({
     const intl = useIntl();
     const notify = useNotifier();
 
-    const onActivateCompleted = (data: GiftCardActivate) => {
+    const onActivateCompleted = (data: GiftCardActivateMutation) => {
         const errors = data?.giftCardActivate?.errors;
 
         if (!!errors?.length) {
@@ -45,7 +48,7 @@ const useGiftCardActivateToggle = ({
         }
     };
 
-    const onDeactivateCompleted = (data: GiftCardDeactivate) => {
+    const onDeactivateCompleted = (data: GiftCardDeactivateMutation) => {
         const errors = data?.giftCardDeactivate?.errors;
 
         if (!!errors?.length) {

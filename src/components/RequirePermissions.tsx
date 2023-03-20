@@ -1,10 +1,9 @@
 // @ts-nocheck
-import { User_userPermissions } from "@mzawadie/fragments/types/User";
-import { PermissionEnum } from "@mzawadie/types/globalTypes";
+import { PermissionEnum, UserPermissionFragment } from "@mzawadie/graphql";
 import React from "react";
 
 export function hasPermissions(
-    userPermissions: User_userPermissions[],
+    userPermissions: UserPermissionFragment[],
     requiredPermissions: PermissionEnum[]
 ): boolean {
     return requiredPermissions.reduce(
@@ -16,7 +15,7 @@ export function hasPermissions(
 export interface RequirePermissionsProps {
     children: React.ReactNode | React.ReactNodeArray;
     requiredPermissions: PermissionEnum[];
-    userPermissions: User_userPermissions[];
+    userPermissions: UserPermissionFragment[];
 }
 
 const RequirePermissions: React.FC<RequirePermissionsProps> = ({

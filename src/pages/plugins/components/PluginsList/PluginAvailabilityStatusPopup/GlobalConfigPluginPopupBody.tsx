@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { CardContent, Typography } from "@material-ui/core";
 import CardSpacer from "@mzawadie/components/CardSpacer";
-import { PluginBaseFragment } from "@mzawadie/fragments/types/PluginBaseFragment";
+import { PluginBaseFragment } from "@mzawadie/graphql";
 import { Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";

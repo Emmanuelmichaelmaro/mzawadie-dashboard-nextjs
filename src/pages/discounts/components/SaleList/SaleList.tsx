@@ -19,23 +19,21 @@ import {
     ListProps,
     SortPage,
 } from "@mzawadie/core";
+import { SaleFragment, SaleType } from "@mzawadie/graphql";
 import { SaleListUrlSortField } from "@mzawadie/pages/discounts/urls";
 import { canBeSorted } from "@mzawadie/pages/discounts/views/SaleList/sort";
-import { SaleType } from "@mzawadie/types/globalTypes";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { SaleList_sales_edges_node } from "../../types/SaleList";
-
 export interface SaleListProps
     extends ListProps,
         ListActions,
         SortPage<SaleListUrlSortField>,
         ChannelProps {
-    sales: SaleList_sales_edges_node[];
+    sales: SaleFragment[];
 }
 
 const useStyles = makeStyles(

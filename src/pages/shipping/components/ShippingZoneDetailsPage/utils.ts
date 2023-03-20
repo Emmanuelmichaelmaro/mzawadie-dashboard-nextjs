@@ -1,11 +1,10 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import { ShippingZone_shippingZone } from "@mzawadie/pages/shipping/types/ShippingZone";
+import { ShippingZoneQuery } from "@mzawadie/graphql";
 import { mapMetadataItemToInput } from "@mzawadie/utils/maps";
 
 import { FormData } from "./types";
 
-export const getInitialFormData = (shippingZone?: ShippingZone_shippingZone): FormData => ({
+export const getInitialFormData = (shippingZone?: ShippingZoneQuery["shippingZone"]): FormData => ({
     description: shippingZone?.description || "",
     metadata: shippingZone?.metadata.map(mapMetadataItemToInput),
     name: shippingZone?.name || "",

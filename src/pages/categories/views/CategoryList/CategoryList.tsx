@@ -8,6 +8,11 @@ import {
     SaveFilterTabDialogFormData,
 } from "@mzawadie/components/SaveFilterTabDialog";
 import { ListViews, maybe } from "@mzawadie/core";
+import {
+    useCategoryBulkDeleteMutation,
+    useRootCategoriesQuery,
+    CategoryBulkDeleteMutation,
+} from "@mzawadie/graphql";
 import useBulkActions from "@mzawadie/hooks/useBulkActions";
 import useListSettings from "@mzawadie/hooks/useListSettings";
 import useNavigator from "@mzawadie/hooks/useNavigator";
@@ -21,9 +26,6 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CategoryListPage } from "../../components/CategoryListPage/CategoryListPage";
-import { useCategoryBulkDeleteMutation } from "../../mutations";
-import { useRootCategoriesQuery } from "../../queries";
-import { CategoryBulkDelete } from "../../types/CategoryBulkDelete";
 import {
     categoryAddUrl,
     categoryListUrl,
@@ -49,11 +51,14 @@ interface CategoryListProps {
 export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     const navigate = useNavigator();
     const paginate = usePaginator();
-    const { isSelected, listElements, toggle, toggleAll, reset } = useBulkActions(params.ids);
-    const { updateListSettings, settings } = useListSettings(ListViews.CATEGORY_LIST);
     const intl = useIntl();
 
+    const { isSelected, listElements, toggle, toggleAll, reset } = useBulkActions(params.ids);
+
+    const { updateListSettings, settings } = useListSettings(ListViews.CATEGORY_LIST);
+
     const paginationState = createPaginationState(settings.rowNumber, params);
+
     const queryVariables = React.useMemo(
         () => ({
             ...paginationState,
@@ -62,6 +67,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         }),
         [paginationState, params]
     );
+
     const { data, loading, refetch } = useRootCategoriesQuery({
         displayLoader: true,
         variables: queryVariables,
@@ -119,7 +125,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         params
     );
 
-    const handleCategoryBulkDelete = (data: CategoryBulkDelete) => {
+    const handleCategoryBulkDelete = (data: CategoryBulkDeleteMutation) => {
         if (data.categoryBulkDelete?.errors.length === 0) {
             navigate(categoryListUrl(), true);
             refetch();
@@ -172,6 +178,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
                     </IconButton>
                 }
             />
+
             <ActionDialog
                 confirmButtonState={categoryBulkDeleteOpts.status}
                 onClose={() =>
@@ -208,6 +215,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
                         }}
                     />
                 </DialogContentText>
+
                 <DialogContentText>
                     <FormattedMessage
                         defaultMessage="Remember this will also delete all products assigned to this category."
@@ -215,12 +223,14 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
                     />
                 </DialogContentText>
             </ActionDialog>
+
             <SaveFilterTabDialog
                 open={params.action === "save-search"}
                 confirmButtonState="default"
                 onClose={closeModal}
                 onSubmit={handleTabSave}
             />
+
             <DeleteFilterTabDialog
                 open={params.action === "delete-search"}
                 confirmButtonState="default"

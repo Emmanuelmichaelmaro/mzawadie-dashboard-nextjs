@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import {
     Card,
@@ -15,8 +14,7 @@ import ControlledCheckbox from "@mzawadie/components/ControlledCheckbox";
 import FormSpacer from "@mzawadie/components/FormSpacer";
 import Hr from "@mzawadie/components/Hr";
 import { SingleSelectField } from "@mzawadie/components/SingleSelectField";
-import { WarehouseFragment } from "@mzawadie/fragments/types/WarehouseFragment";
-import { ProductDetails_product_productType_variantAttributes } from "@mzawadie/pages/products/types/ProductDetails";
+import { ProductVariantAttributesFragment, WarehouseFragment } from "@mzawadie/graphql";
 import { isSelected } from "@mzawadie/utils/lists";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -81,7 +79,7 @@ const useStyles = makeStyles(
 );
 
 export interface ProductVariantCreatorStockProps {
-    attributes: ProductDetails_product_productType_variantAttributes[];
+    attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"];
     data: ProductVariantCreateFormData;
     warehouses: WarehouseFragment[];
     onApplyToAllChange: (mode: VariantCreatorPricesAndSkuMode) => void;

@@ -1,8 +1,10 @@
 /* eslint-disable import/no-cycle */
+import { MultiAutocompleteChoiceType } from "@mzawadie/components";
 import { FetchMoreProps, SearchPageProps } from "@mzawadie/core";
+import { PermissionEnum } from "@mzawadie/graphql";
+import React from "react";
 import { MessageDescriptor } from "react-intl";
 
-import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
 import { FilterReducerAction } from "./reducer";
 
 export enum FieldType {
@@ -22,6 +24,7 @@ export interface IFilterElementMutableData<T extends string = string> {
     options?: MultiAutocompleteChoiceType[];
     value: T[];
 }
+
 export interface IFilterElement<T extends string = string>
     extends IFilterElementMutableData,
         Partial<FetchMoreProps & SearchPageProps> {
@@ -35,6 +38,7 @@ export interface IFilterElement<T extends string = string>
     multipleFields?: IFilterElement[];
     id?: string;
     dependencies?: string[];
+    permissions?: PermissionEnum[];
 }
 
 export interface FilterBaseFieldProps<T extends string = string> {

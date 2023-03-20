@@ -7,15 +7,10 @@ import Skeleton from "@mzawadie/components/Skeleton";
 import { SortableTableBody, SortableTableRow } from "@mzawadie/components/SortableTable";
 import { TableHead } from "@mzawadie/components/TableHead";
 import { ListActions, ReorderAction, maybe, renderCollection, stopPropagation } from "@mzawadie/core";
-import { ProductAttributeType } from "@mzawadie/types/globalTypes";
+import { AttributeFragment, ProductAttributeType } from "@mzawadie/graphql";
 import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import {
-    ProductTypeDetails_productType_productAttributes,
-    ProductTypeDetails_productType_variantAttributes,
-} from "../../types/ProductTypeDetails";
 
 const useStyles = makeStyles(
     {
@@ -43,9 +38,7 @@ const useStyles = makeStyles(
 );
 
 interface ProductTypeAttributesProps extends ListActions {
-    attributes:
-        | ProductTypeDetails_productType_productAttributes[]
-        | ProductTypeDetails_productType_variantAttributes[];
+    attributes: AttributeFragment[];
     disabled: boolean;
     type: string;
     testId?: string;

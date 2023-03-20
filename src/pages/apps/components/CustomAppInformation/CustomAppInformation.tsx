@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { Card, CardContent, TextField } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
-import { AppErrorFragment } from "@mzawadie/fragments/types/AppErrorFragment";
+import { AppErrorFragment } from "@mzawadie/graphql";
 import { FormChange } from "@mzawadie/hooks/useForm";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getAppErrorMessage from "@mzawadie/utils/errors/app";

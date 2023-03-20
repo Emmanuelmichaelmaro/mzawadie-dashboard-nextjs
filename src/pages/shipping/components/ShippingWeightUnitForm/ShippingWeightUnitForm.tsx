@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { Button, Card, CardActions, CardContent } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
@@ -6,7 +5,7 @@ import { Form } from "@mzawadie/components/Form";
 import Hr from "@mzawadie/components/Hr";
 import { SingleSelectField } from "@mzawadie/components/SingleSelectField";
 import { buttonMessages, sectionNames } from "@mzawadie/core";
-import { WeightUnitsEnum } from "@mzawadie/types/globalTypes";
+import { WeightUnitsEnum } from "@mzawadie/graphql";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

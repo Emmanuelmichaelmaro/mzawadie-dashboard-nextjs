@@ -1,5 +1,7 @@
-import { ChannelShippingZones_shippingZones_edges_node } from "@mzawadie/pages/shipping/types/ChannelShippingZones";
+// @ts-nocheck
+import { RelayToFlat } from "@mzawadie/core";
+import { ChannelShippingZonesQuery } from "@mzawadie/graphql";
 
-export type ChannelShippingZone = ChannelShippingZones_shippingZones_edges_node;
+export type ChannelShippingZones = RelayToFlat<ChannelShippingZonesQuery["shippingZones"]>;
 
-export type ChannelShippingZones = ChannelShippingZone[];
+export type ChannelShippingZone = ChannelShippingZones[0];

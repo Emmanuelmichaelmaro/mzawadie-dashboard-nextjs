@@ -1,13 +1,13 @@
 // @ts-nocheck
 import { IFilterElement } from "@mzawadie/components/Filter";
 import { findValueInEnum, maybe } from "@mzawadie/core";
+import { StaffMemberStatus, StaffUserInput } from "@mzawadie/graphql";
 import { StaffFilterKeys, StaffListFilterOpts } from "@mzawadie/pages/staff/components/StaffListPage";
 import {
     StaffListUrlFilters,
     StaffListUrlFiltersEnum,
     StaffListUrlQueryParams,
 } from "@mzawadie/pages/staff/urls";
-import { StaffMemberStatus, StaffUserInput } from "@mzawadie/types/globalTypes";
 import {
     createFilterTabUtils,
     createFilterUtils,

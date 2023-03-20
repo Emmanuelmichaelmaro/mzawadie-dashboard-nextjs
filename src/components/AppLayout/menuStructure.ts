@@ -9,9 +9,8 @@ import ordersIcon from "@assets/images/menu-orders-icon.svg";
 import pagesIcon from "@assets/images/menu-pages-icon.svg";
 import translationIcon from "@assets/images/menu-translation-icon.svg";
 import { commonMessages, sectionNames } from "@mzawadie/core";
-import { User } from "@mzawadie/fragments/types/User";
+import { UserFragment, PermissionEnum } from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
-import { PermissionEnum } from "@mzawadie/types/globalTypes";
 import { SidebarMenuItem } from "@saleor/macaw-ui";
 import { IntlShape } from "react-intl";
 
@@ -37,7 +36,7 @@ export interface FilterableMenuItem extends Omit<SidebarMenuItem, "children"> {
 
 function useMenuStructure(
     intl: IntlShape,
-    user: User
+    user: UserFragment
 ): [SidebarMenuItem[], (menuItem: SidebarMenuItem) => void] {
     const navigate = useNavigator();
     const extensions = useExtensions(extensionMountPoints.NAVIGATION_SIDEBAR);

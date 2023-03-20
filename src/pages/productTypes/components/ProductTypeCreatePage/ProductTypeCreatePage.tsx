@@ -1,17 +1,19 @@
 // @ts-nocheck
-import CardSpacer from "@mzawadie/components/CardSpacer";
-import Container from "@mzawadie/components/Container";
-import { Form } from "@mzawadie/components/Form";
-import { Grid } from "@mzawadie/components/Grid";
-import { Metadata, MetadataFormData } from "@mzawadie/components/Metadata";
-import { PageHeader } from "@mzawadie/components/PageHeader";
-import Savebar from "@mzawadie/components/Savebar";
+import {
+    CardSpacer,
+    Container,
+    Form,
+    Grid,
+    Metadata,
+    MetadataFormData,
+    PageHeader,
+    Savebar,
+} from "@mzawadie/components";
 import { sectionNames, UserError } from "@mzawadie/core";
+import { ProductTypeDetailsQuery, ProductTypeKindEnum, WeightUnitsEnum } from "@mzawadie/graphql";
 import { ChangeEvent, FormChange, SubmitPromise } from "@mzawadie/hooks/useForm";
 import useStateFromProps from "@mzawadie/hooks/useStateFromProps";
 import { makeProductTypeKindChangeHandler } from "@mzawadie/pages/productTypes/handlers";
-import { ProductTypeDetails_taxTypes } from "@mzawadie/pages/productTypes/types/ProductTypeDetails";
-import { ProductTypeKindEnum, WeightUnitsEnum } from "@mzawadie/types/globalTypes";
 import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChangeTrigger";
 import { ConfirmButtonTransitionState, Backlink } from "@saleor/macaw-ui";
 import React from "react";
@@ -35,7 +37,7 @@ export interface ProductTypeCreatePageProps {
     disabled: boolean;
     pageTitle: string;
     saveButtonBarState: ConfirmButtonTransitionState;
-    taxTypes: ProductTypeDetails_taxTypes[];
+    taxTypes: ProductTypeDetailsQuery["taxTypes"];
     kind: ProductTypeKindEnum;
     onChangeKind: (kind: ProductTypeKindEnum) => void;
     onBack: () => void;
@@ -54,7 +56,7 @@ const formInitialData: ProductTypeForm = {
 
 function handleTaxTypeChange(
     event: ChangeEvent,
-    taxTypes: ProductTypeDetails_taxTypes[],
+    taxTypes: ProductTypeDetailsQuery["taxTypes"],
     formChange: FormChange,
     displayChange: (name: string) => void
 ) {

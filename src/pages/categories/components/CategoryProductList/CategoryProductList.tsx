@@ -9,12 +9,18 @@ import { TableCellAvatar } from "@mzawadie/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@mzawadie/components/TableCellAvatar/Avatar";
 import { TableHead } from "@mzawadie/components/TableHead";
 import { TablePagination } from "@mzawadie/components/TablePagination";
-import { ChannelProps, ListActions, ListProps, maybe, renderCollection } from "@mzawadie/core";
+import {
+    ChannelProps,
+    ListActions,
+    ListProps,
+    maybe,
+    RelayToFlat,
+    renderCollection,
+} from "@mzawadie/core";
+import { CategoryDetailsQuery } from "@mzawadie/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-
-import { CategoryDetails_category_products_edges_node } from "../../types/CategoryDetails";
 
 const useStyles = makeStyles(
     (theme) => ({
@@ -68,7 +74,7 @@ const useStyles = makeStyles(
 
 interface CategoryProductListProps extends ListProps, ListActions, ChannelProps {
     channelsCount: number;
-    products: CategoryDetails_category_products_edges_node[];
+    products: RelayToFlat<CategoryDetailsQuery["category"]["products"]>;
 }
 
 export const CategoryProductList: React.FC<CategoryProductListProps> = (props) => {

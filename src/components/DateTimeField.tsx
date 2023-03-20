@@ -3,8 +3,7 @@ import { TextField } from "@material-ui/core";
 import { TextFieldProps } from "@material-ui/core/TextField";
 import { getErrorMessage } from "@mzawadie/components";
 import { commonMessages, DateTime, joinDateTime, splitDateTime } from "@mzawadie/core";
-import { PageErrorWithAttributesFragment } from "@mzawadie/fragments/types/PageErrorWithAttributesFragment";
-import { ProductErrorWithAttributesFragment } from "@mzawadie/fragments/types/ProductErrorWithAttributesFragment";
+import { PageErrorWithAttributesFragment, ProductErrorWithAttributesFragment } from "@mzawadie/graphql";
 import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 

@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { Typography } from "@material-ui/core";
 import { commonMessages } from "@mzawadie/core";
-import { FileFragment } from "@mzawadie/fragments/types/FileFragment";
+import { FileFragment } from "@mzawadie/graphql";
 import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";

@@ -2,7 +2,7 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { RadioGroupField } from "@mzawadie/components/RadioGroupField";
-import { AttributeTypeEnum } from "@mzawadie/types/globalTypes";
+import { AttributeTypeEnum } from "@mzawadie/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";

@@ -1,5 +1,4 @@
-import { GiftCardError } from "@mzawadie/fragments/types/GiftCardError";
-import { GiftCardErrorCode } from "@mzawadie/types/globalTypes";
+import { GiftCardErrorCode, GiftCardErrorFragment } from "@mzawadie/graphql";
 import commonErrorMessages, { getCommonFormFieldErrorMessage } from "@mzawadie/utils/errors/common";
 import { defineMessages, IntlShape } from "react-intl";
 
@@ -20,7 +19,7 @@ const giftCardErrorMessages = defineMessages({
 });
 
 export function getGiftCardErrorMessage(
-    error: Omit<GiftCardError, "__typename"> | undefined,
+    error: Omit<GiftCardErrorFragment, "__typename" | "message"> | undefined,
     intl: IntlShape
 ): string {
     if (error) {

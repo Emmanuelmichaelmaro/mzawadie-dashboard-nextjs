@@ -11,18 +11,13 @@ import Savebar from "@mzawadie/components/Savebar";
 import { SeoForm } from "@mzawadie/components/SeoForm";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
 import { Tab, TabContainer } from "@mzawadie/components/Tab";
-import { ChannelProps, TabListActions, sectionNames, maybe } from "@mzawadie/core";
-import { ProductErrorFragment } from "@mzawadie/fragments/types/ProductErrorFragment";
+import { ChannelProps, TabListActions, sectionNames, maybe, RelayToFlat } from "@mzawadie/core";
+import { CategoryDetailsQuery, ProductErrorFragment } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import {
-    CategoryDetails_category,
-    CategoryDetails_category_children_edges_node,
-    CategoryDetails_category_products_edges_node,
-} from "../../types/CategoryDetails";
 import { CategoryBackground } from "../CategoryBackground";
 import { CategoryDetailsForm } from "../CategoryDetailsForm";
 import { CategoryList } from "../CategoryList";
@@ -41,9 +36,9 @@ export interface CategoryUpdatePageProps
     currentTab: CategoryPageTab;
     errors: ProductErrorFragment[];
     disabled: boolean;
-    category: CategoryDetails_category;
-    products: CategoryDetails_category_products_edges_node[];
-    subcategories: CategoryDetails_category_children_edges_node[];
+    category: CategoryDetailsQuery["category"];
+    products: RelayToFlat<CategoryDetailsQuery["category"]["products"]>;
+    subcategories: RelayToFlat<CategoryDetailsQuery["category"]["children"]>;
     pageInfo: {
         hasNextPage: boolean;
         hasPreviousPage: boolean;
@@ -115,6 +110,7 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                         onChange={change}
                         onDescriptionChange={handlers.changeDescription}
                     />
+
                     <CardSpacer />
 
                     <CategoryBackground

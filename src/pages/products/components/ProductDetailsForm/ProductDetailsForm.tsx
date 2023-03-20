@@ -8,7 +8,7 @@ import { Grid } from "@mzawadie/components/Grid";
 import Hr from "@mzawadie/components/Hr";
 import { RichTextEditor, RichTextEditorChange } from "@mzawadie/components/RichTextEditor";
 import { commonMessages } from "@mzawadie/core";
-import { ProductErrorFragment } from "@mzawadie/fragments/types/ProductErrorFragment";
+import { ProductErrorFragment } from "@mzawadie/graphql";
 import { getFormErrors, getProductErrorMessage } from "@mzawadie/utils/errors";
 import React from "react";
 import { useIntl } from "react-intl";

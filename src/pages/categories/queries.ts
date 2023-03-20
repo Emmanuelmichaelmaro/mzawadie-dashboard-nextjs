@@ -1,14 +1,6 @@
 import { gql } from "@apollo/client";
-import { categoryDetailsFragment, categoryFragment } from "@mzawadie/fragments/categories";
-import { pageInfoFragment } from "@mzawadie/fragments/pageInfo";
-import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
-
-import { CategoryDetails, CategoryDetailsVariables } from "./types/CategoryDetails";
-import { RootCategories } from "./types/RootCategories";
 
 export const rootCategories = gql`
-    ${categoryFragment}
-    ${pageInfoFragment}
     query RootCategories(
         $first: Int
         $after: String
@@ -28,37 +20,33 @@ export const rootCategories = gql`
         ) {
             edges {
                 node {
-                    ...CategoryFragment
+                    ...Category
                 }
             }
             pageInfo {
-                ...PageInfoFragment
+                ...PageInfo
             }
         }
     }
 `;
-export const useRootCategoriesQuery = makeQuery<RootCategories, {}>(rootCategories);
 
 export const categoryDetails = gql`
-    ${categoryFragment}
-    ${categoryDetailsFragment}
-    ${pageInfoFragment}
     query CategoryDetails($id: ID!, $first: Int, $after: String, $last: Int, $before: String) {
         category(id: $id) {
-            ...CategoryDetailsFragment
+            ...CategoryDetails
             children(first: $first, after: $after, last: $last, before: $before) {
                 edges {
                     node {
-                        ...CategoryFragment
+                        ...Category
                     }
                 }
                 pageInfo {
-                    ...PageInfoFragment
+                    ...PageInfo
                 }
             }
             products(first: $first, after: $after, last: $last, before: $before) {
                 pageInfo {
-                    ...PageInfoFragment
+                    ...PageInfo
                 }
                 edges {
                     cursor
@@ -74,6 +62,3 @@ export const categoryDetails = gql`
         }
     }
 `;
-export const useCategoryDetailsQuery = makeQuery<CategoryDetails, CategoryDetailsVariables>(
-    categoryDetails
-);

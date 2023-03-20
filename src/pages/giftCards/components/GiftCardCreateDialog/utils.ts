@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { IMessage } from "@mzawadie/components/Messages";
-import { TimePeriodTypeEnum } from "@mzawadie/types/globalTypes";
+import { GiftCardCreateMutation, TimePeriodTypeEnum } from "@mzawadie/graphql";
 import commonErrorMessages from "@mzawadie/utils/errors/common";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
@@ -8,7 +8,6 @@ import { IntlShape } from "react-intl";
 import { GiftCardCreateCommonFormData } from "../GiftCardBulkCreateDialog/types";
 import { giftCardUpdateFormMessages } from "../GiftCardsList/messages";
 import { giftCardCreateMessages as messages } from "./messages";
-import { GiftCardCreate_giftCardCreate_errors } from "./types/GiftCardCreate";
 
 const addToCurrentDate = (
     currentDate: number,
@@ -42,7 +41,7 @@ export const getGiftCardExpiryError = (intl: IntlShape): IMessage => ({
 });
 
 export const getGiftCardCreateOnCompletedMessage = (
-    errors: GiftCardCreate_giftCardCreate_errors[],
+    errors: GiftCardCreateMutation["giftCardCreate"]["errors"],
     intl: IntlShape,
     successMessage?: IMessage
 ): IMessage => {

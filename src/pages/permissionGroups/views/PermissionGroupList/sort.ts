@@ -1,6 +1,6 @@
 // @ts-nocheck
+import { PermissionGroupSortField } from "@mzawadie/graphql";
 import { PermissionGroupListUrlSortField } from "@mzawadie/pages/permissionGroups/urls";
-import { PermissionGroupSortField } from "@mzawadie/types/globalTypes";
 import { createGetSortQueryVariables } from "@mzawadie/utils/sort";
 
 export function getSortQueryField(sort: PermissionGroupListUrlSortField): PermissionGroupSortField {

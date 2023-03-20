@@ -3,9 +3,9 @@ import {
     MultiAutocompleteSelectField,
     MultiAutocompleteChoiceType,
 } from "@mzawadie/components/MultiAutocompleteSelectField";
+import { ChannelFragment } from "@mzawadie/graphql";
 import { useChannelsSearch } from "@mzawadie/hooks/useChannelsSearch";
 import { FormChange } from "@mzawadie/hooks/useForm";
-import { BaseChannels_channels } from "@mzawadie/pages/channels/types/BaseChannels";
 import { mapNodeToChoice } from "@mzawadie/utils/maps";
 import React from "react";
 import { useIntl, defineMessages, FormattedMessage } from "react-intl";
@@ -32,7 +32,7 @@ const messages = defineMessages({
 interface ChannelsSectionProps {
     onChange: FormChange;
     selectedChannels: string[];
-    allChannels?: BaseChannels_channels[];
+    allChannels?: ChannelFragment[];
     channelsDisplayValues: MultiAutocompleteChoiceType[];
 }
 

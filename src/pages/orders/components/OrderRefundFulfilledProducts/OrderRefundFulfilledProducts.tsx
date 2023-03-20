@@ -15,8 +15,8 @@ import { Money } from "@mzawadie/components/Money";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { TableCellAvatar } from "@mzawadie/components/TableCellAvatar";
 import { renderCollection } from "@mzawadie/core";
+import { OrderRefundDataQuery } from "@mzawadie/graphql";
 import { FormsetChange } from "@mzawadie/hooks/useFormset";
-import { OrderRefundData_order_fulfillments } from "@mzawadie/pages/orders/types/OrderRefundData";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -68,7 +68,7 @@ const useStyles = makeStyles(
 );
 
 interface OrderRefundFulfilledProductsProps {
-    fulfillment: OrderRefundData_order_fulfillments;
+    fulfillment: OrderRefundDataQuery["order"]["fulfillments"][0];
     data: OrderRefundFormData;
     disabled: boolean;
     orderNumber: string;

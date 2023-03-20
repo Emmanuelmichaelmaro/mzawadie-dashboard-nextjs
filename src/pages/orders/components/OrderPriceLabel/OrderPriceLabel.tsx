@@ -2,13 +2,13 @@
 import { Typography } from "@material-ui/core";
 import DiscountedPrice from "@mzawadie/components/DiscountedPrice/DiscountedPrice";
 import { Money } from "@mzawadie/components/Money";
-import { SearchOrderVariant_search_edges_node_variants_pricing } from "@mzawadie/pages/orders/types/SearchOrderVariant";
+import { SearchOrderVariantQuery } from "@mzawadie/graphql";
 import * as React from "react";
 
 import { useStyles } from "./styles";
 
 interface OrderPriceLabelProps {
-    pricing: SearchOrderVariant_search_edges_node_variants_pricing;
+    pricing: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0]["pricing"];
 }
 
 const OrderPriceLabel: React.FC<OrderPriceLabelProps> = ({ pricing }) => {

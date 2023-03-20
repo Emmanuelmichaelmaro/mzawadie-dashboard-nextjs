@@ -1,15 +1,14 @@
+// @ts-nocheck
 import TrashIcon from "@icons/Trash";
 import { Card, TableBody } from "@material-ui/core";
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import { renderCollection } from "@mzawadie/core";
-import { OrderDetailsFragment } from "@mzawadie/fragments/types/OrderDetailsFragment";
+import { OrderDetailsFragment, FulfillmentStatus } from "@mzawadie/graphql";
 import { mergeRepeatedOrderLines } from "@mzawadie/pages/orders/utils/data";
-import { FulfillmentStatus } from "@mzawadie/types/globalTypes";
 import { IconButton } from "@saleor/macaw-ui";
 import React from "react";
 
-import { OrderDetails_order_fulfillments } from "../../types/OrderDetails";
 import TableHeader from "../OrderProductsCardElements/OrderProductsCardHeader";
 import TableLine from "../OrderProductsCardElements/OrderProductsTableRow";
 import CardTitle from "../OrderReturnPage/OrderReturnRefundItemsCard/CardTitle";
@@ -18,7 +17,7 @@ import ExtraInfoLines from "./ExtraInfoLines";
 import useStyles from "./styles";
 
 interface OrderFulfilledProductsCardProps {
-    fulfillment: OrderDetails_order_fulfillments;
+    fulfillment: OrderDetailsFragment["fulfillments"][0];
     fulfillmentAllowUnpaid: boolean;
     order?: OrderDetailsFragment;
     onOrderFulfillmentApprove: () => void;

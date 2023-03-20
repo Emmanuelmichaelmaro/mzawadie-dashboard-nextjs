@@ -5,12 +5,12 @@ import { Grid } from "@mzawadie/components/Grid";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { sectionNames, maybe } from "@mzawadie/core";
+import { CountryListQuery } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import { ConfirmButtonTransitionState, Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { CountryList_shop } from "../../types/CountryList";
 import { CountryList } from "../CountryList";
 import { TaxConfiguration } from "../TaxConfiguration";
 
@@ -22,7 +22,7 @@ export interface TaxesConfigurationFormData {
 export interface CountryListPageProps {
     disabled: boolean;
     saveButtonBarState: ConfirmButtonTransitionState;
-    shop: CountryList_shop;
+    shop: CountryListQuery["shop"];
     onBack: () => void;
     onRowClick: (code: string) => void;
     onSubmit: (data: TaxesConfigurationFormData) => SubmitPromise;

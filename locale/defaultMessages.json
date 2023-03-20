@@ -155,6 +155,10 @@
         "context": "creation label",
         "string": "Creation"
     },
+    "/BJQIq": {
+        "context": "dialog header",
+        "string": "Add Tracking Code"
+    },
     "/JENWS": {
         "string": "Reduced Tax Rates"
     },
@@ -1355,6 +1359,10 @@
         "context": "unapproved fulfillment, section header",
         "string": "Waiting for approval ({quantity})"
     },
+    "9tgY4G": {
+        "context": "apps content",
+        "string": "You don’t have any installed apps in your dashboard"
+    },
     "9uNz+T": {
         "context": "button",
         "string": "Cancel"
@@ -1460,6 +1468,9 @@
         "context": "provided email input placeholder",
         "string": "Provided email address"
     },
+    "AqXzM2": {
+        "string": "Order #{orderNumber}"
+    },
     "ArctEg": {
         "context": "requires activation checkbox caption",
         "string": "All issued cards require activation by staff before use."
@@ -1485,6 +1496,10 @@
     "AzshS2": {
         "context": "notification",
         "string": "Published pages"
+    },
+    "B/y6LC": {
+        "context": "section header",
+        "string": "Unfulfilled Products"
     },
     "B0PaVS": {
         "context": "pint unit",
@@ -1877,6 +1892,10 @@
     },
     "EGG8f+": {
         "string": "Apply unique prices by attribute to each SKU"
+    },
+    "EHsnZX": {
+        "context": "dialog description",
+        "string": "Are you sure you want to approve this fullfillment?"
     },
     "EIULpW": {
         "string": "Manage how your store charges tax"
@@ -3771,6 +3790,10 @@
         "context": "channel availability dialog header",
         "string": "Manage Channel Availability"
     },
+    "SqhC7g": {
+        "context": "checkbox label, fulfillment approval",
+        "string": "Send shipment details to customer"
+    },
     "Sx7QVu": {
         "context": "variant creation step",
         "string": "Prices and SKU"
@@ -3807,6 +3830,10 @@
     "T8rvXs": {
         "context": "order subtotal price",
         "string": "Subtotal"
+    },
+    "TBaMo2": {
+        "context": "about app",
+        "string": "About"
     },
     "TC/EOG": {
         "context": "status section title",
@@ -3954,6 +3981,10 @@
     "UQ4Kuh": {
         "context": "input label",
         "string": "Search Staff Members"
+    },
+    "UQu75k": {
+        "context": "dialog header",
+        "string": "Approve this fulfillment"
     },
     "US3IPU": {
         "string": "Search Engine Description"
@@ -4661,6 +4692,10 @@
         "context": "dialog header",
         "string": "Unassigned Categories From Sale"
     },
+    "ZeD2TK": {
+        "context": "section header",
+        "string": "Third-party Apps"
+    },
     "Zg0dRo": {
         "context": "dialog description",
         "string": "You have changed customer assigned to this order. What would you like to do with the shipping address?"
@@ -5216,9 +5251,6 @@
         "context": "button",
         "string": "Done"
     },
-    "eR3vfw": {
-        "string": "Manage Channels Availability"
-    },
     "eUjFjW": {
         "string": "Permission group created"
     },
@@ -5349,6 +5381,9 @@
     "fyE8BN": {
         "context": "product organization, header",
         "string": "Organization"
+    },
+    "fyZmI1": {
+        "string": "You have reached your order limit,\n                you will be billed extra for orders above limit.\n                If you would like to up your limit,\n                contact your administration staff about raising your limits."
     },
     "fzDI3A": {
         "context": "add link to navigation",
@@ -5648,6 +5683,10 @@
         "context": "section header",
         "string": "Content Attributes"
     },
+    "iUIn50": {
+        "context": "section notice",
+        "string": "Unfulfilled products will be restocked"
+    },
     "iUy2dx": {
         "context": "vouchers section name",
         "string": "Vouchers"
@@ -5916,9 +5955,6 @@
     "kak5vT": {
         "context": "order refund amount",
         "string": "Selected Products Value"
-    },
-    "kbL3CY": {
-        "string": "You have reached your order limit,\n                you will be billed extra for orders above limit.\n                If you would like to up your limit,\n                contact your administration staff about raising your limits."
     },
     "kbkjEc": {
         "context": "navigator catalog mode description",
@@ -6873,83 +6909,6 @@
         "context": "header",
         "string": "Unnamed Webhook Details"
     },
-    "src_dot_pages_dot_apps_dot_components_dot_InstalledApps_dot_1636202177": {
-        "context": "about app",
-        "string": "About"
-    },
-    "src_dot_pages_dot_apps_dot_components_dot_InstalledApps_dot_186286611": {
-        "context": "apps content",
-        "string": "You don’t have any installed apps in your dashboard"
-    },
-    "src_dot_pages_dot_apps_dot_components_dot_InstalledApps_dot_3504763431": {
-        "context": "section header",
-        "string": "Third-party Apps"
-    },
-    "src_dot_pages_dot_orders_dot_components_dot_DraftOrderChannelSectionCard_dot_1243773440": {
-        "context": "section header",
-        "string": "Sales channel"
-    },
-    "src_dot_pages_dot_orders_dot_components_dot_OrderDetailsPage_dot_580490159": {
-        "string": "Order #{orderNumber}"
-    },
-    "src_dot_pages_dot_orders_dot_components_dot_OrderFulfillmentApproveDialog_dot_description": {
-        "context": "dialog description",
-        "string": "Are you sure you want to approve this fullfillment?"
-    },
-    "src_dot_pages_dot_orders_dot_components_dot_OrderFulfillmentApproveDialog_dot_notifyCustomer": {
-        "context": "checkbox label, fulfillment approval",
-        "string": "Send shipment details to customer"
-    },
-    "src_dot_pages_dot_orders_dot_components_dot_OrderFulfillmentApproveDialog_dot_title": {
-        "context": "dialog header",
-        "string": "Approve this fulfillment"
-    },
-    "src_dot_pages_dot_orders_dot_components_dot_OrderFulfillmentTrackingDialog_dot_3252172269": {
-        "string": "Tracking number"
-    },
-    "src_dot_pages_dot_orders_dot_components_dot_OrderFulfillmentTrackingDialog_dot_606831229": {
-        "context": "dialog header",
-        "string": "Add Tracking Code"
-    },
-    "src_dot_pages_dot_orders_dot_components_dot_OrderRefundUnfulfilledProducts_dot_1134347598": {
-        "context": "tabel column header",
-        "string": "Price"
-    },
-    "src_dot_pages_dot_orders_dot_components_dot_OrderRefundUnfulfilledProducts_dot_1404351240": {
-        "context": "section header",
-        "string": "Unfulfilled Products"
-    },
-    "src_dot_pages_dot_orders_dot_components_dot_OrderRefundUnfulfilledProducts_dot_1657559629": {
-        "string": "No products found"
-    },
-    "src_dot_pages_dot_orders_dot_components_dot_OrderRefundUnfulfilledProducts_dot_1895667608": {
-        "context": "tabel column header",
-        "string": "Product"
-    },
-    "src_dot_pages_dot_orders_dot_components_dot_OrderRefundUnfulfilledProducts_dot_2271032876": {
-        "context": "section notice",
-        "string": "Unfulfilled products will be restocked"
-    },
-    "src_dot_pages_dot_orders_dot_components_dot_OrderRefundUnfulfilledProducts_dot_3536696555": {
-        "context": "tabel column header",
-        "string": "Refunded Qty"
-    },
-    "src_dot_pages_dot_orders_dot_components_dot_OrderRefundUnfulfilledProducts_dot_3988345170": {
-        "context": "button",
-        "string": "Set maximal quantities"
-    },
-    "src_dot_pages_dot_orders_dot_components_dot_OrderRefundUnfulfilledProducts_dot_878013594": {
-        "context": "tabel column header",
-        "string": "Total"
-    },
-    "src_dot_pages_dot_orders_dot_components_dot_OrderRefundUnfulfilledProducts_dot_937914544": {
-        "context": "error message",
-        "string": "Improper value"
-    },
-    "src_dot_pages_dot_orders_dot_views_dot_OrderDetails_dot_OrderUnconfirmedDetails_dot_580490159": {
-        "context": "window title",
-        "string": "Order #{orderNumber}"
-    },
     "stjHjY": {
         "context": "error message",
         "string": "Promo code already exists"
@@ -7642,6 +7601,9 @@
     "ySqrUU": {
         "context": "button",
         "string": "Assign variants"
+    },
+    "yT/GAp": {
+        "string": "Tracking number"
     },
     "yT5zvU": {
         "string": "{counter,plural,one{Are you sure you want to delete this collection?} other{Are you sure you want to delete {displayQuantity} collections?}}"

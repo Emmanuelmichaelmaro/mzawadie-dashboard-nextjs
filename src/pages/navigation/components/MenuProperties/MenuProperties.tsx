@@ -1,7 +1,7 @@
 import { Card, CardContent, TextField } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { commonMessages } from "@mzawadie/core";
-import { MenuErrorFragment } from "@mzawadie/fragments/types/MenuErrorFragment";
+import { MenuErrorFragment } from "@mzawadie/graphql";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getMenuErrorMessage from "@mzawadie/utils/errors/menu";
 import React from "react";
@@ -42,5 +42,7 @@ const MenuProperties: React.FC<MenuPropertiesProps> = ({ data, disabled, errors,
         </Card>
     );
 };
+
 MenuProperties.displayName = "MenuProperties";
+
 export default MenuProperties;

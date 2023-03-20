@@ -1,33 +1,32 @@
 // @ts-nocheck
 import { gql } from "@apollo/client";
-import { attributeValueFragment } from "@mzawadie/fragments/attributes";
-import { pageInfoFragment } from "@mzawadie/fragments/pageInfo";
+import {
+    SearchAttributeValuesDocument,
+    SearchAttributeValuesQuery,
+    SearchAttributeValuesQueryVariables,
+} from "@mzawadie/graphql";
 import makeSearch from "@mzawadie/hooks/makeSearch";
 
-import { SearchAttributeValues, SearchAttributeValuesVariables } from "./types/SearchAttributeValues";
-
 export const searchAttributeValues = gql`
-    ${pageInfoFragment}
-    ${attributeValueFragment}
     query SearchAttributeValues($id: ID, $after: String, $first: Int!, $query: String!) {
         attribute(id: $id) {
             id
             choices(after: $after, first: $first, filter: { search: $query }) {
                 edges {
                     node {
-                        ...AttributeValueFragment
+                        ...AttributeValue
                     }
                 }
                 pageInfo {
-                    ...PageInfoFragment
+                    ...PageInfo
                 }
             }
         }
     }
 `;
 
-export default makeSearch<SearchAttributeValues, SearchAttributeValuesVariables>(
-    searchAttributeValues,
+export default makeSearch<SearchAttributeValuesQuery, SearchAttributeValuesQueryVariables>(
+    SearchAttributeValuesDocument,
     (result) => {
         if (result.data?.attribute.choices.pageInfo.hasNextPage) {
             result.loadMore(

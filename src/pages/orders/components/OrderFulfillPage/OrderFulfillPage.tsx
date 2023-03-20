@@ -20,17 +20,16 @@ import Savebar from "@mzawadie/components/Savebar";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { TableCellAvatar } from "@mzawadie/components/TableCellAvatar";
 import { commonMessages, renderCollection } from "@mzawadie/core";
-import { ShopOrderSettingsFragment } from "@mzawadie/fragments/types/ShopOrderSettingsFragment";
-import { WarehouseFragment } from "@mzawadie/fragments/types/WarehouseFragment";
+import {
+    FulfillOrderMutation,
+    OrderFulfillDataQuery,
+    ShopOrderSettingsFragment,
+    WarehouseFragment,
+    OrderFulfillStockInput,
+} from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import useFormset, { FormsetData } from "@mzawadie/hooks/useFormset";
-import { FulfillOrder_orderFulfill_errors } from "@mzawadie/pages/orders/types/FulfillOrder";
-import {
-    OrderFulfillData_order,
-    OrderFulfillData_order_lines,
-} from "@mzawadie/pages/orders/types/OrderFulfillData";
 import { getToFulfillOrderLines, isStockError } from "@mzawadie/pages/orders/utils/data";
-import { OrderFulfillStockInput } from "@mzawadie/types/globalTypes";
 import { update } from "@mzawadie/utils/lists";
 import { ConfirmButtonTransitionState, Backlink, makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
@@ -113,8 +112,8 @@ export interface OrderFulfillSubmitData extends OrderFulfillFormData {
 }
 export interface OrderFulfillPageProps {
     loading: boolean;
-    errors: FulfillOrder_orderFulfill_errors[];
-    order: OrderFulfillData_order;
+    errors: FulfillOrderMutation["orderFulfill"]["errors"];
+    order: OrderFulfillDataQuery["order"];
     saveButtonBar: ConfirmButtonTransitionState;
     warehouses: WarehouseFragment[];
     shopSettings?: ShopOrderSettingsFragment;
@@ -230,7 +229,10 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = (props) => {
                                 <TableBody>
                                     {renderCollection(
                                         getToFulfillOrderLines(order?.lines),
-                                        (line: OrderFulfillData_order_lines, lineIndex) => {
+                                        (
+                                            line: OrderFulfillDataQuery["order"]["lines"][0],
+                                            lineIndex
+                                        ) => {
                                             if (!line) {
                                                 return (
                                                     <TableRow key={lineIndex}>

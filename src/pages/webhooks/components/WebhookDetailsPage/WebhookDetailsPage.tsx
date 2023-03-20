@@ -5,7 +5,12 @@ import FormSpacer from "@mzawadie/components/FormSpacer";
 import { Grid } from "@mzawadie/components/Grid";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
-import { WebhookErrorFragment } from "@mzawadie/fragments/types/WebhookErrorFragment";
+import {
+    WebhookDetailsQuery,
+    WebhookErrorFragment,
+    WebhookEventTypeAsyncEnum,
+    WebhookEventTypeSyncEnum,
+} from "@mzawadie/graphql";
 import { WebhookEvents } from "@mzawadie/pages/webhooks/components/WebhookEvents";
 import { WebhookInfo } from "@mzawadie/pages/webhooks/components/WebhookInfo";
 import { WebhookStatus } from "@mzawadie/pages/webhooks/components/WebhookStatus";
@@ -13,9 +18,7 @@ import {
     createAsyncEventsSelectHandler,
     createSyncEventsSelectHandler,
 } from "@mzawadie/pages/webhooks/handlers";
-import { WebhookDetails_webhook } from "@mzawadie/pages/webhooks/types/WebhookDetails";
 import { mapAsyncEventsToChoices, mapSyncEventsToChoices } from "@mzawadie/pages/webhooks/utils";
-import { WebhookEventTypeAsyncEnum, WebhookEventTypeSyncEnum } from "@mzawadie/types/globalTypes";
 import { Backlink, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -35,7 +38,7 @@ export interface WebhookDetailsPageProps {
     appName: string;
     disabled: boolean;
     errors: WebhookErrorFragment[];
-    webhook?: WebhookDetails_webhook;
+    webhook?: WebhookDetailsQuery["webhook"];
     saveButtonBarState: ConfirmButtonTransitionState;
     onBack: () => void;
     onSubmit: (data: FormData) => void;

@@ -4,7 +4,7 @@ import { CardTitle } from "@mzawadie/components/CardTitle";
 import { Grid } from "@mzawadie/components/Grid";
 import Hr from "@mzawadie/components/Hr";
 import { commonMessages } from "@mzawadie/core";
-import { AccountErrorFragment } from "@mzawadie/fragments/types/AccountErrorFragment";
+import { AccountErrorFragment } from "@mzawadie/graphql";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getAccountErrorMessage from "@mzawadie/utils/errors/account";
 import { makeStyles } from "@saleor/macaw-ui";

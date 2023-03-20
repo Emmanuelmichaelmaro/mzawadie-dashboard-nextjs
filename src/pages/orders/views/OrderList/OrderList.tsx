@@ -5,8 +5,9 @@ import {
     SaveFilterTabDialog,
     SaveFilterTabDialogFormData,
 } from "@mzawadie/components/SaveFilterTabDialog";
-import { useShopLimitsQuery } from "@mzawadie/components/Shop/query";
+import { useShopLimitsQuery } from "@mzawadie/components/Shop/queries";
 import { getStringOrPlaceholder, ListViews } from "@mzawadie/core";
+import { useOrderDraftCreateMutation, useOrderListQuery } from "@mzawadie/graphql";
 import useListSettings from "@mzawadie/hooks/useListSettings";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
@@ -14,6 +15,13 @@ import { usePaginationReset } from "@mzawadie/hooks/usePaginationReset";
 import usePaginator, { createPaginationState } from "@mzawadie/hooks/usePaginator";
 import { ChannelPickerDialog } from "@mzawadie/pages/channels/components/ChannelPickerDialog";
 import { OrderListPage } from "@mzawadie/pages/orders/components/OrderListPage";
+import {
+    orderListUrl,
+    OrderListUrlDialog,
+    OrderListUrlQueryParams,
+    orderSettingsPath,
+    orderUrl,
+} from "@mzawadie/pages/orders/urls";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@mzawadie/utils/handlers/filterHandlers";
 import createSortHandler from "@mzawadie/utils/handlers/sortHandler";
@@ -22,16 +30,6 @@ import { getSortParams } from "@mzawadie/utils/sort";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { useOrderDraftCreateMutation } from "../../mutations";
-import { useOrderListQuery } from "../../queries";
-import { OrderDraftCreate } from "../../types/OrderDraftCreate";
-import {
-    orderListUrl,
-    OrderListUrlDialog,
-    OrderListUrlQueryParams,
-    orderSettingsPath,
-    orderUrl,
-} from "../../urls";
 import {
     deleteFilterTab,
     getActiveFilters,
@@ -58,19 +56,17 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
 
     usePaginationReset(orderListUrl, params, settings.rowNumber);
 
-    const handleCreateOrderCreateSuccess = (data: OrderDraftCreate) => {
-        notify({
-            status: "success",
-            text: intl.formatMessage({
-                defaultMessage: "Order draft successfully created",
-                id: "6udlH+",
-            }),
-        });
-        navigate(orderUrl(data.draftOrderCreate.order.id));
-    };
-
     const [createOrder] = useOrderDraftCreateMutation({
-        onCompleted: handleCreateOrderCreateSuccess,
+        onCompleted: (data) => {
+            notify({
+                status: "success",
+                text: intl.formatMessage({
+                    defaultMessage: "Order draft successfully created",
+                    id: "6udlH+",
+                }),
+            });
+            navigate(orderUrl(data.draftOrderCreate.order.id));
+        },
     });
 
     const { channel, availableChannels } = useAppChannel(false);

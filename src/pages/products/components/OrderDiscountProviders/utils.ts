@@ -1,11 +1,6 @@
 // @ts-nocheck
+import { OrderDetailsQuery, OrderDiscountType } from "@mzawadie/graphql";
 import { OrderDiscountCommonInput } from "@mzawadie/pages/orders/components/OrderDiscountCommonModal/types";
-import {
-    OrderDetails_order,
-    OrderDetails_order_discounts,
-    OrderDetails_order_lines,
-} from "@mzawadie/pages/orders/types/OrderDetails";
-import { OrderDiscountType } from "@mzawadie/types/globalTypes";
 import { useState } from "react";
 
 import { OrderLineDiscountData } from "./types";
@@ -19,16 +14,17 @@ export const useDiscountDialog = () => {
     return { closeDialog, isDialogOpen, openDialog };
 };
 
-export const getManualOrderDiscount = (order: OrderDetails_order) =>
+export const getManualOrderDiscount = (order: OrderDetailsQuery["order"]) =>
     order ? getOrderDiscount(order, OrderDiscountType.MANUAL) : null;
 
 export const getOrderDiscount = (
-    order: OrderDetails_order,
+    order: OrderDetailsQuery["order"],
     discountType: OrderDiscountType
-): OrderDetails_order_discounts => order.discounts.find(({ type }) => type === discountType);
+): OrderDetailsQuery["order"]["discounts"][0] =>
+    order.discounts.find(({ type }) => type === discountType);
 
 export const getOrderLineDiscount = (
-    order: OrderDetails_order,
+    order: OrderDetailsQuery["order"],
     orderLineId: string
 ): OrderLineDiscountData => {
     const {
@@ -37,7 +33,7 @@ export const getOrderLineDiscount = (
         unitDiscountValue: value,
         undiscountedUnitPrice: undiscountedPrice,
         unitDiscountType: calculationMode,
-    } = order.lines.find(({ id }: OrderDetails_order_lines) => id === orderLineId);
+    } = order.lines.find(({ id }: OrderDetailsQuery["order"]["lines"][0]) => id === orderLineId);
 
     if (!value) {
         return null;

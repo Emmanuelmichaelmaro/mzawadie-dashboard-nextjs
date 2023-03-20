@@ -6,10 +6,10 @@ import ControlledCheckbox from "@mzawadie/components/ControlledCheckbox";
 import { IMessage } from "@mzawadie/components/Messages";
 import { SingleAutocompleteSelectField } from "@mzawadie/components/SingleAutocompleteSelectField";
 import { DialogProps } from "@mzawadie/core";
+import { useGiftCardResendMutation, useChannelsQuery } from "@mzawadie/graphql";
 import useForm from "@mzawadie/hooks/useForm";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { VerticalSpacer } from "@mzawadie/pages/apps/components/VerticalSpacer";
-import { useChannelsList } from "@mzawadie/pages/channels/queries";
 import { getBySlug } from "@mzawadie/pages/products/components/ProductVariantCreatorPage/utils";
 import commonErrorMessages from "@mzawadie/utils/errors/common";
 import { mapSlugNodeToChoice } from "@mzawadie/utils/maps";
@@ -21,8 +21,6 @@ import { useUpdateBalanceDialogStyles as useStyles } from "../GiftCardUpdateBala
 import { getGiftCardErrorMessage } from "../messages";
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import { giftCardResendCodeDialogMessages as messages } from "./messages";
-import { useGiftCardResendCodeMutation } from "./mutations";
-import { GiftCardResend } from "./types/GiftCardResend";
 import { useDialogFormReset } from "./utils";
 
 export interface GiftCardResendCodeFormData {
@@ -42,7 +40,7 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
 
     const [consentSelected, setConsentSelected] = useState(false);
 
-    const { data: channelsData, loading: loadingChannels } = useChannelsList({});
+    const { data: channelsData, loading: loadingChannels } = useChannelsQuery({});
 
     const channels = channelsData?.channels;
 
@@ -96,7 +94,7 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
         }
     };
 
-    const [resendGiftCardCode, resendGiftCardCodeOpts] = useGiftCardResendCodeMutation({
+    const [resendGiftCardCode, resendGiftCardCodeOpts] = useGiftCardResendMutation({
         onCompleted,
     });
 

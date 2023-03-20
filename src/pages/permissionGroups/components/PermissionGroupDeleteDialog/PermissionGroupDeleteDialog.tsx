@@ -1,8 +1,7 @@
 // @ts-nocheck
 import { DialogContentText, Typography } from "@material-ui/core";
 import { ActionDialog } from "@mzawadie/components/ActionDialog";
-import { PermissionGroupErrorFragment } from "@mzawadie/fragments/types/PermissionGroupErrorFragment";
-import { PermissionGroupErrorCode } from "@mzawadie/types/globalTypes";
+import { PermissionGroupErrorFragment, PermissionGroupErrorCode } from "@mzawadie/graphql";
 import getPermissionGroupErrorMessage from "@mzawadie/utils/errors/permissionGroups";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";

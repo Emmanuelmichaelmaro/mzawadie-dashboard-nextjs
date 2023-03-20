@@ -1,6 +1,12 @@
+// @ts-nocheck
 import { ApolloError } from "@apollo/client";
-import { IMessageContext } from "@mzawadie/components/Messages";
-import { commonMessages } from "@mzawadie/core";
+import { IMessage, IMessageContext } from "@mzawadie/components/Messages";
+import {
+    commonMessages,
+    ServerErrorWithName,
+    getMutationErrors,
+    parseLogMessage,
+} from "@mzawadie/core";
 import { UseNotifierResult } from "@mzawadie/hooks/useNotifier";
 import { IntlShape } from "react-intl";
 
@@ -12,8 +18,72 @@ export const displayDemoMessage = (intl: IntlShape, notify: UseNotifierResult) =
     });
 };
 
-// eslint-disable-next-line @typescript-eslint/require-await
-export async function handleQueryAuthError(
+const getAllErrorMessages = (error: ApolloError) => {
+    const errorMessages = [];
+
+    if (error.graphQLErrors.length) {
+        error.graphQLErrors.forEach((err) => {
+            errorMessages.push(err.message);
+        });
+    }
+
+    const networkErrors = error.networkError as ServerErrorWithName;
+
+    if (error.networkError) {
+        // Apparently network errors can be an object or an array
+        if (Array.isArray(networkErrors.result)) {
+            networkErrors.result.forEach((result) => {
+                if (result.errors) {
+                    result.errors.forEach(({ message }) => {
+                        errorMessages.push(message);
+                    });
+                }
+            });
+        } else {
+            errorMessages.push(networkErrors.result.errors.message);
+        }
+    }
+
+    return errorMessages;
+};
+
+export const showAllErrors = ({ notify, error }: { notify: IMessageContext; error: ApolloError }) => {
+    getAllErrorMessages(error).forEach((message) => {
+        notify({
+            text: error.message,
+            status: "error",
+            apiMessage: message,
+        });
+    });
+};
+
+export const handleNestedMutationErrors = ({
+    data,
+    intl,
+    notify,
+}: {
+    data: any;
+    intl: IntlShape;
+    notify: (message: IMessage) => void;
+}) => {
+    const mutationErrors = getMutationErrors({ data });
+
+    if (mutationErrors.length > 0) {
+        mutationErrors.forEach((error) => {
+            notify({
+                status: "error",
+                text: error.message,
+                apiMessage: parseLogMessage({
+                    intl,
+                    code: error.code,
+                    field: error.field,
+                }),
+            });
+        });
+    }
+};
+
+export function handleQueryAuthError(
     error: ApolloError,
     notify: IMessageContext,
     logout: () => void,
@@ -27,17 +97,9 @@ export async function handleQueryAuthError(
                 text: intl.formatMessage(commonMessages.sessionExpired),
             });
         } else {
-            notify({
-                status: "error",
-                text: intl.formatMessage(commonMessages.somethingWentWrong),
-            });
+            showAllErrors({ notify, error });
         }
-    } else if (
-        !error.graphQLErrors.every((err) => err.extensions?.exception?.code === "PermissionDenied")
-    ) {
-        notify({
-            status: "error",
-            text: intl.formatMessage(commonMessages.somethingWentWrong),
-        });
+    } else {
+        showAllErrors({ notify, error });
     }
 }

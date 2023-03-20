@@ -8,7 +8,6 @@ import { getByName } from "@mzawadie/components/Filter/utils";
 import { FilterBar } from "@mzawadie/components/FilterBar";
 import LimitReachedAlert from "@mzawadie/components/LimitReachedAlert";
 import { PageHeader } from "@mzawadie/components/PageHeader";
-import { RefreshLimits_shop_limits } from "@mzawadie/components/Shop/types/RefreshLimits";
 import {
     ProductListColumns,
     sectionNames,
@@ -18,15 +17,19 @@ import {
     ListActions,
     PageListProps,
     SortPage,
+    RelayToFlat,
 } from "@mzawadie/core";
+import {
+    AvailableInGridAttributesQuery,
+    GridAttributesQuery,
+    ProductListQuery,
+    RefreshLimitsQuery,
+} from "@mzawadie/graphql";
 import {
     extensionMountPoints,
     mapToMenuItems,
     useExtensions,
 } from "@mzawadie/pages/apps/useExtensions";
-import { AvailableInGridAttributes_availableInGrid_edges_node } from "@mzawadie/pages/products/types/AvailableInGridAttributes";
-import { GridAttributes_grid_edges_node } from "@mzawadie/pages/products/types/GridAttributes";
-import { ProductList_products_edges_node } from "@mzawadie/pages/products/types/ProductList";
 import { hasLimits, isLimitReached } from "@mzawadie/utils/limits";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -45,13 +48,13 @@ export interface ProductListPageProps
         SortPage<ProductListUrlSortField>,
         ChannelProps {
     activeAttributeSortId: string;
-    availableInGridAttributes: AvailableInGridAttributes_availableInGrid_edges_node[];
+    availableInGridAttributes: RelayToFlat<AvailableInGridAttributesQuery["availableInGrid"]>;
     channelsCount: number;
     currencySymbol: string;
-    gridAttributes: GridAttributes_grid_edges_node[];
-    limits: RefreshLimits_shop_limits;
+    gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
+    limits: RefreshLimitsQuery["shop"]["limits"];
     totalGridAttributes: number;
-    products: ProductList_products_edges_node[];
+    products: RelayToFlat<ProductListQuery["products"]>;
     onExport: () => void;
 }
 

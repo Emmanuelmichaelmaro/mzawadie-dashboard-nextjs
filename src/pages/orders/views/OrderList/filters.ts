@@ -2,16 +2,12 @@
 import { IFilterElement } from "@mzawadie/components/Filter";
 import { MultiAutocompleteChoiceType } from "@mzawadie/components/MultiAutocompleteSelectField";
 import { findInEnum, findValueInEnum, parseBoolean } from "@mzawadie/core";
+import { OrderFilterInput, OrderStatusFilter, PaymentChargeStatusEnum } from "@mzawadie/graphql";
 import {
     OrderFilterGiftCard,
     OrderFilterKeys,
     OrderListFilterOpts,
 } from "@mzawadie/pages/orders/components/OrderListPage/filters";
-import {
-    OrderFilterInput,
-    OrderStatusFilter,
-    PaymentChargeStatusEnum,
-} from "@mzawadie/types/globalTypes";
 import {
     createFilterTabUtils,
     createFilterUtils,

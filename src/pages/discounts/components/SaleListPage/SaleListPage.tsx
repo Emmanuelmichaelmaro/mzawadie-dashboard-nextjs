@@ -12,11 +12,11 @@ import {
     SortPage,
     TabPageProps,
 } from "@mzawadie/core";
+import { SaleFragment } from "@mzawadie/graphql";
 import { SaleListUrlSortField } from "@mzawadie/pages/discounts/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { SaleList_sales_edges_node } from "../../types/SaleList";
 import { SaleList } from "../SaleList";
 import { createFilterStructure, SaleFilterKeys, SaleListFilterOpts } from "./filters";
 
@@ -27,7 +27,7 @@ export interface SaleListPageProps
         SortPage<SaleListUrlSortField>,
         TabPageProps,
         ChannelProps {
-    sales: SaleList_sales_edges_node[];
+    sales: SaleFragment[];
 }
 
 const SaleListPage: React.FC<SaleListPageProps> = ({

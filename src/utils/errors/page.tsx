@@ -1,6 +1,5 @@
 import { commonMessages } from "@mzawadie/core";
-import { PageErrorFragment } from "@mzawadie/fragments/types/PageErrorFragment";
-import { PageErrorCode } from "@mzawadie/types/globalTypes";
+import { PageErrorFragment, PageErrorCode } from "@mzawadie/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 
 import commonErrorMessages from "./common";

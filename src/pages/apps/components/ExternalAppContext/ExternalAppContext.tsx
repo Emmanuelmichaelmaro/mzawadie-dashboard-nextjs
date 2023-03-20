@@ -1,7 +1,7 @@
 // @ts-nocheck
+import { AppExtensionTargetEnum } from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { appDeepUrl } from "@mzawadie/pages/apps/urls";
-import { AppExtensionTargetEnum } from "@mzawadie/types/globalTypes";
 import React from "react";
 
 import { AppDialog } from "../AppDialog";

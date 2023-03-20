@@ -3,11 +3,15 @@ import { DialogContent, Divider, TextField } from "@material-ui/core";
 import DialogButtons from "@mzawadie/components/ActionDialog/DialogButtons";
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import { commonMessages } from "@mzawadie/core";
-import { GiftCardError } from "@mzawadie/fragments/types/GiftCardError";
+import {
+    GiftCardErrorFragment,
+    GiftCardSettingsExpiryTypeEnum,
+    TimePeriodTypeEnum,
+    useGiftCardSettingsQuery,
+} from "@mzawadie/graphql";
 import useForm from "@mzawadie/hooks/useForm";
 import { VerticalSpacer } from "@mzawadie/pages/apps/components/VerticalSpacer";
 import { Label } from "@mzawadie/pages/orders/components/OrderHistory/Label";
-import { GiftCardSettingsExpiryTypeEnum, TimePeriodTypeEnum } from "@mzawadie/types/globalTypes";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React, { useState } from "react";
@@ -15,7 +19,6 @@ import { useIntl } from "react-intl";
 
 import { GiftCardCreateCommonFormData } from "../GiftCardBulkCreateDialog/types";
 import GiftCardSendToCustomer from "../GiftCardSendToCustomer/GiftCardSendToCustomer";
-import { useGiftCardSettingsQuery } from "../GiftCardSettings/queries";
 import { GiftCardTagInput } from "../GiftCardTagInput";
 import { GiftCardCreateExpirySelect } from "./GiftCardCreateExpirySelect";
 import GiftCardCreateMoneyInput from "./GiftCardCreateMoneyInput";
@@ -44,9 +47,10 @@ export const initialData: GiftCardCreateFormData = {
     expiryPeriodAmount: 12,
     requiresActivation: true,
 };
+
 interface GiftCardCreateDialogFormProps {
     opts: { status: ConfirmButtonTransitionState };
-    apiErrors: GiftCardError[];
+    apiErrors: GiftCardErrorFragment[];
     onSubmit: (data: GiftCardCreateFormData) => void;
     onClose: () => void;
     initialCustomer?: GiftCardCreateFormCustomer | null;

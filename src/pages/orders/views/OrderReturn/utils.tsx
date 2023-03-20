@@ -1,24 +1,24 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 // @ts-nocheck
+import {
+    OrderDetailsFragment,
+    OrderReturnFulfillmentLineInput,
+    OrderReturnLineInput,
+    OrderReturnProductsInput,
+} from "@mzawadie/graphql";
 import { OrderRefundAmountCalculationMode } from "@mzawadie/pages/orders/components/OrderRefundPage/form";
 import {
     FormsetQuantityData,
     OrderReturnFormData,
 } from "@mzawadie/pages/orders/components/OrderReturnPage/form";
 import { getById } from "@mzawadie/pages/orders/components/OrderReturnPage/utils";
-import { OrderDetails_order } from "@mzawadie/pages/orders/types/OrderDetails";
-import {
-    OrderReturnFulfillmentLineInput,
-    OrderReturnLineInput,
-    OrderReturnProductsInput,
-} from "@mzawadie/types/globalTypes";
 
 class ReturnFormDataParser {
-    private order: OrderDetails_order;
+    private order: OrderDetailsFragment;
 
     private formData: OrderReturnFormData;
 
-    constructor(order: OrderDetails_order, formData: OrderReturnFormData) {
+    constructor(order: OrderDetailsFragment, formData: OrderReturnFormData) {
         this.order = order;
         this.formData = formData;
     }

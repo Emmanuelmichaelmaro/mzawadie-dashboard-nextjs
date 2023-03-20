@@ -1,23 +1,27 @@
 // @ts-nocheck
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
+import {
+    PageTypeCreateMutation,
+    usePageTypeCreateMutation,
+    useUpdateMetadataMutation,
+    useUpdatePrivateMetadataMutation,
+} from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import createMetadataCreateHandler from "@mzawadie/utils/handlers/metadataCreateHandler";
-import { useMetadataUpdate, usePrivateMetadataUpdate } from "@mzawadie/utils/metadata/updateMetadata";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { PageTypeCreatePage, PageTypeForm } from "../components/PageTypeCreatePage";
-import { usePageTypeCreateMutation } from "../mutations";
-import { PageTypeCreate as PageTypeCreateMutation } from "../types/PageTypeCreate";
 import { pageTypeListUrl, pageTypeUrl } from "../urls";
 
 export const PageTypeCreate: React.FC = () => {
     const navigate = useNavigator();
     const notify = useNotifier();
     const intl = useIntl();
-    const [updateMetadata] = useMetadataUpdate({});
-    const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+
+    const [updateMetadata] = useUpdateMetadataMutation({});
+    const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
     const [createPageType, createPageTypeOpts] = usePageTypeCreateMutation({
         onCompleted: (updateData: PageTypeCreateMutation) => {
@@ -45,6 +49,7 @@ export const PageTypeCreate: React.FC = () => {
 
         return result.data?.pageTypeCreate?.pageType?.id || null;
     };
+
     const handleSubmit = createMetadataCreateHandler(
         handleCreate,
         updateMetadata,

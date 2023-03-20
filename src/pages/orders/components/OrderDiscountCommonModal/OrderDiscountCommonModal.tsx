@@ -7,8 +7,7 @@ import { ConfirmButton, ConfirmButtonTransitionState } from "@mzawadie/component
 import { PriceField } from "@mzawadie/components/PriceField";
 import { RadioGroupField } from "@mzawadie/components/RadioGroupField";
 import { buttonMessages } from "@mzawadie/core";
-import { Money } from "@mzawadie/fragments/types/Money";
-import { DiscountValueTypeEnum } from "@mzawadie/types/globalTypes";
+import { MoneyFragment, DiscountValueTypeEnum } from "@mzawadie/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import React, { ChangeEvent, MutableRefObject, useEffect, useRef, useState } from "react";
 import { useIntl, defineMessages } from "react-intl";
@@ -96,7 +95,7 @@ const messages = defineMessages({
 });
 
 export interface OrderDiscountCommonModalProps {
-    maxPrice: Money;
+    maxPrice: MoneyFragment;
     onConfirm: (discount: OrderDiscountCommonInput) => void;
     onClose: () => void;
     onRemove: () => void;

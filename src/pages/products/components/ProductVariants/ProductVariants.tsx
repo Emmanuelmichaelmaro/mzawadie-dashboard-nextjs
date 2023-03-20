@@ -7,26 +7,23 @@ import LimitReachedAlert from "@mzawadie/components/LimitReachedAlert";
 import { LinkChoice } from "@mzawadie/components/LinkChoice";
 import { Money } from "@mzawadie/components/Money";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
-import { RefreshLimits_shop_limits } from "@mzawadie/components/Shop/types/RefreshLimits";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { SortableTableBody, SortableTableRow } from "@mzawadie/components/SortableTable";
 import { TableHead } from "@mzawadie/components/TableHead";
 import { maybe, renderCollection, ChannelProps, ListActions, ReorderAction } from "@mzawadie/core";
+import { ProductDetailsVariantFragment, ProductFragment, RefreshLimitsQuery } from "@mzawadie/graphql";
 import { isLimitReached } from "@mzawadie/utils/limits";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 
-import {
-    ProductDetails_product,
-    ProductDetails_product_variants,
-    ProductDetails_product_variants_stocks_warehouse,
-} from "../../types/ProductDetails";
 import { ProductVariantSetDefault } from "../ProductVariantSetDefault";
 
+type Warehouse = ProductDetailsVariantFragment[][0]["stocks"][0]["warehouse"];
+
 function getWarehouseChoices(
-    variants: ProductDetails_product_variants[],
+    variants: ProductDetailsVariantFragment[],
     intl: IntlShape
 ): SingleAutocompleteChoiceType[] {
     return [
@@ -39,19 +36,16 @@ function getWarehouseChoices(
             value: null,
         },
         ...variants
-            .reduce<ProductDetails_product_variants_stocks_warehouse[]>(
+            .reduce<Warehouse[]>(
                 (warehouses, variant) => [
                     ...warehouses,
-                    ...variant.stocks.reduce<ProductDetails_product_variants_stocks_warehouse[]>(
-                        (variantStocks, stock) => {
-                            if (!!warehouses.find((w) => w.id === stock.warehouse.id)) {
-                                return variantStocks;
-                            }
+                    ...variant.stocks.reduce<Warehouse[]>((variantStocks, stock) => {
+                        if (!!warehouses.find((w) => w.id === stock.warehouse.id)) {
+                            return variantStocks;
+                        }
 
-                            return [...variantStocks, stock.warehouse];
-                        },
-                        []
-                    ),
+                        return [...variantStocks, stock.warehouse];
+                    }, []),
                 ],
                 []
             )
@@ -126,7 +120,7 @@ const useStyles = makeStyles(
 function getAvailabilityLabel(
     intl: IntlShape,
     warehouse: string,
-    variant: ProductDetails_product_variants,
+    variant: ProductDetailsVariantFragment[][0],
     numAvailable: number
 ): string {
     if (variant.preorder) {
@@ -167,18 +161,21 @@ function getAvailabilityLabel(
                     }
                 );
             }
+
             return intl.formatMessage({
                 defaultMessage: "Unavailable",
                 id: "7mK2vs",
                 description: "product variant inventory",
             });
         }
+
         return intl.formatMessage({
             defaultMessage: "Not stocked",
             id: "9PmyrU",
             description: "product variant inventory",
         });
     }
+
     if (numAvailable > 0) {
         return intl.formatMessage(
             {
@@ -193,6 +190,7 @@ function getAvailabilityLabel(
             }
         );
     }
+
     return intl.formatMessage({
         defaultMessage: "Unavailable in all locations",
         id: "6+sMz4",
@@ -202,12 +200,12 @@ function getAvailabilityLabel(
 
 interface ProductVariantsProps extends ListActions, ChannelProps {
     disabled: boolean;
-    limits: RefreshLimits_shop_limits;
-    product: ProductDetails_product;
-    variants: ProductDetails_product_variants[];
+    limits: RefreshLimitsQuery["shop"]["limits"];
+    product: ProductFragment;
+    variants: ProductDetailsVariantFragment[];
     onVariantReorder: ReorderAction;
     onRowClick: (id: string) => () => void;
-    onSetDefaultVariant(variant: ProductDetails_product_variants);
+    onSetDefaultVariant(variant: ProductDetailsVariantFragment[][0]);
     onVariantAdd?();
     onVariantsAdd?();
 }
@@ -235,8 +233,11 @@ export const ProductVariants: React.FC<ProductVariantsProps> = (props) => {
 
     const classes = useStyles(props);
     const intl = useIntl();
+
     const [warehouse, setWarehouse] = React.useState<string>(null);
+
     const hasVariants = maybe(() => variants.length > 0, true);
+
     const limitReached = isLimitReached(limits, "productVariants");
 
     return (
@@ -303,6 +304,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = (props) => {
                             description="variant stock status"
                         />
                     </Typography>
+
                     <LinkChoice
                         className={classes.select}
                         choices={getWarehouseChoices(variants, intl)}

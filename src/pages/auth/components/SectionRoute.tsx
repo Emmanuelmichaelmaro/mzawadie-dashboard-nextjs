@@ -1,6 +1,6 @@
 // @ts-nocheck
 import NotFound from "@mzawadie/components/NotFound";
-import { PermissionEnum } from "@mzawadie/types/globalTypes";
+import { PermissionEnum } from "@mzawadie/graphql";
 import React from "react";
 import { Route, RouteProps } from "react-router-dom";
 
@@ -22,9 +22,6 @@ export const SectionRoute: React.FC<SectionRouteProps> = ({
     ...props
 }) => {
     const { user } = useUser();
-
-    // eslint-disable-next-line no-console
-    console.log(JSON.stringify(user, null, 4));
 
     const hasSectionPermissions = () => {
         if (!permissions) {

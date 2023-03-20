@@ -6,8 +6,7 @@ import {
     SingleAutocompleteChoiceType,
 } from "@mzawadie/components/SingleAutocompleteSelectField";
 import { FetchMoreProps } from "@mzawadie/core";
-import { PageErrorFragment } from "@mzawadie/fragments/types/PageErrorFragment";
-import { PageTypeFragment } from "@mzawadie/fragments/types/PageTypeFragment";
+import { PageErrorFragment, PageTypeFragment } from "@mzawadie/graphql";
 import { FormChange } from "@mzawadie/hooks/useForm";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getPageErrorMessage from "@mzawadie/utils/errors/page";

@@ -3,12 +3,11 @@ import { Card, TableBody, TableCell, TableHead, TableRow } from "@material-ui/co
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { maybe, renderCollection } from "@mzawadie/core";
+import { CountryListQuery } from "@mzawadie/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage } from "react-intl";
-
-import { CountryList_shop_countries } from "../../types/CountryList";
 
 const useStyles = makeStyles(
     {
@@ -23,7 +22,7 @@ const useStyles = makeStyles(
 );
 
 interface CountryListProps {
-    countries: CountryList_shop_countries[];
+    countries: CountryListQuery["shop"]["countries"];
     onRowClick: (code: string) => void;
 }
 

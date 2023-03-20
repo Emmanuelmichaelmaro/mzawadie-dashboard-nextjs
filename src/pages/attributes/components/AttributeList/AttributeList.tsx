@@ -14,19 +14,18 @@ import {
     ListProps,
     SortPage,
 } from "@mzawadie/core";
+import { AttributeFragment } from "@mzawadie/graphql";
 import { AttributeListUrlSortField } from "@mzawadie/pages/attributes/urls";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { AttributeList_attributes_edges_node } from "../../types/AttributeList";
-
 export interface AttributeListProps
     extends ListProps,
         ListActions,
         SortPage<AttributeListUrlSortField> {
-    attributes: AttributeList_attributes_edges_node[];
+    attributes: AttributeFragment[];
 }
 
 const useStyles = makeStyles(

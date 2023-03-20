@@ -1,12 +1,12 @@
+// @ts-nocheck
 import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
 import BackButton from "@mzawadie/components/BackButton";
 import { ConfirmButton } from "@mzawadie/components/ConfirmButton";
 import { Form } from "@mzawadie/components/Form";
 import { buttonMessages } from "@mzawadie/core";
-import { AttributeErrorFragment } from "@mzawadie/fragments/types/AttributeErrorFragment";
+import { AttributeErrorFragment, AttributeInputTypeEnum } from "@mzawadie/graphql";
 import { useModalDialogErrors } from "@mzawadie/hooks/useModalDialogErrors";
 import { getAttributeValueErrorMessage } from "@mzawadie/pages/attributes/errors";
-import { AttributeInputTypeEnum } from "@mzawadie/types/globalTypes";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";

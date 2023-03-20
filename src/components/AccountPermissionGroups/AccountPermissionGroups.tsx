@@ -1,8 +1,8 @@
+// @ts-nocheck
 import { Typography } from "@material-ui/core";
-import { FetchMoreProps, SearchPageProps } from "@mzawadie/core";
-import { StaffErrorFragment } from "@mzawadie/fragments/types/StaffErrorFragment";
+import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@mzawadie/core";
+import { SearchPermissionGroupsQuery, StaffErrorFragment } from "@mzawadie/graphql";
 import { FormChange } from "@mzawadie/hooks/useForm";
-import { SearchPermissionGroups_search_edges_node } from "@mzawadie/searches/types/SearchPermissionGroups";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getStaffErrorMessage from "@mzawadie/utils/errors/staff";
 import React from "react";
@@ -19,7 +19,7 @@ export interface AccountPermissionGroupsProps extends FetchMoreProps, SearchPage
     };
     disabled: boolean;
     errors: StaffErrorFragment[];
-    availablePermissionGroups: SearchPermissionGroups_search_edges_node[];
+    availablePermissionGroups: RelayToFlat<SearchPermissionGroupsQuery["search"]>;
     onChange: FormChange;
     displayValues: MultiAutocompleteChoiceType[];
 }

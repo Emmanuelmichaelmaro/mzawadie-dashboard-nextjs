@@ -4,7 +4,16 @@ import { AttributeInput } from "@mzawadie/components/Attributes";
 import { NotFoundPage } from "@mzawadie/components/NotFoundPage";
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, getMutationErrors, weight } from "@mzawadie/core";
-import { useFileUploadMutation } from "@mzawadie/files/mutations";
+import {
+    useFileUploadMutation,
+    useProductVariantCreateDataQuery,
+    useUpdateMetadataMutation,
+    useUpdatePrivateMetadataMutation,
+    useWarehouseListQuery,
+    VariantCreateMutation,
+    useProductVariantReorderMutation,
+    useVariantCreateMutation,
+} from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import useShop from "@mzawadie/hooks/useShop";
@@ -13,22 +22,17 @@ import {
     handleUploadMultipleFiles,
     prepareAttributesInput,
 } from "@mzawadie/pages/attributes/utils/handlers";
-import { useWarehouseList } from "@mzawadie/pages/warehouses/queries";
 import { warehouseAddPath } from "@mzawadie/pages/warehouses/urls";
 import usePageSearch from "@mzawadie/searches/usePageSearch";
 import useProductSearch from "@mzawadie/searches/useProductSearch";
 import useAttributeValueSearchHandler from "@mzawadie/utils/handlers/attributeValueSearchHandler";
 import createMetadataCreateHandler from "@mzawadie/utils/handlers/metadataCreateHandler";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
-import { useMetadataUpdate, usePrivateMetadataUpdate } from "@mzawadie/utils/metadata/updateMetadata";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { ProductVariantCreatePage } from "../components/ProductVariantCreatePage";
 import { ProductVariantCreateData } from "../components/ProductVariantCreatePage/form";
-import { useProductVariantReorderMutation, useVariantCreateMutation } from "../mutations";
-import { useProductVariantCreateQuery } from "../queries";
-import { VariantCreate } from "../types/VariantCreate";
 import {
     productListUrl,
     productUrl,
@@ -47,18 +51,17 @@ interface ProductVariantCreateProps {
 export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId, params }) => {
     const navigate = useNavigator();
     const notify = useNotifier();
-
     const shop = useShop();
     const intl = useIntl();
 
-    const warehouses = useWarehouseList({
+    const warehouses = useWarehouseListQuery({
         displayLoader: true,
         variables: {
             first: 50,
         },
     });
 
-    const { data, loading: productLoading } = useProductVariantCreateQuery({
+    const { data, loading: productLoading } = useProductVariantCreateDataQuery({
         displayLoader: true,
         variables: {
             id: productId,
@@ -70,13 +73,14 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
 
     const product = data?.product;
 
-    const handleVariantCreationSuccess = (data: VariantCreate) => {
+    const handleVariantCreationSuccess = (data: VariantCreateMutation) => {
         const variantId = data.productVariantCreate.productVariant.id;
 
         notify({
             status: "success",
             text: intl.formatMessage(messages.variantCreatedSuccess),
         });
+
         navigate(productVariantEditUrl(productId, variantId), {
             resetScroll: true,
         });
@@ -86,8 +90,8 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
         onCompleted: handleVariantCreationSuccess,
     });
 
-    const [updateMetadata] = useMetadataUpdate({});
-    const [updatePrivateMetadata] = usePrivateMetadataUpdate({});
+    const [updateMetadata] = useUpdateMetadataMutation({});
+    const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
     if (product === null) {
         return <NotFoundPage onBack={() => navigate(productListUrl())} />;
@@ -142,6 +146,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
                 firstValues: 10,
             },
         });
+
         const id = result.data?.productVariantCreate?.productVariant?.id || null;
 
         return { id, errors: getMutationErrors(result) };
@@ -204,7 +209,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
         onFetchMore: loadMoreAttributeValues,
     };
 
-    const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
+    const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute?.choices) || [];
 
     const disableForm =
         productLoading ||

@@ -7,17 +7,17 @@ import Skeleton from "@mzawadie/components/Skeleton";
 import { TableCellAvatar } from "@mzawadie/components/TableCellAvatar";
 import { TableHead } from "@mzawadie/components/TableHead";
 import { TablePagination } from "@mzawadie/components/TablePagination";
-import { maybe, renderCollection, ListActions, ListProps } from "@mzawadie/core";
+import { maybe, renderCollection, ListActions, ListProps, RelayToFlat } from "@mzawadie/core";
+import { SaleDetailsFragment } from "@mzawadie/graphql";
 import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { SaleDetails_sale_variants_edges_node } from "../../types/SaleDetails";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
 export interface SaleVariantsProps extends Omit<ListProps, "onRowClick">, ListActions {
-    variants: SaleDetails_sale_variants_edges_node[] | null;
+    variants: Array<RelayToFlat<SaleDetailsFragment["variants"]>> | null;
     onVariantAssign: () => void;
     onRowClick: (productId: string, variantId: string) => () => void;
     onVariantUnassign: (id: string) => void;

@@ -7,8 +7,7 @@ import Skeleton from "@mzawadie/components/Skeleton";
 import { SortableTableBody, SortableTableRow } from "@mzawadie/components/SortableTable";
 import { TableHead } from "@mzawadie/components/TableHead";
 import { renderCollection, stopPropagation, ListActions, ReorderAction } from "@mzawadie/core";
-import { PageTypeDetails_pageType_attributes } from "@mzawadie/pages/pageTypes/types/PageTypeDetails";
-import { AttributeTypeEnum } from "@mzawadie/types/globalTypes";
+import { AttributeFragment, AttributeTypeEnum } from "@mzawadie/graphql";
 import { DeleteIcon, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -39,7 +38,7 @@ const useStyles = makeStyles(
 );
 
 interface PageTypeAttributesProps extends ListActions {
-    attributes: PageTypeDetails_pageType_attributes[];
+    attributes: AttributeFragment[];
     disabled: boolean;
     type: string;
     onAttributeAssign: (type: AttributeTypeEnum) => void;

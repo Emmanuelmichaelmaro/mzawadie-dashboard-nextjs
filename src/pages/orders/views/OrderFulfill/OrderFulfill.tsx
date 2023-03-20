@@ -1,15 +1,19 @@
 // @ts-nocheck
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
 import { extractMutationErrors } from "@mzawadie/core";
+import {
+    OrderFulfillDataQuery,
+    useFulfillOrderMutation,
+    useOrderFulfillDataQuery,
+    useOrderFulfillSettingsQuery,
+    WarehouseClickAndCollectOptionEnum,
+    WarehouseFragment,
+} from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { OrderFulfillPage } from "@mzawadie/pages/orders/components/OrderFulfillPage";
-import { useOrderFulfill } from "@mzawadie/pages/orders/mutations";
-import { useOrderFulfillData, useOrderFulfillSettingsQuery } from "@mzawadie/pages/orders/queries";
-import { OrderFulfillData_order } from "@mzawadie/pages/orders/types/OrderFulfillData";
 import { orderUrl } from "@mzawadie/pages/orders/urls";
 import { getWarehousesFromOrderLines } from "@mzawadie/pages/orders/utils/data";
-import { WarehouseClickAndCollectOptionEnum } from "@mzawadie/types/globalTypes";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -17,7 +21,10 @@ export interface OrderFulfillProps {
     orderId: string;
 }
 
-const resolveLocalFulfillment = (order: OrderFulfillData_order, orderLineWarehouses: any) => {
+const resolveLocalFulfillment = (
+    order: OrderFulfillDataQuery["order"],
+    orderLineWarehouses: WarehouseFragment[]
+) => {
     const deliveryMethod = order?.deliveryMethod;
     if (
         deliveryMethod?.__typename === "Warehouse" &&
@@ -35,7 +42,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
 
     const { data: settings, loading: settingsLoading } = useOrderFulfillSettingsQuery({});
 
-    const { data, loading } = useOrderFulfillData({
+    const { data, loading } = useOrderFulfillDataQuery({
         displayLoader: true,
         variables: {
             orderId,
@@ -44,7 +51,7 @@ const OrderFulfill: React.FC<OrderFulfillProps> = ({ orderId }) => {
 
     const orderLinesWarehouses = getWarehousesFromOrderLines(data?.order?.lines);
 
-    const [fulfillOrder, fulfillOrderOpts] = useOrderFulfill({
+    const [fulfillOrder, fulfillOrderOpts] = useFulfillOrderMutation({
         onCompleted: (data) => {
             if (data.orderFulfill?.errors.length === 0) {
                 navigate(orderUrl(orderId), { replace: true });

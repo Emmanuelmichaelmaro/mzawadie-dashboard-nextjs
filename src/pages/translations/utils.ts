@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { OutputData } from "@editorjs/editorjs";
-import { AttributeTranslationDetailsFragment_attribute_choices } from "@mzawadie/fragments/types/AttributeTranslationDetailsFragment";
+import { AttributeTranslationDetailsFragment } from "@mzawadie/graphql";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import { getParsedDataForJsonStringField } from "@mzawadie/utils/richText/misc";
 import { IntlShape } from "react-intl";
@@ -31,7 +31,7 @@ export const getParsedTranslationInputData = ({
 };
 
 export const getTranslationFields = (
-    fields: AttributeTranslationDetailsFragment_attribute_choices,
+    fields: AttributeTranslationDetailsFragment["attribute"]["choices"],
     intl: IntlShape
 ) =>
     mapEdgesToItems(fields).map(({ id, name, translation }, attributeValueIndex) => {

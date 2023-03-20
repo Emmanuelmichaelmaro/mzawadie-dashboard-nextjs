@@ -1,20 +1,17 @@
 // @ts-nocheck
-import {
-    ProductType_productType,
-    ProductType_productType_productAttributes,
-} from "@mzawadie/pages/products/types/ProductType";
-import { SearchProductTypes_search_edges_node } from "@mzawadie/searches/types/SearchProductTypes";
+import { RelayToFlat } from "@mzawadie/core";
 import {
     AttributeInputTypeEnum,
     AttributeTypeEnum,
+    ProductTypeDetailsQuery,
     ProductTypeKindEnum,
+    ProductTypeListQuery,
+    ProductTypeQuery,
+    SearchProductTypesQuery,
     WeightUnitsEnum,
-} from "@mzawadie/types/globalTypes";
+} from "@mzawadie/graphql";
 
-import { ProductTypeDetails_productType } from "./types/ProductTypeDetails";
-import { ProductTypeList_productTypes_edges_node } from "./types/ProductTypeList";
-
-export const attributes: ProductType_productType_productAttributes[] = [
+export const attributes: ProductTypeQuery["productType"]["productAttributes"] = [
     {
         node: {
             __typename: "Attribute" as const,
@@ -970,7 +967,7 @@ export const attributes: ProductType_productType_productAttributes[] = [
     },
 ].map((edge) => edge.node);
 
-export const productTypeSearch: ProductType_productType = {
+export const productTypeSearch: ProductTypeQuery["productType"] = {
     __typename: "ProductType" as const,
     hasVariants: true,
     id: "UHJvZHVjdFR5cGU6NA==",
@@ -984,7 +981,8 @@ export const productTypeSearch: ProductType_productType = {
 };
 
 export const productTypes: Array<
-    SearchProductTypes_search_edges_node & ProductTypeList_productTypes_edges_node
+    RelayToFlat<SearchProductTypesQuery["search"]>[0] &
+        ProductTypeListQuery["productTypes"]["edges"][0]["node"]
 > = [
     {
         __typename: "ProductType" as const,
@@ -1066,7 +1064,7 @@ export const productTypes: Array<
     ...productType,
 }));
 
-export const productType: ProductTypeDetails_productType = {
+export const productType: ProductTypeDetailsQuery["productType"] = {
     __typename: "ProductType" as const,
     hasVariants: false,
     id: "UHJvZHVjdFR5cGU6NQ==",

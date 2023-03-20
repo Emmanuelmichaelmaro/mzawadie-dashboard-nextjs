@@ -1,6 +1,6 @@
 // @ts-nocheck
+import { UserSortField } from "@mzawadie/graphql";
 import { StaffListUrlSortField } from "@mzawadie/pages/staff/urls";
-import { UserSortField } from "@mzawadie/types/globalTypes";
 import { createGetSortQueryVariables } from "@mzawadie/utils/sort";
 
 export function getSortQueryField(sort: StaffListUrlSortField): UserSortField | undefined {

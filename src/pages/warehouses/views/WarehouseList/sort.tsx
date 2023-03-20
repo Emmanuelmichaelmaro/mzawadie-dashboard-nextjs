@@ -1,7 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
+import { WarehouseSortField } from "@mzawadie/graphql";
 import { WarehouseListUrlSortField } from "@mzawadie/pages/warehouses/urls";
-import { WarehouseSortField } from "@mzawadie/types/globalTypes";
 import { createGetSortQueryVariables } from "@mzawadie/utils/sort";
 
 export function getSortQueryField(sort: WarehouseListUrlSortField): WarehouseSortField {

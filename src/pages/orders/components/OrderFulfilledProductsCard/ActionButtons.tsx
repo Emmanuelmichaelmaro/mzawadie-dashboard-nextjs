@@ -1,6 +1,7 @@
+// @ts-nocheck
 import { CardActions, Typography } from "@material-ui/core";
 import { buttonMessages, commonMessages } from "@mzawadie/core";
-import { FulfillmentStatus } from "@mzawadie/types/globalTypes";
+import { FulfillmentStatus } from "@mzawadie/graphql";
 import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";

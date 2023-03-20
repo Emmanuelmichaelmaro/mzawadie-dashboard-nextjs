@@ -1,10 +1,10 @@
 /* eslint-disable sort-keys */
 // @ts-nocheck
 import * as placeholderImage from "@assets/images/sample-product.jpg";
-import { OrderFulfillData_order } from "@mzawadie/pages/orders/types/OrderFulfillData";
+import { OrderFulfillDataQuery } from "@mzawadie/graphql";
 import { warehouseList } from "@mzawadie/pages/warehouses/fixtures";
 
-export const orderToFulfill: OrderFulfillData_order = {
+export const orderToFulfill: OrderFulfillDataQuery["order"] = {
     __typename: "Order",
     id: "T3JkZXI6Mg==",
     isPaid: true,

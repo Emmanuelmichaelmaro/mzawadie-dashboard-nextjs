@@ -1,8 +1,7 @@
 // @ts-nocheck
+import { GiftCardDetailsQuery, useGiftCardDetailsQuery } from "@mzawadie/graphql";
 import React, { createContext } from "react";
 
-import { useGiftCardDetailsQuery } from "../../queries";
-import { GiftCardDetails_giftCard } from "../../types/GiftCardDetails";
 import { ExtendedGiftCard } from "./types";
 import { getExtendedGiftCard } from "./utils";
 
@@ -12,7 +11,7 @@ interface GiftCardDetailsProviderProps {
 }
 
 export interface GiftCardDetailsConsumerProps {
-    giftCard: ExtendedGiftCard<GiftCardDetails_giftCard> | undefined;
+    giftCard: ExtendedGiftCard<GiftCardDetailsQuery["giftCard"]> | undefined;
     loading: boolean;
 }
 

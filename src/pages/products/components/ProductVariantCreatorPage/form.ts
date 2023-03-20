@@ -1,10 +1,11 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import { AttributeValueFragment } from "@mzawadie/fragments/types/AttributeValueFragment";
-import { WarehouseFragment } from "@mzawadie/fragments/types/WarehouseFragment";
+import {
+    AttributeValueFragment,
+    ProductVariantAttributesFragment,
+    ProductVariantBulkCreateInput,
+    WarehouseFragment,
+} from "@mzawadie/graphql";
 import { ChannelPriceData } from "@mzawadie/pages/channels/utils";
-import { ProductDetails_product_productType_variantAttributes } from "@mzawadie/pages/products/types/ProductDetails";
-import { ProductVariantBulkCreateInput } from "@mzawadie/types/globalTypes";
 
 export interface ChannelPrice {
     channelId: string;
@@ -41,7 +42,7 @@ export interface ProductVariantCreateFormData {
 }
 
 export const createInitialForm = (
-    attributes: ProductDetails_product_productType_variantAttributes[],
+    attributes: ProductVariantAttributesFragment["productType"]["variantAttributes"],
     channels: ChannelPriceData[],
     warehouses: WarehouseFragment[]
 ): ProductVariantCreateFormData => {

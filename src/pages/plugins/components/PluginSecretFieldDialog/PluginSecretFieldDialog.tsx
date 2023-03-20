@@ -5,8 +5,7 @@ import { ConfirmButton } from "@mzawadie/components/ConfirmButton";
 import { Form } from "@mzawadie/components/Form";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { buttonMessages, maybe, DialogProps } from "@mzawadie/core";
-import { PluginConfigurationExtendedFragment_configuration } from "@mzawadie/fragments/types/PluginConfigurationExtendedFragment";
-import { ConfigurationTypeFieldEnum } from "@mzawadie/types/globalTypes";
+import { ConfigurationItemFragment, ConfigurationTypeFieldEnum } from "@mzawadie/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -17,7 +16,7 @@ export interface PluginSecretFieldDialogFormData {
 
 export interface PluginSecretFieldDialogProps extends DialogProps {
     confirmButtonState: ConfirmButtonTransitionState;
-    field: PluginConfigurationExtendedFragment_configuration;
+    field: ConfigurationItemFragment;
     onConfirm: (data: PluginSecretFieldDialogFormData) => void;
 }
 

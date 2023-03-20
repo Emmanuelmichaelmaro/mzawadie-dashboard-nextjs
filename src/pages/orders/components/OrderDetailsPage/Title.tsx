@@ -1,11 +1,11 @@
 import { transformOrderStatus } from "@mzawadie/core";
-import { OrderDetails_order } from "@mzawadie/pages/orders/types/OrderDetails";
+import { OrderDetailsFragment } from "@mzawadie/graphql";
 import { makeStyles, Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
 export interface TitleProps {
-    order?: OrderDetails_order;
+    order?: OrderDetailsFragment;
 }
 
 const useStyles = makeStyles(
@@ -39,7 +39,7 @@ const Title: React.FC<TitleProps> = (props) => {
                 { orderNumber: order?.number }
             )}
             <div className={classes.statusContainer}>
-                <Pill label={localized} color={status} />
+                <Pill label={localized} color={status} css={undefined} />
             </div>
         </div>
     );

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 // @ts-nocheck
 import { CircularProgress, MenuItem, Paper, TextField } from "@material-ui/core";
 import ArrowBack from "@material-ui/icons/ArrowBack";

@@ -1,7 +1,8 @@
-import { PLACEHOLDER } from "../../GiftCardUpdate/types";
-import { GiftCardList_giftCards_edges_node_tags } from "../types/GiftCardList";
+import { GiftCardDataFragment } from "@mzawadie/graphql";
 
-export const getTagCellText = (tags: GiftCardList_giftCards_edges_node_tags[]) => {
+import { PLACEHOLDER } from "../../GiftCardUpdate/types";
+
+export const getTagCellText = (tags: GiftCardDataFragment["tags"]) => {
     if (!!tags.length) {
         return tags.map(({ name }) => name).join(", ");
     }

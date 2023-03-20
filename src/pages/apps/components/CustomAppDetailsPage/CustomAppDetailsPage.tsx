@@ -7,12 +7,10 @@ import { Form } from "@mzawadie/components/Form";
 import { Grid } from "@mzawadie/components/Grid";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
-import { ShopInfo_shop_permissions } from "@mzawadie/components/Shop/types/ShopInfo";
 import { sectionNames } from "@mzawadie/core";
-import { AppErrorFragment } from "@mzawadie/fragments/types/AppErrorFragment";
+import { AppErrorFragment, AppUpdateMutation, PermissionEnum, ShopInfoQuery } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import { WebhooksList } from "@mzawadie/pages/webhooks/components/WebhooksList";
-import { PermissionEnum } from "@mzawadie/types/globalTypes";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getAppErrorMessage from "@mzawadie/utils/errors/app";
 import { ConfirmButtonTransitionState, Backlink, Button } from "@saleor/macaw-ui";
@@ -20,7 +18,6 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "../../styles";
-import { AppUpdate_appUpdate_app } from "../../types/AppUpdate";
 import { CustomAppDefaultToken } from "../CustomAppDefaultToken";
 import { CustomAppInformation } from "../CustomAppInformation";
 import { CustomAppTokens } from "../CustomAppTokens";
@@ -31,13 +28,14 @@ export interface CustomAppDetailsPageFormData {
     name: string;
     permissions: PermissionEnum[];
 }
+
 export interface CustomAppDetailsPageProps {
     apiUri: string;
     disabled: boolean;
     errors: AppErrorFragment[];
-    permissions: ShopInfo_shop_permissions[];
+    permissions: ShopInfoQuery["shop"]["permissions"];
     saveButtonBarState: ConfirmButtonTransitionState;
-    app: AppUpdate_appUpdate_app;
+    app: AppUpdateMutation["appUpdate"]["app"];
     token: string;
     onApiUriClick: () => void;
     onBack: () => void;

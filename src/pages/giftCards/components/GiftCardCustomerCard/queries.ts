@@ -1,30 +1,17 @@
+// @ts-nocheck
 import { gql } from "@apollo/client";
-import { fragmentMoney } from "@mzawadie/fragments/products";
-import makeQuery from "@mzawadie/hooks/graphql/makeQuery";
+import { getOperationAST } from "graphql";
 
-import { CustomerGiftCardList, CustomerGiftCardListVariables } from "./types/CustomerGiftCardList";
-
-const customerGiftCardListQuery = gql`
-    ${fragmentMoney}
+export const customerGiftCardListQuery = gql`
     query CustomerGiftCardList($first: Int, $filter: GiftCardFilterInput) {
         giftCards(first: $first, filter: $filter) {
             edges {
                 node {
-                    id
-                    last4CodeChars
-                    expiryDate
-                    isActive
-                    currentBalance {
-                        ...Money
-                    }
+                    ...CustomerGiftCard
                 }
             }
         }
     }
 `;
 
-export const useCustomerGiftCardQuery = makeQuery<CustomerGiftCardList, CustomerGiftCardListVariables>(
-    customerGiftCardListQuery
-);
-
-export const CUSTOMER_GIFT_CARD_LIST_QUERY = "CustomerGiftCardList";
+export const CUSTOMER_GIFT_CARD_LIST_QUERY = getOperationAST(customerGiftCardListQuery).name.value;

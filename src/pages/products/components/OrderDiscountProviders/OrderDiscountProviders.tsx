@@ -1,17 +1,14 @@
 /* eslint-disable sort-keys */
 // @ts-nocheck
-import { useNotifier } from "@mzawadie/hooks/useNotifier";
-import { getDefaultNotifierSuccessErrorData } from "@mzawadie/hooks/useNotifier/utils";
-import { OrderDiscountCommonInput } from "@mzawadie/pages/orders/components/OrderDiscountCommonModal/types";
 import {
+    OrderDetailsFragment,
     useOrderDiscountAddMutation,
     useOrderDiscountDeleteMutation,
     useOrderDiscountUpdateMutation,
-} from "@mzawadie/pages/orders/mutations";
-import { OrderDetails_order } from "@mzawadie/pages/orders/types/OrderDetails";
-import { OrderDiscountAdd } from "@mzawadie/pages/orders/types/OrderDiscountAdd";
-import { OrderDiscountDelete } from "@mzawadie/pages/orders/types/OrderDiscountDelete";
-import { OrderDiscountUpdate } from "@mzawadie/pages/orders/types/OrderDiscountUpdate";
+} from "@mzawadie/graphql";
+import { useNotifier } from "@mzawadie/hooks/useNotifier";
+import { getDefaultNotifierSuccessErrorData } from "@mzawadie/hooks/useNotifier/utils";
+import { OrderDiscountCommonInput } from "@mzawadie/pages/orders/components/OrderDiscountCommonModal/types";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React, { createContext } from "react";
 import { useIntl } from "react-intl";
@@ -29,7 +26,7 @@ export interface OrderDiscountContextConsumerProps extends OrderDiscountConsumer
 
 interface OrderDiscountProviderProps {
     children: React.ReactNode;
-    order?: OrderDetails_order;
+    order?: OrderDetailsFragment;
 }
 
 export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({ children, order }) => {
@@ -43,18 +40,15 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({ ch
     const orderDiscount = getManualOrderDiscount(order);
 
     const [orderDiscountAdd, orderDiscountAddOpts] = useOrderDiscountAddMutation({
-        onCompleted: ({ orderDiscountAdd: { errors } }: OrderDiscountAdd) =>
-            handleDiscountDataSubmission(errors),
+        onCompleted: ({ orderDiscountAdd: { errors } }) => handleDiscountDataSubmission(errors),
     });
 
     const [orderDiscountUpdate, orderDiscountUpdateOpts] = useOrderDiscountUpdateMutation({
-        onCompleted: ({ orderDiscountUpdate: { errors } }: OrderDiscountUpdate) =>
-            handleDiscountDataSubmission(errors),
+        onCompleted: ({ orderDiscountUpdate: { errors } }) => handleDiscountDataSubmission(errors),
     });
 
     const [orderDiscountRemove, orderDiscountRemoveOpts] = useOrderDiscountDeleteMutation({
-        onCompleted: ({ orderDiscountDelete: { errors } }: OrderDiscountDelete) =>
-            handleDiscountDataSubmission(errors),
+        onCompleted: ({ orderDiscountDelete: { errors } }) => handleDiscountDataSubmission(errors),
     });
 
     const handleDiscountDataSubmission = (errors: any[]) => {

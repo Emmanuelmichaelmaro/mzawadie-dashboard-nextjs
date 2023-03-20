@@ -1,9 +1,14 @@
 // @ts-nocheck
 import { DialogTitle } from "@material-ui/core";
 import { DialogProps } from "@mzawadie/core";
+import {
+    GiftCardCreateInput,
+    GiftCardCreateMutation,
+    useChannelCurrenciesQuery,
+    useGiftCardCreateMutation,
+} from "@mzawadie/graphql";
 import useCurrentDate from "@mzawadie/hooks/useCurrentDate";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
-import { GiftCardCreateInput } from "@mzawadie/types/globalTypes";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -11,10 +16,7 @@ import ContentWithProgress from "./ContentWithProgress";
 import GiftCardCreateDialogCodeContent from "./GiftCardCreateDialogCodeContent";
 import GiftCardCreateDialogForm, { GiftCardCreateFormData } from "./GiftCardCreateDialogForm";
 import { giftCardCreateMessages as messages } from "./messages";
-import { useGiftCardCreateMutation } from "./mutations";
-import { useChannelCurrencies } from "./queries";
 import { GiftCardCreateFormCustomer } from "./types";
-import { GiftCardCreate } from "./types/GiftCardCreate";
 import { getGiftCardCreateOnCompletedMessage, getGiftCardExpiryInputData } from "./utils";
 
 interface GiftCardCreateDialogContentProps extends Pick<DialogProps, "onClose"> {
@@ -30,11 +32,11 @@ const GiftCardCreateDialogContent: React.FC<GiftCardCreateDialogContentProps> = 
     const intl = useIntl();
     const notify = useNotifier();
 
-    const { loading: loadingChannelCurrencies } = useChannelCurrencies({});
+    const { loading: loadingChannelCurrencies } = useChannelCurrenciesQuery({});
 
     const [cardCode, setCardCode] = useState(null);
 
-    const onCompleted = (data: GiftCardCreate) => {
+    const onCompleted = (data: GiftCardCreateMutation) => {
         const errors = data?.giftCardCreate?.errors;
 
         notify(getGiftCardCreateOnCompletedMessage(errors, intl));

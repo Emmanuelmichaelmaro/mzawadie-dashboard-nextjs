@@ -6,6 +6,7 @@ import Link from "@mzawadie/components/Link";
 import { PreviewPill } from "@mzawadie/components/PreviewPill";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { getFullName } from "@mzawadie/core";
+import { useCustomerGiftCardListQuery } from "@mzawadie/graphql";
 import { VerticalSpacer } from "@mzawadie/pages/apps/components/VerticalSpacer";
 import { useCustomerDetails } from "@mzawadie/pages/customers/hooks/useCustomerDetails";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
@@ -19,7 +20,7 @@ import GiftCardCreateDialogContent from "../GiftCardCreateDialog/GiftCardCreateD
 import { getExtendedGiftCard } from "../GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
 import CustomerGiftCardsCardListItem from "./CustomerGiftCardsCardListItem";
 import { giftCardCustomerCardMessages as messages } from "./messages";
-import { CUSTOMER_GIFT_CARD_LIST_QUERY, useCustomerGiftCardQuery } from "./queries";
+import { CUSTOMER_GIFT_CARD_LIST_QUERY } from "./queries";
 import { useCardActionsStyles } from "./styles";
 
 const CustomerGiftCardsCard: React.FC = () => {
@@ -29,7 +30,7 @@ const CustomerGiftCardsCard: React.FC = () => {
     const customer = customerDetails?.customer?.user;
     const id = customer?.id;
 
-    const { data, loading } = useCustomerGiftCardQuery({
+    const { data, loading } = useCustomerGiftCardListQuery({
         variables: {
             first: 5,
             filter: {

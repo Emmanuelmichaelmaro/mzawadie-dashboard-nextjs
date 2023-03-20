@@ -5,7 +5,7 @@ import { CardTitle } from "@mzawadie/components/CardTitle";
 import FormSpacer from "@mzawadie/components/FormSpacer";
 import { RichTextEditor, RichTextEditorChange } from "@mzawadie/components/RichTextEditor";
 import { commonMessages } from "@mzawadie/core";
-import { CollectionErrorFragment } from "@mzawadie/fragments/types/CollectionErrorFragment";
+import { CollectionErrorFragment } from "@mzawadie/graphql";
 import { getFormErrors, getProductErrorMessage } from "@mzawadie/utils/errors";
 import React from "react";
 import { useIntl } from "react-intl";

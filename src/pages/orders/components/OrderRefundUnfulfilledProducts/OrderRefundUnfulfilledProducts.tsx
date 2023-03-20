@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
     Card,
     CardContent,
@@ -14,8 +15,8 @@ import { Money } from "@mzawadie/components/Money";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { TableCellAvatar } from "@mzawadie/components/TableCellAvatar";
 import { renderCollection } from "@mzawadie/core";
+import { OrderRefundDataQuery } from "@mzawadie/graphql";
 import { FormsetChange } from "@mzawadie/hooks/useFormset";
-import { OrderRefundData_order_lines } from "@mzawadie/pages/orders/types/OrderRefundData";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -62,7 +63,7 @@ const useStyles = makeStyles(
 );
 
 interface OrderRefundUnfulfilledProductsProps {
-    unfulfilledLines: OrderRefundData_order_lines[];
+    unfulfilledLines: OrderRefundDataQuery["order"]["lines"];
     data: OrderRefundFormData;
     disabled: boolean;
     onRefundedProductQuantityChange: FormsetChange<string>;
@@ -235,5 +236,7 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
         </Card>
     );
 };
+
 OrderRefundUnfulfilledProducts.displayName = "OrderRefundUnfulfilledProducts";
+
 export default OrderRefundUnfulfilledProducts;
