@@ -2,10 +2,12 @@
 import { Typography } from "@material-ui/core";
 import Link from "@mzawadie/components/Link";
 import { Money } from "@mzawadie/components/Money";
-import { DiscountValueTypeEnum, OrderDetailsFragment } from "@mzawadie/graphql";
+import { DiscountValueTypeEnum, OrderDetailsFragment, OrderErrorFragment } from "@mzawadie/graphql";
 import { HorizontalSpacer } from "@mzawadie/pages/apps/components/HorizontalSpacer";
 import { OrderDiscountContextConsumerProps } from "@mzawadie/pages/products/components/OrderDiscountProviders/OrderDiscountProviders";
 import { OrderDiscountData } from "@mzawadie/pages/products/components/OrderDiscountProviders/types";
+import { getFormErrors } from "@mzawadie/utils/errors";
+import getOrderErrorMessage from "@mzawadie/utils/errors/order";
 import { makeStyles } from "@saleor/macaw-ui";
 import React, { useRef } from "react";
 import { useIntl } from "react-intl";
@@ -23,6 +25,11 @@ const useStyles = makeStyles(
         },
         textRight: {
             textAlign: "right",
+        },
+        textError: {
+            color: theme.palette.error.main,
+            marginLeft: theme.spacing(1.5),
+            display: "inline",
         },
         subtitle: {
             color: theme.palette.grey[500],
@@ -51,12 +58,14 @@ const PRICE_PLACEHOLDER = "---";
 interface OrderDraftDetailsSummaryProps extends OrderDiscountContextConsumerProps {
     disabled?: boolean;
     order: OrderDetailsFragment;
+    errors: OrderErrorFragment[];
     onShippingMethodEdit: () => void;
 }
 
 const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = (props) => {
     const {
         order,
+        errors,
         onShippingMethodEdit,
         orderDiscount,
         addOrderDiscount,
@@ -70,6 +79,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = (props
     } = props;
 
     const intl = useIntl();
+
     const classes = useStyles(props);
 
     const popperAnchorRef = useRef<HTMLTableRowElement | null>(null);
@@ -89,6 +99,8 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = (props
         isShippingRequired,
     } = order;
 
+    const formErrors = getFormErrors(["shipping"], errors);
+
     const hasChosenShippingMethod = shippingMethod !== null && shippingMethodName !== null;
 
     const hasShippingMethods = !!shippingMethods?.length || isShippingRequired;
@@ -101,7 +113,8 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = (props
         }
 
         const { value: discountValue, calculationMode, amount: discountAmount } = orderDiscountData;
-        const { currency } = total.gross;
+
+        const currency = total.gross.currency;
 
         if (calculationMode === DiscountValueTypeEnum.PERCENTAGE) {
             return (
@@ -165,16 +178,26 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = (props
                     </td>
                     <td className={classes.textRight}>{getOrderDiscountLabel(orderDiscount)}</td>
                 </tr>
+
                 <tr>
                     <td>{intl.formatMessage(messages.subtotal)}</td>
                     <td className={classes.textRight}>
                         <Money money={subtotal.gross} />
                     </td>
                 </tr>
-                <tr>
-                    {hasShippingMethods && <td>{getShippingMethodComponent()}</td>}
 
-                    {!hasShippingMethods && <td>{intl.formatMessage(messages.noShippingCarriers)}</td>}
+                <tr>
+                    <td>
+                        {hasShippingMethods && getShippingMethodComponent()}
+
+                        {!hasShippingMethods && intl.formatMessage(messages.noShippingCarriers)}
+
+                        {formErrors.shipping && (
+                            <Typography variant="body2" className={classes.textError}>
+                                {getOrderErrorMessage(formErrors.shipping, intl)}
+                            </Typography>
+                        )}
+                    </td>
 
                     <td className={classes.textRight}>
                         {hasChosenShippingMethod ? (
@@ -184,12 +207,14 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = (props
                         )}
                     </td>
                 </tr>
+
                 <tr>
                     <td>{intl.formatMessage(messages.taxes)}</td>
                     <td className={classes.textRight}>
                         <Money money={order.total.tax} />
                     </td>
                 </tr>
+
                 <tr>
                     <td>{intl.formatMessage(messages.total)}</td>
                     <td className={classes.textRight}>

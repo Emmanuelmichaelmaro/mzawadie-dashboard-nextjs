@@ -1,5 +1,5 @@
 import { getStringOrPlaceholder } from "@mzawadie/core";
-import { WebhookDetails_webhook } from "@mzawadie/pages/webhooks/types/WebhookDetails";
+import { WebhookDetailsQuery } from "@mzawadie/graphql";
 import { isUnnamed } from "@mzawadie/pages/webhooks/utils";
 import { IntlShape, defineMessages } from "react-intl";
 
@@ -21,13 +21,15 @@ export const messages = defineMessages({
     },
 });
 
-export const getHeaderTitle = (intl: IntlShape, webhook?: WebhookDetails_webhook) => {
+export const getHeaderTitle = (intl: IntlShape, webhook?: WebhookDetailsQuery["webhook"]) => {
     if (!webhook) {
         return intl.formatMessage(messages.headerCreate);
     }
+    
     if (isUnnamed(webhook)) {
         return intl.formatMessage(messages.header);
     }
+    
     return intl.formatMessage(messages.headerNamed, {
         webhookName: getStringOrPlaceholder(webhook?.name),
     });

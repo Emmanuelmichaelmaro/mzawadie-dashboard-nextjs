@@ -5,14 +5,15 @@ import {
     TableBody,
     TableCell,
     TableRow,
-    Tooltip,
     Typography,
 } from "@material-ui/core";
-import ErrorIcon from "@material-ui/icons/Error";
+import { Button } from "@mzawadie/components/Button";
 import { CardTitle } from "@mzawadie/components/CardTitle";
-import { renderCollection, stopPropagation } from "@mzawadie/core";
+import { IconButton } from "@mzawadie/components/IconButton";
+import { TableButtonWrapper } from "@mzawadie/components/TableButtonWrapper/TableButtonWrapper";
+import { renderCollection } from "@mzawadie/core";
 import { AppsInstallationsQuery, JobStatusEnum } from "@mzawadie/graphql";
-import { DeleteIcon, ResponsiveTable, Button, IconButton } from "@saleor/macaw-ui";
+import { DeleteIcon, Indicator, ResponsiveTable, Tooltip, TooltipMountWrapper } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -21,14 +22,12 @@ import { useStyles } from "../../styles";
 
 export interface AppsInProgressProps {
     appsList: AppsInstallationsQuery["appsInstallations"];
-    disabled: boolean;
     onAppInstallRetry: (id: string) => void;
     onRemove: (id: string) => void;
 }
 
 const AppsInProgress: React.FC<AppsInProgressProps> = ({
     appsList,
-    disabled,
     onAppInstallRetry,
     onRemove,
     ...props
@@ -40,8 +39,8 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
         <Card>
             <CardTitle
                 title={intl.formatMessage({
-                    defaultMessage: "Ongoing Installations",
                     id: "nIrjSR",
+                    defaultMessage: "Ongoing Installations",
                     description: "section header",
                 })}
             />
@@ -60,11 +59,12 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
                                 >
                                     <Typography variant="body2" className={classes.text}>
                                         <FormattedMessage
-                                            defaultMessage="Installing app..."
                                             id="1qRwgQ"
+                                            defaultMessage="Installing app..."
                                             description="app installation"
                                         />
                                     </Typography>
+
                                     <div className={classes.colSpinner}>
                                         <Progress size={20} />
                                     </div>
@@ -77,35 +77,37 @@ const AppsInProgress: React.FC<AppsInProgressProps> = ({
                                 >
                                     <Typography variant="body2" className={classes.error}>
                                         <FormattedMessage
-                                            defaultMessage="There was a problem during installation"
-                                            id="JufWFT"
+                                            id="Xl0o2y"
+                                            defaultMessage="Problem occured during installation"
                                             description="app installation error"
                                         />
-                                        <Tooltip
-                                            title={<Typography variant="body2">{message}</Typography>}
-                                            classes={{
-                                                tooltip: classes.customTooltip,
-                                            }}
-                                        >
-                                            <ErrorIcon />
+
+                                        <Tooltip title={message} variant="error">
+                                            <TooltipMountWrapper>
+                                                <Indicator icon="error" />
+                                            </TooltipMountWrapper>
                                         </Tooltip>
                                     </Typography>
 
-                                    <Button onClick={() => onAppInstallRetry(id)}>
-                                        <FormattedMessage
-                                            defaultMessage="Retry"
-                                            id="+c/f61"
-                                            description="retry installation"
-                                        />
-                                    </Button>
+                                    <TableButtonWrapper>
+                                        <Button onClick={() => onAppInstallRetry(id)}>
+                                            <FormattedMessage
+                                                id="+c/f61"
+                                                defaultMessage="Retry"
+                                                description="retry installation"
+                                            />
+                                        </Button>
+                                    </TableButtonWrapper>
 
-                                    <IconButton
-                                        variant="secondary"
-                                        color="primary"
-                                        onClick={stopPropagation(() => onRemove(id))}
-                                    >
-                                        <DeleteIcon />
-                                    </IconButton>
+                                    <TableButtonWrapper>
+                                        <IconButton
+                                            variant="secondary"
+                                            color="primary"
+                                            onClick={() => onRemove(id)}
+                                        >
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </TableButtonWrapper>
                                 </TableCell>
                             )}
                         </TableRow>

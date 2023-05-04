@@ -1,8 +1,9 @@
 // @ts-nocheck
 import { NotFoundPage } from "@mzawadie/components/NotFoundPage";
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
+import { commonMessages } from "@mzawadie/core";
 import {
-    commonMessages,
+    extractMutationErrors,
     findValueInEnum,
     getMutationStatus,
     getStringOrPlaceholder,
@@ -16,7 +17,6 @@ import {
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import useShop from "@mzawadie/hooks/useShop";
-import { shippingZoneUrl } from "@mzawadie/pages/shipping/urls";
 import { WarehouseDeleteDialog } from "@mzawadie/pages/warehouses/components/WarehouseDeleteDialog";
 import {
     WarehouseDetailsPage,
@@ -37,16 +37,16 @@ export interface WarehouseDetailsProps {
 }
 
 const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
+    const intl = useIntl();
     const navigate = useNavigator();
     const notify = useNotifier();
     const shop = useShop();
-    const intl = useIntl();
-
+    
     const { data, loading } = useWarehouseDetailsQuery({
         displayLoader: true,
         variables: { id },
     });
-
+    
     const [updateWarehouse, updateWarehouseOpts] = useWarehouseUpdateMutation({
         onCompleted: (data) => {
             if (data.updateWarehouse?.errors.length === 0) {
@@ -57,7 +57,7 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
             }
         },
     });
-
+    
     const updateWarehouseTransitionState = getMutationStatus(updateWarehouseOpts);
 
     const [deleteWarehouse, deleteWarehouseOpts] = useWarehouseDeleteMutation({
@@ -71,7 +71,7 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
             }
         },
     });
-
+    
     const deleteWarehouseTransitionState = getMutationStatus(deleteWarehouseOpts);
 
     const [openModal, closeModal] = createDialogActionHandlers(
@@ -84,29 +84,30 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
         return <NotFoundPage onBack={() => navigate(warehouseListUrl())} />;
     }
 
-    const handleSubmit = async (data: WarehouseDetailsPageFormData) => {
-        const result = await updateWarehouse({
-            variables: {
-                id,
-                input: {
-                    address: {
-                        companyName: data.companyName,
-                        city: data.city,
-                        cityArea: data.cityArea,
-                        country: findValueInEnum(data.country, CountryCode),
-                        countryArea: data.countryArea,
-                        phone: data.phone,
-                        postalCode: data.postalCode,
-                        streetAddress1: data.streetAddress1,
-                        streetAddress2: data.streetAddress2,
+    const handleSubmit = async (data: WarehouseDetailsPageFormData) =>
+        extractMutationErrors(
+            updateWarehouse({
+                variables: {
+                    id,
+                    input: {
+                        address: {
+                            companyName: data.companyName,
+                            city: data.city,
+                            cityArea: data.cityArea,
+                            country: findValueInEnum(data.country, CountryCode),
+                            countryArea: data.countryArea,
+                            phone: data.phone,
+                            postalCode: data.postalCode,
+                            streetAddress1: data.streetAddress1,
+                            streetAddress2: data.streetAddress2,
+                        },
+                        name: data.name,
+                        isPrivate: data.isPrivate,
+                        clickAndCollectOption: data.clickAndCollectOption,
                     },
-                    name: data.name,
                 },
-            },
-        });
-
-        return result.data?.updateWarehouse?.errors;
-    };
+            })
+        );
 
     return (
         <>
@@ -118,9 +119,7 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
                 errors={updateWarehouseOpts.data?.updateWarehouse?.errors || []}
                 saveButtonBarState={updateWarehouseTransitionState}
                 warehouse={data?.warehouse}
-                onBack={() => navigate(warehouseListUrl())}
                 onDelete={() => openModal("delete")}
-                onShippingZoneClick={(id) => navigate(shippingZoneUrl(id))}
                 onSubmit={handleSubmit}
             />
 

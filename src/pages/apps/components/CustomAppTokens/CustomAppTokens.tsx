@@ -1,18 +1,19 @@
 // @ts-nocheck
 import { Card, TableBody, TableCell, TableHead, TableRow } from "@material-ui/core";
+import { Button } from "@mzawadie/components/Button";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { renderCollection } from "@mzawadie/core";
 import { AppUpdateMutation } from "@mzawadie/graphql";
-import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useStyles } from "./styles";
 
 export interface CustomAppTokensProps {
-    tokens: Array<AppUpdateMutation["appUpdate"]["app"]["tokens"] | null> | null;
+    tokens: AppUpdateMutation["appUpdate"]["app"]["tokens"] | null;
     onCreate: () => void;
     onDelete: (id: string) => void;
 }
@@ -28,42 +29,46 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = (props) => {
         <Card>
             <CardTitle
                 title={intl.formatMessage({
-                    defaultMessage: "Tokens",
                     id: "0Mg8o5",
+                    defaultMessage: "Tokens",
                     description: "header",
                 })}
                 toolbar={
                     <Button variant="secondary" onClick={onCreate} data-test-id="create-token">
                         <FormattedMessage
-                            defaultMessage="Create Token"
                             id="RMB6fU"
+                            defaultMessage="Create Token"
                             description="button"
                         />
                     </Button>
                 }
             />
+
             <ResponsiveTable>
                 <TableHead>
                     <TableRow>
                         <TableCell className={classes.colNote}>
-                            <FormattedMessage defaultMessage="Token Note" id="0DRBjg" />
+                            <FormattedMessage id="0DRBjg" defaultMessage="Token Note" />
                         </TableCell>
+
                         <TableCell className={classes.colKey}>
                             <FormattedMessage
-                                defaultMessage="Key"
                                 id="MAsLIT"
+                                defaultMessage="Key"
                                 description="custom app token key"
                             />
                         </TableCell>
+
                         <TableCell className={classes.colActions}>
                             <FormattedMessage
-                                defaultMessage="Actions"
                                 id="VHuzgq"
+                                defaultMessage="Actions"
                                 description="table actions"
                             />
                         </TableCell>
                     </TableRow>
                 </TableHead>
+
                 <TableBody>
                     {renderCollection(
                         tokens,
@@ -72,9 +77,11 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = (props) => {
                                 <TableCell className={classes.colNote}>
                                     {token?.name || <Skeleton />}
                                 </TableCell>
+
                                 <TableCell className={classes.colKey}>
                                     {token?.authToken ? `**** ${token.authToken}` : <Skeleton />}
                                 </TableCell>
+
                                 <TableCell className={classes.colActions}>
                                     <IconButton
                                         variant="secondary"
@@ -89,7 +96,7 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = (props) => {
                         () => (
                             <TableRow>
                                 <TableCell colSpan={numberOfColumns}>
-                                    <FormattedMessage defaultMessage="No tokens found" id="bsP4f3" />
+                                    <FormattedMessage id="bsP4f3" defaultMessage="No tokens found" />
                                 </TableCell>
                             </TableRow>
                         )

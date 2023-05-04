@@ -1,25 +1,21 @@
 // @ts-nocheck
 import { DeleteFilterTabDialog } from "@mzawadie/components/DeleteFilterTabDialog";
 import {
-    SaveFilterTabDialog,
     SaveFilterTabDialogFormData,
+    SaveFilterTabDialog,
 } from "@mzawadie/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@mzawadie/components/Shop/queries";
-import {
-    APP_MOUNT_URI,
-    DEFAULT_INITIAL_SEARCH_DATA,
-    commonMessages,
-    getStringOrPlaceholder,
-    ListViews,
-} from "@mzawadie/core";
+import { APP_MOUNT_URI, DEFAULT_INITIAL_SEARCH_DATA } from "@mzawadie/core";
+import { commonMessages } from "@mzawadie/core";
+import { getStringOrPlaceholder } from "@mzawadie/core";
+import { ListViews } from "@mzawadie/core";
 import { useStaffListQuery, useStaffMemberAddMutation } from "@mzawadie/graphql";
 import useListSettings from "@mzawadie/hooks/useListSettings";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { usePaginationReset } from "@mzawadie/hooks/usePaginationReset";
-import usePaginator, { createPaginationState } from "@mzawadie/hooks/usePaginator";
+import usePaginator, { createPaginationState, PaginatorContext } from "@mzawadie/hooks/usePaginator";
 import { newPasswordUrl } from "@mzawadie/pages/auth/urls";
-import { configurationMenuUrl } from "@mzawadie/pages/configuration";
 import usePermissionGroupSearch from "@mzawadie/searches/usePermissionGroupSearch";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@mzawadie/utils/handlers/filterHandlers";
@@ -58,13 +54,13 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
     const navigate = useNavigator();
     const notify = useNotifier();
     const intl = useIntl();
-    const paginate = usePaginator();
 
     const { updateListSettings, settings } = useListSettings(ListViews.STAFF_MEMBERS_LIST);
 
     usePaginationReset(staffListUrl, params, settings.rowNumber);
 
     const paginationState = createPaginationState(settings.rowNumber, params);
+
     const queryVariables = React.useMemo(
         () => ({
             ...paginationState,
@@ -73,10 +69,12 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
         }),
         [params, settings.rowNumber]
     );
+
     const { data: staffQueryData, loading } = useStaffListQuery({
         displayLoader: true,
         variables: queryVariables,
     });
+
     const limitOpts = useShopLimitsQuery({
         variables: {
             staffUsers: true,
@@ -90,16 +88,16 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
                     status: "success",
                     text: intl.formatMessage(commonMessages.savedChanges),
                 });
-                navigate(staffMemberDetailsUrl(data.staffCreate.user?.id));
+                navigate(staffMemberDetailsUrl(data.staffCreate.user.id));
             }
         },
     });
 
-    const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-        staffQueryData?.staffUsers.pageInfo,
+    const paginationValues = usePaginator({
+        pageInfo: staffQueryData?.staffUsers?.pageInfo,
         paginationState,
-        params
-    );
+        queryString: params,
+    });
 
     const handleSort = createSortHandler(navigate, staffListUrl, params);
 
@@ -164,7 +162,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
         });
 
     return (
-        <>
+        <PaginatorContext.Provider value={paginationValues}>
             <StaffListPage
                 currentTab={currentTab}
                 filterOpts={getFilterOpts(params)}
@@ -179,39 +177,37 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
                 disabled={loading || addStaffMemberData.loading || limitOpts.loading}
                 limits={limitOpts.data?.shop.limits}
                 settings={settings}
-                pageInfo={pageInfo}
                 sort={getSortParams(params)}
                 staffMembers={mapEdgesToItems(staffQueryData?.staffUsers)}
                 onAdd={() => openModal("add")}
-                onBack={() => navigate(configurationMenuUrl)}
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
                 onUpdateListSettings={updateListSettings}
-                onRowClick={(id) => () => navigate(staffMemberDetailsUrl(id))}
                 onSort={handleSort}
             />
+
             <StaffAddMemberDialog
                 availablePermissionGroups={mapEdgesToItems(searchPermissionGroupsOpts?.data?.search)}
                 confirmButtonState={addStaffMemberData.status}
                 initialSearch=""
                 disabled={loading}
-                errors={addStaffMemberData.data?.staffCreate.errors || []}
+                errors={addStaffMemberData.data?.staffCreate?.errors || []}
                 open={params.action === "add"}
                 onClose={closeModal}
                 onConfirm={handleStaffMemberAdd}
                 fetchMorePermissionGroups={{
-                    hasMore: searchPermissionGroupsOpts.data?.search.pageInfo.hasNextPage,
+                    hasMore: searchPermissionGroupsOpts.data?.search?.pageInfo.hasNextPage,
                     loading: searchPermissionGroupsOpts.loading,
                     onFetchMore: loadMorePermissionGroups,
                 }}
                 onSearchChange={searchPermissionGroups}
             />
+
             <SaveFilterTabDialog
                 open={params.action === "save-search"}
                 confirmButtonState="default"
                 onClose={closeModal}
                 onSubmit={handleTabSave}
             />
+
             <DeleteFilterTabDialog
                 open={params.action === "delete-search"}
                 confirmButtonState="default"
@@ -219,7 +215,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
                 onSubmit={handleTabDelete}
                 tabName={getStringOrPlaceholder(tabs[currentTab - 1]?.name)}
             />
-        </>
+        </PaginatorContext.Provider>
     );
 };
 

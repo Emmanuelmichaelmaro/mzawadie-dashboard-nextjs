@@ -1,20 +1,17 @@
 // @ts-nocheck
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    TextField,
-} from "@material-ui/core";
-import { ConfirmButton, ConfirmButtonTransitionState } from "@mzawadie/components/ConfirmButton";
+import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
+import BackButton from "@mzawadie/components/BackButton";
+import { ConfirmButton } from "@mzawadie/components/ConfirmButton";
 import { Form } from "@mzawadie/components/Form";
 import FormSpacer from "@mzawadie/components/FormSpacer";
-import { buttonMessages, DialogProps } from "@mzawadie/core";
+import { buttonMessages } from "@mzawadie/core";
+import { DialogProps } from "@mzawadie/core";
 import { AccountErrorFragment } from "@mzawadie/graphql";
+import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import { useModalDialogErrors } from "@mzawadie/hooks/useModalDialogErrors";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getAccountErrorMessage from "@mzawadie/utils/errors/account";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -26,7 +23,7 @@ interface StaffPasswordResetDialogFormData {
 export interface StaffPasswordResetDialogProps extends DialogProps {
     confirmButtonState: ConfirmButtonTransitionState;
     errors: AccountErrorFragment[];
-    onSubmit: (data: StaffPasswordResetDialogFormData) => void;
+    onSubmit: (data: StaffPasswordResetDialogFormData) => SubmitPromise;
 }
 
 const initialForm: StaffPasswordResetDialogFormData = {
@@ -51,8 +48,8 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
         <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
             <DialogTitle>
                 <FormattedMessage
-                    defaultMessage="Change Password"
                     id="+kb2lM"
+                    defaultMessage="Change Password"
                     description="dialog header"
                 />
             </DialogTitle>
@@ -66,8 +63,8 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
                                 fullWidth
                                 helperText={getAccountErrorMessage(formErrors.oldPassword, intl)}
                                 label={intl.formatMessage({
-                                    defaultMessage: "Previous Password",
                                     id: "GXdwyR",
+                                    defaultMessage: "Previous Password",
                                     description: "input label",
                                 })}
                                 name="oldPassword"
@@ -83,14 +80,14 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
                                 helperText={
                                     getAccountErrorMessage(formErrors.newPassword, intl) ||
                                     intl.formatMessage({
+                                        id: "qEJT8e",
                                         defaultMessage:
                                             "New password must be at least 8 characters long",
-                                        id: "qEJT8e",
                                     })
                                 }
                                 label={intl.formatMessage({
-                                    defaultMessage: "New Password",
                                     id: "cMFlOp",
+                                    defaultMessage: "New Password",
                                     description: "input label",
                                 })}
                                 name="newPassword"
@@ -100,14 +97,10 @@ const StaffPasswordResetDialog: React.FC<StaffPasswordResetDialogProps> = ({
                         </DialogContent>
 
                         <DialogActions>
-                            <Button onClick={onClose}>
-                                <FormattedMessage {...buttonMessages.back} />
-                            </Button>
+                            <BackButton onClick={onClose} />
                             <ConfirmButton
                                 disabled={data.newPassword.length < 8}
                                 transitionState={confirmButtonState}
-                                color="primary"
-                                variant="contained"
                                 type="submit"
                                 onClick={submit}
                             >

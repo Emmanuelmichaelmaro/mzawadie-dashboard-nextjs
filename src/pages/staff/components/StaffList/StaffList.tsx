@@ -1,21 +1,14 @@
-/* eslint-disable jsx-a11y/alt-text */
 // @ts-nocheck
 import { TableBody, TableCell, TableFooter, TableHead, TableRow, Typography } from "@material-ui/core";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { TableCellHeader } from "@mzawadie/components/TableCellHeader";
-import { TablePagination } from "@mzawadie/components/TablePagination";
-import {
-    getUserInitials,
-    getUserName,
-    maybe,
-    renderCollection,
-    ListProps,
-    SortPage,
-    RelayToFlat,
-} from "@mzawadie/core";
+import { TablePaginationWithContext } from "@mzawadie/components/TablePagination";
+import { TableRowLink } from "@mzawadie/components/TableRowLink";
+import { getUserInitials, getUserName, maybe, renderCollection } from "@mzawadie/core";
+import { ListProps, RelayToFlat, SortPage } from "@mzawadie/core";
 import { StaffListQuery } from "@mzawadie/graphql";
-import { StaffListUrlSortField } from "@mzawadie/pages/staff/urls";
+import { StaffListUrlSortField, staffMemberDetailsUrl } from "@mzawadie/pages/staff/urls";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
@@ -72,20 +65,10 @@ interface StaffListProps extends ListProps, SortPage<StaffListUrlSortField> {
 const numberOfColumns = 2;
 
 const StaffList: React.FC<StaffListProps> = (props) => {
-    const {
-        settings,
-        disabled,
-        onNextPage,
-        onPreviousPage,
-        onUpdateListSettings,
-        onRowClick,
-        onSort,
-        pageInfo,
-        sort,
-        staffMembers,
-    } = props;
+    const { settings, disabled, onUpdateListSettings, onSort, sort, staffMembers } = props;
 
     const classes = useStyles(props);
+
     const intl = useIntl();
 
     return (
@@ -108,8 +91,8 @@ const StaffList: React.FC<StaffListProps> = (props) => {
                         className={classes.wideColumn}
                     >
                         <FormattedMessage
-                            defaultMessage="Name"
                             id="W32xfN"
+                            defaultMessage="Name"
                             description="staff member full name"
                         />
                     </TableCellHeader>
@@ -122,21 +105,18 @@ const StaffList: React.FC<StaffListProps> = (props) => {
                         }
                         onClick={() => onSort(StaffListUrlSortField.email)}
                     >
-                        <FormattedMessage defaultMessage="Email Address" id="xxQxLE" />
+                        <FormattedMessage id="xxQxLE" defaultMessage="Email Address" />
                     </TableCellHeader>
                 </TableRow>
             </TableHead>
 
             <TableFooter>
                 <TableRow>
-                    <TablePagination
+                    <TablePaginationWithContext
                         colSpan={numberOfColumns}
+                        disabled={disabled}
                         settings={settings}
-                        hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : undefined}
-                        onNextPage={onNextPage}
                         onUpdateListSettings={onUpdateListSettings}
-                        hasPreviousPage={pageInfo && !disabled ? pageInfo.hasPreviousPage : undefined}
-                        onPreviousPage={onPreviousPage}
                     />
                 </TableRow>
             </TableFooter>
@@ -145,12 +125,12 @@ const StaffList: React.FC<StaffListProps> = (props) => {
                 {renderCollection(
                     staffMembers,
                     (staffMember) => (
-                        <TableRow
+                        <TableRowLink
                             className={classNames({
                                 [classes.tableRow]: !!staffMember,
                             })}
                             hover={!!staffMember}
-                            onClick={!!staffMember ? onRowClick(staffMember.id) : undefined}
+                            href={staffMember && staffMemberDetailsUrl(staffMember.id)}
                             key={staffMember ? staffMember.id : "skeleton"}
                         >
                             <TableCell>
@@ -169,18 +149,18 @@ const StaffList: React.FC<StaffListProps> = (props) => {
 
                                 <Typography>{getUserName(staffMember) || <Skeleton />}</Typography>
 
-                                <Typography variant="caption" className={classes.statusText}>
+                                <Typography variant={"caption"} className={classes.statusText}>
                                     {maybe<React.ReactNode>(
                                         () =>
                                             staffMember.isActive
                                                 ? intl.formatMessage({
-                                                      defaultMessage: "Active",
                                                       id: "9Zlogd",
+                                                      defaultMessage: "Active",
                                                       description: "staff member status",
                                                   })
                                                 : intl.formatMessage({
-                                                      defaultMessage: "Inactive",
                                                       id: "7WzUxn",
+                                                      defaultMessage: "Inactive",
                                                       description: "staff member status",
                                                   }),
                                         <Skeleton />
@@ -191,12 +171,12 @@ const StaffList: React.FC<StaffListProps> = (props) => {
                             <TableCell>
                                 {maybe<React.ReactNode>(() => staffMember.email, <Skeleton />)}
                             </TableCell>
-                        </TableRow>
+                        </TableRowLink>
                     ),
                     () => (
                         <TableRow>
                             <TableCell colSpan={numberOfColumns}>
-                                <FormattedMessage defaultMessage="No staff members found" id="xJQX5t" />
+                                <FormattedMessage id="xJQX5t" defaultMessage="No staff members found" />
                             </TableCell>
                         </TableRow>
                     )

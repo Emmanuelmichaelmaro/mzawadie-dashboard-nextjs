@@ -1,13 +1,17 @@
 // @ts-nocheck
 import { Card, TableBody, TableCell, TableHead, TableRow } from "@material-ui/core";
+import { Button } from "@mzawadie/components/Button";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { DateTime } from "@mzawadie/components/Date";
 import { Money } from "@mzawadie/components/Money";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
-import { maybe, RelayToFlat, renderCollection, transformPaymentStatus } from "@mzawadie/core";
+import { TableRowLink } from "@mzawadie/components/TableRowLink";
+import { RelayToFlat } from "@mzawadie/core";
+import { maybe, renderCollection, transformPaymentStatus } from "@mzawadie/core";
 import { CustomerDetailsQuery } from "@mzawadie/graphql";
-import { Button, makeStyles, Pill } from "@saleor/macaw-ui";
+import { orderUrl } from "@mzawadie/pages/orders/urls";
+import { makeStyles, Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -25,12 +29,11 @@ const useStyles = makeStyles(
 
 export interface CustomerOrdersProps {
     orders: RelayToFlat<CustomerDetailsQuery["user"]["orders"]>;
-    onViewAllOrdersClick: () => void;
-    onRowClick: (id: string) => void;
+    viewAllHref: string;
 }
 
 const CustomerOrders: React.FC<CustomerOrdersProps> = (props) => {
-    const { orders, onRowClick, onViewAllOrdersClick } = props;
+    const { orders, viewAllHref } = props;
     const classes = useStyles(props);
 
     const intl = useIntl();
@@ -41,70 +44,77 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = (props) => {
               paymentStatus: transformPaymentStatus(order.paymentStatus, intl),
           }))
         : undefined;
+
     return (
         <Card>
             <CardTitle
                 title={intl.formatMessage({
-                    defaultMessage: "Recent Orders",
                     id: "1LiVhv",
+                    defaultMessage: "Recent Orders",
                     description: "section header",
                 })}
                 toolbar={
-                    <Button variant="tertiary" onClick={onViewAllOrdersClick}>
+                    <Button variant="tertiary" href={viewAllHref}>
                         <FormattedMessage
-                            defaultMessage="View all orders"
                             id="3+990c"
+                            defaultMessage="View all orders"
                             description="button"
                         />
                     </Button>
                 }
             />
+
             <ResponsiveTable>
                 <TableHead>
                     <TableRow>
                         <TableCell>
                             <FormattedMessage
-                                defaultMessage="No. of Order"
                                 id="nTF6tG"
+                                defaultMessage="No. of Order"
                                 description="number of order"
                             />
                         </TableCell>
+
                         <TableCell>
                             <FormattedMessage
-                                defaultMessage="Date"
                                 id="ri3kK9"
+                                defaultMessage="Date"
                                 description="order placement date"
                             />
                         </TableCell>
+
                         <TableCell>
                             <FormattedMessage
-                                defaultMessage="Status"
                                 id="pURrk1"
+                                defaultMessage="Status"
                                 description="order status"
                             />
                         </TableCell>
+
                         <TableCell className={classes.textRight}>
                             <FormattedMessage
-                                defaultMessage="Total"
                                 id="taX/V3"
+                                defaultMessage="Total"
                                 description="order total amount"
                             />
                         </TableCell>
                     </TableRow>
                 </TableHead>
+
                 <TableBody>
                     {renderCollection(
                         orderList,
                         (order) => (
-                            <TableRow
+                            <TableRowLink
                                 hover={!!order}
                                 className={!!order ? classes.link : undefined}
-                                onClick={order ? () => onRowClick(order.id) : undefined}
+                                href={order && orderUrl(order.id)}
                                 key={order ? order.id : "skeleton"}
                             >
                                 <TableCell>
-                                    {maybe(() => order.number) ? `#${order.number}` : <Skeleton />}
+                                    {maybe(() => order.number) ? "#" + order.number : <Skeleton />}
                                 </TableCell>
+
                                 <TableCell>
                                     {maybe(() => order.created) ? (
                                         <DateTime date={order.created} />
@@ -112,6 +122,7 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = (props) => {
                                         <Skeleton />
                                     )}
                                 </TableCell>
+
                                 <TableCell>
                                     {maybe(() => order.paymentStatus.status) !== undefined ? (
                                         order.paymentStatus.status === null ? null : (
@@ -124,6 +135,7 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = (props) => {
                                         <Skeleton />
                                     )}
                                 </TableCell>
+
                                 <TableCell className={classes.textRight} align="right">
                                     {maybe(() => order.total.gross) ? (
                                         <Money money={order.total.gross} />
@@ -131,12 +143,12 @@ const CustomerOrders: React.FC<CustomerOrdersProps> = (props) => {
                                         <Skeleton />
                                     )}
                                 </TableCell>
-                            </TableRow>
+                            </TableRowLink>
                         ),
                         () => (
                             <TableRow>
                                 <TableCell colSpan={6}>
-                                    <FormattedMessage defaultMessage="No orders found" id="RlfqSV" />
+                                    <FormattedMessage id="RlfqSV" defaultMessage="No orders found" />
                                 </TableCell>
                             </TableRow>
                         )

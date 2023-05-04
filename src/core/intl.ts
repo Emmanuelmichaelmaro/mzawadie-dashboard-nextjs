@@ -1,552 +1,602 @@
 import { defineMessages, IntlShape } from "react-intl";
 
 export const commonMessages = defineMessages({
+    active: {
+        id: "c24hjq",
+        defaultMessage: "Active",
+        description: "status",
+    },
+    notActive: {
+        id: "NwQXZp",
+        defaultMessage: "Not active",
+        description: "status",
+    },
     availability: {
-        defaultMessage: "Availability",
         id: "hOxIeP",
+        defaultMessage: "Availability",
     },
     catalog: {
-        defaultMessage: "Catalog",
         id: "GOdq5V",
+        defaultMessage: "Catalog",
     },
     chooseFile: {
-        defaultMessage: "Choose file",
         id: "eWcvOc",
+        defaultMessage: "Choose file",
         description: "button",
     },
     channel: {
-        defaultMessage: "Channel",
         id: "KeO51o",
+        defaultMessage: "Channel",
     },
     customApps: {
-        defaultMessage: "Local Apps",
-        id: "w4R/SO",
+        id: "+iV0gu",
+        defaultMessage: "Internal Apps",
     },
     dashboard: {
-        defaultMessage: "Dashboard",
         id: "hzSNj4",
+        defaultMessage: "Dashboard",
     },
     demo: {
+        id: "i0AcKY",
         defaultMessage:
             "Just to let you know... You're in demo mode. You can play around with the dashboard but can't save changes.",
-        id: "i0AcKY",
         description: "notification message after log in",
     },
     description: {
-        defaultMessage: "Description",
         id: "Q8Qw5B",
+        defaultMessage: "Description",
     },
     descriptionOptional: {
-        defaultMessage: "Description (optional)",
         id: "bZenNC",
+        defaultMessage: "Description (optional)",
     },
     discounts: {
-        defaultMessage: "Discounts",
         id: "n+Gwbu",
+        defaultMessage: "Discounts",
     },
     drafts: {
-        defaultMessage: "Drafts",
         id: "2atspc",
+        defaultMessage: "Drafts",
     },
     email: {
-        defaultMessage: "Email address",
         id: "hJZwTS",
+        defaultMessage: "Email address",
     },
     endDate: {
-        defaultMessage: "End Date",
         id: "T4GOiX",
+        defaultMessage: "End Date",
     },
     endHour: {
-        defaultMessage: "End Hour",
         id: "juBV+h",
+        defaultMessage: "End Hour",
     },
     error: {
-        defaultMessage: "Error",
         id: "KN7zKn",
+        defaultMessage: "Error",
     },
     firstName: {
-        defaultMessage: "First Name",
         id: "Q6wcZ5",
+        defaultMessage: "First Name",
     },
     generalInformations: {
-        defaultMessage: "General Information",
         id: "pkUbrL",
+        defaultMessage: "General Information",
     },
 
     insufficientPermissions: {
-        defaultMessage: "Insufficient permissions",
         id: "DOkfyZ",
+        defaultMessage: "Insufficient permissions",
     },
     lastName: {
-        defaultMessage: "Last Name",
         id: "aheQdn",
+        defaultMessage: "Last Name",
     },
     limitReached: {
-        defaultMessage: "Reached limit for this plan",
         id: "8oIbMI",
+        defaultMessage: "Reached limit for this plan",
+    },
+    name: {
+        id: "HAlOn1",
+        defaultMessage: "Name",
     },
     no: {
-        defaultMessage: "No",
         id: "oUWADl",
+        defaultMessage: "No",
     },
     optionalField: {
-        defaultMessage: "Optional",
         id: "lzdvwp",
+        defaultMessage: "Optional",
         description: "field is optional",
     },
     properties: {
-        defaultMessage: "Properties",
         id: "aI80kg",
+        defaultMessage: "Properties",
     },
     readOnly: {
-        defaultMessage: "Mzawadie runs in read-only mode. Changes not saved.",
-        id: "OeKIoY",
+        id: "kFYlu2",
+        defaultMessage: "Saleor runs in read-only mode. Changes not saved.",
     },
     requiredField: {
-        defaultMessage: "This field is required",
         id: "TKmub+",
+        defaultMessage: "This field is required",
     },
     savedChanges: {
-        defaultMessage: "Saved changes",
         id: "rqiCWU",
+        defaultMessage: "Saved changes",
     },
     selected: {
-        defaultMessage: "Selected",
         id: "byP6IC",
+        defaultMessage: "Selected",
     },
     sessionExpired: {
-        defaultMessage: "Your session has expired. Please log in again to continue.",
         id: "Fvvgoi",
+        defaultMessage: "Your session has expired. Please log in again to continue.",
     },
     somethingWentWrong: {
-        defaultMessage: "Mzawadie ran into an unexpected problem",
-        id: "xqfaLi",
+        id: "LVa5ew",
+        defaultMessage: "Saleor ran into an unexpected problem",
+    },
+    defaultErrorTitle: {
+        id: "JqiqNj",
+        defaultMessage: "Something went wrong",
     },
     startDate: {
-        defaultMessage: "Start Date",
         id: "QirE3M",
+        defaultMessage: "Start Date",
     },
     startHour: {
-        defaultMessage: "Start Hour",
         id: "tWbE34",
+        defaultMessage: "Start Hour",
     },
     status: {
-        defaultMessage: "Status",
         id: "tzMNF3",
+        defaultMessage: "Status",
     },
     paymentStatus: {
-        defaultMessage: "Payment status",
         id: "6D+yYX",
+        defaultMessage: "Payment status",
     },
     summary: {
-        defaultMessage: "Summary",
         id: "RrCui3",
+        defaultMessage: "Summary",
     },
     translationAttributes: {
-        defaultMessage: "Attributes",
         id: "+xTpT1",
+        defaultMessage: "Attributes",
     },
     unauthorizedDashboardAccess: {
-        defaultMessage: "Only staff users can access the dashboard",
         id: "MKtgZB",
+        defaultMessage: "Only staff users can access the dashboard",
     },
     uploadImage: {
-        defaultMessage: "Upload image",
         id: "Lx1ima",
+        defaultMessage: "Upload image",
         description: "button",
     },
     yes: {
-        defaultMessage: "Yes",
         id: "a5msuh",
+        defaultMessage: "Yes",
     },
     date: {
-        defaultMessage: "Date",
         id: "P7PLVj",
+        defaultMessage: "Date",
     },
     time: {
-        defaultMessage: "Time",
         id: "u3sYPH",
+        defaultMessage: "Time",
         description: "independent of any particular day, eg. 11:35",
     },
     cannotFullfillUnpaidOrder: {
-        defaultMessage: "Can’t fulfill until payment is captured",
         id: "o8f4Sg",
+        defaultMessage: "Can’t fulfill until payment is captured",
         description: "disabled option description",
+    },
+    deprecated: {
+        id: "z9c6/C",
+        defaultMessage: "Deprecated",
     },
 });
 
 export const errorMessages = defineMessages({
     imgageUploadErrorTitle: {
-        defaultMessage: "Couldn't process image",
         id: "Yo2kC+",
+        defaultMessage: "Couldn't process image",
     },
     imageUploadErrorText: {
+        id: "26+K4N",
         defaultMessage:
-            "There was a problem with the file you uploaded as an image and it couldn't be used. Please try a different file.",
-        id: "JiVwOU",
+            "There was a poblem with the file you uploaded as an image and it couldn't be used. Please try a different file.",
     },
     preorderEndDateInFutureErrorText: {
-        defaultMessage: "Preorder end time needs to be set in the future",
         id: "6QjMei",
+        defaultMessage: "Preorder end time needs to be set in the future",
+    },
+    baseCodeErrorMessage: {
+        id: "7+GBlj",
+        defaultMessage: "Error code {errorCode} {fieldError}",
+    },
+    codeErrorFieldMessage: {
+        id: "Qox+kb",
+        defaultMessage: "on field {fieldName}",
     },
 });
 
 export const buttonMessages = defineMessages({
     accept: {
-        defaultMessage: "Accept",
         id: "skPoVe",
+        defaultMessage: "Accept",
         description: "button",
     },
     approve: {
-        defaultMessage: "Approve",
         id: "59XppT",
+        defaultMessage: "Approve",
         description: "button",
     },
     assign: {
-        defaultMessage: "Assign",
         id: "oiuwOl",
+        defaultMessage: "Assign",
         description: "button",
     },
     back: {
-        defaultMessage: "Back",
         id: "0OfZJA",
+        defaultMessage: "Back",
         description: "button",
     },
     cancel: {
-        defaultMessage: "Cancel",
         id: "9uNz+T",
+        defaultMessage: "Cancel",
         description: "button",
     },
     clear: {
-        defaultMessage: "Clear",
         id: "2FQsYj",
+        defaultMessage: "Clear",
         description: "button",
     },
     confirm: {
-        defaultMessage: "Confirm",
         id: "DJFPzq",
+        defaultMessage: "Confirm",
         description: "button",
     },
     continue: {
-        defaultMessage: "Continue",
         id: "Rjs1CD",
+        defaultMessage: "Continue",
         description: "button",
     },
     create: {
-        defaultMessage: "Create",
         id: "H5NKfr",
+        defaultMessage: "Create",
         description: "button",
     },
     delete: {
-        defaultMessage: "Delete",
         id: "ufmuTp",
+        defaultMessage: "Delete",
         description: "button",
     },
     done: {
-        defaultMessage: "Done",
         id: "eOrLzG",
+        defaultMessage: "Done",
         description: "button",
     },
     edit: {
-        defaultMessage: "Edit",
         id: "Ja7gHc",
+        defaultMessage: "Edit",
         description: "button",
     },
     manage: {
-        defaultMessage: "Manage",
         id: "IbVKSH",
+        defaultMessage: "Manage",
         description: "button",
     },
     nextStep: {
-        defaultMessage: "Next",
         id: "wlQTfb",
+        defaultMessage: "Next",
         description: "go to next step, button",
     },
     ok: {
-        defaultMessage: "OK",
         id: "s9sOcC",
+        defaultMessage: "OK",
         description: "button",
     },
     remove: {
-        defaultMessage: "Remove",
         id: "bu/fC1",
+        defaultMessage: "Remove",
+        description: "button",
+    },
+    reset: {
+        defaultMessage: "Reset",
+        id: "TOMgXz",
         description: "button",
     },
     save: {
-        defaultMessage: "Save",
         id: "RaycYK",
+        defaultMessage: "Save",
         description: "button",
     },
     select: {
-        defaultMessage: "Select",
         id: "a+x05s",
+        defaultMessage: "Select",
         description: "select option, button",
     },
     selectAll: {
-        defaultMessage: "Select All",
         id: "rfvBAF",
+        defaultMessage: "Select All",
         description: "select all options, button",
     },
     send: {
-        defaultMessage: "Send",
         id: "hqVMLQ",
+        defaultMessage: "Send",
         description: "button",
     },
     show: {
-        defaultMessage: "Show",
         id: "/8/Ffn",
+        defaultMessage: "Show",
         description: "button",
     },
     undo: {
-        defaultMessage: "Undo",
         id: "vN3qdA",
+        defaultMessage: "Undo",
         description: "button",
     },
 });
 
 export const sectionNames = defineMessages({
     apps: {
-        defaultMessage: "Apps",
         id: "9q562c",
+        defaultMessage: "Apps",
         description: "apps section name",
     },
     appExtensions: {
-        defaultMessage: "Apps",
         id: "Y7UlMR",
+        defaultMessage: "Apps",
         description: "app extensions subsection",
     },
     attributes: {
-        defaultMessage: "Attributes",
         id: "l2oVCF",
+        defaultMessage: "Attributes",
         description: "attributes section name",
     },
     categories: {
-        defaultMessage: "Categories",
         id: "sK1FPw",
+        defaultMessage: "Categories",
         description: "categories section name",
     },
     channels: {
-        defaultMessage: "Channels",
         id: "NlSJMM",
+        defaultMessage: "Channels",
         description: "channels section name",
     },
     collections: {
-        defaultMessage: "Collections",
         id: "NNT3Lp",
+        defaultMessage: "Collections",
         description: "collections section name",
     },
     configuration: {
-        defaultMessage: "Configuration",
         id: "xfGZsi",
+        defaultMessage: "Configuration",
         description: "configuration section name",
     },
     customers: {
-        defaultMessage: "Customers",
         id: "McN+wq",
+        defaultMessage: "Customers",
         description: "customers section name",
     },
     draftOrders: {
-        defaultMessage: "Draft Orders",
         id: "YMBn8d",
+        defaultMessage: "Draft Orders",
         description: "draft orders section name",
     },
     exchangeRates: {
-        defaultMessage: "Exchange Rates",
         id: "j0ugM4",
+        defaultMessage: "Exchange Rates",
         description: "Manage and Update your warehouse information",
     },
     giftCards: {
-        defaultMessage: "Gift Cards",
         id: "HSmg1/",
+        defaultMessage: "Gift Cards",
         description: "gift cards section name",
     },
     home: {
-        defaultMessage: "Home",
         id: "4JW9iJ",
+        defaultMessage: "Home",
         description: "home section name",
     },
+    marketplace: {
+        id: "E+M17x",
+        defaultMessage: "Marketplace",
+        description: "marketplace section name",
+    },
     navigation: {
-        defaultMessage: "Navigation",
         id: "9C7PZE",
+        defaultMessage: "Navigation",
         description: "navigation section name",
     },
     orders: {
-        defaultMessage: "Orders",
         id: "Ta9j04",
+        defaultMessage: "Orders",
         description: "orders section name",
     },
     pageTypes: {
-        defaultMessage: "Page Types",
         id: "a9S9Je",
+        defaultMessage: "Page Types",
         description: "page types section name",
     },
     pages: {
-        defaultMessage: "Pages",
         id: "H6NsC1",
+        defaultMessage: "Pages",
         description: "pages section name",
     },
     permissionGroups: {
-        defaultMessage: "Permission Groups",
         id: "DNTxWr",
+        defaultMessage: "Permission Groups",
         description: "permission groups section name",
     },
     plugins: {
-        defaultMessage: "Plugins",
         id: "WhvuCb",
+        defaultMessage: "Plugins",
         description: "plugins section name",
     },
     productTypes: {
-        defaultMessage: "Product Types",
         id: "YQ3EXR",
+        defaultMessage: "Product Types",
         description: "product types section name",
     },
     products: {
-        defaultMessage: "Products",
         id: "K8xNLe",
+        defaultMessage: "Products",
         description: "products section name",
     },
     sales: {
-        defaultMessage: "Sales",
         id: "kJQczl",
+        defaultMessage: "Sales",
         description: "sales section name",
     },
     serviceAccounts: {
-        defaultMessage: "Service Accounts",
         id: "8xsKUv",
+        defaultMessage: "Service Accounts",
         description: "service accounts section name",
     },
     shipping: {
-        defaultMessage: "Shipping Methods",
         id: "D9ie4n",
+        defaultMessage: "Shipping Methods",
         description: "shipping section name",
     },
+    shippingZones: {
+        id: "V1MytH",
+        defaultMessage: "Shipping Zones",
+        description: "shipping zones section name",
+    },
     siteSettings: {
-        defaultMessage: "Site Settings",
         id: "viFkCw",
+        defaultMessage: "Site Settings",
         description: "site settings section name",
     },
     staff: {
-        defaultMessage: "Staff Members",
         id: "AQFMYU",
+        defaultMessage: "Staff Members",
         description: "staff section name",
     },
     taxes: {
-        defaultMessage: "Taxes",
         id: "5elC9k",
+        defaultMessage: "Taxes",
         description: "taxes section name",
     },
     translations: {
-        defaultMessage: "Translations",
         id: "5fCMUI",
+        defaultMessage: "Translations",
         description: "translations section name",
     },
+    variants: {
+        id: "8GC/ah",
+        defaultMessage: "Variants",
+        description: "variants section name",
+    },
     vouchers: {
-        defaultMessage: "Vouchers",
         id: "iUy2dx",
+        defaultMessage: "Vouchers",
         description: "vouchers section name",
     },
     warehouses: {
-        defaultMessage: "Warehouses",
         id: "ycMLN9",
+        defaultMessage: "Warehouses",
         description: "warehouses section name",
     },
     webhooks: {
-        defaultMessage: "Webhooks",
         id: "6nSTuC",
+        defaultMessage: "Webhooks",
         description: "webhooks section name",
     },
 });
 
 export const commonStatusMessages = defineMessages({
     cancelled: {
-        defaultMessage: "Cancelled",
         id: "dOQB9o",
+        defaultMessage: "Cancelled",
         description: "payment status",
     },
 });
 
 export const orderStatusMessages = defineMessages({
     draft: {
-        defaultMessage: "Draft",
         id: "toDL5R",
+        defaultMessage: "Draft",
         description: "order status",
     },
     fulfilled: {
-        defaultMessage: "Fulfilled",
         id: "pkjXPD",
+        defaultMessage: "Fulfilled",
         description: "order status",
     },
     partiallyFulfilled: {
-        defaultMessage: "Partially fulfilled",
         id: "PbqNhi",
+        defaultMessage: "Partially fulfilled",
         description: "order status",
     },
     partiallyReturned: {
-        defaultMessage: "Partially returned",
         id: "26BKkX",
+        defaultMessage: "Partially returned",
         description: "order status",
     },
     readyToCapture: {
-        defaultMessage: "Ready to capture",
         id: "rqtV5d",
+        defaultMessage: "Ready to capture",
         description: "order status",
     },
     readyToFulfill: {
-        defaultMessage: "Ready to fulfill",
         id: "oLMXDv",
+        defaultMessage: "Ready to fulfill",
         description: "order status",
     },
     returned: {
-        defaultMessage: "Returned",
         id: "4Dc2j0",
+        defaultMessage: "Returned",
         description: "order status",
     },
     unconfirmed: {
-        defaultMessage: "Unconfirmed",
         id: "+x84Ji",
+        defaultMessage: "Unconfirmed",
         description: "order status",
     },
     unfulfilled: {
-        defaultMessage: "Unfulfilled",
         id: "oB0y5Y",
+        defaultMessage: "Unfulfilled",
         description: "order status",
     },
 });
 
 export const paymentStatusMessages = defineMessages({
     paid: {
-        defaultMessage: "Fully paid",
         id: "2pw5dQ",
+        defaultMessage: "Fully paid",
         description: "payment status",
     },
     partiallyPaid: {
-        defaultMessage: "Partially paid",
         id: "INNPVX",
+        defaultMessage: "Partially paid",
         description: "payment status",
     },
     partiallyRefunded: {
-        defaultMessage: "Partially refunded",
         id: "OGemtu",
+        defaultMessage: "Partially refunded",
         description: "payment status",
     },
     refunded: {
-        defaultMessage: "Fully refunded",
         id: "XJSRDK",
+        defaultMessage: "Fully refunded",
         description: "payment status",
     },
     unpaid: {
-        defaultMessage: "Unpaid",
         id: "FBtqtl",
+        defaultMessage: "Unpaid",
         description: "payment status",
     },
     pending: {
-        defaultMessage: "Pending",
         id: "hLUYBt",
+        defaultMessage: "Pending",
         description: "payment status",
     },
     refused: {
-        defaultMessage: "Refused",
         id: "nwnwJ0",
+        defaultMessage: "Refused",
         description: "payment status",
     },
 });

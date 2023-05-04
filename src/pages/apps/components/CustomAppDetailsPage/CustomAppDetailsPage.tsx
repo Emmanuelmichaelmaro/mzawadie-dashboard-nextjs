@@ -1,6 +1,7 @@
 // @ts-nocheck
 import activateIcon from "@assets/images/activate-icon.svg";
 import { AccountPermissions } from "@mzawadie/components/AccountPermissions";
+import { Backlink } from "@mzawadie/components/Backlink";
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import Container from "@mzawadie/components/Container";
 import { Form } from "@mzawadie/components/Form";
@@ -10,10 +11,12 @@ import Savebar from "@mzawadie/components/Savebar";
 import { sectionNames } from "@mzawadie/core";
 import { AppErrorFragment, AppUpdateMutation, PermissionEnum, ShopInfoQuery } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
+import useNavigator from "@mzawadie/hooks/useNavigator";
+import { appsListUrl } from "@mzawadie/pages/apps/urls";
 import { WebhooksList } from "@mzawadie/pages/webhooks/components/WebhooksList";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getAppErrorMessage from "@mzawadie/utils/errors/app";
-import { ConfirmButtonTransitionState, Backlink, Button } from "@saleor/macaw-ui";
+import { Button, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -28,7 +31,6 @@ export interface CustomAppDetailsPageFormData {
     name: string;
     permissions: PermissionEnum[];
 }
-
 export interface CustomAppDetailsPageProps {
     apiUri: string;
     disabled: boolean;
@@ -38,14 +40,12 @@ export interface CustomAppDetailsPageProps {
     app: AppUpdateMutation["appUpdate"]["app"];
     token: string;
     onApiUriClick: () => void;
-    onBack: () => void;
     onTokenDelete: (id: string) => void;
     onTokenClose: () => void;
     onTokenCreate: () => void;
     onSubmit: (data: CustomAppDetailsPageFormData) => SubmitPromise<AppErrorFragment[]>;
-    onWebhookCreate: () => void;
+    webhookCreateHref: string;
     onWebhookRemove: (id: string) => void;
-    navigateToWebhookDetails: (id: string) => () => void;
     onAppActivateOpen: () => void;
     onAppDeactivateOpen: () => void;
 }
@@ -58,43 +58,44 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = (props) => {
         permissions,
         saveButtonBarState,
         app,
-        navigateToWebhookDetails,
         token,
         onApiUriClick,
-        onBack,
         onTokenClose,
         onTokenCreate,
         onTokenDelete,
         onSubmit,
-        onWebhookCreate,
+        webhookCreateHref,
         onWebhookRemove,
         onAppActivateOpen,
         onAppDeactivateOpen,
     } = props;
+    
     const intl = useIntl();
     const classes = useStyles({});
+    const navigate = useNavigator();
 
     const webhooks = app?.webhooks;
 
     const formErrors = getFormErrors(["permissions"], errors || []);
+
     const permissionsError = getAppErrorMessage(formErrors.permissions, intl);
 
     const initialForm: CustomAppDetailsPageFormData = {
         hasFullAccess:
             permissions?.filter(
                 (perm) =>
-                    app?.permissions?.filter((userPerm) => userPerm.code === perm.code).length === 0
+                    app?.permissions?.filter((userPerm: any) => userPerm.code === perm?.code).length === 0
             ).length === 0 || false,
         isActive: !!app?.isActive,
         name: app?.name || "",
-        permissions: app?.permissions?.map((perm) => perm.code) || [],
+        permissions: app?.permissions?.map((perm: any) => perm.code) || [],
     };
 
     return (
-        <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-            {({ data, change, hasChanged, submit }) => (
+        <Form confirmLeave initial={initialForm} onSubmit={onSubmit} disabled={disabled}>
+            {({ data, change, submit, isSaveDisabled }) => (
                 <Container>
-                    <Backlink onClick={onBack}>{intl.formatMessage(sectionNames.apps)}</Backlink>
+                    <Backlink href={appsListUrl()}>{intl.formatMessage(sectionNames.apps)}</Backlink>
 
                     <PageHeader title={app?.name}>
                         <Button
@@ -107,14 +108,14 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = (props) => {
 
                             {data?.isActive ? (
                                 <FormattedMessage
-                                    defaultMessage="Deactivate"
                                     id="whTEcF"
+                                    defaultMessage="Deactivate"
                                     description="link"
                                 />
                             ) : (
                                 <FormattedMessage
-                                    defaultMessage="Activate"
                                     id="P5twxk"
+                                    defaultMessage="Activate"
                                     description="link"
                                 />
                             )}
@@ -155,8 +156,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = (props) => {
                             <WebhooksList
                                 webhooks={webhooks}
                                 onRemove={onWebhookRemove}
-                                onRowClick={navigateToWebhookDetails}
-                                onCreate={app?.isActive && onWebhookCreate}
+                                createHref={app?.isActive && webhookCreateHref}
                             />
                         </div>
 
@@ -169,14 +169,14 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = (props) => {
                                 permissionsExceeded={false}
                                 onChange={change}
                                 fullAccessLabel={intl.formatMessage({
-                                    defaultMessage: "Grant this app full access to the store",
                                     id: "D4nzdD",
+                                    defaultMessage: "Grant this app full access to the store",
                                     description: "checkbox label",
                                 })}
                                 description={intl.formatMessage({
+                                    id: "flP8Hj",
                                     defaultMessage:
                                         "Expand or restrict app permissions to access certain part of Saleor system.",
-                                    id: "flP8Hj",
                                     description: "card description",
                                 })}
                             />
@@ -184,9 +184,9 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = (props) => {
                     </Grid>
 
                     <Savebar
-                        disabled={disabled || !hasChanged}
+                        disabled={isSaveDisabled}
                         state={saveButtonBarState}
-                        onCancel={onBack}
+                        onCancel={() => navigate(appsListUrl())}
                         onSubmit={submit}
                     />
                 </Container>

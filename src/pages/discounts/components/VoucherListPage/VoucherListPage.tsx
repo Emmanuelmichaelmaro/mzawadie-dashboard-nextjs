@@ -1,11 +1,12 @@
 // @ts-nocheck
 import { Card } from "@material-ui/core";
+import { Button } from "@mzawadie/components/Button";
 import Container from "@mzawadie/components/Container";
 import { getByName } from "@mzawadie/components/Filter/utils";
 import { FilterBar } from "@mzawadie/components/FilterBar";
 import { PageHeader } from "@mzawadie/components/PageHeader";
+import { sectionNames } from "@mzawadie/core";
 import {
-    sectionNames,
     ChannelProps,
     FilterPageProps,
     ListActions,
@@ -14,8 +15,7 @@ import {
     TabPageProps,
 } from "@mzawadie/core";
 import { VoucherFragment } from "@mzawadie/graphql";
-import { VoucherListUrlSortField } from "@mzawadie/pages/discounts/urls";
-import { Button } from "@saleor/macaw-ui";
+import { voucherAddUrl, VoucherListUrlSortField } from "@mzawadie/pages/discounts/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -36,7 +36,6 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
     currentTab,
     filterOpts,
     initialSearch,
-    onAdd,
     onAll,
     onFilterChange,
     onSearchChange,
@@ -55,10 +54,10 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
     return (
         <Container>
             <PageHeader title={intl.formatMessage(sectionNames.vouchers)}>
-                <Button onClick={onAdd} variant="primary" data-test-id="create-voucher">
+                <Button href={voucherAddUrl()} variant="primary" data-test-id="create-voucher">
                     <FormattedMessage
-                        defaultMessage="Create voucher"
                         id="GbhZJ4"
+                        defaultMessage="Create voucher"
                         description="button"
                     />
                 </Button>
@@ -67,16 +66,16 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
             <Card>
                 <FilterBar
                     allTabLabel={intl.formatMessage({
-                        defaultMessage: "All Vouchers",
                         id: "pNrF72",
+                        defaultMessage: "All Vouchers",
                         description: "tab name",
                     })}
                     currentTab={currentTab}
                     filterStructure={structure}
                     initialSearch={initialSearch}
                     searchPlaceholder={intl.formatMessage({
-                        defaultMessage: "Search Voucher",
                         id: "IruP2T",
+                        defaultMessage: "Search Voucher",
                     })}
                     tabs={tabs}
                     onAll={onAll}
@@ -86,6 +85,7 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
                     onTabDelete={onTabDelete}
                     onTabSave={onTabSave}
                 />
+
                 <VoucherList filterDependency={filterDependency} {...listProps} />
             </Card>
         </Container>

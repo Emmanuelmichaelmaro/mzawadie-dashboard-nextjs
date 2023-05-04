@@ -1,18 +1,12 @@
-// @ts-nocheck
-import { Button, Card } from "@material-ui/core";
+import { Card } from "@material-ui/core";
+import { Button } from "@mzawadie/components/Button";
 import Container from "@mzawadie/components/Container";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import { SearchBar } from "@mzawadie/components/SearchBar";
-import {
-    sectionNames,
-    ListActions,
-    PageListProps,
-    SearchPageProps,
-    SortPage,
-    TabPageProps,
-} from "@mzawadie/core";
+import { sectionNames } from "@mzawadie/core";
+import { ListActions, PageListProps, SearchPageProps, SortPage, TabPageProps } from "@mzawadie/core";
 import { CategoryFragment } from "@mzawadie/graphql";
-import { CategoryListUrlSortField } from "@mzawadie/pages/categories/urls";
+import { categoryAddUrl, CategoryListUrlSortField } from "@mzawadie/pages/categories/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -33,18 +27,13 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
     disabled,
     initialSearch,
     isChecked,
-    pageInfo,
     selected,
     settings,
     tabs,
     toggle,
     toggleAll,
     toolbar,
-    onAdd,
     onAll,
-    onNextPage,
-    onPreviousPage,
-    onRowClick,
     onSearchChange,
     onTabChange,
     onTabDelete,
@@ -57,15 +46,10 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
     return (
         <Container>
             <PageHeader title={intl.formatMessage(sectionNames.categories)}>
-                <Button
-                    color="primary"
-                    variant="contained"
-                    onClick={onAdd}
-                    data-test-id="createCategory"
-                >
+                <Button variant="primary" href={categoryAddUrl()} data-test-id="create-category">
                     <FormattedMessage
-                        defaultMessage="Create category"
                         id="vof5TR"
+                        defaultMessage="Create category"
                         description="button"
                     />
                 </Button>
@@ -74,15 +58,15 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
             <Card>
                 <SearchBar
                     allTabLabel={intl.formatMessage({
-                        defaultMessage: "All Categories",
                         id: "vy7fjd",
+                        defaultMessage: "All Categories",
                         description: "tab name",
                     })}
                     currentTab={currentTab}
                     initialSearch={initialSearch}
                     searchPlaceholder={intl.formatMessage({
-                        defaultMessage: "Search Category",
                         id: "JiXNEV",
+                        defaultMessage: "Search Category",
                     })}
                     tabs={tabs}
                     onAll={onAll}
@@ -96,17 +80,12 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
                     categories={categories}
                     disabled={disabled}
                     isChecked={isChecked}
-                    isRoot
-                    pageInfo={pageInfo}
+                    isRoot={true}
                     selected={selected}
                     settings={settings}
                     toggle={toggle}
                     toggleAll={toggleAll}
                     toolbar={toolbar}
-                    onAdd={onAdd}
-                    onNextPage={onNextPage}
-                    onPreviousPage={onPreviousPage}
-                    onRowClick={onRowClick}
                     onUpdateListSettings={onUpdateListSettings}
                     {...listProps}
                 />

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { WindowTitle } from "@mzawadie/components";
+import { WindowTitle } from "@mzawadie/components/WindowTitle";
 import { getMutationErrors } from "@mzawadie/core";
 import {
     ProductTypeKindEnum,
@@ -8,18 +8,14 @@ import {
     useUpdateMetadataMutation,
     useUpdatePrivateMetadataMutation,
 } from "@mzawadie/graphql";
-import { useNavigator, useNotifier } from "@mzawadie/hooks";
+import useNavigator from "@mzawadie/hooks/useNavigator";
+import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import createMetadataCreateHandler from "@mzawadie/utils/handlers/metadataCreateHandler";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { ProductTypeCreatePage, ProductTypeForm } from "../components/ProductTypeCreatePage";
-import {
-    productTypeAddUrl,
-    ProductTypeAddUrlQueryParams,
-    productTypeListUrl,
-    productTypeUrl,
-} from "../urls";
+import { productTypeAddUrl, ProductTypeAddUrlQueryParams, productTypeUrl } from "../urls";
 
 interface ProductTypeCreateProps {
     params: ProductTypeAddUrlQueryParams;
@@ -51,11 +47,11 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({ params }) 
                 notify({
                     status: "success",
                     text: intl.formatMessage({
-                        defaultMessage: "Successfully created product type",
                         id: "paa4m0",
+                        defaultMessage: "Successfully created product type",
                     }),
                 });
-                navigate(productTypeUrl(data.productTypeCreate.productType?.id));
+                navigate(productTypeUrl(data.productTypeCreate.productType.id));
             }
         },
     });
@@ -90,9 +86,9 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({ params }) 
         <>
             <WindowTitle
                 title={intl.formatMessage({
+                    id: "SSWFo8",
                     defaultMessage: "Create Product Type",
                     description: "window title",
-                    id: "SSWFo8",
                 })}
             />
 
@@ -101,15 +97,14 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({ params }) 
                 disabled={loading}
                 errors={createProductTypeOpts.data?.productTypeCreate?.errors || []}
                 pageTitle={intl.formatMessage({
+                    id: "bq1eEx",
                     defaultMessage: "Create Product Type",
                     description: "header",
-                    id: "bq1eEx",
                 })}
                 saveButtonBarState={createProductTypeOpts.status}
                 taxTypes={data?.taxTypes || []}
                 kind={params.kind}
                 onChangeKind={handleChangeKind}
-                onBack={() => navigate(productTypeListUrl())}
                 onSubmit={handleSubmit}
             />
         </>

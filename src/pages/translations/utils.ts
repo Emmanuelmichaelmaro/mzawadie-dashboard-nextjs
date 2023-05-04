@@ -1,13 +1,14 @@
 // @ts-nocheck
 import { OutputData } from "@editorjs/editorjs";
 import { AttributeTranslationDetailsFragment } from "@mzawadie/graphql";
+import { TranslationField } from "@mzawadie/pages/translations/types";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import { getParsedDataForJsonStringField } from "@mzawadie/utils/richText/misc";
 import { IntlShape } from "react-intl";
 
 import { fieldNames } from "./components/TranslationsAttributesPage";
 import { transtionsAttributesPageFieldsMessages as messages } from "./components/TranslationsAttributesPage/messages";
-import { TranslationField, PageTranslationInputFieldName, TranslationInputFieldName } from "./types";
+import { PageTranslationInputFieldName, TranslationInputFieldName } from "./types";
 
 export const getParsedTranslationInputData = ({
     fieldName,

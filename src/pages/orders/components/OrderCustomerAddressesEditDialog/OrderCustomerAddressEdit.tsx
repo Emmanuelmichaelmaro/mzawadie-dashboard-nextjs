@@ -90,6 +90,7 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = (props
                 label={intl.formatMessage(addressEditMessages.customerAddress)}
                 className={classes.optionLabel}
             />
+
             {addressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS && showCard && (
                 <>
                     <CardSpacer />
@@ -101,6 +102,7 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = (props
                     <FormSpacer />
                 </>
             )}
+
             <FormControlLabel
                 value={AddressInputOptionEnum.NEW_ADDRESS}
                 control={
@@ -112,6 +114,7 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = (props
                 label={intl.formatMessage(addressEditMessages.newAddress)}
                 className={classes.optionLabel}
             />
+
             {addressInputOption === AddressInputOptionEnum.NEW_ADDRESS && (
                 <AddressEdit
                     countries={countryChoices}
@@ -127,4 +130,5 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = (props
 };
 
 OrderCustomerAddressEdit.displayName = "OrderCustomerAddressEdit";
+
 export default OrderCustomerAddressEdit;

@@ -1,13 +1,16 @@
 // @ts-nocheck
+import { Backlink } from "@mzawadie/components/Backlink";
 import { Container } from "@mzawadie/components/Container";
 import { Form } from "@mzawadie/components/Form";
 import { Grid } from "@mzawadie/components/Grid";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
-import { sectionNames, maybe } from "@mzawadie/core";
+import { sectionNames } from "@mzawadie/core";
 import { CountryListQuery } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
-import { ConfirmButtonTransitionState, Backlink } from "@saleor/macaw-ui";
+import useNavigator from "@mzawadie/hooks/useNavigator";
+import { configurationMenuUrl } from "@mzawadie/pages/configuration";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -19,12 +22,11 @@ export interface TaxesConfigurationFormData {
     showGross: boolean;
     chargeTaxesOnShipping: boolean;
 }
+
 export interface CountryListPageProps {
     disabled: boolean;
     saveButtonBarState: ConfirmButtonTransitionState;
     shop: CountryListQuery["shop"];
-    onBack: () => void;
-    onRowClick: (code: string) => void;
     onSubmit: (data: TaxesConfigurationFormData) => SubmitPromise;
     onTaxFetch: () => void;
 }
@@ -33,33 +35,36 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
     disabled,
     saveButtonBarState,
     shop,
-    onBack,
-    onRowClick,
     onSubmit,
     onTaxFetch,
 }) => {
     const intl = useIntl();
 
+    const navigate = useNavigator();
+
     const initialForm: TaxesConfigurationFormData = {
-        chargeTaxesOnShipping: maybe(() => shop.chargeTaxesOnShipping, false),
-        includeTax: maybe(() => shop.includeTaxesInPrices, false),
-        showGross: maybe(() => shop.displayGrossPrices, false),
+        chargeTaxesOnShipping: shop?.chargeTaxesOnShipping || false,
+        includeTax: shop?.includeTaxesInPrices || false,
+        showGross: shop?.displayGrossPrices || false,
     };
+
     return (
-        <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-            {({ change, data, hasChanged, submit }) => (
+        <Form confirmLeave initial={initialForm} onSubmit={onSubmit} disabled={disabled}>
+            {({ change, data, isSaveDisabled, submit }) => (
                 <>
                     <Container>
-                        <Backlink onClick={onBack}>
+                        <Backlink href={configurationMenuUrl}>
                             {intl.formatMessage(sectionNames.configuration)}
                         </Backlink>
+
                         <PageHeader
                             title={intl.formatMessage({
-                                defaultMessage: "Taxes",
                                 id: "lnQAos",
+                                defaultMessage: "Taxes",
                                 description: "header",
                             })}
                         />
+
                         <Grid variant="inverted">
                             <div>
                                 <TaxConfiguration
@@ -69,18 +74,17 @@ const CountryListPage: React.FC<CountryListPageProps> = ({
                                     onTaxFetch={onTaxFetch}
                                 />
                             </div>
+
                             <div>
-                                <CountryList
-                                    countries={maybe(() => shop.countries)}
-                                    onRowClick={onRowClick}
-                                />
+                                <CountryList countries={shop?.countries} />
                             </div>
                         </Grid>
                     </Container>
+
                     <Savebar
-                        disabled={disabled || !hasChanged}
+                        disabled={isSaveDisabled}
                         state={saveButtonBarState}
-                        onCancel={onBack}
+                        onCancel={() => navigate(configurationMenuUrl)}
                         onSubmit={submit}
                     />
                 </>

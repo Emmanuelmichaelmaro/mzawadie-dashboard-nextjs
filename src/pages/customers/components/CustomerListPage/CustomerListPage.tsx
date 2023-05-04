@@ -1,24 +1,25 @@
 // @ts-nocheck
 import { Card } from "@material-ui/core";
-import { Container, FilterBar, PageHeader } from "@mzawadie/components";
+import { Button } from "@mzawadie/components/Button";
+import Container from "@mzawadie/components/Container";
+import { FilterBar } from "@mzawadie/components/FilterBar";
+import { PageHeader } from "@mzawadie/components/PageHeader";
+import { sectionNames } from "@mzawadie/core";
 import {
-    sectionNames,
     FilterPageProps,
     ListActions,
     PageListProps,
+    RelayToFlat,
     SortPage,
     TabPageProps,
-    RelayToFlat,
 } from "@mzawadie/core";
 import { ListCustomersQuery } from "@mzawadie/graphql";
-import { useUser } from "@mzawadie/pages/auth";
 import { useUserPermissions } from "@mzawadie/pages/auth/hooks/useUserPermissions";
-import { CustomerListUrlSortField } from "@mzawadie/pages/customers/urls";
-import { Button } from "@saleor/macaw-ui";
+import { customerAddUrl, CustomerListUrlSortField } from "@mzawadie/pages/customers/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { CustomerList } from "../CustomerList";
+import CustomerList from "../CustomerList/CustomerList";
 import { createFilterStructure, CustomerFilterKeys, CustomerListFilterOpts } from "./filters";
 
 export interface CustomerListPageProps
@@ -34,7 +35,6 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
     currentTab,
     filterOpts,
     initialSearch,
-    onAdd,
     onAll,
     onFilterChange,
     onSearchChange,
@@ -45,36 +45,36 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
     ...customerListProps
 }) => {
     const intl = useIntl();
-	
-	const userPermissions = useUserPermissions();
 
+    const userPermissions = useUserPermissions();
+    
     const structure = createFilterStructure(intl, filterOpts, userPermissions);
 
     return (
         <Container>
             <PageHeader title={intl.formatMessage(sectionNames.customers)}>
-                <Button variant="primary" onClick={onAdd} data-test-id="create-customer">
+                <Button variant="primary" href={customerAddUrl} data-test-id="create-customer">
                     <FormattedMessage
-                        defaultMessage="Create customer"
                         id="QLVddq"
+                        defaultMessage="Create customer"
                         description="button"
                     />
                 </Button>
             </PageHeader>
     
-			<Card>
+            <Card>
                 <FilterBar
                     allTabLabel={intl.formatMessage({
-                        defaultMessage: "All Customers",
                         id: "xQK2EC",
+                        defaultMessage: "All Customers",
                         description: "tab name",
                     })}
                     currentTab={currentTab}
                     filterStructure={structure}
                     initialSearch={initialSearch}
                     searchPlaceholder={intl.formatMessage({
-                        defaultMessage: "Search Customer",
                         id: "2mRLis",
+                        defaultMessage: "Search Customer",
                     })}
                     tabs={tabs}
                     onAll={onAll}

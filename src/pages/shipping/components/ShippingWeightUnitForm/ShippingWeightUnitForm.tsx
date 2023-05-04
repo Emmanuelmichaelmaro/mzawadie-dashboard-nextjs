@@ -1,11 +1,12 @@
 // @ts-nocheck
-import { Button, Card, CardActions, CardContent } from "@material-ui/core";
+import { Card, CardActions, CardContent } from "@material-ui/core";
+import { Button } from "@mzawadie/components/Button";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { Form } from "@mzawadie/components/Form";
-import Hr from "@mzawadie/components/Hr";
 import { SingleSelectField } from "@mzawadie/components/SingleSelectField";
 import { buttonMessages, sectionNames } from "@mzawadie/core";
 import { WeightUnitsEnum } from "@mzawadie/graphql";
+import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -16,7 +17,7 @@ export interface FormData {
 export interface ShippingWeightUnitFormProps {
     defaultWeightUnit: WeightUnitsEnum;
     disabled: boolean;
-    onSubmit: (unit: WeightUnitsEnum) => void;
+    onSubmit: (unit: WeightUnitsEnum) => SubmitPromise;
 }
 
 const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
@@ -25,14 +26,17 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
     onSubmit,
 }) => {
     const intl = useIntl();
+
     const initialForm: FormData = {
         unit: defaultWeightUnit,
     };
+
     return (
-        <Form initial={initialForm} onSubmit={(formData) => onSubmit(formData.unit)}>
+        <Form confirmLeave initial={initialForm} onSubmit={(formData) => onSubmit(formData.unit)}>
             {({ change, data, submit }) => (
                 <Card>
                     <CardTitle title={intl.formatMessage(sectionNames.configuration)} />
+
                     <CardContent>
                         <SingleSelectField
                             disabled={disabled}
@@ -41,21 +45,21 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
                                 value: WeightUnitsEnum[unit],
                             }))}
                             label={intl.formatMessage({
-                                defaultMessage: "Shipping Weight Unit",
                                 id: "Rp/Okl",
+                                defaultMessage: "Shipping Weight Unit",
                             })}
                             hint={intl.formatMessage({
-                                defaultMessage: "This unit will be used as default shipping weight",
                                 id: "4Kq3O6",
+                                defaultMessage: "This unit will be used as default shipping weight",
                             })}
                             name={"unit" as keyof FormData}
                             value={data.unit}
                             onChange={change}
                         />
                     </CardContent>
-                    <Hr />
+
                     <CardActions>
-                        <Button color="primary" onClick={submit} data-test-id="saveUnit">
+                        <Button onClick={submit} data-test-id="save-unit">
                             <FormattedMessage {...buttonMessages.save} />
                         </Button>
                     </CardActions>
@@ -64,5 +68,7 @@ const ShippingWeightUnitForm: React.FC<ShippingWeightUnitFormProps> = ({
         </Form>
     );
 };
+
 ShippingWeightUnitForm.displayName = "ShippingWeightUnitForm";
+
 export default ShippingWeightUnitForm;

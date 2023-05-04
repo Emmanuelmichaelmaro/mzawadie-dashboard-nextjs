@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { Typography } from "@material-ui/core";
+import { Backlink } from "@mzawadie/components/Backlink";
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import { ChannelsAvailabilityCard } from "@mzawadie/components/ChannelsAvailabilityCard";
 import Container from "@mzawadie/components/Container";
@@ -10,31 +11,29 @@ import { Metadata, MetadataFormData } from "@mzawadie/components/Metadata";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { Tab, TabContainer } from "@mzawadie/components/Tab";
-import {
-    sectionNames,
-    maybe,
-    splitDateTime,
-    ChannelProps,
-    ListProps,
-    TabListActions,
-} from "@mzawadie/core";
+import { sectionNames } from "@mzawadie/core";
+import { splitDateTime } from "@mzawadie/core";
+import { ChannelProps, ListProps, TabListActions } from "@mzawadie/core";
 import {
     DiscountErrorFragment,
-    VoucherDetailsFragment,
     DiscountValueTypeEnum,
     PermissionEnum,
+    VoucherDetailsFragment,
     VoucherTypeEnum,
 } from "@mzawadie/graphql";
+import useNavigator from "@mzawadie/hooks/useNavigator";
 import { ChannelVoucherData } from "@mzawadie/pages/channels/utils";
 import {
     createChannelsChangeHandler,
     createDiscountTypeChangeHandler,
+    createVoucherUpdateHandler,
 } from "@mzawadie/pages/discounts/handlers";
+import { itemsQuantityMessages } from "@mzawadie/pages/discounts/translations";
 import { DiscountTypeEnum, RequirementsPicker } from "@mzawadie/pages/discounts/types";
-import { validatePrice } from "@mzawadie/pages/products/utils/validation";
+import { voucherListUrl } from "@mzawadie/pages/discounts/urls";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@mzawadie/utils/maps";
 import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChangeTrigger";
-import { ConfirmButtonTransitionState, Backlink } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -54,6 +53,8 @@ export enum VoucherDetailsPageTab {
     collections = "collections",
     products = "products",
 }
+
+export type VoucherTabItemsCount = Partial<Record<VoucherDetailsPageTab, number>>;
 
 export interface VoucherDetailsPageFormData extends MetadataFormData {
     applyOncePerCustomer: boolean;
@@ -76,28 +77,24 @@ export interface VoucherDetailsPageFormData extends MetadataFormData {
 }
 
 export interface VoucherDetailsPageProps
-    extends Pick<ListProps, Exclude<keyof ListProps, "onRowClick">>,
+    extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
         TabListActions<"categoryListToolbar" | "collectionListToolbar" | "productListToolbar">,
         ChannelProps {
     activeTab: VoucherDetailsPageTab;
+    tabItemsCount: VoucherTabItemsCount;
     errors: DiscountErrorFragment[];
     saveButtonBarState: ConfirmButtonTransitionState;
     voucher: VoucherDetailsFragment;
     allChannelsCount: number;
     channelListings: ChannelVoucherData[];
-    hasChannelChanged: boolean;
-    onBack: () => void;
     onCategoryAssign: () => void;
     onCategoryUnassign: (id: string) => void;
-    onCategoryClick: (id: string) => () => void;
     onCollectionAssign: () => void;
     onCollectionUnassign: (id: string) => void;
-    onCollectionClick: (id: string) => () => void;
     onCountryAssign: () => void;
     onCountryUnassign: (code: string) => void;
     onProductAssign: () => void;
     onProductUnassign: (id: string) => void;
-    onProductClick: (id: string) => () => void;
     onRemove: () => void;
     onSubmit: (data: VoucherDetailsPageFormData) => void;
     onTabClick: (index: VoucherDetailsPageTab) => void;
@@ -111,30 +108,23 @@ const ProductsTab = Tab(VoucherDetailsPageTab.products);
 
 const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     activeTab,
+    tabItemsCount = {},
     allChannelsCount,
     channelListings = [],
     disabled,
     errors,
-    pageInfo,
     saveButtonBarState,
     voucher,
-    onBack,
     onCategoryAssign,
-    onCategoryClick,
     onCategoryUnassign,
     onChannelsChange,
     onCountryAssign,
     onCountryUnassign,
     onCollectionAssign,
-    onCollectionClick,
     onCollectionUnassign,
-    onNextPage,
-    onPreviousPage,
     onProductAssign,
-    onProductClick,
     onProductUnassign,
     onTabClick,
-    hasChannelChanged,
     openChannelsModal,
     onRemove,
     onSubmit,
@@ -148,11 +138,19 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     productListToolbar,
 }) => {
     const intl = useIntl();
+
+    const navigate = useNavigator();
+
+    const [localErrors, setLocalErrors] = React.useState<DiscountErrorFragment[]>([]);
+
     const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
+
     const channel = voucher?.channelListings?.find(
         (listing) => listing.channel.id === selectedChannelId
     );
+
     let requirementsPickerInitValue;
+
     if (voucher?.minCheckoutItemsQuantity > 0) {
         requirementsPickerInitValue = RequirementsPicker.ITEM;
     } else if (channel?.minSpent?.amount > 0) {
@@ -192,30 +190,29 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
 
     return (
         <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-            {({ change, data, hasChanged, submit, triggerChange, set }) => {
+            {({ change, data, submit, triggerChange, set }) => {
                 const handleDiscountTypeChange = createDiscountTypeChangeHandler(change);
+
                 const handleChannelChange = createChannelsChangeHandler(
                     data.channelListings,
                     onChannelsChange,
                     triggerChange
                 );
-                const formDisabled =
-                    (data.discountType.toString() !== "SHIPPING" &&
-                        data.channelListings?.some(
-                            (channel) =>
-                                validatePrice(channel.discountValue) ||
-                                (data.requirementsPicker === RequirementsPicker.ORDER &&
-                                    validatePrice(channel.minSpent))
-                        )) ||
-                    data.usageLimit <= 0;
+
                 const changeMetadata = makeMetadataChangeHandler(change);
+
+                const handleSubmit = createVoucherUpdateHandler(submit, setLocalErrors);
+
+                const allErrors = [...localErrors, ...errors];
 
                 return (
                     <Container>
-                        <Backlink onClick={onBack}>
+                        <Backlink href={voucherListUrl()}>
                             {intl.formatMessage(sectionNames.vouchers)}
                         </Backlink>
+
                         <PageHeader title={voucher?.code} />
+
                         <Grid>
                             <div>
                                 <VoucherInfo
@@ -225,25 +222,31 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                                     onChange={change}
                                     variant="update"
                                 />
+
                                 <CardSpacer />
+
                                 <VoucherTypes
                                     data={data}
                                     disabled={disabled}
                                     errors={errors}
                                     onChange={(event) => handleDiscountTypeChange(data, event)}
                                 />
+
                                 <CardSpacer />
+
                                 {data.discountType.toString() !== "SHIPPING" ? (
                                     <VoucherValue
                                         data={data}
                                         disabled={disabled}
-                                        errors={errors}
+                                        errors={allErrors}
                                         onChange={change}
                                         onChannelChange={handleChannelChange}
                                         variant="update"
                                     />
                                 ) : null}
+
                                 <CardSpacer />
+
                                 {data.type === VoucherTypeEnum.SPECIFIC_PRODUCT &&
                                 data.discountType.toString() !== "SHIPPING" ? (
                                     <>
@@ -254,72 +257,41 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                                                 }
                                                 changeTab={onTabClick}
                                             >
-                                                {intl.formatMessage(
-                                                    {
-                                                        defaultMessage: "Categories ({quantity})",
-                                                        id: "ppLwx3",
-                                                        description: "number of categories",
-                                                    },
-                                                    {
-                                                        quantity: maybe(
-                                                            () =>
-                                                                voucher.categories.totalCount.toString(),
-                                                            "…"
-                                                        ),
-                                                    }
-                                                )}
+                                                {intl.formatMessage(itemsQuantityMessages.categories, {
+                                                    quantity:
+                                                        tabItemsCount.categories?.toString() || "…",
+                                                })}
                                             </CategoriesTab>
+
                                             <CollectionsTab
                                                 isActive={
                                                     activeTab === VoucherDetailsPageTab.collections
                                                 }
                                                 changeTab={onTabClick}
                                             >
-                                                {intl.formatMessage(
-                                                    {
-                                                        defaultMessage: "Collections ({quantity})",
-                                                        id: "QdGzUf",
-                                                        description: "number of collections",
-                                                    },
-                                                    {
-                                                        quantity: maybe(
-                                                            () =>
-                                                                voucher.collections.totalCount.toString(),
-                                                            "…"
-                                                        ),
-                                                    }
-                                                )}
+                                                {intl.formatMessage(itemsQuantityMessages.collections, {
+                                                    quantity:
+                                                        tabItemsCount.collections?.toString() || "…",
+                                                })}
                                             </CollectionsTab>
+
                                             <ProductsTab
                                                 isActive={activeTab === VoucherDetailsPageTab.products}
                                                 changeTab={onTabClick}
                                             >
-                                                {intl.formatMessage(
-                                                    {
-                                                        defaultMessage: "Products ({quantity})",
-                                                        id: "bNw8PM",
-                                                        description: "number of products",
-                                                    },
-                                                    {
-                                                        quantity: maybe(
-                                                            () =>
-                                                                voucher.products.totalCount.toString(),
-                                                            "…"
-                                                        ),
-                                                    }
-                                                )}
+                                                {intl.formatMessage(itemsQuantityMessages.products, {
+                                                    quantity: tabItemsCount.products?.toString() || "…",
+                                                })}
                                             </ProductsTab>
                                         </TabContainer>
+
                                         <CardSpacer />
+
                                         {activeTab === VoucherDetailsPageTab.categories ? (
                                             <DiscountCategories
                                                 disabled={disabled}
                                                 onCategoryAssign={onCategoryAssign}
                                                 onCategoryUnassign={onCategoryUnassign}
-                                                onNextPage={onNextPage}
-                                                onPreviousPage={onPreviousPage}
-                                                onRowClick={onCategoryClick}
-                                                pageInfo={pageInfo}
                                                 discount={voucher}
                                                 isChecked={isChecked}
                                                 selected={selected}
@@ -332,10 +304,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                                                 disabled={disabled}
                                                 onCollectionAssign={onCollectionAssign}
                                                 onCollectionUnassign={onCollectionUnassign}
-                                                onNextPage={onNextPage}
-                                                onPreviousPage={onPreviousPage}
-                                                onRowClick={onCollectionClick}
-                                                pageInfo={pageInfo}
                                                 discount={voucher}
                                                 isChecked={isChecked}
                                                 selected={selected}
@@ -346,13 +314,9 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                                         ) : (
                                             <DiscountProducts
                                                 disabled={disabled}
-                                                onNextPage={onNextPage}
-                                                onPreviousPage={onPreviousPage}
                                                 onProductAssign={onProductAssign}
                                                 onProductUnassign={onProductUnassign}
-                                                onRowClick={onProductClick}
-                                                pageInfo={pageInfo}
-                                                products={mapEdgesToItems(voucher.products)}
+                                                products={mapEdgesToItems(voucher?.products)}
                                                 isChecked={isChecked}
                                                 selected={selected}
                                                 toggle={toggle}
@@ -362,26 +326,28 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                                         )}
                                     </>
                                 ) : null}
+
                                 <CardSpacer />
+
                                 {data.discountType.toString() === "SHIPPING" ? (
                                     <CountryList
-                                        countries={maybe(() => voucher.countries)}
+                                        countries={voucher?.countries}
                                         disabled={disabled}
                                         emptyText={intl.formatMessage({
-                                            defaultMessage: "Voucher applies to all countries",
                                             id: "jd/LWa",
+                                            defaultMessage: "Voucher applies to all countries",
                                         })}
                                         title={
                                             <>
                                                 {intl.formatMessage({
-                                                    defaultMessage: "Countries",
                                                     id: "ibnmEd",
+                                                    defaultMessage: "Countries",
                                                     description: "voucher country range",
                                                 })}
                                                 <Typography variant="caption">
                                                     <FormattedMessage
-                                                        defaultMessage="Voucher is limited to these countries"
                                                         id="glT6fm"
+                                                        defaultMessage="Voucher is limited to these countries"
                                                     />
                                                 </Typography>
                                             </>
@@ -390,7 +356,9 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                                         onCountryUnassign={onCountryUnassign}
                                     />
                                 ) : null}
+
                                 <CardSpacer />
+
                                 <VoucherRequirements
                                     data={data}
                                     disabled={disabled}
@@ -398,7 +366,9 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                                     onChange={change}
                                     onChannelChange={handleChannelChange}
                                 />
+
                                 <CardSpacer />
+
                                 <VoucherLimits
                                     data={data}
                                     initialUsageLimit={initialForm.usageLimit}
@@ -408,7 +378,9 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                                     setData={set}
                                     isNewVoucher={false}
                                 />
+
                                 <CardSpacer />
+
                                 <DiscountDates
                                     data={data}
                                     disabled={disabled}
@@ -416,15 +388,17 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                                     onChange={change}
                                 />
                             </div>
+
                             <div>
                                 <VoucherSummary
                                     voucher={voucher}
                                     selectedChannelId={selectedChannelId}
                                 />
+
                                 <CardSpacer />
+
                                 <ChannelsAvailabilityCard
                                     managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
-                                    selectedChannelsCount={data.channelListings.length}
                                     allChannelsCount={allChannelsCount}
                                     channelsList={data.channelListings.map((channel) => ({
                                         id: channel.id,
@@ -434,13 +408,15 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                                     openModal={openChannelsModal}
                                 />
                             </div>
+
                             <Metadata data={data} onChange={changeMetadata} />
                         </Grid>
+
                         <Savebar
-                            disabled={disabled || formDisabled || (!hasChanged && !hasChannelChanged)}
-                            onCancel={onBack}
+                            onCancel={() => navigate(voucherListUrl())}
+                            disabled={disabled}
                             onDelete={onRemove}
-                            onSubmit={submit}
+                            onSubmit={() => handleSubmit(data)}
                             state={saveButtonBarState}
                         />
                     </Container>

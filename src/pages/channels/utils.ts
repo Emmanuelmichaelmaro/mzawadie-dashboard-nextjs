@@ -16,6 +16,8 @@ import {
     ChannelSaleFormData,
     SaleDetailsPageFormData,
 } from "@mzawadie/pages/discounts/components/SaleDetailsPage";
+import { VoucherDetailsPageFormData } from "@mzawadie/pages/discounts/components/VoucherDetailsPage";
+import { RequirementsPicker } from "@mzawadie/pages/discounts/types";
 import { validatePrice } from "@mzawadie/pages/products/utils/validation";
 import { mapNodeToChoice } from "@mzawadie/utils/maps";
 import uniqBy from "lodash/uniqBy";
@@ -39,6 +41,15 @@ export interface ChannelData {
     visibleInListings?: boolean;
     preorderThreshold?: number;
     unitsSold?: number;
+}
+
+export interface ProductChannelListingData extends Channel {
+    isPublished: boolean;
+    publicationDate: string | null;
+    availableForPurchase: string;
+    isAvailableForPurchase: boolean;
+    visibleInListings: boolean;
+    currency?: string;
 }
 
 export interface ChannelPriceData {
@@ -179,13 +190,13 @@ export const createChannelsData = (data?: ChannelFragment[]): ChannelData[] =>
         costPrice: "",
         currency: channel.currencyCode,
         id: channel.id,
-        isAvailableForPurchase: false,
+        isAvailableForPurchase: true,
         variantsIds: [],
-        isPublished: false,
+        isPublished: true,
         name: channel.name,
         price: "",
         publicationDate: null,
-        visibleInListings: false,
+        visibleInListings: true,
     })) || [];
 
 export const createChannelsDataWithPrice = (
@@ -194,8 +205,8 @@ export const createChannelsDataWithPrice = (
 ): ChannelData[] => {
     if (data && productData?.channelListings) {
         const dataArr = createChannelsData(data);
-
         const productDataArr = createChannelsDataFromProduct(productData);
+
         return uniqBy([...productDataArr, ...dataArr], (obj) => obj.id);
     }
     return [];
@@ -278,15 +289,23 @@ export const createChannelsDataFromProduct = (productData?: ProductFragment) =>
             const variantChannel = productData.variants[0]?.channelListings.find(
                 (listing) => listing.channel.id === channel.id
             );
+            // Comparing explicitly to false because `hasVariants` can be undefined
+            const isSimpleProduct = productData.productType?.hasVariants === false;
+            const haveVariantsChannelListings = productData?.variants?.some((variant) =>
+                variant?.channelListings?.some((listing) => listing.channel.id === channel.id)
+            );
             const price = variantChannel?.price;
             const costPrice = variantChannel?.costPrice;
-            const variantsIds = extractVariantsIdsForChannel(productData.variants, channel.id);
+            const variantsIds = extractVariantsIdsForChannel(productData?.variants, channel.id);
             const soldUnits = variantChannel?.preorderThreshold?.soldUnits;
             const preorderThreshold = variantChannel?.preorderThreshold?.quantity;
+            // Published defaults to true if none of variants have set channel listing yet
+            const isProductPublished =
+                !isSimpleProduct && !haveVariantsChannelListings ? true : isPublished;
 
             return {
                 availableForPurchase,
-                isPublished,
+                isPublished: isProductPublished,
                 publicationDate,
                 variantsIds,
                 costPrice: costPrice?.amount.toString() ?? "",
@@ -370,3 +389,7 @@ export const getChannelsCurrencyChoices = (
 
 export const validateSalePrice = (data: SaleDetailsPageFormData, channel: ChannelSaleFormData) =>
     validatePrice(data.type === SaleType.PERCENTAGE ? channel.percentageValue : channel.fixedValue);
+
+export const validateVoucherPrice = (data: VoucherDetailsPageFormData, channel: ChannelVoucherData) =>
+    validatePrice(channel.discountValue) ||
+    (data.requirementsPicker === RequirementsPicker.ORDER && validatePrice(channel.minSpent));

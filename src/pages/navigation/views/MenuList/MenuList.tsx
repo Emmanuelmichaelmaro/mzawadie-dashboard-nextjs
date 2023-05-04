@@ -1,13 +1,10 @@
 // @ts-nocheck
 import { DialogContentText } from "@material-ui/core";
 import { ActionDialog } from "@mzawadie/components/ActionDialog";
-import {
-    buttonMessages,
-    commonMessages,
-    getStringOrPlaceholder,
-    maybe,
-    ListViews,
-} from "@mzawadie/core";
+import { Button } from "@mzawadie/components/Button";
+import { buttonMessages, commonMessages } from "@mzawadie/core";
+import { getStringOrPlaceholder, maybe } from "@mzawadie/core";
+import { ListViews } from "@mzawadie/core";
 import {
     useMenuBulkDeleteMutation,
     useMenuCreateMutation,
@@ -19,28 +16,26 @@ import useListSettings from "@mzawadie/hooks/useListSettings";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { usePaginationReset } from "@mzawadie/hooks/usePaginationReset";
-import usePaginator, { createPaginationState } from "@mzawadie/hooks/usePaginator";
-import { configurationMenuUrl } from "@mzawadie/pages/configuration";
-import { MenuCreateDialog } from "@mzawadie/pages/navigation/components/MenuCreateDialog";
-import { MenuListPage } from "@mzawadie/pages/navigation/components/MenuListPage";
-import { menuListUrl, MenuListUrlQueryParams, menuUrl } from "@mzawadie/pages/navigation/urls";
+import usePaginator, { createPaginationState, PaginatorContext } from "@mzawadie/hooks/usePaginator";
 import { getById } from "@mzawadie/pages/orders/components/OrderReturnPage/utils";
 import createSortHandler from "@mzawadie/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import { getSortParams } from "@mzawadie/utils/sort";
-import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { MenuCreateDialog } from "../../components/MenuCreateDialog";
+import { MenuListPage } from "../../components/MenuListPage";
+import { menuListUrl, MenuListUrlQueryParams, menuUrl } from "../../urls";
 import { getSortQueryVariables } from "./sort";
 
 interface MenuListProps {
     params: MenuListUrlQueryParams;
 }
+
 const MenuList: React.FC<MenuListProps> = ({ params }) => {
     const navigate = useNavigator();
     const notify = useNotifier();
-    const paginate = usePaginator();
     const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
     const { updateListSettings, settings } = useListSettings(ListViews.NAVIGATION_LIST);
 
@@ -60,6 +55,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         );
 
     const paginationState = createPaginationState(settings.rowNumber, params);
+    
     const queryVariables = React.useMemo(
         () => ({
             ...paginationState,
@@ -67,25 +63,26 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         }),
         [params, settings.rowNumber]
     );
+    
     const { data, loading, refetch } = useMenuListQuery({
         displayLoader: true,
         variables: queryVariables,
     });
 
-    const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-        maybe(() => data.menus.pageInfo),
+    const paginationValues = usePaginator({
+        pageInfo: maybe(() => data.menus.pageInfo),
         paginationState,
-        params
-    );
+        queryString: params,
+    });
 
     const [menuCreate, menuCreateOpts] = useMenuCreateMutation({
         onCompleted: (data) => {
-            if (data.menuCreate.errors.length === 0) {
+            if (data.menuCreate?.errors.length === 0) {
                 notify({
                     status: "success",
                     text: intl.formatMessage({
-                        defaultMessage: "Created menu",
                         id: "ugnggZ",
+                        defaultMessage: "Created menu",
                     }),
                 });
                 navigate(menuUrl(data.menuCreate.menu.id));
@@ -95,12 +92,12 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
 
     const [menuDelete, menuDeleteOpts] = useMenuDeleteMutation({
         onCompleted: (data) => {
-            if (data.menuDelete.errors.length === 0) {
+            if (data.menuDelete?.errors.length === 0) {
                 notify({
                     status: "success",
                     text: intl.formatMessage({
-                        defaultMessage: "Deleted menu",
                         id: "OwG/0z",
+                        defaultMessage: "Deleted menu",
                     }),
                 });
                 closeModal();
@@ -111,7 +108,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
 
     const [menuBulkDelete, menuBulkDeleteOpts] = useMenuBulkDeleteMutation({
         onCompleted: (data) => {
-            if (data.menuBulkDelete.errors.length === 0) {
+            if (data.menuBulkDelete?.errors.length === 0) {
                 notify({
                     status: "success",
                     text: intl.formatMessage(commonMessages.savedChanges),
@@ -126,19 +123,11 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
     const handleSort = createSortHandler(navigate, menuListUrl, params);
 
     return (
-        <>
+        <PaginatorContext.Provider value={paginationValues}>
             <MenuListPage
                 disabled={loading}
                 menus={mapEdgesToItems(data?.menus)}
                 settings={settings}
-                onAdd={() =>
-                    navigate(
-                        menuListUrl({
-                            action: "add",
-                        })
-                    )
-                }
-                onBack={() => navigate(configurationMenuUrl)}
                 onDelete={(id) =>
                     navigate(
                         menuListUrl({
@@ -147,12 +136,8 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                         })
                     )
                 }
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
                 onUpdateListSettings={updateListSettings}
-                onRowClick={(id) => () => navigate(menuUrl(id))}
                 onSort={handleSort}
-                pageInfo={pageInfo}
                 isChecked={isSelected}
                 selected={listElements.length}
                 sort={getSortParams(params)}
@@ -174,11 +159,12 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                     </Button>
                 }
             />
+            
             <MenuCreateDialog
                 open={params.action === "add"}
                 confirmButtonState={menuCreateOpts.status}
                 disabled={menuCreateOpts.loading}
-                errors={menuCreateOpts?.data?.menuCreate.errors || []}
+                errors={menuCreateOpts?.data?.menuCreate?.errors || []}
                 onClose={closeModal}
                 onConfirm={(formData) =>
                     menuCreate({
@@ -186,6 +172,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                     })
                 }
             />
+
             <ActionDialog
                 open={params.action === "remove"}
                 onClose={closeModal}
@@ -199,15 +186,15 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                 }
                 variant="delete"
                 title={intl.formatMessage({
+                    id: "QzseV7",
                     defaultMessage: "Delete Menu",
                     description: "dialog header",
-                    id: "QzseV7",
                 })}
             >
                 <DialogContentText>
                     <FormattedMessage
-                        defaultMessage="Are you sure you want to delete {menuName}?"
                         id="bj1U23"
+                        defaultMessage="Are you sure you want to delete {menuName}?"
                         values={{
                             menuName: getStringOrPlaceholder(
                                 mapEdgesToItems(data?.menus)?.find(getById(params.id))?.name
@@ -216,6 +203,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                     />
                 </DialogContentText>
             </ActionDialog>
+
             <ActionDialog
                 open={params.action === "remove-many" && maybe(() => params.ids.length > 0)}
                 onClose={closeModal}
@@ -229,15 +217,15 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                 }
                 variant="delete"
                 title={intl.formatMessage({
+                    id: "1LBYpE",
                     defaultMessage: "Delete Menus",
                     description: "dialog header",
-                    id: "1LBYpE",
                 })}
             >
                 <DialogContentText>
                     <FormattedMessage
-                        defaultMessage="{counter,plural,one{Are you sure you want to delete this menu?} other{Are you sure you want to delete {displayQuantity} menus?}}"
                         id="svK+kv"
+                        defaultMessage="{counter,plural,one{Are you sure you want to delete this menu?} other{Are you sure you want to delete {displayQuantity} menus?}}"
                         values={{
                             counter: maybe(() => params.ids.length.toString(), "..."),
                             displayQuantity: (
@@ -247,7 +235,8 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
                     />
                 </DialogContentText>
             </ActionDialog>
-        </>
+        </PaginatorContext.Provider>
     );
 };
+
 export default MenuList;

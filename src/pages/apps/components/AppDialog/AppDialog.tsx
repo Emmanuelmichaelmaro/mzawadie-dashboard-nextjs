@@ -29,6 +29,7 @@ export const AppDialog: React.FC<AppDialogProps> = ({ children, ...props }) => {
                     <CloseIcon />
                 </IconButton>
             </DialogTitle>
+
             <DialogContent className={classes.content}>{children}</DialogContent>
         </Dialog>
     );

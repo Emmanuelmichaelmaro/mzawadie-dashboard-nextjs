@@ -1,31 +1,21 @@
 // @ts-nocheck
+import { DeleteFilterTabDialog } from "@mzawadie/components/DeleteFilterTabDialog";
 import {
-    DeleteFilterTabDialog,
-    SaveFilterTabDialog,
     SaveFilterTabDialogFormData,
-    TypeDeleteWarningDialog,
-} from "@mzawadie/components";
-import { commonMessages, ListViews, maybe } from "@mzawadie/core";
+    SaveFilterTabDialog,
+} from "@mzawadie/components/SaveFilterTabDialog";
+import TypeDeleteWarningDialog from "@mzawadie/components/TypeDeleteWarningDialog/TypeDeleteWarningDialog";
+import { commonMessages } from "@mzawadie/core";
+import { ListViews } from "@mzawadie/core";
+import { maybe } from "@mzawadie/core";
 import { useProductTypeBulkDeleteMutation, useProductTypeListQuery } from "@mzawadie/graphql";
-import {
-    useBulkActions,
-    useListSettings,
-    useNavigator,
-    useNotifier,
-    usePaginationReset,
-    createPaginationState,
-    usePaginator,
-} from "@mzawadie/hooks";
-import { configurationMenuUrl } from "@mzawadie/pages/configuration";
-import { ProductTypeListPage } from "@mzawadie/pages/productTypes/components/ProductTypeListPage";
+import useBulkActions from "@mzawadie/hooks/useBulkActions";
+import useListSettings from "@mzawadie/hooks/useListSettings";
+import useNavigator from "@mzawadie/hooks/useNavigator";
+import { useNotifier } from "@mzawadie/hooks/useNotifier";
+import { usePaginationReset } from "@mzawadie/hooks/usePaginationReset";
+import usePaginator, { createPaginationState, PaginatorContext } from "@mzawadie/hooks/usePaginator";
 import { useProductTypeDelete } from "@mzawadie/pages/productTypes/hooks/useProductTypeDelete";
-import {
-    productTypeAddUrl,
-    productTypeListUrl,
-    ProductTypeListUrlDialog,
-    ProductTypeListUrlQueryParams,
-    productTypeUrl,
-} from "@mzawadie/pages/productTypes/urls";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@mzawadie/utils/handlers/filterHandlers";
 import createSortHandler from "@mzawadie/utils/handlers/sortHandler";
@@ -35,6 +25,12 @@ import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { ProductTypeListPage } from "../../components/ProductTypeListPage";
+import {
+    productTypeListUrl,
+    ProductTypeListUrlDialog,
+    ProductTypeListUrlQueryParams,
+} from "../../urls";
 import {
     deleteFilterTab,
     getActiveFilters,
@@ -55,7 +51,6 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
     const navigate = useNavigator();
     const notify = useNotifier();
     const intl = useIntl();
-    const paginate = usePaginator();
 
     const {
         isSelected,
@@ -123,11 +118,11 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
         handleTabChange(tabs.length + 1);
     };
 
-    const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-        maybe(() => data.productTypes.pageInfo),
+    const paginationValues = usePaginator({
+        pageInfo: maybe(() => data?.productTypes?.pageInfo),
         paginationState,
-        params
-    );
+        queryString: params,
+    });
 
     const handleSort = createSortHandler(navigate, productTypeListUrl, params);
 
@@ -140,7 +135,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
 
     const [productTypeBulkDelete, productTypeBulkDeleteOpts] = useProductTypeBulkDeleteMutation({
         onCompleted: (data) => {
-            if (data.productTypeBulkDelete.errors.length === 0) {
+            if (data.productTypeBulkDelete?.errors.length === 0) {
                 notify({
                     status: "success",
                     text: intl.formatMessage(commonMessages.savedChanges),
@@ -166,7 +161,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
         });
 
     return (
-        <>
+        <PaginatorContext.Provider value={paginationValues}>
             <ProductTypeListPage
                 currentTab={currentTab}
                 filterOpts={getFilterOpts(params)}
@@ -180,12 +175,6 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
                 tabs={tabs.map((tab) => tab.name)}
                 disabled={loading}
                 productTypes={productTypesData}
-                pageInfo={pageInfo}
-                onAdd={() => navigate(productTypeAddUrl())}
-                onBack={() => navigate(configurationMenuUrl)}
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
-                onRowClick={(id) => () => navigate(productTypeUrl(id))}
                 onSort={handleSort}
                 isChecked={isSelected}
                 selected={selectedProductTypes.length}
@@ -232,7 +221,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
                 onSubmit={handleTabDelete}
                 tabName={maybe(() => tabs[currentTab - 1].name, "...")}
             />
-        </>
+        </PaginatorContext.Provider>
     );
 };
 

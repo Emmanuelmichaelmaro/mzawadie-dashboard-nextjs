@@ -5,10 +5,12 @@ import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { TableCellHeader } from "@mzawadie/components/TableCellHeader";
 import { TableHead } from "@mzawadie/components/TableHead";
-import { TablePagination } from "@mzawadie/components/TablePagination";
-import { ListActions, ListProps, SortPage, maybe, renderCollection } from "@mzawadie/core";
+import { TablePaginationWithContext } from "@mzawadie/components/TablePagination";
+import { TableRowLink } from "@mzawadie/components/TableRowLink";
+import { maybe, renderCollection } from "@mzawadie/core";
+import { ListActions, ListProps, SortPage } from "@mzawadie/core";
 import { ProductTypeFragment } from "@mzawadie/graphql";
-import { ProductTypeListUrlSortField } from "@mzawadie/pages/productTypes/urls";
+import { ProductTypeListUrlSortField, productTypeUrl } from "@mzawadie/pages/productTypes/urls";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -44,21 +46,9 @@ interface ProductTypeListProps extends ListProps, ListActions, SortPage<ProductT
 const numberOfColumns = 4;
 
 const ProductTypeList: React.FC<ProductTypeListProps> = (props) => {
-    const {
-        disabled,
-        productTypes,
-        pageInfo,
-        onNextPage,
-        onPreviousPage,
-        onRowClick,
-        onSort,
-        isChecked,
-        selected,
-        sort,
-        toggle,
-        toggleAll,
-        toolbar,
-    } = props;
+    const { disabled, productTypes, onSort, isChecked, selected, sort, toggle, toggleAll, toolbar } =
+        props;
+
     const classes = useStyles(props);
 
     const intl = useIntl();
@@ -84,11 +74,12 @@ const ProductTypeList: React.FC<ProductTypeListProps> = (props) => {
                     className={classes.colName}
                 >
                     <FormattedMessage
-                        defaultMessage="Type Name"
                         id="hHOI7D"
+                        defaultMessage="Type Name"
                         description="product type name"
                     />
                 </TableCellHeader>
+
                 <TableCellHeader
                     direction={
                         sort.sort === ProductTypeListUrlSortField.digital
@@ -99,67 +90,64 @@ const ProductTypeList: React.FC<ProductTypeListProps> = (props) => {
                     className={classes.colType}
                 >
                     <FormattedMessage
-                        defaultMessage="Type"
                         id="jyTwDR"
+                        defaultMessage="Type"
                         description="product type is either simple or configurable"
                     />
                 </TableCellHeader>
+
                 <TableCell className={classes.colTax}>
                     <FormattedMessage
-                        defaultMessage="Tax"
                         id="TalJlD"
+                        defaultMessage="Tax"
                         description="tax rate for a product type"
                     />
                 </TableCell>
             </TableHead>
+
             <TableFooter>
                 <TableRow>
-                    <TablePagination
-                        colSpan={numberOfColumns}
-                        hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-                        onNextPage={onNextPage}
-                        hasPreviousPage={pageInfo && !disabled ? pageInfo.hasPreviousPage : false}
-                        onPreviousPage={onPreviousPage}
-                    />
+                    <TablePaginationWithContext colSpan={numberOfColumns} />
                 </TableRow>
             </TableFooter>
+
             <TableBody>
                 {renderCollection(
                     productTypes,
                     (productType) => {
                         const isSelected = productType ? isChecked(productType.id) : false;
                         return (
-                            <TableRow
-                                className={productType ? classes.link : undefined}
+                            <TableRowLink
+                                className={!!productType ? classes.link : undefined}
                                 hover={!!productType}
                                 key={productType ? productType.id : "skeleton"}
-                                onClick={productType ? onRowClick(productType.id) : undefined}
+                                href={productType && productTypeUrl(productType.id)}
                                 selected={isSelected}
-                                data-test="id"
-                                data-test-id={maybe(() => productType?.id)}
+                                data-test-id={"id-" + maybe(() => productType.id)}
                             >
                                 <TableCell padding="checkbox">
                                     <Checkbox
                                         checked={isSelected}
                                         disabled={disabled}
                                         disableClickPropagation
-                                        onChange={() => toggle(productType?.id)}
+                                        onChange={() => toggle(productType.id)}
                                     />
                                 </TableCell>
+
                                 <TableCell className={classes.colName}>
                                     {productType ? (
                                         <>
-                                            <span data-test="name">{productType.name}</span>
+                                            <span data-test-id="name">{productType.name}</span>
                                             <Typography variant="caption">
                                                 {maybe(() => productType.hasVariants)
                                                     ? intl.formatMessage({
-                                                          defaultMessage: "Configurable",
                                                           id: "X90t9n",
+                                                          defaultMessage: "Configurable",
                                                           description: "product type",
                                                       })
                                                     : intl.formatMessage({
-                                                          defaultMessage: "Simple product",
                                                           id: "yNb+dT",
+                                                          defaultMessage: "Simple product",
                                                           description: "product type",
                                                       })}
                                             </Typography>
@@ -168,21 +156,22 @@ const ProductTypeList: React.FC<ProductTypeListProps> = (props) => {
                                         <Skeleton />
                                     )}
                                 </TableCell>
+
                                 <TableCell className={classes.colType}>
                                     {maybe(() => productType?.isShippingRequired) !== undefined ? (
                                         productType?.isShippingRequired ? (
                                             <>
                                                 <FormattedMessage
-                                                    defaultMessage="Physical"
                                                     id="ADTNND"
+                                                    defaultMessage="Physical"
                                                     description="product type"
                                                 />
                                             </>
                                         ) : (
                                             <>
                                                 <FormattedMessage
-                                                    defaultMessage="Digital"
                                                     id="asdvmK"
+                                                    defaultMessage="Digital"
                                                     description="product type"
                                                 />
                                             </>
@@ -191,6 +180,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = (props) => {
                                         <Skeleton />
                                     )}
                                 </TableCell>
+
                                 <TableCell className={classes.colTax}>
                                     {maybe(() => productType?.taxType) ? (
                                         productType?.taxType?.description
@@ -198,13 +188,13 @@ const ProductTypeList: React.FC<ProductTypeListProps> = (props) => {
                                         <Skeleton />
                                     )}
                                 </TableCell>
-                            </TableRow>
+                            </TableRowLink>
                         );
                     },
                     () => (
                         <TableRow>
                             <TableCell colSpan={numberOfColumns}>
-                                <FormattedMessage defaultMessage="No product types found" id="0nLsyM" />
+                                <FormattedMessage id="0nLsyM" defaultMessage="No product types found" />
                             </TableCell>
                         </TableRow>
                     )

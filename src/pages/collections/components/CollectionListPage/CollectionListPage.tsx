@@ -1,17 +1,13 @@
 // @ts-nocheck
 import { Card } from "@material-ui/core";
+import { Button } from "@mzawadie/components/Button";
 import { Container } from "@mzawadie/components/Container";
 import { getByName } from "@mzawadie/components/Filter/utils";
 import { FilterBar } from "@mzawadie/components/FilterBar";
 import { PageHeader } from "@mzawadie/components/PageHeader";
-import {
-    sectionNames,
-    FilterPageProps,
-    PageListProps,
-    SearchPageProps,
-    TabPageProps,
-} from "@mzawadie/core";
-import { Button } from "@saleor/macaw-ui";
+import { sectionNames } from "@mzawadie/core";
+import { FilterPageProps, PageListProps, SearchPageProps, TabPageProps } from "@mzawadie/core";
+import { collectionAddUrl } from "@mzawadie/pages/collections/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -23,16 +19,12 @@ export interface CollectionListPageProps
         SearchPageProps,
         TabPageProps,
         FilterPageProps<CollectionFilterKeys, CollectionListFilterOpts>,
-        CollectionListProps {
-    channelsCount: number;
-}
+        CollectionListProps {}
 
 const CollectionListPage: React.FC<CollectionListPageProps> = ({
-    channelsCount,
     currentTab,
     disabled,
     initialSearch,
-    onAdd,
     onAll,
     onSearchChange,
     onTabChange,
@@ -46,6 +38,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
     ...listProps
 }) => {
     const intl = useIntl();
+
     const filterStructure = createFilterStructure(intl, filterOpts);
 
     const filterDependency = filterStructure.find(getByName("channel"));
@@ -56,21 +49,22 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
                 <Button
                     disabled={disabled}
                     variant="primary"
-                    onClick={onAdd}
+                    href={collectionAddUrl()}
                     data-test-id="create-collection"
                 >
                     <FormattedMessage
-                        defaultMessage="Create collection"
                         id="jyaAlB"
+                        defaultMessage="Create collection"
                         description="button"
                     />
                 </Button>
             </PageHeader>
+
             <Card>
                 <FilterBar
                     allTabLabel={intl.formatMessage({
-                        defaultMessage: "All Collections",
                         id: "G4g5Ii",
+                        defaultMessage: "All Collections",
                         description: "tab name",
                     })}
                     currentTab={currentTab}
@@ -84,11 +78,12 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
                     onTabDelete={onTabDelete}
                     onTabSave={onTabSave}
                     searchPlaceholder={intl.formatMessage({
-                        defaultMessage: "Search Collections",
                         id: "s97tLq",
+                        defaultMessage: "Search Collections",
                     })}
                     tabs={tabs}
                 />
+
                 <CollectionList
                     disabled={disabled}
                     selectedChannelId={selectedChannelId}

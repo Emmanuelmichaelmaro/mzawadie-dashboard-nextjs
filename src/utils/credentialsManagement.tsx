@@ -1,49 +1,45 @@
 // @ts-nocheck
-import { UserFragment } from "@mzawadie/graphql";
+import { LoginData } from "@saleor/sdk";
 
-export const isSupported = !!(typeof window !== "undefined"
-    ? navigator?.credentials?.preventSilentAccess() && window.PasswordCredential
-    : undefined);
+export const isSupported = !!(navigator?.credentials?.preventSilentAccess && window.PasswordCredential);
 
-export async function login<T>(loginFunction: (id: string, password: string) => T): Promise<T | null> {
+export async function login<T>(
+    loginFn: (id: string, password: string) => Promise<T>
+): Promise<T | null> {
     let result: T;
 
     try {
         const credential = await navigator.credentials.get({ password: true });
         if (credential instanceof PasswordCredential) {
-            result = loginFunction(credential.id, credential.password || "");
+            result = await loginFn(credential.id, credential.password);
         }
     } catch {
-        // The user either does not have credentials for this site, or
-        // refused to share them. Insert some code here to fall back to
-        // a basic login form.
-        // @ts-ignore
         result = null;
     }
 
     return result;
 }
 
-export function saveCredentials(user: UserFragment, password: string): Promise<Credential | null> {
-    let result: Promise<Credential | null>;
+export function saveCredentials(
+    user: LoginData["user"],
+    password: string
+): Promise<CredentialType | null> {
+    let result: Promise<CredentialType | null>;
 
     if (isSupported) {
         const cred = new PasswordCredential({
-            iconURL:
-                user.avatar !== null
-                    ? user.avatar?.url
-                    : "https://www.flaticon.com/free-icon/profile-user_64572",
             id: user.email,
-            name: user.firstName ? `${user.firstName} ${user.lastName}` : "John Doe",
+            name: user.firstName ? `${user.firstName} ${user.lastName}` : undefined,
             password,
         });
+
         try {
             result = navigator.credentials.store(cred);
         } catch {
-            result = Promise.resolve(null);
+            result = null;
         }
     } else {
-        result = Promise.resolve(null);
+        result = null;
     }
 
     return result;

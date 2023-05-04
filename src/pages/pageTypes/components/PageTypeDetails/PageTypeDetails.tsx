@@ -19,6 +19,7 @@ interface PageTypeDetailsProps {
 
 const PageTypeDetails: React.FC<PageTypeDetailsProps> = (props) => {
     const { data, disabled, errors, onChange } = props;
+
     const intl = useIntl();
 
     const formErrors = getFormErrors(["name"], errors);
@@ -26,7 +27,6 @@ const PageTypeDetails: React.FC<PageTypeDetailsProps> = (props) => {
     return (
         <Card>
             <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
-
             <CardContent>
                 <TextField
                     disabled={disabled}
@@ -34,8 +34,8 @@ const PageTypeDetails: React.FC<PageTypeDetailsProps> = (props) => {
                     error={!!formErrors.name}
                     helperText={getPageErrorMessage(formErrors.name, intl)}
                     label={intl.formatMessage({
-                        defaultMessage: "Content Type Name",
                         id: "jWna9Q",
+                        defaultMessage: "Content Type Name",
                     })}
                     name="name"
                     onChange={onChange}
@@ -47,7 +47,6 @@ const PageTypeDetails: React.FC<PageTypeDetailsProps> = (props) => {
 };
 
 PageTypeDetails.defaultProps = {
-    // eslint-disable-next-line react/default-props-match-prop-types
     errors: [],
 };
 

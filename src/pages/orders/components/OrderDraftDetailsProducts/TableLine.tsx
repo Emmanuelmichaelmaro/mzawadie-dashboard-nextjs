@@ -5,21 +5,26 @@ import { Money } from "@mzawadie/components/Money";
 import { TableCellAvatar } from "@mzawadie/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@mzawadie/components/TableCellAvatar/Avatar";
 import { maybe } from "@mzawadie/core";
-import { OrderLineFragment } from "@mzawadie/graphql";
+import { OrderErrorFragment, OrderLineFragment, OrderLineInput } from "@mzawadie/graphql";
 import { OrderLineDiscountContextConsumerProps } from "@mzawadie/pages/products/components/OrderDiscountProviders/OrderLineDiscountProviders";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import classNames from "classnames";
 import React, { useRef } from "react";
 
 import { OrderDiscountCommonModal } from "../OrderDiscountCommonModal";
 import { ORDER_LINE_DISCOUNT } from "../OrderDiscountCommonModal/types";
-import TableLineForm, { FormData } from "./TableLineForm";
+import TableLineAlert from "./TableLineAlert";
+import TableLineForm from "./TableLineForm";
+import useLineAlerts from "./useLineAlerts";
 
 const useStyles = makeStyles(
     (theme) => ({
-        colAction: {
-            "&:last-child": {
+        colStatusEmpty: {
+            "&:first-child:not(.MuiTableCell-paddingCheckbox)": {
                 paddingRight: 0,
             },
+        },
+        colAction: {
             width: `calc(76px + ${theme.spacing(0.5)})`,
         },
         colName: {
@@ -41,24 +46,20 @@ const useStyles = makeStyles(
             textDecoration: "line-through",
             color: theme.palette.grey[400],
         },
-        errorInfo: {
-            color: theme.palette.error.main,
-        },
-        table: {
-            tableLayout: "fixed",
-        },
     }),
     { name: "OrderDraftDetailsProducts" }
 );
 
 interface TableLineProps extends OrderLineDiscountContextConsumerProps {
     line: OrderLineFragment;
-    onOrderLineChange: (id: string, data: FormData) => void;
+    error?: OrderErrorFragment;
+    onOrderLineChange: (id: string, data: OrderLineInput) => void;
     onOrderLineRemove: (id: string) => void;
 }
 
 const TableLine: React.FC<TableLineProps> = ({
     line,
+    error,
     onOrderLineChange,
     onOrderLineRemove,
     orderLineDiscount,
@@ -72,9 +73,16 @@ const TableLine: React.FC<TableLineProps> = ({
     discountedPrice,
     orderLineDiscountUpdateStatus,
 }) => {
-    const classes = useStyles({});
+    const classes = useStyles();
+
     const popperAnchorRef = useRef<HTMLTableRowElement | null>(null);
+
     const { id, thumbnail, productName, productSku, quantity } = line;
+
+    const alerts = useLineAlerts({
+        line,
+        error,
+    });
 
     const getUnitPriceLabel = () => {
         const money = <Money money={undiscountedPrice} />;
@@ -95,13 +103,25 @@ const TableLine: React.FC<TableLineProps> = ({
 
     return (
         <TableRow key={id}>
+            <TableCell
+                className={classNames({
+                    [classes.colStatusEmpty]: !alerts.length,
+                })}
+            >
+                {!!alerts.length && (
+                    <TableLineAlert alerts={alerts} variant={!!error ? "error" : "warning"} />
+                )}
+            </TableCell>
+
             <TableCellAvatar className={classes.colName} thumbnail={maybe(() => thumbnail.url)}>
                 <Typography variant="body2">{productName}</Typography>
                 <Typography variant="caption">{productSku}</Typography>
             </TableCellAvatar>
+
             <TableCell className={classes.colQuantity}>
                 <TableLineForm line={line} onOrderLineChange={onOrderLineChange} />
             </TableCell>
+
             <TableCell className={classes.colPrice} ref={popperAnchorRef}>
                 {getUnitPriceLabel()}
                 <OrderDiscountCommonModal
@@ -118,6 +138,7 @@ const TableLine: React.FC<TableLineProps> = ({
                     dialogPlacement="bottom-end"
                 />
             </TableCell>
+
             <TableCell className={classes.colTotal}>
                 <Money
                     money={{
@@ -126,6 +147,7 @@ const TableLine: React.FC<TableLineProps> = ({
                     }}
                 />
             </TableCell>
+
             <TableCell className={classes.colAction}>
                 <IconButton variant="secondary" onClick={() => onOrderLineRemove(id)}>
                     <DeleteIcon color="primary" />

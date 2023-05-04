@@ -2,8 +2,10 @@
 import { Card, TableBody, TableCell, TableHead, TableRow } from "@material-ui/core";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
+import { TableRowLink } from "@mzawadie/components/TableRowLink";
 import { maybe, renderCollection } from "@mzawadie/core";
 import { CountryListQuery } from "@mzawadie/graphql";
+import { countryTaxRatesUrl } from "@mzawadie/pages/taxes/urls";
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
@@ -23,11 +25,10 @@ const useStyles = makeStyles(
 
 interface CountryListProps {
     countries: CountryListQuery["shop"]["countries"];
-    onRowClick: (code: string) => void;
 }
 
 const CountryList: React.FC<CountryListProps> = (props) => {
-    const { onRowClick, countries } = props;
+    const { countries } = props;
 
     const classes = useStyles(props);
 
@@ -37,46 +38,51 @@ const CountryList: React.FC<CountryListProps> = (props) => {
                 <TableHead>
                     <TableRow>
                         <TableCell>
-                            <FormattedMessage defaultMessage="Country Code" id="07KB2d" />
+                            <FormattedMessage id="07KB2d" defaultMessage="Country Code" />
                         </TableCell>
+
                         <TableCell>
-                            <FormattedMessage defaultMessage="Country Name" id="0GJfWd" />
+                            <FormattedMessage id="0GJfWd" defaultMessage="Country Name" />
                         </TableCell>
+
                         <TableCell className={classes.textRight}>
-                            <FormattedMessage defaultMessage="Reduced Tax Rates" id="/JENWS" />
+                            <FormattedMessage id="/JENWS" defaultMessage="Reduced Tax Rates" />
                         </TableCell>
                     </TableRow>
                 </TableHead>
+
                 <TableBody>
                     {renderCollection(
                         countries,
                         (country) => (
-                            <TableRow
+                            <TableRowLink
                                 className={classNames({
                                     [classes.tableRow]: !!country,
                                 })}
                                 hover={!!country}
-                                onClick={!!country ? () => onRowClick(country.code) : undefined}
+                                href={country && countryTaxRatesUrl(country.code)}
                                 key={country ? country.code : "skeleton"}
                             >
                                 <TableCell>
-                                    {maybe<React.ReactNode>(() => country.code, <Skeleton />)}
+                                    {maybe<React.ReactNode>(() => country?.code, <Skeleton />)}
                                 </TableCell>
+
                                 <TableCell>
-                                    {maybe<React.ReactNode>(() => country.country, <Skeleton />)}
+                                    {maybe<React.ReactNode>(() => country?.country, <Skeleton />)}
                                 </TableCell>
+
                                 <TableCell className={classes.textRight}>
                                     {maybe<React.ReactNode>(
-                                        () => country.vat.reducedRates.length,
+                                        () => country?.vat?.reducedRates.length,
                                         <Skeleton />
                                     )}
                                 </TableCell>
-                            </TableRow>
+                            </TableRowLink>
                         ),
                         () => (
                             <TableRow>
                                 <TableCell colSpan={3}>
-                                    <FormattedMessage defaultMessage="No countries found" id="3BTtL2" />
+                                    <FormattedMessage id="3BTtL2" defaultMessage="No countries found" />
                                 </TableCell>
                             </TableRow>
                         )

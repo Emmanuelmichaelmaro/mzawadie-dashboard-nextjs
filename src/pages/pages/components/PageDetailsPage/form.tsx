@@ -1,18 +1,30 @@
 // @ts-nocheck
 import { OutputData } from "@editorjs/editorjs";
 import { AttributeInput } from "@mzawadie/components/Attributes";
+import { useExitFormDialog } from "@mzawadie/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@mzawadie/components/Metadata";
-import { RichTextEditorChange } from "@mzawadie/components/RichTextEditor";
 import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@mzawadie/core";
 import {
     PageDetailsFragment,
+    PageErrorWithAttributesFragment,
     SearchPagesQuery,
     SearchPageTypesQuery,
     SearchProductsQuery,
 } from "@mzawadie/graphql";
-import useForm, { FormChange, SubmitPromise } from "@mzawadie/hooks/useForm";
+import useForm, {
+    CommonUseFormResultWithHandlers,
+    FormChange,
+    SubmitPromise,
+} from "@mzawadie/hooks/useForm";
 import useFormset, { FormsetChange, FormsetData } from "@mzawadie/hooks/useFormset";
-import { getAttributesDisplayData } from "@mzawadie/pages/attributes/utils/data";
+import useHandleFormSubmit from "@mzawadie/hooks/useHandleFormSubmit";
+import {
+    getAttributesDisplayData,
+    getRichTextAttributesFromMap,
+    getRichTextDataFromAttributes,
+    mergeAttributes,
+    RichTextProps,
+} from "@mzawadie/pages/attributes/utils/data";
 import {
     createAttributeChangeHandler,
     createAttributeFileChangeHandler,
@@ -27,13 +39,15 @@ import {
     getAttributeInputFromPageType,
 } from "@mzawadie/pages/pages/utils/data";
 import { createPageTypeSelectHandler } from "@mzawadie/pages/pages/utils/handlers";
+import { validatePageCreateData } from "@mzawadie/pages/pages/utils/validation";
 import getPublicationData from "@mzawadie/utils/data/getPublicationData";
-import handleFormSubmit from "@mzawadie/utils/handlers/handleFormSubmit";
 import { mapMetadataItemToInput } from "@mzawadie/utils/maps";
 import getMetadata from "@mzawadie/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChangeTrigger";
+import { RichTextContext } from "@mzawadie/utils/richText/context";
+import { useMultipleRichText } from "@mzawadie/utils/richText/useMultipleRichText";
 import useRichText from "@mzawadie/utils/richText/useRichText";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export interface PageFormData extends MetadataFormData {
     isPublished: boolean;
@@ -58,7 +72,6 @@ export interface PageSubmitData extends PageFormData {
 
 export interface PageUpdateHandlers {
     changeMetadata: FormChange;
-    changeContent: RichTextEditorChange;
     selectPageType: FormChange;
     selectAttribute: FormsetChange<string>;
     selectAttributeMulti: FormsetChange<string>;
@@ -68,14 +81,15 @@ export interface PageUpdateHandlers {
     fetchReferences: (value: string) => void;
     fetchMoreReferences: FetchMoreProps;
 }
-export interface UsePageUpdateFormResult {
-    change: FormChange;
-    data: PageData;
+
+export interface UsePageUpdateFormOutput
+    extends CommonUseFormResultWithHandlers<PageData, PageUpdateHandlers>,
+        RichTextProps {
     valid: boolean;
-    handlers: PageUpdateHandlers;
-    hasChanged: boolean;
-    submit: () => void;
+    validationErrors: PageErrorWithAttributesFragment[];
 }
+
+export type UsePageUpdateFormRenderProps = Omit<UsePageUpdateFormOutput, "richText">;
 
 export interface UsePageFormOpts {
     pageTypes?: RelayToFlat<SearchPageTypesQuery["search"]>;
@@ -91,20 +105,42 @@ export interface UsePageFormOpts {
 }
 
 export interface PageFormProps extends UsePageFormOpts {
-    children: (props: UsePageUpdateFormResult) => React.ReactNode;
+    children: (props: UsePageUpdateFormRenderProps) => React.ReactNode;
     page: PageDetailsFragment;
     onSubmit: (data: PageData) => SubmitPromise;
+    disabled: boolean;
 }
+
+const getInitialFormData = (pageExists: boolean, page?: PageDetailsFragment): PageFormData => ({
+    isPublished: pageExists ? page?.isPublished : true,
+    metadata: page?.metadata?.map(mapMetadataItemToInput) || [],
+    pageType: null,
+    privateMetadata: page?.privateMetadata?.map(mapMetadataItemToInput) || [],
+    publicationDate: pageExists ? page?.publicationDate : "",
+    seoDescription: page?.seoDescription || "",
+    seoTitle: page?.seoTitle || "",
+    slug: page?.slug || "",
+    title: page?.title || "",
+});
 
 function usePageForm(
     page: PageDetailsFragment,
     onSubmit: (data: PageData) => SubmitPromise,
+    disabled: boolean,
     opts: UsePageFormOpts
-): UsePageUpdateFormResult {
-    const [changed, setChanged] = React.useState(false);
-    const triggerChange = () => setChanged(true);
-
+): UsePageUpdateFormOutput {
     const pageExists = page !== null;
+
+    const {
+        handleChange,
+        triggerChange,
+        data: formData,
+        formId,
+    } = useForm(getInitialFormData(pageExists, page), undefined, {
+        confirmLeave: true,
+    });
+    
+    const [validationErrors, setValidationErrors] = useState<PageErrorWithAttributesFragment[]>([]);
 
     const attributes = useFormset(
         pageExists
@@ -114,22 +150,21 @@ function usePageForm(
             : []
     );
 
+    const { getters: attributeRichTextGetters, getValues: getAttributeRichTextValues } =
+        useMultipleRichText({
+            initial: getRichTextDataFromAttributes(attributes.data),
+            triggerChange,
+        });
+    
     const attributesWithNewFileValue = useFormset<null, File>([]);
 
-    const form = useForm<PageFormData>({
-        isPublished: page?.isPublished,
-        metadata: pageExists ? page?.metadata?.map(mapMetadataItemToInput) : [],
-        pageType: null,
-        privateMetadata: pageExists ? page?.privateMetadata?.map(mapMetadataItemToInput) : [],
-        publicationDate: page?.publicationDate || "",
-        seoDescription: page?.seoDescription || "",
-        seoTitle: page?.seoTitle || "",
-        slug: page?.slug || "",
-        title: page?.title || "",
+    const { setExitDialogSubmitRef, setIsSubmitDisabled, setIsDirty } = useExitFormDialog({
+        formId,
     });
 
-    const [content, changeContent] = useRichText({
+    const richText = useRichText({
         initial: pageExists ? page?.content : null,
+        loading: pageExists ? !page : false,
         triggerChange,
     });
 
@@ -139,35 +174,37 @@ function usePageForm(
         makeChangeHandler: makeMetadataChangeHandler,
     } = useMetadataChangeTrigger();
 
-    const handleChange: FormChange = (event, cb) => {
-        form.change(event, cb);
-        triggerChange();
-    };
-
     const changeMetadata = makeMetadataChangeHandler(handleChange);
+    
     const handlePageTypeSelect = createPageTypeSelectHandler(opts.onSelectPageType, triggerChange);
+    
     const handleAttributeChange = createAttributeChangeHandler(attributes.change, triggerChange);
+    
     const handleAttributeMultiChange = createAttributeMultiChangeHandler(
         attributes.change,
         attributes.data,
         triggerChange
     );
+    
     const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
         attributes.change,
         triggerChange
     );
+    
     const handleFetchReferences = createFetchReferencesHandler(
         attributes.data,
         opts.assignReferencesAttributeId,
         opts.fetchReferencePages,
         opts.fetchReferenceProducts
     );
+    
     const handleFetchMoreReferences = createFetchMoreReferencesHandler(
         attributes.data,
         opts.assignReferencesAttributeId,
         opts.fetchMoreReferencePages,
         opts.fetchMoreReferenceProducts
     );
+    
     const handleAttributeFileChange = createAttributeFileChangeHandler(
         attributes.change,
         attributesWithNewFileValue.data,
@@ -175,34 +212,47 @@ function usePageForm(
         attributesWithNewFileValue.change,
         triggerChange
     );
+    
     const handleAttributeValueReorder = createAttributeValueReorderHandler(
         attributes.change,
         attributes.data,
         triggerChange
     );
 
-    // Need to make it function to always have content.current up to date
-    const getData = (): PageData => ({
-        ...form.data,
+    const data: PageData = {
+        ...formData,
         attributes: getAttributesDisplayData(
             attributes.data,
             attributesWithNewFileValue.data,
             opts.referencePages,
             opts.referenceProducts
         ),
-        content: content.current,
+        content: null,
         pageType: pageExists ? page?.pageType : opts.selectedPageType,
-    });
+    };
 
-    const getSubmitData = (): PageSubmitData => ({
-        ...getData(),
-        ...getMetadata(form.data, isMetadataModified, isPrivateMetadataModified),
-        ...getPublicationData(form.data),
+    const getSubmitData = async (): Promise<PageSubmitData> => ({
+        ...data,
+        ...getMetadata(formData, isMetadataModified, isPrivateMetadataModified),
+        ...getPublicationData(formData),
+        content: await richText.getValue(),
+        attributes: mergeAttributes(
+            attributes.data,
+            getRichTextAttributesFromMap(attributes.data, await getAttributeRichTextValues())
+        ),
         attributesWithNewFileValue: attributesWithNewFileValue.data,
     });
 
     const handleSubmit = async (data: PageData) => {
-        const errors = await onSubmit(data);
+        let errors = validatePageCreateData(data);
+
+        setValidationErrors(errors);
+
+        if (errors.length) {
+            return errors;
+        }
+
+        errors = await onSubmit(data);
 
         if (!errors?.length && pageExists) {
             attributesWithNewFileValue.set([]);
@@ -211,19 +261,41 @@ function usePageForm(
         return errors;
     };
 
-    const submit = () =>
-        pageExists
-            ? handleFormSubmit(getSubmitData(), handleSubmit, setChanged)
-            : onSubmit(getSubmitData());
+    const handleFormSubmit = useHandleFormSubmit({
+        formId,
+        onSubmit: handleSubmit,
+    });
+
+    const submit = async () => {
+        const errors = await handleFormSubmit(await getSubmitData());
+
+        if (errors.length) {
+            setIsSubmitDisabled(isSaveDisabled);
+            setIsDirty(true);
+        }
+
+        return errors;
+    };
+
+    useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
     const valid = pageExists || !!opts.selectedPageType;
 
+    const isSaveDisabled = disabled || !valid;
+
+    useEffect(() => {
+        setIsSubmitDisabled(isSaveDisabled);
+        if (!pageExists) {
+            setIsDirty(true);
+        }
+    }, [isSaveDisabled]);
+
     return {
         change: handleChange,
-        data: getData(),
+        data,
+        validationErrors,
         valid,
         handlers: {
-            changeContent,
             changeMetadata,
             fetchMoreReferences: handleFetchMoreReferences,
             fetchReferences: handleFetchReferences,
@@ -234,15 +306,21 @@ function usePageForm(
             selectAttributeReference: handleAttributeReferenceChange,
             selectPageType: handlePageTypeSelect,
         },
-        hasChanged: changed,
         submit,
+        isSaveDisabled,
+        richText,
+        attributeRichTextGetters,
     };
 }
 
-const PageForm: React.FC<PageFormProps> = ({ children, page, onSubmit, ...rest }) => {
-    const props = usePageForm(page, onSubmit, rest);
+const PageForm: React.FC<PageFormProps> = ({ children, page, onSubmit, disabled, ...rest }) => {
+    const { richText, ...props } = usePageForm(page, onSubmit, disabled, rest);
 
-    return <form onSubmit={props.submit}>{children(props)}</form>;
+    return (
+        <form onSubmit={props.submit}>
+            <RichTextContext.Provider value={richText}>{children(props)}</RichTextContext.Provider>
+        </form>
+    );
 };
 
 PageForm.displayName = "PageForm";

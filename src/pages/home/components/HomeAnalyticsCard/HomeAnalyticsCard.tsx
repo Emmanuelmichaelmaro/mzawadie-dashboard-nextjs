@@ -27,7 +27,7 @@ const useStyles = makeStyles(
         },
         cardTitle: {
             fontSize: 20,
-            fontWeight: 500 as const,
+            fontWeight: 500 as 500,
         },
         icon: {
             color: theme.palette.primary.contrastText,
@@ -69,17 +69,20 @@ const HomeAnalyticsCard: React.FC<HomeAnalyticsCardProps> = (props) => {
                     <Typography className={classes.cardTitle} variant="subtitle1">
                         {title}
                     </Typography>
+
                     <Typography
                         className={classes.cardSubtitle}
                         variant="caption"
                         color="textSecondary"
                     >
-                        <FormattedMessage defaultMessage="Today" id="zWgbGg" />
+                        <FormattedMessage id="zWgbGg" defaultMessage="Today" />
                     </Typography>
+
                     <Typography className={classes.value} color="textPrimary" variant="h4">
                         {children}
                     </Typography>
                 </div>
+
                 <div className={classes.iconBackground}>{icon}</div>
             </CardContent>
         </Card>

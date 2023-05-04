@@ -2,7 +2,6 @@
 import { OutputData } from "@editorjs/editorjs";
 import { useExitFormDialog } from "@mzawadie/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@mzawadie/components/Metadata";
-import { RichTextEditorChange } from "@mzawadie/components/RichTextEditor";
 import useForm, {
     CommonUseFormResultWithHandlers,
     FormChange,
@@ -13,6 +12,7 @@ import { ChannelCollectionData } from "@mzawadie/pages/channels/utils";
 import { createChannelsChangeHandler } from "@mzawadie/pages/collections/utils";
 import { COLLECTION_CREATE_FORM_ID } from "@mzawadie/pages/collections/views/consts";
 import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChangeTrigger";
+import { RichTextContext, RichTextContextValues } from "@mzawadie/utils/richText/context";
 import useRichText from "@mzawadie/utils/richText/useRichText";
 import React, { useEffect } from "react";
 
@@ -28,15 +28,16 @@ export interface CollectionCreateFormData extends MetadataFormData {
     seoDescription: string;
     seoTitle: string;
 }
+
 export interface CollectionCreateData extends CollectionCreateFormData {
     description: OutputData;
 }
 
 interface CollectionCreateHandlers {
     changeMetadata: FormChange;
-    changeDescription: RichTextEditorChange;
     changeChannels: (id: string, data: Omit<ChannelCollectionData, "name" | "id">) => void;
 }
+
 export type UseCollectionCreateFormResult = CommonUseFormResultWithHandlers<
     CollectionCreateData,
     CollectionCreateHandlers
@@ -47,6 +48,7 @@ export interface CollectionCreateFormProps {
     setChannels: (data: ChannelCollectionData[]) => void;
     children: (props: UseCollectionCreateFormResult) => React.ReactNode;
     onSubmit: (data: CollectionCreateData) => SubmitPromise;
+    disabled: boolean;
 }
 
 const getInitialData = (currentChannels: ChannelCollectionData[]): CollectionCreateFormData => ({
@@ -67,15 +69,15 @@ const getInitialData = (currentChannels: ChannelCollectionData[]): CollectionCre
 function useCollectionCreateForm(
     currentChannels: ChannelCollectionData[],
     setChannels: (data: ChannelCollectionData[]) => void,
-    onSubmit: (data: CollectionCreateData) => SubmitPromise
-): UseCollectionCreateFormResult {
+    onSubmit: (data: CollectionCreateData) => SubmitPromise,
+    disabled: boolean
+): UseCollectionCreateFormResult & { richText: RichTextContextValues } {
     const {
         handleChange,
         data: formData,
         triggerChange,
-        setChanged,
-        hasChanged,
         formId,
+        setIsSubmitDisabled,
     } = useForm(getInitialData(currentChannels), undefined, {
         confirmLeave: true,
         formId: COLLECTION_CREATE_FORM_ID,
@@ -84,14 +86,13 @@ function useCollectionCreateForm(
     const handleFormSubmit = useHandleFormSubmit({
         formId,
         onSubmit,
-        setChanged,
     });
 
     const { setExitDialogSubmitRef } = useExitFormDialog({
         formId,
     });
 
-    const [description, changeDescription] = useRichText({
+    const richText = useRichText({
         initial: null,
         triggerChange,
     });
@@ -100,10 +101,15 @@ function useCollectionCreateForm(
 
     const changeMetadata = makeMetadataChangeHandler(handleChange);
 
-    // Need to make it function to always have description.current up to date
-    const getData = (): CollectionCreateData => ({
+    const data: CollectionCreateData = {
         ...formData,
-        description: description.current,
+        description: null,
+    };
+
+    // Need to make it function to always have description.current up to date
+    const getData = async (): Promise<CollectionCreateData> => ({
+        ...formData,
+        description: await richText.getValue(),
     });
 
     const handleChannelChange = createChannelsChangeHandler(
@@ -112,20 +118,24 @@ function useCollectionCreateForm(
         triggerChange
     );
 
-    const submit = () => handleFormSubmit(getData());
+    const submit = async () => handleFormSubmit(await getData());
 
     useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
+    const isSaveDisabled = disabled;
+
+    setIsSubmitDisabled(isSaveDisabled);
+
     return {
         change: handleChange,
-        data: getData(),
+        data,
         handlers: {
             changeChannels: handleChannelChange,
-            changeDescription,
             changeMetadata,
         },
-        hasChanged,
         submit,
+        isSaveDisabled,
+        richText,
     };
 }
 
@@ -134,10 +144,20 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
     setChannels,
     children,
     onSubmit,
+    disabled,
 }) => {
-    const props = useCollectionCreateForm(currentChannels, setChannels, onSubmit);
+    const { richText, ...props } = useCollectionCreateForm(
+        currentChannels,
+        setChannels,
+        onSubmit,
+        disabled
+    );
 
-    return <form onSubmit={props.submit}>{children(props)}</form>;
+    return (
+        <form onSubmit={props.submit}>
+            <RichTextContext.Provider value={richText}>{children(props)}</RichTextContext.Provider>
+        </form>
+    );
 };
 
 CollectionCreateForm.displayName = "CollectionCreateForm";

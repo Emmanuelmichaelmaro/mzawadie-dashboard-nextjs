@@ -1,10 +1,9 @@
 // @ts-nocheck
-import ArrowDropdownIcon from "@icons/ArrowDropdown";
-import { InputBase, Popper, TextField } from "@material-ui/core";
+import { InputBase, Popper, PopperPlacementType, TextField } from "@material-ui/core";
 import { InputProps } from "@material-ui/core/Input";
 import { FetchMoreProps } from "@mzawadie/core";
 import { ExtendedFormHelperTextProps } from "@mzawadie/pages/channels/components/ChannelForm/types";
-import { makeStyles } from "@saleor/macaw-ui";
+import { ChevronIcon } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import Downshift from "downshift";
 import { filter } from "fuzzaldrin";
@@ -15,25 +14,7 @@ import SingleAutocompleteSelectFieldContent, {
     SingleAutocompleteActionType,
     SingleAutocompleteChoiceType,
 } from "./SingleAutocompleteSelectFieldContent";
-
-const useStyles = makeStyles(
-    (theme) => ({
-        container: {
-            flexGrow: 1,
-            position: "relative",
-        },
-        nakedInput: {
-            padding: theme.spacing(2, 0),
-        },
-        adornment: {
-            cursor: "pointer",
-            "&:active": {
-                pointerEvents: "none",
-            },
-        },
-    }),
-    { name: "SingleAutocompleteSelectField" }
-);
+import { useStyles } from "./styles";
 
 export interface SingleAutocompleteSelectFieldProps extends Partial<FetchMoreProps> {
     add?: SingleAutocompleteActionType;
@@ -56,6 +37,7 @@ export interface SingleAutocompleteSelectFieldProps extends Partial<FetchMorePro
     FormHelperTextProps?: ExtendedFormHelperTextProps;
     nakedInput?: boolean;
     onBlur?: () => void;
+    popperPlacement?: PopperPlacementType;
 }
 
 const DebounceAutocomplete: React.ComponentType<DebounceProps<string>> = Debounce;
@@ -87,10 +69,15 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
         FormHelperTextProps,
         nakedInput = false,
         onBlur,
+        popperPlacement = "bottom-end",
         ...rest
     } = props;
+
     const classes = useStyles(props);
-    const anchor = React.useRef<HTMLInputElement | null>(null);
+
+    const anchor = React.useRef<HTMLDivElement | null>(null);
+
+    const input = React.useRef<HTMLInputElement | null>(null);
 
     const handleChange = (item: string) => {
         onChange({
@@ -103,16 +90,14 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
 
     return (
         <DebounceAutocomplete debounceFn={fetchChoices}>
-            {(debounceFn) => (
+            {(fetchChoicesDebounced) => (
                 <Downshift
-                    defaultInputValue={displayValue}
                     itemToString={() => displayValue || ""}
-                    onInputValueChange={(value) => debounceFn(value)}
+                    onInputValueChange={(value) => fetchChoicesDebounced(value)}
                     onSelect={handleChange}
                     selectedItem={value || ""}
-                    // this is to prevent unwanted state updates when the dropdown
-                    // is closed with an empty value, which downshift interprets
-                    // as the value being updated with an empty string, causing side effects
+                    // this is to prevent unwanted state updates when the dropdown is closed with an empty value,
+                    // which downshift interprets as the value being updated with an empty string, causing side-effects
                     stateReducer={(_, changes) => {
                         if (changes.isOpen === false) {
                             delete changes.inputValue;
@@ -144,7 +129,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
 
                         const isValueInLabels = !!choices.find((choice) => choice.label === inputValue);
 
-                        const ensureProperValues = (alwaysCheck = false) => {
+                        const ensureProperValues = (alwaysCheck: boolean = false) => {
                             if ((allowCustomValues || isValueInLabels) && !alwaysCheck) {
                                 return;
                             }
@@ -172,27 +157,44 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                             closeMenu();
                         };
 
+                        const handleFocus = () => {
+                            if (fetchOnFocus) {
+                                fetchChoices(inputValue);
+                            }
+
+                            if (input.current) {
+                                input.current.select();
+                            }
+                        };
+
+                        const handleToggleMenu = () => {
+                            if (disabled) {
+                                return;
+                            }
+                            toggleMenu();
+                        };
+
                         const TextFieldComponent = nakedInput ? InputBase : TextField;
 
                         const commonInputProps = {
                             ...InputProps,
-                            ...getInputProps({
-                                placeholder,
-                            }),
                             endAdornment: (
-                                <div className={classes.adornment}>
-                                    <ArrowDropdownIcon />
+                                <div
+                                    onClick={() => {
+                                        handleToggleMenu();
+                                        handleFocus();
+                                    }}
+                                    className={classNames(classes.adornment, {
+                                        [classes.adornmentRotate]: isOpen,
+                                    })}
+                                >
+                                    <ChevronIcon />
                                 </div>
                             ),
                             error,
                             id: undefined,
-                            onBlur: handleBlur,
-                            onClick: !disabled && toggleMenu,
-                            onFocus: () => {
-                                if (fetchOnFocus) {
-                                    fetchChoices(inputValue);
-                                }
-                            },
+                            onFocus: handleFocus,
+                            ref: anchor,
                         };
 
                         const nakedInputProps = nakedInput
@@ -201,22 +203,38 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                                   ...commonInputProps,
                                   autoFocus: true,
                                   className: classes.nakedInput,
+                                  onBlur: handleBlur,
                               }
                             : {};
 
                         return (
-                            <div className={classNames(classes.container, className)} {...rest}>
+                            <div
+                                className={classNames(
+                                    classes.container,
+                                    "click-outside-ignore",
+                                    className
+                                )}
+                                {...rest}
+                            >
                                 <TextFieldComponent
                                     {...nakedInputProps}
                                     InputProps={commonInputProps}
+                                    // Downshift doesn't seem to be fully compatible with MUI
+                                    // https://github.com/downshift-js/downshift/issues/718
+                                    inputProps={{
+                                        ...getInputProps({
+                                            placeholder,
+                                            onClick: handleToggleMenu,
+                                        }),
+                                    }}
                                     error={error}
                                     disabled={disabled}
                                     helperText={helperText}
                                     FormHelperTextProps={FormHelperTextProps}
                                     label={label}
-                                    fullWidth
+                                    fullWidth={true}
                                     onBlur={onBlur}
-                                    ref={anchor}
+                                    inputRef={input}
                                 />
 
                                 {isOpen && (!!inputValue || !!choices.length) && (
@@ -224,7 +242,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                                         anchorEl={anchor.current}
                                         open={isOpen}
                                         style={{ width: anchor.current.clientWidth, zIndex: 1301 }}
-                                        placement="bottom-end"
+                                        placement={popperPlacement}
                                     >
                                         <SingleAutocompleteSelectFieldContent
                                             add={

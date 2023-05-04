@@ -1,42 +1,40 @@
-/* eslint-disable radix */
 // @ts-nocheck
-import { IconButton } from "@material-ui/core";
 import { DeleteFilterTabDialog } from "@mzawadie/components/DeleteFilterTabDialog";
 import {
     SaveFilterTabDialog,
     SaveFilterTabDialogFormData,
 } from "@mzawadie/components/SaveFilterTabDialog";
 import { TypeDeleteWarningDialog } from "@mzawadie/components/TypeDeleteWarningDialog";
-import { commonMessages, getStringOrPlaceholder, ListViews } from "@mzawadie/core";
+import { commonMessages } from "@mzawadie/core";
+import { getStringOrPlaceholder } from "@mzawadie/core";
+import { ListViews } from "@mzawadie/core";
 import { usePageTypeBulkDeleteMutation, usePageTypeListQuery } from "@mzawadie/graphql";
 import useBulkActions from "@mzawadie/hooks/useBulkActions";
 import useListSettings from "@mzawadie/hooks/useListSettings";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
-import usePaginator, { createPaginationState } from "@mzawadie/hooks/usePaginator";
-import { configurationMenuUrl } from "@mzawadie/pages/configuration";
+import { usePaginationReset } from "@mzawadie/hooks/usePaginationReset";
+import usePaginator, { createPaginationState, PaginatorContext } from "@mzawadie/hooks/usePaginator";
 import { usePageTypeDelete } from "@mzawadie/pages/pageTypes/hooks/usePageTypeDelete";
-import {
-    pageTypeAddUrl,
-    pageTypeListUrl,
-    PageTypeListUrlDialog,
-    PageTypeListUrlFilters,
-    PageTypeListUrlQueryParams,
-    pageTypeUrl,
-} from "@mzawadie/pages/pageTypes/urls";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@mzawadie/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import { getSortParams } from "@mzawadie/utils/sort";
-import { DeleteIcon } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { PageTypeListPage } from "../../components/PageTypeListPage";
 import {
-    areFiltersApplied,
+    pageTypeListUrl,
+    PageTypeListUrlDialog,
+    PageTypeListUrlFilters,
+    PageTypeListUrlQueryParams,
+} from "../../urls";
+import {
     deleteFilterTab,
     getActiveFilters,
+    getFiltersCurrentTab,
     getFilterTabs,
     getFilterVariables,
     saveFilterTab,
@@ -49,10 +47,8 @@ interface PageTypeListProps {
 
 export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
     const navigate = useNavigator();
-    const paginate = usePaginator();
     const notify = useNotifier();
-    const intl = useIntl();
-
+    
     const {
         isSelected,
         listElements: selectedPageTypes,
@@ -60,20 +56,24 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
         toggle,
         toggleAll,
     } = useBulkActions(params.ids);
-
+    
+    const intl = useIntl();
+    
     const { settings } = useListSettings(ListViews.PAGES_LIST);
 
-    const paginationState = createPaginationState(settings.rowNumber, params);
+    usePaginationReset(pageTypeListUrl, params, settings.rowNumber);
 
+    const paginationState = createPaginationState(settings.rowNumber, params);
+    
     const queryVariables = React.useMemo(
         () => ({
             ...paginationState,
             filter: getFilterVariables(params),
             sort: getSortQueryVariables(params),
         }),
-        [params]
+        [params, settings.rowNumber]
     );
-
+    
     const { data, loading, refetch } = usePageTypeListQuery({
         displayLoader: true,
         variables: queryVariables,
@@ -81,12 +81,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
 
     const tabs = getFilterTabs();
 
-    const currentTab =
-        params.activeTab === undefined
-            ? areFiltersApplied(params)
-                ? tabs.length + 1
-                : 0
-            : parseInt(params.activeTab, 0);
+    const currentTab = getFiltersCurrentTab(params, tabs);
 
     const changeFilterField = (filter: PageTypeListUrlFilters) => {
         reset();
@@ -125,17 +120,17 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
         handleTabChange(tabs.length + 1);
     };
 
-    const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-        data?.pageTypes?.pageInfo,
+    const paginationValues = usePaginator({
+        pageInfo: data?.pageTypes?.pageInfo,
         paginationState,
-        params
-    );
+        queryString: params,
+    });
 
     const handleSort = createSortHandler(navigate, pageTypeListUrl, params);
 
     const [pageTypeBulkDelete, pageTypeBulkDeleteOpts] = usePageTypeBulkDeleteMutation({
         onCompleted: (data) => {
-            if (data.pageTypeBulkDelete.errors.length === 0) {
+            if (data.pageTypeBulkDelete?.errors.length === 0) {
                 notify({
                     status: "success",
                     text: intl.formatMessage(commonMessages.savedChanges),
@@ -168,7 +163,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
     const pageTypesData = mapEdgesToItems(data?.pageTypes);
 
     return (
-        <>
+        <PaginatorContext.Provider value={paginationValues}>
             <PageTypeListPage
                 currentTab={currentTab}
                 initialSearch={params.query || ""}
@@ -180,12 +175,6 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
                 tabs={tabs.map((tab) => tab.name)}
                 disabled={loading}
                 pageTypes={pageTypesData}
-                pageInfo={pageInfo}
-                onAdd={() => navigate(pageTypeAddUrl)}
-                onBack={() => navigate(configurationMenuUrl)}
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
-                onRowClick={(id) => () => navigate(pageTypeUrl(id))}
                 onSort={handleSort}
                 isChecked={isSelected}
                 selected={selectedPageTypes.length}
@@ -194,6 +183,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
                 toggleAll={toggleAll}
                 toolbar={
                     <IconButton
+                        variant="secondary"
                         color="primary"
                         onClick={() =>
                             openModal("remove", {
@@ -232,7 +222,7 @@ export const PageTypeList: React.FC<PageTypeListProps> = ({ params }) => {
                 onSubmit={handleTabDelete}
                 tabName={getStringOrPlaceholder(tabs[currentTab - 1]?.name)}
             />
-        </>
+        </PaginatorContext.Provider>
     );
 };
 

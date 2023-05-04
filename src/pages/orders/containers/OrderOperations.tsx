@@ -1,5 +1,6 @@
 // @ts-nocheck
-import { getMutationProviderData, PartialMutationProviderOutput } from "@mzawadie/core";
+import { getMutationProviderData } from "@mzawadie/core";
+import { PartialMutationProviderOutput } from "@mzawadie/core";
 import {
     InvoiceEmailSendMutation,
     InvoiceEmailSendMutationVariables,
@@ -198,6 +199,7 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
     });
     const approveFulfillment = useOrderFulfillmentApproveMutation({
         onCompleted: onOrderFulfillmentApprove,
+        disableErrorHandling: true,
     });
     const cancelFulfillment = useOrderFulfillmentCancelMutation({
         onCompleted: onOrderFulfillmentCancel,

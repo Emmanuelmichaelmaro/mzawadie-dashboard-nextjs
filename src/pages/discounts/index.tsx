@@ -7,8 +7,6 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
-import { SaleDetailsPageTab } from "./components/SaleDetailsPage";
-import { VoucherDetailsPageTab } from "./components/VoucherDetailsPage";
 import {
     saleAddPath,
     SaleCreateUrlQueryParams,
@@ -25,7 +23,7 @@ import {
     voucherPath,
     VoucherUrlQueryParams,
 } from "./urls";
-import { SaleCreateViewComponent } from "./views/SaleCreate";
+import SaleCreateViewComponent from "./views/SaleCreate/SaleCreate";
 import { SaleDetailsViewComponent } from "./views/SaleDetails";
 import { SaleListViewComponent } from "./views/SaleList";
 import { VoucherCreateViewComponent } from "./views/VoucherCreate";
@@ -39,11 +37,8 @@ const SaleListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
 };
 
 const SaleDetailsView: React.FC<RouteComponentProps<{ id: string }>> = ({ match, location }) => {
-    const { activeTab, ...qs } = parseQs(location.search.substr(1));
-    const params: SaleUrlQueryParams = {
-        ...qs,
-        activeTab: SaleDetailsPageTab(activeTab),
-    };
+    const qs = parseQs(location.search.substr(1));
+    const params: SaleUrlQueryParams = qs;
 
     return <SaleDetailsViewComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
@@ -66,11 +61,9 @@ const VoucherListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
 };
 
 const VoucherDetailsView: React.FC<RouteComponentProps<{ id: string }>> = ({ match, location }) => {
-    const { activeTab, ...qs } = parseQs(location.search.substr(1));
-    const params: VoucherUrlQueryParams = {
-        ...qs,
-        activeTab: VoucherDetailsPageTab(activeTab),
-    };
+    const qs = parseQs(location.search.substr(1));
+    const params: VoucherUrlQueryParams = qs;
+
     return <VoucherDetailsViewComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
 
@@ -90,8 +83,8 @@ export const DiscountSection: React.FC<{}> = () => {
             <Switch>
                 <Route exact path={saleListPath} component={SaleListView} />
                 <Route exact path={saleAddPath} component={SaleCreateView} />
-                <Route path={salePath(":id")} component={SaleDetailsView} />
                 <Route exact path={voucherAddPath} component={VoucherCreateView} />
+                <Route path={salePath(":id")} component={SaleDetailsView} />
                 <Route exact path={voucherListPath} component={VoucherListView} />
                 <Route path={voucherPath(":id")} component={VoucherDetailsView} />
             </Switch>

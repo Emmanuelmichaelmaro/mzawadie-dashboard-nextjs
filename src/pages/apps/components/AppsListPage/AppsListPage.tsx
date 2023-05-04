@@ -2,83 +2,182 @@
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import Container from "@mzawadie/components/Container";
 import { PageHeader } from "@mzawadie/components/PageHeader";
-import { sectionNames, ListProps } from "@mzawadie/core";
+import { sectionNames } from "@mzawadie/core";
+import { ListProps } from "@mzawadie/core";
 import { AppsInstallationsQuery, AppsListQuery } from "@mzawadie/graphql";
-import React from "react";
-import { useIntl } from "react-intl";
+import { useSaleorApps } from "@mzawadie/pages/apps/hooks/useSaleorApps";
+import { makeStyles } from "@saleor/macaw-ui";
+import React, { useEffect, useMemo, useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
+import { AppPageTabs, AppPageTabValue } from "../AppPageTabs/AppPageTabs";
 import AppsInProgress from "../AppsInProgress/AppsInProgress";
 import CustomApps from "../CustomApps/CustomApps";
 import InstalledApps from "../InstalledApps/InstalledApps";
-import Marketplace from "../Marketplace/Marketplace";
 
 export interface AppsListPageProps extends ListProps {
     installedAppsList: AppsListQuery["apps"]["edges"];
     customAppsList: AppsListQuery["apps"]["edges"];
     appsInProgressList?: AppsInstallationsQuery;
-    loadingAppsInProgress: boolean;
-    navigateToCustomApp: (id: string) => () => void;
-    navigateToCustomAppCreate: () => void;
+    getCustomAppHref: (id: string) => string;
     onInstalledAppRemove: (id: string) => void;
     onCustomAppRemove: (id: string) => void;
     onAppInProgressRemove: (id: string) => void;
     onAppInstallRetry: (id: string) => void;
-    onRowAboutClick: (id: string) => () => void;
 }
+
+const useStyles = makeStyles(
+    (theme) => ({
+        topTabs: {
+            marginBottom: theme.spacing(4),
+        },
+    }),
+    {
+        name: "AppsListPageStyles",
+    }
+);
 
 const AppsListPage: React.FC<AppsListPageProps> = ({
     appsInProgressList,
     customAppsList,
     installedAppsList,
-    loadingAppsInProgress,
-    navigateToCustomApp,
-    navigateToCustomAppCreate,
+    getCustomAppHref,
     onInstalledAppRemove,
     onCustomAppRemove,
     onAppInProgressRemove,
     onAppInstallRetry,
-    onRowAboutClick,
     ...listProps
 }) => {
+    const { fetchApps, apps: fetchedSaleorApps, saleorAppsEnabled } = useSaleorApps();
+
+    useEffect(() => {
+        if (saleorAppsEnabled) {
+            fetchApps();
+        }
+    }, [saleorAppsEnabled, fetchApps]);
+
+    const styles = useStyles();
     const intl = useIntl();
+    const [activeTab, setActiveTab] = useState<AppPageTabValue>("THIRD_PARTY");
 
     const appsInProgress = appsInProgressList?.appsInstallations;
+
+    const thirdPartyApps = useMemo(
+        () =>
+            installedAppsList?.filter(
+                (app) =>
+                    !(fetchedSaleorApps ?? []).find((fetchedApp) =>
+                        app.node.manifestUrl.includes(fetchedApp.hostname)
+                    )
+            ),
+        [installedAppsList, fetchedSaleorApps]
+    );
+
+    const saleorApps = useMemo(
+        () =>
+            fetchedSaleorApps
+                ?.map((app) =>
+                    installedAppsList?.find((installedApp) =>
+                        installedApp.node.manifestUrl.includes(app.hostname)
+                    )
+                )
+                .filter(Boolean),
+        [installedAppsList, fetchedSaleorApps]
+    );
+
+    const renderContent = () => {
+        switch (activeTab) {
+            case "THIRD_PARTY": {
+                return (
+                    <>
+                        <p>
+                            <FormattedMessage
+                                defaultMessage="Third party apps are installed with App Manifests. They contain UI
+                accessible from dashboard and can extend it. Read more here."
+                                id="vkY3W9"
+                            />
+                        </p>
+                        <InstalledApps
+                            title={intl.formatMessage({
+                                id: "BvmnJq",
+                                defaultMessage: "Third Party Apps",
+                                description: "section header",
+                            })}
+                            appsList={thirdPartyApps}
+                            onRemove={onInstalledAppRemove}
+                            displayQuickManifestButton
+                            {...listProps}
+                        />
+
+                        <CardSpacer />
+
+                        {!!appsInProgress?.length && (
+                            <>
+                                <CardSpacer />
+                                <AppsInProgress
+                                    appsList={appsInProgress}
+                                    onAppInstallRetry={onAppInstallRetry}
+                                    onRemove={onAppInProgressRemove}
+                                />
+                            </>
+                        )}
+                    </>
+                );
+            }
+            case "WEBHOOKS_AND_EVENTS": {
+                return (
+                    <>
+                        <p>
+                            <FormattedMessage
+                                defaultMessage="Local apps are custom webhooks & token pairs that can be used to
+                connect apps and access Saleor API. Read more."
+                                id="EqDdoh"
+                            />
+                        </p>
+                        <CustomApps
+                            appsList={customAppsList}
+                            getCustomAppHref={getCustomAppHref}
+                            onRemove={onCustomAppRemove}
+                        />
+                    </>
+                );
+            }
+            case "SALEOR_APPS": {
+                return (
+                    <>
+                        <p>
+                            <FormattedMessage
+                                defaultMessage="Saleor apps are hosted and maintained by Saleor Team. They are
+                preinstalled for you and ready to use"
+                                id="FLtdaw"
+                            />
+                        </p>
+                        <InstalledApps
+                            title={intl.formatMessage({
+                                id: "PbQJY5",
+                                defaultMessage: "Saleor Apps",
+                                description: "section header",
+                            })}
+                            appsList={saleorApps}
+                            onRemove={onInstalledAppRemove}
+                            {...listProps}
+                        />
+                    </>
+                );
+            }
+        }
+    };
 
     return (
         <Container>
             <PageHeader title={intl.formatMessage(sectionNames.apps)} />
-
-            {!!appsInProgress?.length && (
-                <>
-                    <AppsInProgress
-                        appsList={appsInProgress}
-                        disabled={loadingAppsInProgress}
-                        onAppInstallRetry={onAppInstallRetry}
-                        onRemove={onAppInProgressRemove}
-                    />
-                    <CardSpacer />
-                </>
-            )}
-
-            <InstalledApps
-                appsList={installedAppsList}
-                onRemove={onInstalledAppRemove}
-                onRowAboutClick={onRowAboutClick}
-                {...listProps}
+            <AppPageTabs
+                showSaleorApps={saleorAppsEnabled}
+                className={styles.topTabs}
+                onChange={setActiveTab}
+                value={activeTab}
             />
-
-            <CardSpacer />
-
-            <CustomApps
-                appsList={customAppsList}
-                navigateToCustomApp={navigateToCustomApp}
-                navigateToCustomAppCreate={navigateToCustomAppCreate}
-                onRemove={onCustomAppRemove}
-            />
-
-            <CardSpacer />
-
-            <Marketplace />
+            {renderContent()}
         </Container>
     );
 };

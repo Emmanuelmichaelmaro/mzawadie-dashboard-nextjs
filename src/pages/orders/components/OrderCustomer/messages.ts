@@ -2,13 +2,13 @@ import { defineMessages } from "react-intl";
 
 const messages = defineMessages({
     orderCustomerFulfillmentAll: {
-        defaultMessage: "Fulfill from All Warehouses",
         id: "R98JLZ",
+        defaultMessage: "Fulfill from All Warehouses",
         description: "OrderCustomer Fulfillment from All Warehouses",
     },
     orderCustomerFulfillmentLocal: {
-        defaultMessage: "Fulfill from Local Stock",
         id: "/w919H",
+        defaultMessage: "Fulfill from Local Stock",
         description: "OrderCustomer Fulfillment from Local Warehouse",
     },
 });

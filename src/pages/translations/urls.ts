@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { Pagination } from "@mzawadie/core";
 import { stringifyQs } from "@mzawadie/utils/urls";
 import urlJoin from "url-join";
@@ -15,6 +14,7 @@ export enum TranslatableEntities {
     pages = "pages",
     attributes = "attributes",
     shippingMethods = "shippingMethods",
+    menuItems = "menuItems",
 }
 
 const translationsSection = "/translations/";
@@ -23,13 +23,15 @@ export const languageListPath = translationsSection;
 export const languageListUrl = translationsSection;
 
 export const languageEntitiesPath = (code: string) => urlJoin(translationsSection, code);
+
 export type LanguageEntitiesUrlQueryParams = Pagination &
     Partial<{
         query: string;
         tab: TranslationsEntitiesListFilterTab;
     }>;
+
 export const languageEntitiesUrl = (code: string, params: LanguageEntitiesUrlQueryParams) =>
-    `${languageEntitiesPath(code)}?${stringifyQs(params)}`;
+    languageEntitiesPath(code) + "?" + stringifyQs(params);
 
 export const languageEntityPath = (
     code: string,
@@ -37,6 +39,7 @@ export const languageEntityPath = (
     id: string,
     ...args: string[]
 ) => urlJoin(languageEntitiesPath(code), entity.toString(), id, ...args);
+
 export const languageEntityUrl = (
     code: string,
     entity: TranslatableEntities,

@@ -1,122 +1,69 @@
-// @ts-nocheck
-import { TableCell, Toolbar } from "@material-ui/core";
-import { IconButtonProps } from "@material-ui/core/IconButton";
-import { RowNumberSelect } from "@mzawadie/components";
-import { maybe, ListSettings } from "@mzawadie/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { TableCell } from "@material-ui/core";
+import { ListSettings } from "@mzawadie/core";
+import { Pagination, PaginationProps as MacawPaginationProps } from "@saleor/macaw-ui";
 import React from "react";
-
-import TablePaginationActions from "./TablePaginationActions";
-
-const useStyles = makeStyles(
-    (theme) => ({
-        actions: {
-            color: theme.palette.text.secondary,
-            flexShrink: 0,
-            marginLeft: theme.spacing(2.5),
-        },
-        caption: {
-            flexShrink: 0,
-        },
-        input: {
-            flexShrink: 0,
-            fontSize: "inherit",
-        },
-        root: {
-            "&:last-child": {
-                padding: 0,
-            },
-        },
-        select: {
-            paddingLeft: theme.spacing(),
-            paddingRight: theme.spacing(2),
-        },
-        selectIcon: {
-            top: 1,
-        },
-        selectRoot: {
-            color: theme.palette.text.secondary,
-            marginLeft: theme.spacing(),
-            marginRight: theme.spacing(4),
-        },
-        spacer: {
-            flex: "1 1 100%",
-        },
-        toolbar: {
-            height: 56,
-            minHeight: 56,
-            paddingLeft: 2,
-            paddingRight: 2,
-        },
-    }),
-    { name: "TablePagination" }
-);
+import { defineMessages, useIntl } from "react-intl";
+import { Link, LinkProps } from "react-router-dom";
 
 export type ListSettingsUpdate = <T extends keyof ListSettings>(key: T, value: ListSettings[T]) => void;
 
-interface TablePaginationProps {
-    backIconButtonProps?: Partial<IconButtonProps>;
-    colSpan: number;
-    component?: string | typeof TableCell;
+const messages = defineMessages({
+    noOfRows: {
+        id: "2HfSiT",
+        defaultMessage: "No. of rows",
+        description: "pagination",
+    },
+});
+
+export interface PaginationProps
+    extends Omit<
+        MacawPaginationProps,
+        "labels" | "rowNumber" | "nextIconButtonProps" | "prevIconButtonProps"
+    > {
+    component?: React.ElementType;
+    colSpan?: number;
     settings?: ListSettings;
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
-    nextIconButtonProps?: Partial<IconButtonProps>;
     onUpdateListSettings?: ListSettingsUpdate;
-    onNextPage(event: any): any;
-    onPreviousPage(event: any): any;
+    prevHref?: string;
+    nextHref?: string;
+    disabled?: boolean;
 }
 
-const TablePagination: React.FC<TablePaginationProps> = (props) => {
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    const {
-        backIconButtonProps,
-        colSpan: colSpanProp,
-        component: Component,
-        settings,
-        hasNextPage,
-        hasPreviousPage,
-        nextIconButtonProps,
-        onNextPage,
-        onPreviousPage,
-        onUpdateListSettings,
-        ...other
-    } = props;
-    const classes = useStyles(props);
-
-    let colSpan;
-
-    if (Component === TableCell || Component === "td") {
-        colSpan = colSpanProp || 1000;
-    }
+export const TablePagination: React.FC<PaginationProps> = ({
+    component,
+    colSpan,
+    settings,
+    onUpdateListSettings,
+    nextHref,
+    prevHref,
+    hasNextPage,
+    hasPreviousPage,
+    disabled,
+    ...rest
+}) => {
+    const intl = useIntl();
+    const Wrapper = component || TableCell;
 
     return (
-        <Component className={classes.root} colSpan={colSpan} {...other}>
-            <Toolbar className={classes.toolbar}>
-                <div className={classes.spacer}>
-                    {maybe(() => settings.rowNumber) && (
-                        <RowNumberSelect
-                            choices={[10, 20, 30, 50, 100]}
-                            rowNumber={settings.rowNumber}
-                            onChange={(value) => onUpdateListSettings("rowNumber", value)}
-                        />
-                    )}
-                </div>
-                <TablePaginationActions
-                    backIconButtonProps={backIconButtonProps}
-                    hasNextPage={hasNextPage}
-                    hasPreviousPage={hasPreviousPage}
-                    nextIconButtonProps={nextIconButtonProps}
-                    onNextPage={onNextPage}
-                    onPreviousPage={onPreviousPage}
-                />
-            </Toolbar>
-        </Component>
+        <Wrapper colSpan={colSpan || 1000}>
+            <Pagination<LinkProps>
+                {...rest}
+                hasNextPage={hasNextPage && !disabled}
+                hasPreviousPage={hasPreviousPage && !disabled}
+                labels={{
+                    noOfRows: intl.formatMessage(messages.noOfRows),
+                }}
+                rowNumber={settings?.rowNumber}
+                onRowNumberUpdate={
+                    onUpdateListSettings
+                        ? (value) => onUpdateListSettings("rowNumber", value)
+                        : undefined
+                }
+                nextIconButtonProps={nextHref ? { component: Link, to: nextHref } : undefined}
+                prevIconButtonProps={prevHref ? { component: Link, to: prevHref } : undefined}
+            />
+        </Wrapper>
     );
-};
-
-TablePagination.defaultProps = {
-    component: TableCell,
 };
 
 TablePagination.displayName = "TablePagination";

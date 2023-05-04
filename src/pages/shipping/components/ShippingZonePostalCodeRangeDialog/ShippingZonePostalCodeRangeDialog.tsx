@@ -1,116 +1,234 @@
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    TextField,
-    Typography,
-} from "@material-ui/core";
-import { ConfirmButton, ConfirmButtonTransitionState } from "@mzawadie/components/ConfirmButton";
-import { Form } from "@mzawadie/components/Form";
+// @ts-nocheck
+import { Backlink } from "@mzawadie/components/Backlink";
+import CardSpacer from "@mzawadie/components/CardSpacer";
+import { ChannelsAvailabilityCard } from "@mzawadie/components/ChannelsAvailabilityCard";
+import Container from "@mzawadie/components/Container";
+import { WithFormId } from "@mzawadie/components/Form/ExitFormDialogProvider";
 import { Grid } from "@mzawadie/components/Grid";
-import { buttonMessages, commonMessages, DialogProps, MinMax } from "@mzawadie/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { PageHeader } from "@mzawadie/components/PageHeader";
+import Savebar from "@mzawadie/components/Savebar";
+import {
+    PermissionEnum,
+    PostalCodeRuleInclusionTypeEnum,
+    ShippingChannelsErrorFragment,
+    ShippingErrorFragment,
+    ShippingMethodTypeEnum,
+    ShippingMethodTypeFragment,
+} from "@mzawadie/graphql";
+import useForm, { SubmitPromise } from "@mzawadie/hooks/useForm";
+import useHandleFormSubmit from "@mzawadie/hooks/useHandleFormSubmit";
+import useNavigator from "@mzawadie/hooks/useNavigator";
+import { ChannelShippingData } from "@mzawadie/pages/channels/utils";
+import { validatePrice } from "@mzawadie/pages/products/utils/validation";
+import { OrderValue } from "@mzawadie/pages/shipping/components/OrderValue";
+import { OrderWeight } from "@mzawadie/pages/shipping/components/OrderWeight";
+import { PricingCard } from "@mzawadie/pages/shipping/components/PricingCard";
+import { ShippingRateInfo } from "@mzawadie/pages/shipping/components/ShippingRateInfo";
+import { ShippingZonePostalCodes } from "@mzawadie/pages/shipping/components/ShippingZonePostalCodes";
+import { ShippingZoneRateCommonFormData } from "@mzawadie/pages/shipping/components/ShippingZoneRatesPage/types";
+import { createChannelsChangeHandler } from "@mzawadie/pages/shipping/handlers";
+import { RichTextContext } from "@mzawadie/utils/richText/context";
+import useRichText from "@mzawadie/utils/richText/useRichText";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React, { FormEventHandler } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-export interface ShippingZonePostalCodeRangeDialogProps extends DialogProps {
-    confirmButtonState: ConfirmButtonTransitionState;
-    onSubmit: (range: MinMax) => void;
+export interface ShippingZoneRatesCreatePageProps extends WithFormId {
+    allChannelsCount?: number;
+    shippingChannels: ChannelShippingData[];
+    disabled: boolean;
+    postalCodes?: ShippingMethodTypeFragment["postalCodeRules"];
+    channelErrors: ShippingChannelsErrorFragment[];
+    errors: ShippingErrorFragment[];
+    saveButtonBarState: ConfirmButtonTransitionState;
+    backUrl: string;
+    onDelete?: () => void;
+    onSubmit: (data: ShippingZoneRateCommonFormData) => SubmitPromise;
+    onPostalCodeInclusionChange: (inclusion: PostalCodeRuleInclusionTypeEnum) => void;
+    onPostalCodeAssign: () => void;
+    onPostalCodeUnassign: (code: any) => void;
+    onChannelsChange: (data: ChannelShippingData[]) => void;
+    openChannelsModal: () => void;
+    variant: ShippingMethodTypeEnum;
 }
 
-const useStyles = makeStyles(
-    (theme) => ({
-        info: {
-            marginBottom: theme.spacing(2),
-        },
-    }),
-    {
-        name: "ShippingZonePostalCodeRangeDialog",
-    }
-);
-
-const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDialogProps> = ({
-    confirmButtonState,
-    open,
-    onClose,
+export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePageProps> = ({
+    allChannelsCount,
+    shippingChannels,
+    channelErrors,
+    disabled,
+    errors,
+    backUrl,
+    onDelete,
     onSubmit,
+    onPostalCodeInclusionChange,
+    onChannelsChange,
+    onPostalCodeAssign,
+    onPostalCodeUnassign,
+    openChannelsModal,
+    saveButtonBarState,
+    variant,
+    postalCodes,
+    formId,
 }) => {
-    const classes = useStyles({});
     const intl = useIntl();
+    
+    const navigate = useNavigator();
 
-    const initial: MinMax = {
-        max: "",
-        min: "",
+    const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
+    
+    const initialForm: ShippingZoneRateCommonFormData = {
+        channelListings: shippingChannels,
+        maxDays: "",
+        maxValue: "",
+        minDays: "",
+        minValue: "",
+        name: "",
+        description: null,
+        orderValueRestricted: true,
+        type: null,
     };
 
+    const {
+        change,
+        data: formData,
+        setIsSubmitDisabled,
+        triggerChange,
+    } = useForm(initialForm, undefined, { confirmLeave: true, formId });
+
+    const handleFormSubmit = useHandleFormSubmit({
+        formId,
+        onSubmit,
+    });
+
+    const richText = useRichText({
+        initial: null,
+        triggerChange,
+    });
+
+    const data: ShippingZoneRateCommonFormData = {
+        ...formData,
+        description: null,
+    };
+
+    const getData = async (): Promise<ShippingZoneRateCommonFormData> => ({
+        ...formData,
+        description: await richText.getValue(),
+    });
+
+    const handleFormElementSubmit: FormEventHandler = async (event) => {
+        event.preventDefault();
+        handleFormSubmit(await getData());
+    };
+
+    const handleSubmit = async () => handleFormSubmit(await getData());
+
+    const handleChannelsChange = createChannelsChangeHandler(
+        shippingChannels,
+        onChannelsChange,
+        triggerChange
+    );
+    
+    const isValid = !data.channelListings?.some((channel) => validatePrice(channel.price));
+    
+    const isSaveDisabled = disabled || !isValid;
+    
+    setIsSubmitDisabled(isSaveDisabled);
+
     return (
-        <Dialog open={open}>
-            <DialogTitle>
-                <FormattedMessage
-                    defaultMessage="Add postal codes"
-                    id="2Xt+sw"
-                    description="dialog header"
-                />
-            </DialogTitle>
-            <Form initial={initial} onSubmit={onSubmit}>
-                {({ change, data, hasChanged }) => (
-                    <>
-                        <DialogContent>
-                            <Typography className={classes.info}>
-                                <FormattedMessage
-                                    defaultMessage="Please provide range of postal codes you want to add to the include/exclude list."
-                                    id="8InCjD"
-                                />
-                            </Typography>
-                            <Grid variant="uniform">
-                                <TextField
-                                    label={intl.formatMessage({
-                                        defaultMessage: "Postal codes (start)",
-                                        id: "1T1fP8",
-                                        description: "range input label",
-                                    })}
-                                    name="min"
-                                    value={data.min}
+        <RichTextContext.Provider value={richText}>
+            <form onSubmit={handleFormElementSubmit}>
+                <Container>
+                    <Backlink href={backUrl}>
+                        <FormattedMessage id="PRlD0A" defaultMessage="Shipping" />
+                    </Backlink>
+    
+                    <PageHeader
+                        title={
+                            isPriceVariant
+                                ? intl.formatMessage({
+                                      id: "RXPGi/",
+                                      defaultMessage: "Price Rate Create",
+                                      description: "page title",
+                                  })
+                                : intl.formatMessage({
+                                      id: "NDm2Fe",
+                                      defaultMessage: "Weight Rate Create",
+                                      description: "page title",
+                                  })
+                        }
+                    />
+    
+                    <Grid>
+                        <div>
+                            <ShippingRateInfo
+                                data={data}
+                                disabled={disabled}
+                                errors={errors}
+                                onChange={change}
+                            />
+    
+                            <CardSpacer />
+    
+                            {isPriceVariant ? (
+                                <OrderValue
+                                    channels={data.channelListings}
+                                    errors={channelErrors}
+                                    orderValueRestricted={data.orderValueRestricted}
+                                    disabled={disabled}
                                     onChange={change}
+                                    onChannelsChange={handleChannelsChange}
                                 />
-                                <TextField
-                                    label={intl.formatMessage({
-                                        defaultMessage: "Postal codes (end)",
-                                        id: "axFFaD",
-                                        description: "range input label",
-                                    })}
-                                    name="max"
-                                    helperText={intl.formatMessage(commonMessages.optionalField)}
-                                    value={data.max}
+                            ) : (
+                                <OrderWeight
+                                    orderValueRestricted={data.orderValueRestricted}
+                                    disabled={disabled}
+                                    minValue={data.minValue}
+                                    maxValue={data.maxValue}
                                     onChange={change}
+                                    errors={errors}
                                 />
-                            </Grid>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={onClose}>
-                                <FormattedMessage {...buttonMessages.back} />
-                            </Button>
-                            <ConfirmButton
-                                disabled={!hasChanged || !data.min}
-                                transitionState={confirmButtonState}
-                                type="submit"
-                                data-test="submit"
-                            >
-                                <FormattedMessage
-                                    defaultMessage="Add"
-                                    id="DM/Ha1"
-                                    description="add postal code range, button"
-                                />
-                            </ConfirmButton>
-                        </DialogActions>
-                    </>
-                )}
-            </Form>
-        </Dialog>
+                            )}
+    
+                            <CardSpacer />
+                            <PricingCard
+                                channels={data.channelListings}
+                                onChange={handleChannelsChange}
+                                disabled={disabled}
+                                errors={channelErrors}
+                            />
+    
+                            <CardSpacer />
+                            <ShippingZonePostalCodes
+                                disabled={disabled}
+                                onPostalCodeDelete={onPostalCodeUnassign}
+                                onPostalCodeInclusionChange={onPostalCodeInclusionChange}
+                                onPostalCodeRangeAdd={onPostalCodeAssign}
+                                postalCodes={postalCodes}
+                            />
+                        </div>
+    
+                        <div>
+                            <ChannelsAvailabilityCard
+                                managePermissions={[PermissionEnum.MANAGE_SHIPPING]}
+                                allChannelsCount={allChannelsCount}
+                                channelsList={data.channelListings}
+                                openModal={openChannelsModal}
+                            />
+                        </div>
+                    </Grid>
+    
+                    <Savebar
+                        disabled={isSaveDisabled}
+                        onCancel={() => navigate(backUrl)}
+                        onDelete={onDelete}
+                        onSubmit={handleSubmit}
+                        state={saveButtonBarState}
+                    />
+                </Container>
+            </form>
+        </RichTextContext.Provider>
     );
 };
 
-ShippingZonePostalCodeRangeDialog.displayName = "ShippingZonePostalCodeRangeDialog";
-export default ShippingZonePostalCodeRangeDialog;
+export default ShippingZoneRatesCreatePage;

@@ -4,17 +4,19 @@ import { ActionDialog } from "@mzawadie/components/ActionDialog";
 import useAppChannel from "@mzawadie/components/AppLayout/AppChannelContext";
 import { DeleteFilterTabDialog } from "@mzawadie/components/DeleteFilterTabDialog";
 import {
-    SaveFilterTabDialog,
     SaveFilterTabDialogFormData,
+    SaveFilterTabDialog,
 } from "@mzawadie/components/SaveFilterTabDialog";
-import { commonMessages, maybe, ListViews } from "@mzawadie/core";
+import { commonMessages } from "@mzawadie/core";
+import { maybe } from "@mzawadie/core";
+import { ListViews } from "@mzawadie/core";
 import { useCollectionBulkDeleteMutation, useCollectionListQuery } from "@mzawadie/graphql";
 import useBulkActions from "@mzawadie/hooks/useBulkActions";
 import useListSettings from "@mzawadie/hooks/useListSettings";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { usePaginationReset } from "@mzawadie/hooks/usePaginationReset";
-import usePaginator, { createPaginationState } from "@mzawadie/hooks/usePaginator";
+import usePaginator, { createPaginationState, PaginatorContext } from "@mzawadie/hooks/usePaginator";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@mzawadie/utils/handlers/filterHandlers";
 import createSortHandler from "@mzawadie/utils/handlers/sortHandler";
@@ -25,13 +27,7 @@ import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CollectionListPage from "../../components/CollectionListPage/CollectionListPage";
-import {
-    collectionAddUrl,
-    collectionListUrl,
-    CollectionListUrlDialog,
-    CollectionListUrlQueryParams,
-    collectionUrl,
-} from "../../urls";
+import { collectionListUrl, CollectionListUrlDialog, CollectionListUrlQueryParams } from "../../urls";
 import {
     deleteFilterTab,
     getActiveFilters,
@@ -50,12 +46,10 @@ interface CollectionListProps {
 
 export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     const navigate = useNavigator();
-    const notify = useNotifier();
     const intl = useIntl();
-    const paginate = usePaginator();
+    const notify = useNotifier();
 
     const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
-
     const { updateListSettings, settings } = useListSettings(ListViews.COLLECTION_LIST);
 
     usePaginationReset(collectionListUrl, params, settings.rowNumber);
@@ -69,9 +63,11 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     });
 
     const { availableChannels } = useAppChannel(false);
+
     const channelOpts = availableChannels
         ? mapNodeToChoice(availableChannels, (channel) => channel.slug)
         : null;
+
     const selectedChannel = availableChannels.find((channel) => channel.slug === params.channel);
 
     const paginationState = createPaginationState(settings.rowNumber, params);
@@ -93,7 +89,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
 
     const [collectionBulkDelete, collectionBulkDeleteOpts] = useCollectionBulkDeleteMutation({
         onCompleted: (data) => {
-            if (data.collectionBulkDelete.errors.length === 0) {
+            if (data.collectionBulkDelete?.errors.length === 0) {
                 notify({
                     status: "success",
                     text: intl.formatMessage(commonMessages.savedChanges),
@@ -106,6 +102,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     });
 
     const filterOpts = getFilterOpts(params, channelOpts);
+
     const tabs = getFilterTabs();
 
     useEffect(() => {
@@ -147,21 +144,20 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         handleTabChange(tabs.length + 1);
     };
 
-    const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-        maybe(() => data.collections.pageInfo),
+    const paginationValues = usePaginator({
+        pageInfo: maybe(() => data?.collections?.pageInfo),
         paginationState,
-        params
-    );
+        queryString: params,
+    });
 
     const handleSort = createSortHandler(navigate, collectionListUrl, params);
 
     return (
-        <>
+        <PaginatorContext.Provider value={paginationValues}>
             <CollectionListPage
                 currentTab={currentTab}
                 initialSearch={params.query || ""}
                 onSearchChange={handleSearchChange}
-                onAdd={() => navigate(collectionAddUrl())}
                 onAll={resetFilters}
                 onTabChange={handleTabChange}
                 onTabDelete={() => openModal("delete-search")}
@@ -170,17 +166,14 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
                 disabled={loading}
                 collections={mapEdgesToItems(data?.collections)}
                 settings={settings}
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
                 onSort={handleSort}
                 onUpdateListSettings={updateListSettings}
-                pageInfo={pageInfo}
                 sort={getSortParams(params)}
-                onRowClick={(id) => () => navigate(collectionUrl(id))}
                 toolbar={
                     <IconButton
                         variant="secondary"
                         color="primary"
+                        data-test-id="delete-icon"
                         onClick={() =>
                             openModal("remove", {
                                 ids: listElements,
@@ -194,11 +187,11 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
                 selected={listElements.length}
                 toggle={toggle}
                 toggleAll={toggleAll}
-                channelsCount={availableChannels?.length}
                 selectedChannelId={selectedChannel?.id}
                 filterOpts={filterOpts}
                 onFilterChange={changeFilters}
             />
+
             <ActionDialog
                 open={params.action === "remove" && maybe(() => params.ids.length > 0)}
                 onClose={closeModal}
@@ -212,15 +205,15 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
                 }
                 variant="delete"
                 title={intl.formatMessage({
-                    defaultMessage: "Delete collections",
                     id: "Ykw8k5",
+                    defaultMessage: "Delete collections",
                     description: "dialog title",
                 })}
             >
                 <DialogContentText>
                     <FormattedMessage
-                        defaultMessage="{counter,plural,one{Are you sure you want to delete this collection?} other{Are you sure you want to delete {displayQuantity} collections?}}"
                         id="yT5zvU"
+                        defaultMessage="{counter,plural,one{Are you sure you want to delete this collection?} other{Are you sure you want to delete {displayQuantity} collections?}}"
                         values={{
                             counter: maybe(() => params.ids.length),
                             displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>,
@@ -228,12 +221,14 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
                     />
                 </DialogContentText>
             </ActionDialog>
+
             <SaveFilterTabDialog
                 open={params.action === "save-search"}
                 confirmButtonState="default"
                 onClose={closeModal}
                 onSubmit={handleTabSave}
             />
+
             <DeleteFilterTabDialog
                 open={params.action === "delete-search"}
                 confirmButtonState="default"
@@ -241,7 +236,8 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
                 onSubmit={handleTabDelete}
                 tabName={maybe(() => tabs[currentTab - 1].name, "...")}
             />
-        </>
+        </PaginatorContext.Provider>
     );
 };
+
 export default CollectionList;

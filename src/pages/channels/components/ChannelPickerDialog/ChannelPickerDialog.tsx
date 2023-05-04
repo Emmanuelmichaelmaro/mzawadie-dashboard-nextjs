@@ -1,15 +1,17 @@
-// @ts-nocheck
+import { MenuItem } from "@material-ui/core";
 import { ActionDialog } from "@mzawadie/components/ActionDialog";
-import { Choices, SingleSelectField } from "@mzawadie/components/SingleSelectField";
+import { Choice } from "@mzawadie/components/SingleSelectField";
+import useChoiceSearch from "@mzawadie/hooks/useChoiceSearch";
+import { useModalDialogOpen } from "@mzawadie/hooks/useModalDialogOpen";
 import useStateFromProps from "@mzawadie/hooks/useStateFromProps";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Autocomplete, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { useStyles } from "../styles";
+import { messages } from "./messages";
 
 export interface ChannelPickerDialogProps {
-    channelsChoices: Choices;
+    channelsChoices: Array<Choice<string, string>>;
     confirmButtonState: ConfirmButtonTransitionState;
     defaultChoice: string;
     open: boolean;
@@ -25,11 +27,20 @@ const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
     onClose,
     onConfirm,
 }) => {
-    const classes = useStyles({});
     const intl = useIntl();
+
     const [choice, setChoice] = useStateFromProps(
-        defaultChoice || (channelsChoices.length ? channelsChoices[0].value : "")
+        defaultChoice || (!!channelsChoices.length ? channelsChoices[0].value : "")
     );
+
+    const { result, search } = useChoiceSearch(channelsChoices);
+
+    useModalDialogOpen(open, {
+        onClose: () => {
+            search("");
+            setChoice(defaultChoice);
+        },
+    });
 
     return (
         <ActionDialog
@@ -37,27 +48,30 @@ const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
             open={open}
             onClose={onClose}
             onConfirm={() => onConfirm(choice)}
-            title={intl.formatMessage({
-                defaultMessage: "Select a channel",
-                id: "G/pgG3",
-                description: "dialog header",
-            })}
+            title={intl.formatMessage(messages.selectChannel)}
         >
-            <div>
-                <div className={classes.select}>
-                    <SingleSelectField
-                        choices={channelsChoices}
-                        name="channels"
-                        label={intl.formatMessage({
-                            defaultMessage: "Channel name",
-                            id: "nKwgxY",
-                            description: "select label",
-                        })}
-                        value={choice}
-                        onChange={(e) => setChoice(e.target.value)}
-                    />
-                </div>
-            </div>
+            <Autocomplete
+                choices={result}
+                fullWidth
+                label={intl.formatMessage(messages.channelName)}
+                data-test-id="channel-autocomplete"
+                value={choice}
+                onChange={(e) => setChoice(e.target.value)}
+                onInputChange={search}
+            >
+                {({ getItemProps, highlightedIndex }) =>
+                    result.map((choice, choiceIndex) => (
+                        <MenuItem
+                            data-test-id="select-field-option"
+                            selected={highlightedIndex === choiceIndex}
+                            key={choice.value}
+                            {...getItemProps({ item: choice, index: choiceIndex })}
+                        >
+                            {choice.label}
+                        </MenuItem>
+                    ))
+                }
+            </Autocomplete>
         </ActionDialog>
     );
 };

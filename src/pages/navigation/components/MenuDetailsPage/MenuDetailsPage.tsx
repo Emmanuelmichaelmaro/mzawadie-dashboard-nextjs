@@ -1,22 +1,24 @@
 // @ts-nocheck
 import { Typography } from "@material-ui/core";
+import { Backlink } from "@mzawadie/components/Backlink";
 import CardSpacer from "@mzawadie/components/CardSpacer";
-import { ConfirmButtonTransitionState } from "@mzawadie/components/ConfirmButton";
 import Container from "@mzawadie/components/Container";
 import { Form } from "@mzawadie/components/Form";
 import { Grid } from "@mzawadie/components/Grid";
 import Savebar from "@mzawadie/components/Savebar";
-import { sectionNames, maybe } from "@mzawadie/core";
+import { sectionNames } from "@mzawadie/core";
 import { MenuDetailsFragment, MenuErrorFragment } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
-import { Backlink } from "@saleor/macaw-ui";
+import useNavigator from "@mzawadie/hooks/useNavigator";
+import { menuListUrl } from "@mzawadie/pages/navigation/urls";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { MenuItemType } from "../MenuItemDialog";
 import { MenuItems, TreeOperation } from "../MenuItems";
 import { MenuProperties } from "../MenuProperties";
-import { computeTree } from "./tree";
+import { computeRelativeTree } from "./tree";
 
 export interface MenuDetailsFormData {
     name: string;
@@ -31,7 +33,6 @@ export interface MenuDetailsPageProps {
     disabled: boolean;
     errors: MenuErrorFragment[];
     menu: MenuDetailsFragment;
-    onBack: () => void;
     onDelete: () => void;
     onItemAdd: () => void;
     onItemClick: (id: string, type: MenuItemType) => void;
@@ -44,7 +45,6 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
     errors,
     menu,
     saveButtonState,
-    onBack,
     onDelete,
     onItemAdd,
     onItemClick,
@@ -53,16 +53,21 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
 }) => {
     const intl = useIntl();
 
+    const navigate = useNavigator();
+
     const initialForm: MenuDetailsFormData = {
-        name: maybe(() => menu.name, ""),
+        name: menu?.name ?? "",
     };
 
     const [treeOperations, setTreeOperations] = React.useState<TreeOperation[]>([]);
 
+    const removeSimulatedMoves = (operations: TreeOperation[]) =>
+        operations.filter((operation) => !operation.simulatedMove);
+
     const handleSubmit = async (data: MenuDetailsFormData) => {
         const result = await onSubmit({
             name: data.name,
-            operations: treeOperations,
+            operations: removeSimulatedMoves(treeOperations),
         });
 
         if (result) {
@@ -72,17 +77,18 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
         return result;
     };
 
-    const handleChange = (operation: TreeOperation) => {
-        if (operation) {
-            setTreeOperations([...treeOperations, operation]);
-        }
+    const handleChange = (operations: TreeOperation[]) => {
+        setTreeOperations([...treeOperations, ...operations]);
     };
 
     return (
-        <Form initial={initialForm} onSubmit={handleSubmit}>
-            {({ change, data, hasChanged, submit }) => (
+        <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
+            {({ change, data, submit }) => (
                 <Container>
-                    <Backlink onClick={onBack}>{intl.formatMessage(sectionNames.navigation)}</Backlink>
+                    <Backlink href={menuListUrl()}>
+                        {intl.formatMessage(sectionNames.navigation)}
+                    </Backlink>
+
                     <Grid variant="inverted">
                         <div>
                             <Typography variant="h5">
@@ -90,11 +96,12 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
                             </Typography>
                             <Typography>
                                 <FormattedMessage
-                                    defaultMessage="Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy"
                                     id="E54eoT"
+                                    defaultMessage="Creating the navigation structure is done by dragging and dropping. Simply create a new menu item and then drag it into its destined place. You can move items inside one another to create a tree structure and drag items up and down to create a hierarchy"
                                 />
                             </Typography>
                         </div>
+
                         <div>
                             <MenuProperties
                                 data={data}
@@ -102,25 +109,36 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
                                 errors={errors}
                                 onChange={change}
                             />
+
                             <CardSpacer />
+
                             <MenuItems
                                 canUndo={treeOperations.length > 0}
-                                items={maybe(() => computeTree(menu.items, [...treeOperations]))}
+                                items={
+                                    menu?.items ? computeRelativeTree(menu.items, treeOperations) : []
+                                }
                                 onChange={handleChange}
                                 onItemAdd={onItemAdd}
                                 onItemClick={onItemClick}
                                 onItemEdit={onItemEdit}
                                 onUndo={() =>
-                                    setTreeOperations(
-                                        treeOperations.slice(0, treeOperations.length - 1)
-                                    )
+                                    setTreeOperations((operations) => {
+                                        if (operations.length > 1) {
+                                            // Undo of a simulated move needs removal of 2 moves instead of one
+                                            if (operations[operations.length - 2].simulatedMove) {
+                                                return operations.slice(0, operations.length - 2);
+                                            }
+                                        }
+                                        return operations.slice(0, operations.length - 1);
+                                    })
                                 }
                             />
                         </div>
                     </Grid>
+
                     <Savebar
-                        disabled={disabled || (!hasChanged && treeOperations.length === 0)}
-                        onCancel={onBack}
+                        onCancel={() => navigate(menuListUrl())}
+                        disabled={disabled || treeOperations.length === 0}
                         onDelete={onDelete}
                         onSubmit={submit}
                         state={saveButtonState}
@@ -130,5 +148,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
         </Form>
     );
 };
+
 MenuDetailsPage.displayName = "MenuDetailsPage";
+
 export default MenuDetailsPage;

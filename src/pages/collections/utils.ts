@@ -1,3 +1,5 @@
+// @ts-nocheck
+import { CollectionDetailsQuery, SearchProductsQuery } from "@mzawadie/graphql";
 import { ChannelCollectionData } from "@mzawadie/pages/channels/utils";
 
 export const createChannelsChangeHandler =
@@ -21,3 +23,17 @@ export const createChannelsChangeHandler =
         updateChannels(updatedChannels);
         triggerChange();
     };
+
+export const getAssignedProductIdsToCollection = (
+    collection: CollectionDetailsQuery["collection"],
+    queryData: SearchProductsQuery["search"]
+) => {
+    if (!queryData || !collection) {
+        return {};
+    }
+
+    return queryData.edges
+        .filter((e) => e.node.collections?.some((s) => collection.id === s.id))
+        .map((e) => ({ [e.node.id]: true }))
+        .reduce((p, c) => ({ ...p, ...c }), {});
+};

@@ -5,15 +5,12 @@ import useAppChannel from "@mzawadie/components/AppLayout/AppChannelContext";
 import { AssignCategoryDialog } from "@mzawadie/components/AssignCategoryDialog";
 import { AssignCollectionDialog } from "@mzawadie/components/AssignCollectionDialog";
 import { AssignProductDialog } from "@mzawadie/components/AssignProductDialog";
+import { Button } from "@mzawadie/components/Button";
 import { ChannelsAvailabilityDialog } from "@mzawadie/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
-import {
-    DEFAULT_INITIAL_SEARCH_DATA,
-    PAGINATE_BY,
-    commonMessages,
-    sectionNames,
-    maybe,
-} from "@mzawadie/core";
+import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@mzawadie/core";
+import { commonMessages, sectionNames } from "@mzawadie/core";
+import { maybe } from "@mzawadie/core";
 import {
     useUpdateMetadataMutation,
     useUpdatePrivateMetadataMutation,
@@ -23,19 +20,25 @@ import {
     useVoucherDeleteMutation,
     useVoucherDetailsQuery,
     useVoucherUpdateMutation,
+    VoucherDetailsQueryVariables,
 } from "@mzawadie/graphql";
 import useBulkActions from "@mzawadie/hooks/useBulkActions";
 import useChannels from "@mzawadie/hooks/useChannels";
 import useLocalPaginator, { useSectionLocalPaginationState } from "@mzawadie/hooks/useLocalPaginator";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
+import { PaginatorContext } from "@mzawadie/hooks/usePaginator";
 import useShop from "@mzawadie/hooks/useShop";
-import { categoryUrl } from "@mzawadie/pages/categories/urls";
-import { collectionUrl } from "@mzawadie/pages/collections/urls";
+import {
+    ChannelVoucherData,
+    createChannelsDataWithDiscountPrice,
+    createSortedChannelsDataFromVoucher,
+} from "@mzawadie/pages/channels/utils";
 import { DiscountCountrySelectDialog } from "@mzawadie/pages/discounts/components/DiscountCountrySelectDialog";
 import {
-    VoucherDetailsPage,
     VoucherDetailsPageTab,
+    VoucherTabItemsCount,
+    VoucherDetailsPage,
 } from "@mzawadie/pages/discounts/components/VoucherDetailsPage";
 import {
     voucherListUrl,
@@ -43,15 +46,12 @@ import {
     VoucherUrlDialog,
     VoucherUrlQueryParams,
 } from "@mzawadie/pages/discounts/urls";
-import { productUrl } from "@mzawadie/pages/products/urls";
 import useCategorySearch from "@mzawadie/searches/useCategorySearch";
 import useCollectionSearch from "@mzawadie/searches/useCollectionSearch";
 import useProductSearch from "@mzawadie/searches/useProductSearch";
-import { arrayDiff } from "@mzawadie/utils/arrays";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@mzawadie/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
-import { Button } from "@saleor/macaw-ui";
 import React, { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -67,8 +67,10 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
     const navigate = useNavigator();
     const notify = useNotifier();
     const shop = useShop();
-    const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
     const intl = useIntl();
+
+    const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
+
     const {
         loadMore: loadMoreCategories,
         search: searchCategories,
@@ -76,6 +78,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
     } = useCategorySearch({
         variables: DEFAULT_INITIAL_SEARCH_DATA,
     });
+
     const {
         loadMore: loadMoreCollections,
         search: searchCollections,
@@ -83,6 +86,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
     } = useCollectionSearch({
         variables: DEFAULT_INITIAL_SEARCH_DATA,
     });
+
     const {
         loadMore: loadMoreProducts,
         search: searchProducts,
@@ -90,18 +94,32 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
     } = useProductSearch({
         variables: DEFAULT_INITIAL_SEARCH_DATA,
     });
+
     const [updateMetadata] = useUpdateMetadataMutation({});
+
     const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
     const [activeTab, setActiveTab] = useState<VoucherDetailsPageTab>(VoucherDetailsPageTab.categories);
+
     const [paginationState, setPaginationState] = useSectionLocalPaginationState(
         PAGINATE_BY,
         activeTab
     );
+
     const paginate = useLocalPaginator(setPaginationState);
+
     const changeTab = (tab: VoucherDetailsPageTab) => {
         reset();
         setActiveTab(tab);
+    };
+
+    const detailsQueryInclude: Pick<
+        VoucherDetailsQueryVariables,
+        "includeCategories" | "includeCollections" | "includeProducts"
+    > = {
+        includeCategories: activeTab === VoucherDetailsPageTab.categories,
+        includeCollections: activeTab === VoucherDetailsPageTab.collections,
+        includeProducts: activeTab === VoucherDetailsPageTab.products,
     };
 
     const { data, loading } = useVoucherDetailsQuery({
@@ -109,6 +127,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
         variables: {
             id,
             ...paginationState,
+            ...detailsQueryInclude,
         },
     });
 
@@ -124,6 +143,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
         data?.voucher,
         availableChannels
     );
+
     const voucherChannelsChoices: ChannelVoucherData[] = useMemo(
         () => createSortedChannelsDataFromVoucher(data?.voucher),
         [data?.voucher]
@@ -152,28 +172,25 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
 
     const [updateChannels, updateChannelsOpts] = useVoucherChannelListingUpdateMutation({});
 
+    const notifySaved = () =>
+        notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+        });
+
     const [voucherUpdate, voucherUpdateOpts] = useVoucherUpdateMutation({
         onCompleted: (data) => {
-            if (data.voucherUpdate.errors.length === 0) {
+            if (data.voucherUpdate?.errors.length === 0) {
                 closeModal();
-                notify({
-                    status: "success",
-                    text: intl.formatMessage(commonMessages.savedChanges),
-                });
+                notifySaved();
             }
         },
     });
 
     const [voucherDelete, voucherDeleteOpts] = useVoucherDeleteMutation({
         onCompleted: (data) => {
-            if (data.voucherDelete.errors.length === 0) {
-                notify({
-                    status: "success",
-                    text: intl.formatMessage({
-                        defaultMessage: "Deleted voucher",
-                        id: "MiYkuJ",
-                    }),
-                });
+            if (data.voucherDelete?.errors?.length === 0) {
+                notifySaved();
                 navigate(voucherListUrl(), { replace: true });
             }
         },
@@ -181,7 +198,8 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
 
     const [voucherCataloguesRemove, voucherCataloguesRemoveOpts] = useVoucherCataloguesRemoveMutation({
         onCompleted: (data) => {
-            if (data.voucherCataloguesRemove.errors.length === 0) {
+            if (data.voucherCataloguesRemove?.errors.length === 0) {
+                notifySaved();
                 closeModal();
                 reset();
             }
@@ -190,22 +208,14 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
 
     const [voucherCataloguesAdd, voucherCataloguesAddOpts] = useVoucherCataloguesAddMutation({
         onCompleted: (data) => {
-            if (data.voucherCataloguesAdd.errors.length === 0) {
+            if (data.voucherCataloguesAdd?.errors.length === 0) {
+                notifySaved();
                 closeModal();
             }
         },
     });
 
     const canOpenBulkActionDialog = maybe(() => params.ids.length > 0);
-
-    const hasArrChanged = () => {
-        const { added, removed } = arrayDiff(
-            voucherChannelsChoices.map((choice) => choice.id),
-            currentChannels.map((choice) => choice.id)
-        );
-
-        return added.length !== 0 || removed.length !== 0;
-    };
 
     const handleUpdate = createUpdateHandler(
         data?.voucher,
@@ -223,15 +233,16 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
 
     const tabPageInfo =
         activeTab === VoucherDetailsPageTab.categories
-            ? maybe(() => data.voucher.categories.pageInfo)
+            ? maybe(() => data?.voucher?.categories?.pageInfo)
             : activeTab === VoucherDetailsPageTab.collections
-            ? maybe(() => data.voucher.collections.pageInfo)
-            : maybe(() => data.voucher.products.pageInfo);
+            ? maybe(() => data?.voucher?.collections?.pageInfo)
+            : maybe(() => data?.voucher?.products?.pageInfo);
 
     const handleCategoriesUnassign = (ids: string[]) =>
         voucherCataloguesRemove({
             variables: {
                 ...paginationState,
+                ...detailsQueryInclude,
                 id,
                 input: {
                     categories: ids,
@@ -243,6 +254,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
         voucherCataloguesRemove({
             variables: {
                 ...paginationState,
+                ...detailsQueryInclude,
                 id,
                 input: {
                     collections: ids,
@@ -254,6 +266,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
         voucherCataloguesRemove({
             variables: {
                 ...paginationState,
+                ...detailsQueryInclude,
                 id,
                 input: {
                     products: ids,
@@ -261,11 +274,18 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
             },
         });
 
-    const { loadNextPage, loadPreviousPage, pageInfo } = paginate(tabPageInfo, paginationState);
+    const { pageInfo, ...paginationValues } = paginate(tabPageInfo, paginationState);
+
+    const tabItemsCount: VoucherTabItemsCount = {
+        categories: data?.voucher?.categoriesCount?.totalCount,
+        collections: data?.voucher?.collectionsCount?.totalCount,
+        products: data?.voucher?.productsCount?.totalCount,
+    };
 
     return (
-        <>
+        <PaginatorContext.Provider value={{ ...pageInfo, ...paginationValues }}>
             <WindowTitle title={intl.formatMessage(sectionNames.vouchers)} />
+
             {!!allChannels?.length && (
                 <ChannelsAvailabilityDialog
                     isSelected={isChannelSelected}
@@ -275,8 +295,8 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
                     onClose={handleChannelsModalClose}
                     open={isChannelsModalOpen}
                     title={intl.formatMessage({
-                        defaultMessage: "Manage Channel Availability",
                         id: "EM730i",
+                        defaultMessage: "Manage Channel Availability",
                     })}
                     selected={channelListElements.length}
                     confirmButtonState="default"
@@ -284,32 +304,22 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
                     toggleAll={toggleAllChannels}
                 />
             )}
+
             <VoucherDetailsPage
                 voucher={data?.voucher}
                 allChannelsCount={allChannels?.length}
                 channelListings={currentChannels}
-                hasChannelChanged={hasArrChanged()}
                 disabled={loading || voucherCataloguesRemoveOpts.loading || updateChannelsOpts.loading}
                 errors={[
-                    ...(voucherUpdateOpts.data?.voucherUpdate.errors || []),
-                    ...(updateChannelsOpts.data?.voucherChannelListingUpdate.errors || []),
+                    ...(voucherUpdateOpts.data?.voucherUpdate?.errors || []),
+                    ...(updateChannelsOpts.data?.voucherChannelListingUpdate?.errors || []),
                 ]}
                 selectedChannelId={channel?.id}
-                pageInfo={pageInfo}
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
                 onCategoryAssign={() => openModal("assign-category")}
-                onCategoryClick={(id) => () => navigate(categoryUrl(id))}
                 onCollectionAssign={() => openModal("assign-collection")}
                 onCollectionUnassign={(collectionId) =>
-                    voucherCataloguesRemove({
-                        variables: {
-                            ...paginationState,
-                            id,
-                            input: {
-                                collections: [collectionId],
-                            },
-                        },
+                    openModal("unassign-collection", {
+                        ids: [collectionId],
                     })
                 }
                 onCountryAssign={() => openModal("assign-country")}
@@ -319,7 +329,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
                             ...paginationState,
                             id,
                             input: {
-                                countries: data.voucher.countries
+                                countries: data?.voucher?.countries
                                     .filter((country) => country.code !== countryCode)
                                     .map((country) => country.code),
                             },
@@ -327,32 +337,18 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
                     })
                 }
                 onCategoryUnassign={(categoryId) =>
-                    voucherCataloguesRemove({
-                        variables: {
-                            ...paginationState,
-                            id,
-                            input: {
-                                categories: [categoryId],
-                            },
-                        },
+                    openModal("unassign-category", {
+                        ids: [categoryId],
                     })
                 }
-                onCollectionClick={(id) => () => navigate(collectionUrl(id))}
                 onProductAssign={() => openModal("assign-product")}
                 onProductUnassign={(productId) =>
-                    voucherCataloguesRemove({
-                        variables: {
-                            ...paginationState,
-                            id,
-                            input: {
-                                products: [productId],
-                            },
-                        },
+                    openModal("unassign-product", {
+                        ids: [productId],
                     })
                 }
-                onProductClick={(id) => () => navigate(productUrl(id))}
                 activeTab={activeTab}
-                onBack={() => navigate(voucherListUrl())}
+                tabItemsCount={tabItemsCount}
                 onTabClick={changeTab}
                 onSubmit={handleSubmit}
                 onRemove={() => openModal("remove")}
@@ -367,11 +363,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
                             })
                         }
                     >
-                        <FormattedMessage
-                            defaultMessage="Unassign"
-                            description="unassign category from voucher, button"
-                            id="i18B1c"
-                        />
+                        <FormattedMessage id="Gkip05" defaultMessage="Unassign" description="button" />
                     </Button>
                 }
                 collectionListToolbar={
@@ -382,11 +374,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
                             })
                         }
                     >
-                        <FormattedMessage
-                            defaultMessage="Unassign"
-                            description="unassign collection from voucher, button"
-                            id="W6nRwB"
-                        />
+                        <FormattedMessage id="Gkip05" defaultMessage="Unassign" description="button" />
                     </Button>
                 }
                 productListToolbar={
@@ -397,11 +385,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
                             })
                         }
                     >
-                        <FormattedMessage
-                            defaultMessage="Unassign"
-                            description="unassign product from voucher, button"
-                            id="Gw7glu"
-                        />
+                        <FormattedMessage id="Gkip05" defaultMessage="Unassign" description="button" />
                     </Button>
                 }
                 isChecked={isSelected}
@@ -409,12 +393,13 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
                 toggle={toggle}
                 toggleAll={toggleAll}
             />
+
             <AssignCategoryDialog
                 categories={mapEdgesToItems(searchCategoriesOpts?.data?.search)?.filter(
                     (suggestedCategory) => suggestedCategory.id
                 )}
                 confirmButtonState={voucherCataloguesAddOpts.status}
-                hasMore={searchCategoriesOpts.data?.search.pageInfo.hasNextPage}
+                hasMore={searchCategoriesOpts.data?.search?.pageInfo.hasNextPage}
                 open={params.action === "assign-category"}
                 onFetch={searchCategories}
                 onFetchMore={loadMoreCategories}
@@ -424,6 +409,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
                     voucherCataloguesAdd({
                         variables: {
                             ...paginationState,
+                            ...detailsQueryInclude,
                             id,
                             input: {
                                 categories,
@@ -432,12 +418,13 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
                     })
                 }
             />
+
             <AssignCollectionDialog
                 collections={mapEdgesToItems(searchCollectionsOpts?.data?.search)?.filter(
                     (suggestedCategory) => suggestedCategory.id
                 )}
                 confirmButtonState={voucherCataloguesAddOpts.status}
-                hasMore={searchCollectionsOpts.data?.search.pageInfo.hasNextPage}
+                hasMore={searchCollectionsOpts.data?.search?.pageInfo.hasNextPage}
                 open={params.action === "assign-collection"}
                 onFetch={searchCollections}
                 onFetchMore={loadMoreCollections}
@@ -447,6 +434,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
                     voucherCataloguesAdd({
                         variables: {
                             ...paginationState,
+                            ...detailsQueryInclude,
                             id,
                             input: {
                                 collections,
@@ -455,9 +443,10 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
                     })
                 }
             />
+
             <DiscountCountrySelectDialog
                 confirmButtonState={voucherUpdateOpts.status}
-                countries={maybe(() => shop.countries, [])}
+                countries={maybe(() => shop?.countries, [])}
                 onClose={() => navigate(voucherUrl(id))}
                 onConfirm={(formData) =>
                     voucherUpdate({
@@ -470,11 +459,12 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
                     })
                 }
                 open={params.action === "assign-country"}
-                initial={maybe(() => data.voucher.countries.map((country) => country.code), [])}
+                initial={maybe(() => data?.voucher?.countries?.map((country) => country.code), [])}
             />
+
             <AssignProductDialog
                 confirmButtonState={voucherCataloguesAddOpts.status}
-                hasMore={searchProductsOpts.data?.search.pageInfo.hasNextPage}
+                hasMore={searchProductsOpts.data?.search?.pageInfo.hasNextPage}
                 open={params.action === "assign-product"}
                 onFetch={searchProducts}
                 onFetchMore={loadMoreProducts}
@@ -484,6 +474,7 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
                     voucherCataloguesAdd({
                         variables: {
                             ...paginationState,
+                            ...detailsQueryInclude,
                             id,
                             input: {
                                 products,
@@ -495,22 +486,28 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
                     (suggestedProduct) => suggestedProduct.id
                 )}
             />
+
             <ActionDialog
                 open={params.action === "unassign-category" && canOpenBulkActionDialog}
                 title={intl.formatMessage({
-                    defaultMessage: "Unassign Categories From Voucher",
                     id: "LOSNq0",
+                    defaultMessage: "Unassign Categories From Voucher",
                     description: "dialog header",
                 })}
                 confirmButtonState={voucherCataloguesRemoveOpts.status}
                 onClose={closeModal}
                 onConfirm={() => handleCategoriesUnassign(params.ids)}
+                confirmButtonLabel={intl.formatMessage({
+                    id: "cNSLLO",
+                    defaultMessage: "Unassign and save",
+                    description: "button",
+                })}
             >
                 {canOpenBulkActionDialog && (
                     <DialogContentText>
                         <FormattedMessage
-                            defaultMessage="{counter,plural,one{Are you sure you want to unassign this category?} other{Are you sure you want to unassign {displayQuantity} categories?}}"
                             id="GiJm1v"
+                            defaultMessage="{counter,plural,one{Are you sure you want to unassign this category?} other{Are you sure you want to unassign {displayQuantity} categories?}}"
                             description="dialog content"
                             values={{
                                 counter: params.ids.length,
@@ -520,22 +517,28 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
                     </DialogContentText>
                 )}
             </ActionDialog>
+
             <ActionDialog
                 open={params.action === "unassign-collection" && canOpenBulkActionDialog}
                 title={intl.formatMessage({
-                    defaultMessage: "Unassign Collections From Voucher",
                     id: "MmGlkp",
+                    defaultMessage: "Unassign Collections From Voucher",
                     description: "dialog header",
                 })}
                 confirmButtonState={voucherCataloguesRemoveOpts.status}
                 onClose={closeModal}
                 onConfirm={() => handleCollectionsUnassign(params.ids)}
+                confirmButtonLabel={intl.formatMessage({
+                    id: "cNSLLO",
+                    defaultMessage: "Unassign and save",
+                    description: "button",
+                })}
             >
                 {canOpenBulkActionDialog && (
                     <DialogContentText>
                         <FormattedMessage
-                            defaultMessage="{counter,plural,one{Are you sure you want to unassign this collection?} other{Are you sure you want to unassign {displayQuantity} collections?}}"
                             id="UjoSZB"
+                            defaultMessage="{counter,plural,one{Are you sure you want to unassign this collection?} other{Are you sure you want to unassign {displayQuantity} collections?}}"
                             description="dialog content"
                             values={{
                                 counter: params.ids.length,
@@ -545,22 +548,28 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
                     </DialogContentText>
                 )}
             </ActionDialog>
+
             <ActionDialog
                 open={params.action === "unassign-product" && canOpenBulkActionDialog}
                 title={intl.formatMessage({
-                    defaultMessage: "Unassign Products From Voucher",
                     id: "cKCfSW",
+                    defaultMessage: "Unassign Products From Voucher",
                     description: "dialog header",
                 })}
                 confirmButtonState={voucherCataloguesRemoveOpts.status}
                 onClose={closeModal}
                 onConfirm={() => handleProductsUnassign(params.ids)}
+                confirmButtonLabel={intl.formatMessage({
+                    id: "cNSLLO",
+                    defaultMessage: "Unassign and save",
+                    description: "button",
+                })}
             >
                 {canOpenBulkActionDialog && (
                     <DialogContentText>
                         <FormattedMessage
-                            defaultMessage="{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
                             id="AHK0K9"
+                            defaultMessage="{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
                             description="dialog content"
                             values={{
                                 counter: params.ids.length,
@@ -570,11 +579,12 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
                     </DialogContentText>
                 )}
             </ActionDialog>
+
             <ActionDialog
                 open={params.action === "remove"}
                 title={intl.formatMessage({
-                    defaultMessage: "Delete Voucher",
                     id: "Hgz44z",
+                    defaultMessage: "Delete Voucher",
                     description: "dialog header",
                 })}
                 confirmButtonState={voucherDeleteOpts.status}
@@ -588,16 +598,17 @@ export const VoucherDetails: React.FC<VoucherDetailsProps> = ({ id, params }) =>
             >
                 <DialogContentText>
                     <FormattedMessage
-                        defaultMessage="Are you sure you want to delete {voucherCode}?"
                         id="NEJo1I"
+                        defaultMessage="Are you sure you want to delete {voucherCode}?"
                         description="dialog content"
                         values={{
-                            voucherCode: <strong>{maybe(() => data.voucher.code, "...")}</strong>,
+                            voucherCode: <strong>{maybe(() => data?.voucher?.code, "...")}</strong>,
                         }}
                     />
                 </DialogContentText>
             </ActionDialog>
-        </>
+        </PaginatorContext.Provider>
     );
 };
+
 export default VoucherDetails;

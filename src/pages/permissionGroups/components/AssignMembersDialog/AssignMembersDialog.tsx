@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
 // @ts-nocheck
 import {
     Checkbox,
@@ -18,16 +17,9 @@ import CardSpacer from "@mzawadie/components/CardSpacer";
 import { ConfirmButton } from "@mzawadie/components/ConfirmButton";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
-import {
-    buttonMessages,
-    getUserInitials,
-    getUserName,
-    renderCollection,
-    DialogProps,
-    FetchMoreProps,
-    SearchPageProps,
-    RelayToFlat,
-} from "@mzawadie/core";
+import { buttonMessages } from "@mzawadie/core";
+import { getUserInitials, getUserName, renderCollection } from "@mzawadie/core";
+import { DialogProps, FetchMoreProps, RelayToFlat, SearchPageProps } from "@mzawadie/core";
 import { SearchStaffMembersQuery } from "@mzawadie/graphql";
 import useElementScroll, { isScrolledToBottom } from "@mzawadie/hooks/useElementScroll";
 import useSearchQuery from "@mzawadie/hooks/useSearchQuery";
@@ -159,6 +151,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
 }) => {
     const intl = useIntl();
     const classes = useStyles({});
+
     const [query, onQueryChange] = useSearchQuery(onSearchChange);
 
     const [selectedMembers, setSelectedMembers] = React.useState<
@@ -182,6 +175,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
             <DialogTitle>
                 <FormattedMessage {...messages.title} />
             </DialogTitle>
+
             <DialogContent className={classes.inputContainer}>
                 <TextField
                     name="query"
@@ -197,6 +191,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                     disabled={disabled}
                 />
             </DialogContent>
+
             <DialogContent className={classes.scrollArea} ref={anchor} id={scrollableTargetId}>
                 <InfiniteScroll
                     dataLength={staffMembers?.length || 0}
@@ -221,6 +216,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                                     if (!member) {
                                         return null;
                                     }
+
                                     const isSelected = selectedMembers.some(
                                         (selectedMember) => selectedMember.id === member.id
                                     );
@@ -244,6 +240,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                                                     }
                                                 />
                                             </TableCell>
+
                                             <TableCell className={classes.avatarCell}>
                                                 <div className={classes.avatar}>
                                                     {!!member?.avatar?.url ? (
@@ -260,12 +257,14 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                                                     )}
                                                 </div>
                                             </TableCell>
+
                                             <TableCell className={classes.colName}>
                                                 <Typography>
                                                     {getUserName(member) || <Skeleton />}
                                                 </Typography>
+
                                                 <Typography
-                                                    variant="caption"
+                                                    variant={"caption"}
                                                     className={classes.statusText}
                                                 >
                                                     {!!member ? (
@@ -295,6 +294,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                     </ResponsiveTable>
                 </InfiniteScroll>
             </DialogContent>
+
             <DialogActions
                 className={classNames({
                     [classes.dropShadow]: dropShadow,
@@ -315,5 +315,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
         </Dialog>
     );
 };
+
 AssignMembersDialog.displayName = "AssignMembersDialog";
+
 export default AssignMembersDialog;

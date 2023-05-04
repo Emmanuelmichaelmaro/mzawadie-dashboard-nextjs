@@ -2,26 +2,20 @@
 import useAppChannel from "@mzawadie/components/AppLayout/AppChannelContext";
 import { DeleteFilterTabDialog } from "@mzawadie/components/DeleteFilterTabDialog";
 import {
-    SaveFilterTabDialog,
     SaveFilterTabDialogFormData,
+    SaveFilterTabDialog,
 } from "@mzawadie/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@mzawadie/components/Shop/queries";
-import { getStringOrPlaceholder, ListViews } from "@mzawadie/core";
+import { getStringOrPlaceholder } from "@mzawadie/core";
+import { ListViews } from "@mzawadie/core";
 import { useOrderDraftCreateMutation, useOrderListQuery } from "@mzawadie/graphql";
 import useListSettings from "@mzawadie/hooks/useListSettings";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { usePaginationReset } from "@mzawadie/hooks/usePaginationReset";
-import usePaginator, { createPaginationState } from "@mzawadie/hooks/usePaginator";
+import usePaginator, { createPaginationState, PaginatorContext } from "@mzawadie/hooks/usePaginator";
+import { useSortRedirects } from "@mzawadie/hooks/useSortRedirects";
 import { ChannelPickerDialog } from "@mzawadie/pages/channels/components/ChannelPickerDialog";
-import { OrderListPage } from "@mzawadie/pages/orders/components/OrderListPage";
-import {
-    orderListUrl,
-    OrderListUrlDialog,
-    OrderListUrlQueryParams,
-    orderSettingsPath,
-    orderUrl,
-} from "@mzawadie/pages/orders/urls";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@mzawadie/utils/handlers/filterHandlers";
 import createSortHandler from "@mzawadie/utils/handlers/sortHandler";
@@ -30,6 +24,15 @@ import { getSortParams } from "@mzawadie/utils/sort";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import OrderListPage from "../../components/OrderListPage/OrderListPage";
+import {
+    orderListUrl,
+    OrderListUrlDialog,
+    OrderListUrlQueryParams,
+    OrderListUrlSortField,
+    orderSettingsPath,
+    orderUrl,
+} from "../../urls";
 import {
     deleteFilterTab,
     getActiveFilters,
@@ -40,7 +43,7 @@ import {
     getFilterVariables,
     saveFilterTab,
 } from "./filters";
-import { getSortQueryVariables } from "./sort";
+import { DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
 interface OrderListProps {
     params: OrderListUrlQueryParams;
@@ -49,20 +52,20 @@ interface OrderListProps {
 export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     const navigate = useNavigator();
     const notify = useNotifier();
-    const intl = useIntl();
-    const paginate = usePaginator();
 
     const { updateListSettings, settings } = useListSettings(ListViews.ORDER_LIST);
 
     usePaginationReset(orderListUrl, params, settings.rowNumber);
+
+    const intl = useIntl();
 
     const [createOrder] = useOrderDraftCreateMutation({
         onCompleted: (data) => {
             notify({
                 status: "success",
                 text: intl.formatMessage({
-                    defaultMessage: "Order draft successfully created",
                     id: "6udlH+",
+                    defaultMessage: "Order draft successfully created",
                 }),
             });
             navigate(orderUrl(data.draftOrderCreate.order.id));
@@ -131,16 +134,22 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         variables: queryVariables,
     });
 
-    const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-        data?.orders?.pageInfo,
+    const paginationValues = usePaginator({
+        pageInfo: data?.orders?.pageInfo,
         paginationState,
-        params
-    );
+        queryString: params,
+    });
 
     const handleSort = createSortHandler(navigate, orderListUrl, params);
 
+    useSortRedirects<OrderListUrlSortField>({
+        params,
+        defaultSortField: DEFAULT_SORT_KEY,
+        urlFunc: orderListUrl,
+    });
+
     return (
-        <>
+        <PaginatorContext.Provider value={paginationValues}>
             <OrderListPage
                 settings={settings}
                 currentTab={currentTab}
@@ -148,13 +157,9 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
                 filterOpts={getFilterOpts(params, channelOpts)}
                 limits={limitOpts.data?.shop.limits}
                 orders={mapEdgesToItems(data?.orders)}
-                pageInfo={pageInfo}
                 sort={getSortParams(params)}
                 onAdd={() => openModal("create-order")}
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
                 onUpdateListSettings={updateListSettings}
-                onRowClick={(id) => () => navigate(orderUrl(id))}
                 onSort={handleSort}
                 onSearchChange={handleSearchChange}
                 onFilterChange={changeFilters}
@@ -184,7 +189,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
 
             {!noChannel && (
                 <ChannelPickerDialog
-                    channelsChoices={mapNodeToChoice(availableChannels)}
+                    channelsChoices={channelOpts}
                     confirmButtonState="success"
                     defaultChoice={channel.id}
                     open={params.action === "create-order"}
@@ -198,7 +203,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
                     }
                 />
             )}
-        </>
+        </PaginatorContext.Provider>
     );
 };
 

@@ -3,18 +3,20 @@ import { DialogContentText } from "@material-ui/core";
 import { ActionDialog } from "@mzawadie/components/ActionDialog";
 import { DeleteFilterTabDialog } from "@mzawadie/components/DeleteFilterTabDialog";
 import {
-    SaveFilterTabDialog,
     SaveFilterTabDialogFormData,
+    SaveFilterTabDialog,
 } from "@mzawadie/components/SaveFilterTabDialog";
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
-import { commonMessages, sectionNames, maybe, ListViews } from "@mzawadie/core";
+import { commonMessages, sectionNames } from "@mzawadie/core";
+import { maybe } from "@mzawadie/core";
+import { ListViews } from "@mzawadie/core";
 import { useBulkRemoveCustomersMutation, useListCustomersQuery } from "@mzawadie/graphql";
 import useBulkActions from "@mzawadie/hooks/useBulkActions";
 import useListSettings from "@mzawadie/hooks/useListSettings";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { usePaginationReset } from "@mzawadie/hooks/usePaginationReset";
-import usePaginator, { createPaginationState } from "@mzawadie/hooks/usePaginator";
+import usePaginator, { createPaginationState, PaginatorContext } from "@mzawadie/hooks/usePaginator";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@mzawadie/utils/handlers/filterHandlers";
 import createSortHandler from "@mzawadie/utils/handlers/sortHandler";
@@ -25,13 +27,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CustomerListPage } from "../../components/CustomerListPage";
-import {
-    customerAddUrl,
-    customerListUrl,
-    CustomerListUrlDialog,
-    CustomerListUrlQueryParams,
-    customerUrl,
-} from "../../urls";
+import { customerListUrl, CustomerListUrlDialog, CustomerListUrlQueryParams } from "../../urls";
 import {
     deleteFilterTab,
     getActiveFilters,
@@ -51,8 +47,9 @@ interface CustomerListProps {
 export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
     const navigate = useNavigator();
     const notify = useNotifier();
-    const paginate = usePaginator();
+    
     const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
+    
     const { updateListSettings, settings } = useListSettings(ListViews.CUSTOMER_LIST);
 
     usePaginationReset(customerListUrl, params, settings.rowNumber);
@@ -60,6 +57,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
     const intl = useIntl();
 
     const paginationState = createPaginationState(settings.rowNumber, params);
+    
     const queryVariables = React.useMemo(
         () => ({
             ...paginationState,
@@ -68,6 +66,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
         }),
         [params, settings.rowNumber]
     );
+    
     const { data, loading, refetch } = useListCustomersQuery({
         displayLoader: true,
         variables: queryVariables,
@@ -111,15 +110,15 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
         handleTabChange(tabs.length + 1);
     };
 
-    const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-        maybe(() => data.customers.pageInfo),
+    const paginationValues = usePaginator({
+        pageInfo: maybe(() => data?.customers?.pageInfo),
         paginationState,
-        params
-    );
+        queryString: params,
+    });
 
     const [bulkRemoveCustomers, bulkRemoveCustomersOpts] = useBulkRemoveCustomersMutation({
         onCompleted: (data) => {
-            if (data.customerBulkDelete.errors.length === 0) {
+            if (data.customerBulkDelete?.errors.length === 0) {
                 notify({
                     status: "success",
                     text: intl.formatMessage(commonMessages.savedChanges),
@@ -134,8 +133,9 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
     const handleSort = createSortHandler(navigate, customerListUrl, params);
 
     return (
-        <>
+        <PaginatorContext.Provider value={paginationValues}>
             <WindowTitle title={intl.formatMessage(sectionNames.customers)} />
+
             <CustomerListPage
                 currentTab={currentTab}
                 filterOpts={getFilterOpts(params)}
@@ -150,12 +150,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
                 customers={mapEdgesToItems(data?.customers)}
                 settings={settings}
                 disabled={loading}
-                pageInfo={pageInfo}
-                onAdd={() => navigate(customerAddUrl)}
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
                 onUpdateListSettings={updateListSettings}
-                onRowClick={(id) => () => navigate(customerUrl(id))}
                 onSort={handleSort}
                 toolbar={
                     <IconButton
@@ -176,6 +171,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
                 toggle={toggle}
                 toggleAll={toggleAll}
             />
+
             <ActionDialog
                 open={params.action === "remove" && maybe(() => params.ids.length > 0)}
                 onClose={closeModal}
@@ -189,15 +185,15 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
                 }
                 variant="delete"
                 title={intl.formatMessage({
-                    defaultMessage: "Delete Customers",
                     id: "q8ep2I",
+                    defaultMessage: "Delete Customers",
                     description: "dialog header",
                 })}
             >
                 <DialogContentText>
                     <FormattedMessage
-                        defaultMessage="{counter,plural,one{Are you sure you want to delete this customer?} other{Are you sure you want to delete {displayQuantity} customers?}}"
                         id="N2SbNc"
+                        defaultMessage="{counter,plural,one{Are you sure you want to delete this customer?} other{Are you sure you want to delete {displayQuantity} customers?}}"
                         values={{
                             counter: maybe(() => params.ids.length),
                             displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>,
@@ -205,12 +201,14 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
                     />
                 </DialogContentText>
             </ActionDialog>
+
             <SaveFilterTabDialog
                 open={params.action === "save-search"}
                 confirmButtonState="default"
                 onClose={closeModal}
                 onSubmit={handleTabSave}
             />
+
             <DeleteFilterTabDialog
                 open={params.action === "delete-search"}
                 confirmButtonState="default"
@@ -218,7 +216,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
                 onSubmit={handleTabDelete}
                 tabName={maybe(() => tabs[currentTab - 1].name, "...")}
             />
-        </>
+        </PaginatorContext.Provider>
     );
 };
 

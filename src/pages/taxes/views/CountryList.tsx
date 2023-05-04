@@ -1,23 +1,21 @@
-import { commonMessages, extractMutationErrors, maybe } from "@mzawadie/core";
+// @ts-nocheck
+import { commonMessages } from "@mzawadie/core";
+import { extractMutationErrors, maybe } from "@mzawadie/core";
 import {
     useCountryListQuery,
     useFetchTaxesMutation,
     useUpdateTaxSettingsMutation,
 } from "@mzawadie/graphql";
-import { useNavigator, useNotifier } from "@mzawadie/hooks";
-import { configurationMenuUrl } from "@mzawadie/pages/configuration";
-import {
-    CountryListPage,
-    TaxesConfigurationFormData,
-} from "@mzawadie/pages/taxes/components/CountryListPage";
-import { countryTaxRatesUrl } from "@mzawadie/pages/taxes/urls";
+import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { CountryListPage, TaxesConfigurationFormData } from "../components/CountryListPage";
+
 export const CountryList: React.FC = () => {
-    const navigate = useNavigator();
-    const notify = useNotifier();
     const intl = useIntl();
+    
+    const notify = useNotifier();
 
     const { data, loading } = useCountryListQuery({
         displayLoader: true,
@@ -29,8 +27,8 @@ export const CountryList: React.FC = () => {
                 notify({
                     status: "success",
                     text: intl.formatMessage({
-                        defaultMessage: "Successfully fetched tax rates",
                         id: "HtQGEH",
+                        defaultMessage: "Successfully fetched tax rates",
                     }),
                 });
             } else {
@@ -69,8 +67,6 @@ export const CountryList: React.FC = () => {
     return (
         <CountryListPage
             disabled={loading || fetchTaxesOpts.loading || updateTaxSettingsOpts.loading}
-            onBack={() => navigate(configurationMenuUrl)}
-            onRowClick={(code) => navigate(countryTaxRatesUrl(code))}
             onSubmit={handleSubmit}
             onTaxFetch={fetchTaxes}
             saveButtonBarState={updateTaxSettingsOpts.status}

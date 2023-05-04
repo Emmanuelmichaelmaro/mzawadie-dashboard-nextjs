@@ -8,7 +8,9 @@ import messages from "./messages";
 
 const ServiceWorker: React.FC = () => {
     const { update, updateAvailable } = useServiceWorker(SW_INTERVAL * 1000);
+    
     const notify = useNotifier();
+    
     const { formatMessage } = useIntl();
 
     React.useEffect(() => {

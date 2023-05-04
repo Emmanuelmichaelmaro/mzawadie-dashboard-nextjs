@@ -1,21 +1,19 @@
 // @ts-nocheck
 import { Card } from "@material-ui/core";
-import { Container, FilterBar, PageHeader } from "@mzawadie/components";
-import {
-    sectionNames,
-    FilterPageProps,
-    ListActions,
-    PageListProps,
-    SortPage,
-    TabPageProps,
-} from "@mzawadie/core";
+import { Backlink } from "@mzawadie/components/Backlink";
+import { Button } from "@mzawadie/components/Button";
+import Container from "@mzawadie/components/Container";
+import {FilterBar} from "@mzawadie/components/FilterBar";
+import {PageHeader} from "@mzawadie/components/PageHeader";
+import { configurationMenuUrl } from "@mzawadie/pages/configuration";
+import { sectionNames } from "@mzawadie/core";
+import { FilterPageProps, ListActions, PageListProps, SortPage, TabPageProps } from "@mzawadie/core";
 import { ProductTypeFragment } from "@mzawadie/graphql";
-import { ProductTypeListUrlSortField } from "@mzawadie/pages/productTypes/urls";
-import { Backlink, Button } from "@saleor/macaw-ui";
+import { productTypeAddUrl, ProductTypeListUrlSortField } from "@mzawadie/pages/productTypes/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import ProductTypeList from "../ProductTypeList/ProductTypeList";
+import { ProductTypeList } from "../ProductTypeList";
 import { createFilterStructure, ProductTypeFilterKeys, ProductTypeListFilterOpts } from "./filters";
 
 export interface ProductTypeListPageProps
@@ -25,16 +23,13 @@ export interface ProductTypeListPageProps
         SortPage<ProductTypeListUrlSortField>,
         TabPageProps {
     productTypes: ProductTypeFragment[];
-    onBack: () => void;
 }
 
 const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
     currentTab,
     filterOpts,
     initialSearch,
-    onAdd,
     onAll,
-    onBack,
     onFilterChange,
     onSearchChange,
     onTabChange,
@@ -49,13 +44,15 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
 
     return (
         <Container>
-            <Backlink onClick={onBack}>{intl.formatMessage(sectionNames.configuration)}</Backlink>
+            <Backlink href={configurationMenuUrl}>
+                {intl.formatMessage(sectionNames.configuration)}
+            </Backlink>
 
             <PageHeader title={intl.formatMessage(sectionNames.productTypes)}>
-                <Button variant="primary" onClick={onAdd} data-test-id="add-product-type">
+                <Button variant="primary" href={productTypeAddUrl()} data-test-id="add-product-type">
                     <FormattedMessage
-                        defaultMessage="create product type"
                         id="QY7FSs"
+                        defaultMessage="create product type"
                         description="button"
                     />
                 </Button>
@@ -64,16 +61,16 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
             <Card>
                 <FilterBar
                     allTabLabel={intl.formatMessage({
-                        defaultMessage: "All Product Types",
                         id: "1KSqnn",
+                        defaultMessage: "All Product Types",
                         description: "tab name",
                     })}
                     currentTab={currentTab}
                     filterStructure={structure}
                     initialSearch={initialSearch}
                     searchPlaceholder={intl.formatMessage({
-                        defaultMessage: "Search Product Type",
                         id: "rpFdD1",
+                        defaultMessage: "Search Product Type",
                     })}
                     tabs={tabs}
                     onAll={onAll}

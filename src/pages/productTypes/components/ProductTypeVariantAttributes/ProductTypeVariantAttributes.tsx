@@ -1,15 +1,19 @@
 // @ts-nocheck
 import { Card, TableCell, TableRow, Tooltip } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
+import { Button } from "@mzawadie/components/Button";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { Checkbox } from "@mzawadie/components/Checkbox";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { SortableTableBody, SortableTableRow } from "@mzawadie/components/SortableTable";
+import { TableButtonWrapper } from "@mzawadie/components/TableButtonWrapper/TableButtonWrapper";
 import { TableHead } from "@mzawadie/components/TableHead";
-import { maybe, renderCollection, stopPropagation, ListActions, ReorderAction } from "@mzawadie/core";
+import { maybe, renderCollection } from "@mzawadie/core";
+import { ListActions, ReorderAction } from "@mzawadie/core";
 import { ProductAttributeType, ProductTypeDetailsQuery } from "@mzawadie/graphql";
-import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { attributeUrl } from "@mzawadie/pages/attributes/urls";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import capitalize from "lodash/capitalize";
 import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -62,11 +66,9 @@ interface ProductTypeVariantAttributesProps extends ListActions {
     testId?: string;
     selectedVariantAttributes: string[];
     onAttributeAssign: (type: ProductAttributeType) => void;
-    onAttributeClick: (id: string) => void;
     onAttributeReorder: ReorderAction;
     onAttributeUnassign: (id: string) => void;
-    onAttributeVariantSelection?: (isActive: boolean) => void;
-    setSelectedVariantAttributes?: (data: string[]) => void;
+    setSelectedVariantAttributes: (data: string[]) => void;
 }
 
 function handleContainerAssign(
@@ -98,13 +100,12 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
         type,
         testId,
         onAttributeAssign,
-        onAttributeClick,
         onAttributeReorder,
         onAttributeUnassign,
-        onAttributeVariantSelection,
         setSelectedVariantAttributes,
         selectedVariantAttributes,
     } = props;
+
     const classes = useStyles(props);
 
     const intl = useIntl();
@@ -122,8 +123,8 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
         <Card data-test-id="variant-attributes">
             <CardTitle
                 title={intl.formatMessage({
-                    defaultMessage: "Variant Attributes",
                     id: "skEK/i",
+                    defaultMessage: "Variant Attributes",
                     description: "section header",
                 })}
                 toolbar={
@@ -133,13 +134,14 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                         onClick={() => onAttributeAssign(ProductAttributeType[type])}
                     >
                         <FormattedMessage
-                            defaultMessage="Assign attribute"
                             id="uxPpRx"
+                            defaultMessage="Assign attribute"
                             description="button"
                         />
                     </Button>
                 }
             />
+
             <ResponsiveTable>
                 <colgroup>
                     <col className={classes.colGrab} />
@@ -149,6 +151,7 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                     <col className={classes.colVariant} />
                     <col className={classes.colAction} />
                 </colgroup>
+
                 {assignedVariantAttributes?.length > 0 && (
                     <TableHead
                         colSpan={numberOfColumns}
@@ -162,42 +165,50 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                         toolbar={toolbar}
                     >
                         <TableCell className={classes.colName}>
-                            <FormattedMessage defaultMessage="Attribute name" id="kTr2o8" />
+                            <FormattedMessage id="kTr2o8" defaultMessage="Attribute name" />
                         </TableCell>
+
                         <TableCell className={classes.colName}>
                             <FormattedMessage
-                                defaultMessage="Slug"
                                 id="nf3XSt"
+                                defaultMessage="Slug"
                                 description="attribute internal name"
                             />
                         </TableCell>
+
                         <TableCell className={classes.colName}>
                             <FormattedMessage
-                                defaultMessage="Variant Selection"
                                 id="4k9rMQ"
+                                defaultMessage="Variant Selection"
                                 description="variant attribute checkbox"
                             />
                         </TableCell>
+
                         <TableCell />
                     </TableHead>
                 )}
+
                 <SortableTableBody onSortEnd={onAttributeReorder}>
                     {renderCollection(
                         assignedVariantAttributes,
                         (assignedVariantAttribute, attributeIndex) => {
                             const { attribute } = assignedVariantAttribute;
+
                             const isVariantSelected = assignedVariantAttribute
                                 ? isChecked(attribute.id)
                                 : false;
+
                             const isSelected = !!selectedVariantAttributes.find(
                                 (selectedAttribute) => selectedAttribute === attribute.id
                             );
+
                             const variantSelectionDisabled = ![
                                 "DROPDOWN",
                                 "BOOLEAN",
                                 "SWATCH",
                                 "NUMERIC",
                             ].includes(attribute.inputType);
+
                             const readableAttributeInputType = capitalize(
                                 attribute.inputType.split("_").join(" ")
                             );
@@ -207,12 +218,10 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                                     selected={isVariantSelected}
                                     className={!!attribute ? classes.link : undefined}
                                     hover={!!attribute}
-                                    onClick={
-                                        !!attribute ? () => onAttributeClick(attribute.id) : undefined
-                                    }
+                                    href={attribute ? attributeUrl(attribute.id) : undefined}
                                     key={maybe(() => attribute.id)}
                                     index={attributeIndex || 0}
-                                    data-test-id={`id-${+maybe(() => attribute.id)}`}
+                                    data-test-id={"id-" + +maybe(() => attribute.id)}
                                 >
                                     <TableCell padding="checkbox">
                                         <Checkbox
@@ -222,12 +231,15 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                                             onChange={() => toggle(attribute.id)}
                                         />
                                     </TableCell>
+
                                     <TableCell className={classes.colName} data-test-id="name">
                                         {attribute.name ?? <Skeleton />}
                                     </TableCell>
+
                                     <TableCell className={classes.colSlug} data-test-id="slug">
                                         {maybe(() => attribute.slug) ? attribute.slug : <Skeleton />}
                                     </TableCell>
+
                                     <TableCell
                                         className={classes.colVariant}
                                         data-test-id="variant-selection"
@@ -238,22 +250,22 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                                                 checked={isSelected}
                                                 disabled={disabled || variantSelectionDisabled}
                                                 disableClickPropagation
-                                                onChange={() => {
-                                                    onAttributeVariantSelection(true);
+                                                onChange={() =>
                                                     handleContainerAssign(
                                                         attribute.id,
                                                         isSelected,
                                                         selectedVariantAttributes,
                                                         setSelectedVariantAttributes
-                                                    );
-                                                }}
+                                                    )
+                                                }
                                             />
+
                                             {!!variantSelectionDisabled && (
                                                 <Tooltip
                                                     title={
                                                         <FormattedMessage
-                                                            defaultMessage="{inputType} attributes cannot be used as variant selection attributes."
                                                             id="vlLyvk"
+                                                            defaultMessage="{inputType} attributes cannot be used as variant selection attributes."
                                                             values={{
                                                                 inputType: readableAttributeInputType,
                                                             }}
@@ -267,15 +279,16 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                                             )}
                                         </div>
                                     </TableCell>
+
                                     <TableCell className={classes.colAction}>
-                                        <IconButton
-                                            data-test-id="delete-icon"
-                                            onClick={stopPropagation(() =>
-                                                onAttributeUnassign(attribute.id)
-                                            )}
-                                        >
-                                            <DeleteIcon color="primary" />
-                                        </IconButton>
+                                        <TableButtonWrapper>
+                                            <IconButton
+                                                data-test-id="delete-icon"
+                                                onClick={() => onAttributeUnassign(attribute.id)}
+                                            >
+                                                <DeleteIcon color="primary" />
+                                            </IconButton>
+                                        </TableButtonWrapper>
                                     </TableCell>
                                 </SortableTableRow>
                             );
@@ -284,8 +297,8 @@ const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> 
                             <TableRow>
                                 <TableCell colSpan={numberOfColumns}>
                                     <FormattedMessage
-                                        defaultMessage="No attributes found"
                                         id="ztQgD8"
+                                        defaultMessage="No attributes found"
                                     />
                                 </TableCell>
                             </TableRow>

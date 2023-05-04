@@ -13,9 +13,9 @@ export type Scalars = {
     Float: number;
     Date: any;
     DateTime: any;
-    Decimal: any;
     GenericScalar: any;
     JSONString: any;
+    Metadata: any;
     PositiveDecimal: any;
     UUID: any;
     Upload: any;
@@ -78,8 +78,12 @@ export type AccountRegisterInput = {
     channel?: InputMaybe<Scalars["String"]>;
     /** The email address of the user. */
     email: Scalars["String"];
+    /** Given name. */
+    firstName?: InputMaybe<Scalars["String"]>;
     /** User language code. */
     languageCode?: InputMaybe<LanguageCodeEnum>;
+    /** Family name. */
+    lastName?: InputMaybe<Scalars["String"]>;
     /** User public metadata. */
     metadata?: InputMaybe<Array<MetadataInput>>;
     /** Password. */
@@ -137,33 +141,9 @@ export enum AppErrorCode {
 }
 
 export type AppExtensionFilterInput = {
-    mount?: InputMaybe<Array<InputMaybe<AppExtensionMountEnum>>>;
+    mount?: InputMaybe<Array<AppExtensionMountEnum>>;
     target?: InputMaybe<AppExtensionTargetEnum>;
-    type?: InputMaybe<AppExtensionTypeEnum>;
-    view?: InputMaybe<AppExtensionViewEnum>;
 };
-
-/** An enumeration. */
-export enum AppExtensionMount {
-    /** navigation_catalog */
-    NAVIGATION_CATALOG = "NAVIGATION_CATALOG",
-    /** navigation_customers */
-    NAVIGATION_CUSTOMERS = "NAVIGATION_CUSTOMERS",
-    /** navigation_discounts */
-    NAVIGATION_DISCOUNTS = "NAVIGATION_DISCOUNTS",
-    /** navigation_orders */
-    NAVIGATION_ORDERS = "NAVIGATION_ORDERS",
-    /** navigation_pages */
-    NAVIGATION_PAGES = "NAVIGATION_PAGES",
-    /** navigation_translations */
-    NAVIGATION_TRANSLATIONS = "NAVIGATION_TRANSLATIONS",
-    /** product_details_more_actions */
-    PRODUCT_DETAILS_MORE_ACTIONS = "PRODUCT_DETAILS_MORE_ACTIONS",
-    /** product_overview_create */
-    PRODUCT_OVERVIEW_CREATE = "PRODUCT_OVERVIEW_CREATE",
-    /** product_overview_more_actions */
-    PRODUCT_OVERVIEW_MORE_ACTIONS = "PRODUCT_OVERVIEW_MORE_ACTIONS",
-}
 
 /** All places where app extension can be mounted. */
 export enum AppExtensionMountEnum {
@@ -173,44 +153,25 @@ export enum AppExtensionMountEnum {
     NAVIGATION_ORDERS = "NAVIGATION_ORDERS",
     NAVIGATION_PAGES = "NAVIGATION_PAGES",
     NAVIGATION_TRANSLATIONS = "NAVIGATION_TRANSLATIONS",
+    ORDER_DETAILS_MORE_ACTIONS = "ORDER_DETAILS_MORE_ACTIONS",
+    ORDER_OVERVIEW_CREATE = "ORDER_OVERVIEW_CREATE",
+    ORDER_OVERVIEW_MORE_ACTIONS = "ORDER_OVERVIEW_MORE_ACTIONS",
     PRODUCT_DETAILS_MORE_ACTIONS = "PRODUCT_DETAILS_MORE_ACTIONS",
     PRODUCT_OVERVIEW_CREATE = "PRODUCT_OVERVIEW_CREATE",
     PRODUCT_OVERVIEW_MORE_ACTIONS = "PRODUCT_OVERVIEW_MORE_ACTIONS",
 }
 
 /**
- * All available places where app's iframe can be mounted.
- *     MORE_ACTIONS - more actions button
- *     CREATE - create button
+ *
+ *     All available ways of opening an app extension.
+ *
  *     POPUP - app's extension will be mounted as a popup window
  *     APP_PAGE - redirect to app's page
  *
  */
 export enum AppExtensionTargetEnum {
     APP_PAGE = "APP_PAGE",
-    CREATE = "CREATE",
-    MORE_ACTIONS = "MORE_ACTIONS",
     POPUP = "POPUP",
-}
-
-/**
- * All available types where app's iframe can be mounted.
- *     OVERVIEW - app's iframe will be mounted on list view.
- *     DETAILS - app's iframe will be mounted on detail view
- *
- */
-export enum AppExtensionTypeEnum {
-    DETAILS = "DETAILS",
-    OVERVIEW = "OVERVIEW",
-}
-
-/**
- * All available places where app's iframe can be mounted.
- *     PRODUCT - app's iframe will be mounted in product section
- *
- */
-export enum AppExtensionViewEnum {
-    PRODUCT = "PRODUCT",
 }
 
 export type AppFilterInput = {
@@ -223,7 +184,7 @@ export type AppInput = {
     /** Name of the app. */
     name?: InputMaybe<Scalars["String"]>;
     /** List of permission code names to assign to this app. */
-    permissions?: InputMaybe<Array<InputMaybe<PermissionEnum>>>;
+    permissions?: InputMaybe<Array<PermissionEnum>>;
 };
 
 export type AppInstallInput = {
@@ -234,7 +195,7 @@ export type AppInstallInput = {
     /** Url to app's manifest in JSON format. */
     manifestUrl?: InputMaybe<Scalars["String"]>;
     /** List of permission code names to assign to this app. */
-    permissions?: InputMaybe<Array<InputMaybe<PermissionEnum>>>;
+    permissions?: InputMaybe<Array<PermissionEnum>>;
 };
 
 export enum AppSortField {
@@ -245,7 +206,7 @@ export enum AppSortField {
 }
 
 export type AppSortingInput = {
-    /** Specifies the direction in which to sort product. */
+    /** Specifies the direction in which to sort products. */
     direction: OrderDirection;
     /** Sort apps by the selected field. */
     field: AppSortField;
@@ -260,10 +221,10 @@ export type AppTokenInput = {
 
 /** Enum determining type of your App. */
 export enum AppTypeEnum {
-    /** Local mzawadie App. The app is fully manageable from dashboard. You can change assigned permissions, add webhooks, or authentication token */
+    /** Local Saleor App. The app is fully manageable from dashboard. You can change assigned permissions, add webhooks, or authentication token */
     LOCAL = "LOCAL",
-    /** Third party external App. Installation is fully automated. mzawadie uses a defined App manifest to gather all required information. */
-    THIRDPARTY = "THIRDPARTY",
+    /** Third party external App. Installation is fully automated. Mzawadie uses a defined App manifest to gather all required information. */
+    THIRD_PARTY = "THIRD_PARTY",
 }
 
 /** An enumeration. */
@@ -284,7 +245,7 @@ export enum AttributeChoicesSortField {
 }
 
 export type AttributeChoicesSortingInput = {
-    /** Specifies the direction in which to sort product. */
+    /** Specifies the direction in which to sort products. */
     direction: OrderDirection;
     /** Sort attribute choices by the selected field. */
     field: AttributeChoicesSortField;
@@ -316,7 +277,7 @@ export type AttributeCreateInput = {
     /** Whether the attribute requires values to be passed or not. */
     valueRequired?: InputMaybe<Scalars["Boolean"]>;
     /** List of attribute's values. */
-    values?: InputMaybe<Array<InputMaybe<AttributeValueCreateInput>>>;
+    values?: InputMaybe<Array<AttributeValueCreateInput>>;
     /** Whether the attribute should be visible or not in storefront. */
     visibleInStorefront?: InputMaybe<Scalars["Boolean"]>;
 };
@@ -339,15 +300,19 @@ export enum AttributeErrorCode {
 
 export type AttributeFilterInput = {
     availableInGrid?: InputMaybe<Scalars["Boolean"]>;
-    /** Specifies the channel by which the data should be filtered. DEPRECATED: Will be removed in Mzawadie 4.0.Use root-level channel argument instead. */
+    /**
+     * Specifies the channel by which the data should be filtered.
+     *
+     * DEPRECATED: this field will be removed in Mzawadie 3.0. Use root-level channel argument instead.
+     */
     channel?: InputMaybe<Scalars["String"]>;
     filterableInDashboard?: InputMaybe<Scalars["Boolean"]>;
     filterableInStorefront?: InputMaybe<Scalars["Boolean"]>;
-    ids?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    ids?: InputMaybe<Array<Scalars["ID"]>>;
     inCategory?: InputMaybe<Scalars["ID"]>;
     inCollection?: InputMaybe<Scalars["ID"]>;
     isVariantOnly?: InputMaybe<Scalars["Boolean"]>;
-    metadata?: InputMaybe<Array<InputMaybe<MetadataFilter>>>;
+    metadata?: InputMaybe<Array<MetadataFilter>>;
     search?: InputMaybe<Scalars["String"]>;
     type?: InputMaybe<AttributeTypeEnum>;
     valueRequired?: InputMaybe<Scalars["Boolean"]>;
@@ -357,14 +322,14 @@ export type AttributeFilterInput = {
 export type AttributeInput = {
     /** The boolean value of the attribute. */
     boolean?: InputMaybe<Scalars["Boolean"]>;
-    /** The date range that the returned values should be in. */
+    /** The date range that the returned values should be in. In case of date/time attributes, the UTC midnight of the given date is used. */
     date?: InputMaybe<DateRangeInput>;
-    /** The date time range that the returned values should be in. */
+    /** The date/time range that the returned values should be in. */
     dateTime?: InputMaybe<DateTimeRangeInput>;
     /** Internal representation of an attribute name. */
     slug: Scalars["String"];
     /** Internal representation of a value (unique per attribute). */
-    values?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+    values?: InputMaybe<Array<Scalars["String"]>>;
     /** The range that the returned values should be in. */
     valuesRange?: InputMaybe<IntRangeInput>;
 };
@@ -380,6 +345,7 @@ export enum AttributeInputTypeEnum {
     NUMERIC = "NUMERIC",
     REFERENCE = "REFERENCE",
     RICH_TEXT = "RICH_TEXT",
+    SWATCH = "SWATCH",
 }
 
 export enum AttributeSortField {
@@ -404,7 +370,7 @@ export enum AttributeSortField {
 }
 
 export type AttributeSortingInput = {
-    /** Specifies the direction in which to sort product. */
+    /** Specifies the direction in which to sort products. */
     direction: OrderDirection;
     /** Sort attributes by the selected field. */
     field: AttributeSortField;
@@ -418,7 +384,7 @@ export enum AttributeTypeEnum {
 
 export type AttributeUpdateInput = {
     /** New values to be created for this attribute. */
-    addValues?: InputMaybe<Array<InputMaybe<AttributeValueUpdateInput>>>;
+    addValues?: InputMaybe<Array<AttributeValueUpdateInput>>;
     /** Whether the attribute can be displayed in the admin product list. */
     availableInGrid?: InputMaybe<Scalars["Boolean"]>;
     /** Whether the attribute can be filtered in dashboard. */
@@ -430,7 +396,7 @@ export type AttributeUpdateInput = {
     /** Name of an attribute displayed in the interface. */
     name?: InputMaybe<Scalars["String"]>;
     /** IDs of values to be removed from this attribute. */
-    removeValues?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    removeValues?: InputMaybe<Array<Scalars["ID"]>>;
     /** Internal representation of an attribute name. */
     slug?: InputMaybe<Scalars["String"]>;
     /** The position of the attribute in the storefront navigation (0 by default). */
@@ -450,13 +416,18 @@ export type AttributeValueCreateInput = {
     fileUrl?: InputMaybe<Scalars["String"]>;
     /** Name of a value displayed in the interface. */
     name: Scalars["String"];
-    /** Represents the text (JSON) of the attribute value. */
+    /**
+     * Represents the text of the attribute value, includes formatting.
+     *
+     * Rich text format. For reference see https://editorjs.io/
+     */
     richText?: InputMaybe<Scalars["JSONString"]>;
     /** Represent value of the attribute value (e.g. color values for swatch attributes). */
     value?: InputMaybe<Scalars["String"]>;
 };
 
 export type AttributeValueFilterInput = {
+    ids?: InputMaybe<Array<Scalars["ID"]>>;
     search?: InputMaybe<Scalars["String"]>;
 };
 
@@ -467,7 +438,7 @@ export type AttributeValueInput = {
     contentType?: InputMaybe<Scalars["String"]>;
     /** Represents the date value of the attribute value. */
     date?: InputMaybe<Scalars["Date"]>;
-    /** Represents the date time value of the attribute value. */
+    /** Represents the date/time value of the attribute value. */
     dateTime?: InputMaybe<Scalars["DateTime"]>;
     /** URL of the file attribute. Every time, a new value is created. */
     file?: InputMaybe<Scalars["String"]>;
@@ -483,6 +454,11 @@ export type AttributeValueInput = {
 
 export type AttributeValueTranslationInput = {
     name?: InputMaybe<Scalars["String"]>;
+    /**
+     * Translated text.
+     *
+     * Rich text format. For reference see https://editorjs.io/
+     */
     richText?: InputMaybe<Scalars["JSONString"]>;
 };
 
@@ -493,7 +469,11 @@ export type AttributeValueUpdateInput = {
     fileUrl?: InputMaybe<Scalars["String"]>;
     /** Name of a value displayed in the interface. */
     name?: InputMaybe<Scalars["String"]>;
-    /** Represents the text (JSON) of the attribute value. */
+    /**
+     * Represents the text of the attribute value, includes formatting.
+     *
+     * Rich text format. For reference see https://editorjs.io/
+     */
     richText?: InputMaybe<Scalars["JSONString"]>;
     /** Represent value of the attribute value (e.g. color values for swatch attributes). */
     value?: InputMaybe<Scalars["String"]>;
@@ -519,16 +499,22 @@ export type CardInput = {
 
 export type CatalogueInput = {
     /** Categories related to the discount. */
-    categories?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    categories?: InputMaybe<Array<Scalars["ID"]>>;
     /** Collections related to the discount. */
-    collections?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    collections?: InputMaybe<Array<Scalars["ID"]>>;
     /** Products related to the discount. */
-    products?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    products?: InputMaybe<Array<Scalars["ID"]>>;
+    /**
+     * Product variant related to the discount.
+     *
+     * Added in Saleor 3.1.
+     */
+    variants?: InputMaybe<Array<Scalars["ID"]>>;
 };
 
 export type CategoryFilterInput = {
-    ids?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-    metadata?: InputMaybe<Array<InputMaybe<MetadataFilter>>>;
+    ids?: InputMaybe<Array<Scalars["ID"]>>;
+    metadata?: InputMaybe<Array<MetadataFilter>>;
     search?: InputMaybe<Scalars["String"]>;
 };
 
@@ -537,10 +523,26 @@ export type CategoryInput = {
     backgroundImage?: InputMaybe<Scalars["Upload"]>;
     /** Alt text for a product media. */
     backgroundImageAlt?: InputMaybe<Scalars["String"]>;
-    /** Category description (JSON). */
+    /**
+     * Category description.
+     *
+     * Rich text format. For reference see https://editorjs.io/
+     */
     description?: InputMaybe<Scalars["JSONString"]>;
+    /**
+     * Fields required to update the category metadata.
+     *
+     * Added in Saleor 3.8.
+     */
+    metadata?: InputMaybe<Array<MetadataInput>>;
     /** Category name. */
     name?: InputMaybe<Scalars["String"]>;
+    /**
+     * Fields required to update the category private metadata.
+     *
+     * Added in Saleor 3.8.
+     */
+    privateMetadata?: InputMaybe<Array<MetadataInput>>;
     /** Search engine optimization fields. */
     seo?: InputMaybe<SeoInput>;
     /** Category slug. */
@@ -557,9 +559,13 @@ export enum CategorySortField {
 }
 
 export type CategorySortingInput = {
-    /** Specifies the channel in which to sort the data. DEPRECATED: Will be removed in Mzawadie 4.0.Use root-level channel argument instead. */
+    /**
+     * Specifies the channel in which to sort the data.
+     *
+     * DEPRECATED: this field will be removed in Mzawadie 3.0. Use root-level channel argument instead.
+     */
     channel?: InputMaybe<Scalars["String"]>;
-    /** Specifies the direction in which to sort product. */
+    /** Specifies the direction in which to sort products. */
     direction: OrderDirection;
     /** Sort categories by the selected field. */
     field: CategorySortField;
@@ -570,7 +576,11 @@ export type ChannelCreateInput = {
     addShippingZones?: InputMaybe<Array<Scalars["ID"]>>;
     /** Currency of the channel. */
     currencyCode: Scalars["String"];
-    /** New in mzawadie 3.1. Default country for the channel. Default country can be used in checkout to determine the stock quantities or calculate taxes when the country was not explicitly provided. */
+    /**
+     * Default country for the channel. Default country can be used in checkout to determine the stock quantities or calculate taxes when the country was not explicitly provided.
+     *
+     * Added in Saleor 3.1.
+     */
     defaultCountry: CountryCode;
     /** isActive flag. */
     isActive?: InputMaybe<Scalars["Boolean"]>;
@@ -601,7 +611,11 @@ export enum ChannelErrorCode {
 export type ChannelUpdateInput = {
     /** List of shipping zones to assign to the channel. */
     addShippingZones?: InputMaybe<Array<Scalars["ID"]>>;
-    /** New in mzawadie 3.1. Default country for the channel. Default country can be used in checkout to determine the stock quantities or calculate taxes when the country was not explicitly provided. */
+    /**
+     * Default country for the channel. Default country can be used in checkout to determine the stock quantities or calculate taxes when the country was not explicitly provided.
+     *
+     * Added in Saleor 3.1.
+     */
     defaultCountry?: InputMaybe<CountryCode>;
     /** isActive flag. */
     isActive?: InputMaybe<Scalars["Boolean"]>;
@@ -623,7 +637,7 @@ export type CheckoutCreateInput = {
     /** Checkout language code. */
     languageCode?: InputMaybe<LanguageCodeEnum>;
     /** A list of checkout lines, each containing information about an item in the checkout. */
-    lines: Array<InputMaybe<CheckoutLineInput>>;
+    lines: Array<CheckoutLineInput>;
     /** The mailing address to where the checkout will be shipped. Note: the address will be ignored if the checkout doesn't contain shippable items. */
     shippingAddress?: InputMaybe<AddressInput>;
 };
@@ -642,6 +656,7 @@ export enum CheckoutErrorCode {
     INVALID_SHIPPING_METHOD = "INVALID_SHIPPING_METHOD",
     MISSING_CHANNEL_SLUG = "MISSING_CHANNEL_SLUG",
     NOT_FOUND = "NOT_FOUND",
+    NO_LINES = "NO_LINES",
     PAYMENT_ERROR = "PAYMENT_ERROR",
     PRODUCT_NOT_PUBLISHED = "PRODUCT_NOT_PUBLISHED",
     PRODUCT_UNAVAILABLE_FOR_PURCHASE = "PRODUCT_UNAVAILABLE_FOR_PURCHASE",
@@ -659,16 +674,39 @@ export enum CheckoutErrorCode {
 }
 
 export type CheckoutFilterInput = {
-    channels?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    channels?: InputMaybe<Array<Scalars["ID"]>>;
     created?: InputMaybe<DateRangeInput>;
     customer?: InputMaybe<Scalars["String"]>;
-    metadata?: InputMaybe<Array<InputMaybe<MetadataFilter>>>;
+    metadata?: InputMaybe<Array<MetadataFilter>>;
     search?: InputMaybe<Scalars["String"]>;
 };
 
 export type CheckoutLineInput = {
+    /**
+     * Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used.
+     *
+     * Added in Saleor 3.1.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
+    price?: InputMaybe<Scalars["PositiveDecimal"]>;
     /** The number of items purchased. */
     quantity: Scalars["Int"];
+    /** ID of the product variant. */
+    variantId: Scalars["ID"];
+};
+
+export type CheckoutLineUpdateInput = {
+    /**
+     * Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used.
+     *
+     * Added in Saleor 3.1.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
+    price?: InputMaybe<Scalars["PositiveDecimal"]>;
+    /** The number of items purchased. Optional for apps, required for any other users. */
+    quantity?: InputMaybe<Scalars["Int"]>;
     /** ID of the product variant. */
     variantId: Scalars["ID"];
 };
@@ -683,7 +721,7 @@ export enum CheckoutSortField {
 }
 
 export type CheckoutSortingInput = {
-    /** Specifies the direction in which to sort product. */
+    /** Specifies the direction in which to sort products. */
     direction: OrderDirection;
     /** Sort checkouts by the selected field. */
     field: CheckoutSortField;
@@ -701,15 +739,35 @@ export type CollectionCreateInput = {
     backgroundImage?: InputMaybe<Scalars["Upload"]>;
     /** Alt text for an image. */
     backgroundImageAlt?: InputMaybe<Scalars["String"]>;
-    /** Description of the collection (JSON). */
+    /**
+     * Description of the collection.
+     *
+     * Rich text format. For reference see https://editorjs.io/
+     */
     description?: InputMaybe<Scalars["JSONString"]>;
     /** Informs whether a collection is published. */
     isPublished?: InputMaybe<Scalars["Boolean"]>;
+    /**
+     * Fields required to update the collection metadata.
+     *
+     * Added in Saleor 3.8.
+     */
+    metadata?: InputMaybe<Array<MetadataInput>>;
     /** Name of the collection. */
     name?: InputMaybe<Scalars["String"]>;
+    /**
+     * Fields required to update the collection private metadata.
+     *
+     * Added in Saleor 3.8.
+     */
+    privateMetadata?: InputMaybe<Array<MetadataInput>>;
     /** List of products to be added to the collection. */
-    products?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-    /** Publication date. ISO 8601 standard. */
+    products?: InputMaybe<Array<Scalars["ID"]>>;
+    /**
+     * Publication date. ISO 8601 standard.
+     *
+     * DEPRECATED: this field will be removed in Mzawadie 3.0.
+     */
     publicationDate?: InputMaybe<Scalars["Date"]>;
     /** Search engine optimization fields. */
     seo?: InputMaybe<SeoInput>;
@@ -729,10 +787,14 @@ export enum CollectionErrorCode {
 }
 
 export type CollectionFilterInput = {
-    /** Specifies the channel by which the data should be filtered. DEPRECATED: Will be removed in Mzawadie 4.0.Use root-level channel argument instead. */
+    /**
+     * Specifies the channel by which the data should be filtered.
+     *
+     * DEPRECATED: this field will be removed in Mzawadie 3.0. Use root-level channel argument instead.
+     */
     channel?: InputMaybe<Scalars["String"]>;
-    ids?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-    metadata?: InputMaybe<Array<InputMaybe<MetadataFilter>>>;
+    ids?: InputMaybe<Array<Scalars["ID"]>>;
+    metadata?: InputMaybe<Array<MetadataFilter>>;
     published?: InputMaybe<CollectionPublished>;
     search?: InputMaybe<Scalars["String"]>;
 };
@@ -742,13 +804,33 @@ export type CollectionInput = {
     backgroundImage?: InputMaybe<Scalars["Upload"]>;
     /** Alt text for an image. */
     backgroundImageAlt?: InputMaybe<Scalars["String"]>;
-    /** Description of the collection (JSON). */
+    /**
+     * Description of the collection.
+     *
+     * Rich text format. For reference see https://editorjs.io/
+     */
     description?: InputMaybe<Scalars["JSONString"]>;
     /** Informs whether a collection is published. */
     isPublished?: InputMaybe<Scalars["Boolean"]>;
+    /**
+     * Fields required to update the collection metadata.
+     *
+     * Added in Saleor 3.8.
+     */
+    metadata?: InputMaybe<Array<MetadataInput>>;
     /** Name of the collection. */
     name?: InputMaybe<Scalars["String"]>;
-    /** Publication date. ISO 8601 standard. */
+    /**
+     * Fields required to update the collection private metadata.
+     *
+     * Added in Saleor 3.8.
+     */
+    privateMetadata?: InputMaybe<Array<MetadataInput>>;
+    /**
+     * Publication date. ISO 8601 standard.
+     *
+     * DEPRECATED: this field will be removed in Mzawadie 3.0.
+     */
     publicationDate?: InputMaybe<Scalars["Date"]>;
     /** Search engine optimization fields. */
     seo?: InputMaybe<SeoInput>;
@@ -762,20 +844,38 @@ export enum CollectionPublished {
 }
 
 export enum CollectionSortField {
-    /** Sort collections by availability. */
+    /**
+     * Sort collections by availability.
+     *
+     * This option requires a channel filter to work as the values can vary between channels.
+     */
     AVAILABILITY = "AVAILABILITY",
     /** Sort collections by name. */
     NAME = "NAME",
     /** Sort collections by product count. */
     PRODUCT_COUNT = "PRODUCT_COUNT",
-    /** Sort collections by publication date. */
+    /**
+     * Sort collections by publication date.
+     *
+     * This option requires a channel filter to work as the values can vary between channels.
+     */
     PUBLICATION_DATE = "PUBLICATION_DATE",
+    /**
+     * Sort collections by publication date.
+     *
+     * This option requires a channel filter to work as the values can vary between channels.
+     */
+    PUBLISHED_AT = "PUBLISHED_AT",
 }
 
 export type CollectionSortingInput = {
-    /** Specifies the channel in which to sort the data. DEPRECATED: Will be removed in Mzawadie 4.0.Use root-level channel argument instead. */
+    /**
+     * Specifies the channel in which to sort the data.
+     *
+     * DEPRECATED: this field will be removed in Mzawadie 3.0. Use root-level channel argument instead.
+     */
     channel?: InputMaybe<Scalars["String"]>;
-    /** Specifies the direction in which to sort product. */
+    /** Specifies the direction in which to sort products. */
     direction: OrderDirection;
     /** Sort collections by the selected field. */
     field: CollectionSortField;
@@ -1060,7 +1160,9 @@ export type CountryFilterInput = {
 
 /** An enumeration. */
 export enum CustomerEventsEnum {
+    ACCOUNT_ACTIVATED = "ACCOUNT_ACTIVATED",
     ACCOUNT_CREATED = "ACCOUNT_CREATED",
+    ACCOUNT_DEACTIVATED = "ACCOUNT_DEACTIVATED",
     CUSTOMER_DELETED = "CUSTOMER_DELETED",
     DIGITAL_LINK_DOWNLOADED = "DIGITAL_LINK_DOWNLOADED",
     EMAIL_ASSIGNED = "EMAIL_ASSIGNED",
@@ -1077,10 +1179,11 @@ export enum CustomerEventsEnum {
 
 export type CustomerFilterInput = {
     dateJoined?: InputMaybe<DateRangeInput>;
-    metadata?: InputMaybe<Array<InputMaybe<MetadataFilter>>>;
+    metadata?: InputMaybe<Array<MetadataFilter>>;
     numberOfOrders?: InputMaybe<IntRangeInput>;
     placedOrders?: InputMaybe<DateRangeInput>;
     search?: InputMaybe<Scalars["String"]>;
+    updatedAt?: InputMaybe<DateTimeRangeInput>;
 };
 
 export type CustomerInput = {
@@ -1188,7 +1291,7 @@ export type DraftOrderCreateInput = {
     /** Discount amount for the order. */
     discount?: InputMaybe<Scalars["PositiveDecimal"]>;
     /** Variant line input consisting of variant ID and quantity of products. */
-    lines?: InputMaybe<Array<InputMaybe<OrderLineCreateInput>>>;
+    lines?: InputMaybe<Array<OrderLineCreateInput>>;
     /** URL of a view where users should be redirected to see the order details. URL in RFC 1808 format. */
     redirectUrl?: InputMaybe<Scalars["String"]>;
     /** Shipping address of the customer. */
@@ -1232,7 +1335,7 @@ export enum EventDeliveryAttemptSortField {
 }
 
 export type EventDeliveryAttemptSortingInput = {
-    /** Specifies the direction in which to sort product. */
+    /** Specifies the direction in which to sort products. */
     direction: OrderDirection;
     /** Sort attempts by the selected field. */
     field: EventDeliveryAttemptSortField;
@@ -1249,7 +1352,7 @@ export enum EventDeliverySortField {
 }
 
 export type EventDeliverySortingInput = {
-    /** Specifies the direction in which to sort product. */
+    /** Specifies the direction in which to sort products. */
     direction: OrderDirection;
     /** Sort deliveries by the selected field. */
     field: EventDeliverySortField;
@@ -1288,16 +1391,14 @@ export type ExportFileFilterInput = {
 };
 
 export enum ExportFileSortField {
-    /** Sort export file by created at. */
     CREATED_AT = "CREATED_AT",
-    /** Sort export file by status. */
+    LAST_MODIFIED_AT = "LAST_MODIFIED_AT",
     STATUS = "STATUS",
-    /** Sort export file by updated at. */
     UPDATED_AT = "UPDATED_AT",
 }
 
 export type ExportFileSortingInput = {
-    /** Specifies the direction in which to sort product. */
+    /** Specifies the direction in which to sort products. */
     direction: OrderDirection;
     /** Sort export file by the selected field. */
     field: ExportFileSortField;
@@ -1361,7 +1462,7 @@ export type ExternalNotificationTriggerInput = {
     /** Additional payload that will be merged with the one based on the bussines object ID. */
     extraPayload?: InputMaybe<Scalars["JSONString"]>;
     /** The list of customers or orders node IDs that will be serialized and included in the notification payload. */
-    ids: Array<InputMaybe<Scalars["ID"]>>;
+    ids: Array<Scalars["ID"]>;
 };
 
 /** An enumeration. */
@@ -1377,19 +1478,12 @@ export type FulfillmentCancelInput = {
 
 /** An enumeration. */
 export enum FulfillmentStatus {
-    /** Canceled */
     CANCELED = "CANCELED",
-    /** Fulfilled */
     FULFILLED = "FULFILLED",
-    /** Refunded */
     REFUNDED = "REFUNDED",
-    /** Refunded and returned */
     REFUNDED_AND_RETURNED = "REFUNDED_AND_RETURNED",
-    /** Replaced */
     REPLACED = "REPLACED",
-    /** Returned */
     RETURNED = "RETURNED",
-    /** Waiting for approval */
     WAITING_FOR_APPROVAL = "WAITING_FOR_APPROVAL",
 }
 
@@ -1419,34 +1513,64 @@ export type GiftCardBulkCreateInput = {
 };
 
 export type GiftCardCreateInput = {
-    /** New in mzawadie 3.1. The gift card tags to add. */
+    /**
+     * The gift card tags to add.
+     *
+     * Added in Saleor 3.1.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
     addTags?: InputMaybe<Array<Scalars["String"]>>;
     /** Balance of the gift card. */
     balance: PriceInput;
-    /** New in mzawadie 3.1. Slug of a channel from which the email should be sent. */
+    /**
+     * Slug of a channel from which the email should be sent.
+     *
+     * Added in Saleor 3.1.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
     channel?: InputMaybe<Scalars["String"]>;
     /**
      * Code to use the gift card.
      *
-     * DEPRECATED: this field will be removed in mzawadie 4.0. The code is now auto generated.
+     * DEPRECATED: this field will be removed in Mzawadie 3.0. The code is now auto generated.
      */
     code?: InputMaybe<Scalars["String"]>;
     /**
      * End date of the gift card in ISO 8601 format.
      *
-     * DEPRECATED: this field will be removed in mzawadie 4.0. Use `expiryDate` from `expirySettings` instead.
+     * DEPRECATED: this field will be removed in Mzawadie 3.0. Use `expiryDate` from `expirySettings` instead.
      */
     endDate?: InputMaybe<Scalars["Date"]>;
-    /** New in mzawadie 3.1. The gift card expiry date. */
+    /**
+     * The gift card expiry date.
+     *
+     * Added in Saleor 3.1.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
     expiryDate?: InputMaybe<Scalars["Date"]>;
-    /** New in mzawadie 3.1. Determine if gift card is active. */
+    /**
+     * Determine if gift card is active.
+     *
+     * Added in Saleor 3.1.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
     isActive: Scalars["Boolean"];
-    /** New in mzawadie 3.1. The gift card note from the staff member. */
+    /**
+     * The gift card note from the staff member.
+     *
+     * Added in Saleor 3.1.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
     note?: InputMaybe<Scalars["String"]>;
     /**
      * Start date of the gift card in ISO 8601 format.
      *
-     * DEPRECATED: this field will be removed in mzawadie 4.0.
+     * DEPRECATED: this field will be removed in Mzawadie 3.0.
      */
     startDate?: InputMaybe<Scalars["Date"]>;
     /** Email of the customer to whom gift card will be sent. */
@@ -1492,11 +1616,11 @@ export type GiftCardFilterInput = {
     currentBalance?: InputMaybe<PriceRangeInput>;
     initialBalance?: InputMaybe<PriceRangeInput>;
     isActive?: InputMaybe<Scalars["Boolean"]>;
-    metadata?: InputMaybe<Array<InputMaybe<MetadataFilter>>>;
-    products?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-    tags?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+    metadata?: InputMaybe<Array<MetadataFilter>>;
+    products?: InputMaybe<Array<Scalars["ID"]>>;
+    tags?: InputMaybe<Array<Scalars["String"]>>;
     used?: InputMaybe<Scalars["Boolean"]>;
-    usedBy?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    usedBy?: InputMaybe<Array<Scalars["ID"]>>;
 };
 
 export type GiftCardResendInput = {
@@ -1538,7 +1662,7 @@ export enum GiftCardSortField {
 }
 
 export type GiftCardSortingInput = {
-    /** Specifies the direction in which to sort product. */
+    /** Specifies the direction in which to sort products. */
     direction: OrderDirection;
     /** Sort gift cards by the selected field. */
     field: GiftCardSortField;
@@ -1549,24 +1673,48 @@ export type GiftCardTagFilterInput = {
 };
 
 export type GiftCardUpdateInput = {
-    /** New in mzawadie 3.1. The gift card tags to add. */
+    /**
+     * The gift card tags to add.
+     *
+     * Added in Saleor 3.1.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
     addTags?: InputMaybe<Array<Scalars["String"]>>;
-    /** New in mzawadie 3.1. The gift card balance amount. */
+    /**
+     * The gift card balance amount.
+     *
+     * Added in Saleor 3.1.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
     balanceAmount?: InputMaybe<Scalars["PositiveDecimal"]>;
     /**
      * End date of the gift card in ISO 8601 format.
      *
-     * DEPRECATED: this field will be removed in mzawadie 4.0. Use `expiryDate` from `expirySettings` instead.
+     * DEPRECATED: this field will be removed in Mzawadie 3.0. Use `expiryDate` from `expirySettings` instead.
      */
     endDate?: InputMaybe<Scalars["Date"]>;
-    /** New in mzawadie 3.1. The gift card expiry date. */
+    /**
+     * The gift card expiry date.
+     *
+     * Added in Saleor 3.1.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
     expiryDate?: InputMaybe<Scalars["Date"]>;
-    /** New in mzawadie 3.1. The gift card tags to remove. */
+    /**
+     * The gift card tags to remove.
+     *
+     * Added in Saleor 3.1.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
     removeTags?: InputMaybe<Array<Scalars["String"]>>;
     /**
      * Start date of the gift card in ISO 8601 format.
      *
-     * DEPRECATED: this field will be removed in mzawadie 4.0.
+     * DEPRECATED: this field will be removed in Mzawadie 3.0.
      */
     startDate?: InputMaybe<Scalars["Date"]>;
 };
@@ -1591,6 +1739,7 @@ export enum InvoiceErrorCode {
     INVALID_STATUS = "INVALID_STATUS",
     NOT_FOUND = "NOT_FOUND",
     NOT_READY = "NOT_READY",
+    NO_INVOICE_PLUGIN = "NO_INVOICE_PLUGIN",
     NUMBER_NOT_SET = "NUMBER_NOT_SET",
     REQUIRED = "REQUIRED",
     URL_NOT_SET = "URL_NOT_SET",
@@ -1606,8 +1755,785 @@ export enum JobStatusEnum {
 
 /** An enumeration. */
 export enum LanguageCodeEnum {
+    AF = "AF",
+    AF_NA = "AF_NA",
+    AF_ZA = "AF_ZA",
+    AGQ = "AGQ",
+    AGQ_CM = "AGQ_CM",
+    AK = "AK",
+    AK_GH = "AK_GH",
+    AM = "AM",
+    AM_ET = "AM_ET",
+    AR = "AR",
+    AR_AE = "AR_AE",
+    AR_BH = "AR_BH",
+    AR_DJ = "AR_DJ",
+    AR_DZ = "AR_DZ",
+    AR_EG = "AR_EG",
+    AR_EH = "AR_EH",
+    AR_ER = "AR_ER",
+    AR_IL = "AR_IL",
+    AR_IQ = "AR_IQ",
+    AR_JO = "AR_JO",
+    AR_KM = "AR_KM",
+    AR_KW = "AR_KW",
+    AR_LB = "AR_LB",
+    AR_LY = "AR_LY",
+    AR_MA = "AR_MA",
+    AR_MR = "AR_MR",
+    AR_OM = "AR_OM",
+    AR_PS = "AR_PS",
+    AR_QA = "AR_QA",
+    AR_SA = "AR_SA",
+    AR_SD = "AR_SD",
+    AR_SO = "AR_SO",
+    AR_SS = "AR_SS",
+    AR_SY = "AR_SY",
+    AR_TD = "AR_TD",
+    AR_TN = "AR_TN",
+    AR_YE = "AR_YE",
+    AS = "AS",
+    ASA = "ASA",
+    ASA_TZ = "ASA_TZ",
+    AST = "AST",
+    AST_ES = "AST_ES",
+    AS_IN = "AS_IN",
+    AZ = "AZ",
+    AZ_CYRL = "AZ_CYRL",
+    AZ_CYRL_AZ = "AZ_CYRL_AZ",
+    AZ_LATN = "AZ_LATN",
+    AZ_LATN_AZ = "AZ_LATN_AZ",
+    BAS = "BAS",
+    BAS_CM = "BAS_CM",
+    BE = "BE",
+    BEM = "BEM",
+    BEM_ZM = "BEM_ZM",
+    BEZ = "BEZ",
+    BEZ_TZ = "BEZ_TZ",
+    BE_BY = "BE_BY",
+    BG = "BG",
+    BG_BG = "BG_BG",
+    BM = "BM",
+    BM_ML = "BM_ML",
+    BN = "BN",
+    BN_BD = "BN_BD",
+    BN_IN = "BN_IN",
+    BO = "BO",
+    BO_CN = "BO_CN",
+    BO_IN = "BO_IN",
+    BR = "BR",
+    BRX = "BRX",
+    BRX_IN = "BRX_IN",
+    BR_FR = "BR_FR",
+    BS = "BS",
+    BS_CYRL = "BS_CYRL",
+    BS_CYRL_BA = "BS_CYRL_BA",
+    BS_LATN = "BS_LATN",
+    BS_LATN_BA = "BS_LATN_BA",
+    CA = "CA",
+    CA_AD = "CA_AD",
+    CA_ES = "CA_ES",
+    CA_ES_VALENCIA = "CA_ES_VALENCIA",
+    CA_FR = "CA_FR",
+    CA_IT = "CA_IT",
+    CCP = "CCP",
+    CCP_BD = "CCP_BD",
+    CCP_IN = "CCP_IN",
+    CE = "CE",
+    CEB = "CEB",
+    CEB_PH = "CEB_PH",
+    CE_RU = "CE_RU",
+    CGG = "CGG",
+    CGG_UG = "CGG_UG",
+    CHR = "CHR",
+    CHR_US = "CHR_US",
+    CKB = "CKB",
+    CKB_IQ = "CKB_IQ",
+    CKB_IR = "CKB_IR",
+    CS = "CS",
+    CS_CZ = "CS_CZ",
+    CU = "CU",
+    CU_RU = "CU_RU",
+    CY = "CY",
+    CY_GB = "CY_GB",
+    DA = "DA",
+    DAV = "DAV",
+    DAV_KE = "DAV_KE",
+    DA_DK = "DA_DK",
+    DA_GL = "DA_GL",
+    DE = "DE",
+    DE_AT = "DE_AT",
+    DE_BE = "DE_BE",
+    DE_CH = "DE_CH",
+    DE_DE = "DE_DE",
+    DE_IT = "DE_IT",
+    DE_LI = "DE_LI",
+    DE_LU = "DE_LU",
+    DJE = "DJE",
+    DJE_NE = "DJE_NE",
+    DSB = "DSB",
+    DSB_DE = "DSB_DE",
+    DUA = "DUA",
+    DUA_CM = "DUA_CM",
+    DYO = "DYO",
+    DYO_SN = "DYO_SN",
+    DZ = "DZ",
+    DZ_BT = "DZ_BT",
+    EBU = "EBU",
+    EBU_KE = "EBU_KE",
+    EE = "EE",
+    EE_GH = "EE_GH",
+    EE_TG = "EE_TG",
+    EL = "EL",
+    EL_CY = "EL_CY",
+    EL_GR = "EL_GR",
     EN = "EN",
+    EN_AE = "EN_AE",
+    EN_AG = "EN_AG",
+    EN_AI = "EN_AI",
+    EN_AS = "EN_AS",
+    EN_AT = "EN_AT",
+    EN_AU = "EN_AU",
+    EN_BB = "EN_BB",
+    EN_BE = "EN_BE",
+    EN_BI = "EN_BI",
+    EN_BM = "EN_BM",
+    EN_BS = "EN_BS",
+    EN_BW = "EN_BW",
+    EN_BZ = "EN_BZ",
+    EN_CA = "EN_CA",
+    EN_CC = "EN_CC",
+    EN_CH = "EN_CH",
+    EN_CK = "EN_CK",
+    EN_CM = "EN_CM",
+    EN_CX = "EN_CX",
+    EN_CY = "EN_CY",
+    EN_DE = "EN_DE",
+    EN_DG = "EN_DG",
+    EN_DK = "EN_DK",
+    EN_DM = "EN_DM",
+    EN_ER = "EN_ER",
+    EN_FI = "EN_FI",
+    EN_FJ = "EN_FJ",
+    EN_FK = "EN_FK",
+    EN_FM = "EN_FM",
+    EN_GB = "EN_GB",
+    EN_GD = "EN_GD",
+    EN_GG = "EN_GG",
+    EN_GH = "EN_GH",
+    EN_GI = "EN_GI",
+    EN_GM = "EN_GM",
+    EN_GU = "EN_GU",
+    EN_GY = "EN_GY",
+    EN_HK = "EN_HK",
+    EN_IE = "EN_IE",
+    EN_IL = "EN_IL",
+    EN_IM = "EN_IM",
+    EN_IN = "EN_IN",
+    EN_IO = "EN_IO",
+    EN_JE = "EN_JE",
+    EN_JM = "EN_JM",
+    EN_KE = "EN_KE",
+    EN_KI = "EN_KI",
+    EN_KN = "EN_KN",
+    EN_KY = "EN_KY",
+    EN_LC = "EN_LC",
+    EN_LR = "EN_LR",
+    EN_LS = "EN_LS",
+    EN_MG = "EN_MG",
+    EN_MH = "EN_MH",
+    EN_MO = "EN_MO",
+    EN_MP = "EN_MP",
+    EN_MS = "EN_MS",
+    EN_MT = "EN_MT",
+    EN_MU = "EN_MU",
+    EN_MW = "EN_MW",
+    EN_MY = "EN_MY",
+    EN_NA = "EN_NA",
+    EN_NF = "EN_NF",
+    EN_NG = "EN_NG",
+    EN_NL = "EN_NL",
+    EN_NR = "EN_NR",
+    EN_NU = "EN_NU",
+    EN_NZ = "EN_NZ",
+    EN_PG = "EN_PG",
+    EN_PH = "EN_PH",
+    EN_PK = "EN_PK",
+    EN_PN = "EN_PN",
+    EN_PR = "EN_PR",
+    EN_PW = "EN_PW",
+    EN_RW = "EN_RW",
+    EN_SB = "EN_SB",
+    EN_SC = "EN_SC",
+    EN_SD = "EN_SD",
+    EN_SE = "EN_SE",
+    EN_SG = "EN_SG",
+    EN_SH = "EN_SH",
+    EN_SI = "EN_SI",
+    EN_SL = "EN_SL",
+    EN_SS = "EN_SS",
+    EN_SX = "EN_SX",
+    EN_SZ = "EN_SZ",
+    EN_TC = "EN_TC",
+    EN_TK = "EN_TK",
+    EN_TO = "EN_TO",
+    EN_TT = "EN_TT",
+    EN_TV = "EN_TV",
+    EN_TZ = "EN_TZ",
+    EN_UG = "EN_UG",
+    EN_UM = "EN_UM",
+    EN_US = "EN_US",
+    EN_VC = "EN_VC",
+    EN_VG = "EN_VG",
+    EN_VI = "EN_VI",
+    EN_VU = "EN_VU",
+    EN_WS = "EN_WS",
+    EN_ZA = "EN_ZA",
+    EN_ZM = "EN_ZM",
+    EN_ZW = "EN_ZW",
+    EO = "EO",
+    ES = "ES",
+    ES_AR = "ES_AR",
+    ES_BO = "ES_BO",
+    ES_BR = "ES_BR",
+    ES_BZ = "ES_BZ",
+    ES_CL = "ES_CL",
+    ES_CO = "ES_CO",
+    ES_CR = "ES_CR",
+    ES_CU = "ES_CU",
+    ES_DO = "ES_DO",
+    ES_EA = "ES_EA",
+    ES_EC = "ES_EC",
+    ES_ES = "ES_ES",
+    ES_GQ = "ES_GQ",
+    ES_GT = "ES_GT",
+    ES_HN = "ES_HN",
+    ES_IC = "ES_IC",
+    ES_MX = "ES_MX",
+    ES_NI = "ES_NI",
+    ES_PA = "ES_PA",
+    ES_PE = "ES_PE",
+    ES_PH = "ES_PH",
+    ES_PR = "ES_PR",
+    ES_PY = "ES_PY",
+    ES_SV = "ES_SV",
+    ES_US = "ES_US",
+    ES_UY = "ES_UY",
+    ES_VE = "ES_VE",
+    ET = "ET",
+    ET_EE = "ET_EE",
+    EU = "EU",
+    EU_ES = "EU_ES",
+    EWO = "EWO",
+    EWO_CM = "EWO_CM",
+    FA = "FA",
+    FA_AF = "FA_AF",
+    FA_IR = "FA_IR",
+    FF = "FF",
+    FF_ADLM = "FF_ADLM",
+    FF_ADLM_BF = "FF_ADLM_BF",
+    FF_ADLM_CM = "FF_ADLM_CM",
+    FF_ADLM_GH = "FF_ADLM_GH",
+    FF_ADLM_GM = "FF_ADLM_GM",
+    FF_ADLM_GN = "FF_ADLM_GN",
+    FF_ADLM_GW = "FF_ADLM_GW",
+    FF_ADLM_LR = "FF_ADLM_LR",
+    FF_ADLM_MR = "FF_ADLM_MR",
+    FF_ADLM_NE = "FF_ADLM_NE",
+    FF_ADLM_NG = "FF_ADLM_NG",
+    FF_ADLM_SL = "FF_ADLM_SL",
+    FF_ADLM_SN = "FF_ADLM_SN",
+    FF_LATN = "FF_LATN",
+    FF_LATN_BF = "FF_LATN_BF",
+    FF_LATN_CM = "FF_LATN_CM",
+    FF_LATN_GH = "FF_LATN_GH",
+    FF_LATN_GM = "FF_LATN_GM",
+    FF_LATN_GN = "FF_LATN_GN",
+    FF_LATN_GW = "FF_LATN_GW",
+    FF_LATN_LR = "FF_LATN_LR",
+    FF_LATN_MR = "FF_LATN_MR",
+    FF_LATN_NE = "FF_LATN_NE",
+    FF_LATN_NG = "FF_LATN_NG",
+    FF_LATN_SL = "FF_LATN_SL",
+    FF_LATN_SN = "FF_LATN_SN",
+    FI = "FI",
+    FIL = "FIL",
+    FIL_PH = "FIL_PH",
+    FI_FI = "FI_FI",
+    FO = "FO",
+    FO_DK = "FO_DK",
+    FO_FO = "FO_FO",
+    FR = "FR",
+    FR_BE = "FR_BE",
+    FR_BF = "FR_BF",
+    FR_BI = "FR_BI",
+    FR_BJ = "FR_BJ",
+    FR_BL = "FR_BL",
+    FR_CA = "FR_CA",
+    FR_CD = "FR_CD",
+    FR_CF = "FR_CF",
+    FR_CG = "FR_CG",
+    FR_CH = "FR_CH",
+    FR_CI = "FR_CI",
+    FR_CM = "FR_CM",
+    FR_DJ = "FR_DJ",
+    FR_DZ = "FR_DZ",
+    FR_FR = "FR_FR",
+    FR_GA = "FR_GA",
+    FR_GF = "FR_GF",
+    FR_GN = "FR_GN",
+    FR_GP = "FR_GP",
+    FR_GQ = "FR_GQ",
+    FR_HT = "FR_HT",
+    FR_KM = "FR_KM",
+    FR_LU = "FR_LU",
+    FR_MA = "FR_MA",
+    FR_MC = "FR_MC",
+    FR_MF = "FR_MF",
+    FR_MG = "FR_MG",
+    FR_ML = "FR_ML",
+    FR_MQ = "FR_MQ",
+    FR_MR = "FR_MR",
+    FR_MU = "FR_MU",
+    FR_NC = "FR_NC",
+    FR_NE = "FR_NE",
+    FR_PF = "FR_PF",
+    FR_PM = "FR_PM",
+    FR_RE = "FR_RE",
+    FR_RW = "FR_RW",
+    FR_SC = "FR_SC",
+    FR_SN = "FR_SN",
+    FR_SY = "FR_SY",
+    FR_TD = "FR_TD",
+    FR_TG = "FR_TG",
+    FR_TN = "FR_TN",
+    FR_VU = "FR_VU",
+    FR_WF = "FR_WF",
+    FR_YT = "FR_YT",
+    FUR = "FUR",
+    FUR_IT = "FUR_IT",
+    FY = "FY",
+    FY_NL = "FY_NL",
+    GA = "GA",
+    GA_GB = "GA_GB",
+    GA_IE = "GA_IE",
+    GD = "GD",
+    GD_GB = "GD_GB",
+    GL = "GL",
+    GL_ES = "GL_ES",
+    GSW = "GSW",
+    GSW_CH = "GSW_CH",
+    GSW_FR = "GSW_FR",
+    GSW_LI = "GSW_LI",
+    GU = "GU",
+    GUZ = "GUZ",
+    GUZ_KE = "GUZ_KE",
+    GU_IN = "GU_IN",
+    GV = "GV",
+    GV_IM = "GV_IM",
+    HA = "HA",
+    HAW = "HAW",
+    HAW_US = "HAW_US",
+    HA_GH = "HA_GH",
+    HA_NE = "HA_NE",
+    HA_NG = "HA_NG",
+    HE = "HE",
+    HE_IL = "HE_IL",
+    HI = "HI",
+    HI_IN = "HI_IN",
+    HR = "HR",
+    HR_BA = "HR_BA",
+    HR_HR = "HR_HR",
+    HSB = "HSB",
+    HSB_DE = "HSB_DE",
+    HU = "HU",
+    HU_HU = "HU_HU",
+    HY = "HY",
+    HY_AM = "HY_AM",
+    IA = "IA",
+    ID = "ID",
+    ID_ID = "ID_ID",
+    IG = "IG",
+    IG_NG = "IG_NG",
+    II = "II",
+    II_CN = "II_CN",
+    IS = "IS",
+    IS_IS = "IS_IS",
+    IT = "IT",
+    IT_CH = "IT_CH",
+    IT_IT = "IT_IT",
+    IT_SM = "IT_SM",
+    IT_VA = "IT_VA",
+    JA = "JA",
+    JA_JP = "JA_JP",
+    JGO = "JGO",
+    JGO_CM = "JGO_CM",
+    JMC = "JMC",
+    JMC_TZ = "JMC_TZ",
+    JV = "JV",
+    JV_ID = "JV_ID",
+    KA = "KA",
+    KAB = "KAB",
+    KAB_DZ = "KAB_DZ",
+    KAM = "KAM",
+    KAM_KE = "KAM_KE",
+    KA_GE = "KA_GE",
+    KDE = "KDE",
+    KDE_TZ = "KDE_TZ",
+    KEA = "KEA",
+    KEA_CV = "KEA_CV",
+    KHQ = "KHQ",
+    KHQ_ML = "KHQ_ML",
+    KI = "KI",
+    KI_KE = "KI_KE",
+    KK = "KK",
+    KKJ = "KKJ",
+    KKJ_CM = "KKJ_CM",
+    KK_KZ = "KK_KZ",
+    KL = "KL",
+    KLN = "KLN",
+    KLN_KE = "KLN_KE",
+    KL_GL = "KL_GL",
+    KM = "KM",
+    KM_KH = "KM_KH",
+    KN = "KN",
+    KN_IN = "KN_IN",
+    KO = "KO",
+    KOK = "KOK",
+    KOK_IN = "KOK_IN",
+    KO_KP = "KO_KP",
+    KO_KR = "KO_KR",
+    KS = "KS",
+    KSB = "KSB",
+    KSB_TZ = "KSB_TZ",
+    KSF = "KSF",
+    KSF_CM = "KSF_CM",
+    KSH = "KSH",
+    KSH_DE = "KSH_DE",
+    KS_ARAB = "KS_ARAB",
+    KS_ARAB_IN = "KS_ARAB_IN",
+    KU = "KU",
+    KU_TR = "KU_TR",
+    KW = "KW",
+    KW_GB = "KW_GB",
+    KY = "KY",
+    KY_KG = "KY_KG",
+    LAG = "LAG",
+    LAG_TZ = "LAG_TZ",
+    LB = "LB",
+    LB_LU = "LB_LU",
+    LG = "LG",
+    LG_UG = "LG_UG",
+    LKT = "LKT",
+    LKT_US = "LKT_US",
+    LN = "LN",
+    LN_AO = "LN_AO",
+    LN_CD = "LN_CD",
+    LN_CF = "LN_CF",
+    LN_CG = "LN_CG",
+    LO = "LO",
+    LO_LA = "LO_LA",
+    LRC = "LRC",
+    LRC_IQ = "LRC_IQ",
+    LRC_IR = "LRC_IR",
+    LT = "LT",
+    LT_LT = "LT_LT",
+    LU = "LU",
+    LUO = "LUO",
+    LUO_KE = "LUO_KE",
+    LUY = "LUY",
+    LUY_KE = "LUY_KE",
+    LU_CD = "LU_CD",
+    LV = "LV",
+    LV_LV = "LV_LV",
+    MAI = "MAI",
+    MAI_IN = "MAI_IN",
+    MAS = "MAS",
+    MAS_KE = "MAS_KE",
+    MAS_TZ = "MAS_TZ",
+    MER = "MER",
+    MER_KE = "MER_KE",
+    MFE = "MFE",
+    MFE_MU = "MFE_MU",
+    MG = "MG",
+    MGH = "MGH",
+    MGH_MZ = "MGH_MZ",
+    MGO = "MGO",
+    MGO_CM = "MGO_CM",
+    MG_MG = "MG_MG",
+    MI = "MI",
+    MI_NZ = "MI_NZ",
+    MK = "MK",
+    MK_MK = "MK_MK",
+    ML = "ML",
+    ML_IN = "ML_IN",
+    MN = "MN",
+    MNI = "MNI",
+    MNI_BENG = "MNI_BENG",
+    MNI_BENG_IN = "MNI_BENG_IN",
+    MN_MN = "MN_MN",
+    MR = "MR",
+    MR_IN = "MR_IN",
+    MS = "MS",
+    MS_BN = "MS_BN",
+    MS_ID = "MS_ID",
+    MS_MY = "MS_MY",
+    MS_SG = "MS_SG",
+    MT = "MT",
+    MT_MT = "MT_MT",
+    MUA = "MUA",
+    MUA_CM = "MUA_CM",
+    MY = "MY",
+    MY_MM = "MY_MM",
+    MZN = "MZN",
+    MZN_IR = "MZN_IR",
+    NAQ = "NAQ",
+    NAQ_NA = "NAQ_NA",
+    NB = "NB",
+    NB_NO = "NB_NO",
+    NB_SJ = "NB_SJ",
+    ND = "ND",
+    NDS = "NDS",
+    NDS_DE = "NDS_DE",
+    NDS_NL = "NDS_NL",
+    ND_ZW = "ND_ZW",
+    NE = "NE",
+    NE_IN = "NE_IN",
+    NE_NP = "NE_NP",
+    NL = "NL",
+    NL_AW = "NL_AW",
+    NL_BE = "NL_BE",
+    NL_BQ = "NL_BQ",
+    NL_CW = "NL_CW",
+    NL_NL = "NL_NL",
+    NL_SR = "NL_SR",
+    NL_SX = "NL_SX",
+    NMG = "NMG",
+    NMG_CM = "NMG_CM",
+    NN = "NN",
+    NNH = "NNH",
+    NNH_CM = "NNH_CM",
+    NN_NO = "NN_NO",
+    NUS = "NUS",
+    NUS_SS = "NUS_SS",
+    NYN = "NYN",
+    NYN_UG = "NYN_UG",
+    OM = "OM",
+    OM_ET = "OM_ET",
+    OM_KE = "OM_KE",
+    OR = "OR",
+    OR_IN = "OR_IN",
+    OS = "OS",
+    OS_GE = "OS_GE",
+    OS_RU = "OS_RU",
+    PA = "PA",
+    PA_ARAB = "PA_ARAB",
+    PA_ARAB_PK = "PA_ARAB_PK",
+    PA_GURU = "PA_GURU",
+    PA_GURU_IN = "PA_GURU_IN",
+    PCM = "PCM",
+    PCM_NG = "PCM_NG",
+    PL = "PL",
+    PL_PL = "PL_PL",
+    PRG = "PRG",
+    PS = "PS",
+    PS_AF = "PS_AF",
+    PS_PK = "PS_PK",
+    PT = "PT",
+    PT_AO = "PT_AO",
+    PT_BR = "PT_BR",
+    PT_CH = "PT_CH",
+    PT_CV = "PT_CV",
+    PT_GQ = "PT_GQ",
+    PT_GW = "PT_GW",
+    PT_LU = "PT_LU",
+    PT_MO = "PT_MO",
+    PT_MZ = "PT_MZ",
+    PT_PT = "PT_PT",
+    PT_ST = "PT_ST",
+    PT_TL = "PT_TL",
+    QU = "QU",
+    QU_BO = "QU_BO",
+    QU_EC = "QU_EC",
+    QU_PE = "QU_PE",
+    RM = "RM",
+    RM_CH = "RM_CH",
+    RN = "RN",
+    RN_BI = "RN_BI",
+    RO = "RO",
+    ROF = "ROF",
+    ROF_TZ = "ROF_TZ",
+    RO_MD = "RO_MD",
+    RO_RO = "RO_RO",
+    RU = "RU",
+    RU_BY = "RU_BY",
+    RU_KG = "RU_KG",
+    RU_KZ = "RU_KZ",
+    RU_MD = "RU_MD",
+    RU_RU = "RU_RU",
+    RU_UA = "RU_UA",
+    RW = "RW",
+    RWK = "RWK",
+    RWK_TZ = "RWK_TZ",
+    RW_RW = "RW_RW",
+    SAH = "SAH",
+    SAH_RU = "SAH_RU",
+    SAQ = "SAQ",
+    SAQ_KE = "SAQ_KE",
+    SAT = "SAT",
+    SAT_OLCK = "SAT_OLCK",
+    SAT_OLCK_IN = "SAT_OLCK_IN",
+    SBP = "SBP",
+    SBP_TZ = "SBP_TZ",
+    SD = "SD",
+    SD_ARAB = "SD_ARAB",
+    SD_ARAB_PK = "SD_ARAB_PK",
+    SD_DEVA = "SD_DEVA",
+    SD_DEVA_IN = "SD_DEVA_IN",
+    SE = "SE",
+    SEH = "SEH",
+    SEH_MZ = "SEH_MZ",
+    SES = "SES",
+    SES_ML = "SES_ML",
+    SE_FI = "SE_FI",
+    SE_NO = "SE_NO",
+    SE_SE = "SE_SE",
+    SG = "SG",
+    SG_CF = "SG_CF",
+    SHI = "SHI",
+    SHI_LATN = "SHI_LATN",
+    SHI_LATN_MA = "SHI_LATN_MA",
+    SHI_TFNG = "SHI_TFNG",
+    SHI_TFNG_MA = "SHI_TFNG_MA",
+    SI = "SI",
+    SI_LK = "SI_LK",
+    SK = "SK",
+    SK_SK = "SK_SK",
+    SL = "SL",
+    SL_SI = "SL_SI",
+    SMN = "SMN",
+    SMN_FI = "SMN_FI",
+    SN = "SN",
+    SN_ZW = "SN_ZW",
+    SO = "SO",
+    SO_DJ = "SO_DJ",
+    SO_ET = "SO_ET",
+    SO_KE = "SO_KE",
+    SO_SO = "SO_SO",
+    SQ = "SQ",
+    SQ_AL = "SQ_AL",
+    SQ_MK = "SQ_MK",
+    SQ_XK = "SQ_XK",
+    SR = "SR",
+    SR_CYRL = "SR_CYRL",
+    SR_CYRL_BA = "SR_CYRL_BA",
+    SR_CYRL_ME = "SR_CYRL_ME",
+    SR_CYRL_RS = "SR_CYRL_RS",
+    SR_CYRL_XK = "SR_CYRL_XK",
+    SR_LATN = "SR_LATN",
+    SR_LATN_BA = "SR_LATN_BA",
+    SR_LATN_ME = "SR_LATN_ME",
+    SR_LATN_RS = "SR_LATN_RS",
+    SR_LATN_XK = "SR_LATN_XK",
+    SU = "SU",
+    SU_LATN = "SU_LATN",
+    SU_LATN_ID = "SU_LATN_ID",
+    SV = "SV",
+    SV_AX = "SV_AX",
+    SV_FI = "SV_FI",
+    SV_SE = "SV_SE",
     SW = "SW",
+    SW_CD = "SW_CD",
+    SW_KE = "SW_KE",
+    SW_TZ = "SW_TZ",
+    SW_UG = "SW_UG",
+    TA = "TA",
+    TA_IN = "TA_IN",
+    TA_LK = "TA_LK",
+    TA_MY = "TA_MY",
+    TA_SG = "TA_SG",
+    TE = "TE",
+    TEO = "TEO",
+    TEO_KE = "TEO_KE",
+    TEO_UG = "TEO_UG",
+    TE_IN = "TE_IN",
+    TG = "TG",
+    TG_TJ = "TG_TJ",
+    TH = "TH",
+    TH_TH = "TH_TH",
+    TI = "TI",
+    TI_ER = "TI_ER",
+    TI_ET = "TI_ET",
+    TK = "TK",
+    TK_TM = "TK_TM",
+    TO = "TO",
+    TO_TO = "TO_TO",
+    TR = "TR",
+    TR_CY = "TR_CY",
+    TR_TR = "TR_TR",
+    TT = "TT",
+    TT_RU = "TT_RU",
+    TWQ = "TWQ",
+    TWQ_NE = "TWQ_NE",
+    TZM = "TZM",
+    TZM_MA = "TZM_MA",
+    UG = "UG",
+    UG_CN = "UG_CN",
+    UK = "UK",
+    UK_UA = "UK_UA",
+    UR = "UR",
+    UR_IN = "UR_IN",
+    UR_PK = "UR_PK",
+    UZ = "UZ",
+    UZ_ARAB = "UZ_ARAB",
+    UZ_ARAB_AF = "UZ_ARAB_AF",
+    UZ_CYRL = "UZ_CYRL",
+    UZ_CYRL_UZ = "UZ_CYRL_UZ",
+    UZ_LATN = "UZ_LATN",
+    UZ_LATN_UZ = "UZ_LATN_UZ",
+    VAI = "VAI",
+    VAI_LATN = "VAI_LATN",
+    VAI_LATN_LR = "VAI_LATN_LR",
+    VAI_VAII = "VAI_VAII",
+    VAI_VAII_LR = "VAI_VAII_LR",
+    VI = "VI",
+    VI_VN = "VI_VN",
+    VO = "VO",
+    VUN = "VUN",
+    VUN_TZ = "VUN_TZ",
+    WAE = "WAE",
+    WAE_CH = "WAE_CH",
+    WO = "WO",
+    WO_SN = "WO_SN",
+    XH = "XH",
+    XH_ZA = "XH_ZA",
+    XOG = "XOG",
+    XOG_UG = "XOG_UG",
+    YAV = "YAV",
+    YAV_CM = "YAV_CM",
+    YI = "YI",
+    YO = "YO",
+    YO_BJ = "YO_BJ",
+    YO_NG = "YO_NG",
+    YUE = "YUE",
+    YUE_HANS = "YUE_HANS",
+    YUE_HANS_CN = "YUE_HANS_CN",
+    YUE_HANT = "YUE_HANT",
+    YUE_HANT_HK = "YUE_HANT_HK",
+    ZGH = "ZGH",
+    ZGH_MA = "ZGH_MA",
+    ZH = "ZH",
+    ZH_HANS = "ZH_HANS",
+    ZH_HANS_CN = "ZH_HANS_CN",
+    ZH_HANS_HK = "ZH_HANS_HK",
+    ZH_HANS_MO = "ZH_HANS_MO",
+    ZH_HANS_SG = "ZH_HANS_SG",
+    ZH_HANT = "ZH_HANT",
+    ZH_HANT_HK = "ZH_HANT_HK",
+    ZH_HANT_MO = "ZH_HANT_MO",
+    ZH_HANT_TW = "ZH_HANT_TW",
+    ZU = "ZU",
+    ZU_ZA = "ZU_ZA",
 }
 
 /** An enumeration. */
@@ -1646,7 +2572,7 @@ export enum MeasurementUnitsEnum {
 
 export type MenuCreateInput = {
     /** List of menu items. */
-    items?: InputMaybe<Array<InputMaybe<MenuItemInput>>>;
+    items?: InputMaybe<Array<MenuItemInput>>;
     /** Name of the menu. */
     name: Scalars["String"];
     /** Slug of the menu. Will be generated if not provided. */
@@ -1667,9 +2593,9 @@ export enum MenuErrorCode {
 }
 
 export type MenuFilterInput = {
-    metadata?: InputMaybe<Array<InputMaybe<MetadataFilter>>>;
+    metadata?: InputMaybe<Array<MetadataFilter>>;
     search?: InputMaybe<Scalars["String"]>;
-    slug?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+    slug?: InputMaybe<Array<Scalars["String"]>>;
 };
 
 export type MenuInput = {
@@ -1697,7 +2623,7 @@ export type MenuItemCreateInput = {
 };
 
 export type MenuItemFilterInput = {
-    metadata?: InputMaybe<Array<InputMaybe<MetadataFilter>>>;
+    metadata?: InputMaybe<Array<MetadataFilter>>;
     search?: InputMaybe<Scalars["String"]>;
 };
 
@@ -1724,7 +2650,7 @@ export type MenuItemMoveInput = {
 };
 
 export type MenuItemSortingInput = {
-    /** Specifies the direction in which to sort product. */
+    /** Specifies the direction in which to sort products. */
     direction: OrderDirection;
     /** Sort menu items by the selected field. */
     field: MenuItemsSortField;
@@ -1743,7 +2669,7 @@ export enum MenuSortField {
 }
 
 export type MenuSortingInput = {
-    /** Specifies the direction in which to sort product. */
+    /** Specifies the direction in which to sort products. */
     direction: OrderDirection;
     /** Sort menus by the selected field. */
     field: MenuSortField;
@@ -1754,6 +2680,7 @@ export enum MetadataErrorCode {
     GRAPHQL_ERROR = "GRAPHQL_ERROR",
     INVALID = "INVALID",
     NOT_FOUND = "NOT_FOUND",
+    NOT_UPDATED = "NOT_UPDATED",
     REQUIRED = "REQUIRED",
 }
 
@@ -1812,6 +2739,67 @@ export type OrderAddNoteInput = {
     message: Scalars["String"];
 };
 
+/**
+ * Determine a current authorize status for order.
+ *
+ *     We treat the order as fully authorized when the sum of authorized and charged funds
+ *     cover the order.total.
+ *     We treat the order as partially authorized when the sum of authorized and charged
+ *     funds covers only part of the order.total
+ *     We treat the order as not authorized when the sum of authorized and charged funds is
+ *     0.
+ *
+ *     NONE - the funds are not authorized
+ *     PARTIAL - the funds that are authorized or charged don't cover fully the order's
+ *     total
+ *     FULL - the funds that are authorized or charged fully cover the order's total
+ *
+ */
+export enum OrderAuthorizeStatusEnum {
+    FULL = "FULL",
+    NONE = "NONE",
+    PARTIAL = "PARTIAL",
+}
+
+/**
+ * Determine the current charge status for the order.
+ *
+ *     We treat the order as overcharged when the charged amount is bigger that order.total
+ *     We treat the order as fully charged when the charged amount is equal to order.total.
+ *     We treat the order as partially charged when the charged amount covers only part of
+ *     the order.total
+ *
+ *     NONE - the funds are not charged.
+ *     PARTIAL - the funds that are charged don't cover the order's total
+ *     FULL - the funds that are charged fully cover the order's total
+ *     OVERCHARGED - the charged funds are bigger than order's total
+ *
+ */
+export enum OrderChargeStatusEnum {
+    FULL = "FULL",
+    NONE = "NONE",
+    OVERCHARGED = "OVERCHARGED",
+    PARTIAL = "PARTIAL",
+}
+
+/** An enumeration. */
+export enum OrderCreateFromCheckoutErrorCode {
+    BILLING_ADDRESS_NOT_SET = "BILLING_ADDRESS_NOT_SET",
+    CHANNEL_INACTIVE = "CHANNEL_INACTIVE",
+    CHECKOUT_NOT_FOUND = "CHECKOUT_NOT_FOUND",
+    EMAIL_NOT_SET = "EMAIL_NOT_SET",
+    GIFT_CARD_NOT_APPLICABLE = "GIFT_CARD_NOT_APPLICABLE",
+    GRAPHQL_ERROR = "GRAPHQL_ERROR",
+    INSUFFICIENT_STOCK = "INSUFFICIENT_STOCK",
+    INVALID_SHIPPING_METHOD = "INVALID_SHIPPING_METHOD",
+    NO_LINES = "NO_LINES",
+    SHIPPING_ADDRESS_NOT_SET = "SHIPPING_ADDRESS_NOT_SET",
+    SHIPPING_METHOD_NOT_SET = "SHIPPING_METHOD_NOT_SET",
+    TAX_ERROR = "TAX_ERROR",
+    UNAVAILABLE_VARIANT_IN_CHANNEL = "UNAVAILABLE_VARIANT_IN_CHANNEL",
+    VOUCHER_NOT_APPLICABLE = "VOUCHER_NOT_APPLICABLE",
+}
+
 export enum OrderDirection {
     /** Specifies an ascending sort order. */
     ASC = "ASC",
@@ -1830,17 +2818,15 @@ export type OrderDiscountCommonInput = {
 
 /** An enumeration. */
 export enum OrderDiscountType {
-    /** Manual */
     MANUAL = "MANUAL",
-    /** Voucher */
     VOUCHER = "VOUCHER",
 }
 
 export type OrderDraftFilterInput = {
-    channels?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    channels?: InputMaybe<Array<Scalars["ID"]>>;
     created?: InputMaybe<DateRangeInput>;
     customer?: InputMaybe<Scalars["String"]>;
-    metadata?: InputMaybe<Array<InputMaybe<MetadataFilter>>>;
+    metadata?: InputMaybe<Array<MetadataFilter>>;
     search?: InputMaybe<Scalars["String"]>;
 };
 
@@ -1851,15 +2837,18 @@ export enum OrderErrorCode {
     CANNOT_CANCEL_ORDER = "CANNOT_CANCEL_ORDER",
     CANNOT_DELETE = "CANNOT_DELETE",
     CANNOT_DISCOUNT = "CANNOT_DISCOUNT",
+    CANNOT_FULFILL_UNPAID_ORDER = "CANNOT_FULFILL_UNPAID_ORDER",
     CANNOT_REFUND = "CANNOT_REFUND",
     CAPTURE_INACTIVE_PAYMENT = "CAPTURE_INACTIVE_PAYMENT",
     CHANNEL_INACTIVE = "CHANNEL_INACTIVE",
     DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
     FULFILL_ORDER_LINE = "FULFILL_ORDER_LINE",
+    GIFT_CARD_LINE = "GIFT_CARD_LINE",
     GRAPHQL_ERROR = "GRAPHQL_ERROR",
     INSUFFICIENT_STOCK = "INSUFFICIENT_STOCK",
     INVALID = "INVALID",
     INVALID_QUANTITY = "INVALID_QUANTITY",
+    MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK = "MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK",
     NOT_AVAILABLE_IN_CHANNEL = "NOT_AVAILABLE_IN_CHANNEL",
     NOT_EDITABLE = "NOT_EDITABLE",
     NOT_FOUND = "NOT_FOUND",
@@ -1933,22 +2922,29 @@ export enum OrderEventsEnum {
     PLACED_FROM_DRAFT = "PLACED_FROM_DRAFT",
     REMOVED_PRODUCTS = "REMOVED_PRODUCTS",
     TRACKING_UPDATED = "TRACKING_UPDATED",
+    TRANSACTION_CAPTURE_REQUESTED = "TRANSACTION_CAPTURE_REQUESTED",
+    TRANSACTION_EVENT = "TRANSACTION_EVENT",
+    TRANSACTION_REFUND_REQUESTED = "TRANSACTION_REFUND_REQUESTED",
+    TRANSACTION_VOID_REQUESTED = "TRANSACTION_VOID_REQUESTED",
     UPDATED_ADDRESS = "UPDATED_ADDRESS",
 }
 
 export type OrderFilterInput = {
-    channels?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    authorizeStatus?: InputMaybe<Array<OrderAuthorizeStatusEnum>>;
+    channels?: InputMaybe<Array<Scalars["ID"]>>;
+    chargeStatus?: InputMaybe<Array<OrderChargeStatusEnum>>;
     created?: InputMaybe<DateRangeInput>;
     customer?: InputMaybe<Scalars["String"]>;
     giftCardBought?: InputMaybe<Scalars["Boolean"]>;
     giftCardUsed?: InputMaybe<Scalars["Boolean"]>;
-    ids?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    ids?: InputMaybe<Array<Scalars["ID"]>>;
     isClickAndCollect?: InputMaybe<Scalars["Boolean"]>;
     isPreorder?: InputMaybe<Scalars["Boolean"]>;
-    metadata?: InputMaybe<Array<InputMaybe<MetadataFilter>>>;
-    paymentStatus?: InputMaybe<Array<InputMaybe<PaymentChargeStatusEnum>>>;
+    metadata?: InputMaybe<Array<MetadataFilter>>;
+    paymentStatus?: InputMaybe<Array<PaymentChargeStatusEnum>>;
     search?: InputMaybe<Scalars["String"]>;
-    status?: InputMaybe<Array<InputMaybe<OrderStatusFilter>>>;
+    status?: InputMaybe<Array<OrderStatusFilter>>;
+    updatedAt?: InputMaybe<DateTimeRangeInput>;
 };
 
 export type OrderFulfillInput = {
@@ -1958,6 +2954,12 @@ export type OrderFulfillInput = {
     lines: Array<OrderFulfillLineInput>;
     /** If true, send an email notification to the customer. */
     notifyCustomer?: InputMaybe<Scalars["Boolean"]>;
+    /**
+     * Fulfillment tracking number.
+     *
+     * Added in Saleor 3.6.
+     */
+    trackingNumber?: InputMaybe<Scalars["String"]>;
 };
 
 export type OrderFulfillLineInput = {
@@ -1975,6 +2977,14 @@ export type OrderFulfillStockInput = {
 };
 
 export type OrderLineCreateInput = {
+    /**
+     * Flag that allow force splitting the same variant into multiple lines by skipping the matching logic.
+     *
+     * Added in Saleor 3.6.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
+    forceNewLine?: InputMaybe<Scalars["Boolean"]>;
     /** Number of variant items ordered. */
     quantity: Scalars["Int"];
     /** Product variant ID. */
@@ -2012,7 +3022,7 @@ export type OrderRefundProductsInput = {
     amountToRefund?: InputMaybe<Scalars["PositiveDecimal"]>;
     /** List of fulfilled lines to refund. */
     fulfillmentLines?: InputMaybe<Array<OrderRefundFulfillmentLineInput>>;
-    /** If true, Mzawadie will refund shipping costs. If amountToRefund is providedincludeShippingCosts will be ignored. */
+    /** If true, Saleor will refund shipping costs. If amountToRefund is providedincludeShippingCosts will be ignored. */
     includeShippingCosts?: InputMaybe<Scalars["Boolean"]>;
     /** List of unfulfilled lines to refund. */
     orderLines?: InputMaybe<Array<OrderRefundLineInput>>;
@@ -2041,11 +3051,11 @@ export type OrderReturnProductsInput = {
     amountToRefund?: InputMaybe<Scalars["PositiveDecimal"]>;
     /** List of fulfilled lines to return. */
     fulfillmentLines?: InputMaybe<Array<OrderReturnFulfillmentLineInput>>;
-    /** If true, Mzawadie will refund shipping costs. If amountToRefund is providedincludeShippingCosts will be ignored. */
+    /** If true, Saleor will refund shipping costs. If amountToRefund is providedincludeShippingCosts will be ignored. */
     includeShippingCosts?: InputMaybe<Scalars["Boolean"]>;
     /** List of unfulfilled lines to return. */
     orderLines?: InputMaybe<Array<OrderReturnLineInput>>;
-    /** If true, Mzawadie will call refund action for all lines. */
+    /** If true, Saleor will call refund action for all lines. */
     refund?: InputMaybe<Scalars["Boolean"]>;
 };
 
@@ -2056,18 +3066,30 @@ export enum OrderSettingsErrorCode {
 
 export type OrderSettingsUpdateInput = {
     /** When disabled, all new orders from checkout will be marked as unconfirmed. When enabled orders from checkout will become unfulfilled immediately. */
-    automaticallyConfirmAllNewOrders: Scalars["Boolean"];
+    automaticallyConfirmAllNewOrders?: InputMaybe<Scalars["Boolean"]>;
     /** When enabled, all non-shippable gift card orders will be fulfilled automatically. */
     automaticallyFulfillNonShippableGiftCard?: InputMaybe<Scalars["Boolean"]>;
 };
 
 export enum OrderSortField {
-    /** Sort orders by creation date. */
+    /**
+     * Sort orders by creation date.
+     *
+     * DEPRECATED: this field will be removed in Mzawadie 3.0.
+     */
+    CREATED_AT = "CREATED_AT",
+    /**
+     * Sort orders by creation date.
+     *
+     * DEPRECATED: this field will be removed in Mzawadie 3.0.
+     */
     CREATION_DATE = "CREATION_DATE",
     /** Sort orders by customer. */
     CUSTOMER = "CUSTOMER",
     /** Sort orders by fulfillment status. */
     FULFILLMENT_STATUS = "FULFILLMENT_STATUS",
+    /** Sort orders by last modified at. */
+    LAST_MODIFIED_AT = "LAST_MODIFIED_AT",
     /** Sort orders by number. */
     NUMBER = "NUMBER",
     /** Sort orders by payment. */
@@ -2075,7 +3097,7 @@ export enum OrderSortField {
 }
 
 export type OrderSortingInput = {
-    /** Specifies the direction in which to sort product. */
+    /** Specifies the direction in which to sort products. */
     direction: OrderDirection;
     /** Sort orders by the selected field. */
     field: OrderSortField;
@@ -2083,21 +3105,13 @@ export type OrderSortingInput = {
 
 /** An enumeration. */
 export enum OrderStatus {
-    /** Canceled */
     CANCELED = "CANCELED",
-    /** Draft */
     DRAFT = "DRAFT",
-    /** Fulfilled */
     FULFILLED = "FULFILLED",
-    /** Partially fulfilled */
     PARTIALLY_FULFILLED = "PARTIALLY_FULFILLED",
-    /** Partially returned */
     PARTIALLY_RETURNED = "PARTIALLY_RETURNED",
-    /** Returned */
     RETURNED = "RETURNED",
-    /** Unconfirmed */
     UNCONFIRMED = "UNCONFIRMED",
-    /** Unfulfilled */
     UNFULFILLED = "UNFULFILLED",
 }
 
@@ -2128,14 +3142,28 @@ export type OrderUpdateShippingInput = {
 export type PageCreateInput = {
     /** List of attributes. */
     attributes?: InputMaybe<Array<AttributeValueInput>>;
-    /** Page content in JSON format. */
+    /**
+     * Page content.
+     *
+     * Rich text format. For reference see https://editorjs.io/
+     */
     content?: InputMaybe<Scalars["JSONString"]>;
     /** Determines if page is visible in the storefront. */
     isPublished?: InputMaybe<Scalars["Boolean"]>;
     /** ID of the page type that page belongs to. */
     pageType: Scalars["ID"];
-    /** Publication date. ISO 8601 standard. */
+    /**
+     * Publication date. ISO 8601 standard.
+     *
+     * DEPRECATED: this field will be removed in Mzawadie 3.0. Use `publishedAt` field instead.
+     */
     publicationDate?: InputMaybe<Scalars["String"]>;
+    /**
+     * Publication date time. ISO 8601 standard.
+     *
+     * Added in Saleor 3.3.
+     */
+    publishedAt?: InputMaybe<Scalars["DateTime"]>;
     /** Search engine optimization fields. */
     seo?: InputMaybe<SeoInput>;
     /** Page internal name. */
@@ -2156,21 +3184,35 @@ export enum PageErrorCode {
 }
 
 export type PageFilterInput = {
-    ids?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-    metadata?: InputMaybe<Array<InputMaybe<MetadataFilter>>>;
-    pageTypes?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    ids?: InputMaybe<Array<Scalars["ID"]>>;
+    metadata?: InputMaybe<Array<MetadataFilter>>;
+    pageTypes?: InputMaybe<Array<Scalars["ID"]>>;
     search?: InputMaybe<Scalars["String"]>;
 };
 
 export type PageInput = {
     /** List of attributes. */
     attributes?: InputMaybe<Array<AttributeValueInput>>;
-    /** Page content in JSON format. */
+    /**
+     * Page content.
+     *
+     * Rich text format. For reference see https://editorjs.io/
+     */
     content?: InputMaybe<Scalars["JSONString"]>;
     /** Determines if page is visible in the storefront. */
     isPublished?: InputMaybe<Scalars["Boolean"]>;
-    /** Publication date. ISO 8601 standard. */
+    /**
+     * Publication date. ISO 8601 standard.
+     *
+     * DEPRECATED: this field will be removed in Mzawadie 3.0. Use `publishedAt` field instead.
+     */
     publicationDate?: InputMaybe<Scalars["String"]>;
+    /**
+     * Publication date time. ISO 8601 standard.
+     *
+     * Added in Saleor 3.3.
+     */
+    publishedAt?: InputMaybe<Scalars["DateTime"]>;
     /** Search engine optimization fields. */
     seo?: InputMaybe<SeoInput>;
     /** Page internal name. */
@@ -2182,8 +3224,18 @@ export type PageInput = {
 export enum PageSortField {
     /** Sort pages by creation date. */
     CREATION_DATE = "CREATION_DATE",
-    /** Sort pages by publication date. */
+    /**
+     * Sort pages by publication date.
+     *
+     * DEPRECATED: this field will be removed in Mzawadie 3.0.
+     */
     PUBLICATION_DATE = "PUBLICATION_DATE",
+    /**
+     * Sort pages by publication date.
+     *
+     * DEPRECATED: this field will be removed in Mzawadie 3.0.
+     */
+    PUBLISHED_AT = "PUBLISHED_AT",
     /** Sort pages by slug. */
     SLUG = "SLUG",
     /** Sort pages by title. */
@@ -2193,13 +3245,18 @@ export enum PageSortField {
 }
 
 export type PageSortingInput = {
-    /** Specifies the direction in which to sort product. */
+    /** Specifies the direction in which to sort products. */
     direction: OrderDirection;
     /** Sort pages by the selected field. */
     field: PageSortField;
 };
 
 export type PageTranslationInput = {
+    /**
+     * Translated page content.
+     *
+     * Rich text format. For reference see https://editorjs.io/
+     */
     content?: InputMaybe<Scalars["JSONString"]>;
     seoDescription?: InputMaybe<Scalars["String"]>;
     seoTitle?: InputMaybe<Scalars["String"]>;
@@ -2227,7 +3284,7 @@ export enum PageTypeSortField {
 }
 
 export type PageTypeSortingInput = {
-    /** Specifies the direction in which to sort product. */
+    /** Specifies the direction in which to sort products. */
     direction: OrderDirection;
     /** Sort page types by the selected field. */
     field: PageTypeSortField;
@@ -2269,23 +3326,27 @@ export type PaymentCheckBalanceInput = {
 
 /** An enumeration. */
 export enum PaymentErrorCode {
+    BALANCE_CHECK_ERROR = "BALANCE_CHECK_ERROR",
     BILLING_ADDRESS_NOT_SET = "BILLING_ADDRESS_NOT_SET",
     CHANNEL_INACTIVE = "CHANNEL_INACTIVE",
+    CHECKOUT_EMAIL_NOT_SET = "CHECKOUT_EMAIL_NOT_SET",
     GRAPHQL_ERROR = "GRAPHQL_ERROR",
     INVALID = "INVALID",
     INVALID_SHIPPING_METHOD = "INVALID_SHIPPING_METHOD",
     NOT_FOUND = "NOT_FOUND",
     NOT_SUPPORTED_GATEWAY = "NOT_SUPPORTED_GATEWAY",
+    NO_CHECKOUT_LINES = "NO_CHECKOUT_LINES",
     PARTIAL_PAYMENT_NOT_ALLOWED = "PARTIAL_PAYMENT_NOT_ALLOWED",
     PAYMENT_ERROR = "PAYMENT_ERROR",
     REQUIRED = "REQUIRED",
     SHIPPING_ADDRESS_NOT_SET = "SHIPPING_ADDRESS_NOT_SET",
     SHIPPING_METHOD_NOT_SET = "SHIPPING_METHOD_NOT_SET",
+    UNAVAILABLE_VARIANT_IN_CHANNEL = "UNAVAILABLE_VARIANT_IN_CHANNEL",
     UNIQUE = "UNIQUE",
 }
 
 export type PaymentFilterInput = {
-    checkouts?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    checkouts?: InputMaybe<Array<Scalars["ID"]>>;
 };
 
 export type PaymentInput = {
@@ -2293,11 +3354,19 @@ export type PaymentInput = {
     amount?: InputMaybe<Scalars["PositiveDecimal"]>;
     /** A gateway to use with that payment. */
     gateway: Scalars["String"];
-    /** New in mzawadie 3.1. User public metadata. */
+    /**
+     * User public metadata.
+     *
+     * Added in Saleor 3.1.
+     */
     metadata?: InputMaybe<Array<MetadataInput>>;
     /** URL of a storefront view where user should be redirected after requiring additional actions. Payment with additional actions will not be finished if this field is not provided. */
     returnUrl?: InputMaybe<Scalars["String"]>;
-    /** New in mzawadie 3.1. Payment store type. */
+    /**
+     * Payment store type.
+     *
+     * Added in Saleor 3.1.
+     */
     storePaymentMethod?: InputMaybe<StorePaymentMethodEnum>;
     /** Client-side generated payment token, representing customer's billing data in a secure manner. */
     token?: InputMaybe<Scalars["String"]>;
@@ -2305,7 +3374,9 @@ export type PaymentInput = {
 
 /** An enumeration. */
 export enum PermissionEnum {
+    HANDLE_CHECKOUTS = "HANDLE_CHECKOUTS",
     HANDLE_PAYMENTS = "HANDLE_PAYMENTS",
+    HANDLE_TAXES = "HANDLE_TAXES",
     IMPERSONATE_USER = "IMPERSONATE_USER",
     MANAGE_APPS = "MANAGE_APPS",
     MANAGE_CHANNELS = "MANAGE_CHANNELS",
@@ -2313,6 +3384,7 @@ export enum PermissionEnum {
     MANAGE_DISCOUNTS = "MANAGE_DISCOUNTS",
     MANAGE_GIFT_CARD = "MANAGE_GIFT_CARD",
     MANAGE_MENUS = "MANAGE_MENUS",
+    MANAGE_OBSERVABILITY = "MANAGE_OBSERVABILITY",
     MANAGE_ORDERS = "MANAGE_ORDERS",
     MANAGE_PAGES = "MANAGE_PAGES",
     MANAGE_PAGE_TYPES_AND_ATTRIBUTES = "MANAGE_PAGE_TYPES_AND_ATTRIBUTES",
@@ -2322,6 +3394,7 @@ export enum PermissionEnum {
     MANAGE_SETTINGS = "MANAGE_SETTINGS",
     MANAGE_SHIPPING = "MANAGE_SHIPPING",
     MANAGE_STAFF = "MANAGE_STAFF",
+    MANAGE_TAXES = "MANAGE_TAXES",
     MANAGE_TRANSLATIONS = "MANAGE_TRANSLATIONS",
     MANAGE_USERS = "MANAGE_USERS",
 }
@@ -2348,6 +3421,7 @@ export enum PermissionGroupErrorCode {
 }
 
 export type PermissionGroupFilterInput = {
+    ids?: InputMaybe<Array<Scalars["ID"]>>;
     search?: InputMaybe<Scalars["String"]>;
 };
 
@@ -2357,7 +3431,7 @@ export enum PermissionGroupSortField {
 }
 
 export type PermissionGroupSortingInput = {
-    /** Specifies the direction in which to sort product. */
+    /** Specifies the direction in which to sort products. */
     direction: OrderDirection;
     /** Sort permission group by the selected field. */
     field: PermissionGroupSortField;
@@ -2403,7 +3477,7 @@ export enum PluginSortField {
 }
 
 export type PluginSortingInput = {
-    /** Specifies the direction in which to sort product. */
+    /** Specifies the direction in which to sort products. */
     direction: OrderDirection;
     /** Sort plugins by the selected field. */
     field: PluginSortField;
@@ -2418,7 +3492,7 @@ export type PluginUpdateInput = {
     /** Indicates whether the plugin should be enabled. */
     active?: InputMaybe<Scalars["Boolean"]>;
     /** Configuration of the plugin. */
-    configuration?: InputMaybe<Array<InputMaybe<ConfigurationItemInput>>>;
+    configuration?: InputMaybe<Array<ConfigurationItemInput>>;
 };
 
 /** An enumeration. */
@@ -2453,14 +3527,22 @@ export type ProductAttributeAssignInput = {
     id: Scalars["ID"];
     /** The attribute type to be assigned as. */
     type: ProductAttributeType;
-    /** New in mzawadie 3.1. Whether attribute is allowed in variant selection. Allowed types are: ['dropdown', 'boolean']. */
+    /**
+     * Whether attribute is allowed in variant selection. Allowed types are: ['dropdown', 'boolean', 'swatch', 'numeric'].
+     *
+     * Added in Saleor 3.1.
+     */
     variantSelection?: InputMaybe<Scalars["Boolean"]>;
 };
 
 export type ProductAttributeAssignmentUpdateInput = {
     /** The ID of the attribute to assign. */
     id: Scalars["ID"];
-    /** New in mzawadie 3.1. Whether attribute is allowed in variant selection. Allowed types are: ['dropdown', 'boolean']. */
+    /**
+     * Whether attribute is allowed in variant selection. Allowed types are: ['dropdown', 'boolean', 'swatch', 'numeric'].
+     *
+     * Added in Saleor 3.1.
+     */
     variantSelection: Scalars["Boolean"];
 };
 
@@ -2472,7 +3554,17 @@ export enum ProductAttributeType {
 export type ProductChannelListingAddInput = {
     /** List of variants to which the channel should be assigned. */
     addVariants?: InputMaybe<Array<Scalars["ID"]>>;
-    /** A start date from which a product will be available for purchase. When not set and isAvailable is set to True, the current day is assumed. */
+    /**
+     * A start date time from which a product will be available for purchase. When not set and `isAvailable` is set to True, the current day is assumed.
+     *
+     * Added in Saleor 3.3.
+     */
+    availableForPurchaseAt?: InputMaybe<Scalars["DateTime"]>;
+    /**
+     * A start date from which a product will be available for purchase. When not set and isAvailable is set to True, the current day is assumed.
+     *
+     * DEPRECATED: this field will be removed in Mzawadie 3.0. Use `availableForPurchaseAt` field instead.
+     */
     availableForPurchaseDate?: InputMaybe<Scalars["Date"]>;
     /** ID of a channel. */
     channelId: Scalars["ID"];
@@ -2480,8 +3572,18 @@ export type ProductChannelListingAddInput = {
     isAvailableForPurchase?: InputMaybe<Scalars["Boolean"]>;
     /** Determines if object is visible to customers. */
     isPublished?: InputMaybe<Scalars["Boolean"]>;
-    /** Publication date. ISO 8601 standard. */
+    /**
+     * Publication date. ISO 8601 standard.
+     *
+     * DEPRECATED: this field will be removed in Mzawadie 3.0. Use `publishedAt` field instead.
+     */
     publicationDate?: InputMaybe<Scalars["Date"]>;
+    /**
+     * Publication date time. ISO 8601 standard.
+     *
+     * Added in Saleor 3.3.
+     */
+    publishedAt?: InputMaybe<Scalars["DateTime"]>;
     /** List of variants from which the channel should be unassigned. */
     removeVariants?: InputMaybe<Array<Scalars["ID"]>>;
     /** Determines if product is visible in product listings (doesn't apply to product collections). */
@@ -2504,10 +3606,26 @@ export type ProductCreateInput = {
     chargeTaxes?: InputMaybe<Scalars["Boolean"]>;
     /** List of IDs of collections that the product belongs to. */
     collections?: InputMaybe<Array<Scalars["ID"]>>;
-    /** Product description (JSON). */
+    /**
+     * Product description.
+     *
+     * Rich text format. For reference see https://editorjs.io/
+     */
     description?: InputMaybe<Scalars["JSONString"]>;
+    /**
+     * Fields required to update the product metadata.
+     *
+     * Added in Saleor 3.8.
+     */
+    metadata?: InputMaybe<Array<MetadataInput>>;
     /** Product name. */
     name?: InputMaybe<Scalars["String"]>;
+    /**
+     * Fields required to update the product private metadata.
+     *
+     * Added in Saleor 3.8.
+     */
+    privateMetadata?: InputMaybe<Array<MetadataInput>>;
     /** ID of the type that product belongs to. */
     productType: Scalars["ID"];
     /** Defines the product rating value. */
@@ -2532,6 +3650,7 @@ export enum ProductErrorCode {
     DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
     GRAPHQL_ERROR = "GRAPHQL_ERROR",
     INVALID = "INVALID",
+    MEDIA_ALREADY_ASSIGNED = "MEDIA_ALREADY_ASSIGNED",
     NOT_FOUND = "NOT_FOUND",
     NOT_PRODUCTS_IMAGE = "NOT_PRODUCTS_IMAGE",
     NOT_PRODUCTS_VARIANT = "NOT_PRODUCTS_VARIANT",
@@ -2553,29 +3672,35 @@ export enum ProductFieldEnum {
     PRODUCT_MEDIA = "PRODUCT_MEDIA",
     PRODUCT_TYPE = "PRODUCT_TYPE",
     PRODUCT_WEIGHT = "PRODUCT_WEIGHT",
+    VARIANT_ID = "VARIANT_ID",
     VARIANT_MEDIA = "VARIANT_MEDIA",
     VARIANT_SKU = "VARIANT_SKU",
     VARIANT_WEIGHT = "VARIANT_WEIGHT",
 }
 
 export type ProductFilterInput = {
-    attributes?: InputMaybe<Array<InputMaybe<AttributeInput>>>;
-    categories?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
-    /** Specifies the channel by which the data should be filtered. DEPRECATED: Will be removed in Mzawadie 4.0.Use root-level channel argument instead. */
+    attributes?: InputMaybe<Array<AttributeInput>>;
+    categories?: InputMaybe<Array<Scalars["ID"]>>;
+    /**
+     * Specifies the channel by which the data should be filtered.
+     *
+     * DEPRECATED: this field will be removed in Mzawadie 3.0. Use root-level channel argument instead.
+     */
     channel?: InputMaybe<Scalars["String"]>;
-    collections?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    collections?: InputMaybe<Array<Scalars["ID"]>>;
     giftCard?: InputMaybe<Scalars["Boolean"]>;
     hasCategory?: InputMaybe<Scalars["Boolean"]>;
     hasPreorderedVariants?: InputMaybe<Scalars["Boolean"]>;
-    ids?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    ids?: InputMaybe<Array<Scalars["ID"]>>;
     isPublished?: InputMaybe<Scalars["Boolean"]>;
-    metadata?: InputMaybe<Array<InputMaybe<MetadataFilter>>>;
+    metadata?: InputMaybe<Array<MetadataFilter>>;
     minimalPrice?: InputMaybe<PriceRangeInput>;
     price?: InputMaybe<PriceRangeInput>;
-    productTypes?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    productTypes?: InputMaybe<Array<Scalars["ID"]>>;
     search?: InputMaybe<Scalars["String"]>;
     stockAvailability?: InputMaybe<StockAvailability>;
     stocks?: InputMaybe<ProductStockFilterInput>;
+    updatedAt?: InputMaybe<DateTimeRangeInput>;
 };
 
 export type ProductInput = {
@@ -2587,10 +3712,26 @@ export type ProductInput = {
     chargeTaxes?: InputMaybe<Scalars["Boolean"]>;
     /** List of IDs of collections that the product belongs to. */
     collections?: InputMaybe<Array<Scalars["ID"]>>;
-    /** Product description (JSON). */
+    /**
+     * Product description.
+     *
+     * Rich text format. For reference see https://editorjs.io/
+     */
     description?: InputMaybe<Scalars["JSONString"]>;
+    /**
+     * Fields required to update the product metadata.
+     *
+     * Added in Saleor 3.8.
+     */
+    metadata?: InputMaybe<Array<MetadataInput>>;
     /** Product name. */
     name?: InputMaybe<Scalars["String"]>;
+    /**
+     * Fields required to update the product private metadata.
+     *
+     * Added in Saleor 3.8.
+     */
+    privateMetadata?: InputMaybe<Array<MetadataInput>>;
     /** Defines the product rating value. */
     rating?: InputMaybe<Scalars["Float"]>;
     /** Search engine optimization fields. */
@@ -2616,9 +3757,7 @@ export type ProductMediaCreateInput = {
 
 /** An enumeration. */
 export enum ProductMediaType {
-    /** An uploaded image or an URL to an image */
     IMAGE = "IMAGE",
-    /** A URL to an external video */
     VIDEO = "VIDEO",
 }
 
@@ -2633,30 +3772,64 @@ export type ProductOrder = {
      * Note: this doesn't take translations into account yet.
      */
     attributeId?: InputMaybe<Scalars["ID"]>;
-    /** Specifies the channel in which to sort the data. DEPRECATED: Will be removed in Mzawadie 4.0.Use root-level channel argument instead. */
+    /**
+     * Specifies the channel in which to sort the data.
+     *
+     * DEPRECATED: this field will be removed in Mzawadie 3.0. Use root-level channel argument instead.
+     */
     channel?: InputMaybe<Scalars["String"]>;
-    /** Specifies the direction in which to sort product. */
+    /** Specifies the direction in which to sort products. */
     direction: OrderDirection;
     /** Sort products by the selected field. */
     field?: InputMaybe<ProductOrderField>;
 };
 
 export enum ProductOrderField {
-    /** Sort products by collection. Note: This option is available only for the `Collection.products` query. */
+    /**
+     * Sort products by collection. Note: This option is available only for the `Collection.products` query.
+     *
+     * This option requires a channel filter to work as the values can vary between channels.
+     */
     COLLECTION = "COLLECTION",
     /** Sort products by update date. */
     DATE = "DATE",
-    /** Sort products by a minimal price of a product's variant. */
+    /** Sort products by update date. */
+    LAST_MODIFIED = "LAST_MODIFIED",
+    /** Sort products by update date. */
+    LAST_MODIFIED_AT = "LAST_MODIFIED_AT",
+    /**
+     * Sort products by a minimal price of a product's variant.
+     *
+     * This option requires a channel filter to work as the values can vary between channels.
+     */
     MINIMAL_PRICE = "MINIMAL_PRICE",
     /** Sort products by name. */
     NAME = "NAME",
-    /** Sort products by price. */
+    /**
+     * Sort products by price.
+     *
+     * This option requires a channel filter to work as the values can vary between channels.
+     */
     PRICE = "PRICE",
-    /** Sort products by publication date. */
+    /**
+     * Sort products by publication date.
+     *
+     * This option requires a channel filter to work as the values can vary between channels.
+     */
     PUBLICATION_DATE = "PUBLICATION_DATE",
-    /** Sort products by publication status. */
+    /**
+     * Sort products by publication status.
+     *
+     * This option requires a channel filter to work as the values can vary between channels.
+     */
     PUBLISHED = "PUBLISHED",
-    /** Sort products by name. */
+    /**
+     * Sort products by publication date.
+     *
+     * This option requires a channel filter to work as the values can vary between channels.
+     */
+    PUBLISHED_AT = "PUBLISHED_AT",
+    /** Sort products by rank. Note: This option is available only with the `search` filter. */
     RANK = "RANK",
     /** Sort products by rating. */
     RATING = "RATING",
@@ -2681,9 +3854,9 @@ export enum ProductTypeEnum {
 
 export type ProductTypeFilterInput = {
     configurable?: InputMaybe<ProductTypeConfigurable>;
-    ids?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    ids?: InputMaybe<Array<Scalars["ID"]>>;
     kind?: InputMaybe<ProductTypeKindEnum>;
-    metadata?: InputMaybe<Array<InputMaybe<MetadataFilter>>>;
+    metadata?: InputMaybe<Array<MetadataFilter>>;
     productType?: InputMaybe<ProductTypeEnum>;
     search?: InputMaybe<Scalars["String"]>;
 };
@@ -2700,13 +3873,13 @@ export type ProductTypeInput = {
     /** Name of the product type. */
     name?: InputMaybe<Scalars["String"]>;
     /** List of attributes shared among all product variants. */
-    productAttributes?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    productAttributes?: InputMaybe<Array<Scalars["ID"]>>;
     /** Product type slug. */
     slug?: InputMaybe<Scalars["String"]>;
     /** Tax rate for enabled tax gateway. */
     taxCode?: InputMaybe<Scalars["String"]>;
     /** List of attributes used to distinguish between different variants of a product. */
-    variantAttributes?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    variantAttributes?: InputMaybe<Array<Scalars["ID"]>>;
     /** Weight of the ProductType items. */
     weight?: InputMaybe<Scalars["WeightScalar"]>;
 };
@@ -2727,7 +3900,7 @@ export enum ProductTypeSortField {
 }
 
 export type ProductTypeSortingInput = {
-    /** Specifies the direction in which to sort product. */
+    /** Specifies the direction in which to sort products. */
     direction: OrderDirection;
     /** Sort product types by the selected field. */
     field: ProductTypeSortField;
@@ -2738,9 +3911,35 @@ export type ProductVariantBulkCreateInput = {
     attributes: Array<BulkAttributeValueInput>;
     /** List of prices assigned to channels. */
     channelListings?: InputMaybe<Array<ProductVariantChannelListingAddInput>>;
-    /** New in mzawadie 3.1. Determines if variant is in preorder. */
+    /**
+     * Fields required to update the product variant metadata.
+     *
+     * Added in Saleor 3.8.
+     */
+    metadata?: InputMaybe<Array<MetadataInput>>;
+    /** Variant name. */
+    name?: InputMaybe<Scalars["String"]>;
+    /**
+     * Determines if variant is in preorder.
+     *
+     * Added in Saleor 3.1.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
     preorder?: InputMaybe<PreorderSettingsInput>;
-    /** New in mzawadie 3.1. Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout. */
+    /**
+     * Fields required to update the product variant private metadata.
+     *
+     * Added in Saleor 3.8.
+     */
+    privateMetadata?: InputMaybe<Array<MetadataInput>>;
+    /**
+     * Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout.
+     *
+     * Added in Saleor 3.1.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
     quantityLimitPerCustomer?: InputMaybe<Scalars["Int"]>;
     /** Stock keeping unit. */
     sku?: InputMaybe<Scalars["String"]>;
@@ -2757,7 +3956,13 @@ export type ProductVariantChannelListingAddInput = {
     channelId: Scalars["ID"];
     /** Cost price of the variant in channel. */
     costPrice?: InputMaybe<Scalars["PositiveDecimal"]>;
-    /** New in mzawadie 3.1. The threshold for preorder variant in channel. */
+    /**
+     * The threshold for preorder variant in channel.
+     *
+     * Added in Saleor 3.1.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
     preorderThreshold?: InputMaybe<Scalars["Int"]>;
     /** Price of the particular variant in channel. */
     price: Scalars["PositiveDecimal"];
@@ -2766,11 +3971,37 @@ export type ProductVariantChannelListingAddInput = {
 export type ProductVariantCreateInput = {
     /** List of attributes specific to this variant. */
     attributes: Array<AttributeValueInput>;
-    /** New in mzawadie 3.1. Determines if variant is in preorder. */
+    /**
+     * Fields required to update the product variant metadata.
+     *
+     * Added in Saleor 3.8.
+     */
+    metadata?: InputMaybe<Array<MetadataInput>>;
+    /** Variant name. */
+    name?: InputMaybe<Scalars["String"]>;
+    /**
+     * Determines if variant is in preorder.
+     *
+     * Added in Saleor 3.1.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
     preorder?: InputMaybe<PreorderSettingsInput>;
+    /**
+     * Fields required to update the product variant private metadata.
+     *
+     * Added in Saleor 3.8.
+     */
+    privateMetadata?: InputMaybe<Array<MetadataInput>>;
     /** Product ID of which type is the variant. */
     product: Scalars["ID"];
-    /** New in mzawadie 3.1. Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout. */
+    /**
+     * Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout.
+     *
+     * Added in Saleor 3.1.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
     quantityLimitPerCustomer?: InputMaybe<Scalars["Int"]>;
     /** Stock keeping unit. */
     sku?: InputMaybe<Scalars["String"]>;
@@ -2784,17 +4015,44 @@ export type ProductVariantCreateInput = {
 
 export type ProductVariantFilterInput = {
     isPreorder?: InputMaybe<Scalars["Boolean"]>;
-    metadata?: InputMaybe<Array<InputMaybe<MetadataFilter>>>;
+    metadata?: InputMaybe<Array<MetadataFilter>>;
     search?: InputMaybe<Scalars["String"]>;
-    sku?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+    sku?: InputMaybe<Array<Scalars["String"]>>;
+    updatedAt?: InputMaybe<DateTimeRangeInput>;
 };
 
 export type ProductVariantInput = {
     /** List of attributes specific to this variant. */
     attributes?: InputMaybe<Array<AttributeValueInput>>;
-    /** New in mzawadie 3.1. Determines if variant is in preorder. */
+    /**
+     * Fields required to update the product variant metadata.
+     *
+     * Added in Saleor 3.8.
+     */
+    metadata?: InputMaybe<Array<MetadataInput>>;
+    /** Variant name. */
+    name?: InputMaybe<Scalars["String"]>;
+    /**
+     * Determines if variant is in preorder.
+     *
+     * Added in Saleor 3.1.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
     preorder?: InputMaybe<PreorderSettingsInput>;
-    /** New in mzawadie 3.1. Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout. */
+    /**
+     * Fields required to update the product variant private metadata.
+     *
+     * Added in Saleor 3.8.
+     */
+    privateMetadata?: InputMaybe<Array<MetadataInput>>;
+    /**
+     * Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout.
+     *
+     * Added in Saleor 3.1.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
     quantityLimitPerCustomer?: InputMaybe<Scalars["Int"]>;
     /** Stock keeping unit. */
     sku?: InputMaybe<Scalars["String"]>;
@@ -2804,13 +4062,35 @@ export type ProductVariantInput = {
     weight?: InputMaybe<Scalars["WeightScalar"]>;
 };
 
+export enum ProductVariantSortField {
+    /** Sort products variants by last modified at. */
+    LAST_MODIFIED_AT = "LAST_MODIFIED_AT",
+}
+
+export type ProductVariantSortingInput = {
+    /** Specifies the direction in which to sort products. */
+    direction: OrderDirection;
+    /** Sort productVariants by the selected field. */
+    field: ProductVariantSortField;
+};
+
 export type PublishableChannelListingInput = {
     /** ID of a channel. */
     channelId: Scalars["ID"];
     /** Determines if object is visible to customers. */
     isPublished?: InputMaybe<Scalars["Boolean"]>;
-    /** Publication date. ISO 8601 standard. */
+    /**
+     * Publication date. ISO 8601 standard.
+     *
+     * DEPRECATED: this field will be removed in Mzawadie 3.0. Use `publishedAt` field instead.
+     */
     publicationDate?: InputMaybe<Scalars["Date"]>;
+    /**
+     * Publication date time. ISO 8601 standard.
+     *
+     * Added in Saleor 3.3.
+     */
+    publishedAt?: InputMaybe<Scalars["DateTime"]>;
 };
 
 export type ReorderInput = {
@@ -2840,59 +4120,70 @@ export type SaleChannelListingInput = {
 };
 
 export type SaleFilterInput = {
-    metadata?: InputMaybe<Array<InputMaybe<MetadataFilter>>>;
+    metadata?: InputMaybe<Array<MetadataFilter>>;
     saleType?: InputMaybe<DiscountValueTypeEnum>;
     search?: InputMaybe<Scalars["String"]>;
     started?: InputMaybe<DateTimeRangeInput>;
-    status?: InputMaybe<Array<InputMaybe<DiscountStatusEnum>>>;
+    status?: InputMaybe<Array<DiscountStatusEnum>>;
+    updatedAt?: InputMaybe<DateTimeRangeInput>;
 };
 
 export type SaleInput = {
     /** Categories related to the discount. */
-    categories?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    categories?: InputMaybe<Array<Scalars["ID"]>>;
     /** Collections related to the discount. */
-    collections?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    collections?: InputMaybe<Array<Scalars["ID"]>>;
     /** End date of the voucher in ISO 8601 format. */
     endDate?: InputMaybe<Scalars["DateTime"]>;
     /** Voucher name. */
     name?: InputMaybe<Scalars["String"]>;
     /** Products related to the discount. */
-    products?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    products?: InputMaybe<Array<Scalars["ID"]>>;
     /** Start date of the voucher in ISO 8601 format. */
     startDate?: InputMaybe<Scalars["DateTime"]>;
     /** Fixed or percentage. */
     type?: InputMaybe<DiscountValueTypeEnum>;
     /** Value of the voucher. */
     value?: InputMaybe<Scalars["PositiveDecimal"]>;
+    variants?: InputMaybe<Array<Scalars["ID"]>>;
 };
 
 export enum SaleSortField {
+    /** Sort sales by created at. */
+    CREATED_AT = "CREATED_AT",
     /** Sort sales by end date. */
     END_DATE = "END_DATE",
+    /** Sort sales by last modified at. */
+    LAST_MODIFIED_AT = "LAST_MODIFIED_AT",
     /** Sort sales by name. */
     NAME = "NAME",
     /** Sort sales by start date. */
     START_DATE = "START_DATE",
     /** Sort sales by type. */
     TYPE = "TYPE",
-    /** Sort sales by value. */
+    /**
+     * Sort sales by value.
+     *
+     * This option requires a channel filter to work as the values can vary between channels.
+     */
     VALUE = "VALUE",
 }
 
 export type SaleSortingInput = {
-    /** Specifies the channel in which to sort the data. DEPRECATED: Will be removed in Mzawadie 4.0.Use root-level channel argument instead. */
+    /**
+     * Specifies the channel in which to sort the data.
+     *
+     * DEPRECATED: this field will be removed in Mzawadie 3.0. Use root-level channel argument instead.
+     */
     channel?: InputMaybe<Scalars["String"]>;
-    /** Specifies the direction in which to sort product. */
+    /** Specifies the direction in which to sort products. */
     direction: OrderDirection;
     /** Sort sales by the selected field. */
     field: SaleSortField;
 };
 
-/** An enumeration. */
 export enum SaleType {
-    /** fixed */
     FIXED = "FIXED",
-    /** % */
     PERCENTAGE = "PERCENTAGE",
 }
 
@@ -2948,7 +4239,7 @@ export type ShippingPostalCodeRulesCreateInputRange = {
 
 export type ShippingPriceExcludeProductsInput = {
     /** List of products which will be excluded. */
-    products: Array<InputMaybe<Scalars["ID"]>>;
+    products: Array<Scalars["ID"]>;
 };
 
 export type ShippingPriceInput = {
@@ -2977,7 +4268,11 @@ export type ShippingPriceInput = {
 };
 
 export type ShippingPriceTranslationInput = {
-    /** Translated shipping method description (JSON). */
+    /**
+     * Translated shipping method description.
+     *
+     * Rich text format. For reference see https://editorjs.io/
+     */
     description?: InputMaybe<Scalars["JSONString"]>;
     name?: InputMaybe<Scalars["String"]>;
 };
@@ -2986,9 +4281,9 @@ export type ShippingZoneCreateInput = {
     /** List of channels to assign to the shipping zone. */
     addChannels?: InputMaybe<Array<Scalars["ID"]>>;
     /** List of warehouses to assign to a shipping zone */
-    addWarehouses?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    addWarehouses?: InputMaybe<Array<Scalars["ID"]>>;
     /** List of countries in this shipping zone. */
-    countries?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+    countries?: InputMaybe<Array<Scalars["String"]>>;
     /** Default shipping zone will be used for countries not covered by other zones. */
     default?: InputMaybe<Scalars["Boolean"]>;
     /** Description of the shipping zone. */
@@ -2998,7 +4293,7 @@ export type ShippingZoneCreateInput = {
 };
 
 export type ShippingZoneFilterInput = {
-    channels?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    channels?: InputMaybe<Array<Scalars["ID"]>>;
     search?: InputMaybe<Scalars["String"]>;
 };
 
@@ -3006,9 +4301,9 @@ export type ShippingZoneUpdateInput = {
     /** List of channels to assign to the shipping zone. */
     addChannels?: InputMaybe<Array<Scalars["ID"]>>;
     /** List of warehouses to assign to a shipping zone */
-    addWarehouses?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    addWarehouses?: InputMaybe<Array<Scalars["ID"]>>;
     /** List of countries in this shipping zone. */
-    countries?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+    countries?: InputMaybe<Array<Scalars["String"]>>;
     /** Default shipping zone will be used for countries not covered by other zones. */
     default?: InputMaybe<Scalars["Boolean"]>;
     /** Description of the shipping zone. */
@@ -3018,7 +4313,7 @@ export type ShippingZoneUpdateInput = {
     /** List of channels to unassign from the shipping zone. */
     removeChannels?: InputMaybe<Array<Scalars["ID"]>>;
     /** List of warehouses to unassign from a shipping zone */
-    removeWarehouses?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    removeWarehouses?: InputMaybe<Array<Scalars["ID"]>>;
 };
 
 /** An enumeration. */
@@ -3053,19 +4348,41 @@ export type ShopSettingsInput = {
     description?: InputMaybe<Scalars["String"]>;
     /** Display prices with tax in store. */
     displayGrossPrices?: InputMaybe<Scalars["Boolean"]>;
-    /** New in mzawadie 3.1. Enable ability to approve fulfillments which are unpaid. */
+    /**
+     * Enable ability to approve fulfillments which are unpaid.
+     *
+     * Added in Saleor 3.1.
+     */
     fulfillmentAllowUnpaid?: InputMaybe<Scalars["Boolean"]>;
-    /** New in mzawadie 3.1. Enable automatic approval of all new fulfillments. */
+    /**
+     * Enable automatic approval of all new fulfillments.
+     *
+     * Added in Saleor 3.1.
+     */
     fulfillmentAutoApprove?: InputMaybe<Scalars["Boolean"]>;
     /** Header text. */
     headerText?: InputMaybe<Scalars["String"]>;
     /** Include taxes in prices. */
     includeTaxesInPrices?: InputMaybe<Scalars["Boolean"]>;
-    /** New in mzawadie 3.1. Default number of maximum line quantity in single checkout. Minimum possible value is 1, default value is 50. */
+    /**
+     * Default number of maximum line quantity in single checkout. Minimum possible value is 1, default value is 50.
+     *
+     * Added in Saleor 3.1.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
     limitQuantityPerCheckout?: InputMaybe<Scalars["Int"]>;
-    /** New in mzawadie 3.1. Default number of minutes stock will be reserved for anonymous checkout. Enter 0 or null to disable. */
+    /**
+     * Default number of minutes stock will be reserved for anonymous checkout. Enter 0 or null to disable.
+     *
+     * Added in Saleor 3.1.
+     */
     reserveStockDurationAnonymousUser?: InputMaybe<Scalars["Int"]>;
-    /** New in mzawadie 3.1. Default number of minutes stock will be reserved for authenticated checkout. Enter 0 or null to disable. */
+    /**
+     * Default number of minutes stock will be reserved for authenticated checkout. Enter 0 or null to disable.
+     *
+     * Added in Saleor 3.1.
+     */
     reserveStockDurationAuthenticatedUser?: InputMaybe<Scalars["Int"]>;
     /** Enable inventory tracking. */
     trackInventoryByDefault?: InputMaybe<Scalars["Boolean"]>;
@@ -3134,6 +4451,7 @@ export type StaffUpdateInput = {
 };
 
 export type StaffUserInput = {
+    ids?: InputMaybe<Array<Scalars["ID"]>>;
     search?: InputMaybe<Scalars["String"]>;
     status?: InputMaybe<StaffMemberStatus>;
 };
@@ -3175,6 +4493,19 @@ export enum StorePaymentMethodEnum {
     ON_SESSION = "ON_SESSION",
 }
 
+/** An enumeration. */
+export enum TaxExemptionManageErrorCode {
+    GRAPHQL_ERROR = "GRAPHQL_ERROR",
+    INVALID = "INVALID",
+    NOT_EDITABLE_ORDER = "NOT_EDITABLE_ORDER",
+    NOT_FOUND = "NOT_FOUND",
+}
+
+/** An enumeration. */
+export enum ThumbnailFormatEnum {
+    WEBP = "WEBP",
+}
+
 export type TimePeriodInputType = {
     /** The length of the period. */
     amount: Scalars["Int"];
@@ -3190,29 +4521,123 @@ export enum TimePeriodTypeEnum {
     YEAR = "YEAR",
 }
 
-/** An enumeration. */
-export enum TransactionKind {
-    /** Action to confirm */
-    ACTION_TO_CONFIRM = "ACTION_TO_CONFIRM",
-    /** Authorization */
-    AUTH = "AUTH",
-    /** Cancel */
-    CANCEL = "CANCEL",
-    /** Capture */
-    CAPTURE = "CAPTURE",
-    /** Confirm */
-    CONFIRM = "CONFIRM",
-    /** External reference */
-    EXTERNAL = "EXTERNAL",
-    /** Pending */
-    PENDING = "PENDING",
-    /** Refund */
+/**
+ *
+ *     Represents possible actions on payment transaction.
+ *
+ *     The following actions are possible:
+ *     CHARGE - Represents the charge action.
+ *     REFUND - Represents a refund action.
+ *     VOID - Represents a void action.
+ *
+ */
+export enum TransactionActionEnum {
+    CHARGE = "CHARGE",
     REFUND = "REFUND",
-    /** Refund in progress */
-    REFUND_ONGOING = "REFUND_ONGOING",
-    /** Void */
     VOID = "VOID",
 }
+
+/** An enumeration. */
+export enum TransactionCreateErrorCode {
+    GRAPHQL_ERROR = "GRAPHQL_ERROR",
+    INCORRECT_CURRENCY = "INCORRECT_CURRENCY",
+    INVALID = "INVALID",
+    METADATA_KEY_REQUIRED = "METADATA_KEY_REQUIRED",
+    NOT_FOUND = "NOT_FOUND",
+}
+
+export type TransactionCreateInput = {
+    /** Amount authorized by this transaction. */
+    amountAuthorized?: InputMaybe<MoneyInput>;
+    /** Amount charged by this transaction. */
+    amountCharged?: InputMaybe<MoneyInput>;
+    /** Amount refunded by this transaction. */
+    amountRefunded?: InputMaybe<MoneyInput>;
+    /** Amount voided by this transaction. */
+    amountVoided?: InputMaybe<MoneyInput>;
+    /** List of all possible actions for the transaction */
+    availableActions?: InputMaybe<Array<TransactionActionEnum>>;
+    /** Payment public metadata. */
+    metadata?: InputMaybe<Array<MetadataInput>>;
+    /** Payment private metadata. */
+    privateMetadata?: InputMaybe<Array<MetadataInput>>;
+    /** Reference of the transaction. */
+    reference?: InputMaybe<Scalars["String"]>;
+    /** Status of the transaction. */
+    status: Scalars["String"];
+    /** Payment type used for this transaction. */
+    type: Scalars["String"];
+};
+
+export type TransactionEventInput = {
+    /** Name of the transaction. */
+    name?: InputMaybe<Scalars["String"]>;
+    /** Reference of the transaction. */
+    reference?: InputMaybe<Scalars["String"]>;
+    /** Current status of the payment transaction. */
+    status: TransactionStatus;
+};
+
+/** An enumeration. */
+export enum TransactionKind {
+    ACTION_TO_CONFIRM = "ACTION_TO_CONFIRM",
+    AUTH = "AUTH",
+    CANCEL = "CANCEL",
+    CAPTURE = "CAPTURE",
+    CONFIRM = "CONFIRM",
+    EXTERNAL = "EXTERNAL",
+    PENDING = "PENDING",
+    REFUND = "REFUND",
+    REFUND_ONGOING = "REFUND_ONGOING",
+    VOID = "VOID",
+}
+
+/** An enumeration. */
+export enum TransactionRequestActionErrorCode {
+    GRAPHQL_ERROR = "GRAPHQL_ERROR",
+    INVALID = "INVALID",
+    MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK = "MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK",
+    NOT_FOUND = "NOT_FOUND",
+}
+
+/** An enumeration. */
+export enum TransactionStatus {
+    FAILURE = "FAILURE",
+    PENDING = "PENDING",
+    SUCCESS = "SUCCESS",
+}
+
+/** An enumeration. */
+export enum TransactionUpdateErrorCode {
+    GRAPHQL_ERROR = "GRAPHQL_ERROR",
+    INCORRECT_CURRENCY = "INCORRECT_CURRENCY",
+    INVALID = "INVALID",
+    METADATA_KEY_REQUIRED = "METADATA_KEY_REQUIRED",
+    NOT_FOUND = "NOT_FOUND",
+}
+
+export type TransactionUpdateInput = {
+    /** Amount authorized by this transaction. */
+    amountAuthorized?: InputMaybe<MoneyInput>;
+    /** Amount charged by this transaction. */
+    amountCharged?: InputMaybe<MoneyInput>;
+    /** Amount refunded by this transaction. */
+    amountRefunded?: InputMaybe<MoneyInput>;
+    /** Amount voided by this transaction. */
+    amountVoided?: InputMaybe<MoneyInput>;
+    /** List of all possible actions for the transaction */
+    availableActions?: InputMaybe<Array<TransactionActionEnum>>;
+    /** Payment public metadata. */
+    metadata?: InputMaybe<Array<MetadataInput>>;
+    /** Payment private metadata. */
+    privateMetadata?: InputMaybe<Array<MetadataInput>>;
+    /** Reference of the transaction. */
+    reference?: InputMaybe<Scalars["String"]>;
+    /** Status of the transaction. */
+    status?: InputMaybe<Scalars["String"]>;
+    /** Payment type used for this transaction. */
+    type?: InputMaybe<Scalars["String"]>;
+};
 
 export enum TranslatableKinds {
     ATTRIBUTE = "ATTRIBUTE",
@@ -3237,6 +4662,11 @@ export enum TranslationErrorCode {
 }
 
 export type TranslationInput = {
+    /**
+     * Translated description.
+     *
+     * Rich text format. For reference see https://editorjs.io/
+     */
     description?: InputMaybe<Scalars["JSONString"]>;
     name?: InputMaybe<Scalars["String"]>;
     seoDescription?: InputMaybe<Scalars["String"]>;
@@ -3279,10 +4709,14 @@ export type UserCreateInput = {
 };
 
 export enum UserSortField {
+    /** Sort users by created at. */
+    CREATED_AT = "CREATED_AT",
     /** Sort users by email. */
     EMAIL = "EMAIL",
     /** Sort users by first name. */
     FIRST_NAME = "FIRST_NAME",
+    /** Sort users by last modified at. */
+    LAST_MODIFIED_AT = "LAST_MODIFIED_AT",
     /** Sort users by last name. */
     LAST_NAME = "LAST_NAME",
     /** Sort users by order count. */
@@ -3290,7 +4724,7 @@ export enum UserSortField {
 }
 
 export type UserSortingInput = {
-    /** Specifies the direction in which to sort product. */
+    /** Specifies the direction in which to sort products. */
     direction: OrderDirection;
     /** Sort users by the selected field. */
     field: UserSortField;
@@ -3342,11 +4776,11 @@ export enum VoucherDiscountType {
 }
 
 export type VoucherFilterInput = {
-    discountType?: InputMaybe<Array<InputMaybe<VoucherDiscountType>>>;
-    metadata?: InputMaybe<Array<InputMaybe<MetadataFilter>>>;
+    discountType?: InputMaybe<Array<VoucherDiscountType>>;
+    metadata?: InputMaybe<Array<MetadataFilter>>;
     search?: InputMaybe<Scalars["String"]>;
     started?: InputMaybe<DateTimeRangeInput>;
-    status?: InputMaybe<Array<InputMaybe<DiscountStatusEnum>>>;
+    status?: InputMaybe<Array<DiscountStatusEnum>>;
     timesUsed?: InputMaybe<IntRangeInput>;
 };
 
@@ -3356,13 +4790,13 @@ export type VoucherInput = {
     /** Voucher should be applied to the cheapest item or entire order. */
     applyOncePerOrder?: InputMaybe<Scalars["Boolean"]>;
     /** Categories discounted by the voucher. */
-    categories?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    categories?: InputMaybe<Array<Scalars["ID"]>>;
     /** Code to use the voucher. */
     code?: InputMaybe<Scalars["String"]>;
     /** Collections discounted by the voucher. */
-    collections?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    collections?: InputMaybe<Array<Scalars["ID"]>>;
     /** Country codes that can be used with the shipping voucher. */
-    countries?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>;
+    countries?: InputMaybe<Array<Scalars["String"]>>;
     /** Choices: fixed or percentage. */
     discountValueType?: InputMaybe<DiscountValueTypeEnum>;
     /** End date of the voucher in ISO 8601 format. */
@@ -3374,13 +4808,19 @@ export type VoucherInput = {
     /** Voucher can be used only by staff user. */
     onlyForStaff?: InputMaybe<Scalars["Boolean"]>;
     /** Products discounted by the voucher. */
-    products?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    products?: InputMaybe<Array<Scalars["ID"]>>;
     /** Start date of the voucher in ISO 8601 format. */
     startDate?: InputMaybe<Scalars["DateTime"]>;
     /** Voucher type: PRODUCT, CATEGORY SHIPPING or ENTIRE_ORDER. */
     type?: InputMaybe<VoucherTypeEnum>;
     /** Limit number of times this voucher can be used in total. */
     usageLimit?: InputMaybe<Scalars["Int"]>;
+    /**
+     * Variants discounted by the voucher.
+     *
+     * Added in Saleor 3.1.
+     */
+    variants?: InputMaybe<Array<Scalars["ID"]>>;
 };
 
 export enum VoucherSortField {
@@ -3388,7 +4828,11 @@ export enum VoucherSortField {
     CODE = "CODE",
     /** Sort vouchers by end date. */
     END_DATE = "END_DATE",
-    /** Sort vouchers by minimum spent amount. */
+    /**
+     * Sort vouchers by minimum spent amount.
+     *
+     * This option requires a channel filter to work as the values can vary between channels.
+     */
     MINIMUM_SPENT_AMOUNT = "MINIMUM_SPENT_AMOUNT",
     /** Sort vouchers by start date. */
     START_DATE = "START_DATE",
@@ -3396,14 +4840,22 @@ export enum VoucherSortField {
     TYPE = "TYPE",
     /** Sort vouchers by usage limit. */
     USAGE_LIMIT = "USAGE_LIMIT",
-    /** Sort vouchers by value. */
+    /**
+     * Sort vouchers by value.
+     *
+     * This option requires a channel filter to work as the values can vary between channels.
+     */
     VALUE = "VALUE",
 }
 
 export type VoucherSortingInput = {
-    /** Specifies the channel in which to sort the data. DEPRECATED: Will be removed in Mzawadie 4.0.Use root-level channel argument instead. */
+    /**
+     * Specifies the channel in which to sort the data.
+     *
+     * DEPRECATED: this field will be removed in Mzawadie 3.0. Use root-level channel argument instead.
+     */
     channel?: InputMaybe<Scalars["String"]>;
-    /** Specifies the direction in which to sort product. */
+    /** Specifies the direction in which to sort products. */
     direction: OrderDirection;
     /** Sort vouchers by the selected field. */
     field: VoucherSortField;
@@ -3430,7 +4882,7 @@ export type WarehouseCreateInput = {
     /** Warehouse name. */
     name: Scalars["String"];
     /** Shipping zones supported by the warehouse. */
-    shippingZones?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    shippingZones?: InputMaybe<Array<Scalars["ID"]>>;
     /** Warehouse slug. */
     slug?: InputMaybe<Scalars["String"]>;
 };
@@ -3447,7 +4899,7 @@ export enum WarehouseErrorCode {
 
 export type WarehouseFilterInput = {
     clickAndCollectOption?: InputMaybe<WarehouseClickAndCollectOptionEnum>;
-    ids?: InputMaybe<Array<InputMaybe<Scalars["ID"]>>>;
+    ids?: InputMaybe<Array<Scalars["ID"]>>;
     isPrivate?: InputMaybe<Scalars["Boolean"]>;
     search?: InputMaybe<Scalars["String"]>;
 };
@@ -3458,7 +4910,7 @@ export enum WarehouseSortField {
 }
 
 export type WarehouseSortingInput = {
-    /** Specifies the direction in which to sort product. */
+    /** Specifies the direction in which to sort products. */
     direction: OrderDirection;
     /** Sort warehouses by the selected field. */
     field: WarehouseSortField;
@@ -3467,11 +4919,23 @@ export type WarehouseSortingInput = {
 export type WarehouseUpdateInput = {
     /** Address of the warehouse. */
     address?: InputMaybe<AddressInput>;
-    /** New in mzawadie 3.1. Click and collect options: local, all or disabled */
+    /**
+     * Click and collect options: local, all or disabled.
+     *
+     * Added in Saleor 3.1.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
     clickAndCollectOption?: InputMaybe<WarehouseClickAndCollectOptionEnum>;
     /** The email address of the warehouse. */
     email?: InputMaybe<Scalars["String"]>;
-    /** New in mzawadie 3.1. Visibility of warehouse stocks */
+    /**
+     * Visibility of warehouse stocks.
+     *
+     * Added in Saleor 3.1.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
     isPrivate?: InputMaybe<Scalars["Boolean"]>;
     /** Warehouse name. */
     name?: InputMaybe<Scalars["String"]>;
@@ -3487,14 +4951,26 @@ export type WebhookCreateInput = {
     /**
      * The events that webhook wants to subscribe.
      *
-     * DEPRECATED: this field will be removed in mzawadie 4.0. Use `asyncEvents` or `syncEvents` instead.
+     * DEPRECATED: this field will be removed in Mzawadie 3.0. Use `asyncEvents` or `syncEvents` instead.
      */
-    events?: InputMaybe<Array<InputMaybe<WebhookEventTypeEnum>>>;
+    events?: InputMaybe<Array<WebhookEventTypeEnum>>;
     /** Determine if webhook will be set active or not. */
     isActive?: InputMaybe<Scalars["Boolean"]>;
     /** The name of the webhook. */
     name?: InputMaybe<Scalars["String"]>;
-    /** The secret key used to create a hash signature with each payload. */
+    /**
+     * Subscription query used to define a webhook payload.
+     *
+     * Added in Saleor 3.2.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
+    query?: InputMaybe<Scalars["String"]>;
+    /**
+     * The secret key used to create a hash signature with each payload.
+     *
+     * DEPRECATED: this field will be removed in Mzawadie 3.0. As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
+     */
     secretKey?: InputMaybe<Scalars["String"]>;
     /** The synchronous events that webhook wants to subscribe. */
     syncEvents?: InputMaybe<Array<WebhookEventTypeSyncEnum>>;
@@ -3513,8 +4989,48 @@ export enum WebhookErrorCode {
 
 /** Enum determining type of webhook. */
 export enum WebhookEventTypeAsyncEnum {
+    /** A new address created. */
+    ADDRESS_CREATED = "ADDRESS_CREATED",
+    /** An address deleted. */
+    ADDRESS_DELETED = "ADDRESS_DELETED",
+    /** An address updated. */
+    ADDRESS_UPDATED = "ADDRESS_UPDATED",
     /** All the events. */
     ANY_EVENTS = "ANY_EVENTS",
+    /** An app deleted. */
+    APP_DELETED = "APP_DELETED",
+    /** A new app installed. */
+    APP_INSTALLED = "APP_INSTALLED",
+    /** An app status is changed. */
+    APP_STATUS_CHANGED = "APP_STATUS_CHANGED",
+    /** An app updated. */
+    APP_UPDATED = "APP_UPDATED",
+    /** A new attribute is created. */
+    ATTRIBUTE_CREATED = "ATTRIBUTE_CREATED",
+    /** An attribute is deleted. */
+    ATTRIBUTE_DELETED = "ATTRIBUTE_DELETED",
+    /** An attribute is updated. */
+    ATTRIBUTE_UPDATED = "ATTRIBUTE_UPDATED",
+    /** A new attribute value is created. */
+    ATTRIBUTE_VALUE_CREATED = "ATTRIBUTE_VALUE_CREATED",
+    /** An attribute value is deleted. */
+    ATTRIBUTE_VALUE_DELETED = "ATTRIBUTE_VALUE_DELETED",
+    /** An attribute value is updated. */
+    ATTRIBUTE_VALUE_UPDATED = "ATTRIBUTE_VALUE_UPDATED",
+    /** A new category created. */
+    CATEGORY_CREATED = "CATEGORY_CREATED",
+    /** A category is deleted. */
+    CATEGORY_DELETED = "CATEGORY_DELETED",
+    /** A category is updated. */
+    CATEGORY_UPDATED = "CATEGORY_UPDATED",
+    /** A new channel created. */
+    CHANNEL_CREATED = "CHANNEL_CREATED",
+    /** A channel is deleted. */
+    CHANNEL_DELETED = "CHANNEL_DELETED",
+    /** A channel status is changed. */
+    CHANNEL_STATUS_CHANGED = "CHANNEL_STATUS_CHANGED",
+    /** A channel is updated. */
+    CHANNEL_UPDATED = "CHANNEL_UPDATED",
     /** A new checkout is created. */
     CHECKOUT_CREATED = "CHECKOUT_CREATED",
     /** A checkout is updated. It also triggers all updates related to the checkout. */
@@ -3527,23 +5043,52 @@ export enum WebhookEventTypeAsyncEnum {
     COLLECTION_UPDATED = "COLLECTION_UPDATED",
     /** A new customer account is created. */
     CUSTOMER_CREATED = "CUSTOMER_CREATED",
+    /** A customer account is deleted. */
+    CUSTOMER_DELETED = "CUSTOMER_DELETED",
     /** A customer account is updated. */
     CUSTOMER_UPDATED = "CUSTOMER_UPDATED",
+    /** A draft order is created. */
     DRAFT_ORDER_CREATED = "DRAFT_ORDER_CREATED",
+    /** A draft order is deleted. */
     DRAFT_ORDER_DELETED = "DRAFT_ORDER_DELETED",
+    /** A draft order is updated. */
     DRAFT_ORDER_UPDATED = "DRAFT_ORDER_UPDATED",
+    /** A fulfillment is approved. */
+    FULFILLMENT_APPROVED = "FULFILLMENT_APPROVED",
     /** A fulfillment is cancelled. */
     FULFILLMENT_CANCELED = "FULFILLMENT_CANCELED",
     /** A new fulfillment is created. */
     FULFILLMENT_CREATED = "FULFILLMENT_CREATED",
+    /** A new gift card created. */
+    GIFT_CARD_CREATED = "GIFT_CARD_CREATED",
+    /** A gift card is deleted. */
+    GIFT_CARD_DELETED = "GIFT_CARD_DELETED",
+    /** A gift card status is changed. */
+    GIFT_CARD_STATUS_CHANGED = "GIFT_CARD_STATUS_CHANGED",
+    /** A gift card is updated. */
+    GIFT_CARD_UPDATED = "GIFT_CARD_UPDATED",
     /** An invoice is deleted. */
     INVOICE_DELETED = "INVOICE_DELETED",
     /** An invoice for order requested. */
     INVOICE_REQUESTED = "INVOICE_REQUESTED",
     /** Invoice has been sent. */
     INVOICE_SENT = "INVOICE_SENT",
+    /** A new menu created. */
+    MENU_CREATED = "MENU_CREATED",
+    /** A menu is deleted. */
+    MENU_DELETED = "MENU_DELETED",
+    /** A new menu item created. */
+    MENU_ITEM_CREATED = "MENU_ITEM_CREATED",
+    /** A menu item is deleted. */
+    MENU_ITEM_DELETED = "MENU_ITEM_DELETED",
+    /** A menu item is updated. */
+    MENU_ITEM_UPDATED = "MENU_ITEM_UPDATED",
+    /** A menu is updated. */
+    MENU_UPDATED = "MENU_UPDATED",
     /** User notification triggered. */
     NOTIFY_USER = "NOTIFY_USER",
+    /** An observability event is created. */
+    OBSERVABILITY = "OBSERVABILITY",
     /** An order is cancelled. */
     ORDER_CANCELLED = "ORDER_CANCELLED",
     /** An order is confirmed (status change unconfirmed -> unfulfilled) by a staff user using the OrderConfirm mutation. It also triggers when the user completes the checkout and the shop setting `automatically_confirm_all_new_orders` is enabled. */
@@ -3560,110 +5105,403 @@ export enum WebhookEventTypeAsyncEnum {
     PAGE_CREATED = "PAGE_CREATED",
     /** A page is deleted. */
     PAGE_DELETED = "PAGE_DELETED",
+    /** A new page type is created. */
+    PAGE_TYPE_CREATED = "PAGE_TYPE_CREATED",
+    /** A page type is deleted. */
+    PAGE_TYPE_DELETED = "PAGE_TYPE_DELETED",
+    /** A page type is updated. */
+    PAGE_TYPE_UPDATED = "PAGE_TYPE_UPDATED",
     /** A page is updated. */
     PAGE_UPDATED = "PAGE_UPDATED",
+    /** A new permission group is created. */
+    PERMISSION_GROUP_CREATED = "PERMISSION_GROUP_CREATED",
+    /** A permission group is deleted. */
+    PERMISSION_GROUP_DELETED = "PERMISSION_GROUP_DELETED",
+    /** A permission group is updated. */
+    PERMISSION_GROUP_UPDATED = "PERMISSION_GROUP_UPDATED",
     /** A new product is created. */
     PRODUCT_CREATED = "PRODUCT_CREATED",
     /** A product is deleted. */
     PRODUCT_DELETED = "PRODUCT_DELETED",
     /** A product is updated. */
     PRODUCT_UPDATED = "PRODUCT_UPDATED",
+    /** A product variant is back in stock. */
     PRODUCT_VARIANT_BACK_IN_STOCK = "PRODUCT_VARIANT_BACK_IN_STOCK",
     /** A new product variant is created. */
     PRODUCT_VARIANT_CREATED = "PRODUCT_VARIANT_CREATED",
     /** A product variant is deleted. */
     PRODUCT_VARIANT_DELETED = "PRODUCT_VARIANT_DELETED",
+    /** A product variant is out of stock. */
     PRODUCT_VARIANT_OUT_OF_STOCK = "PRODUCT_VARIANT_OUT_OF_STOCK",
     /** A product variant is updated. */
     PRODUCT_VARIANT_UPDATED = "PRODUCT_VARIANT_UPDATED",
+    /** A sale is created. */
     SALE_CREATED = "SALE_CREATED",
+    /** A sale is deleted. */
     SALE_DELETED = "SALE_DELETED",
+    /** A sale is activated or deactivated. */
+    SALE_TOGGLE = "SALE_TOGGLE",
+    /** A sale is updated. */
     SALE_UPDATED = "SALE_UPDATED",
+    /** A new shipping price is created. */
+    SHIPPING_PRICE_CREATED = "SHIPPING_PRICE_CREATED",
+    /** A shipping price is deleted. */
+    SHIPPING_PRICE_DELETED = "SHIPPING_PRICE_DELETED",
+    /** A shipping price is updated. */
+    SHIPPING_PRICE_UPDATED = "SHIPPING_PRICE_UPDATED",
+    /** A new shipping zone is created. */
+    SHIPPING_ZONE_CREATED = "SHIPPING_ZONE_CREATED",
+    /** A shipping zone is deleted. */
+    SHIPPING_ZONE_DELETED = "SHIPPING_ZONE_DELETED",
+    /** A shipping zone is updated. */
+    SHIPPING_ZONE_UPDATED = "SHIPPING_ZONE_UPDATED",
+    /** A new staff user is created. */
+    STAFF_CREATED = "STAFF_CREATED",
+    /** A staff user is deleted. */
+    STAFF_DELETED = "STAFF_DELETED",
+    /** A staff user is updated. */
+    STAFF_UPDATED = "STAFF_UPDATED",
+    /** An action requested for transaction. */
+    TRANSACTION_ACTION_REQUEST = "TRANSACTION_ACTION_REQUEST",
+    /** A new translation is created. */
     TRANSLATION_CREATED = "TRANSLATION_CREATED",
+    /** A translation is updated. */
     TRANSLATION_UPDATED = "TRANSLATION_UPDATED",
+    /** A new voucher created. */
+    VOUCHER_CREATED = "VOUCHER_CREATED",
+    /** A voucher is deleted. */
+    VOUCHER_DELETED = "VOUCHER_DELETED",
+    /** A voucher is updated. */
+    VOUCHER_UPDATED = "VOUCHER_UPDATED",
+    /** A new warehouse created. */
+    WAREHOUSE_CREATED = "WAREHOUSE_CREATED",
+    /** A warehouse is deleted. */
+    WAREHOUSE_DELETED = "WAREHOUSE_DELETED",
+    /** A warehouse is updated. */
+    WAREHOUSE_UPDATED = "WAREHOUSE_UPDATED",
 }
 
 /** Enum determining type of webhook. */
 export enum WebhookEventTypeEnum {
+    /** A new address created. */
+    ADDRESS_CREATED = "ADDRESS_CREATED",
+    /** An address deleted. */
+    ADDRESS_DELETED = "ADDRESS_DELETED",
+    /** An address updated. */
+    ADDRESS_UPDATED = "ADDRESS_UPDATED",
+    /** All the events. */
     ANY_EVENTS = "ANY_EVENTS",
+    /** An app deleted. */
+    APP_DELETED = "APP_DELETED",
+    /** A new app installed. */
+    APP_INSTALLED = "APP_INSTALLED",
+    /** An app status is changed. */
+    APP_STATUS_CHANGED = "APP_STATUS_CHANGED",
+    /** An app updated. */
+    APP_UPDATED = "APP_UPDATED",
+    /** A new attribute is created. */
+    ATTRIBUTE_CREATED = "ATTRIBUTE_CREATED",
+    /** An attribute is deleted. */
+    ATTRIBUTE_DELETED = "ATTRIBUTE_DELETED",
+    /** An attribute is updated. */
+    ATTRIBUTE_UPDATED = "ATTRIBUTE_UPDATED",
+    /** A new attribute value is created. */
+    ATTRIBUTE_VALUE_CREATED = "ATTRIBUTE_VALUE_CREATED",
+    /** An attribute value is deleted. */
+    ATTRIBUTE_VALUE_DELETED = "ATTRIBUTE_VALUE_DELETED",
+    /** An attribute value is updated. */
+    ATTRIBUTE_VALUE_UPDATED = "ATTRIBUTE_VALUE_UPDATED",
+    /** A new category created. */
+    CATEGORY_CREATED = "CATEGORY_CREATED",
+    /** A category is deleted. */
+    CATEGORY_DELETED = "CATEGORY_DELETED",
+    /** A category is updated. */
+    CATEGORY_UPDATED = "CATEGORY_UPDATED",
+    /** A new channel created. */
+    CHANNEL_CREATED = "CHANNEL_CREATED",
+    /** A channel is deleted. */
+    CHANNEL_DELETED = "CHANNEL_DELETED",
+    /** A channel status is changed. */
+    CHANNEL_STATUS_CHANGED = "CHANNEL_STATUS_CHANGED",
+    /** A channel is updated. */
+    CHANNEL_UPDATED = "CHANNEL_UPDATED",
+    /**
+     * Event called for checkout tax calculation.
+     *
+     * Added in Saleor 3.6.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
+    CHECKOUT_CALCULATE_TAXES = "CHECKOUT_CALCULATE_TAXES",
+    /** A new checkout is created. */
     CHECKOUT_CREATED = "CHECKOUT_CREATED",
+    /** Filter shipping methods for checkout. */
+    CHECKOUT_FILTER_SHIPPING_METHODS = "CHECKOUT_FILTER_SHIPPING_METHODS",
+    /** A checkout is updated. It also triggers all updates related to the checkout. */
     CHECKOUT_UPDATED = "CHECKOUT_UPDATED",
+    /** A new collection is created. */
     COLLECTION_CREATED = "COLLECTION_CREATED",
+    /** A collection is deleted. */
     COLLECTION_DELETED = "COLLECTION_DELETED",
+    /** A collection is updated. */
     COLLECTION_UPDATED = "COLLECTION_UPDATED",
+    /** A new customer account is created. */
     CUSTOMER_CREATED = "CUSTOMER_CREATED",
+    /** A customer account is deleted. */
+    CUSTOMER_DELETED = "CUSTOMER_DELETED",
+    /** A customer account is updated. */
     CUSTOMER_UPDATED = "CUSTOMER_UPDATED",
+    /** A draft order is created. */
     DRAFT_ORDER_CREATED = "DRAFT_ORDER_CREATED",
+    /** A draft order is deleted. */
     DRAFT_ORDER_DELETED = "DRAFT_ORDER_DELETED",
+    /** A draft order is updated. */
     DRAFT_ORDER_UPDATED = "DRAFT_ORDER_UPDATED",
+    /** A fulfillment is approved. */
+    FULFILLMENT_APPROVED = "FULFILLMENT_APPROVED",
+    /** A fulfillment is cancelled. */
     FULFILLMENT_CANCELED = "FULFILLMENT_CANCELED",
+    /** A new fulfillment is created. */
     FULFILLMENT_CREATED = "FULFILLMENT_CREATED",
+    /** A new gift card created. */
+    GIFT_CARD_CREATED = "GIFT_CARD_CREATED",
+    /** A gift card is deleted. */
+    GIFT_CARD_DELETED = "GIFT_CARD_DELETED",
+    /** A gift card status is changed. */
+    GIFT_CARD_STATUS_CHANGED = "GIFT_CARD_STATUS_CHANGED",
+    /** A gift card is updated. */
+    GIFT_CARD_UPDATED = "GIFT_CARD_UPDATED",
+    /** An invoice is deleted. */
     INVOICE_DELETED = "INVOICE_DELETED",
+    /** An invoice for order requested. */
     INVOICE_REQUESTED = "INVOICE_REQUESTED",
+    /** Invoice has been sent. */
     INVOICE_SENT = "INVOICE_SENT",
+    /** A new menu created. */
+    MENU_CREATED = "MENU_CREATED",
+    /** A menu is deleted. */
+    MENU_DELETED = "MENU_DELETED",
+    /** A new menu item created. */
+    MENU_ITEM_CREATED = "MENU_ITEM_CREATED",
+    /** A menu item is deleted. */
+    MENU_ITEM_DELETED = "MENU_ITEM_DELETED",
+    /** A menu item is updated. */
+    MENU_ITEM_UPDATED = "MENU_ITEM_UPDATED",
+    /** A menu is updated. */
+    MENU_UPDATED = "MENU_UPDATED",
+    /** User notification triggered. */
     NOTIFY_USER = "NOTIFY_USER",
+    /** An observability event is created. */
+    OBSERVABILITY = "OBSERVABILITY",
+    /**
+     * Event called for order tax calculation.
+     *
+     * Added in Saleor 3.6.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
+    ORDER_CALCULATE_TAXES = "ORDER_CALCULATE_TAXES",
+    /** An order is cancelled. */
     ORDER_CANCELLED = "ORDER_CANCELLED",
+    /** An order is confirmed (status change unconfirmed -> unfulfilled) by a staff user using the OrderConfirm mutation. It also triggers when the user completes the checkout and the shop setting `automatically_confirm_all_new_orders` is enabled. */
     ORDER_CONFIRMED = "ORDER_CONFIRMED",
+    /** A new order is placed. */
     ORDER_CREATED = "ORDER_CREATED",
+    /** Filter shipping methods for order. */
+    ORDER_FILTER_SHIPPING_METHODS = "ORDER_FILTER_SHIPPING_METHODS",
+    /** An order is fulfilled. */
     ORDER_FULFILLED = "ORDER_FULFILLED",
+    /** Payment is made and an order is fully paid. */
     ORDER_FULLY_PAID = "ORDER_FULLY_PAID",
+    /** An order is updated; triggered for all changes related to an order; covers all other order webhooks, except for ORDER_CREATED. */
     ORDER_UPDATED = "ORDER_UPDATED",
+    /** A new page is created. */
     PAGE_CREATED = "PAGE_CREATED",
+    /** A page is deleted. */
     PAGE_DELETED = "PAGE_DELETED",
+    /** A new page type is created. */
+    PAGE_TYPE_CREATED = "PAGE_TYPE_CREATED",
+    /** A page type is deleted. */
+    PAGE_TYPE_DELETED = "PAGE_TYPE_DELETED",
+    /** A page type is updated. */
+    PAGE_TYPE_UPDATED = "PAGE_TYPE_UPDATED",
+    /** A page is updated. */
     PAGE_UPDATED = "PAGE_UPDATED",
+    /** Authorize payment. */
     PAYMENT_AUTHORIZE = "PAYMENT_AUTHORIZE",
+    /** Capture payment. */
     PAYMENT_CAPTURE = "PAYMENT_CAPTURE",
+    /** Confirm payment. */
     PAYMENT_CONFIRM = "PAYMENT_CONFIRM",
+    /** Listing available payment gateways. */
     PAYMENT_LIST_GATEWAYS = "PAYMENT_LIST_GATEWAYS",
+    /** Process payment. */
     PAYMENT_PROCESS = "PAYMENT_PROCESS",
+    /** Refund payment. */
     PAYMENT_REFUND = "PAYMENT_REFUND",
+    /** Void payment. */
     PAYMENT_VOID = "PAYMENT_VOID",
+    /** A new permission group is created. */
+    PERMISSION_GROUP_CREATED = "PERMISSION_GROUP_CREATED",
+    /** A permission group is deleted. */
+    PERMISSION_GROUP_DELETED = "PERMISSION_GROUP_DELETED",
+    /** A permission group is updated. */
+    PERMISSION_GROUP_UPDATED = "PERMISSION_GROUP_UPDATED",
+    /** A new product is created. */
     PRODUCT_CREATED = "PRODUCT_CREATED",
+    /** A product is deleted. */
     PRODUCT_DELETED = "PRODUCT_DELETED",
+    /** A product is updated. */
     PRODUCT_UPDATED = "PRODUCT_UPDATED",
+    /** A product variant is back in stock. */
     PRODUCT_VARIANT_BACK_IN_STOCK = "PRODUCT_VARIANT_BACK_IN_STOCK",
+    /** A new product variant is created. */
     PRODUCT_VARIANT_CREATED = "PRODUCT_VARIANT_CREATED",
+    /** A product variant is deleted. */
     PRODUCT_VARIANT_DELETED = "PRODUCT_VARIANT_DELETED",
+    /** A product variant is out of stock. */
     PRODUCT_VARIANT_OUT_OF_STOCK = "PRODUCT_VARIANT_OUT_OF_STOCK",
+    /** A product variant is updated. */
     PRODUCT_VARIANT_UPDATED = "PRODUCT_VARIANT_UPDATED",
+    /** A sale is created. */
     SALE_CREATED = "SALE_CREATED",
+    /** A sale is deleted. */
     SALE_DELETED = "SALE_DELETED",
+    /** A sale is activated or deactivated. */
+    SALE_TOGGLE = "SALE_TOGGLE",
+    /** A sale is updated. */
     SALE_UPDATED = "SALE_UPDATED",
+    /** Fetch external shipping methods for checkout. */
     SHIPPING_LIST_METHODS_FOR_CHECKOUT = "SHIPPING_LIST_METHODS_FOR_CHECKOUT",
+    /** A new shipping price is created. */
+    SHIPPING_PRICE_CREATED = "SHIPPING_PRICE_CREATED",
+    /** A shipping price is deleted. */
+    SHIPPING_PRICE_DELETED = "SHIPPING_PRICE_DELETED",
+    /** A shipping price is updated. */
+    SHIPPING_PRICE_UPDATED = "SHIPPING_PRICE_UPDATED",
+    /** A new shipping zone is created. */
+    SHIPPING_ZONE_CREATED = "SHIPPING_ZONE_CREATED",
+    /** A shipping zone is deleted. */
+    SHIPPING_ZONE_DELETED = "SHIPPING_ZONE_DELETED",
+    /** A shipping zone is updated. */
+    SHIPPING_ZONE_UPDATED = "SHIPPING_ZONE_UPDATED",
+    /** A new staff user is created. */
+    STAFF_CREATED = "STAFF_CREATED",
+    /** A staff user is deleted. */
+    STAFF_DELETED = "STAFF_DELETED",
+    /** A staff user is updated. */
+    STAFF_UPDATED = "STAFF_UPDATED",
+    /** An action requested for transaction. */
+    TRANSACTION_ACTION_REQUEST = "TRANSACTION_ACTION_REQUEST",
+    /** A new translation is created. */
     TRANSLATION_CREATED = "TRANSLATION_CREATED",
+    /** A translation is updated. */
     TRANSLATION_UPDATED = "TRANSLATION_UPDATED",
+    /** A new voucher created. */
+    VOUCHER_CREATED = "VOUCHER_CREATED",
+    /** A voucher is deleted. */
+    VOUCHER_DELETED = "VOUCHER_DELETED",
+    /** A voucher is updated. */
+    VOUCHER_UPDATED = "VOUCHER_UPDATED",
+    /** A new warehouse created. */
+    WAREHOUSE_CREATED = "WAREHOUSE_CREATED",
+    /** A warehouse is deleted. */
+    WAREHOUSE_DELETED = "WAREHOUSE_DELETED",
+    /** A warehouse is updated. */
+    WAREHOUSE_UPDATED = "WAREHOUSE_UPDATED",
 }
 
 /** Enum determining type of webhook. */
 export enum WebhookEventTypeSyncEnum {
+    /**
+     * Event called for checkout tax calculation.
+     *
+     * Added in Saleor 3.6.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
+    CHECKOUT_CALCULATE_TAXES = "CHECKOUT_CALCULATE_TAXES",
+    /** Filter shipping methods for checkout. */
+    CHECKOUT_FILTER_SHIPPING_METHODS = "CHECKOUT_FILTER_SHIPPING_METHODS",
+    /**
+     * Event called for order tax calculation.
+     *
+     * Added in Saleor 3.6.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
+    ORDER_CALCULATE_TAXES = "ORDER_CALCULATE_TAXES",
+    /** Filter shipping methods for order. */
+    ORDER_FILTER_SHIPPING_METHODS = "ORDER_FILTER_SHIPPING_METHODS",
+    /** Authorize payment. */
     PAYMENT_AUTHORIZE = "PAYMENT_AUTHORIZE",
+    /** Capture payment. */
     PAYMENT_CAPTURE = "PAYMENT_CAPTURE",
+    /** Confirm payment. */
     PAYMENT_CONFIRM = "PAYMENT_CONFIRM",
+    /** Listing available payment gateways. */
     PAYMENT_LIST_GATEWAYS = "PAYMENT_LIST_GATEWAYS",
+    /** Process payment. */
     PAYMENT_PROCESS = "PAYMENT_PROCESS",
+    /** Refund payment. */
     PAYMENT_REFUND = "PAYMENT_REFUND",
+    /** Void payment. */
     PAYMENT_VOID = "PAYMENT_VOID",
+    /** Fetch external shipping methods for checkout. */
     SHIPPING_LIST_METHODS_FOR_CHECKOUT = "SHIPPING_LIST_METHODS_FOR_CHECKOUT",
 }
 
 /** An enumeration. */
 export enum WebhookSampleEventTypeEnum {
+    ADDRESS_CREATED = "ADDRESS_CREATED",
+    ADDRESS_DELETED = "ADDRESS_DELETED",
+    ADDRESS_UPDATED = "ADDRESS_UPDATED",
+    APP_DELETED = "APP_DELETED",
+    APP_INSTALLED = "APP_INSTALLED",
+    APP_STATUS_CHANGED = "APP_STATUS_CHANGED",
+    APP_UPDATED = "APP_UPDATED",
+    ATTRIBUTE_CREATED = "ATTRIBUTE_CREATED",
+    ATTRIBUTE_DELETED = "ATTRIBUTE_DELETED",
+    ATTRIBUTE_UPDATED = "ATTRIBUTE_UPDATED",
+    ATTRIBUTE_VALUE_CREATED = "ATTRIBUTE_VALUE_CREATED",
+    ATTRIBUTE_VALUE_DELETED = "ATTRIBUTE_VALUE_DELETED",
+    ATTRIBUTE_VALUE_UPDATED = "ATTRIBUTE_VALUE_UPDATED",
+    CATEGORY_CREATED = "CATEGORY_CREATED",
+    CATEGORY_DELETED = "CATEGORY_DELETED",
+    CATEGORY_UPDATED = "CATEGORY_UPDATED",
+    CHANNEL_CREATED = "CHANNEL_CREATED",
+    CHANNEL_DELETED = "CHANNEL_DELETED",
+    CHANNEL_STATUS_CHANGED = "CHANNEL_STATUS_CHANGED",
+    CHANNEL_UPDATED = "CHANNEL_UPDATED",
     CHECKOUT_CREATED = "CHECKOUT_CREATED",
     CHECKOUT_UPDATED = "CHECKOUT_UPDATED",
     COLLECTION_CREATED = "COLLECTION_CREATED",
     COLLECTION_DELETED = "COLLECTION_DELETED",
     COLLECTION_UPDATED = "COLLECTION_UPDATED",
     CUSTOMER_CREATED = "CUSTOMER_CREATED",
+    CUSTOMER_DELETED = "CUSTOMER_DELETED",
     CUSTOMER_UPDATED = "CUSTOMER_UPDATED",
     DRAFT_ORDER_CREATED = "DRAFT_ORDER_CREATED",
     DRAFT_ORDER_DELETED = "DRAFT_ORDER_DELETED",
     DRAFT_ORDER_UPDATED = "DRAFT_ORDER_UPDATED",
+    FULFILLMENT_APPROVED = "FULFILLMENT_APPROVED",
     FULFILLMENT_CANCELED = "FULFILLMENT_CANCELED",
     FULFILLMENT_CREATED = "FULFILLMENT_CREATED",
+    GIFT_CARD_CREATED = "GIFT_CARD_CREATED",
+    GIFT_CARD_DELETED = "GIFT_CARD_DELETED",
+    GIFT_CARD_STATUS_CHANGED = "GIFT_CARD_STATUS_CHANGED",
+    GIFT_CARD_UPDATED = "GIFT_CARD_UPDATED",
     INVOICE_DELETED = "INVOICE_DELETED",
     INVOICE_REQUESTED = "INVOICE_REQUESTED",
     INVOICE_SENT = "INVOICE_SENT",
+    MENU_CREATED = "MENU_CREATED",
+    MENU_DELETED = "MENU_DELETED",
+    MENU_ITEM_CREATED = "MENU_ITEM_CREATED",
+    MENU_ITEM_DELETED = "MENU_ITEM_DELETED",
+    MENU_ITEM_UPDATED = "MENU_ITEM_UPDATED",
+    MENU_UPDATED = "MENU_UPDATED",
     NOTIFY_USER = "NOTIFY_USER",
+    OBSERVABILITY = "OBSERVABILITY",
     ORDER_CANCELLED = "ORDER_CANCELLED",
     ORDER_CONFIRMED = "ORDER_CONFIRMED",
     ORDER_CREATED = "ORDER_CREATED",
@@ -3672,7 +5510,13 @@ export enum WebhookSampleEventTypeEnum {
     ORDER_UPDATED = "ORDER_UPDATED",
     PAGE_CREATED = "PAGE_CREATED",
     PAGE_DELETED = "PAGE_DELETED",
+    PAGE_TYPE_CREATED = "PAGE_TYPE_CREATED",
+    PAGE_TYPE_DELETED = "PAGE_TYPE_DELETED",
+    PAGE_TYPE_UPDATED = "PAGE_TYPE_UPDATED",
     PAGE_UPDATED = "PAGE_UPDATED",
+    PERMISSION_GROUP_CREATED = "PERMISSION_GROUP_CREATED",
+    PERMISSION_GROUP_DELETED = "PERMISSION_GROUP_DELETED",
+    PERMISSION_GROUP_UPDATED = "PERMISSION_GROUP_UPDATED",
     PRODUCT_CREATED = "PRODUCT_CREATED",
     PRODUCT_DELETED = "PRODUCT_DELETED",
     PRODUCT_UPDATED = "PRODUCT_UPDATED",
@@ -3683,9 +5527,26 @@ export enum WebhookSampleEventTypeEnum {
     PRODUCT_VARIANT_UPDATED = "PRODUCT_VARIANT_UPDATED",
     SALE_CREATED = "SALE_CREATED",
     SALE_DELETED = "SALE_DELETED",
+    SALE_TOGGLE = "SALE_TOGGLE",
     SALE_UPDATED = "SALE_UPDATED",
+    SHIPPING_PRICE_CREATED = "SHIPPING_PRICE_CREATED",
+    SHIPPING_PRICE_DELETED = "SHIPPING_PRICE_DELETED",
+    SHIPPING_PRICE_UPDATED = "SHIPPING_PRICE_UPDATED",
+    SHIPPING_ZONE_CREATED = "SHIPPING_ZONE_CREATED",
+    SHIPPING_ZONE_DELETED = "SHIPPING_ZONE_DELETED",
+    SHIPPING_ZONE_UPDATED = "SHIPPING_ZONE_UPDATED",
+    STAFF_CREATED = "STAFF_CREATED",
+    STAFF_DELETED = "STAFF_DELETED",
+    STAFF_UPDATED = "STAFF_UPDATED",
+    TRANSACTION_ACTION_REQUEST = "TRANSACTION_ACTION_REQUEST",
     TRANSLATION_CREATED = "TRANSLATION_CREATED",
     TRANSLATION_UPDATED = "TRANSLATION_UPDATED",
+    VOUCHER_CREATED = "VOUCHER_CREATED",
+    VOUCHER_DELETED = "VOUCHER_DELETED",
+    VOUCHER_UPDATED = "VOUCHER_UPDATED",
+    WAREHOUSE_CREATED = "WAREHOUSE_CREATED",
+    WAREHOUSE_DELETED = "WAREHOUSE_DELETED",
+    WAREHOUSE_UPDATED = "WAREHOUSE_UPDATED",
 }
 
 export type WebhookUpdateInput = {
@@ -3696,14 +5557,26 @@ export type WebhookUpdateInput = {
     /**
      * The events that webhook wants to subscribe.
      *
-     * DEPRECATED: this field will be removed in mzawadie 4.0. Use `asyncEvents` or `syncEvents` instead.
+     * DEPRECATED: this field will be removed in Mzawadie 3.0. Use `asyncEvents` or `syncEvents` instead.
      */
-    events?: InputMaybe<Array<InputMaybe<WebhookEventTypeEnum>>>;
+    events?: InputMaybe<Array<WebhookEventTypeEnum>>;
     /** Determine if webhook will be set active or not. */
     isActive?: InputMaybe<Scalars["Boolean"]>;
     /** The new name of the webhook. */
     name?: InputMaybe<Scalars["String"]>;
-    /** Use to create a hash signature with each payload. */
+    /**
+     * Subscription query used to define a webhook payload.
+     *
+     * Added in Saleor 3.2.
+     *
+     * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+     */
+    query?: InputMaybe<Scalars["String"]>;
+    /**
+     * Use to create a hash signature with each payload.
+     *
+     * DEPRECATED: this field will be removed in Mzawadie 3.0. As of Saleor 3.5, webhook payloads default to signing using a verifiable JWS.
+     */
     secretKey?: InputMaybe<Scalars["String"]>;
     /** The synchronous events that webhook wants to subscribe. */
     syncEvents?: InputMaybe<Array<WebhookEventTypeSyncEnum>>;
@@ -3789,12 +5662,8 @@ export type ShopInfoQuery = {
         countries: Array<{ __typename: "CountryDisplay"; country: string; code: string }>;
         defaultCountry: { __typename: "CountryDisplay"; country: string; code: string } | null;
         domain: { __typename: "Domain"; host: string; url: string };
-        languages: Array<{
-            __typename: "LanguageDisplay";
-            code: LanguageCodeEnum;
-            language: string;
-        } | null>;
-        permissions: Array<{ __typename: "Permission"; code: PermissionEnum; name: string } | null>;
+        languages: Array<{ __typename: "LanguageDisplay"; code: LanguageCodeEnum; language: string }>;
+        permissions: Array<{ __typename: "Permission"; code: PermissionEnum; name: string }>;
     };
 };
 
@@ -3869,7 +5738,7 @@ export type CheckOrderInvoicesStatusQuery = {
             createdAt: any;
             url: string | null;
             status: JobStatusEnum;
-        } | null> | null;
+        }>;
     } | null;
 };
 
@@ -3916,26 +5785,40 @@ export type AppFragment = {
     type: AppTypeEnum | null;
     homepageUrl: string | null;
     appUrl: string | null;
+    manifestUrl: string | null;
     configurationUrl: string | null;
     supportUrl: string | null;
     version: string | null;
     accessToken: string | null;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
     tokens: Array<{
         __typename: "AppToken";
         authToken: string | null;
         id: string;
         name: string | null;
-    } | null> | null;
+    }> | null;
     webhooks: Array<{
         __typename: "Webhook";
         id: string;
         name: string;
         isActive: boolean;
         app: { __typename: "App"; id: string; name: string | null };
-    } | null> | null;
+    }> | null;
 };
+
+export type AppListItemFragment = {
+    __typename: "App";
+    id: string;
+    name: string | null;
+    isActive: boolean | null;
+    type: AppTypeEnum | null;
+    appUrl: string | null;
+    manifestUrl: string | null;
+    permissions: Array<{ __typename: "Permission"; name: string; code: PermissionEnum }> | null;
+};
+
+export type AppPermissionFragment = { __typename: "Permission"; name: string; code: PermissionEnum };
 
 export type AttributeValueFragment = {
     __typename: "AttributeValue";
@@ -3992,8 +5875,8 @@ export type AttributeDetailsFragment = {
     visibleInStorefront: boolean;
     filterableInDashboard: boolean;
     filterableInStorefront: boolean;
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 export type AttributeValueListFragment = {
@@ -4044,11 +5927,7 @@ export type UserFragment = {
     firstName: string;
     lastName: string;
     isStaff: boolean;
-    userPermissions: Array<{
-        __typename: "UserPermission";
-        code: PermissionEnum;
-        name: string;
-    } | null> | null;
+    userPermissions: Array<{ __typename: "UserPermission"; code: PermissionEnum; name: string }> | null;
     avatar: { __typename: "Image"; url: string } | null;
 };
 
@@ -4072,8 +5951,8 @@ export type CategoryDetailsFragment = {
     seoTitle: string | null;
     backgroundImage: { __typename: "Image"; alt: string | null; url: string } | null;
     parent: { __typename: "Category"; id: string } | null;
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 export type ChannelErrorFragment = {
@@ -4131,8 +6010,8 @@ export type CollectionDetailsFragment = {
         publicationDate: any | null;
         channel: { __typename: "Channel"; id: string; name: string };
     }> | null;
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 export type CollectionProductFragment = {
@@ -4200,8 +6079,8 @@ export type CustomerDetailsFragment = {
         streetAddress2: string;
         country: { __typename: "CountryDisplay"; code: string; country: string };
     } | null;
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 export type CustomerAddressesFragment = {
@@ -4224,7 +6103,7 @@ export type CustomerAddressesFragment = {
         streetAddress1: string;
         streetAddress2: string;
         country: { __typename: "CountryDisplay"; code: string; country: string };
-    } | null> | null;
+    }>;
     defaultBillingAddress: { __typename: "Address"; id: string } | null;
     defaultShippingAddress: { __typename: "Address"; id: string } | null;
 };
@@ -4239,12 +6118,12 @@ export type SaleFragment = {
     channelListings: Array<{
         __typename: "SaleChannelListing";
         id: string;
-        discountValue: any;
+        discountValue: number;
         currency: string;
         channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
     }> | null;
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 export type SaleDetailsFragment = {
@@ -4373,12 +6252,12 @@ export type SaleDetailsFragment = {
     channelListings: Array<{
         __typename: "SaleChannelListing";
         id: string;
-        discountValue: any;
+        discountValue: number;
         currency: string;
         channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
     }> | null;
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 export type VoucherFragment = {
@@ -4391,17 +6270,17 @@ export type VoucherFragment = {
     type: VoucherTypeEnum;
     discountValueType: DiscountValueTypeEnum;
     minCheckoutItemsQuantity: number | null;
-    countries: Array<{ __typename: "CountryDisplay"; code: string; country: string } | null> | null;
+    countries: Array<{ __typename: "CountryDisplay"; code: string; country: string }> | null;
     channelListings: Array<{
         __typename: "VoucherChannelListing";
         id: string;
-        discountValue: any;
+        discountValue: number;
         currency: string;
         channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
         minSpent: { __typename: "Money"; amount: number; currency: string } | null;
     }> | null;
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 export type VoucherDetailsFragment = {
@@ -4494,17 +6373,17 @@ export type VoucherDetailsFragment = {
             startCursor: string | null;
         };
     } | null;
-    countries: Array<{ __typename: "CountryDisplay"; code: string; country: string } | null> | null;
+    countries: Array<{ __typename: "CountryDisplay"; code: string; country: string }> | null;
     channelListings: Array<{
         __typename: "VoucherChannelListing";
         id: string;
-        discountValue: any;
+        discountValue: number;
         currency: string;
         channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
         minSpent: { __typename: "Money"; amount: number; currency: string } | null;
     }> | null;
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 export type AttributeErrorFragment = {
@@ -4983,8 +6862,8 @@ export type GiftCardDataFragment = {
     initialBalance: { __typename: "Money"; amount: number; currency: string } | null;
     currentBalance: { __typename: "Money"; amount: number; currency: string } | null;
     tags: Array<{ __typename: "GiftCardTag"; name: string }>;
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 export type CustomerGiftCardFragment = {
@@ -5000,152 +6879,164 @@ export type MetadataItemFragment = { __typename: "MetadataItem"; key: string; va
 
 type Metadata_App_Fragment = {
     __typename: "App";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_Attribute_Fragment = {
     __typename: "Attribute";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_Category_Fragment = {
     __typename: "Category";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_Checkout_Fragment = {
     __typename: "Checkout";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_Collection_Fragment = {
     __typename: "Collection";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_DigitalContent_Fragment = {
     __typename: "DigitalContent";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_Fulfillment_Fragment = {
     __typename: "Fulfillment";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_GiftCard_Fragment = {
     __typename: "GiftCard";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_Invoice_Fragment = {
     __typename: "Invoice";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_Menu_Fragment = {
     __typename: "Menu";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_MenuItem_Fragment = {
     __typename: "MenuItem";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_Order_Fragment = {
     __typename: "Order";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+};
+
+type Metadata_OrderLine_Fragment = {
+    __typename: "OrderLine";
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_Page_Fragment = {
     __typename: "Page";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_PageType_Fragment = {
     __typename: "PageType";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_Payment_Fragment = {
     __typename: "Payment";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_Product_Fragment = {
     __typename: "Product";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_ProductType_Fragment = {
     __typename: "ProductType";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_ProductVariant_Fragment = {
     __typename: "ProductVariant";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_Sale_Fragment = {
     __typename: "Sale";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_ShippingMethod_Fragment = {
     __typename: "ShippingMethod";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_ShippingMethodType_Fragment = {
     __typename: "ShippingMethodType";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_ShippingZone_Fragment = {
     __typename: "ShippingZone";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+};
+
+type Metadata_TransactionItem_Fragment = {
+    __typename: "TransactionItem";
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_User_Fragment = {
     __typename: "User";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_Voucher_Fragment = {
     __typename: "Voucher";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 type Metadata_Warehouse_Fragment = {
     __typename: "Warehouse";
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 export type MetadataFragment =
@@ -5161,6 +7052,7 @@ export type MetadataFragment =
     | Metadata_Menu_Fragment
     | Metadata_MenuItem_Fragment
     | Metadata_Order_Fragment
+    | Metadata_OrderLine_Fragment
     | Metadata_Page_Fragment
     | Metadata_PageType_Fragment
     | Metadata_Payment_Fragment
@@ -5171,6 +7063,7 @@ export type MetadataFragment =
     | Metadata_ShippingMethod_Fragment
     | Metadata_ShippingMethodType_Fragment
     | Metadata_ShippingZone_Fragment
+    | Metadata_TransactionItem_Fragment
     | Metadata_User_Fragment
     | Metadata_Voucher_Fragment
     | Metadata_Warehouse_Fragment;
@@ -5179,7 +7072,7 @@ export type MenuFragment = {
     __typename: "Menu";
     id: string;
     name: string;
-    items: Array<{ __typename: "MenuItem"; id: string } | null> | null;
+    items: Array<{ __typename: "MenuItem"; id: string }> | null;
 };
 
 export type MenuItemFragment = {
@@ -5238,27 +7131,27 @@ export type MenuItemNestedFragment = {
                             category: { __typename: "Category"; id: string; name: string } | null;
                             collection: { __typename: "Collection"; id: string; name: string } | null;
                             page: { __typename: "Page"; id: string; title: string } | null;
-                        } | null> | null;
+                        }> | null;
                         category: { __typename: "Category"; id: string; name: string } | null;
                         collection: { __typename: "Collection"; id: string; name: string } | null;
                         page: { __typename: "Page"; id: string; title: string } | null;
-                    } | null> | null;
+                    }> | null;
                     category: { __typename: "Category"; id: string; name: string } | null;
                     collection: { __typename: "Collection"; id: string; name: string } | null;
                     page: { __typename: "Page"; id: string; title: string } | null;
-                } | null> | null;
+                }> | null;
                 category: { __typename: "Category"; id: string; name: string } | null;
                 collection: { __typename: "Collection"; id: string; name: string } | null;
                 page: { __typename: "Page"; id: string; title: string } | null;
-            } | null> | null;
+            }> | null;
             category: { __typename: "Category"; id: string; name: string } | null;
             collection: { __typename: "Collection"; id: string; name: string } | null;
             page: { __typename: "Page"; id: string; title: string } | null;
-        } | null> | null;
+        }> | null;
         category: { __typename: "Category"; id: string; name: string } | null;
         collection: { __typename: "Collection"; id: string; name: string } | null;
         page: { __typename: "Page"; id: string; title: string } | null;
-    } | null> | null;
+    }> | null;
     category: { __typename: "Category"; id: string; name: string } | null;
     collection: { __typename: "Collection"; id: string; name: string } | null;
     page: { __typename: "Page"; id: string; title: string } | null;
@@ -5317,31 +7210,31 @@ export type MenuDetailsFragment = {
                                     name: string;
                                 } | null;
                                 page: { __typename: "Page"; id: string; title: string } | null;
-                            } | null> | null;
+                            }> | null;
                             category: { __typename: "Category"; id: string; name: string } | null;
                             collection: { __typename: "Collection"; id: string; name: string } | null;
                             page: { __typename: "Page"; id: string; title: string } | null;
-                        } | null> | null;
+                        }> | null;
                         category: { __typename: "Category"; id: string; name: string } | null;
                         collection: { __typename: "Collection"; id: string; name: string } | null;
                         page: { __typename: "Page"; id: string; title: string } | null;
-                    } | null> | null;
+                    }> | null;
                     category: { __typename: "Category"; id: string; name: string } | null;
                     collection: { __typename: "Collection"; id: string; name: string } | null;
                     page: { __typename: "Page"; id: string; title: string } | null;
-                } | null> | null;
+                }> | null;
                 category: { __typename: "Category"; id: string; name: string } | null;
                 collection: { __typename: "Collection"; id: string; name: string } | null;
                 page: { __typename: "Page"; id: string; title: string } | null;
-            } | null> | null;
+            }> | null;
             category: { __typename: "Category"; id: string; name: string } | null;
             collection: { __typename: "Collection"; id: string; name: string } | null;
             page: { __typename: "Page"; id: string; title: string } | null;
-        } | null> | null;
+        }> | null;
         category: { __typename: "Category"; id: string; name: string } | null;
         collection: { __typename: "Collection"; id: string; name: string } | null;
         page: { __typename: "Page"; id: string; title: string } | null;
-    } | null> | null;
+    }> | null;
 };
 
 export type OrderEventFragment = {
@@ -5367,7 +7260,7 @@ export type OrderEventFragment = {
         amount: { __typename: "Money"; amount: number; currency: string } | null;
         oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
     } | null;
-    relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+    relatedOrder: { __typename: "Order"; id: string; number: string } | null;
     user: { __typename: "User"; id: string; email: string; firstName: string; lastName: string } | null;
     app: { __typename: "App"; id: string; name: string | null; appUrl: string | null } | null;
     lines: Array<{
@@ -5390,7 +7283,7 @@ export type OrderEventFragment = {
             productName: string;
             variantName: string;
         } | null;
-    } | null> | null;
+    }> | null;
 };
 
 export type OrderLineFragment = {
@@ -5405,11 +7298,25 @@ export type OrderLineFragment = {
     unitDiscountValue: any;
     unitDiscountReason: string | null;
     unitDiscountType: DiscountValueTypeEnum | null;
+    allocations: Array<{
+        __typename: "Allocation";
+        id: string;
+        quantity: number;
+        warehouse: { __typename: "Warehouse"; id: string; name: string };
+    }> | null;
     variant: {
         __typename: "ProductVariant";
         id: string;
         quantityAvailable: number | null;
         preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+        stocks: Array<{
+            __typename: "Stock";
+            id: string;
+            quantity: number;
+            quantityAllocated: number;
+            warehouse: { __typename: "Warehouse"; id: string; name: string };
+        }> | null;
+        product: { __typename: "Product"; id: string; isAvailableForPurchase: boolean | null };
     } | null;
     unitDiscount: { __typename: "Money"; amount: number; currency: string };
     undiscountedUnitPrice: {
@@ -5460,11 +7367,25 @@ export type FulfillmentFragment = {
             unitDiscountValue: any;
             unitDiscountReason: string | null;
             unitDiscountType: DiscountValueTypeEnum | null;
+            allocations: Array<{
+                __typename: "Allocation";
+                id: string;
+                quantity: number;
+                warehouse: { __typename: "Warehouse"; id: string; name: string };
+            }> | null;
             variant: {
                 __typename: "ProductVariant";
                 id: string;
                 quantityAvailable: number | null;
                 preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                stocks: Array<{
+                    __typename: "Stock";
+                    id: string;
+                    quantity: number;
+                    quantityAllocated: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
+                product: { __typename: "Product"; id: string; isAvailableForPurchase: boolean | null };
             } | null;
             unitDiscount: { __typename: "Money"; amount: number; currency: string };
             undiscountedUnitPrice: {
@@ -5480,7 +7401,7 @@ export type FulfillmentFragment = {
             };
             thumbnail: { __typename: "Image"; url: string } | null;
         } | null;
-    } | null> | null;
+    }> | null;
     warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
 };
 
@@ -5501,13 +7422,13 @@ export type OrderDetailsFragment = {
     canFinalize: boolean;
     created: any;
     customerNote: string;
-    number: string | null;
+    number: string;
     isPaid: boolean;
     paymentStatus: PaymentChargeStatusEnum;
     shippingMethodName: string | null;
     collectionPointName: string | null;
     status: OrderStatus;
-    actions: Array<OrderAction | null>;
+    actions: Array<OrderAction>;
     userEmail: string | null;
     billingAddress: {
         __typename: "Address";
@@ -5539,7 +7460,7 @@ export type OrderDetailsFragment = {
                 oldCurrentBalance: { __typename: "Money"; amount: number; currency: string } | null;
             } | null;
         }>;
-    } | null> | null;
+    }>;
     discounts: Array<{
         __typename: "OrderDiscount";
         id: string;
@@ -5548,7 +7469,7 @@ export type OrderDetailsFragment = {
         reason: string | null;
         calculationMode: DiscountValueTypeEnum;
         amount: { __typename: "Money"; amount: number; currency: string };
-    }> | null;
+    }>;
     events: Array<{
         __typename: "OrderEvent";
         id: string;
@@ -5572,7 +7493,7 @@ export type OrderDetailsFragment = {
             amount: { __typename: "Money"; amount: number; currency: string } | null;
             oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
         } | null;
-        relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+        relatedOrder: { __typename: "Order"; id: string; number: string } | null;
         user: {
             __typename: "User";
             id: string;
@@ -5601,8 +7522,8 @@ export type OrderDetailsFragment = {
                 productName: string;
                 variantName: string;
             } | null;
-        } | null> | null;
-    } | null> | null;
+        }> | null;
+    }>;
     fulfillments: Array<{
         __typename: "Fulfillment";
         id: string;
@@ -5625,11 +7546,29 @@ export type OrderDetailsFragment = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -5645,9 +7584,9 @@ export type OrderDetailsFragment = {
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
             } | null;
-        } | null> | null;
+        }> | null;
         warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-    } | null>;
+    }>;
     lines: Array<{
         __typename: "OrderLine";
         id: string;
@@ -5660,11 +7599,25 @@ export type OrderDetailsFragment = {
         unitDiscountValue: any;
         unitDiscountReason: string | null;
         unitDiscountType: DiscountValueTypeEnum | null;
+        allocations: Array<{
+            __typename: "Allocation";
+            id: string;
+            quantity: number;
+            warehouse: { __typename: "Warehouse"; id: string; name: string };
+        }> | null;
         variant: {
             __typename: "ProductVariant";
             id: string;
             quantityAvailable: number | null;
             preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+            stocks: Array<{
+                __typename: "Stock";
+                id: string;
+                quantity: number;
+                quantityAllocated: number;
+                warehouse: { __typename: "Warehouse"; id: string; name: string };
+            }> | null;
+            product: { __typename: "Product"; id: string; isAvailableForPurchase: boolean | null };
         } | null;
         unitDiscount: { __typename: "Money"; amount: number; currency: string };
         undiscountedUnitPrice: {
@@ -5679,7 +7632,7 @@ export type OrderDetailsFragment = {
             net: { __typename: "Money"; amount: number; currency: string };
         };
         thumbnail: { __typename: "Image"; url: string } | null;
-    } | null>;
+    }>;
     shippingAddress: {
         __typename: "Address";
         city: string;
@@ -5721,6 +7674,7 @@ export type OrderDetailsFragment = {
     };
     totalAuthorized: { __typename: "Money"; amount: number; currency: string };
     totalCaptured: { __typename: "Money"; amount: number; currency: string };
+    totalBalance: { __typename: "Money"; amount: number; currency: string };
     undiscountedTotal: {
         __typename: "TaxedMoney";
         net: { __typename: "Money"; amount: number; currency: string };
@@ -5734,7 +7688,7 @@ export type OrderDetailsFragment = {
         active: boolean;
         message: string | null;
         price: { __typename: "Money"; amount: number; currency: string };
-    } | null> | null;
+    }>;
     invoices: Array<{
         __typename: "Invoice";
         id: string;
@@ -5742,7 +7696,7 @@ export type OrderDetailsFragment = {
         createdAt: any;
         url: string | null;
         status: JobStatusEnum;
-    } | null> | null;
+    }>;
     channel: {
         __typename: "Channel";
         isActive: boolean;
@@ -5752,8 +7706,8 @@ export type OrderDetailsFragment = {
         slug: string;
         defaultCountry: { __typename: "CountryDisplay"; code: string };
     };
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 export type OrderSettingsFragment = {
@@ -5766,6 +7720,64 @@ export type ShopOrderSettingsFragment = {
     __typename: "Shop";
     fulfillmentAutoApprove: boolean;
     fulfillmentAllowUnpaid: boolean;
+};
+
+export type OrderFulfillLineFragment = {
+    __typename: "OrderLine";
+    id: string;
+    isShippingRequired: boolean;
+    productName: string;
+    quantity: number;
+    quantityFulfilled: number;
+    quantityToFulfill: number;
+    allocations: Array<{
+        __typename: "Allocation";
+        id: string;
+        quantity: number;
+        warehouse: { __typename: "Warehouse"; id: string; name: string };
+    }> | null;
+    variant: {
+        __typename: "ProductVariant";
+        id: string;
+        name: string;
+        sku: string | null;
+        trackInventory: boolean;
+        preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+        attributes: Array<{
+            __typename: "SelectedAttribute";
+            values: Array<{ __typename: "AttributeValue"; id: string; name: string | null }>;
+        }>;
+        stocks: Array<{
+            __typename: "Stock";
+            id: string;
+            quantity: number;
+            quantityAllocated: number;
+            warehouse: { __typename: "Warehouse"; id: string; name: string };
+        }> | null;
+    } | null;
+    thumbnail: { __typename: "Image"; url: string } | null;
+};
+
+export type OrderLineStockDataFragment = {
+    __typename: "OrderLine";
+    id: string;
+    quantity: number;
+    quantityToFulfill: number;
+    allocations: Array<{
+        __typename: "Allocation";
+        quantity: number;
+        warehouse: { __typename: "Warehouse"; id: string };
+    }> | null;
+    variant: {
+        __typename: "ProductVariant";
+        stocks: Array<{
+            __typename: "Stock";
+            id: string;
+            quantity: number;
+            quantityAllocated: number;
+            warehouse: { __typename: "Warehouse"; id: string; name: string };
+        }> | null;
+    } | null;
 };
 
 export type PageInfoFragment = {
@@ -5799,9 +7811,9 @@ export type PageTypeDetailsFragment = {
         filterableInStorefront: boolean;
         unit: MeasurementUnitsEnum | null;
         inputType: AttributeInputTypeEnum | null;
-    } | null> | null;
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    }> | null;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 export type PageFragment = {
@@ -5863,7 +7875,7 @@ export type PageSelectedAttributeFragment = {
         dateTime: any | null;
         value: string | null;
         file: { __typename: "File"; url: string; contentType: string | null } | null;
-    } | null>;
+    }>;
 };
 
 export type PageAttributesFragment = {
@@ -5919,7 +7931,7 @@ export type PageAttributesFragment = {
             dateTime: any | null;
             value: string | null;
             file: { __typename: "File"; url: string; contentType: string | null } | null;
-        } | null>;
+        }>;
     }>;
     pageType: {
         __typename: "PageType";
@@ -5959,7 +7971,7 @@ export type PageAttributesFragment = {
                     };
                 }>;
             } | null;
-        } | null> | null;
+        }> | null;
     };
 };
 
@@ -6024,7 +8036,7 @@ export type PageDetailsFragment = {
             dateTime: any | null;
             value: string | null;
             file: { __typename: "File"; url: string; contentType: string | null } | null;
-        } | null>;
+        }>;
     }>;
     pageType: {
         __typename: "PageType";
@@ -6064,10 +8076,10 @@ export type PageDetailsFragment = {
                     };
                 }>;
             } | null;
-        } | null> | null;
+        }> | null;
     };
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 export type PermissionGroupFragment = {
@@ -6075,7 +8087,7 @@ export type PermissionGroupFragment = {
     id: string;
     name: string;
     userCanManage: boolean;
-    users: Array<{ __typename: "User"; id: string; firstName: string; lastName: string } | null> | null;
+    users: Array<{ __typename: "User"; id: string; firstName: string; lastName: string }> | null;
 };
 
 export type PermissionFragment = { __typename: "Permission"; code: PermissionEnum; name: string };
@@ -6095,7 +8107,7 @@ export type PermissionGroupDetailsFragment = {
     id: string;
     name: string;
     userCanManage: boolean;
-    permissions: Array<{ __typename: "Permission"; code: PermissionEnum; name: string } | null> | null;
+    permissions: Array<{ __typename: "Permission"; code: PermissionEnum; name: string }> | null;
     users: Array<{
         __typename: "User";
         id: string;
@@ -6104,7 +8116,7 @@ export type PermissionGroupDetailsFragment = {
         email: string;
         isActive: boolean;
         avatar: { __typename: "Image"; url: string } | null;
-    } | null> | null;
+    }> | null;
 };
 
 export type ConfigurationItemFragment = {
@@ -6132,7 +8144,7 @@ export type PluginConfigurationExtendedFragment = {
         type: ConfigurationTypeFieldEnum | null;
         helpText: string | null;
         label: string | null;
-    } | null> | null;
+    }> | null;
     channel: { __typename: "Channel"; id: string; name: string; slug: string } | null;
 };
 
@@ -6168,7 +8180,7 @@ export type PluginsDetailsFragment = {
             type: ConfigurationTypeFieldEnum | null;
             helpText: string | null;
             label: string | null;
-        } | null> | null;
+        }> | null;
         channel: { __typename: "Channel"; id: string; name: string; slug: string } | null;
     } | null;
     channelConfigurations: Array<{
@@ -6181,7 +8193,7 @@ export type PluginsDetailsFragment = {
             type: ConfigurationTypeFieldEnum | null;
             helpText: string | null;
             label: string | null;
-        } | null> | null;
+        }> | null;
         channel: { __typename: "Channel"; id: string; name: string; slug: string } | null;
     }>;
 };
@@ -6214,7 +8226,7 @@ export type ProductTypeDetailsFragment = {
         filterableInStorefront: boolean;
         unit: MeasurementUnitsEnum | null;
         inputType: AttributeInputTypeEnum | null;
-    } | null> | null;
+    }> | null;
     variantAttributes: Array<{
         __typename: "Attribute";
         id: string;
@@ -6226,7 +8238,7 @@ export type ProductTypeDetailsFragment = {
         filterableInStorefront: boolean;
         unit: MeasurementUnitsEnum | null;
         inputType: AttributeInputTypeEnum | null;
-    } | null> | null;
+    }> | null;
     assignedVariantAttributes: Array<{
         __typename: "AssignedVariantAttribute";
         variantSelection: boolean;
@@ -6242,11 +8254,11 @@ export type ProductTypeDetailsFragment = {
             unit: MeasurementUnitsEnum | null;
             inputType: AttributeInputTypeEnum | null;
         };
-    } | null> | null;
+    }> | null;
     weight: { __typename: "Weight"; unit: WeightUnitsEnum; value: number } | null;
     taxType: { __typename: "TaxType"; description: string | null; taxCode: string | null } | null;
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 export type StockFragment = {
@@ -6419,7 +8431,7 @@ export type ProductVariantAttributesFragment = {
             dateTime: any | null;
             value: string | null;
             file: { __typename: "File"; url: string; contentType: string | null } | null;
-        } | null>;
+        }>;
     }>;
     productType: {
         __typename: "ProductType";
@@ -6458,7 +8470,7 @@ export type ProductVariantAttributesFragment = {
                     };
                 }>;
             } | null;
-        } | null> | null;
+        }> | null;
     };
     channelListings: Array<{
         __typename: "ProductChannelListing";
@@ -6471,9 +8483,13 @@ export type ProductDetailsVariantFragment = {
     id: string;
     sku: string | null;
     name: string;
-    margin: number | null;
     trackInventory: boolean;
     quantityLimitPerCustomer: number | null;
+    attributes: Array<{
+        __typename: "SelectedAttribute";
+        attribute: { __typename: "Attribute"; id: string; name: string | null };
+        values: Array<{ __typename: "AttributeValue"; id: string; name: string | null }>;
+    }>;
     media: Array<{ __typename: "ProductMedia"; url: string }> | null;
     stocks: Array<{
         __typename: "Stock";
@@ -6481,7 +8497,7 @@ export type ProductDetailsVariantFragment = {
         quantity: number;
         quantityAllocated: number;
         warehouse: { __typename: "Warehouse"; id: string; name: string };
-    } | null> | null;
+    }> | null;
     preorder: {
         __typename: "PreorderData";
         globalThreshold: number | null;
@@ -6514,7 +8530,7 @@ export type ProductFragment = {
     id: string;
     defaultVariant: { __typename: "ProductVariant"; id: string } | null;
     category: { __typename: "Category"; id: string; name: string } | null;
-    collections: Array<{ __typename: "Collection"; id: string; name: string } | null> | null;
+    collections: Array<{ __typename: "Collection"; id: string; name: string }> | null;
     channelListings: Array<{
         __typename: "ProductChannelListing";
         isPublished: boolean;
@@ -6538,9 +8554,13 @@ export type ProductFragment = {
         id: string;
         sku: string | null;
         name: string;
-        margin: number | null;
         trackInventory: boolean;
         quantityLimitPerCustomer: number | null;
+        attributes: Array<{
+            __typename: "SelectedAttribute";
+            attribute: { __typename: "Attribute"; id: string; name: string | null };
+            values: Array<{ __typename: "AttributeValue"; id: string; name: string | null }>;
+        }>;
         media: Array<{ __typename: "ProductMedia"; url: string }> | null;
         stocks: Array<{
             __typename: "Stock";
@@ -6548,7 +8568,7 @@ export type ProductFragment = {
             quantity: number;
             quantityAllocated: number;
             warehouse: { __typename: "Warehouse"; id: string; name: string };
-        } | null> | null;
+        }> | null;
         preorder: {
             __typename: "PreorderData";
             globalThreshold: number | null;
@@ -6566,7 +8586,7 @@ export type ProductFragment = {
                 soldUnits: number;
             } | null;
         }> | null;
-    } | null> | null;
+    }> | null;
     productType: {
         __typename: "ProductType";
         id: string;
@@ -6607,7 +8627,7 @@ export type ProductFragment = {
                     };
                 }>;
             } | null;
-        } | null> | null;
+        }> | null;
     };
     weight: { __typename: "Weight"; unit: WeightUnitsEnum; value: number } | null;
     taxType: { __typename: "TaxType"; description: string | null; taxCode: string | null } | null;
@@ -6662,10 +8682,10 @@ export type ProductFragment = {
             dateTime: any | null;
             value: string | null;
             file: { __typename: "File"; url: string; contentType: string | null } | null;
-        } | null>;
+        }>;
     }>;
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 export type VariantAttributeFragment = {
@@ -6757,7 +8777,7 @@ export type SelectedVariantAttributeFragment = {
         dateTime: any | null;
         value: string | null;
         file: { __typename: "File"; url: string; contentType: string | null } | null;
-    } | null>;
+    }>;
 };
 
 export type ProductVariantFragment = {
@@ -6818,7 +8838,7 @@ export type ProductVariantFragment = {
             dateTime: any | null;
             value: string | null;
             file: { __typename: "File"; url: string; contentType: string | null } | null;
-        } | null>;
+        }>;
     }>;
     nonSelectionAttributes: Array<{
         __typename: "SelectedAttribute";
@@ -6871,7 +8891,7 @@ export type ProductVariantFragment = {
             dateTime: any | null;
             value: string | null;
             file: { __typename: "File"; url: string; contentType: string | null } | null;
-        } | null>;
+        }>;
     }>;
     media: Array<{
         __typename: "ProductMedia";
@@ -6897,6 +8917,7 @@ export type ProductVariantFragment = {
         thumbnail: { __typename: "Image"; url: string } | null;
         channelListings: Array<{
             __typename: "ProductChannelListing";
+            id: string;
             publicationDate: any | null;
             isPublished: boolean;
             channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
@@ -6913,7 +8934,7 @@ export type ProductVariantFragment = {
                 type: ProductMediaType;
                 oembedData: any;
             }> | null;
-        } | null> | null;
+        }> | null;
     };
     channelListings: Array<{
         __typename: "ProductVariantChannelListing";
@@ -6932,7 +8953,7 @@ export type ProductVariantFragment = {
         quantity: number;
         quantityAllocated: number;
         warehouse: { __typename: "Warehouse"; id: string; name: string };
-    } | null> | null;
+    }> | null;
     preorder: {
         __typename: "PreorderData";
         globalThreshold: number | null;
@@ -6940,8 +8961,8 @@ export type ProductVariantFragment = {
         endDate: any | null;
     } | null;
     weight: { __typename: "Weight"; unit: WeightUnitsEnum; value: number } | null;
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 export type ExportFileFragment = {
@@ -6951,14 +8972,31 @@ export type ExportFileFragment = {
     url: string | null;
 };
 
+export type ProductListAttributeFragment = {
+    __typename: "SelectedAttribute";
+    attribute: { __typename: "Attribute"; id: string };
+    values: Array<{
+        __typename: "AttributeValue";
+        id: string;
+        name: string | null;
+        slug: string | null;
+        reference: string | null;
+        boolean: boolean | null;
+        date: any | null;
+        dateTime: any | null;
+        value: string | null;
+        file: { __typename: "File"; url: string; contentType: string | null } | null;
+    }>;
+};
+
 export type ShippingZoneFragment = {
     __typename: "ShippingZone";
     id: string;
     name: string;
     description: string | null;
-    countries: Array<{ __typename: "CountryDisplay"; code: string; country: string } | null> | null;
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    countries: Array<{ __typename: "CountryDisplay"; code: string; country: string }>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 export type ShippingMethodWithPostalCodesFragment = {
@@ -6970,7 +9008,7 @@ export type ShippingMethodWithPostalCodesFragment = {
         inclusionType: PostalCodeRuleInclusionTypeEnum | null;
         start: string | null;
         end: string | null;
-    } | null> | null;
+    }> | null;
 };
 
 export type ShippingMethodTypeFragment = {
@@ -6997,9 +9035,9 @@ export type ShippingMethodTypeFragment = {
         inclusionType: PostalCodeRuleInclusionTypeEnum | null;
         start: string | null;
         end: string | null;
-    } | null> | null;
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    }> | null;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 export type ShippingMethodWithExcludedProductsFragment = {
@@ -7045,9 +9083,9 @@ export type ShippingMethodWithExcludedProductsFragment = {
         inclusionType: PostalCodeRuleInclusionTypeEnum | null;
         start: string | null;
         end: string | null;
-    } | null> | null;
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    }> | null;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 export type ShippingZoneDetailsFragment = {
@@ -7079,14 +9117,14 @@ export type ShippingZoneDetailsFragment = {
             inclusionType: PostalCodeRuleInclusionTypeEnum | null;
             start: string | null;
             end: string | null;
-        } | null> | null;
-        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    } | null> | null;
+        }> | null;
+        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    }> | null;
     warehouses: Array<{ __typename: "Warehouse"; id: string; name: string }>;
-    countries: Array<{ __typename: "CountryDisplay"; code: string; country: string } | null> | null;
-    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+    countries: Array<{ __typename: "CountryDisplay"; code: string; country: string }>;
+    metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+    privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
 };
 
 export type CountryWithCodeFragment = { __typename: "CountryDisplay"; country: string; code: string };
@@ -7179,12 +9217,8 @@ export type StaffMemberDetailsFragment = {
         id: string;
         name: string;
         userCanManage: boolean;
-    } | null> | null;
-    userPermissions: Array<{
-        __typename: "UserPermission";
-        code: PermissionEnum;
-        name: string;
-    } | null> | null;
+    }> | null;
+    userPermissions: Array<{ __typename: "UserPermission"; code: PermissionEnum; name: string }> | null;
     avatar: { __typename: "Image"; url: string } | null;
 };
 
@@ -7203,7 +9237,7 @@ export type CountryWithTaxesFragment = {
     vat: {
         __typename: "VAT";
         standardRate: number | null;
-        reducedRates: Array<{ __typename: "ReducedRate"; rateType: string; rate: number } | null>;
+        reducedRates: Array<{ __typename: "ReducedRate"; rateType: string; rate: number }>;
     } | null;
 };
 
@@ -7534,6 +9568,17 @@ export type AttributeValueTranslatableContentFragment = {
     } | null;
 };
 
+export type MenuItemTranslationFragment = {
+    __typename: "MenuItemTranslatableContent";
+    translation: {
+        __typename: "MenuItemTranslation";
+        id: string;
+        name: string;
+        language: { __typename: "LanguageDisplay"; language: string };
+    } | null;
+    menuItem: { __typename: "MenuItem"; id: string; name: string } | null;
+};
+
 export type WarehouseFragment = { __typename: "Warehouse"; id: string; name: string };
 
 export type WarehouseWithShippingFragment = {
@@ -7615,25 +9660,26 @@ export type AppCreateMutation = {
             type: AppTypeEnum | null;
             homepageUrl: string | null;
             appUrl: string | null;
+            manifestUrl: string | null;
             configurationUrl: string | null;
             supportUrl: string | null;
             version: string | null;
             accessToken: string | null;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
             tokens: Array<{
                 __typename: "AppToken";
                 authToken: string | null;
                 id: string;
                 name: string | null;
-            } | null> | null;
+            }> | null;
             webhooks: Array<{
                 __typename: "Webhook";
                 id: string;
                 name: string;
                 isActive: boolean;
                 app: { __typename: "App"; id: string; name: string | null };
-            } | null> | null;
+            }> | null;
         } | null;
         errors: Array<{
             __typename: "AppError";
@@ -7662,25 +9708,26 @@ export type AppDeleteMutation = {
             type: AppTypeEnum | null;
             homepageUrl: string | null;
             appUrl: string | null;
+            manifestUrl: string | null;
             configurationUrl: string | null;
             supportUrl: string | null;
             version: string | null;
             accessToken: string | null;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
             tokens: Array<{
                 __typename: "AppToken";
                 authToken: string | null;
                 id: string;
                 name: string | null;
-            } | null> | null;
+            }> | null;
             webhooks: Array<{
                 __typename: "Webhook";
                 id: string;
                 name: string;
                 isActive: boolean;
                 app: { __typename: "App"; id: string; name: string | null };
-            } | null> | null;
+            }> | null;
         } | null;
         errors: Array<{
             __typename: "AppError";
@@ -7738,11 +9785,7 @@ export type AppFetchMutation = {
             dataPrivacyUrl: string | null;
             homepageUrl: string | null;
             supportUrl: string | null;
-            permissions: Array<{
-                __typename: "Permission";
-                code: PermissionEnum;
-                name: string;
-            } | null> | null;
+            permissions: Array<{ __typename: "Permission"; code: PermissionEnum; name: string }> | null;
         } | null;
         errors: Array<{
             __typename: "AppError";
@@ -7822,30 +9865,27 @@ export type AppUpdateMutation = {
             type: AppTypeEnum | null;
             homepageUrl: string | null;
             appUrl: string | null;
+            manifestUrl: string | null;
             configurationUrl: string | null;
             supportUrl: string | null;
             version: string | null;
             accessToken: string | null;
-            permissions: Array<{
-                __typename: "Permission";
-                code: PermissionEnum;
-                name: string;
-            } | null> | null;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            permissions: Array<{ __typename: "Permission"; code: PermissionEnum; name: string }> | null;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
             tokens: Array<{
                 __typename: "AppToken";
                 authToken: string | null;
                 id: string;
                 name: string | null;
-            } | null> | null;
+            }> | null;
             webhooks: Array<{
                 __typename: "Webhook";
                 id: string;
                 name: string;
                 isActive: boolean;
                 app: { __typename: "App"; id: string; name: string | null };
-            } | null> | null;
+            }> | null;
         } | null;
         errors: Array<{
             __typename: "AppError";
@@ -8008,30 +10048,27 @@ export type AppQuery = {
         type: AppTypeEnum | null;
         homepageUrl: string | null;
         appUrl: string | null;
+        manifestUrl: string | null;
         configurationUrl: string | null;
         supportUrl: string | null;
         version: string | null;
         accessToken: string | null;
-        permissions: Array<{
-            __typename: "Permission";
-            code: PermissionEnum;
-            name: string;
-        } | null> | null;
-        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+        permissions: Array<{ __typename: "Permission"; code: PermissionEnum; name: string }> | null;
+        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         tokens: Array<{
             __typename: "AppToken";
             authToken: string | null;
             id: string;
             name: string | null;
-        } | null> | null;
+        }> | null;
         webhooks: Array<{
             __typename: "Webhook";
             id: string;
             name: string;
             isActive: boolean;
             app: { __typename: "App"; id: string; name: string | null };
-        } | null> | null;
+        }> | null;
     } | null;
 };
 
@@ -8050,7 +10087,7 @@ export type ExtensionListQuery = {
                 id: string;
                 label: string;
                 url: string;
-                mount: AppExtensionMount;
+                mount: AppExtensionMountEnum;
                 target: AppExtensionTargetEnum;
                 accessToken: string | null;
                 permissions: Array<{ __typename: "Permission"; code: PermissionEnum }>;
@@ -8118,8 +10155,8 @@ export type AttributeUpdateMutation = {
             visibleInStorefront: boolean;
             filterableInDashboard: boolean;
             filterableInStorefront: boolean;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
         errors: Array<{
             __typename: "AttributeError";
@@ -8399,8 +10436,8 @@ export type AttributeDetailsQuery = {
                 };
             }>;
         } | null;
-        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
     } | null;
 };
 
@@ -8490,7 +10527,7 @@ export type UserDetailsQuery = {
             __typename: "UserPermission";
             code: PermissionEnum;
             name: string;
-        } | null> | null;
+        }> | null;
         avatar: { __typename: "Image"; url: string } | null;
     } | null;
 };
@@ -8531,8 +10568,8 @@ export type CategoryCreateMutation = {
             seoTitle: string | null;
             backgroundImage: { __typename: "Image"; alt: string | null; url: string } | null;
             parent: { __typename: "Category"; id: string } | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
         errors: Array<{
             __typename: "ProductError";
@@ -8562,8 +10599,8 @@ export type CategoryUpdateMutation = {
             seoTitle: string | null;
             backgroundImage: { __typename: "Image"; alt: string | null; url: string } | null;
             parent: { __typename: "Category"; id: string } | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
         errors: Array<{
             __typename: "ProductError";
@@ -8575,7 +10612,7 @@ export type CategoryUpdateMutation = {
 };
 
 export type CategoryBulkDeleteMutationVariables = Exact<{
-    ids: Array<InputMaybe<Scalars["ID"]>> | InputMaybe<Scalars["ID"]>;
+    ids: Array<Scalars["ID"]> | Scalars["ID"];
 }>;
 
 export type CategoryBulkDeleteMutation = {
@@ -8696,8 +10733,8 @@ export type CategoryDetailsQuery = {
         } | null;
         backgroundImage: { __typename: "Image"; alt: string | null; url: string } | null;
         parent: { __typename: "Category"; id: string } | null;
-        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
     } | null;
 };
 
@@ -8901,8 +10938,8 @@ export type CollectionUpdateMutation = {
                 publicationDate: any | null;
                 channel: { __typename: "Channel"; id: string; name: string };
             }> | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
         errors: Array<{
             __typename: "CollectionError";
@@ -8996,8 +11033,8 @@ export type CreateCollectionMutation = {
                 publicationDate: any | null;
                 channel: { __typename: "Channel"; id: string; name: string };
             }> | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
         errors: Array<{
             __typename: "CollectionError";
@@ -9027,7 +11064,7 @@ export type RemoveCollectionMutation = {
 
 export type UnassignCollectionProductMutationVariables = Exact<{
     collectionId: Scalars["ID"];
-    productIds: Array<InputMaybe<Scalars["ID"]>> | InputMaybe<Scalars["ID"]>;
+    productIds: Array<Scalars["ID"]> | Scalars["ID"];
     first?: InputMaybe<Scalars["Int"]>;
     after?: InputMaybe<Scalars["String"]>;
     last?: InputMaybe<Scalars["Int"]>;
@@ -9072,7 +11109,7 @@ export type UnassignCollectionProductMutation = {
 };
 
 export type CollectionBulkDeleteMutationVariables = Exact<{
-    ids: Array<InputMaybe<Scalars["ID"]>> | InputMaybe<Scalars["ID"]>;
+    ids: Array<Scalars["ID"]> | Scalars["ID"];
 }>;
 
 export type CollectionBulkDeleteMutation = {
@@ -9208,8 +11245,8 @@ export type CollectionDetailsQuery = {
             publicationDate: any | null;
             channel: { __typename: "Channel"; id: string; name: string };
         }> | null;
-        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
     } | null;
 };
 
@@ -9269,8 +11306,8 @@ export type UpdateCustomerMutation = {
                 streetAddress2: string;
                 country: { __typename: "CountryDisplay"; code: string; country: string };
             } | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -9349,7 +11386,7 @@ export type SetCustomerDefaultAddressMutation = {
                 streetAddress1: string;
                 streetAddress2: string;
                 country: { __typename: "CountryDisplay"; code: string; country: string };
-            } | null> | null;
+            }>;
             defaultBillingAddress: { __typename: "Address"; id: string } | null;
             defaultShippingAddress: { __typename: "Address"; id: string } | null;
         } | null;
@@ -9407,7 +11444,7 @@ export type CreateCustomerAddressMutation = {
                 streetAddress1: string;
                 streetAddress2: string;
                 country: { __typename: "CountryDisplay"; code: string; country: string };
-            } | null> | null;
+            }>;
             defaultBillingAddress: { __typename: "Address"; id: string } | null;
             defaultShippingAddress: { __typename: "Address"; id: string } | null;
         } | null;
@@ -9483,7 +11520,7 @@ export type RemoveCustomerAddressMutation = {
                 streetAddress1: string;
                 streetAddress2: string;
                 country: { __typename: "CountryDisplay"; code: string; country: string };
-            } | null> | null;
+            }>;
             defaultBillingAddress: { __typename: "Address"; id: string } | null;
             defaultShippingAddress: { __typename: "Address"; id: string } | null;
         } | null;
@@ -9491,7 +11528,7 @@ export type RemoveCustomerAddressMutation = {
 };
 
 export type BulkRemoveCustomersMutationVariables = Exact<{
-    ids: Array<InputMaybe<Scalars["ID"]>> | InputMaybe<Scalars["ID"]>;
+    ids: Array<Scalars["ID"]> | Scalars["ID"];
 }>;
 
 export type BulkRemoveCustomersMutation = {
@@ -9568,7 +11605,7 @@ export type CustomerDetailsQuery = {
                     __typename: "Order";
                     id: string;
                     created: any;
-                    number: string | null;
+                    number: string;
                     paymentStatus: PaymentChargeStatusEnum;
                     total: {
                         __typename: "TaxedMoney";
@@ -9614,8 +11651,8 @@ export type CustomerDetailsQuery = {
             streetAddress2: string;
             country: { __typename: "CountryDisplay"; code: string; country: string };
         } | null;
-        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
     } | null;
 };
 
@@ -9645,7 +11682,7 @@ export type CustomerAddressesQuery = {
             streetAddress1: string;
             streetAddress2: string;
             country: { __typename: "CountryDisplay"; code: string; country: string };
-        } | null> | null;
+        }>;
         defaultBillingAddress: { __typename: "Address"; id: string } | null;
         defaultShippingAddress: { __typename: "Address"; id: string } | null;
     } | null;
@@ -9698,12 +11735,12 @@ export type SaleUpdateMutation = {
             channelListings: Array<{
                 __typename: "SaleChannelListing";
                 id: string;
-                discountValue: any;
+                discountValue: number;
                 currency: string;
                 channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
             }> | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -9715,6 +11752,10 @@ export type SaleCataloguesAddMutationVariables = Exact<{
     before?: InputMaybe<Scalars["String"]>;
     first?: InputMaybe<Scalars["Int"]>;
     last?: InputMaybe<Scalars["Int"]>;
+    includeVariants: Scalars["Boolean"];
+    includeProducts: Scalars["Boolean"];
+    includeCollections: Scalars["Boolean"];
+    includeCategories: Scalars["Boolean"];
 }>;
 
 export type SaleCataloguesAddMutation = {
@@ -9859,12 +11900,12 @@ export type SaleCataloguesAddMutation = {
             channelListings: Array<{
                 __typename: "SaleChannelListing";
                 id: string;
-                discountValue: any;
+                discountValue: number;
                 currency: string;
                 channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
             }> | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -9876,6 +11917,10 @@ export type SaleCataloguesRemoveMutationVariables = Exact<{
     before?: InputMaybe<Scalars["String"]>;
     first?: InputMaybe<Scalars["Int"]>;
     last?: InputMaybe<Scalars["Int"]>;
+    includeVariants: Scalars["Boolean"];
+    includeProducts: Scalars["Boolean"];
+    includeCollections: Scalars["Boolean"];
+    includeCategories: Scalars["Boolean"];
 }>;
 
 export type SaleCataloguesRemoveMutation = {
@@ -10020,12 +12065,12 @@ export type SaleCataloguesRemoveMutation = {
             channelListings: Array<{
                 __typename: "SaleChannelListing";
                 id: string;
-                discountValue: any;
+                discountValue: number;
                 currency: string;
                 channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
             }> | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -10055,12 +12100,12 @@ export type SaleCreateMutation = {
             channelListings: Array<{
                 __typename: "SaleChannelListing";
                 id: string;
-                discountValue: any;
+                discountValue: number;
                 currency: string;
                 channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
             }> | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -10084,7 +12129,7 @@ export type SaleDeleteMutation = {
 };
 
 export type SaleBulkDeleteMutationVariables = Exact<{
-    ids: Array<InputMaybe<Scalars["ID"]>> | InputMaybe<Scalars["ID"]>;
+    ids: Array<Scalars["ID"]> | Scalars["ID"];
 }>;
 
 export type SaleBulkDeleteMutation = {
@@ -10126,12 +12171,12 @@ export type SaleChannelListingUpdateMutation = {
             channelListings: Array<{
                 __typename: "SaleChannelListing";
                 id: string;
-                discountValue: any;
+                discountValue: number;
                 currency: string;
                 channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
             }> | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -10162,21 +12207,17 @@ export type VoucherChannelListingUpdateMutation = {
             type: VoucherTypeEnum;
             discountValueType: DiscountValueTypeEnum;
             minCheckoutItemsQuantity: number | null;
-            countries: Array<{
-                __typename: "CountryDisplay";
-                code: string;
-                country: string;
-            } | null> | null;
+            countries: Array<{ __typename: "CountryDisplay"; code: string; country: string }> | null;
             channelListings: Array<{
                 __typename: "VoucherChannelListing";
                 id: string;
-                discountValue: any;
+                discountValue: number;
                 currency: string;
                 channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
                 minSpent: { __typename: "Money"; amount: number; currency: string } | null;
             }> | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -10207,21 +12248,17 @@ export type VoucherUpdateMutation = {
             type: VoucherTypeEnum;
             discountValueType: DiscountValueTypeEnum;
             minCheckoutItemsQuantity: number | null;
-            countries: Array<{
-                __typename: "CountryDisplay";
-                code: string;
-                country: string;
-            } | null> | null;
+            countries: Array<{ __typename: "CountryDisplay"; code: string; country: string }> | null;
             channelListings: Array<{
                 __typename: "VoucherChannelListing";
                 id: string;
-                discountValue: any;
+                discountValue: number;
                 currency: string;
                 channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
                 minSpent: { __typename: "Money"; amount: number; currency: string } | null;
             }> | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -10233,6 +12270,9 @@ export type VoucherCataloguesAddMutationVariables = Exact<{
     before?: InputMaybe<Scalars["String"]>;
     first?: InputMaybe<Scalars["Int"]>;
     last?: InputMaybe<Scalars["Int"]>;
+    includeProducts: Scalars["Boolean"];
+    includeCollections: Scalars["Boolean"];
+    includeCategories: Scalars["Boolean"];
 }>;
 
 export type VoucherCataloguesAddMutation = {
@@ -10341,21 +12381,17 @@ export type VoucherCataloguesAddMutation = {
                     startCursor: string | null;
                 };
             } | null;
-            countries: Array<{
-                __typename: "CountryDisplay";
-                code: string;
-                country: string;
-            } | null> | null;
+            countries: Array<{ __typename: "CountryDisplay"; code: string; country: string }> | null;
             channelListings: Array<{
                 __typename: "VoucherChannelListing";
                 id: string;
-                discountValue: any;
+                discountValue: number;
                 currency: string;
                 channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
                 minSpent: { __typename: "Money"; amount: number; currency: string } | null;
             }> | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -10367,6 +12403,9 @@ export type VoucherCataloguesRemoveMutationVariables = Exact<{
     before?: InputMaybe<Scalars["String"]>;
     first?: InputMaybe<Scalars["Int"]>;
     last?: InputMaybe<Scalars["Int"]>;
+    includeProducts: Scalars["Boolean"];
+    includeCollections: Scalars["Boolean"];
+    includeCategories: Scalars["Boolean"];
 }>;
 
 export type VoucherCataloguesRemoveMutation = {
@@ -10475,21 +12514,17 @@ export type VoucherCataloguesRemoveMutation = {
                     startCursor: string | null;
                 };
             } | null;
-            countries: Array<{
-                __typename: "CountryDisplay";
-                code: string;
-                country: string;
-            } | null> | null;
+            countries: Array<{ __typename: "CountryDisplay"; code: string; country: string }> | null;
             channelListings: Array<{
                 __typename: "VoucherChannelListing";
                 id: string;
-                discountValue: any;
+                discountValue: number;
                 currency: string;
                 channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
                 minSpent: { __typename: "Money"; amount: number; currency: string } | null;
             }> | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -10519,21 +12554,17 @@ export type VoucherCreateMutation = {
             type: VoucherTypeEnum;
             discountValueType: DiscountValueTypeEnum;
             minCheckoutItemsQuantity: number | null;
-            countries: Array<{
-                __typename: "CountryDisplay";
-                code: string;
-                country: string;
-            } | null> | null;
+            countries: Array<{ __typename: "CountryDisplay"; code: string; country: string }> | null;
             channelListings: Array<{
                 __typename: "VoucherChannelListing";
                 id: string;
-                discountValue: any;
+                discountValue: number;
                 currency: string;
                 channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
                 minSpent: { __typename: "Money"; amount: number; currency: string } | null;
             }> | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -10557,7 +12588,7 @@ export type VoucherDeleteMutation = {
 };
 
 export type VoucherBulkDeleteMutationVariables = Exact<{
-    ids: Array<InputMaybe<Scalars["ID"]>> | InputMaybe<Scalars["ID"]>;
+    ids: Array<Scalars["ID"]> | Scalars["ID"];
 }>;
 
 export type VoucherBulkDeleteMutation = {
@@ -10599,16 +12630,12 @@ export type SaleListQuery = {
                 channelListings: Array<{
                     __typename: "SaleChannelListing";
                     id: string;
-                    discountValue: any;
+                    discountValue: number;
                     currency: string;
                     channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
                 }> | null;
-                metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                privateMetadata: Array<{
-                    __typename: "MetadataItem";
-                    key: string;
-                    value: string;
-                } | null>;
+                metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
             };
         }>;
         pageInfo: {
@@ -10651,21 +12678,17 @@ export type VoucherListQuery = {
                     __typename: "CountryDisplay";
                     code: string;
                     country: string;
-                } | null> | null;
+                }> | null;
                 channelListings: Array<{
                     __typename: "VoucherChannelListing";
                     id: string;
-                    discountValue: any;
+                    discountValue: number;
                     currency: string;
                     channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
                     minSpent: { __typename: "Money"; amount: number; currency: string } | null;
                 }> | null;
-                metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                privateMetadata: Array<{
-                    __typename: "MetadataItem";
-                    key: string;
-                    value: string;
-                } | null>;
+                metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
             };
         }>;
         pageInfo: {
@@ -10819,12 +12842,12 @@ export type SaleDetailsQuery = {
         channelListings: Array<{
             __typename: "SaleChannelListing";
             id: string;
-            discountValue: any;
+            discountValue: number;
             currency: string;
             channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
         }> | null;
-        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
     } | null;
 };
 
@@ -10933,17 +12956,17 @@ export type VoucherDetailsQuery = {
                 startCursor: string | null;
             };
         } | null;
-        countries: Array<{ __typename: "CountryDisplay"; code: string; country: string } | null> | null;
+        countries: Array<{ __typename: "CountryDisplay"; code: string; country: string }> | null;
         channelListings: Array<{
             __typename: "VoucherChannelListing";
             id: string;
-            discountValue: any;
+            discountValue: number;
             currency: string;
             channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
             minSpent: { __typename: "Money"; amount: number; currency: string } | null;
         }> | null;
-        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
     } | null;
 };
 
@@ -11086,8 +13109,8 @@ export type GiftCardResendMutation = {
             initialBalance: { __typename: "Money"; amount: number; currency: string } | null;
             currentBalance: { __typename: "Money"; amount: number; currency: string } | null;
             tags: Array<{ __typename: "GiftCardTag"; name: string }>;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -11124,8 +13147,8 @@ export type GiftCardActivateMutation = {
             initialBalance: { __typename: "Money"; amount: number; currency: string } | null;
             currentBalance: { __typename: "Money"; amount: number; currency: string } | null;
             tags: Array<{ __typename: "GiftCardTag"; name: string }>;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -11162,8 +13185,8 @@ export type GiftCardDeactivateMutation = {
             initialBalance: { __typename: "Money"; amount: number; currency: string } | null;
             currentBalance: { __typename: "Money"; amount: number; currency: string } | null;
             tags: Array<{ __typename: "GiftCardTag"; name: string }>;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -11230,8 +13253,8 @@ export type GiftCardUpdateMutation = {
             initialBalance: { __typename: "Money"; amount: number; currency: string } | null;
             currentBalance: { __typename: "Money"; amount: number; currency: string } | null;
             tags: Array<{ __typename: "GiftCardTag"; name: string }>;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -11269,8 +13292,8 @@ export type GiftCardAddNoteMutation = {
             initialBalance: { __typename: "Money"; amount: number; currency: string } | null;
             currentBalance: { __typename: "Money"; amount: number; currency: string } | null;
             tags: Array<{ __typename: "GiftCardTag"; name: string }>;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
         event: {
             __typename: "GiftCardEvent";
@@ -11357,8 +13380,8 @@ export type GiftCardDetailsQuery = {
         initialBalance: { __typename: "Money"; amount: number; currency: string } | null;
         currentBalance: { __typename: "Money"; amount: number; currency: string } | null;
         tags: Array<{ __typename: "GiftCardTag"; name: string }>;
-        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
     } | null;
 };
 
@@ -11367,7 +13390,7 @@ export type GiftCardCurrenciesQueryVariables = Exact<{ [key: string]: never }>;
 export type GiftCardCurrenciesQuery = { __typename: "Query"; giftCardCurrencies: Array<string> };
 
 export type GiftCardBulkActivateMutationVariables = Exact<{
-    ids: Array<InputMaybe<Scalars["ID"]>> | InputMaybe<Scalars["ID"]>;
+    ids: Array<Scalars["ID"]> | Scalars["ID"];
 }>;
 
 export type GiftCardBulkActivateMutation = {
@@ -11385,7 +13408,7 @@ export type GiftCardBulkActivateMutation = {
 };
 
 export type GiftCardBulkDeactivateMutationVariables = Exact<{
-    ids: Array<InputMaybe<Scalars["ID"]>> | InputMaybe<Scalars["ID"]>;
+    ids: Array<Scalars["ID"]> | Scalars["ID"];
 }>;
 
 export type GiftCardBulkDeactivateMutation = {
@@ -11420,7 +13443,7 @@ export type DeleteGiftCardMutation = {
 };
 
 export type BulkDeleteGiftCardMutationVariables = Exact<{
-    ids: Array<InputMaybe<Scalars["ID"]>> | InputMaybe<Scalars["ID"]>;
+    ids: Array<Scalars["ID"]> | Scalars["ID"];
 }>;
 
 export type BulkDeleteGiftCardMutation = {
@@ -11524,11 +13547,7 @@ export type HomeQuery = {
                 } | null;
                 attributes: Array<{
                     __typename: "SelectedAttribute";
-                    values: Array<{
-                        __typename: "AttributeValue";
-                        id: string;
-                        name: string | null;
-                    } | null>;
+                    values: Array<{ __typename: "AttributeValue"; id: string; name: string | null }>;
                 }>;
                 product: {
                     __typename: "Product";
@@ -11553,7 +13572,7 @@ export type HomeQuery = {
                 id: string;
                 message: string | null;
                 orderNumber: string | null;
-                oversoldItems: Array<string | null> | null;
+                oversoldItems: Array<string> | null;
                 quantity: number | null;
                 type: OrderEventsEnum | null;
                 user: { __typename: "User"; id: string; email: string } | null;
@@ -11581,7 +13600,7 @@ export type MenuCreateMutation = {
 };
 
 export type MenuBulkDeleteMutationVariables = Exact<{
-    ids: Array<InputMaybe<Scalars["ID"]>> | InputMaybe<Scalars["ID"]>;
+    ids: Array<Scalars["ID"]> | Scalars["ID"];
 }>;
 
 export type MenuBulkDeleteMutation = {
@@ -11690,7 +13709,7 @@ export type MenuItemCreateMutation = {
                                                 id: string;
                                                 title: string;
                                             } | null;
-                                        } | null> | null;
+                                        }> | null;
                                         category: {
                                             __typename: "Category";
                                             id: string;
@@ -11702,7 +13721,7 @@ export type MenuItemCreateMutation = {
                                             name: string;
                                         } | null;
                                         page: { __typename: "Page"; id: string; title: string } | null;
-                                    } | null> | null;
+                                    }> | null;
                                     category: {
                                         __typename: "Category";
                                         id: string;
@@ -11714,7 +13733,7 @@ export type MenuItemCreateMutation = {
                                         name: string;
                                     } | null;
                                     page: { __typename: "Page"; id: string; title: string } | null;
-                                } | null> | null;
+                                }> | null;
                                 category: { __typename: "Category"; id: string; name: string } | null;
                                 collection: {
                                     __typename: "Collection";
@@ -11722,19 +13741,19 @@ export type MenuItemCreateMutation = {
                                     name: string;
                                 } | null;
                                 page: { __typename: "Page"; id: string; title: string } | null;
-                            } | null> | null;
+                            }> | null;
                             category: { __typename: "Category"; id: string; name: string } | null;
                             collection: { __typename: "Collection"; id: string; name: string } | null;
                             page: { __typename: "Page"; id: string; title: string } | null;
-                        } | null> | null;
+                        }> | null;
                         category: { __typename: "Category"; id: string; name: string } | null;
                         collection: { __typename: "Collection"; id: string; name: string } | null;
                         page: { __typename: "Page"; id: string; title: string } | null;
-                    } | null> | null;
+                    }> | null;
                     category: { __typename: "Category"; id: string; name: string } | null;
                     collection: { __typename: "Collection"; id: string; name: string } | null;
                     page: { __typename: "Page"; id: string; title: string } | null;
-                } | null> | null;
+                }> | null;
             };
         } | null;
     } | null;
@@ -11743,8 +13762,8 @@ export type MenuItemCreateMutation = {
 export type MenuUpdateMutationVariables = Exact<{
     id: Scalars["ID"];
     name: Scalars["String"];
-    moves: Array<InputMaybe<MenuItemMoveInput>> | InputMaybe<MenuItemMoveInput>;
-    removeIds: Array<InputMaybe<Scalars["ID"]>> | InputMaybe<Scalars["ID"]>;
+    moves: Array<MenuItemMoveInput> | MenuItemMoveInput;
+    removeIds: Array<Scalars["ID"]> | Scalars["ID"];
 }>;
 
 export type MenuUpdateMutation = {
@@ -11824,7 +13843,7 @@ export type MenuListQuery = {
                 __typename: "Menu";
                 id: string;
                 name: string;
-                items: Array<{ __typename: "MenuItem"; id: string } | null> | null;
+                items: Array<{ __typename: "MenuItem"; id: string }> | null;
             };
         }>;
         pageInfo: {
@@ -11900,7 +13919,7 @@ export type MenuDetailsQuery = {
                                         name: string;
                                     } | null;
                                     page: { __typename: "Page"; id: string; title: string } | null;
-                                } | null> | null;
+                                }> | null;
                                 category: { __typename: "Category"; id: string; name: string } | null;
                                 collection: {
                                     __typename: "Collection";
@@ -11908,27 +13927,27 @@ export type MenuDetailsQuery = {
                                     name: string;
                                 } | null;
                                 page: { __typename: "Page"; id: string; title: string } | null;
-                            } | null> | null;
+                            }> | null;
                             category: { __typename: "Category"; id: string; name: string } | null;
                             collection: { __typename: "Collection"; id: string; name: string } | null;
                             page: { __typename: "Page"; id: string; title: string } | null;
-                        } | null> | null;
+                        }> | null;
                         category: { __typename: "Category"; id: string; name: string } | null;
                         collection: { __typename: "Collection"; id: string; name: string } | null;
                         page: { __typename: "Page"; id: string; title: string } | null;
-                    } | null> | null;
+                    }> | null;
                     category: { __typename: "Category"; id: string; name: string } | null;
                     collection: { __typename: "Collection"; id: string; name: string } | null;
                     page: { __typename: "Page"; id: string; title: string } | null;
-                } | null> | null;
+                }> | null;
                 category: { __typename: "Category"; id: string; name: string } | null;
                 collection: { __typename: "Collection"; id: string; name: string } | null;
                 page: { __typename: "Page"; id: string; title: string } | null;
-            } | null> | null;
+            }> | null;
             category: { __typename: "Category"; id: string; name: string } | null;
             collection: { __typename: "Collection"; id: string; name: string } | null;
             page: { __typename: "Page"; id: string; title: string } | null;
-        } | null> | null;
+        }> | null;
     } | null;
 };
 
@@ -11955,13 +13974,13 @@ export type OrderCancelMutation = {
             canFinalize: boolean;
             created: any;
             customerNote: string;
-            number: string | null;
+            number: string;
             isPaid: boolean;
             paymentStatus: PaymentChargeStatusEnum;
             shippingMethodName: string | null;
             collectionPointName: string | null;
             status: OrderStatus;
-            actions: Array<OrderAction | null>;
+            actions: Array<OrderAction>;
             userEmail: string | null;
             billingAddress: {
                 __typename: "Address";
@@ -12005,7 +14024,7 @@ export type OrderCancelMutation = {
                         } | null;
                     } | null;
                 }>;
-            } | null> | null;
+            }>;
             discounts: Array<{
                 __typename: "OrderDiscount";
                 id: string;
@@ -12014,7 +14033,7 @@ export type OrderCancelMutation = {
                 reason: string | null;
                 calculationMode: DiscountValueTypeEnum;
                 amount: { __typename: "Money"; amount: number; currency: string };
-            }> | null;
+            }>;
             events: Array<{
                 __typename: "OrderEvent";
                 id: string;
@@ -12038,7 +14057,7 @@ export type OrderCancelMutation = {
                     amount: { __typename: "Money"; amount: number; currency: string } | null;
                     oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
                 } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+                relatedOrder: { __typename: "Order"; id: string; number: string } | null;
                 user: {
                     __typename: "User";
                     id: string;
@@ -12072,8 +14091,8 @@ export type OrderCancelMutation = {
                         productName: string;
                         variantName: string;
                     } | null;
-                } | null> | null;
-            } | null> | null;
+                }> | null;
+            }>;
             fulfillments: Array<{
                 __typename: "Fulfillment";
                 id: string;
@@ -12096,11 +14115,29 @@ export type OrderCancelMutation = {
                         unitDiscountValue: any;
                         unitDiscountReason: string | null;
                         unitDiscountType: DiscountValueTypeEnum | null;
+                        allocations: Array<{
+                            __typename: "Allocation";
+                            id: string;
+                            quantity: number;
+                            warehouse: { __typename: "Warehouse"; id: string; name: string };
+                        }> | null;
                         variant: {
                             __typename: "ProductVariant";
                             id: string;
                             quantityAvailable: number | null;
                             preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                            stocks: Array<{
+                                __typename: "Stock";
+                                id: string;
+                                quantity: number;
+                                quantityAllocated: number;
+                                warehouse: { __typename: "Warehouse"; id: string; name: string };
+                            }> | null;
+                            product: {
+                                __typename: "Product";
+                                id: string;
+                                isAvailableForPurchase: boolean | null;
+                            };
                         } | null;
                         unitDiscount: { __typename: "Money"; amount: number; currency: string };
                         undiscountedUnitPrice: {
@@ -12116,9 +14153,9 @@ export type OrderCancelMutation = {
                         };
                         thumbnail: { __typename: "Image"; url: string } | null;
                     } | null;
-                } | null> | null;
+                }> | null;
                 warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
+            }>;
             lines: Array<{
                 __typename: "OrderLine";
                 id: string;
@@ -12131,11 +14168,29 @@ export type OrderCancelMutation = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -12150,7 +14205,7 @@ export type OrderCancelMutation = {
                     net: { __typename: "Money"; amount: number; currency: string };
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
+            }>;
             shippingAddress: {
                 __typename: "Address";
                 city: string;
@@ -12192,6 +14247,7 @@ export type OrderCancelMutation = {
             };
             totalAuthorized: { __typename: "Money"; amount: number; currency: string };
             totalCaptured: { __typename: "Money"; amount: number; currency: string };
+            totalBalance: { __typename: "Money"; amount: number; currency: string };
             undiscountedTotal: {
                 __typename: "TaxedMoney";
                 net: { __typename: "Money"; amount: number; currency: string };
@@ -12205,7 +14261,7 @@ export type OrderCancelMutation = {
                 active: boolean;
                 message: string | null;
                 price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
+            }>;
             invoices: Array<{
                 __typename: "Invoice";
                 id: string;
@@ -12213,7 +14269,7 @@ export type OrderCancelMutation = {
                 createdAt: any;
                 url: string | null;
                 status: JobStatusEnum;
-            } | null> | null;
+            }>;
             channel: {
                 __typename: "Channel";
                 isActive: boolean;
@@ -12223,8 +14279,8 @@ export type OrderCancelMutation = {
                 slug: string;
                 defaultCountry: { __typename: "CountryDisplay"; code: string };
             };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -12253,13 +14309,13 @@ export type OrderDiscountAddMutation = {
             canFinalize: boolean;
             created: any;
             customerNote: string;
-            number: string | null;
+            number: string;
             isPaid: boolean;
             paymentStatus: PaymentChargeStatusEnum;
             shippingMethodName: string | null;
             collectionPointName: string | null;
             status: OrderStatus;
-            actions: Array<OrderAction | null>;
+            actions: Array<OrderAction>;
             userEmail: string | null;
             billingAddress: {
                 __typename: "Address";
@@ -12303,7 +14359,7 @@ export type OrderDiscountAddMutation = {
                         } | null;
                     } | null;
                 }>;
-            } | null> | null;
+            }>;
             discounts: Array<{
                 __typename: "OrderDiscount";
                 id: string;
@@ -12312,7 +14368,7 @@ export type OrderDiscountAddMutation = {
                 reason: string | null;
                 calculationMode: DiscountValueTypeEnum;
                 amount: { __typename: "Money"; amount: number; currency: string };
-            }> | null;
+            }>;
             events: Array<{
                 __typename: "OrderEvent";
                 id: string;
@@ -12336,7 +14392,7 @@ export type OrderDiscountAddMutation = {
                     amount: { __typename: "Money"; amount: number; currency: string } | null;
                     oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
                 } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+                relatedOrder: { __typename: "Order"; id: string; number: string } | null;
                 user: {
                     __typename: "User";
                     id: string;
@@ -12370,8 +14426,8 @@ export type OrderDiscountAddMutation = {
                         productName: string;
                         variantName: string;
                     } | null;
-                } | null> | null;
-            } | null> | null;
+                }> | null;
+            }>;
             fulfillments: Array<{
                 __typename: "Fulfillment";
                 id: string;
@@ -12394,11 +14450,29 @@ export type OrderDiscountAddMutation = {
                         unitDiscountValue: any;
                         unitDiscountReason: string | null;
                         unitDiscountType: DiscountValueTypeEnum | null;
+                        allocations: Array<{
+                            __typename: "Allocation";
+                            id: string;
+                            quantity: number;
+                            warehouse: { __typename: "Warehouse"; id: string; name: string };
+                        }> | null;
                         variant: {
                             __typename: "ProductVariant";
                             id: string;
                             quantityAvailable: number | null;
                             preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                            stocks: Array<{
+                                __typename: "Stock";
+                                id: string;
+                                quantity: number;
+                                quantityAllocated: number;
+                                warehouse: { __typename: "Warehouse"; id: string; name: string };
+                            }> | null;
+                            product: {
+                                __typename: "Product";
+                                id: string;
+                                isAvailableForPurchase: boolean | null;
+                            };
                         } | null;
                         unitDiscount: { __typename: "Money"; amount: number; currency: string };
                         undiscountedUnitPrice: {
@@ -12414,9 +14488,9 @@ export type OrderDiscountAddMutation = {
                         };
                         thumbnail: { __typename: "Image"; url: string } | null;
                     } | null;
-                } | null> | null;
+                }> | null;
                 warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
+            }>;
             lines: Array<{
                 __typename: "OrderLine";
                 id: string;
@@ -12429,11 +14503,29 @@ export type OrderDiscountAddMutation = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -12448,7 +14540,7 @@ export type OrderDiscountAddMutation = {
                     net: { __typename: "Money"; amount: number; currency: string };
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
+            }>;
             shippingAddress: {
                 __typename: "Address";
                 city: string;
@@ -12490,6 +14582,7 @@ export type OrderDiscountAddMutation = {
             };
             totalAuthorized: { __typename: "Money"; amount: number; currency: string };
             totalCaptured: { __typename: "Money"; amount: number; currency: string };
+            totalBalance: { __typename: "Money"; amount: number; currency: string };
             undiscountedTotal: {
                 __typename: "TaxedMoney";
                 net: { __typename: "Money"; amount: number; currency: string };
@@ -12503,7 +14596,7 @@ export type OrderDiscountAddMutation = {
                 active: boolean;
                 message: string | null;
                 price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
+            }>;
             invoices: Array<{
                 __typename: "Invoice";
                 id: string;
@@ -12511,7 +14604,7 @@ export type OrderDiscountAddMutation = {
                 createdAt: any;
                 url: string | null;
                 status: JobStatusEnum;
-            } | null> | null;
+            }>;
             channel: {
                 __typename: "Channel";
                 isActive: boolean;
@@ -12521,8 +14614,8 @@ export type OrderDiscountAddMutation = {
                 slug: string;
                 defaultCountry: { __typename: "CountryDisplay"; code: string };
             };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -12550,13 +14643,13 @@ export type OrderDiscountDeleteMutation = {
             canFinalize: boolean;
             created: any;
             customerNote: string;
-            number: string | null;
+            number: string;
             isPaid: boolean;
             paymentStatus: PaymentChargeStatusEnum;
             shippingMethodName: string | null;
             collectionPointName: string | null;
             status: OrderStatus;
-            actions: Array<OrderAction | null>;
+            actions: Array<OrderAction>;
             userEmail: string | null;
             billingAddress: {
                 __typename: "Address";
@@ -12600,7 +14693,7 @@ export type OrderDiscountDeleteMutation = {
                         } | null;
                     } | null;
                 }>;
-            } | null> | null;
+            }>;
             discounts: Array<{
                 __typename: "OrderDiscount";
                 id: string;
@@ -12609,7 +14702,7 @@ export type OrderDiscountDeleteMutation = {
                 reason: string | null;
                 calculationMode: DiscountValueTypeEnum;
                 amount: { __typename: "Money"; amount: number; currency: string };
-            }> | null;
+            }>;
             events: Array<{
                 __typename: "OrderEvent";
                 id: string;
@@ -12633,7 +14726,7 @@ export type OrderDiscountDeleteMutation = {
                     amount: { __typename: "Money"; amount: number; currency: string } | null;
                     oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
                 } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+                relatedOrder: { __typename: "Order"; id: string; number: string } | null;
                 user: {
                     __typename: "User";
                     id: string;
@@ -12667,8 +14760,8 @@ export type OrderDiscountDeleteMutation = {
                         productName: string;
                         variantName: string;
                     } | null;
-                } | null> | null;
-            } | null> | null;
+                }> | null;
+            }>;
             fulfillments: Array<{
                 __typename: "Fulfillment";
                 id: string;
@@ -12691,11 +14784,29 @@ export type OrderDiscountDeleteMutation = {
                         unitDiscountValue: any;
                         unitDiscountReason: string | null;
                         unitDiscountType: DiscountValueTypeEnum | null;
+                        allocations: Array<{
+                            __typename: "Allocation";
+                            id: string;
+                            quantity: number;
+                            warehouse: { __typename: "Warehouse"; id: string; name: string };
+                        }> | null;
                         variant: {
                             __typename: "ProductVariant";
                             id: string;
                             quantityAvailable: number | null;
                             preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                            stocks: Array<{
+                                __typename: "Stock";
+                                id: string;
+                                quantity: number;
+                                quantityAllocated: number;
+                                warehouse: { __typename: "Warehouse"; id: string; name: string };
+                            }> | null;
+                            product: {
+                                __typename: "Product";
+                                id: string;
+                                isAvailableForPurchase: boolean | null;
+                            };
                         } | null;
                         unitDiscount: { __typename: "Money"; amount: number; currency: string };
                         undiscountedUnitPrice: {
@@ -12711,9 +14822,9 @@ export type OrderDiscountDeleteMutation = {
                         };
                         thumbnail: { __typename: "Image"; url: string } | null;
                     } | null;
-                } | null> | null;
+                }> | null;
                 warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
+            }>;
             lines: Array<{
                 __typename: "OrderLine";
                 id: string;
@@ -12726,11 +14837,29 @@ export type OrderDiscountDeleteMutation = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -12745,7 +14874,7 @@ export type OrderDiscountDeleteMutation = {
                     net: { __typename: "Money"; amount: number; currency: string };
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
+            }>;
             shippingAddress: {
                 __typename: "Address";
                 city: string;
@@ -12787,6 +14916,7 @@ export type OrderDiscountDeleteMutation = {
             };
             totalAuthorized: { __typename: "Money"; amount: number; currency: string };
             totalCaptured: { __typename: "Money"; amount: number; currency: string };
+            totalBalance: { __typename: "Money"; amount: number; currency: string };
             undiscountedTotal: {
                 __typename: "TaxedMoney";
                 net: { __typename: "Money"; amount: number; currency: string };
@@ -12800,7 +14930,7 @@ export type OrderDiscountDeleteMutation = {
                 active: boolean;
                 message: string | null;
                 price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
+            }>;
             invoices: Array<{
                 __typename: "Invoice";
                 id: string;
@@ -12808,7 +14938,7 @@ export type OrderDiscountDeleteMutation = {
                 createdAt: any;
                 url: string | null;
                 status: JobStatusEnum;
-            } | null> | null;
+            }>;
             channel: {
                 __typename: "Channel";
                 isActive: boolean;
@@ -12818,8 +14948,8 @@ export type OrderDiscountDeleteMutation = {
                 slug: string;
                 defaultCountry: { __typename: "CountryDisplay"; code: string };
             };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -12847,13 +14977,13 @@ export type OrderLineDiscountRemoveMutation = {
             canFinalize: boolean;
             created: any;
             customerNote: string;
-            number: string | null;
+            number: string;
             isPaid: boolean;
             paymentStatus: PaymentChargeStatusEnum;
             shippingMethodName: string | null;
             collectionPointName: string | null;
             status: OrderStatus;
-            actions: Array<OrderAction | null>;
+            actions: Array<OrderAction>;
             userEmail: string | null;
             billingAddress: {
                 __typename: "Address";
@@ -12897,7 +15027,7 @@ export type OrderLineDiscountRemoveMutation = {
                         } | null;
                     } | null;
                 }>;
-            } | null> | null;
+            }>;
             discounts: Array<{
                 __typename: "OrderDiscount";
                 id: string;
@@ -12906,7 +15036,7 @@ export type OrderLineDiscountRemoveMutation = {
                 reason: string | null;
                 calculationMode: DiscountValueTypeEnum;
                 amount: { __typename: "Money"; amount: number; currency: string };
-            }> | null;
+            }>;
             events: Array<{
                 __typename: "OrderEvent";
                 id: string;
@@ -12930,7 +15060,7 @@ export type OrderLineDiscountRemoveMutation = {
                     amount: { __typename: "Money"; amount: number; currency: string } | null;
                     oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
                 } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+                relatedOrder: { __typename: "Order"; id: string; number: string } | null;
                 user: {
                     __typename: "User";
                     id: string;
@@ -12964,8 +15094,8 @@ export type OrderLineDiscountRemoveMutation = {
                         productName: string;
                         variantName: string;
                     } | null;
-                } | null> | null;
-            } | null> | null;
+                }> | null;
+            }>;
             fulfillments: Array<{
                 __typename: "Fulfillment";
                 id: string;
@@ -12988,11 +15118,29 @@ export type OrderLineDiscountRemoveMutation = {
                         unitDiscountValue: any;
                         unitDiscountReason: string | null;
                         unitDiscountType: DiscountValueTypeEnum | null;
+                        allocations: Array<{
+                            __typename: "Allocation";
+                            id: string;
+                            quantity: number;
+                            warehouse: { __typename: "Warehouse"; id: string; name: string };
+                        }> | null;
                         variant: {
                             __typename: "ProductVariant";
                             id: string;
                             quantityAvailable: number | null;
                             preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                            stocks: Array<{
+                                __typename: "Stock";
+                                id: string;
+                                quantity: number;
+                                quantityAllocated: number;
+                                warehouse: { __typename: "Warehouse"; id: string; name: string };
+                            }> | null;
+                            product: {
+                                __typename: "Product";
+                                id: string;
+                                isAvailableForPurchase: boolean | null;
+                            };
                         } | null;
                         unitDiscount: { __typename: "Money"; amount: number; currency: string };
                         undiscountedUnitPrice: {
@@ -13008,9 +15156,9 @@ export type OrderLineDiscountRemoveMutation = {
                         };
                         thumbnail: { __typename: "Image"; url: string } | null;
                     } | null;
-                } | null> | null;
+                }> | null;
                 warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
+            }>;
             lines: Array<{
                 __typename: "OrderLine";
                 id: string;
@@ -13023,11 +15171,29 @@ export type OrderLineDiscountRemoveMutation = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -13042,7 +15208,7 @@ export type OrderLineDiscountRemoveMutation = {
                     net: { __typename: "Money"; amount: number; currency: string };
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
+            }>;
             shippingAddress: {
                 __typename: "Address";
                 city: string;
@@ -13084,6 +15250,7 @@ export type OrderLineDiscountRemoveMutation = {
             };
             totalAuthorized: { __typename: "Money"; amount: number; currency: string };
             totalCaptured: { __typename: "Money"; amount: number; currency: string };
+            totalBalance: { __typename: "Money"; amount: number; currency: string };
             undiscountedTotal: {
                 __typename: "TaxedMoney";
                 net: { __typename: "Money"; amount: number; currency: string };
@@ -13097,7 +15264,7 @@ export type OrderLineDiscountRemoveMutation = {
                 active: boolean;
                 message: string | null;
                 price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
+            }>;
             invoices: Array<{
                 __typename: "Invoice";
                 id: string;
@@ -13105,7 +15272,7 @@ export type OrderLineDiscountRemoveMutation = {
                 createdAt: any;
                 url: string | null;
                 status: JobStatusEnum;
-            } | null> | null;
+            }>;
             channel: {
                 __typename: "Channel";
                 isActive: boolean;
@@ -13115,8 +15282,8 @@ export type OrderLineDiscountRemoveMutation = {
                 slug: string;
                 defaultCountry: { __typename: "CountryDisplay"; code: string };
             };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -13145,13 +15312,13 @@ export type OrderLineDiscountUpdateMutation = {
             canFinalize: boolean;
             created: any;
             customerNote: string;
-            number: string | null;
+            number: string;
             isPaid: boolean;
             paymentStatus: PaymentChargeStatusEnum;
             shippingMethodName: string | null;
             collectionPointName: string | null;
             status: OrderStatus;
-            actions: Array<OrderAction | null>;
+            actions: Array<OrderAction>;
             userEmail: string | null;
             billingAddress: {
                 __typename: "Address";
@@ -13195,7 +15362,7 @@ export type OrderLineDiscountUpdateMutation = {
                         } | null;
                     } | null;
                 }>;
-            } | null> | null;
+            }>;
             discounts: Array<{
                 __typename: "OrderDiscount";
                 id: string;
@@ -13204,7 +15371,7 @@ export type OrderLineDiscountUpdateMutation = {
                 reason: string | null;
                 calculationMode: DiscountValueTypeEnum;
                 amount: { __typename: "Money"; amount: number; currency: string };
-            }> | null;
+            }>;
             events: Array<{
                 __typename: "OrderEvent";
                 id: string;
@@ -13228,7 +15395,7 @@ export type OrderLineDiscountUpdateMutation = {
                     amount: { __typename: "Money"; amount: number; currency: string } | null;
                     oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
                 } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+                relatedOrder: { __typename: "Order"; id: string; number: string } | null;
                 user: {
                     __typename: "User";
                     id: string;
@@ -13262,8 +15429,8 @@ export type OrderLineDiscountUpdateMutation = {
                         productName: string;
                         variantName: string;
                     } | null;
-                } | null> | null;
-            } | null> | null;
+                }> | null;
+            }>;
             fulfillments: Array<{
                 __typename: "Fulfillment";
                 id: string;
@@ -13286,11 +15453,29 @@ export type OrderLineDiscountUpdateMutation = {
                         unitDiscountValue: any;
                         unitDiscountReason: string | null;
                         unitDiscountType: DiscountValueTypeEnum | null;
+                        allocations: Array<{
+                            __typename: "Allocation";
+                            id: string;
+                            quantity: number;
+                            warehouse: { __typename: "Warehouse"; id: string; name: string };
+                        }> | null;
                         variant: {
                             __typename: "ProductVariant";
                             id: string;
                             quantityAvailable: number | null;
                             preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                            stocks: Array<{
+                                __typename: "Stock";
+                                id: string;
+                                quantity: number;
+                                quantityAllocated: number;
+                                warehouse: { __typename: "Warehouse"; id: string; name: string };
+                            }> | null;
+                            product: {
+                                __typename: "Product";
+                                id: string;
+                                isAvailableForPurchase: boolean | null;
+                            };
                         } | null;
                         unitDiscount: { __typename: "Money"; amount: number; currency: string };
                         undiscountedUnitPrice: {
@@ -13306,9 +15491,9 @@ export type OrderLineDiscountUpdateMutation = {
                         };
                         thumbnail: { __typename: "Image"; url: string } | null;
                     } | null;
-                } | null> | null;
+                }> | null;
                 warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
+            }>;
             lines: Array<{
                 __typename: "OrderLine";
                 id: string;
@@ -13321,11 +15506,29 @@ export type OrderLineDiscountUpdateMutation = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -13340,7 +15543,7 @@ export type OrderLineDiscountUpdateMutation = {
                     net: { __typename: "Money"; amount: number; currency: string };
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
+            }>;
             shippingAddress: {
                 __typename: "Address";
                 city: string;
@@ -13382,6 +15585,7 @@ export type OrderLineDiscountUpdateMutation = {
             };
             totalAuthorized: { __typename: "Money"; amount: number; currency: string };
             totalCaptured: { __typename: "Money"; amount: number; currency: string };
+            totalBalance: { __typename: "Money"; amount: number; currency: string };
             undiscountedTotal: {
                 __typename: "TaxedMoney";
                 net: { __typename: "Money"; amount: number; currency: string };
@@ -13395,7 +15599,7 @@ export type OrderLineDiscountUpdateMutation = {
                 active: boolean;
                 message: string | null;
                 price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
+            }>;
             invoices: Array<{
                 __typename: "Invoice";
                 id: string;
@@ -13403,7 +15607,7 @@ export type OrderLineDiscountUpdateMutation = {
                 createdAt: any;
                 url: string | null;
                 status: JobStatusEnum;
-            } | null> | null;
+            }>;
             channel: {
                 __typename: "Channel";
                 isActive: boolean;
@@ -13413,8 +15617,8 @@ export type OrderLineDiscountUpdateMutation = {
                 slug: string;
                 defaultCountry: { __typename: "CountryDisplay"; code: string };
             };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -13443,13 +15647,13 @@ export type OrderDiscountUpdateMutation = {
             canFinalize: boolean;
             created: any;
             customerNote: string;
-            number: string | null;
+            number: string;
             isPaid: boolean;
             paymentStatus: PaymentChargeStatusEnum;
             shippingMethodName: string | null;
             collectionPointName: string | null;
             status: OrderStatus;
-            actions: Array<OrderAction | null>;
+            actions: Array<OrderAction>;
             userEmail: string | null;
             billingAddress: {
                 __typename: "Address";
@@ -13493,7 +15697,7 @@ export type OrderDiscountUpdateMutation = {
                         } | null;
                     } | null;
                 }>;
-            } | null> | null;
+            }>;
             discounts: Array<{
                 __typename: "OrderDiscount";
                 id: string;
@@ -13502,7 +15706,7 @@ export type OrderDiscountUpdateMutation = {
                 reason: string | null;
                 calculationMode: DiscountValueTypeEnum;
                 amount: { __typename: "Money"; amount: number; currency: string };
-            }> | null;
+            }>;
             events: Array<{
                 __typename: "OrderEvent";
                 id: string;
@@ -13526,7 +15730,7 @@ export type OrderDiscountUpdateMutation = {
                     amount: { __typename: "Money"; amount: number; currency: string } | null;
                     oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
                 } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+                relatedOrder: { __typename: "Order"; id: string; number: string } | null;
                 user: {
                     __typename: "User";
                     id: string;
@@ -13560,8 +15764,8 @@ export type OrderDiscountUpdateMutation = {
                         productName: string;
                         variantName: string;
                     } | null;
-                } | null> | null;
-            } | null> | null;
+                }> | null;
+            }>;
             fulfillments: Array<{
                 __typename: "Fulfillment";
                 id: string;
@@ -13584,11 +15788,29 @@ export type OrderDiscountUpdateMutation = {
                         unitDiscountValue: any;
                         unitDiscountReason: string | null;
                         unitDiscountType: DiscountValueTypeEnum | null;
+                        allocations: Array<{
+                            __typename: "Allocation";
+                            id: string;
+                            quantity: number;
+                            warehouse: { __typename: "Warehouse"; id: string; name: string };
+                        }> | null;
                         variant: {
                             __typename: "ProductVariant";
                             id: string;
                             quantityAvailable: number | null;
                             preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                            stocks: Array<{
+                                __typename: "Stock";
+                                id: string;
+                                quantity: number;
+                                quantityAllocated: number;
+                                warehouse: { __typename: "Warehouse"; id: string; name: string };
+                            }> | null;
+                            product: {
+                                __typename: "Product";
+                                id: string;
+                                isAvailableForPurchase: boolean | null;
+                            };
                         } | null;
                         unitDiscount: { __typename: "Money"; amount: number; currency: string };
                         undiscountedUnitPrice: {
@@ -13604,9 +15826,9 @@ export type OrderDiscountUpdateMutation = {
                         };
                         thumbnail: { __typename: "Image"; url: string } | null;
                     } | null;
-                } | null> | null;
+                }> | null;
                 warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
+            }>;
             lines: Array<{
                 __typename: "OrderLine";
                 id: string;
@@ -13619,11 +15841,29 @@ export type OrderDiscountUpdateMutation = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -13638,7 +15878,7 @@ export type OrderDiscountUpdateMutation = {
                     net: { __typename: "Money"; amount: number; currency: string };
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
+            }>;
             shippingAddress: {
                 __typename: "Address";
                 city: string;
@@ -13680,6 +15920,7 @@ export type OrderDiscountUpdateMutation = {
             };
             totalAuthorized: { __typename: "Money"; amount: number; currency: string };
             totalCaptured: { __typename: "Money"; amount: number; currency: string };
+            totalBalance: { __typename: "Money"; amount: number; currency: string };
             undiscountedTotal: {
                 __typename: "TaxedMoney";
                 net: { __typename: "Money"; amount: number; currency: string };
@@ -13693,7 +15934,7 @@ export type OrderDiscountUpdateMutation = {
                 active: boolean;
                 message: string | null;
                 price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
+            }>;
             invoices: Array<{
                 __typename: "Invoice";
                 id: string;
@@ -13701,7 +15942,7 @@ export type OrderDiscountUpdateMutation = {
                 createdAt: any;
                 url: string | null;
                 status: JobStatusEnum;
-            } | null> | null;
+            }>;
             channel: {
                 __typename: "Channel";
                 isActive: boolean;
@@ -13711,8 +15952,8 @@ export type OrderDiscountUpdateMutation = {
                 slug: string;
                 defaultCountry: { __typename: "CountryDisplay"; code: string };
             };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -13740,13 +15981,13 @@ export type OrderDraftCancelMutation = {
             canFinalize: boolean;
             created: any;
             customerNote: string;
-            number: string | null;
+            number: string;
             isPaid: boolean;
             paymentStatus: PaymentChargeStatusEnum;
             shippingMethodName: string | null;
             collectionPointName: string | null;
             status: OrderStatus;
-            actions: Array<OrderAction | null>;
+            actions: Array<OrderAction>;
             userEmail: string | null;
             billingAddress: {
                 __typename: "Address";
@@ -13790,7 +16031,7 @@ export type OrderDraftCancelMutation = {
                         } | null;
                     } | null;
                 }>;
-            } | null> | null;
+            }>;
             discounts: Array<{
                 __typename: "OrderDiscount";
                 id: string;
@@ -13799,7 +16040,7 @@ export type OrderDraftCancelMutation = {
                 reason: string | null;
                 calculationMode: DiscountValueTypeEnum;
                 amount: { __typename: "Money"; amount: number; currency: string };
-            }> | null;
+            }>;
             events: Array<{
                 __typename: "OrderEvent";
                 id: string;
@@ -13823,7 +16064,7 @@ export type OrderDraftCancelMutation = {
                     amount: { __typename: "Money"; amount: number; currency: string } | null;
                     oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
                 } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+                relatedOrder: { __typename: "Order"; id: string; number: string } | null;
                 user: {
                     __typename: "User";
                     id: string;
@@ -13857,8 +16098,8 @@ export type OrderDraftCancelMutation = {
                         productName: string;
                         variantName: string;
                     } | null;
-                } | null> | null;
-            } | null> | null;
+                }> | null;
+            }>;
             fulfillments: Array<{
                 __typename: "Fulfillment";
                 id: string;
@@ -13881,11 +16122,29 @@ export type OrderDraftCancelMutation = {
                         unitDiscountValue: any;
                         unitDiscountReason: string | null;
                         unitDiscountType: DiscountValueTypeEnum | null;
+                        allocations: Array<{
+                            __typename: "Allocation";
+                            id: string;
+                            quantity: number;
+                            warehouse: { __typename: "Warehouse"; id: string; name: string };
+                        }> | null;
                         variant: {
                             __typename: "ProductVariant";
                             id: string;
                             quantityAvailable: number | null;
                             preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                            stocks: Array<{
+                                __typename: "Stock";
+                                id: string;
+                                quantity: number;
+                                quantityAllocated: number;
+                                warehouse: { __typename: "Warehouse"; id: string; name: string };
+                            }> | null;
+                            product: {
+                                __typename: "Product";
+                                id: string;
+                                isAvailableForPurchase: boolean | null;
+                            };
                         } | null;
                         unitDiscount: { __typename: "Money"; amount: number; currency: string };
                         undiscountedUnitPrice: {
@@ -13901,9 +16160,9 @@ export type OrderDraftCancelMutation = {
                         };
                         thumbnail: { __typename: "Image"; url: string } | null;
                     } | null;
-                } | null> | null;
+                }> | null;
                 warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
+            }>;
             lines: Array<{
                 __typename: "OrderLine";
                 id: string;
@@ -13916,11 +16175,29 @@ export type OrderDraftCancelMutation = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -13935,7 +16212,7 @@ export type OrderDraftCancelMutation = {
                     net: { __typename: "Money"; amount: number; currency: string };
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
+            }>;
             shippingAddress: {
                 __typename: "Address";
                 city: string;
@@ -13977,6 +16254,7 @@ export type OrderDraftCancelMutation = {
             };
             totalAuthorized: { __typename: "Money"; amount: number; currency: string };
             totalCaptured: { __typename: "Money"; amount: number; currency: string };
+            totalBalance: { __typename: "Money"; amount: number; currency: string };
             undiscountedTotal: {
                 __typename: "TaxedMoney";
                 net: { __typename: "Money"; amount: number; currency: string };
@@ -13990,7 +16268,7 @@ export type OrderDraftCancelMutation = {
                 active: boolean;
                 message: string | null;
                 price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
+            }>;
             invoices: Array<{
                 __typename: "Invoice";
                 id: string;
@@ -13998,7 +16276,7 @@ export type OrderDraftCancelMutation = {
                 createdAt: any;
                 url: string | null;
                 status: JobStatusEnum;
-            } | null> | null;
+            }>;
             channel: {
                 __typename: "Channel";
                 isActive: boolean;
@@ -14008,14 +16286,14 @@ export type OrderDraftCancelMutation = {
                 slug: string;
                 defaultCountry: { __typename: "CountryDisplay"; code: string };
             };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
 
 export type OrderDraftBulkCancelMutationVariables = Exact<{
-    ids: Array<InputMaybe<Scalars["ID"]>> | InputMaybe<Scalars["ID"]>;
+    ids: Array<Scalars["ID"]> | Scalars["ID"];
 }>;
 
 export type OrderDraftBulkCancelMutation = {
@@ -14055,13 +16333,13 @@ export type OrderConfirmMutation = {
             canFinalize: boolean;
             created: any;
             customerNote: string;
-            number: string | null;
+            number: string;
             isPaid: boolean;
             paymentStatus: PaymentChargeStatusEnum;
             shippingMethodName: string | null;
             collectionPointName: string | null;
             status: OrderStatus;
-            actions: Array<OrderAction | null>;
+            actions: Array<OrderAction>;
             userEmail: string | null;
             billingAddress: {
                 __typename: "Address";
@@ -14105,7 +16383,7 @@ export type OrderConfirmMutation = {
                         } | null;
                     } | null;
                 }>;
-            } | null> | null;
+            }>;
             discounts: Array<{
                 __typename: "OrderDiscount";
                 id: string;
@@ -14114,7 +16392,7 @@ export type OrderConfirmMutation = {
                 reason: string | null;
                 calculationMode: DiscountValueTypeEnum;
                 amount: { __typename: "Money"; amount: number; currency: string };
-            }> | null;
+            }>;
             events: Array<{
                 __typename: "OrderEvent";
                 id: string;
@@ -14138,7 +16416,7 @@ export type OrderConfirmMutation = {
                     amount: { __typename: "Money"; amount: number; currency: string } | null;
                     oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
                 } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+                relatedOrder: { __typename: "Order"; id: string; number: string } | null;
                 user: {
                     __typename: "User";
                     id: string;
@@ -14172,8 +16450,8 @@ export type OrderConfirmMutation = {
                         productName: string;
                         variantName: string;
                     } | null;
-                } | null> | null;
-            } | null> | null;
+                }> | null;
+            }>;
             fulfillments: Array<{
                 __typename: "Fulfillment";
                 id: string;
@@ -14196,11 +16474,29 @@ export type OrderConfirmMutation = {
                         unitDiscountValue: any;
                         unitDiscountReason: string | null;
                         unitDiscountType: DiscountValueTypeEnum | null;
+                        allocations: Array<{
+                            __typename: "Allocation";
+                            id: string;
+                            quantity: number;
+                            warehouse: { __typename: "Warehouse"; id: string; name: string };
+                        }> | null;
                         variant: {
                             __typename: "ProductVariant";
                             id: string;
                             quantityAvailable: number | null;
                             preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                            stocks: Array<{
+                                __typename: "Stock";
+                                id: string;
+                                quantity: number;
+                                quantityAllocated: number;
+                                warehouse: { __typename: "Warehouse"; id: string; name: string };
+                            }> | null;
+                            product: {
+                                __typename: "Product";
+                                id: string;
+                                isAvailableForPurchase: boolean | null;
+                            };
                         } | null;
                         unitDiscount: { __typename: "Money"; amount: number; currency: string };
                         undiscountedUnitPrice: {
@@ -14216,9 +16512,9 @@ export type OrderConfirmMutation = {
                         };
                         thumbnail: { __typename: "Image"; url: string } | null;
                     } | null;
-                } | null> | null;
+                }> | null;
                 warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
+            }>;
             lines: Array<{
                 __typename: "OrderLine";
                 id: string;
@@ -14231,11 +16527,29 @@ export type OrderConfirmMutation = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -14250,7 +16564,7 @@ export type OrderConfirmMutation = {
                     net: { __typename: "Money"; amount: number; currency: string };
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
+            }>;
             shippingAddress: {
                 __typename: "Address";
                 city: string;
@@ -14292,6 +16606,7 @@ export type OrderConfirmMutation = {
             };
             totalAuthorized: { __typename: "Money"; amount: number; currency: string };
             totalCaptured: { __typename: "Money"; amount: number; currency: string };
+            totalBalance: { __typename: "Money"; amount: number; currency: string };
             undiscountedTotal: {
                 __typename: "TaxedMoney";
                 net: { __typename: "Money"; amount: number; currency: string };
@@ -14305,7 +16620,7 @@ export type OrderConfirmMutation = {
                 active: boolean;
                 message: string | null;
                 price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
+            }>;
             invoices: Array<{
                 __typename: "Invoice";
                 id: string;
@@ -14313,7 +16628,7 @@ export type OrderConfirmMutation = {
                 createdAt: any;
                 url: string | null;
                 status: JobStatusEnum;
-            } | null> | null;
+            }>;
             channel: {
                 __typename: "Channel";
                 isActive: boolean;
@@ -14323,8 +16638,8 @@ export type OrderConfirmMutation = {
                 slug: string;
                 defaultCountry: { __typename: "CountryDisplay"; code: string };
             };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -14352,13 +16667,13 @@ export type OrderDraftFinalizeMutation = {
             canFinalize: boolean;
             created: any;
             customerNote: string;
-            number: string | null;
+            number: string;
             isPaid: boolean;
             paymentStatus: PaymentChargeStatusEnum;
             shippingMethodName: string | null;
             collectionPointName: string | null;
             status: OrderStatus;
-            actions: Array<OrderAction | null>;
+            actions: Array<OrderAction>;
             userEmail: string | null;
             billingAddress: {
                 __typename: "Address";
@@ -14402,7 +16717,7 @@ export type OrderDraftFinalizeMutation = {
                         } | null;
                     } | null;
                 }>;
-            } | null> | null;
+            }>;
             discounts: Array<{
                 __typename: "OrderDiscount";
                 id: string;
@@ -14411,7 +16726,7 @@ export type OrderDraftFinalizeMutation = {
                 reason: string | null;
                 calculationMode: DiscountValueTypeEnum;
                 amount: { __typename: "Money"; amount: number; currency: string };
-            }> | null;
+            }>;
             events: Array<{
                 __typename: "OrderEvent";
                 id: string;
@@ -14435,7 +16750,7 @@ export type OrderDraftFinalizeMutation = {
                     amount: { __typename: "Money"; amount: number; currency: string } | null;
                     oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
                 } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+                relatedOrder: { __typename: "Order"; id: string; number: string } | null;
                 user: {
                     __typename: "User";
                     id: string;
@@ -14469,8 +16784,8 @@ export type OrderDraftFinalizeMutation = {
                         productName: string;
                         variantName: string;
                     } | null;
-                } | null> | null;
-            } | null> | null;
+                }> | null;
+            }>;
             fulfillments: Array<{
                 __typename: "Fulfillment";
                 id: string;
@@ -14493,11 +16808,29 @@ export type OrderDraftFinalizeMutation = {
                         unitDiscountValue: any;
                         unitDiscountReason: string | null;
                         unitDiscountType: DiscountValueTypeEnum | null;
+                        allocations: Array<{
+                            __typename: "Allocation";
+                            id: string;
+                            quantity: number;
+                            warehouse: { __typename: "Warehouse"; id: string; name: string };
+                        }> | null;
                         variant: {
                             __typename: "ProductVariant";
                             id: string;
                             quantityAvailable: number | null;
                             preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                            stocks: Array<{
+                                __typename: "Stock";
+                                id: string;
+                                quantity: number;
+                                quantityAllocated: number;
+                                warehouse: { __typename: "Warehouse"; id: string; name: string };
+                            }> | null;
+                            product: {
+                                __typename: "Product";
+                                id: string;
+                                isAvailableForPurchase: boolean | null;
+                            };
                         } | null;
                         unitDiscount: { __typename: "Money"; amount: number; currency: string };
                         undiscountedUnitPrice: {
@@ -14513,9 +16846,9 @@ export type OrderDraftFinalizeMutation = {
                         };
                         thumbnail: { __typename: "Image"; url: string } | null;
                     } | null;
-                } | null> | null;
+                }> | null;
                 warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
+            }>;
             lines: Array<{
                 __typename: "OrderLine";
                 id: string;
@@ -14528,11 +16861,29 @@ export type OrderDraftFinalizeMutation = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -14547,7 +16898,7 @@ export type OrderDraftFinalizeMutation = {
                     net: { __typename: "Money"; amount: number; currency: string };
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
+            }>;
             shippingAddress: {
                 __typename: "Address";
                 city: string;
@@ -14589,6 +16940,7 @@ export type OrderDraftFinalizeMutation = {
             };
             totalAuthorized: { __typename: "Money"; amount: number; currency: string };
             totalCaptured: { __typename: "Money"; amount: number; currency: string };
+            totalBalance: { __typename: "Money"; amount: number; currency: string };
             undiscountedTotal: {
                 __typename: "TaxedMoney";
                 net: { __typename: "Money"; amount: number; currency: string };
@@ -14602,7 +16954,7 @@ export type OrderDraftFinalizeMutation = {
                 active: boolean;
                 message: string | null;
                 price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
+            }>;
             invoices: Array<{
                 __typename: "Invoice";
                 id: string;
@@ -14610,7 +16962,7 @@ export type OrderDraftFinalizeMutation = {
                 createdAt: any;
                 url: string | null;
                 status: JobStatusEnum;
-            } | null> | null;
+            }>;
             channel: {
                 __typename: "Channel";
                 isActive: boolean;
@@ -14620,8 +16972,8 @@ export type OrderDraftFinalizeMutation = {
                 slug: string;
                 defaultCountry: { __typename: "CountryDisplay"; code: string };
             };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -14671,13 +17023,13 @@ export type OrderRefundMutation = {
             canFinalize: boolean;
             created: any;
             customerNote: string;
-            number: string | null;
+            number: string;
             isPaid: boolean;
             paymentStatus: PaymentChargeStatusEnum;
             shippingMethodName: string | null;
             collectionPointName: string | null;
             status: OrderStatus;
-            actions: Array<OrderAction | null>;
+            actions: Array<OrderAction>;
             userEmail: string | null;
             billingAddress: {
                 __typename: "Address";
@@ -14721,7 +17073,7 @@ export type OrderRefundMutation = {
                         } | null;
                     } | null;
                 }>;
-            } | null> | null;
+            }>;
             discounts: Array<{
                 __typename: "OrderDiscount";
                 id: string;
@@ -14730,7 +17082,7 @@ export type OrderRefundMutation = {
                 reason: string | null;
                 calculationMode: DiscountValueTypeEnum;
                 amount: { __typename: "Money"; amount: number; currency: string };
-            }> | null;
+            }>;
             events: Array<{
                 __typename: "OrderEvent";
                 id: string;
@@ -14754,7 +17106,7 @@ export type OrderRefundMutation = {
                     amount: { __typename: "Money"; amount: number; currency: string } | null;
                     oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
                 } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+                relatedOrder: { __typename: "Order"; id: string; number: string } | null;
                 user: {
                     __typename: "User";
                     id: string;
@@ -14788,8 +17140,8 @@ export type OrderRefundMutation = {
                         productName: string;
                         variantName: string;
                     } | null;
-                } | null> | null;
-            } | null> | null;
+                }> | null;
+            }>;
             fulfillments: Array<{
                 __typename: "Fulfillment";
                 id: string;
@@ -14812,11 +17164,29 @@ export type OrderRefundMutation = {
                         unitDiscountValue: any;
                         unitDiscountReason: string | null;
                         unitDiscountType: DiscountValueTypeEnum | null;
+                        allocations: Array<{
+                            __typename: "Allocation";
+                            id: string;
+                            quantity: number;
+                            warehouse: { __typename: "Warehouse"; id: string; name: string };
+                        }> | null;
                         variant: {
                             __typename: "ProductVariant";
                             id: string;
                             quantityAvailable: number | null;
                             preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                            stocks: Array<{
+                                __typename: "Stock";
+                                id: string;
+                                quantity: number;
+                                quantityAllocated: number;
+                                warehouse: { __typename: "Warehouse"; id: string; name: string };
+                            }> | null;
+                            product: {
+                                __typename: "Product";
+                                id: string;
+                                isAvailableForPurchase: boolean | null;
+                            };
                         } | null;
                         unitDiscount: { __typename: "Money"; amount: number; currency: string };
                         undiscountedUnitPrice: {
@@ -14832,9 +17202,9 @@ export type OrderRefundMutation = {
                         };
                         thumbnail: { __typename: "Image"; url: string } | null;
                     } | null;
-                } | null> | null;
+                }> | null;
                 warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
+            }>;
             lines: Array<{
                 __typename: "OrderLine";
                 id: string;
@@ -14847,11 +17217,29 @@ export type OrderRefundMutation = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -14866,7 +17254,7 @@ export type OrderRefundMutation = {
                     net: { __typename: "Money"; amount: number; currency: string };
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
+            }>;
             shippingAddress: {
                 __typename: "Address";
                 city: string;
@@ -14908,6 +17296,7 @@ export type OrderRefundMutation = {
             };
             totalAuthorized: { __typename: "Money"; amount: number; currency: string };
             totalCaptured: { __typename: "Money"; amount: number; currency: string };
+            totalBalance: { __typename: "Money"; amount: number; currency: string };
             undiscountedTotal: {
                 __typename: "TaxedMoney";
                 net: { __typename: "Money"; amount: number; currency: string };
@@ -14921,7 +17310,7 @@ export type OrderRefundMutation = {
                 active: boolean;
                 message: string | null;
                 price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
+            }>;
             invoices: Array<{
                 __typename: "Invoice";
                 id: string;
@@ -14929,7 +17318,7 @@ export type OrderRefundMutation = {
                 createdAt: any;
                 url: string | null;
                 status: JobStatusEnum;
-            } | null> | null;
+            }>;
             channel: {
                 __typename: "Channel";
                 isActive: boolean;
@@ -14939,8 +17328,8 @@ export type OrderRefundMutation = {
                 slug: string;
                 defaultCountry: { __typename: "CountryDisplay"; code: string };
             };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -14983,11 +17372,29 @@ export type OrderFulfillmentRefundProductsMutation = {
                     unitDiscountValue: any;
                     unitDiscountReason: string | null;
                     unitDiscountType: DiscountValueTypeEnum | null;
+                    allocations: Array<{
+                        __typename: "Allocation";
+                        id: string;
+                        quantity: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
                     variant: {
                         __typename: "ProductVariant";
                         id: string;
                         quantityAvailable: number | null;
                         preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                        stocks: Array<{
+                            __typename: "Stock";
+                            id: string;
+                            quantity: number;
+                            quantityAllocated: number;
+                            warehouse: { __typename: "Warehouse"; id: string; name: string };
+                        }> | null;
+                        product: {
+                            __typename: "Product";
+                            id: string;
+                            isAvailableForPurchase: boolean | null;
+                        };
                     } | null;
                     unitDiscount: { __typename: "Money"; amount: number; currency: string };
                     undiscountedUnitPrice: {
@@ -15003,7 +17410,7 @@ export type OrderFulfillmentRefundProductsMutation = {
                     };
                     thumbnail: { __typename: "Image"; url: string } | null;
                 } | null;
-            } | null> | null;
+            }> | null;
             warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
         } | null;
         order: {
@@ -15014,13 +17421,13 @@ export type OrderFulfillmentRefundProductsMutation = {
             canFinalize: boolean;
             created: any;
             customerNote: string;
-            number: string | null;
+            number: string;
             isPaid: boolean;
             paymentStatus: PaymentChargeStatusEnum;
             shippingMethodName: string | null;
             collectionPointName: string | null;
             status: OrderStatus;
-            actions: Array<OrderAction | null>;
+            actions: Array<OrderAction>;
             userEmail: string | null;
             billingAddress: {
                 __typename: "Address";
@@ -15064,7 +17471,7 @@ export type OrderFulfillmentRefundProductsMutation = {
                         } | null;
                     } | null;
                 }>;
-            } | null> | null;
+            }>;
             discounts: Array<{
                 __typename: "OrderDiscount";
                 id: string;
@@ -15073,7 +17480,7 @@ export type OrderFulfillmentRefundProductsMutation = {
                 reason: string | null;
                 calculationMode: DiscountValueTypeEnum;
                 amount: { __typename: "Money"; amount: number; currency: string };
-            }> | null;
+            }>;
             events: Array<{
                 __typename: "OrderEvent";
                 id: string;
@@ -15097,7 +17504,7 @@ export type OrderFulfillmentRefundProductsMutation = {
                     amount: { __typename: "Money"; amount: number; currency: string } | null;
                     oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
                 } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+                relatedOrder: { __typename: "Order"; id: string; number: string } | null;
                 user: {
                     __typename: "User";
                     id: string;
@@ -15131,8 +17538,8 @@ export type OrderFulfillmentRefundProductsMutation = {
                         productName: string;
                         variantName: string;
                     } | null;
-                } | null> | null;
-            } | null> | null;
+                }> | null;
+            }>;
             fulfillments: Array<{
                 __typename: "Fulfillment";
                 id: string;
@@ -15155,11 +17562,29 @@ export type OrderFulfillmentRefundProductsMutation = {
                         unitDiscountValue: any;
                         unitDiscountReason: string | null;
                         unitDiscountType: DiscountValueTypeEnum | null;
+                        allocations: Array<{
+                            __typename: "Allocation";
+                            id: string;
+                            quantity: number;
+                            warehouse: { __typename: "Warehouse"; id: string; name: string };
+                        }> | null;
                         variant: {
                             __typename: "ProductVariant";
                             id: string;
                             quantityAvailable: number | null;
                             preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                            stocks: Array<{
+                                __typename: "Stock";
+                                id: string;
+                                quantity: number;
+                                quantityAllocated: number;
+                                warehouse: { __typename: "Warehouse"; id: string; name: string };
+                            }> | null;
+                            product: {
+                                __typename: "Product";
+                                id: string;
+                                isAvailableForPurchase: boolean | null;
+                            };
                         } | null;
                         unitDiscount: { __typename: "Money"; amount: number; currency: string };
                         undiscountedUnitPrice: {
@@ -15175,9 +17600,9 @@ export type OrderFulfillmentRefundProductsMutation = {
                         };
                         thumbnail: { __typename: "Image"; url: string } | null;
                     } | null;
-                } | null> | null;
+                }> | null;
                 warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
+            }>;
             lines: Array<{
                 __typename: "OrderLine";
                 id: string;
@@ -15190,11 +17615,29 @@ export type OrderFulfillmentRefundProductsMutation = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -15209,7 +17652,7 @@ export type OrderFulfillmentRefundProductsMutation = {
                     net: { __typename: "Money"; amount: number; currency: string };
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
+            }>;
             shippingAddress: {
                 __typename: "Address";
                 city: string;
@@ -15251,6 +17694,7 @@ export type OrderFulfillmentRefundProductsMutation = {
             };
             totalAuthorized: { __typename: "Money"; amount: number; currency: string };
             totalCaptured: { __typename: "Money"; amount: number; currency: string };
+            totalBalance: { __typename: "Money"; amount: number; currency: string };
             undiscountedTotal: {
                 __typename: "TaxedMoney";
                 net: { __typename: "Money"; amount: number; currency: string };
@@ -15264,7 +17708,7 @@ export type OrderFulfillmentRefundProductsMutation = {
                 active: boolean;
                 message: string | null;
                 price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
+            }>;
             invoices: Array<{
                 __typename: "Invoice";
                 id: string;
@@ -15272,7 +17716,7 @@ export type OrderFulfillmentRefundProductsMutation = {
                 createdAt: any;
                 url: string | null;
                 status: JobStatusEnum;
-            } | null> | null;
+            }>;
             channel: {
                 __typename: "Channel";
                 isActive: boolean;
@@ -15282,8 +17726,8 @@ export type OrderFulfillmentRefundProductsMutation = {
                 slug: string;
                 defaultCountry: { __typename: "CountryDisplay"; code: string };
             };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -15311,13 +17755,13 @@ export type OrderVoidMutation = {
             canFinalize: boolean;
             created: any;
             customerNote: string;
-            number: string | null;
+            number: string;
             isPaid: boolean;
             paymentStatus: PaymentChargeStatusEnum;
             shippingMethodName: string | null;
             collectionPointName: string | null;
             status: OrderStatus;
-            actions: Array<OrderAction | null>;
+            actions: Array<OrderAction>;
             userEmail: string | null;
             billingAddress: {
                 __typename: "Address";
@@ -15361,7 +17805,7 @@ export type OrderVoidMutation = {
                         } | null;
                     } | null;
                 }>;
-            } | null> | null;
+            }>;
             discounts: Array<{
                 __typename: "OrderDiscount";
                 id: string;
@@ -15370,7 +17814,7 @@ export type OrderVoidMutation = {
                 reason: string | null;
                 calculationMode: DiscountValueTypeEnum;
                 amount: { __typename: "Money"; amount: number; currency: string };
-            }> | null;
+            }>;
             events: Array<{
                 __typename: "OrderEvent";
                 id: string;
@@ -15394,7 +17838,7 @@ export type OrderVoidMutation = {
                     amount: { __typename: "Money"; amount: number; currency: string } | null;
                     oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
                 } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+                relatedOrder: { __typename: "Order"; id: string; number: string } | null;
                 user: {
                     __typename: "User";
                     id: string;
@@ -15428,8 +17872,8 @@ export type OrderVoidMutation = {
                         productName: string;
                         variantName: string;
                     } | null;
-                } | null> | null;
-            } | null> | null;
+                }> | null;
+            }>;
             fulfillments: Array<{
                 __typename: "Fulfillment";
                 id: string;
@@ -15452,11 +17896,29 @@ export type OrderVoidMutation = {
                         unitDiscountValue: any;
                         unitDiscountReason: string | null;
                         unitDiscountType: DiscountValueTypeEnum | null;
+                        allocations: Array<{
+                            __typename: "Allocation";
+                            id: string;
+                            quantity: number;
+                            warehouse: { __typename: "Warehouse"; id: string; name: string };
+                        }> | null;
                         variant: {
                             __typename: "ProductVariant";
                             id: string;
                             quantityAvailable: number | null;
                             preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                            stocks: Array<{
+                                __typename: "Stock";
+                                id: string;
+                                quantity: number;
+                                quantityAllocated: number;
+                                warehouse: { __typename: "Warehouse"; id: string; name: string };
+                            }> | null;
+                            product: {
+                                __typename: "Product";
+                                id: string;
+                                isAvailableForPurchase: boolean | null;
+                            };
                         } | null;
                         unitDiscount: { __typename: "Money"; amount: number; currency: string };
                         undiscountedUnitPrice: {
@@ -15472,9 +17934,9 @@ export type OrderVoidMutation = {
                         };
                         thumbnail: { __typename: "Image"; url: string } | null;
                     } | null;
-                } | null> | null;
+                }> | null;
                 warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
+            }>;
             lines: Array<{
                 __typename: "OrderLine";
                 id: string;
@@ -15487,11 +17949,29 @@ export type OrderVoidMutation = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -15506,7 +17986,7 @@ export type OrderVoidMutation = {
                     net: { __typename: "Money"; amount: number; currency: string };
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
+            }>;
             shippingAddress: {
                 __typename: "Address";
                 city: string;
@@ -15548,6 +18028,7 @@ export type OrderVoidMutation = {
             };
             totalAuthorized: { __typename: "Money"; amount: number; currency: string };
             totalCaptured: { __typename: "Money"; amount: number; currency: string };
+            totalBalance: { __typename: "Money"; amount: number; currency: string };
             undiscountedTotal: {
                 __typename: "TaxedMoney";
                 net: { __typename: "Money"; amount: number; currency: string };
@@ -15561,7 +18042,7 @@ export type OrderVoidMutation = {
                 active: boolean;
                 message: string | null;
                 price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
+            }>;
             invoices: Array<{
                 __typename: "Invoice";
                 id: string;
@@ -15569,7 +18050,7 @@ export type OrderVoidMutation = {
                 createdAt: any;
                 url: string | null;
                 status: JobStatusEnum;
-            } | null> | null;
+            }>;
             channel: {
                 __typename: "Channel";
                 isActive: boolean;
@@ -15579,8 +18060,8 @@ export type OrderVoidMutation = {
                 slug: string;
                 defaultCountry: { __typename: "CountryDisplay"; code: string };
             };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -15609,13 +18090,13 @@ export type OrderMarkAsPaidMutation = {
             canFinalize: boolean;
             created: any;
             customerNote: string;
-            number: string | null;
+            number: string;
             isPaid: boolean;
             paymentStatus: PaymentChargeStatusEnum;
             shippingMethodName: string | null;
             collectionPointName: string | null;
             status: OrderStatus;
-            actions: Array<OrderAction | null>;
+            actions: Array<OrderAction>;
             userEmail: string | null;
             billingAddress: {
                 __typename: "Address";
@@ -15659,7 +18140,7 @@ export type OrderMarkAsPaidMutation = {
                         } | null;
                     } | null;
                 }>;
-            } | null> | null;
+            }>;
             discounts: Array<{
                 __typename: "OrderDiscount";
                 id: string;
@@ -15668,7 +18149,7 @@ export type OrderMarkAsPaidMutation = {
                 reason: string | null;
                 calculationMode: DiscountValueTypeEnum;
                 amount: { __typename: "Money"; amount: number; currency: string };
-            }> | null;
+            }>;
             events: Array<{
                 __typename: "OrderEvent";
                 id: string;
@@ -15692,7 +18173,7 @@ export type OrderMarkAsPaidMutation = {
                     amount: { __typename: "Money"; amount: number; currency: string } | null;
                     oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
                 } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+                relatedOrder: { __typename: "Order"; id: string; number: string } | null;
                 user: {
                     __typename: "User";
                     id: string;
@@ -15726,8 +18207,8 @@ export type OrderMarkAsPaidMutation = {
                         productName: string;
                         variantName: string;
                     } | null;
-                } | null> | null;
-            } | null> | null;
+                }> | null;
+            }>;
             fulfillments: Array<{
                 __typename: "Fulfillment";
                 id: string;
@@ -15750,11 +18231,29 @@ export type OrderMarkAsPaidMutation = {
                         unitDiscountValue: any;
                         unitDiscountReason: string | null;
                         unitDiscountType: DiscountValueTypeEnum | null;
+                        allocations: Array<{
+                            __typename: "Allocation";
+                            id: string;
+                            quantity: number;
+                            warehouse: { __typename: "Warehouse"; id: string; name: string };
+                        }> | null;
                         variant: {
                             __typename: "ProductVariant";
                             id: string;
                             quantityAvailable: number | null;
                             preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                            stocks: Array<{
+                                __typename: "Stock";
+                                id: string;
+                                quantity: number;
+                                quantityAllocated: number;
+                                warehouse: { __typename: "Warehouse"; id: string; name: string };
+                            }> | null;
+                            product: {
+                                __typename: "Product";
+                                id: string;
+                                isAvailableForPurchase: boolean | null;
+                            };
                         } | null;
                         unitDiscount: { __typename: "Money"; amount: number; currency: string };
                         undiscountedUnitPrice: {
@@ -15770,9 +18269,9 @@ export type OrderMarkAsPaidMutation = {
                         };
                         thumbnail: { __typename: "Image"; url: string } | null;
                     } | null;
-                } | null> | null;
+                }> | null;
                 warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
+            }>;
             lines: Array<{
                 __typename: "OrderLine";
                 id: string;
@@ -15785,11 +18284,29 @@ export type OrderMarkAsPaidMutation = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -15804,7 +18321,7 @@ export type OrderMarkAsPaidMutation = {
                     net: { __typename: "Money"; amount: number; currency: string };
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
+            }>;
             shippingAddress: {
                 __typename: "Address";
                 city: string;
@@ -15846,6 +18363,7 @@ export type OrderMarkAsPaidMutation = {
             };
             totalAuthorized: { __typename: "Money"; amount: number; currency: string };
             totalCaptured: { __typename: "Money"; amount: number; currency: string };
+            totalBalance: { __typename: "Money"; amount: number; currency: string };
             undiscountedTotal: {
                 __typename: "TaxedMoney";
                 net: { __typename: "Money"; amount: number; currency: string };
@@ -15859,7 +18377,7 @@ export type OrderMarkAsPaidMutation = {
                 active: boolean;
                 message: string | null;
                 price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
+            }>;
             invoices: Array<{
                 __typename: "Invoice";
                 id: string;
@@ -15867,7 +18385,7 @@ export type OrderMarkAsPaidMutation = {
                 createdAt: any;
                 url: string | null;
                 status: JobStatusEnum;
-            } | null> | null;
+            }>;
             channel: {
                 __typename: "Channel";
                 isActive: boolean;
@@ -15877,8 +18395,8 @@ export type OrderMarkAsPaidMutation = {
                 slug: string;
                 defaultCountry: { __typename: "CountryDisplay"; code: string };
             };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -15907,13 +18425,13 @@ export type OrderCaptureMutation = {
             canFinalize: boolean;
             created: any;
             customerNote: string;
-            number: string | null;
+            number: string;
             isPaid: boolean;
             paymentStatus: PaymentChargeStatusEnum;
             shippingMethodName: string | null;
             collectionPointName: string | null;
             status: OrderStatus;
-            actions: Array<OrderAction | null>;
+            actions: Array<OrderAction>;
             userEmail: string | null;
             billingAddress: {
                 __typename: "Address";
@@ -15957,7 +18475,7 @@ export type OrderCaptureMutation = {
                         } | null;
                     } | null;
                 }>;
-            } | null> | null;
+            }>;
             discounts: Array<{
                 __typename: "OrderDiscount";
                 id: string;
@@ -15966,7 +18484,7 @@ export type OrderCaptureMutation = {
                 reason: string | null;
                 calculationMode: DiscountValueTypeEnum;
                 amount: { __typename: "Money"; amount: number; currency: string };
-            }> | null;
+            }>;
             events: Array<{
                 __typename: "OrderEvent";
                 id: string;
@@ -15990,7 +18508,7 @@ export type OrderCaptureMutation = {
                     amount: { __typename: "Money"; amount: number; currency: string } | null;
                     oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
                 } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+                relatedOrder: { __typename: "Order"; id: string; number: string } | null;
                 user: {
                     __typename: "User";
                     id: string;
@@ -16024,8 +18542,8 @@ export type OrderCaptureMutation = {
                         productName: string;
                         variantName: string;
                     } | null;
-                } | null> | null;
-            } | null> | null;
+                }> | null;
+            }>;
             fulfillments: Array<{
                 __typename: "Fulfillment";
                 id: string;
@@ -16048,11 +18566,29 @@ export type OrderCaptureMutation = {
                         unitDiscountValue: any;
                         unitDiscountReason: string | null;
                         unitDiscountType: DiscountValueTypeEnum | null;
+                        allocations: Array<{
+                            __typename: "Allocation";
+                            id: string;
+                            quantity: number;
+                            warehouse: { __typename: "Warehouse"; id: string; name: string };
+                        }> | null;
                         variant: {
                             __typename: "ProductVariant";
                             id: string;
                             quantityAvailable: number | null;
                             preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                            stocks: Array<{
+                                __typename: "Stock";
+                                id: string;
+                                quantity: number;
+                                quantityAllocated: number;
+                                warehouse: { __typename: "Warehouse"; id: string; name: string };
+                            }> | null;
+                            product: {
+                                __typename: "Product";
+                                id: string;
+                                isAvailableForPurchase: boolean | null;
+                            };
                         } | null;
                         unitDiscount: { __typename: "Money"; amount: number; currency: string };
                         undiscountedUnitPrice: {
@@ -16068,9 +18604,9 @@ export type OrderCaptureMutation = {
                         };
                         thumbnail: { __typename: "Image"; url: string } | null;
                     } | null;
-                } | null> | null;
+                }> | null;
                 warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
+            }>;
             lines: Array<{
                 __typename: "OrderLine";
                 id: string;
@@ -16083,11 +18619,29 @@ export type OrderCaptureMutation = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -16102,7 +18656,7 @@ export type OrderCaptureMutation = {
                     net: { __typename: "Money"; amount: number; currency: string };
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
+            }>;
             shippingAddress: {
                 __typename: "Address";
                 city: string;
@@ -16144,6 +18698,7 @@ export type OrderCaptureMutation = {
             };
             totalAuthorized: { __typename: "Money"; amount: number; currency: string };
             totalCaptured: { __typename: "Money"; amount: number; currency: string };
+            totalBalance: { __typename: "Money"; amount: number; currency: string };
             undiscountedTotal: {
                 __typename: "TaxedMoney";
                 net: { __typename: "Money"; amount: number; currency: string };
@@ -16157,7 +18712,7 @@ export type OrderCaptureMutation = {
                 active: boolean;
                 message: string | null;
                 price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
+            }>;
             invoices: Array<{
                 __typename: "Invoice";
                 id: string;
@@ -16165,7 +18720,7 @@ export type OrderCaptureMutation = {
                 createdAt: any;
                 url: string | null;
                 status: JobStatusEnum;
-            } | null> | null;
+            }>;
             channel: {
                 __typename: "Channel";
                 isActive: boolean;
@@ -16175,8 +18730,8 @@ export type OrderCaptureMutation = {
                 slug: string;
                 defaultCountry: { __typename: "CountryDisplay"; code: string };
             };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -16205,13 +18760,13 @@ export type OrderFulfillmentUpdateTrackingMutation = {
             canFinalize: boolean;
             created: any;
             customerNote: string;
-            number: string | null;
+            number: string;
             isPaid: boolean;
             paymentStatus: PaymentChargeStatusEnum;
             shippingMethodName: string | null;
             collectionPointName: string | null;
             status: OrderStatus;
-            actions: Array<OrderAction | null>;
+            actions: Array<OrderAction>;
             userEmail: string | null;
             billingAddress: {
                 __typename: "Address";
@@ -16255,7 +18810,7 @@ export type OrderFulfillmentUpdateTrackingMutation = {
                         } | null;
                     } | null;
                 }>;
-            } | null> | null;
+            }>;
             discounts: Array<{
                 __typename: "OrderDiscount";
                 id: string;
@@ -16264,7 +18819,7 @@ export type OrderFulfillmentUpdateTrackingMutation = {
                 reason: string | null;
                 calculationMode: DiscountValueTypeEnum;
                 amount: { __typename: "Money"; amount: number; currency: string };
-            }> | null;
+            }>;
             events: Array<{
                 __typename: "OrderEvent";
                 id: string;
@@ -16288,7 +18843,7 @@ export type OrderFulfillmentUpdateTrackingMutation = {
                     amount: { __typename: "Money"; amount: number; currency: string } | null;
                     oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
                 } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+                relatedOrder: { __typename: "Order"; id: string; number: string } | null;
                 user: {
                     __typename: "User";
                     id: string;
@@ -16322,8 +18877,8 @@ export type OrderFulfillmentUpdateTrackingMutation = {
                         productName: string;
                         variantName: string;
                     } | null;
-                } | null> | null;
-            } | null> | null;
+                }> | null;
+            }>;
             fulfillments: Array<{
                 __typename: "Fulfillment";
                 id: string;
@@ -16346,11 +18901,29 @@ export type OrderFulfillmentUpdateTrackingMutation = {
                         unitDiscountValue: any;
                         unitDiscountReason: string | null;
                         unitDiscountType: DiscountValueTypeEnum | null;
+                        allocations: Array<{
+                            __typename: "Allocation";
+                            id: string;
+                            quantity: number;
+                            warehouse: { __typename: "Warehouse"; id: string; name: string };
+                        }> | null;
                         variant: {
                             __typename: "ProductVariant";
                             id: string;
                             quantityAvailable: number | null;
                             preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                            stocks: Array<{
+                                __typename: "Stock";
+                                id: string;
+                                quantity: number;
+                                quantityAllocated: number;
+                                warehouse: { __typename: "Warehouse"; id: string; name: string };
+                            }> | null;
+                            product: {
+                                __typename: "Product";
+                                id: string;
+                                isAvailableForPurchase: boolean | null;
+                            };
                         } | null;
                         unitDiscount: { __typename: "Money"; amount: number; currency: string };
                         undiscountedUnitPrice: {
@@ -16366,9 +18939,9 @@ export type OrderFulfillmentUpdateTrackingMutation = {
                         };
                         thumbnail: { __typename: "Image"; url: string } | null;
                     } | null;
-                } | null> | null;
+                }> | null;
                 warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
+            }>;
             lines: Array<{
                 __typename: "OrderLine";
                 id: string;
@@ -16381,11 +18954,29 @@ export type OrderFulfillmentUpdateTrackingMutation = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -16400,7 +18991,7 @@ export type OrderFulfillmentUpdateTrackingMutation = {
                     net: { __typename: "Money"; amount: number; currency: string };
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
+            }>;
             shippingAddress: {
                 __typename: "Address";
                 city: string;
@@ -16442,6 +19033,7 @@ export type OrderFulfillmentUpdateTrackingMutation = {
             };
             totalAuthorized: { __typename: "Money"; amount: number; currency: string };
             totalCaptured: { __typename: "Money"; amount: number; currency: string };
+            totalBalance: { __typename: "Money"; amount: number; currency: string };
             undiscountedTotal: {
                 __typename: "TaxedMoney";
                 net: { __typename: "Money"; amount: number; currency: string };
@@ -16455,7 +19047,7 @@ export type OrderFulfillmentUpdateTrackingMutation = {
                 active: boolean;
                 message: string | null;
                 price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
+            }>;
             invoices: Array<{
                 __typename: "Invoice";
                 id: string;
@@ -16463,7 +19055,7 @@ export type OrderFulfillmentUpdateTrackingMutation = {
                 createdAt: any;
                 url: string | null;
                 status: JobStatusEnum;
-            } | null> | null;
+            }>;
             channel: {
                 __typename: "Channel";
                 isActive: boolean;
@@ -16473,8 +19065,8 @@ export type OrderFulfillmentUpdateTrackingMutation = {
                 slug: string;
                 defaultCountry: { __typename: "CountryDisplay"; code: string };
             };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -16482,6 +19074,7 @@ export type OrderFulfillmentUpdateTrackingMutation = {
 export type OrderFulfillmentApproveMutationVariables = Exact<{
     id: Scalars["ID"];
     notifyCustomer: Scalars["Boolean"];
+    allowStockToBeExceeded?: InputMaybe<Scalars["Boolean"]>;
 }>;
 
 export type OrderFulfillmentApproveMutation = {
@@ -16503,13 +19096,13 @@ export type OrderFulfillmentApproveMutation = {
             canFinalize: boolean;
             created: any;
             customerNote: string;
-            number: string | null;
+            number: string;
             isPaid: boolean;
             paymentStatus: PaymentChargeStatusEnum;
             shippingMethodName: string | null;
             collectionPointName: string | null;
             status: OrderStatus;
-            actions: Array<OrderAction | null>;
+            actions: Array<OrderAction>;
             userEmail: string | null;
             billingAddress: {
                 __typename: "Address";
@@ -16553,7 +19146,7 @@ export type OrderFulfillmentApproveMutation = {
                         } | null;
                     } | null;
                 }>;
-            } | null> | null;
+            }>;
             discounts: Array<{
                 __typename: "OrderDiscount";
                 id: string;
@@ -16562,7 +19155,7 @@ export type OrderFulfillmentApproveMutation = {
                 reason: string | null;
                 calculationMode: DiscountValueTypeEnum;
                 amount: { __typename: "Money"; amount: number; currency: string };
-            }> | null;
+            }>;
             events: Array<{
                 __typename: "OrderEvent";
                 id: string;
@@ -16586,7 +19179,7 @@ export type OrderFulfillmentApproveMutation = {
                     amount: { __typename: "Money"; amount: number; currency: string } | null;
                     oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
                 } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+                relatedOrder: { __typename: "Order"; id: string; number: string } | null;
                 user: {
                     __typename: "User";
                     id: string;
@@ -16620,8 +19213,8 @@ export type OrderFulfillmentApproveMutation = {
                         productName: string;
                         variantName: string;
                     } | null;
-                } | null> | null;
-            } | null> | null;
+                }> | null;
+            }>;
             fulfillments: Array<{
                 __typename: "Fulfillment";
                 id: string;
@@ -16644,11 +19237,29 @@ export type OrderFulfillmentApproveMutation = {
                         unitDiscountValue: any;
                         unitDiscountReason: string | null;
                         unitDiscountType: DiscountValueTypeEnum | null;
+                        allocations: Array<{
+                            __typename: "Allocation";
+                            id: string;
+                            quantity: number;
+                            warehouse: { __typename: "Warehouse"; id: string; name: string };
+                        }> | null;
                         variant: {
                             __typename: "ProductVariant";
                             id: string;
                             quantityAvailable: number | null;
                             preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                            stocks: Array<{
+                                __typename: "Stock";
+                                id: string;
+                                quantity: number;
+                                quantityAllocated: number;
+                                warehouse: { __typename: "Warehouse"; id: string; name: string };
+                            }> | null;
+                            product: {
+                                __typename: "Product";
+                                id: string;
+                                isAvailableForPurchase: boolean | null;
+                            };
                         } | null;
                         unitDiscount: { __typename: "Money"; amount: number; currency: string };
                         undiscountedUnitPrice: {
@@ -16664,9 +19275,9 @@ export type OrderFulfillmentApproveMutation = {
                         };
                         thumbnail: { __typename: "Image"; url: string } | null;
                     } | null;
-                } | null> | null;
+                }> | null;
                 warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
+            }>;
             lines: Array<{
                 __typename: "OrderLine";
                 id: string;
@@ -16679,11 +19290,29 @@ export type OrderFulfillmentApproveMutation = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -16698,7 +19327,7 @@ export type OrderFulfillmentApproveMutation = {
                     net: { __typename: "Money"; amount: number; currency: string };
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
+            }>;
             shippingAddress: {
                 __typename: "Address";
                 city: string;
@@ -16740,6 +19369,7 @@ export type OrderFulfillmentApproveMutation = {
             };
             totalAuthorized: { __typename: "Money"; amount: number; currency: string };
             totalCaptured: { __typename: "Money"; amount: number; currency: string };
+            totalBalance: { __typename: "Money"; amount: number; currency: string };
             undiscountedTotal: {
                 __typename: "TaxedMoney";
                 net: { __typename: "Money"; amount: number; currency: string };
@@ -16753,7 +19383,7 @@ export type OrderFulfillmentApproveMutation = {
                 active: boolean;
                 message: string | null;
                 price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
+            }>;
             invoices: Array<{
                 __typename: "Invoice";
                 id: string;
@@ -16761,7 +19391,7 @@ export type OrderFulfillmentApproveMutation = {
                 createdAt: any;
                 url: string | null;
                 status: JobStatusEnum;
-            } | null> | null;
+            }>;
             channel: {
                 __typename: "Channel";
                 isActive: boolean;
@@ -16771,8 +19401,8 @@ export type OrderFulfillmentApproveMutation = {
                 slug: string;
                 defaultCountry: { __typename: "CountryDisplay"; code: string };
             };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -16801,13 +19431,13 @@ export type OrderFulfillmentCancelMutation = {
             canFinalize: boolean;
             created: any;
             customerNote: string;
-            number: string | null;
+            number: string;
             isPaid: boolean;
             paymentStatus: PaymentChargeStatusEnum;
             shippingMethodName: string | null;
             collectionPointName: string | null;
             status: OrderStatus;
-            actions: Array<OrderAction | null>;
+            actions: Array<OrderAction>;
             userEmail: string | null;
             billingAddress: {
                 __typename: "Address";
@@ -16851,7 +19481,7 @@ export type OrderFulfillmentCancelMutation = {
                         } | null;
                     } | null;
                 }>;
-            } | null> | null;
+            }>;
             discounts: Array<{
                 __typename: "OrderDiscount";
                 id: string;
@@ -16860,7 +19490,7 @@ export type OrderFulfillmentCancelMutation = {
                 reason: string | null;
                 calculationMode: DiscountValueTypeEnum;
                 amount: { __typename: "Money"; amount: number; currency: string };
-            }> | null;
+            }>;
             events: Array<{
                 __typename: "OrderEvent";
                 id: string;
@@ -16884,7 +19514,7 @@ export type OrderFulfillmentCancelMutation = {
                     amount: { __typename: "Money"; amount: number; currency: string } | null;
                     oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
                 } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+                relatedOrder: { __typename: "Order"; id: string; number: string } | null;
                 user: {
                     __typename: "User";
                     id: string;
@@ -16918,8 +19548,8 @@ export type OrderFulfillmentCancelMutation = {
                         productName: string;
                         variantName: string;
                     } | null;
-                } | null> | null;
-            } | null> | null;
+                }> | null;
+            }>;
             fulfillments: Array<{
                 __typename: "Fulfillment";
                 id: string;
@@ -16942,11 +19572,29 @@ export type OrderFulfillmentCancelMutation = {
                         unitDiscountValue: any;
                         unitDiscountReason: string | null;
                         unitDiscountType: DiscountValueTypeEnum | null;
+                        allocations: Array<{
+                            __typename: "Allocation";
+                            id: string;
+                            quantity: number;
+                            warehouse: { __typename: "Warehouse"; id: string; name: string };
+                        }> | null;
                         variant: {
                             __typename: "ProductVariant";
                             id: string;
                             quantityAvailable: number | null;
                             preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                            stocks: Array<{
+                                __typename: "Stock";
+                                id: string;
+                                quantity: number;
+                                quantityAllocated: number;
+                                warehouse: { __typename: "Warehouse"; id: string; name: string };
+                            }> | null;
+                            product: {
+                                __typename: "Product";
+                                id: string;
+                                isAvailableForPurchase: boolean | null;
+                            };
                         } | null;
                         unitDiscount: { __typename: "Money"; amount: number; currency: string };
                         undiscountedUnitPrice: {
@@ -16962,9 +19610,9 @@ export type OrderFulfillmentCancelMutation = {
                         };
                         thumbnail: { __typename: "Image"; url: string } | null;
                     } | null;
-                } | null> | null;
+                }> | null;
                 warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
+            }>;
             lines: Array<{
                 __typename: "OrderLine";
                 id: string;
@@ -16977,11 +19625,29 @@ export type OrderFulfillmentCancelMutation = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -16996,7 +19662,7 @@ export type OrderFulfillmentCancelMutation = {
                     net: { __typename: "Money"; amount: number; currency: string };
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
+            }>;
             shippingAddress: {
                 __typename: "Address";
                 city: string;
@@ -17038,6 +19704,7 @@ export type OrderFulfillmentCancelMutation = {
             };
             totalAuthorized: { __typename: "Money"; amount: number; currency: string };
             totalCaptured: { __typename: "Money"; amount: number; currency: string };
+            totalBalance: { __typename: "Money"; amount: number; currency: string };
             undiscountedTotal: {
                 __typename: "TaxedMoney";
                 net: { __typename: "Money"; amount: number; currency: string };
@@ -17051,7 +19718,7 @@ export type OrderFulfillmentCancelMutation = {
                 active: boolean;
                 message: string | null;
                 price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
+            }>;
             invoices: Array<{
                 __typename: "Invoice";
                 id: string;
@@ -17059,7 +19726,7 @@ export type OrderFulfillmentCancelMutation = {
                 createdAt: any;
                 url: string | null;
                 status: JobStatusEnum;
-            } | null> | null;
+            }>;
             channel: {
                 __typename: "Channel";
                 isActive: boolean;
@@ -17069,8 +19736,8 @@ export type OrderFulfillmentCancelMutation = {
                 slug: string;
                 defaultCountry: { __typename: "CountryDisplay"; code: string };
             };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -17117,7 +19784,7 @@ export type OrderAddNoteMutation = {
                     amount: { __typename: "Money"; amount: number; currency: string } | null;
                     oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
                 } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+                relatedOrder: { __typename: "Order"; id: string; number: string } | null;
                 user: {
                     __typename: "User";
                     id: string;
@@ -17151,8 +19818,8 @@ export type OrderAddNoteMutation = {
                         productName: string;
                         variantName: string;
                     } | null;
-                } | null> | null;
-            } | null> | null;
+                }> | null;
+            }>;
         } | null;
     } | null;
 };
@@ -17181,13 +19848,13 @@ export type OrderUpdateMutation = {
             canFinalize: boolean;
             created: any;
             customerNote: string;
-            number: string | null;
+            number: string;
             isPaid: boolean;
             paymentStatus: PaymentChargeStatusEnum;
             shippingMethodName: string | null;
             collectionPointName: string | null;
             status: OrderStatus;
-            actions: Array<OrderAction | null>;
+            actions: Array<OrderAction>;
             userEmail: string | null;
             billingAddress: {
                 __typename: "Address";
@@ -17231,7 +19898,7 @@ export type OrderUpdateMutation = {
                         } | null;
                     } | null;
                 }>;
-            } | null> | null;
+            }>;
             discounts: Array<{
                 __typename: "OrderDiscount";
                 id: string;
@@ -17240,7 +19907,7 @@ export type OrderUpdateMutation = {
                 reason: string | null;
                 calculationMode: DiscountValueTypeEnum;
                 amount: { __typename: "Money"; amount: number; currency: string };
-            }> | null;
+            }>;
             events: Array<{
                 __typename: "OrderEvent";
                 id: string;
@@ -17264,7 +19931,7 @@ export type OrderUpdateMutation = {
                     amount: { __typename: "Money"; amount: number; currency: string } | null;
                     oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
                 } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+                relatedOrder: { __typename: "Order"; id: string; number: string } | null;
                 user: {
                     __typename: "User";
                     id: string;
@@ -17298,8 +19965,8 @@ export type OrderUpdateMutation = {
                         productName: string;
                         variantName: string;
                     } | null;
-                } | null> | null;
-            } | null> | null;
+                }> | null;
+            }>;
             fulfillments: Array<{
                 __typename: "Fulfillment";
                 id: string;
@@ -17322,11 +19989,29 @@ export type OrderUpdateMutation = {
                         unitDiscountValue: any;
                         unitDiscountReason: string | null;
                         unitDiscountType: DiscountValueTypeEnum | null;
+                        allocations: Array<{
+                            __typename: "Allocation";
+                            id: string;
+                            quantity: number;
+                            warehouse: { __typename: "Warehouse"; id: string; name: string };
+                        }> | null;
                         variant: {
                             __typename: "ProductVariant";
                             id: string;
                             quantityAvailable: number | null;
                             preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                            stocks: Array<{
+                                __typename: "Stock";
+                                id: string;
+                                quantity: number;
+                                quantityAllocated: number;
+                                warehouse: { __typename: "Warehouse"; id: string; name: string };
+                            }> | null;
+                            product: {
+                                __typename: "Product";
+                                id: string;
+                                isAvailableForPurchase: boolean | null;
+                            };
                         } | null;
                         unitDiscount: { __typename: "Money"; amount: number; currency: string };
                         undiscountedUnitPrice: {
@@ -17342,9 +20027,9 @@ export type OrderUpdateMutation = {
                         };
                         thumbnail: { __typename: "Image"; url: string } | null;
                     } | null;
-                } | null> | null;
+                }> | null;
                 warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
+            }>;
             lines: Array<{
                 __typename: "OrderLine";
                 id: string;
@@ -17357,11 +20042,29 @@ export type OrderUpdateMutation = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -17376,7 +20079,7 @@ export type OrderUpdateMutation = {
                     net: { __typename: "Money"; amount: number; currency: string };
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
+            }>;
             shippingAddress: {
                 __typename: "Address";
                 city: string;
@@ -17418,6 +20121,7 @@ export type OrderUpdateMutation = {
             };
             totalAuthorized: { __typename: "Money"; amount: number; currency: string };
             totalCaptured: { __typename: "Money"; amount: number; currency: string };
+            totalBalance: { __typename: "Money"; amount: number; currency: string };
             undiscountedTotal: {
                 __typename: "TaxedMoney";
                 net: { __typename: "Money"; amount: number; currency: string };
@@ -17431,7 +20135,7 @@ export type OrderUpdateMutation = {
                 active: boolean;
                 message: string | null;
                 price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
+            }>;
             invoices: Array<{
                 __typename: "Invoice";
                 id: string;
@@ -17439,7 +20143,7 @@ export type OrderUpdateMutation = {
                 createdAt: any;
                 url: string | null;
                 status: JobStatusEnum;
-            } | null> | null;
+            }>;
             channel: {
                 __typename: "Channel";
                 isActive: boolean;
@@ -17449,8 +20153,8 @@ export type OrderUpdateMutation = {
                 slug: string;
                 defaultCountry: { __typename: "CountryDisplay"; code: string };
             };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -17479,13 +20183,13 @@ export type OrderDraftUpdateMutation = {
             canFinalize: boolean;
             created: any;
             customerNote: string;
-            number: string | null;
+            number: string;
             isPaid: boolean;
             paymentStatus: PaymentChargeStatusEnum;
             shippingMethodName: string | null;
             collectionPointName: string | null;
             status: OrderStatus;
-            actions: Array<OrderAction | null>;
+            actions: Array<OrderAction>;
             userEmail: string | null;
             billingAddress: {
                 __typename: "Address";
@@ -17529,7 +20233,7 @@ export type OrderDraftUpdateMutation = {
                         } | null;
                     } | null;
                 }>;
-            } | null> | null;
+            }>;
             discounts: Array<{
                 __typename: "OrderDiscount";
                 id: string;
@@ -17538,7 +20242,7 @@ export type OrderDraftUpdateMutation = {
                 reason: string | null;
                 calculationMode: DiscountValueTypeEnum;
                 amount: { __typename: "Money"; amount: number; currency: string };
-            }> | null;
+            }>;
             events: Array<{
                 __typename: "OrderEvent";
                 id: string;
@@ -17562,7 +20266,7 @@ export type OrderDraftUpdateMutation = {
                     amount: { __typename: "Money"; amount: number; currency: string } | null;
                     oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
                 } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+                relatedOrder: { __typename: "Order"; id: string; number: string } | null;
                 user: {
                     __typename: "User";
                     id: string;
@@ -17596,8 +20300,8 @@ export type OrderDraftUpdateMutation = {
                         productName: string;
                         variantName: string;
                     } | null;
-                } | null> | null;
-            } | null> | null;
+                }> | null;
+            }>;
             fulfillments: Array<{
                 __typename: "Fulfillment";
                 id: string;
@@ -17620,11 +20324,29 @@ export type OrderDraftUpdateMutation = {
                         unitDiscountValue: any;
                         unitDiscountReason: string | null;
                         unitDiscountType: DiscountValueTypeEnum | null;
+                        allocations: Array<{
+                            __typename: "Allocation";
+                            id: string;
+                            quantity: number;
+                            warehouse: { __typename: "Warehouse"; id: string; name: string };
+                        }> | null;
                         variant: {
                             __typename: "ProductVariant";
                             id: string;
                             quantityAvailable: number | null;
                             preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                            stocks: Array<{
+                                __typename: "Stock";
+                                id: string;
+                                quantity: number;
+                                quantityAllocated: number;
+                                warehouse: { __typename: "Warehouse"; id: string; name: string };
+                            }> | null;
+                            product: {
+                                __typename: "Product";
+                                id: string;
+                                isAvailableForPurchase: boolean | null;
+                            };
                         } | null;
                         unitDiscount: { __typename: "Money"; amount: number; currency: string };
                         undiscountedUnitPrice: {
@@ -17640,9 +20362,9 @@ export type OrderDraftUpdateMutation = {
                         };
                         thumbnail: { __typename: "Image"; url: string } | null;
                     } | null;
-                } | null> | null;
+                }> | null;
                 warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
+            }>;
             lines: Array<{
                 __typename: "OrderLine";
                 id: string;
@@ -17655,11 +20377,29 @@ export type OrderDraftUpdateMutation = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -17674,7 +20414,7 @@ export type OrderDraftUpdateMutation = {
                     net: { __typename: "Money"; amount: number; currency: string };
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
+            }>;
             shippingAddress: {
                 __typename: "Address";
                 city: string;
@@ -17716,6 +20456,7 @@ export type OrderDraftUpdateMutation = {
             };
             totalAuthorized: { __typename: "Money"; amount: number; currency: string };
             totalCaptured: { __typename: "Money"; amount: number; currency: string };
+            totalBalance: { __typename: "Money"; amount: number; currency: string };
             undiscountedTotal: {
                 __typename: "TaxedMoney";
                 net: { __typename: "Money"; amount: number; currency: string };
@@ -17729,7 +20470,7 @@ export type OrderDraftUpdateMutation = {
                 active: boolean;
                 message: string | null;
                 price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
+            }>;
             invoices: Array<{
                 __typename: "Invoice";
                 id: string;
@@ -17737,7 +20478,7 @@ export type OrderDraftUpdateMutation = {
                 createdAt: any;
                 url: string | null;
                 status: JobStatusEnum;
-            } | null> | null;
+            }>;
             channel: {
                 __typename: "Channel";
                 isActive: boolean;
@@ -17747,8 +20488,8 @@ export type OrderDraftUpdateMutation = {
                 slug: string;
                 defaultCountry: { __typename: "CountryDisplay"; code: string };
             };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -17778,12 +20519,12 @@ export type OrderShippingMethodUpdateMutation = {
             canFinalize: boolean;
             created: any;
             customerNote: string;
-            number: string | null;
+            number: string;
             isPaid: boolean;
             paymentStatus: PaymentChargeStatusEnum;
             collectionPointName: string | null;
             status: OrderStatus;
-            actions: Array<OrderAction | null>;
+            actions: Array<OrderAction>;
             userEmail: string | null;
             shippingMethods: Array<{
                 __typename: "ShippingMethod";
@@ -17792,7 +20533,7 @@ export type OrderShippingMethodUpdateMutation = {
                 active: boolean;
                 message: string | null;
                 price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
+            }>;
             total: {
                 __typename: "TaxedMoney";
                 tax: { __typename: "Money"; amount: number; currency: string };
@@ -17851,7 +20592,7 @@ export type OrderShippingMethodUpdateMutation = {
                         } | null;
                     } | null;
                 }>;
-            } | null> | null;
+            }>;
             discounts: Array<{
                 __typename: "OrderDiscount";
                 id: string;
@@ -17860,7 +20601,7 @@ export type OrderShippingMethodUpdateMutation = {
                 reason: string | null;
                 calculationMode: DiscountValueTypeEnum;
                 amount: { __typename: "Money"; amount: number; currency: string };
-            }> | null;
+            }>;
             events: Array<{
                 __typename: "OrderEvent";
                 id: string;
@@ -17884,7 +20625,7 @@ export type OrderShippingMethodUpdateMutation = {
                     amount: { __typename: "Money"; amount: number; currency: string } | null;
                     oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
                 } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+                relatedOrder: { __typename: "Order"; id: string; number: string } | null;
                 user: {
                     __typename: "User";
                     id: string;
@@ -17918,8 +20659,8 @@ export type OrderShippingMethodUpdateMutation = {
                         productName: string;
                         variantName: string;
                     } | null;
-                } | null> | null;
-            } | null> | null;
+                }> | null;
+            }>;
             fulfillments: Array<{
                 __typename: "Fulfillment";
                 id: string;
@@ -17942,11 +20683,29 @@ export type OrderShippingMethodUpdateMutation = {
                         unitDiscountValue: any;
                         unitDiscountReason: string | null;
                         unitDiscountType: DiscountValueTypeEnum | null;
+                        allocations: Array<{
+                            __typename: "Allocation";
+                            id: string;
+                            quantity: number;
+                            warehouse: { __typename: "Warehouse"; id: string; name: string };
+                        }> | null;
                         variant: {
                             __typename: "ProductVariant";
                             id: string;
                             quantityAvailable: number | null;
                             preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                            stocks: Array<{
+                                __typename: "Stock";
+                                id: string;
+                                quantity: number;
+                                quantityAllocated: number;
+                                warehouse: { __typename: "Warehouse"; id: string; name: string };
+                            }> | null;
+                            product: {
+                                __typename: "Product";
+                                id: string;
+                                isAvailableForPurchase: boolean | null;
+                            };
                         } | null;
                         unitDiscount: { __typename: "Money"; amount: number; currency: string };
                         undiscountedUnitPrice: {
@@ -17962,9 +20721,9 @@ export type OrderShippingMethodUpdateMutation = {
                         };
                         thumbnail: { __typename: "Image"; url: string } | null;
                     } | null;
-                } | null> | null;
+                }> | null;
                 warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
+            }>;
             lines: Array<{
                 __typename: "OrderLine";
                 id: string;
@@ -17977,11 +20736,29 @@ export type OrderShippingMethodUpdateMutation = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -17996,7 +20773,7 @@ export type OrderShippingMethodUpdateMutation = {
                     net: { __typename: "Money"; amount: number; currency: string };
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
+            }>;
             shippingAddress: {
                 __typename: "Address";
                 city: string;
@@ -18027,6 +20804,7 @@ export type OrderShippingMethodUpdateMutation = {
             };
             totalAuthorized: { __typename: "Money"; amount: number; currency: string };
             totalCaptured: { __typename: "Money"; amount: number; currency: string };
+            totalBalance: { __typename: "Money"; amount: number; currency: string };
             undiscountedTotal: {
                 __typename: "TaxedMoney";
                 net: { __typename: "Money"; amount: number; currency: string };
@@ -18040,7 +20818,7 @@ export type OrderShippingMethodUpdateMutation = {
                 createdAt: any;
                 url: string | null;
                 status: JobStatusEnum;
-            } | null> | null;
+            }>;
             channel: {
                 __typename: "Channel";
                 isActive: boolean;
@@ -18050,8 +20828,8 @@ export type OrderShippingMethodUpdateMutation = {
                 slug: string;
                 defaultCountry: { __typename: "CountryDisplay"; code: string };
             };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -18093,175 +20871,6 @@ export type OrderLineDeleteMutation = {
         order: {
             __typename: "Order";
             id: string;
-            token: string;
-            isShippingRequired: boolean;
-            canFinalize: boolean;
-            created: any;
-            customerNote: string;
-            number: string | null;
-            isPaid: boolean;
-            paymentStatus: PaymentChargeStatusEnum;
-            shippingMethodName: string | null;
-            collectionPointName: string | null;
-            status: OrderStatus;
-            actions: Array<OrderAction | null>;
-            userEmail: string | null;
-            billingAddress: {
-                __typename: "Address";
-                city: string;
-                cityArea: string;
-                companyName: string;
-                countryArea: string;
-                firstName: string;
-                id: string;
-                lastName: string;
-                phone: string | null;
-                postalCode: string;
-                streetAddress1: string;
-                streetAddress2: string;
-                country: { __typename: "CountryDisplay"; code: string; country: string };
-            } | null;
-            giftCards: Array<{
-                __typename: "GiftCard";
-                events: Array<{
-                    __typename: "GiftCardEvent";
-                    id: string;
-                    type: GiftCardEventsEnum | null;
-                    orderId: string | null;
-                    balance: {
-                        __typename: "GiftCardEventBalance";
-                        initialBalance: {
-                            __typename: "Money";
-                            amount: number;
-                            currency: string;
-                        } | null;
-                        currentBalance: { __typename: "Money"; amount: number; currency: string };
-                        oldInitialBalance: {
-                            __typename: "Money";
-                            amount: number;
-                            currency: string;
-                        } | null;
-                        oldCurrentBalance: {
-                            __typename: "Money";
-                            amount: number;
-                            currency: string;
-                        } | null;
-                    } | null;
-                }>;
-            } | null> | null;
-            discounts: Array<{
-                __typename: "OrderDiscount";
-                id: string;
-                type: OrderDiscountType;
-                value: any;
-                reason: string | null;
-                calculationMode: DiscountValueTypeEnum;
-                amount: { __typename: "Money"; amount: number; currency: string };
-            }> | null;
-            events: Array<{
-                __typename: "OrderEvent";
-                id: string;
-                amount: number | null;
-                shippingCostsIncluded: boolean | null;
-                date: any | null;
-                email: string | null;
-                emailType: OrderEventsEmailsEnum | null;
-                invoiceNumber: string | null;
-                message: string | null;
-                quantity: number | null;
-                transactionReference: string | null;
-                type: OrderEventsEnum | null;
-                discount: {
-                    __typename: "OrderEventDiscountObject";
-                    valueType: DiscountValueTypeEnum;
-                    value: any;
-                    reason: string | null;
-                    oldValueType: DiscountValueTypeEnum | null;
-                    oldValue: any | null;
-                    amount: { __typename: "Money"; amount: number; currency: string } | null;
-                    oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
-                } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
-                user: {
-                    __typename: "User";
-                    id: string;
-                    email: string;
-                    firstName: string;
-                    lastName: string;
-                } | null;
-                app: {
-                    __typename: "App";
-                    id: string;
-                    name: string | null;
-                    appUrl: string | null;
-                } | null;
-                lines: Array<{
-                    __typename: "OrderEventOrderLineObject";
-                    quantity: number | null;
-                    itemName: string | null;
-                    discount: {
-                        __typename: "OrderEventDiscountObject";
-                        valueType: DiscountValueTypeEnum;
-                        value: any;
-                        reason: string | null;
-                        oldValueType: DiscountValueTypeEnum | null;
-                        oldValue: any | null;
-                        amount: { __typename: "Money"; amount: number; currency: string } | null;
-                        oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
-                    } | null;
-                    orderLine: {
-                        __typename: "OrderLine";
-                        id: string;
-                        productName: string;
-                        variantName: string;
-                    } | null;
-                } | null> | null;
-            } | null> | null;
-            fulfillments: Array<{
-                __typename: "Fulfillment";
-                id: string;
-                fulfillmentOrder: number;
-                status: FulfillmentStatus;
-                trackingNumber: string;
-                lines: Array<{
-                    __typename: "FulfillmentLine";
-                    id: string;
-                    quantity: number;
-                    orderLine: {
-                        __typename: "OrderLine";
-                        id: string;
-                        isShippingRequired: boolean;
-                        productName: string;
-                        productSku: string | null;
-                        quantity: number;
-                        quantityFulfilled: number;
-                        quantityToFulfill: number;
-                        unitDiscountValue: any;
-                        unitDiscountReason: string | null;
-                        unitDiscountType: DiscountValueTypeEnum | null;
-                        variant: {
-                            __typename: "ProductVariant";
-                            id: string;
-                            quantityAvailable: number | null;
-                            preorder: { __typename: "PreorderData"; endDate: any | null } | null;
-                        } | null;
-                        unitDiscount: { __typename: "Money"; amount: number; currency: string };
-                        undiscountedUnitPrice: {
-                            __typename: "TaxedMoney";
-                            currency: string;
-                            gross: { __typename: "Money"; amount: number; currency: string };
-                            net: { __typename: "Money"; amount: number; currency: string };
-                        };
-                        unitPrice: {
-                            __typename: "TaxedMoney";
-                            gross: { __typename: "Money"; amount: number; currency: string };
-                            net: { __typename: "Money"; amount: number; currency: string };
-                        };
-                        thumbnail: { __typename: "Image"; url: string } | null;
-                    } | null;
-                } | null> | null;
-                warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
             lines: Array<{
                 __typename: "OrderLine";
                 id: string;
@@ -18274,11 +20883,29 @@ export type OrderLineDeleteMutation = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -18293,88 +20920,14 @@ export type OrderLineDeleteMutation = {
                     net: { __typename: "Money"; amount: number; currency: string };
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
-            shippingAddress: {
-                __typename: "Address";
-                city: string;
-                cityArea: string;
-                companyName: string;
-                countryArea: string;
-                firstName: string;
-                id: string;
-                lastName: string;
-                phone: string | null;
-                postalCode: string;
-                streetAddress1: string;
-                streetAddress2: string;
-                country: { __typename: "CountryDisplay"; code: string; country: string };
-            } | null;
-            deliveryMethod:
-                | { __typename: "ShippingMethod"; id: string }
-                | {
-                      __typename: "Warehouse";
-                      id: string;
-                      clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
-                  }
-                | null;
-            shippingMethod: { __typename: "ShippingMethod"; id: string } | null;
-            shippingPrice: {
-                __typename: "TaxedMoney";
-                gross: { __typename: "Money"; amount: number; currency: string };
-            };
-            subtotal: {
-                __typename: "TaxedMoney";
-                gross: { __typename: "Money"; amount: number; currency: string };
-                net: { __typename: "Money"; amount: number; currency: string };
-            };
-            total: {
-                __typename: "TaxedMoney";
-                gross: { __typename: "Money"; amount: number; currency: string };
-                net: { __typename: "Money"; amount: number; currency: string };
-                tax: { __typename: "Money"; amount: number; currency: string };
-            };
-            totalAuthorized: { __typename: "Money"; amount: number; currency: string };
-            totalCaptured: { __typename: "Money"; amount: number; currency: string };
-            undiscountedTotal: {
-                __typename: "TaxedMoney";
-                net: { __typename: "Money"; amount: number; currency: string };
-                gross: { __typename: "Money"; amount: number; currency: string };
-            };
-            user: { __typename: "User"; id: string; email: string } | null;
-            shippingMethods: Array<{
-                __typename: "ShippingMethod";
-                id: string;
-                name: string;
-                active: boolean;
-                message: string | null;
-                price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
-            invoices: Array<{
-                __typename: "Invoice";
-                id: string;
-                number: string | null;
-                createdAt: any;
-                url: string | null;
-                status: JobStatusEnum;
-            } | null> | null;
-            channel: {
-                __typename: "Channel";
-                isActive: boolean;
-                id: string;
-                name: string;
-                currencyCode: string;
-                slug: string;
-                defaultCountry: { __typename: "CountryDisplay"; code: string };
-            };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            }>;
         } | null;
     } | null;
 };
 
 export type OrderLinesAddMutationVariables = Exact<{
     id: Scalars["ID"];
-    input: Array<InputMaybe<OrderLineCreateInput>> | InputMaybe<OrderLineCreateInput>;
+    input: Array<OrderLineCreateInput> | OrderLineCreateInput;
 }>;
 
 export type OrderLinesAddMutation = {
@@ -18391,175 +20944,6 @@ export type OrderLinesAddMutation = {
         order: {
             __typename: "Order";
             id: string;
-            token: string;
-            isShippingRequired: boolean;
-            canFinalize: boolean;
-            created: any;
-            customerNote: string;
-            number: string | null;
-            isPaid: boolean;
-            paymentStatus: PaymentChargeStatusEnum;
-            shippingMethodName: string | null;
-            collectionPointName: string | null;
-            status: OrderStatus;
-            actions: Array<OrderAction | null>;
-            userEmail: string | null;
-            billingAddress: {
-                __typename: "Address";
-                city: string;
-                cityArea: string;
-                companyName: string;
-                countryArea: string;
-                firstName: string;
-                id: string;
-                lastName: string;
-                phone: string | null;
-                postalCode: string;
-                streetAddress1: string;
-                streetAddress2: string;
-                country: { __typename: "CountryDisplay"; code: string; country: string };
-            } | null;
-            giftCards: Array<{
-                __typename: "GiftCard";
-                events: Array<{
-                    __typename: "GiftCardEvent";
-                    id: string;
-                    type: GiftCardEventsEnum | null;
-                    orderId: string | null;
-                    balance: {
-                        __typename: "GiftCardEventBalance";
-                        initialBalance: {
-                            __typename: "Money";
-                            amount: number;
-                            currency: string;
-                        } | null;
-                        currentBalance: { __typename: "Money"; amount: number; currency: string };
-                        oldInitialBalance: {
-                            __typename: "Money";
-                            amount: number;
-                            currency: string;
-                        } | null;
-                        oldCurrentBalance: {
-                            __typename: "Money";
-                            amount: number;
-                            currency: string;
-                        } | null;
-                    } | null;
-                }>;
-            } | null> | null;
-            discounts: Array<{
-                __typename: "OrderDiscount";
-                id: string;
-                type: OrderDiscountType;
-                value: any;
-                reason: string | null;
-                calculationMode: DiscountValueTypeEnum;
-                amount: { __typename: "Money"; amount: number; currency: string };
-            }> | null;
-            events: Array<{
-                __typename: "OrderEvent";
-                id: string;
-                amount: number | null;
-                shippingCostsIncluded: boolean | null;
-                date: any | null;
-                email: string | null;
-                emailType: OrderEventsEmailsEnum | null;
-                invoiceNumber: string | null;
-                message: string | null;
-                quantity: number | null;
-                transactionReference: string | null;
-                type: OrderEventsEnum | null;
-                discount: {
-                    __typename: "OrderEventDiscountObject";
-                    valueType: DiscountValueTypeEnum;
-                    value: any;
-                    reason: string | null;
-                    oldValueType: DiscountValueTypeEnum | null;
-                    oldValue: any | null;
-                    amount: { __typename: "Money"; amount: number; currency: string } | null;
-                    oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
-                } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
-                user: {
-                    __typename: "User";
-                    id: string;
-                    email: string;
-                    firstName: string;
-                    lastName: string;
-                } | null;
-                app: {
-                    __typename: "App";
-                    id: string;
-                    name: string | null;
-                    appUrl: string | null;
-                } | null;
-                lines: Array<{
-                    __typename: "OrderEventOrderLineObject";
-                    quantity: number | null;
-                    itemName: string | null;
-                    discount: {
-                        __typename: "OrderEventDiscountObject";
-                        valueType: DiscountValueTypeEnum;
-                        value: any;
-                        reason: string | null;
-                        oldValueType: DiscountValueTypeEnum | null;
-                        oldValue: any | null;
-                        amount: { __typename: "Money"; amount: number; currency: string } | null;
-                        oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
-                    } | null;
-                    orderLine: {
-                        __typename: "OrderLine";
-                        id: string;
-                        productName: string;
-                        variantName: string;
-                    } | null;
-                } | null> | null;
-            } | null> | null;
-            fulfillments: Array<{
-                __typename: "Fulfillment";
-                id: string;
-                fulfillmentOrder: number;
-                status: FulfillmentStatus;
-                trackingNumber: string;
-                lines: Array<{
-                    __typename: "FulfillmentLine";
-                    id: string;
-                    quantity: number;
-                    orderLine: {
-                        __typename: "OrderLine";
-                        id: string;
-                        isShippingRequired: boolean;
-                        productName: string;
-                        productSku: string | null;
-                        quantity: number;
-                        quantityFulfilled: number;
-                        quantityToFulfill: number;
-                        unitDiscountValue: any;
-                        unitDiscountReason: string | null;
-                        unitDiscountType: DiscountValueTypeEnum | null;
-                        variant: {
-                            __typename: "ProductVariant";
-                            id: string;
-                            quantityAvailable: number | null;
-                            preorder: { __typename: "PreorderData"; endDate: any | null } | null;
-                        } | null;
-                        unitDiscount: { __typename: "Money"; amount: number; currency: string };
-                        undiscountedUnitPrice: {
-                            __typename: "TaxedMoney";
-                            currency: string;
-                            gross: { __typename: "Money"; amount: number; currency: string };
-                            net: { __typename: "Money"; amount: number; currency: string };
-                        };
-                        unitPrice: {
-                            __typename: "TaxedMoney";
-                            gross: { __typename: "Money"; amount: number; currency: string };
-                            net: { __typename: "Money"; amount: number; currency: string };
-                        };
-                        thumbnail: { __typename: "Image"; url: string } | null;
-                    } | null;
-                } | null> | null;
-                warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
             lines: Array<{
                 __typename: "OrderLine";
                 id: string;
@@ -18572,11 +20956,29 @@ export type OrderLinesAddMutation = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -18591,81 +20993,7 @@ export type OrderLinesAddMutation = {
                     net: { __typename: "Money"; amount: number; currency: string };
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
-            shippingAddress: {
-                __typename: "Address";
-                city: string;
-                cityArea: string;
-                companyName: string;
-                countryArea: string;
-                firstName: string;
-                id: string;
-                lastName: string;
-                phone: string | null;
-                postalCode: string;
-                streetAddress1: string;
-                streetAddress2: string;
-                country: { __typename: "CountryDisplay"; code: string; country: string };
-            } | null;
-            deliveryMethod:
-                | { __typename: "ShippingMethod"; id: string }
-                | {
-                      __typename: "Warehouse";
-                      id: string;
-                      clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
-                  }
-                | null;
-            shippingMethod: { __typename: "ShippingMethod"; id: string } | null;
-            shippingPrice: {
-                __typename: "TaxedMoney";
-                gross: { __typename: "Money"; amount: number; currency: string };
-            };
-            subtotal: {
-                __typename: "TaxedMoney";
-                gross: { __typename: "Money"; amount: number; currency: string };
-                net: { __typename: "Money"; amount: number; currency: string };
-            };
-            total: {
-                __typename: "TaxedMoney";
-                gross: { __typename: "Money"; amount: number; currency: string };
-                net: { __typename: "Money"; amount: number; currency: string };
-                tax: { __typename: "Money"; amount: number; currency: string };
-            };
-            totalAuthorized: { __typename: "Money"; amount: number; currency: string };
-            totalCaptured: { __typename: "Money"; amount: number; currency: string };
-            undiscountedTotal: {
-                __typename: "TaxedMoney";
-                net: { __typename: "Money"; amount: number; currency: string };
-                gross: { __typename: "Money"; amount: number; currency: string };
-            };
-            user: { __typename: "User"; id: string; email: string } | null;
-            shippingMethods: Array<{
-                __typename: "ShippingMethod";
-                id: string;
-                name: string;
-                active: boolean;
-                message: string | null;
-                price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
-            invoices: Array<{
-                __typename: "Invoice";
-                id: string;
-                number: string | null;
-                createdAt: any;
-                url: string | null;
-                status: JobStatusEnum;
-            } | null> | null;
-            channel: {
-                __typename: "Channel";
-                isActive: boolean;
-                id: string;
-                name: string;
-                currencyCode: string;
-                slug: string;
-                defaultCountry: { __typename: "CountryDisplay"; code: string };
-            };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            }>;
         } | null;
     } | null;
 };
@@ -18686,284 +21014,51 @@ export type OrderLineUpdateMutation = {
             addressType: AddressTypeEnum | null;
             message: string | null;
         }>;
-        order: {
-            __typename: "Order";
+        orderLine: {
+            __typename: "OrderLine";
             id: string;
-            token: string;
             isShippingRequired: boolean;
-            canFinalize: boolean;
-            created: any;
-            customerNote: string;
-            number: string | null;
-            isPaid: boolean;
-            paymentStatus: PaymentChargeStatusEnum;
-            shippingMethodName: string | null;
-            collectionPointName: string | null;
-            status: OrderStatus;
-            actions: Array<OrderAction | null>;
-            userEmail: string | null;
-            billingAddress: {
-                __typename: "Address";
-                city: string;
-                cityArea: string;
-                companyName: string;
-                countryArea: string;
-                firstName: string;
+            productName: string;
+            productSku: string | null;
+            quantity: number;
+            quantityFulfilled: number;
+            quantityToFulfill: number;
+            unitDiscountValue: any;
+            unitDiscountReason: string | null;
+            unitDiscountType: DiscountValueTypeEnum | null;
+            allocations: Array<{
+                __typename: "Allocation";
                 id: string;
-                lastName: string;
-                phone: string | null;
-                postalCode: string;
-                streetAddress1: string;
-                streetAddress2: string;
-                country: { __typename: "CountryDisplay"; code: string; country: string };
-            } | null;
-            giftCards: Array<{
-                __typename: "GiftCard";
-                events: Array<{
-                    __typename: "GiftCardEvent";
-                    id: string;
-                    type: GiftCardEventsEnum | null;
-                    orderId: string | null;
-                    balance: {
-                        __typename: "GiftCardEventBalance";
-                        initialBalance: {
-                            __typename: "Money";
-                            amount: number;
-                            currency: string;
-                        } | null;
-                        currentBalance: { __typename: "Money"; amount: number; currency: string };
-                        oldInitialBalance: {
-                            __typename: "Money";
-                            amount: number;
-                            currency: string;
-                        } | null;
-                        oldCurrentBalance: {
-                            __typename: "Money";
-                            amount: number;
-                            currency: string;
-                        } | null;
-                    } | null;
-                }>;
-            } | null> | null;
-            discounts: Array<{
-                __typename: "OrderDiscount";
-                id: string;
-                type: OrderDiscountType;
-                value: any;
-                reason: string | null;
-                calculationMode: DiscountValueTypeEnum;
-                amount: { __typename: "Money"; amount: number; currency: string };
+                quantity: number;
+                warehouse: { __typename: "Warehouse"; id: string; name: string };
             }> | null;
-            events: Array<{
-                __typename: "OrderEvent";
+            variant: {
+                __typename: "ProductVariant";
                 id: string;
-                amount: number | null;
-                shippingCostsIncluded: boolean | null;
-                date: any | null;
-                email: string | null;
-                emailType: OrderEventsEmailsEnum | null;
-                invoiceNumber: string | null;
-                message: string | null;
-                quantity: number | null;
-                transactionReference: string | null;
-                type: OrderEventsEnum | null;
-                discount: {
-                    __typename: "OrderEventDiscountObject";
-                    valueType: DiscountValueTypeEnum;
-                    value: any;
-                    reason: string | null;
-                    oldValueType: DiscountValueTypeEnum | null;
-                    oldValue: any | null;
-                    amount: { __typename: "Money"; amount: number; currency: string } | null;
-                    oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
-                } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
-                user: {
-                    __typename: "User";
-                    id: string;
-                    email: string;
-                    firstName: string;
-                    lastName: string;
-                } | null;
-                app: {
-                    __typename: "App";
-                    id: string;
-                    name: string | null;
-                    appUrl: string | null;
-                } | null;
-                lines: Array<{
-                    __typename: "OrderEventOrderLineObject";
-                    quantity: number | null;
-                    itemName: string | null;
-                    discount: {
-                        __typename: "OrderEventDiscountObject";
-                        valueType: DiscountValueTypeEnum;
-                        value: any;
-                        reason: string | null;
-                        oldValueType: DiscountValueTypeEnum | null;
-                        oldValue: any | null;
-                        amount: { __typename: "Money"; amount: number; currency: string } | null;
-                        oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
-                    } | null;
-                    orderLine: {
-                        __typename: "OrderLine";
-                        id: string;
-                        productName: string;
-                        variantName: string;
-                    } | null;
-                } | null> | null;
-            } | null> | null;
-            fulfillments: Array<{
-                __typename: "Fulfillment";
-                id: string;
-                fulfillmentOrder: number;
-                status: FulfillmentStatus;
-                trackingNumber: string;
-                lines: Array<{
-                    __typename: "FulfillmentLine";
+                quantityAvailable: number | null;
+                preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                stocks: Array<{
+                    __typename: "Stock";
                     id: string;
                     quantity: number;
-                    orderLine: {
-                        __typename: "OrderLine";
-                        id: string;
-                        isShippingRequired: boolean;
-                        productName: string;
-                        productSku: string | null;
-                        quantity: number;
-                        quantityFulfilled: number;
-                        quantityToFulfill: number;
-                        unitDiscountValue: any;
-                        unitDiscountReason: string | null;
-                        unitDiscountType: DiscountValueTypeEnum | null;
-                        variant: {
-                            __typename: "ProductVariant";
-                            id: string;
-                            quantityAvailable: number | null;
-                            preorder: { __typename: "PreorderData"; endDate: any | null } | null;
-                        } | null;
-                        unitDiscount: { __typename: "Money"; amount: number; currency: string };
-                        undiscountedUnitPrice: {
-                            __typename: "TaxedMoney";
-                            currency: string;
-                            gross: { __typename: "Money"; amount: number; currency: string };
-                            net: { __typename: "Money"; amount: number; currency: string };
-                        };
-                        unitPrice: {
-                            __typename: "TaxedMoney";
-                            gross: { __typename: "Money"; amount: number; currency: string };
-                            net: { __typename: "Money"; amount: number; currency: string };
-                        };
-                        thumbnail: { __typename: "Image"; url: string } | null;
-                    } | null;
-                } | null> | null;
-                warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
-            lines: Array<{
-                __typename: "OrderLine";
-                id: string;
-                isShippingRequired: boolean;
-                productName: string;
-                productSku: string | null;
-                quantity: number;
-                quantityFulfilled: number;
-                quantityToFulfill: number;
-                unitDiscountValue: any;
-                unitDiscountReason: string | null;
-                unitDiscountType: DiscountValueTypeEnum | null;
-                variant: {
-                    __typename: "ProductVariant";
-                    id: string;
-                    quantityAvailable: number | null;
-                    preorder: { __typename: "PreorderData"; endDate: any | null } | null;
-                } | null;
-                unitDiscount: { __typename: "Money"; amount: number; currency: string };
-                undiscountedUnitPrice: {
-                    __typename: "TaxedMoney";
-                    currency: string;
-                    gross: { __typename: "Money"; amount: number; currency: string };
-                    net: { __typename: "Money"; amount: number; currency: string };
-                };
-                unitPrice: {
-                    __typename: "TaxedMoney";
-                    gross: { __typename: "Money"; amount: number; currency: string };
-                    net: { __typename: "Money"; amount: number; currency: string };
-                };
-                thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
-            shippingAddress: {
-                __typename: "Address";
-                city: string;
-                cityArea: string;
-                companyName: string;
-                countryArea: string;
-                firstName: string;
-                id: string;
-                lastName: string;
-                phone: string | null;
-                postalCode: string;
-                streetAddress1: string;
-                streetAddress2: string;
-                country: { __typename: "CountryDisplay"; code: string; country: string };
+                    quantityAllocated: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
+                product: { __typename: "Product"; id: string; isAvailableForPurchase: boolean | null };
             } | null;
-            deliveryMethod:
-                | { __typename: "ShippingMethod"; id: string }
-                | {
-                      __typename: "Warehouse";
-                      id: string;
-                      clickAndCollectOption: WarehouseClickAndCollectOptionEnum;
-                  }
-                | null;
-            shippingMethod: { __typename: "ShippingMethod"; id: string } | null;
-            shippingPrice: {
+            unitDiscount: { __typename: "Money"; amount: number; currency: string };
+            undiscountedUnitPrice: {
                 __typename: "TaxedMoney";
+                currency: string;
                 gross: { __typename: "Money"; amount: number; currency: string };
+                net: { __typename: "Money"; amount: number; currency: string };
             };
-            subtotal: {
+            unitPrice: {
                 __typename: "TaxedMoney";
                 gross: { __typename: "Money"; amount: number; currency: string };
                 net: { __typename: "Money"; amount: number; currency: string };
             };
-            total: {
-                __typename: "TaxedMoney";
-                gross: { __typename: "Money"; amount: number; currency: string };
-                net: { __typename: "Money"; amount: number; currency: string };
-                tax: { __typename: "Money"; amount: number; currency: string };
-            };
-            totalAuthorized: { __typename: "Money"; amount: number; currency: string };
-            totalCaptured: { __typename: "Money"; amount: number; currency: string };
-            undiscountedTotal: {
-                __typename: "TaxedMoney";
-                net: { __typename: "Money"; amount: number; currency: string };
-                gross: { __typename: "Money"; amount: number; currency: string };
-            };
-            user: { __typename: "User"; id: string; email: string } | null;
-            shippingMethods: Array<{
-                __typename: "ShippingMethod";
-                id: string;
-                name: string;
-                active: boolean;
-                message: string | null;
-                price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
-            invoices: Array<{
-                __typename: "Invoice";
-                id: string;
-                number: string | null;
-                createdAt: any;
-                url: string | null;
-                status: JobStatusEnum;
-            } | null> | null;
-            channel: {
-                __typename: "Channel";
-                isActive: boolean;
-                id: string;
-                name: string;
-                currencyCode: string;
-                slug: string;
-                defaultCountry: { __typename: "CountryDisplay"; code: string };
-            };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            thumbnail: { __typename: "Image"; url: string } | null;
         } | null;
     } | null;
 };
@@ -18980,7 +21075,6 @@ export type FulfillOrderMutation = {
         errors: Array<{
             __typename: "OrderError";
             warehouse: string | null;
-            orderLines: Array<string> | null;
             code: OrderErrorCode;
             field: string | null;
             addressType: AddressTypeEnum | null;
@@ -18994,13 +21088,13 @@ export type FulfillOrderMutation = {
             canFinalize: boolean;
             created: any;
             customerNote: string;
-            number: string | null;
+            number: string;
             isPaid: boolean;
             paymentStatus: PaymentChargeStatusEnum;
             shippingMethodName: string | null;
             collectionPointName: string | null;
             status: OrderStatus;
-            actions: Array<OrderAction | null>;
+            actions: Array<OrderAction>;
             userEmail: string | null;
             billingAddress: {
                 __typename: "Address";
@@ -19044,7 +21138,7 @@ export type FulfillOrderMutation = {
                         } | null;
                     } | null;
                 }>;
-            } | null> | null;
+            }>;
             discounts: Array<{
                 __typename: "OrderDiscount";
                 id: string;
@@ -19053,7 +21147,7 @@ export type FulfillOrderMutation = {
                 reason: string | null;
                 calculationMode: DiscountValueTypeEnum;
                 amount: { __typename: "Money"; amount: number; currency: string };
-            }> | null;
+            }>;
             events: Array<{
                 __typename: "OrderEvent";
                 id: string;
@@ -19077,7 +21171,7 @@ export type FulfillOrderMutation = {
                     amount: { __typename: "Money"; amount: number; currency: string } | null;
                     oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
                 } | null;
-                relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+                relatedOrder: { __typename: "Order"; id: string; number: string } | null;
                 user: {
                     __typename: "User";
                     id: string;
@@ -19111,8 +21205,8 @@ export type FulfillOrderMutation = {
                         productName: string;
                         variantName: string;
                     } | null;
-                } | null> | null;
-            } | null> | null;
+                }> | null;
+            }>;
             fulfillments: Array<{
                 __typename: "Fulfillment";
                 id: string;
@@ -19135,11 +21229,29 @@ export type FulfillOrderMutation = {
                         unitDiscountValue: any;
                         unitDiscountReason: string | null;
                         unitDiscountType: DiscountValueTypeEnum | null;
+                        allocations: Array<{
+                            __typename: "Allocation";
+                            id: string;
+                            quantity: number;
+                            warehouse: { __typename: "Warehouse"; id: string; name: string };
+                        }> | null;
                         variant: {
                             __typename: "ProductVariant";
                             id: string;
                             quantityAvailable: number | null;
                             preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                            stocks: Array<{
+                                __typename: "Stock";
+                                id: string;
+                                quantity: number;
+                                quantityAllocated: number;
+                                warehouse: { __typename: "Warehouse"; id: string; name: string };
+                            }> | null;
+                            product: {
+                                __typename: "Product";
+                                id: string;
+                                isAvailableForPurchase: boolean | null;
+                            };
                         } | null;
                         unitDiscount: { __typename: "Money"; amount: number; currency: string };
                         undiscountedUnitPrice: {
@@ -19155,9 +21267,9 @@ export type FulfillOrderMutation = {
                         };
                         thumbnail: { __typename: "Image"; url: string } | null;
                     } | null;
-                } | null> | null;
+                }> | null;
                 warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-            } | null>;
+            }>;
             lines: Array<{
                 __typename: "OrderLine";
                 id: string;
@@ -19170,11 +21282,29 @@ export type FulfillOrderMutation = {
                 unitDiscountValue: any;
                 unitDiscountReason: string | null;
                 unitDiscountType: DiscountValueTypeEnum | null;
+                allocations: Array<{
+                    __typename: "Allocation";
+                    id: string;
+                    quantity: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
                 variant: {
                     __typename: "ProductVariant";
                     id: string;
                     quantityAvailable: number | null;
                     preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                    stocks: Array<{
+                        __typename: "Stock";
+                        id: string;
+                        quantity: number;
+                        quantityAllocated: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
+                    product: {
+                        __typename: "Product";
+                        id: string;
+                        isAvailableForPurchase: boolean | null;
+                    };
                 } | null;
                 unitDiscount: { __typename: "Money"; amount: number; currency: string };
                 undiscountedUnitPrice: {
@@ -19189,7 +21319,7 @@ export type FulfillOrderMutation = {
                     net: { __typename: "Money"; amount: number; currency: string };
                 };
                 thumbnail: { __typename: "Image"; url: string } | null;
-            } | null>;
+            }>;
             shippingAddress: {
                 __typename: "Address";
                 city: string;
@@ -19231,6 +21361,7 @@ export type FulfillOrderMutation = {
             };
             totalAuthorized: { __typename: "Money"; amount: number; currency: string };
             totalCaptured: { __typename: "Money"; amount: number; currency: string };
+            totalBalance: { __typename: "Money"; amount: number; currency: string };
             undiscountedTotal: {
                 __typename: "TaxedMoney";
                 net: { __typename: "Money"; amount: number; currency: string };
@@ -19244,7 +21375,7 @@ export type FulfillOrderMutation = {
                 active: boolean;
                 message: string | null;
                 price: { __typename: "Money"; amount: number; currency: string };
-            } | null> | null;
+            }>;
             invoices: Array<{
                 __typename: "Invoice";
                 id: string;
@@ -19252,7 +21383,7 @@ export type FulfillOrderMutation = {
                 createdAt: any;
                 url: string | null;
                 status: JobStatusEnum;
-            } | null> | null;
+            }>;
             channel: {
                 __typename: "Channel";
                 isActive: boolean;
@@ -19262,8 +21393,8 @@ export type FulfillOrderMutation = {
                 slug: string;
                 defaultCountry: { __typename: "CountryDisplay"; code: string };
             };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -19300,7 +21431,7 @@ export type InvoiceRequestMutation = {
                 createdAt: any;
                 url: string | null;
                 status: JobStatusEnum;
-            } | null> | null;
+            }>;
         } | null;
     } | null;
 };
@@ -19386,7 +21517,7 @@ export type OrderListQuery = {
                 __typename: "Order";
                 created: any;
                 id: string;
-                number: string | null;
+                number: string;
                 paymentStatus: PaymentChargeStatusEnum;
                 status: OrderStatus;
                 userEmail: string | null;
@@ -19440,7 +21571,7 @@ export type OrderDraftListQuery = {
                 __typename: "Order";
                 created: any;
                 id: string;
-                number: string | null;
+                number: string;
                 paymentStatus: PaymentChargeStatusEnum;
                 status: OrderStatus;
                 userEmail: string | null;
@@ -19489,13 +21620,13 @@ export type OrderDetailsQuery = {
         canFinalize: boolean;
         created: any;
         customerNote: string;
-        number: string | null;
+        number: string;
         isPaid: boolean;
         paymentStatus: PaymentChargeStatusEnum;
         shippingMethodName: string | null;
         collectionPointName: string | null;
         status: OrderStatus;
-        actions: Array<OrderAction | null>;
+        actions: Array<OrderAction>;
         userEmail: string | null;
         billingAddress: {
             __typename: "Address";
@@ -19527,7 +21658,7 @@ export type OrderDetailsQuery = {
                     oldCurrentBalance: { __typename: "Money"; amount: number; currency: string } | null;
                 } | null;
             }>;
-        } | null> | null;
+        }>;
         discounts: Array<{
             __typename: "OrderDiscount";
             id: string;
@@ -19536,7 +21667,7 @@ export type OrderDetailsQuery = {
             reason: string | null;
             calculationMode: DiscountValueTypeEnum;
             amount: { __typename: "Money"; amount: number; currency: string };
-        }> | null;
+        }>;
         events: Array<{
             __typename: "OrderEvent";
             id: string;
@@ -19560,7 +21691,7 @@ export type OrderDetailsQuery = {
                 amount: { __typename: "Money"; amount: number; currency: string } | null;
                 oldAmount: { __typename: "Money"; amount: number; currency: string } | null;
             } | null;
-            relatedOrder: { __typename: "Order"; id: string; number: string | null } | null;
+            relatedOrder: { __typename: "Order"; id: string; number: string } | null;
             user: {
                 __typename: "User";
                 id: string;
@@ -19589,8 +21720,8 @@ export type OrderDetailsQuery = {
                     productName: string;
                     variantName: string;
                 } | null;
-            } | null> | null;
-        } | null> | null;
+            }> | null;
+        }>;
         fulfillments: Array<{
             __typename: "Fulfillment";
             id: string;
@@ -19613,11 +21744,29 @@ export type OrderDetailsQuery = {
                     unitDiscountValue: any;
                     unitDiscountReason: string | null;
                     unitDiscountType: DiscountValueTypeEnum | null;
+                    allocations: Array<{
+                        __typename: "Allocation";
+                        id: string;
+                        quantity: number;
+                        warehouse: { __typename: "Warehouse"; id: string; name: string };
+                    }> | null;
                     variant: {
                         __typename: "ProductVariant";
                         id: string;
                         quantityAvailable: number | null;
                         preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                        stocks: Array<{
+                            __typename: "Stock";
+                            id: string;
+                            quantity: number;
+                            quantityAllocated: number;
+                            warehouse: { __typename: "Warehouse"; id: string; name: string };
+                        }> | null;
+                        product: {
+                            __typename: "Product";
+                            id: string;
+                            isAvailableForPurchase: boolean | null;
+                        };
                     } | null;
                     unitDiscount: { __typename: "Money"; amount: number; currency: string };
                     undiscountedUnitPrice: {
@@ -19633,9 +21782,9 @@ export type OrderDetailsQuery = {
                     };
                     thumbnail: { __typename: "Image"; url: string } | null;
                 } | null;
-            } | null> | null;
+            }> | null;
             warehouse: { __typename: "Warehouse"; id: string; name: string } | null;
-        } | null>;
+        }>;
         lines: Array<{
             __typename: "OrderLine";
             id: string;
@@ -19648,11 +21797,25 @@ export type OrderDetailsQuery = {
             unitDiscountValue: any;
             unitDiscountReason: string | null;
             unitDiscountType: DiscountValueTypeEnum | null;
+            allocations: Array<{
+                __typename: "Allocation";
+                id: string;
+                quantity: number;
+                warehouse: { __typename: "Warehouse"; id: string; name: string };
+            }> | null;
             variant: {
                 __typename: "ProductVariant";
                 id: string;
                 quantityAvailable: number | null;
                 preorder: { __typename: "PreorderData"; endDate: any | null } | null;
+                stocks: Array<{
+                    __typename: "Stock";
+                    id: string;
+                    quantity: number;
+                    quantityAllocated: number;
+                    warehouse: { __typename: "Warehouse"; id: string; name: string };
+                }> | null;
+                product: { __typename: "Product"; id: string; isAvailableForPurchase: boolean | null };
             } | null;
             unitDiscount: { __typename: "Money"; amount: number; currency: string };
             undiscountedUnitPrice: {
@@ -19667,7 +21830,7 @@ export type OrderDetailsQuery = {
                 net: { __typename: "Money"; amount: number; currency: string };
             };
             thumbnail: { __typename: "Image"; url: string } | null;
-        } | null>;
+        }>;
         shippingAddress: {
             __typename: "Address";
             city: string;
@@ -19709,6 +21872,7 @@ export type OrderDetailsQuery = {
         };
         totalAuthorized: { __typename: "Money"; amount: number; currency: string };
         totalCaptured: { __typename: "Money"; amount: number; currency: string };
+        totalBalance: { __typename: "Money"; amount: number; currency: string };
         undiscountedTotal: {
             __typename: "TaxedMoney";
             net: { __typename: "Money"; amount: number; currency: string };
@@ -19722,7 +21886,7 @@ export type OrderDetailsQuery = {
             active: boolean;
             message: string | null;
             price: { __typename: "Money"; amount: number; currency: string };
-        } | null> | null;
+        }>;
         invoices: Array<{
             __typename: "Invoice";
             id: string;
@@ -19730,7 +21894,7 @@ export type OrderDetailsQuery = {
             createdAt: any;
             url: string | null;
             status: JobStatusEnum;
-        } | null> | null;
+        }>;
         channel: {
             __typename: "Channel";
             isActive: boolean;
@@ -19740,8 +21904,8 @@ export type OrderDetailsQuery = {
             slug: string;
             defaultCountry: { __typename: "CountryDisplay"; code: string };
         };
-        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
     } | null;
     shop: {
         __typename: "Shop";
@@ -19762,7 +21926,7 @@ export type OrderFulfillDataQuery = {
         __typename: "Order";
         id: string;
         isPaid: boolean;
-        number: string | null;
+        number: string;
         deliveryMethod:
             | { __typename: "ShippingMethod"; id: string }
             | {
@@ -19781,8 +21945,9 @@ export type OrderFulfillDataQuery = {
             quantityToFulfill: number;
             allocations: Array<{
                 __typename: "Allocation";
+                id: string;
                 quantity: number;
-                warehouse: { __typename: "Warehouse"; id: string };
+                warehouse: { __typename: "Warehouse"; id: string; name: string };
             }> | null;
             variant: {
                 __typename: "ProductVariant";
@@ -19793,11 +21958,7 @@ export type OrderFulfillDataQuery = {
                 preorder: { __typename: "PreorderData"; endDate: any | null } | null;
                 attributes: Array<{
                     __typename: "SelectedAttribute";
-                    values: Array<{
-                        __typename: "AttributeValue";
-                        id: string;
-                        name: string | null;
-                    } | null>;
+                    values: Array<{ __typename: "AttributeValue"; id: string; name: string | null }>;
                 }>;
                 stocks: Array<{
                     __typename: "Stock";
@@ -19805,10 +21966,10 @@ export type OrderFulfillDataQuery = {
                     quantity: number;
                     quantityAllocated: number;
                     warehouse: { __typename: "Warehouse"; id: string; name: string };
-                } | null> | null;
+                }> | null;
             } | null;
             thumbnail: { __typename: "Image"; url: string } | null;
-        } | null>;
+        }>;
     } | null;
 };
 
@@ -19840,7 +22001,7 @@ export type OrderRefundDataQuery = {
     order: {
         __typename: "Order";
         id: string;
-        number: string | null;
+        number: string;
         total: {
             __typename: "TaxedMoney";
             gross: { __typename: "Money"; amount: number; currency: string };
@@ -19861,7 +22022,7 @@ export type OrderRefundDataQuery = {
                 gross: { __typename: "Money"; amount: number; currency: string };
             };
             thumbnail: { __typename: "Image"; url: string } | null;
-        } | null>;
+        }>;
         fulfillments: Array<{
             __typename: "Fulfillment";
             id: string;
@@ -19882,9 +22043,18 @@ export type OrderRefundDataQuery = {
                     };
                     thumbnail: { __typename: "Image"; url: string } | null;
                 } | null;
-            } | null> | null;
-        } | null>;
+            }> | null;
+        }>;
     } | null;
+};
+
+export type ChannelUsabilityDataQueryVariables = Exact<{
+    channel: Scalars["String"];
+}>;
+
+export type ChannelUsabilityDataQuery = {
+    __typename: "Query";
+    products: { __typename: "ProductCountableConnection"; totalCount: number | null } | null;
 };
 
 export type PageTypeUpdateMutationVariables = Exact<{
@@ -19918,9 +22088,9 @@ export type PageTypeUpdateMutation = {
                 filterableInStorefront: boolean;
                 unit: MeasurementUnitsEnum | null;
                 inputType: AttributeInputTypeEnum | null;
-            } | null> | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            }> | null;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -19955,9 +22125,9 @@ export type PageTypeCreateMutation = {
                 filterableInStorefront: boolean;
                 unit: MeasurementUnitsEnum | null;
                 inputType: AttributeInputTypeEnum | null;
-            } | null> | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            }> | null;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -19993,9 +22163,9 @@ export type AssignPageAttributeMutation = {
                 filterableInStorefront: boolean;
                 unit: MeasurementUnitsEnum | null;
                 inputType: AttributeInputTypeEnum | null;
-            } | null> | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            }> | null;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -20031,9 +22201,9 @@ export type UnassignPageAttributeMutation = {
                 filterableInStorefront: boolean;
                 unit: MeasurementUnitsEnum | null;
                 inputType: AttributeInputTypeEnum | null;
-            } | null> | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            }> | null;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -20104,9 +22274,9 @@ export type PageTypeAttributeReorderMutation = {
                 filterableInStorefront: boolean;
                 unit: MeasurementUnitsEnum | null;
                 inputType: AttributeInputTypeEnum | null;
-            } | null> | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            }> | null;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -20160,9 +22330,9 @@ export type PageTypeDetailsQuery = {
             filterableInStorefront: boolean;
             unit: MeasurementUnitsEnum | null;
             inputType: AttributeInputTypeEnum | null;
-        } | null> | null;
-        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+        }> | null;
+        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
     } | null;
 };
 
@@ -20270,7 +22440,7 @@ export type PageUpdateMutation = {
                     dateTime: any | null;
                     value: string | null;
                     file: { __typename: "File"; url: string; contentType: string | null } | null;
-                } | null>;
+                }>;
             }>;
             pageType: {
                 __typename: "PageType";
@@ -20314,10 +22484,10 @@ export type PageUpdateMutation = {
                             };
                         }>;
                     } | null;
-                } | null> | null;
+                }> | null;
             };
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -20340,7 +22510,7 @@ export type PageRemoveMutation = {
 };
 
 export type PageBulkPublishMutationVariables = Exact<{
-    ids: Array<InputMaybe<Scalars["ID"]>> | InputMaybe<Scalars["ID"]>;
+    ids: Array<Scalars["ID"]> | Scalars["ID"];
     isPublished: Scalars["Boolean"];
 }>;
 
@@ -20358,7 +22528,7 @@ export type PageBulkPublishMutation = {
 };
 
 export type PageBulkRemoveMutationVariables = Exact<{
-    ids: Array<InputMaybe<Scalars["ID"]>> | InputMaybe<Scalars["ID"]>;
+    ids: Array<Scalars["ID"]> | Scalars["ID"];
 }>;
 
 export type PageBulkRemoveMutation = {
@@ -20475,7 +22645,7 @@ export type PageDetailsQuery = {
                 dateTime: any | null;
                 value: string | null;
                 file: { __typename: "File"; url: string; contentType: string | null } | null;
-            } | null>;
+            }>;
         }>;
         pageType: {
             __typename: "PageType";
@@ -20519,10 +22689,10 @@ export type PageDetailsQuery = {
                         };
                     }>;
                 } | null;
-            } | null> | null;
+            }> | null;
         };
-        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
     } | null;
 };
 
@@ -20575,7 +22745,7 @@ export type PageTypeQuery = {
                     };
                 }>;
             } | null;
-        } | null> | null;
+        }> | null;
     } | null;
 };
 
@@ -20624,11 +22794,7 @@ export type PermissionGroupCreateMutation = {
             id: string;
             name: string;
             userCanManage: boolean;
-            permissions: Array<{
-                __typename: "Permission";
-                code: PermissionEnum;
-                name: string;
-            } | null> | null;
+            permissions: Array<{ __typename: "Permission"; code: PermissionEnum; name: string }> | null;
             users: Array<{
                 __typename: "User";
                 id: string;
@@ -20637,7 +22803,7 @@ export type PermissionGroupCreateMutation = {
                 email: string;
                 isActive: boolean;
                 avatar: { __typename: "Image"; url: string } | null;
-            } | null> | null;
+            }> | null;
         } | null;
     } | null;
 };
@@ -20662,11 +22828,7 @@ export type PermissionGroupUpdateMutation = {
             id: string;
             name: string;
             userCanManage: boolean;
-            permissions: Array<{
-                __typename: "Permission";
-                code: PermissionEnum;
-                name: string;
-            } | null> | null;
+            permissions: Array<{ __typename: "Permission"; code: PermissionEnum; name: string }> | null;
             users: Array<{
                 __typename: "User";
                 id: string;
@@ -20675,7 +22837,7 @@ export type PermissionGroupUpdateMutation = {
                 email: string;
                 isActive: boolean;
                 avatar: { __typename: "Image"; url: string } | null;
-            } | null> | null;
+            }> | null;
         } | null;
     } | null;
 };
@@ -20705,7 +22867,7 @@ export type PermissionGroupListQuery = {
                     id: string;
                     firstName: string;
                     lastName: string;
-                } | null> | null;
+                }> | null;
             };
         }>;
         pageInfo: {
@@ -20730,11 +22892,7 @@ export type PermissionGroupDetailsQuery = {
         id: string;
         name: string;
         userCanManage: boolean;
-        permissions: Array<{
-            __typename: "Permission";
-            code: PermissionEnum;
-            name: string;
-        } | null> | null;
+        permissions: Array<{ __typename: "Permission"; code: PermissionEnum; name: string }> | null;
         users: Array<{
             __typename: "User";
             id: string;
@@ -20743,16 +22901,16 @@ export type PermissionGroupDetailsQuery = {
             email: string;
             isActive: boolean;
             avatar: { __typename: "Image"; url: string } | null;
-        } | null> | null;
+        }> | null;
     } | null;
     user: {
         __typename: "User";
-        editableGroups: Array<{ __typename: "Group"; id: string } | null> | null;
+        editableGroups: Array<{ __typename: "Group"; id: string }> | null;
         userPermissions: Array<{
             __typename: "UserPermission";
             code: PermissionEnum;
             sourcePermissionGroups: Array<{ __typename: "Group"; id: string }> | null;
-        } | null> | null;
+        }> | null;
     } | null;
 };
 
@@ -20787,7 +22945,7 @@ export type PluginUpdateMutation = {
                     type: ConfigurationTypeFieldEnum | null;
                     helpText: string | null;
                     label: string | null;
-                } | null> | null;
+                }> | null;
                 channel: { __typename: "Channel"; id: string; name: string; slug: string } | null;
             } | null;
             channelConfigurations: Array<{
@@ -20800,7 +22958,7 @@ export type PluginUpdateMutation = {
                     type: ConfigurationTypeFieldEnum | null;
                     helpText: string | null;
                     label: string | null;
-                } | null> | null;
+                }> | null;
                 channel: { __typename: "Channel"; id: string; name: string; slug: string } | null;
             }>;
         } | null;
@@ -20870,7 +23028,7 @@ export type PluginQuery = {
                 type: ConfigurationTypeFieldEnum | null;
                 helpText: string | null;
                 label: string | null;
-            } | null> | null;
+            }> | null;
             channel: { __typename: "Channel"; id: string; name: string; slug: string } | null;
         } | null;
         channelConfigurations: Array<{
@@ -20883,7 +23041,7 @@ export type PluginQuery = {
                 type: ConfigurationTypeFieldEnum | null;
                 helpText: string | null;
                 label: string | null;
-            } | null> | null;
+            }> | null;
             channel: { __typename: "Channel"; id: string; name: string; slug: string } | null;
         }>;
     } | null;
@@ -20908,7 +23066,7 @@ export type ProductTypeDeleteMutation = {
 };
 
 export type ProductTypeBulkDeleteMutationVariables = Exact<{
-    ids: Array<InputMaybe<Scalars["ID"]>> | InputMaybe<Scalars["ID"]>;
+    ids: Array<Scalars["ID"]> | Scalars["ID"];
 }>;
 
 export type ProductTypeBulkDeleteMutation = {
@@ -20957,7 +23115,7 @@ export type ProductTypeUpdateMutation = {
                 filterableInStorefront: boolean;
                 unit: MeasurementUnitsEnum | null;
                 inputType: AttributeInputTypeEnum | null;
-            } | null> | null;
+            }> | null;
             variantAttributes: Array<{
                 __typename: "Attribute";
                 id: string;
@@ -20969,7 +23127,7 @@ export type ProductTypeUpdateMutation = {
                 filterableInStorefront: boolean;
                 unit: MeasurementUnitsEnum | null;
                 inputType: AttributeInputTypeEnum | null;
-            } | null> | null;
+            }> | null;
             assignedVariantAttributes: Array<{
                 __typename: "AssignedVariantAttribute";
                 variantSelection: boolean;
@@ -20985,15 +23143,15 @@ export type ProductTypeUpdateMutation = {
                     unit: MeasurementUnitsEnum | null;
                     inputType: AttributeInputTypeEnum | null;
                 };
-            } | null> | null;
+            }> | null;
             weight: { __typename: "Weight"; unit: WeightUnitsEnum; value: number } | null;
             taxType: {
                 __typename: "TaxType";
                 description: string | null;
                 taxCode: string | null;
             } | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -21031,7 +23189,7 @@ export type AssignProductAttributeMutation = {
                 filterableInStorefront: boolean;
                 unit: MeasurementUnitsEnum | null;
                 inputType: AttributeInputTypeEnum | null;
-            } | null> | null;
+            }> | null;
             variantAttributes: Array<{
                 __typename: "Attribute";
                 id: string;
@@ -21043,7 +23201,7 @@ export type AssignProductAttributeMutation = {
                 filterableInStorefront: boolean;
                 unit: MeasurementUnitsEnum | null;
                 inputType: AttributeInputTypeEnum | null;
-            } | null> | null;
+            }> | null;
             assignedVariantAttributes: Array<{
                 __typename: "AssignedVariantAttribute";
                 variantSelection: boolean;
@@ -21059,22 +23217,22 @@ export type AssignProductAttributeMutation = {
                     unit: MeasurementUnitsEnum | null;
                     inputType: AttributeInputTypeEnum | null;
                 };
-            } | null> | null;
+            }> | null;
             weight: { __typename: "Weight"; unit: WeightUnitsEnum; value: number } | null;
             taxType: {
                 __typename: "TaxType";
                 description: string | null;
                 taxCode: string | null;
             } | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
 
 export type UnassignProductAttributeMutationVariables = Exact<{
     id: Scalars["ID"];
-    ids: Array<InputMaybe<Scalars["ID"]>> | InputMaybe<Scalars["ID"]>;
+    ids: Array<Scalars["ID"]> | Scalars["ID"];
 }>;
 
 export type UnassignProductAttributeMutation = {
@@ -21105,7 +23263,7 @@ export type UnassignProductAttributeMutation = {
                 filterableInStorefront: boolean;
                 unit: MeasurementUnitsEnum | null;
                 inputType: AttributeInputTypeEnum | null;
-            } | null> | null;
+            }> | null;
             variantAttributes: Array<{
                 __typename: "Attribute";
                 id: string;
@@ -21117,7 +23275,7 @@ export type UnassignProductAttributeMutation = {
                 filterableInStorefront: boolean;
                 unit: MeasurementUnitsEnum | null;
                 inputType: AttributeInputTypeEnum | null;
-            } | null> | null;
+            }> | null;
             assignedVariantAttributes: Array<{
                 __typename: "AssignedVariantAttribute";
                 variantSelection: boolean;
@@ -21133,15 +23291,15 @@ export type UnassignProductAttributeMutation = {
                     unit: MeasurementUnitsEnum | null;
                     inputType: AttributeInputTypeEnum | null;
                 };
-            } | null> | null;
+            }> | null;
             weight: { __typename: "Weight"; unit: WeightUnitsEnum; value: number } | null;
             taxType: {
                 __typename: "TaxType";
                 description: string | null;
                 taxCode: string | null;
             } | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -21178,7 +23336,7 @@ export type ProductTypeCreateMutation = {
                 filterableInStorefront: boolean;
                 unit: MeasurementUnitsEnum | null;
                 inputType: AttributeInputTypeEnum | null;
-            } | null> | null;
+            }> | null;
             variantAttributes: Array<{
                 __typename: "Attribute";
                 id: string;
@@ -21190,7 +23348,7 @@ export type ProductTypeCreateMutation = {
                 filterableInStorefront: boolean;
                 unit: MeasurementUnitsEnum | null;
                 inputType: AttributeInputTypeEnum | null;
-            } | null> | null;
+            }> | null;
             assignedVariantAttributes: Array<{
                 __typename: "AssignedVariantAttribute";
                 variantSelection: boolean;
@@ -21206,15 +23364,15 @@ export type ProductTypeCreateMutation = {
                     unit: MeasurementUnitsEnum | null;
                     inputType: AttributeInputTypeEnum | null;
                 };
-            } | null> | null;
+            }> | null;
             weight: { __typename: "Weight"; unit: WeightUnitsEnum; value: number } | null;
             taxType: {
                 __typename: "TaxType";
                 description: string | null;
                 taxCode: string | null;
             } | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -21253,7 +23411,7 @@ export type ProductTypeAttributeReorderMutation = {
                 filterableInStorefront: boolean;
                 unit: MeasurementUnitsEnum | null;
                 inputType: AttributeInputTypeEnum | null;
-            } | null> | null;
+            }> | null;
             variantAttributes: Array<{
                 __typename: "Attribute";
                 id: string;
@@ -21265,7 +23423,7 @@ export type ProductTypeAttributeReorderMutation = {
                 filterableInStorefront: boolean;
                 unit: MeasurementUnitsEnum | null;
                 inputType: AttributeInputTypeEnum | null;
-            } | null> | null;
+            }> | null;
             assignedVariantAttributes: Array<{
                 __typename: "AssignedVariantAttribute";
                 variantSelection: boolean;
@@ -21281,23 +23439,21 @@ export type ProductTypeAttributeReorderMutation = {
                     unit: MeasurementUnitsEnum | null;
                     inputType: AttributeInputTypeEnum | null;
                 };
-            } | null> | null;
+            }> | null;
             weight: { __typename: "Weight"; unit: WeightUnitsEnum; value: number } | null;
             taxType: {
                 __typename: "TaxType";
                 description: string | null;
                 taxCode: string | null;
             } | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
 
 export type ProductAttributeAssignmentUpdateMutationVariables = Exact<{
-    operations:
-        | Array<InputMaybe<ProductAttributeAssignmentUpdateInput>>
-        | InputMaybe<ProductAttributeAssignmentUpdateInput>;
+    operations: Array<ProductAttributeAssignmentUpdateInput> | ProductAttributeAssignmentUpdateInput;
     productTypeId: Scalars["ID"];
 }>;
 
@@ -21330,7 +23486,7 @@ export type ProductAttributeAssignmentUpdateMutation = {
                 filterableInStorefront: boolean;
                 unit: MeasurementUnitsEnum | null;
                 inputType: AttributeInputTypeEnum | null;
-            } | null> | null;
+            }> | null;
             variantAttributes: Array<{
                 __typename: "Attribute";
                 id: string;
@@ -21342,7 +23498,7 @@ export type ProductAttributeAssignmentUpdateMutation = {
                 filterableInStorefront: boolean;
                 unit: MeasurementUnitsEnum | null;
                 inputType: AttributeInputTypeEnum | null;
-            } | null> | null;
+            }> | null;
             assignedVariantAttributes: Array<{
                 __typename: "AssignedVariantAttribute";
                 variantSelection: boolean;
@@ -21358,15 +23514,15 @@ export type ProductAttributeAssignmentUpdateMutation = {
                     unit: MeasurementUnitsEnum | null;
                     inputType: AttributeInputTypeEnum | null;
                 };
-            } | null> | null;
+            }> | null;
             weight: { __typename: "Weight"; unit: WeightUnitsEnum; value: number } | null;
             taxType: {
                 __typename: "TaxType";
                 description: string | null;
                 taxCode: string | null;
             } | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -21434,7 +23590,7 @@ export type ProductTypeDetailsQuery = {
             filterableInStorefront: boolean;
             unit: MeasurementUnitsEnum | null;
             inputType: AttributeInputTypeEnum | null;
-        } | null> | null;
+        }> | null;
         variantAttributes: Array<{
             __typename: "Attribute";
             id: string;
@@ -21446,7 +23602,7 @@ export type ProductTypeDetailsQuery = {
             filterableInStorefront: boolean;
             unit: MeasurementUnitsEnum | null;
             inputType: AttributeInputTypeEnum | null;
-        } | null> | null;
+        }> | null;
         assignedVariantAttributes: Array<{
             __typename: "AssignedVariantAttribute";
             variantSelection: boolean;
@@ -21462,18 +23618,18 @@ export type ProductTypeDetailsQuery = {
                 unit: MeasurementUnitsEnum | null;
                 inputType: AttributeInputTypeEnum | null;
             };
-        } | null> | null;
+        }> | null;
         weight: { __typename: "Weight"; unit: WeightUnitsEnum; value: number } | null;
         taxType: { __typename: "TaxType"; description: string | null; taxCode: string | null } | null;
-        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
     } | null;
     shop: { __typename: "Shop"; defaultWeightUnit: WeightUnitsEnum | null };
     taxTypes: Array<{
         __typename: "TaxType";
         taxCode: string | null;
         description: string | null;
-    } | null> | null;
+    }> | null;
 };
 
 export type ProductTypeCreateDataQueryVariables = Exact<{ [key: string]: never }>;
@@ -21485,7 +23641,7 @@ export type ProductTypeCreateDataQuery = {
         __typename: "TaxType";
         taxCode: string | null;
         description: string | null;
-    } | null> | null;
+    }> | null;
 };
 
 export type ProductMediaCreateMutationVariables = Exact<{
@@ -21541,7 +23697,7 @@ export type ProductDeleteMutation = {
 
 export type ProductMediaReorderMutationVariables = Exact<{
     productId: Scalars["ID"];
-    mediaIds: Array<InputMaybe<Scalars["ID"]>> | InputMaybe<Scalars["ID"]>;
+    mediaIds: Array<Scalars["ID"]> | Scalars["ID"];
 }>;
 
 export type ProductMediaReorderMutation = {
@@ -21587,7 +23743,7 @@ export type ProductVariantSetDefaultMutation = {
             __typename: "Product";
             id: string;
             defaultVariant: { __typename: "ProductVariant"; id: string; name: string } | null;
-            variants: Array<{ __typename: "ProductVariant"; id: string; name: string } | null> | null;
+            variants: Array<{ __typename: "ProductVariant"; id: string; name: string }> | null;
         } | null;
     } | null;
 };
@@ -21595,10 +23751,6 @@ export type ProductVariantSetDefaultMutation = {
 export type ProductUpdateMutationVariables = Exact<{
     id: Scalars["ID"];
     input: ProductInput;
-    firstValues?: InputMaybe<Scalars["Int"]>;
-    afterValues?: InputMaybe<Scalars["String"]>;
-    lastValues?: InputMaybe<Scalars["Int"]>;
-    beforeValues?: InputMaybe<Scalars["String"]>;
 }>;
 
 export type ProductUpdateMutation = {
@@ -21612,1201 +23764,6 @@ export type ProductUpdateMutation = {
             field: string | null;
             message: string | null;
         }>;
-        product: {
-            __typename: "Product";
-            name: string;
-            slug: string;
-            description: any | null;
-            seoTitle: string | null;
-            seoDescription: string | null;
-            rating: number | null;
-            chargeTaxes: boolean;
-            isAvailable: boolean | null;
-            id: string;
-            defaultVariant: { __typename: "ProductVariant"; id: string } | null;
-            category: { __typename: "Category"; id: string; name: string } | null;
-            collections: Array<{ __typename: "Collection"; id: string; name: string } | null> | null;
-            channelListings: Array<{
-                __typename: "ProductChannelListing";
-                isPublished: boolean;
-                publicationDate: any | null;
-                isAvailableForPurchase: boolean | null;
-                availableForPurchase: any | null;
-                visibleInListings: boolean;
-                channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
-            }> | null;
-            media: Array<{
-                __typename: "ProductMedia";
-                id: string;
-                alt: string;
-                sortOrder: number | null;
-                url: string;
-                type: ProductMediaType;
-                oembedData: any;
-            }> | null;
-            variants: Array<{
-                __typename: "ProductVariant";
-                id: string;
-                sku: string | null;
-                name: string;
-                margin: number | null;
-                trackInventory: boolean;
-                quantityLimitPerCustomer: number | null;
-                media: Array<{ __typename: "ProductMedia"; url: string }> | null;
-                stocks: Array<{
-                    __typename: "Stock";
-                    id: string;
-                    quantity: number;
-                    quantityAllocated: number;
-                    warehouse: { __typename: "Warehouse"; id: string; name: string };
-                } | null> | null;
-                preorder: {
-                    __typename: "PreorderData";
-                    globalThreshold: number | null;
-                    globalSoldUnits: number;
-                    endDate: any | null;
-                } | null;
-                channelListings: Array<{
-                    __typename: "ProductVariantChannelListing";
-                    channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
-                    price: { __typename: "Money"; amount: number; currency: string } | null;
-                    costPrice: { __typename: "Money"; amount: number; currency: string } | null;
-                    preorderThreshold: {
-                        __typename: "PreorderThreshold";
-                        quantity: number | null;
-                        soldUnits: number;
-                    } | null;
-                }> | null;
-            } | null> | null;
-            productType: {
-                __typename: "ProductType";
-                id: string;
-                name: string;
-                hasVariants: boolean;
-                taxType: {
-                    __typename: "TaxType";
-                    description: string | null;
-                    taxCode: string | null;
-                } | null;
-                variantAttributes: Array<{
-                    __typename: "Attribute";
-                    id: string;
-                    name: string | null;
-                    inputType: AttributeInputTypeEnum | null;
-                    valueRequired: boolean;
-                    unit: MeasurementUnitsEnum | null;
-                    choices: {
-                        __typename: "AttributeValueCountableConnection";
-                        pageInfo: {
-                            __typename: "PageInfo";
-                            endCursor: string | null;
-                            hasNextPage: boolean;
-                            hasPreviousPage: boolean;
-                            startCursor: string | null;
-                        };
-                        edges: Array<{
-                            __typename: "AttributeValueCountableEdge";
-                            cursor: string;
-                            node: {
-                                __typename: "AttributeValue";
-                                richText: any | null;
-                                id: string;
-                                name: string | null;
-                                slug: string | null;
-                                reference: string | null;
-                                boolean: boolean | null;
-                                date: any | null;
-                                dateTime: any | null;
-                                value: string | null;
-                                file: {
-                                    __typename: "File";
-                                    url: string;
-                                    contentType: string | null;
-                                } | null;
-                            };
-                        }>;
-                    } | null;
-                } | null> | null;
-            };
-            weight: { __typename: "Weight"; unit: WeightUnitsEnum; value: number } | null;
-            taxType: {
-                __typename: "TaxType";
-                description: string | null;
-                taxCode: string | null;
-            } | null;
-            attributes: Array<{
-                __typename: "SelectedAttribute";
-                attribute: {
-                    __typename: "Attribute";
-                    id: string;
-                    slug: string | null;
-                    name: string | null;
-                    inputType: AttributeInputTypeEnum | null;
-                    entityType: AttributeEntityTypeEnum | null;
-                    valueRequired: boolean;
-                    unit: MeasurementUnitsEnum | null;
-                    choices: {
-                        __typename: "AttributeValueCountableConnection";
-                        pageInfo: {
-                            __typename: "PageInfo";
-                            endCursor: string | null;
-                            hasNextPage: boolean;
-                            hasPreviousPage: boolean;
-                            startCursor: string | null;
-                        };
-                        edges: Array<{
-                            __typename: "AttributeValueCountableEdge";
-                            cursor: string;
-                            node: {
-                                __typename: "AttributeValue";
-                                richText: any | null;
-                                id: string;
-                                name: string | null;
-                                slug: string | null;
-                                reference: string | null;
-                                boolean: boolean | null;
-                                date: any | null;
-                                dateTime: any | null;
-                                value: string | null;
-                                file: {
-                                    __typename: "File";
-                                    url: string;
-                                    contentType: string | null;
-                                } | null;
-                            };
-                        }>;
-                    } | null;
-                };
-                values: Array<{
-                    __typename: "AttributeValue";
-                    richText: any | null;
-                    id: string;
-                    name: string | null;
-                    slug: string | null;
-                    reference: string | null;
-                    boolean: boolean | null;
-                    date: any | null;
-                    dateTime: any | null;
-                    value: string | null;
-                    file: { __typename: "File"; url: string; contentType: string | null } | null;
-                } | null>;
-            }>;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-        } | null;
-    } | null;
-};
-
-export type SimpleProductUpdateMutationVariables = Exact<{
-    id: Scalars["ID"];
-    input: ProductInput;
-    productVariantId: Scalars["ID"];
-    productVariantInput: ProductVariantInput;
-    addStocks: Array<StockInput> | StockInput;
-    deleteStocks: Array<Scalars["ID"]> | Scalars["ID"];
-    updateStocks: Array<StockInput> | StockInput;
-    firstValues?: InputMaybe<Scalars["Int"]>;
-    afterValues?: InputMaybe<Scalars["String"]>;
-    lastValues?: InputMaybe<Scalars["Int"]>;
-    beforeValues?: InputMaybe<Scalars["String"]>;
-}>;
-
-export type SimpleProductUpdateMutation = {
-    __typename: "Mutation";
-    productUpdate: {
-        __typename: "ProductUpdate";
-        errors: Array<{
-            __typename: "ProductError";
-            attributes: Array<string> | null;
-            code: ProductErrorCode;
-            field: string | null;
-            message: string | null;
-        }>;
-        product: {
-            __typename: "Product";
-            name: string;
-            slug: string;
-            description: any | null;
-            seoTitle: string | null;
-            seoDescription: string | null;
-            rating: number | null;
-            chargeTaxes: boolean;
-            isAvailable: boolean | null;
-            id: string;
-            defaultVariant: { __typename: "ProductVariant"; id: string } | null;
-            category: { __typename: "Category"; id: string; name: string } | null;
-            collections: Array<{ __typename: "Collection"; id: string; name: string } | null> | null;
-            channelListings: Array<{
-                __typename: "ProductChannelListing";
-                isPublished: boolean;
-                publicationDate: any | null;
-                isAvailableForPurchase: boolean | null;
-                availableForPurchase: any | null;
-                visibleInListings: boolean;
-                channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
-            }> | null;
-            media: Array<{
-                __typename: "ProductMedia";
-                id: string;
-                alt: string;
-                sortOrder: number | null;
-                url: string;
-                type: ProductMediaType;
-                oembedData: any;
-            }> | null;
-            variants: Array<{
-                __typename: "ProductVariant";
-                id: string;
-                sku: string | null;
-                name: string;
-                margin: number | null;
-                trackInventory: boolean;
-                quantityLimitPerCustomer: number | null;
-                media: Array<{ __typename: "ProductMedia"; url: string }> | null;
-                stocks: Array<{
-                    __typename: "Stock";
-                    id: string;
-                    quantity: number;
-                    quantityAllocated: number;
-                    warehouse: { __typename: "Warehouse"; id: string; name: string };
-                } | null> | null;
-                preorder: {
-                    __typename: "PreorderData";
-                    globalThreshold: number | null;
-                    globalSoldUnits: number;
-                    endDate: any | null;
-                } | null;
-                channelListings: Array<{
-                    __typename: "ProductVariantChannelListing";
-                    channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
-                    price: { __typename: "Money"; amount: number; currency: string } | null;
-                    costPrice: { __typename: "Money"; amount: number; currency: string } | null;
-                    preorderThreshold: {
-                        __typename: "PreorderThreshold";
-                        quantity: number | null;
-                        soldUnits: number;
-                    } | null;
-                }> | null;
-            } | null> | null;
-            productType: {
-                __typename: "ProductType";
-                id: string;
-                name: string;
-                hasVariants: boolean;
-                taxType: {
-                    __typename: "TaxType";
-                    description: string | null;
-                    taxCode: string | null;
-                } | null;
-                variantAttributes: Array<{
-                    __typename: "Attribute";
-                    id: string;
-                    name: string | null;
-                    inputType: AttributeInputTypeEnum | null;
-                    valueRequired: boolean;
-                    unit: MeasurementUnitsEnum | null;
-                    choices: {
-                        __typename: "AttributeValueCountableConnection";
-                        pageInfo: {
-                            __typename: "PageInfo";
-                            endCursor: string | null;
-                            hasNextPage: boolean;
-                            hasPreviousPage: boolean;
-                            startCursor: string | null;
-                        };
-                        edges: Array<{
-                            __typename: "AttributeValueCountableEdge";
-                            cursor: string;
-                            node: {
-                                __typename: "AttributeValue";
-                                richText: any | null;
-                                id: string;
-                                name: string | null;
-                                slug: string | null;
-                                reference: string | null;
-                                boolean: boolean | null;
-                                date: any | null;
-                                dateTime: any | null;
-                                value: string | null;
-                                file: {
-                                    __typename: "File";
-                                    url: string;
-                                    contentType: string | null;
-                                } | null;
-                            };
-                        }>;
-                    } | null;
-                } | null> | null;
-            };
-            weight: { __typename: "Weight"; unit: WeightUnitsEnum; value: number } | null;
-            taxType: {
-                __typename: "TaxType";
-                description: string | null;
-                taxCode: string | null;
-            } | null;
-            attributes: Array<{
-                __typename: "SelectedAttribute";
-                attribute: {
-                    __typename: "Attribute";
-                    id: string;
-                    slug: string | null;
-                    name: string | null;
-                    inputType: AttributeInputTypeEnum | null;
-                    entityType: AttributeEntityTypeEnum | null;
-                    valueRequired: boolean;
-                    unit: MeasurementUnitsEnum | null;
-                    choices: {
-                        __typename: "AttributeValueCountableConnection";
-                        pageInfo: {
-                            __typename: "PageInfo";
-                            endCursor: string | null;
-                            hasNextPage: boolean;
-                            hasPreviousPage: boolean;
-                            startCursor: string | null;
-                        };
-                        edges: Array<{
-                            __typename: "AttributeValueCountableEdge";
-                            cursor: string;
-                            node: {
-                                __typename: "AttributeValue";
-                                richText: any | null;
-                                id: string;
-                                name: string | null;
-                                slug: string | null;
-                                reference: string | null;
-                                boolean: boolean | null;
-                                date: any | null;
-                                dateTime: any | null;
-                                value: string | null;
-                                file: {
-                                    __typename: "File";
-                                    url: string;
-                                    contentType: string | null;
-                                } | null;
-                            };
-                        }>;
-                    } | null;
-                };
-                values: Array<{
-                    __typename: "AttributeValue";
-                    richText: any | null;
-                    id: string;
-                    name: string | null;
-                    slug: string | null;
-                    reference: string | null;
-                    boolean: boolean | null;
-                    date: any | null;
-                    dateTime: any | null;
-                    value: string | null;
-                    file: { __typename: "File"; url: string; contentType: string | null } | null;
-                } | null>;
-            }>;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-        } | null;
-    } | null;
-    productVariantUpdate: {
-        __typename: "ProductVariantUpdate";
-        errors: Array<{
-            __typename: "ProductError";
-            attributes: Array<string> | null;
-            code: ProductErrorCode;
-            field: string | null;
-            message: string | null;
-        }>;
-        productVariant: {
-            __typename: "ProductVariant";
-            id: string;
-            name: string;
-            sku: string | null;
-            trackInventory: boolean;
-            quantityLimitPerCustomer: number | null;
-            selectionAttributes: Array<{
-                __typename: "SelectedAttribute";
-                attribute: {
-                    __typename: "Attribute";
-                    id: string;
-                    name: string | null;
-                    slug: string | null;
-                    inputType: AttributeInputTypeEnum | null;
-                    entityType: AttributeEntityTypeEnum | null;
-                    valueRequired: boolean;
-                    unit: MeasurementUnitsEnum | null;
-                    choices: {
-                        __typename: "AttributeValueCountableConnection";
-                        pageInfo: {
-                            __typename: "PageInfo";
-                            endCursor: string | null;
-                            hasNextPage: boolean;
-                            hasPreviousPage: boolean;
-                            startCursor: string | null;
-                        };
-                        edges: Array<{
-                            __typename: "AttributeValueCountableEdge";
-                            cursor: string;
-                            node: {
-                                __typename: "AttributeValue";
-                                richText: any | null;
-                                id: string;
-                                name: string | null;
-                                slug: string | null;
-                                reference: string | null;
-                                boolean: boolean | null;
-                                date: any | null;
-                                dateTime: any | null;
-                                value: string | null;
-                                file: {
-                                    __typename: "File";
-                                    url: string;
-                                    contentType: string | null;
-                                } | null;
-                            };
-                        }>;
-                    } | null;
-                };
-                values: Array<{
-                    __typename: "AttributeValue";
-                    richText: any | null;
-                    id: string;
-                    name: string | null;
-                    slug: string | null;
-                    reference: string | null;
-                    boolean: boolean | null;
-                    date: any | null;
-                    dateTime: any | null;
-                    value: string | null;
-                    file: { __typename: "File"; url: string; contentType: string | null } | null;
-                } | null>;
-            }>;
-            nonSelectionAttributes: Array<{
-                __typename: "SelectedAttribute";
-                attribute: {
-                    __typename: "Attribute";
-                    id: string;
-                    name: string | null;
-                    slug: string | null;
-                    inputType: AttributeInputTypeEnum | null;
-                    entityType: AttributeEntityTypeEnum | null;
-                    valueRequired: boolean;
-                    unit: MeasurementUnitsEnum | null;
-                    choices: {
-                        __typename: "AttributeValueCountableConnection";
-                        pageInfo: {
-                            __typename: "PageInfo";
-                            endCursor: string | null;
-                            hasNextPage: boolean;
-                            hasPreviousPage: boolean;
-                            startCursor: string | null;
-                        };
-                        edges: Array<{
-                            __typename: "AttributeValueCountableEdge";
-                            cursor: string;
-                            node: {
-                                __typename: "AttributeValue";
-                                richText: any | null;
-                                id: string;
-                                name: string | null;
-                                slug: string | null;
-                                reference: string | null;
-                                boolean: boolean | null;
-                                date: any | null;
-                                dateTime: any | null;
-                                value: string | null;
-                                file: {
-                                    __typename: "File";
-                                    url: string;
-                                    contentType: string | null;
-                                } | null;
-                            };
-                        }>;
-                    } | null;
-                };
-                values: Array<{
-                    __typename: "AttributeValue";
-                    richText: any | null;
-                    id: string;
-                    name: string | null;
-                    slug: string | null;
-                    reference: string | null;
-                    boolean: boolean | null;
-                    date: any | null;
-                    dateTime: any | null;
-                    value: string | null;
-                    file: { __typename: "File"; url: string; contentType: string | null } | null;
-                } | null>;
-            }>;
-            media: Array<{
-                __typename: "ProductMedia";
-                id: string;
-                url: string;
-                type: ProductMediaType;
-                oembedData: any;
-            }> | null;
-            product: {
-                __typename: "Product";
-                id: string;
-                name: string;
-                defaultVariant: { __typename: "ProductVariant"; id: string } | null;
-                media: Array<{
-                    __typename: "ProductMedia";
-                    id: string;
-                    alt: string;
-                    sortOrder: number | null;
-                    url: string;
-                    type: ProductMediaType;
-                    oembedData: any;
-                }> | null;
-                thumbnail: { __typename: "Image"; url: string } | null;
-                channelListings: Array<{
-                    __typename: "ProductChannelListing";
-                    publicationDate: any | null;
-                    isPublished: boolean;
-                    channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
-                }> | null;
-                variants: Array<{
-                    __typename: "ProductVariant";
-                    id: string;
-                    name: string;
-                    sku: string | null;
-                    media: Array<{
-                        __typename: "ProductMedia";
-                        id: string;
-                        url: string;
-                        type: ProductMediaType;
-                        oembedData: any;
-                    }> | null;
-                } | null> | null;
-            };
-            channelListings: Array<{
-                __typename: "ProductVariantChannelListing";
-                channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
-                price: { __typename: "Money"; amount: number; currency: string } | null;
-                costPrice: { __typename: "Money"; amount: number; currency: string } | null;
-                preorderThreshold: {
-                    __typename: "PreorderThreshold";
-                    quantity: number | null;
-                    soldUnits: number;
-                } | null;
-            }> | null;
-            stocks: Array<{
-                __typename: "Stock";
-                id: string;
-                quantity: number;
-                quantityAllocated: number;
-                warehouse: { __typename: "Warehouse"; id: string; name: string };
-            } | null> | null;
-            preorder: {
-                __typename: "PreorderData";
-                globalThreshold: number | null;
-                globalSoldUnits: number;
-                endDate: any | null;
-            } | null;
-            weight: { __typename: "Weight"; unit: WeightUnitsEnum; value: number } | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-        } | null;
-    } | null;
-    productVariantStocksCreate: {
-        __typename: "ProductVariantStocksCreate";
-        errors: Array<{
-            __typename: "BulkStockError";
-            code: ProductErrorCode;
-            field: string | null;
-            index: number | null;
-            message: string | null;
-        }>;
-        productVariant: {
-            __typename: "ProductVariant";
-            id: string;
-            name: string;
-            sku: string | null;
-            trackInventory: boolean;
-            quantityLimitPerCustomer: number | null;
-            selectionAttributes: Array<{
-                __typename: "SelectedAttribute";
-                attribute: {
-                    __typename: "Attribute";
-                    id: string;
-                    name: string | null;
-                    slug: string | null;
-                    inputType: AttributeInputTypeEnum | null;
-                    entityType: AttributeEntityTypeEnum | null;
-                    valueRequired: boolean;
-                    unit: MeasurementUnitsEnum | null;
-                    choices: {
-                        __typename: "AttributeValueCountableConnection";
-                        pageInfo: {
-                            __typename: "PageInfo";
-                            endCursor: string | null;
-                            hasNextPage: boolean;
-                            hasPreviousPage: boolean;
-                            startCursor: string | null;
-                        };
-                        edges: Array<{
-                            __typename: "AttributeValueCountableEdge";
-                            cursor: string;
-                            node: {
-                                __typename: "AttributeValue";
-                                richText: any | null;
-                                id: string;
-                                name: string | null;
-                                slug: string | null;
-                                reference: string | null;
-                                boolean: boolean | null;
-                                date: any | null;
-                                dateTime: any | null;
-                                value: string | null;
-                                file: {
-                                    __typename: "File";
-                                    url: string;
-                                    contentType: string | null;
-                                } | null;
-                            };
-                        }>;
-                    } | null;
-                };
-                values: Array<{
-                    __typename: "AttributeValue";
-                    richText: any | null;
-                    id: string;
-                    name: string | null;
-                    slug: string | null;
-                    reference: string | null;
-                    boolean: boolean | null;
-                    date: any | null;
-                    dateTime: any | null;
-                    value: string | null;
-                    file: { __typename: "File"; url: string; contentType: string | null } | null;
-                } | null>;
-            }>;
-            nonSelectionAttributes: Array<{
-                __typename: "SelectedAttribute";
-                attribute: {
-                    __typename: "Attribute";
-                    id: string;
-                    name: string | null;
-                    slug: string | null;
-                    inputType: AttributeInputTypeEnum | null;
-                    entityType: AttributeEntityTypeEnum | null;
-                    valueRequired: boolean;
-                    unit: MeasurementUnitsEnum | null;
-                    choices: {
-                        __typename: "AttributeValueCountableConnection";
-                        pageInfo: {
-                            __typename: "PageInfo";
-                            endCursor: string | null;
-                            hasNextPage: boolean;
-                            hasPreviousPage: boolean;
-                            startCursor: string | null;
-                        };
-                        edges: Array<{
-                            __typename: "AttributeValueCountableEdge";
-                            cursor: string;
-                            node: {
-                                __typename: "AttributeValue";
-                                richText: any | null;
-                                id: string;
-                                name: string | null;
-                                slug: string | null;
-                                reference: string | null;
-                                boolean: boolean | null;
-                                date: any | null;
-                                dateTime: any | null;
-                                value: string | null;
-                                file: {
-                                    __typename: "File";
-                                    url: string;
-                                    contentType: string | null;
-                                } | null;
-                            };
-                        }>;
-                    } | null;
-                };
-                values: Array<{
-                    __typename: "AttributeValue";
-                    richText: any | null;
-                    id: string;
-                    name: string | null;
-                    slug: string | null;
-                    reference: string | null;
-                    boolean: boolean | null;
-                    date: any | null;
-                    dateTime: any | null;
-                    value: string | null;
-                    file: { __typename: "File"; url: string; contentType: string | null } | null;
-                } | null>;
-            }>;
-            media: Array<{
-                __typename: "ProductMedia";
-                id: string;
-                url: string;
-                type: ProductMediaType;
-                oembedData: any;
-            }> | null;
-            product: {
-                __typename: "Product";
-                id: string;
-                name: string;
-                defaultVariant: { __typename: "ProductVariant"; id: string } | null;
-                media: Array<{
-                    __typename: "ProductMedia";
-                    id: string;
-                    alt: string;
-                    sortOrder: number | null;
-                    url: string;
-                    type: ProductMediaType;
-                    oembedData: any;
-                }> | null;
-                thumbnail: { __typename: "Image"; url: string } | null;
-                channelListings: Array<{
-                    __typename: "ProductChannelListing";
-                    publicationDate: any | null;
-                    isPublished: boolean;
-                    channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
-                }> | null;
-                variants: Array<{
-                    __typename: "ProductVariant";
-                    id: string;
-                    name: string;
-                    sku: string | null;
-                    media: Array<{
-                        __typename: "ProductMedia";
-                        id: string;
-                        url: string;
-                        type: ProductMediaType;
-                        oembedData: any;
-                    }> | null;
-                } | null> | null;
-            };
-            channelListings: Array<{
-                __typename: "ProductVariantChannelListing";
-                channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
-                price: { __typename: "Money"; amount: number; currency: string } | null;
-                costPrice: { __typename: "Money"; amount: number; currency: string } | null;
-                preorderThreshold: {
-                    __typename: "PreorderThreshold";
-                    quantity: number | null;
-                    soldUnits: number;
-                } | null;
-            }> | null;
-            stocks: Array<{
-                __typename: "Stock";
-                id: string;
-                quantity: number;
-                quantityAllocated: number;
-                warehouse: { __typename: "Warehouse"; id: string; name: string };
-            } | null> | null;
-            preorder: {
-                __typename: "PreorderData";
-                globalThreshold: number | null;
-                globalSoldUnits: number;
-                endDate: any | null;
-            } | null;
-            weight: { __typename: "Weight"; unit: WeightUnitsEnum; value: number } | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-        } | null;
-    } | null;
-    productVariantStocksDelete: {
-        __typename: "ProductVariantStocksDelete";
-        errors: Array<{
-            __typename: "StockError";
-            code: StockErrorCode;
-            field: string | null;
-            message: string | null;
-        }>;
-        productVariant: {
-            __typename: "ProductVariant";
-            id: string;
-            name: string;
-            sku: string | null;
-            trackInventory: boolean;
-            quantityLimitPerCustomer: number | null;
-            selectionAttributes: Array<{
-                __typename: "SelectedAttribute";
-                attribute: {
-                    __typename: "Attribute";
-                    id: string;
-                    name: string | null;
-                    slug: string | null;
-                    inputType: AttributeInputTypeEnum | null;
-                    entityType: AttributeEntityTypeEnum | null;
-                    valueRequired: boolean;
-                    unit: MeasurementUnitsEnum | null;
-                    choices: {
-                        __typename: "AttributeValueCountableConnection";
-                        pageInfo: {
-                            __typename: "PageInfo";
-                            endCursor: string | null;
-                            hasNextPage: boolean;
-                            hasPreviousPage: boolean;
-                            startCursor: string | null;
-                        };
-                        edges: Array<{
-                            __typename: "AttributeValueCountableEdge";
-                            cursor: string;
-                            node: {
-                                __typename: "AttributeValue";
-                                richText: any | null;
-                                id: string;
-                                name: string | null;
-                                slug: string | null;
-                                reference: string | null;
-                                boolean: boolean | null;
-                                date: any | null;
-                                dateTime: any | null;
-                                value: string | null;
-                                file: {
-                                    __typename: "File";
-                                    url: string;
-                                    contentType: string | null;
-                                } | null;
-                            };
-                        }>;
-                    } | null;
-                };
-                values: Array<{
-                    __typename: "AttributeValue";
-                    richText: any | null;
-                    id: string;
-                    name: string | null;
-                    slug: string | null;
-                    reference: string | null;
-                    boolean: boolean | null;
-                    date: any | null;
-                    dateTime: any | null;
-                    value: string | null;
-                    file: { __typename: "File"; url: string; contentType: string | null } | null;
-                } | null>;
-            }>;
-            nonSelectionAttributes: Array<{
-                __typename: "SelectedAttribute";
-                attribute: {
-                    __typename: "Attribute";
-                    id: string;
-                    name: string | null;
-                    slug: string | null;
-                    inputType: AttributeInputTypeEnum | null;
-                    entityType: AttributeEntityTypeEnum | null;
-                    valueRequired: boolean;
-                    unit: MeasurementUnitsEnum | null;
-                    choices: {
-                        __typename: "AttributeValueCountableConnection";
-                        pageInfo: {
-                            __typename: "PageInfo";
-                            endCursor: string | null;
-                            hasNextPage: boolean;
-                            hasPreviousPage: boolean;
-                            startCursor: string | null;
-                        };
-                        edges: Array<{
-                            __typename: "AttributeValueCountableEdge";
-                            cursor: string;
-                            node: {
-                                __typename: "AttributeValue";
-                                richText: any | null;
-                                id: string;
-                                name: string | null;
-                                slug: string | null;
-                                reference: string | null;
-                                boolean: boolean | null;
-                                date: any | null;
-                                dateTime: any | null;
-                                value: string | null;
-                                file: {
-                                    __typename: "File";
-                                    url: string;
-                                    contentType: string | null;
-                                } | null;
-                            };
-                        }>;
-                    } | null;
-                };
-                values: Array<{
-                    __typename: "AttributeValue";
-                    richText: any | null;
-                    id: string;
-                    name: string | null;
-                    slug: string | null;
-                    reference: string | null;
-                    boolean: boolean | null;
-                    date: any | null;
-                    dateTime: any | null;
-                    value: string | null;
-                    file: { __typename: "File"; url: string; contentType: string | null } | null;
-                } | null>;
-            }>;
-            media: Array<{
-                __typename: "ProductMedia";
-                id: string;
-                url: string;
-                type: ProductMediaType;
-                oembedData: any;
-            }> | null;
-            product: {
-                __typename: "Product";
-                id: string;
-                name: string;
-                defaultVariant: { __typename: "ProductVariant"; id: string } | null;
-                media: Array<{
-                    __typename: "ProductMedia";
-                    id: string;
-                    alt: string;
-                    sortOrder: number | null;
-                    url: string;
-                    type: ProductMediaType;
-                    oembedData: any;
-                }> | null;
-                thumbnail: { __typename: "Image"; url: string } | null;
-                channelListings: Array<{
-                    __typename: "ProductChannelListing";
-                    publicationDate: any | null;
-                    isPublished: boolean;
-                    channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
-                }> | null;
-                variants: Array<{
-                    __typename: "ProductVariant";
-                    id: string;
-                    name: string;
-                    sku: string | null;
-                    media: Array<{
-                        __typename: "ProductMedia";
-                        id: string;
-                        url: string;
-                        type: ProductMediaType;
-                        oembedData: any;
-                    }> | null;
-                } | null> | null;
-            };
-            channelListings: Array<{
-                __typename: "ProductVariantChannelListing";
-                channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
-                price: { __typename: "Money"; amount: number; currency: string } | null;
-                costPrice: { __typename: "Money"; amount: number; currency: string } | null;
-                preorderThreshold: {
-                    __typename: "PreorderThreshold";
-                    quantity: number | null;
-                    soldUnits: number;
-                } | null;
-            }> | null;
-            stocks: Array<{
-                __typename: "Stock";
-                id: string;
-                quantity: number;
-                quantityAllocated: number;
-                warehouse: { __typename: "Warehouse"; id: string; name: string };
-            } | null> | null;
-            preorder: {
-                __typename: "PreorderData";
-                globalThreshold: number | null;
-                globalSoldUnits: number;
-                endDate: any | null;
-            } | null;
-            weight: { __typename: "Weight"; unit: WeightUnitsEnum; value: number } | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-        } | null;
-    } | null;
-    productVariantStocksUpdate: {
-        __typename: "ProductVariantStocksUpdate";
-        errors: Array<{
-            __typename: "BulkStockError";
-            code: ProductErrorCode;
-            field: string | null;
-            index: number | null;
-            message: string | null;
-        }>;
-        productVariant: {
-            __typename: "ProductVariant";
-            id: string;
-            name: string;
-            sku: string | null;
-            trackInventory: boolean;
-            quantityLimitPerCustomer: number | null;
-            selectionAttributes: Array<{
-                __typename: "SelectedAttribute";
-                attribute: {
-                    __typename: "Attribute";
-                    id: string;
-                    name: string | null;
-                    slug: string | null;
-                    inputType: AttributeInputTypeEnum | null;
-                    entityType: AttributeEntityTypeEnum | null;
-                    valueRequired: boolean;
-                    unit: MeasurementUnitsEnum | null;
-                    choices: {
-                        __typename: "AttributeValueCountableConnection";
-                        pageInfo: {
-                            __typename: "PageInfo";
-                            endCursor: string | null;
-                            hasNextPage: boolean;
-                            hasPreviousPage: boolean;
-                            startCursor: string | null;
-                        };
-                        edges: Array<{
-                            __typename: "AttributeValueCountableEdge";
-                            cursor: string;
-                            node: {
-                                __typename: "AttributeValue";
-                                richText: any | null;
-                                id: string;
-                                name: string | null;
-                                slug: string | null;
-                                reference: string | null;
-                                boolean: boolean | null;
-                                date: any | null;
-                                dateTime: any | null;
-                                value: string | null;
-                                file: {
-                                    __typename: "File";
-                                    url: string;
-                                    contentType: string | null;
-                                } | null;
-                            };
-                        }>;
-                    } | null;
-                };
-                values: Array<{
-                    __typename: "AttributeValue";
-                    richText: any | null;
-                    id: string;
-                    name: string | null;
-                    slug: string | null;
-                    reference: string | null;
-                    boolean: boolean | null;
-                    date: any | null;
-                    dateTime: any | null;
-                    value: string | null;
-                    file: { __typename: "File"; url: string; contentType: string | null } | null;
-                } | null>;
-            }>;
-            nonSelectionAttributes: Array<{
-                __typename: "SelectedAttribute";
-                attribute: {
-                    __typename: "Attribute";
-                    id: string;
-                    name: string | null;
-                    slug: string | null;
-                    inputType: AttributeInputTypeEnum | null;
-                    entityType: AttributeEntityTypeEnum | null;
-                    valueRequired: boolean;
-                    unit: MeasurementUnitsEnum | null;
-                    choices: {
-                        __typename: "AttributeValueCountableConnection";
-                        pageInfo: {
-                            __typename: "PageInfo";
-                            endCursor: string | null;
-                            hasNextPage: boolean;
-                            hasPreviousPage: boolean;
-                            startCursor: string | null;
-                        };
-                        edges: Array<{
-                            __typename: "AttributeValueCountableEdge";
-                            cursor: string;
-                            node: {
-                                __typename: "AttributeValue";
-                                richText: any | null;
-                                id: string;
-                                name: string | null;
-                                slug: string | null;
-                                reference: string | null;
-                                boolean: boolean | null;
-                                date: any | null;
-                                dateTime: any | null;
-                                value: string | null;
-                                file: {
-                                    __typename: "File";
-                                    url: string;
-                                    contentType: string | null;
-                                } | null;
-                            };
-                        }>;
-                    } | null;
-                };
-                values: Array<{
-                    __typename: "AttributeValue";
-                    richText: any | null;
-                    id: string;
-                    name: string | null;
-                    slug: string | null;
-                    reference: string | null;
-                    boolean: boolean | null;
-                    date: any | null;
-                    dateTime: any | null;
-                    value: string | null;
-                    file: { __typename: "File"; url: string; contentType: string | null } | null;
-                } | null>;
-            }>;
-            media: Array<{
-                __typename: "ProductMedia";
-                id: string;
-                url: string;
-                type: ProductMediaType;
-                oembedData: any;
-            }> | null;
-            product: {
-                __typename: "Product";
-                id: string;
-                name: string;
-                defaultVariant: { __typename: "ProductVariant"; id: string } | null;
-                media: Array<{
-                    __typename: "ProductMedia";
-                    id: string;
-                    alt: string;
-                    sortOrder: number | null;
-                    url: string;
-                    type: ProductMediaType;
-                    oembedData: any;
-                }> | null;
-                thumbnail: { __typename: "Image"; url: string } | null;
-                channelListings: Array<{
-                    __typename: "ProductChannelListing";
-                    publicationDate: any | null;
-                    isPublished: boolean;
-                    channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
-                }> | null;
-                variants: Array<{
-                    __typename: "ProductVariant";
-                    id: string;
-                    name: string;
-                    sku: string | null;
-                    media: Array<{
-                        __typename: "ProductMedia";
-                        id: string;
-                        url: string;
-                        type: ProductMediaType;
-                        oembedData: any;
-                    }> | null;
-                } | null> | null;
-            };
-            channelListings: Array<{
-                __typename: "ProductVariantChannelListing";
-                channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
-                price: { __typename: "Money"; amount: number; currency: string } | null;
-                costPrice: { __typename: "Money"; amount: number; currency: string } | null;
-                preorderThreshold: {
-                    __typename: "PreorderThreshold";
-                    quantity: number | null;
-                    soldUnits: number;
-                } | null;
-            }> | null;
-            stocks: Array<{
-                __typename: "Stock";
-                id: string;
-                quantity: number;
-                quantityAllocated: number;
-                warehouse: { __typename: "Warehouse"; id: string; name: string };
-            } | null> | null;
-            preorder: {
-                __typename: "PreorderData";
-                globalThreshold: number | null;
-                globalSoldUnits: number;
-                endDate: any | null;
-            } | null;
-            weight: { __typename: "Weight"; unit: WeightUnitsEnum; value: number } | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-        } | null;
     } | null;
 };
 
@@ -22847,6 +23804,73 @@ export type VariantDeleteMutation = {
     } | null;
 };
 
+export type VariantDatagridUpdateMutationVariables = Exact<{
+    id: Scalars["ID"];
+    input: ProductVariantInput;
+}>;
+
+export type VariantDatagridUpdateMutation = {
+    __typename: "Mutation";
+    productVariantUpdate: {
+        __typename: "ProductVariantUpdate";
+        errors: Array<{
+            __typename: "ProductError";
+            attributes: Array<string> | null;
+            code: ProductErrorCode;
+            field: string | null;
+            message: string | null;
+        }>;
+    } | null;
+};
+
+export type VariantDatagridStockUpdateMutationVariables = Exact<{
+    stocks: Array<StockInput> | StockInput;
+    removeStocks: Array<Scalars["ID"]> | Scalars["ID"];
+    id: Scalars["ID"];
+}>;
+
+export type VariantDatagridStockUpdateMutation = {
+    __typename: "Mutation";
+    productVariantStocksDelete: {
+        __typename: "ProductVariantStocksDelete";
+        errors: Array<{
+            __typename: "StockError";
+            code: StockErrorCode;
+            field: string | null;
+            message: string | null;
+        }>;
+    } | null;
+    productVariantStocksUpdate: {
+        __typename: "ProductVariantStocksUpdate";
+        errors: Array<{
+            __typename: "BulkStockError";
+            code: ProductErrorCode;
+            field: string | null;
+            index: number | null;
+            message: string | null;
+        }>;
+    } | null;
+};
+
+export type VariantDatagridChannelListingUpdateMutationVariables = Exact<{
+    id: Scalars["ID"];
+    input: Array<ProductVariantChannelListingAddInput> | ProductVariantChannelListingAddInput;
+}>;
+
+export type VariantDatagridChannelListingUpdateMutation = {
+    __typename: "Mutation";
+    productVariantChannelListingUpdate: {
+        __typename: "ProductVariantChannelListingUpdate";
+        errors: Array<{
+            __typename: "ProductChannelListingError";
+            code: ProductErrorCode;
+            field: string | null;
+            message: string | null;
+            channels: Array<string> | null;
+        }>;
+    } | null;
+};
+
 export type VariantUpdateMutationVariables = Exact<{
     addStocks: Array<StockInput> | StockInput;
     removeStocks: Array<Scalars["ID"]> | Scalars["ID"];
@@ -22866,205 +23890,45 @@ export type VariantUpdateMutationVariables = Exact<{
 
 export type VariantUpdateMutation = {
     __typename: "Mutation";
-    productVariantUpdate: {
-        __typename: "ProductVariantUpdate";
+    productVariantStocksDelete: {
+        __typename: "ProductVariantStocksDelete";
         errors: Array<{
-            __typename: "ProductError";
-            attributes: Array<string> | null;
-            code: ProductErrorCode;
+            __typename: "StockError";
+            code: StockErrorCode;
             field: string | null;
             message: string | null;
         }>;
         productVariant: {
             __typename: "ProductVariant";
             id: string;
-            name: string;
-            sku: string | null;
-            trackInventory: boolean;
-            quantityLimitPerCustomer: number | null;
-            selectionAttributes: Array<{
-                __typename: "SelectedAttribute";
-                attribute: {
-                    __typename: "Attribute";
-                    id: string;
-                    name: string | null;
-                    slug: string | null;
-                    inputType: AttributeInputTypeEnum | null;
-                    entityType: AttributeEntityTypeEnum | null;
-                    valueRequired: boolean;
-                    unit: MeasurementUnitsEnum | null;
-                    choices: {
-                        __typename: "AttributeValueCountableConnection";
-                        pageInfo: {
-                            __typename: "PageInfo";
-                            endCursor: string | null;
-                            hasNextPage: boolean;
-                            hasPreviousPage: boolean;
-                            startCursor: string | null;
-                        };
-                        edges: Array<{
-                            __typename: "AttributeValueCountableEdge";
-                            cursor: string;
-                            node: {
-                                __typename: "AttributeValue";
-                                richText: any | null;
-                                id: string;
-                                name: string | null;
-                                slug: string | null;
-                                reference: string | null;
-                                boolean: boolean | null;
-                                date: any | null;
-                                dateTime: any | null;
-                                value: string | null;
-                                file: {
-                                    __typename: "File";
-                                    url: string;
-                                    contentType: string | null;
-                                } | null;
-                            };
-                        }>;
-                    } | null;
-                };
-                values: Array<{
-                    __typename: "AttributeValue";
-                    richText: any | null;
-                    id: string;
-                    name: string | null;
-                    slug: string | null;
-                    reference: string | null;
-                    boolean: boolean | null;
-                    date: any | null;
-                    dateTime: any | null;
-                    value: string | null;
-                    file: { __typename: "File"; url: string; contentType: string | null } | null;
-                } | null>;
-            }>;
-            nonSelectionAttributes: Array<{
-                __typename: "SelectedAttribute";
-                attribute: {
-                    __typename: "Attribute";
-                    id: string;
-                    name: string | null;
-                    slug: string | null;
-                    inputType: AttributeInputTypeEnum | null;
-                    entityType: AttributeEntityTypeEnum | null;
-                    valueRequired: boolean;
-                    unit: MeasurementUnitsEnum | null;
-                    choices: {
-                        __typename: "AttributeValueCountableConnection";
-                        pageInfo: {
-                            __typename: "PageInfo";
-                            endCursor: string | null;
-                            hasNextPage: boolean;
-                            hasPreviousPage: boolean;
-                            startCursor: string | null;
-                        };
-                        edges: Array<{
-                            __typename: "AttributeValueCountableEdge";
-                            cursor: string;
-                            node: {
-                                __typename: "AttributeValue";
-                                richText: any | null;
-                                id: string;
-                                name: string | null;
-                                slug: string | null;
-                                reference: string | null;
-                                boolean: boolean | null;
-                                date: any | null;
-                                dateTime: any | null;
-                                value: string | null;
-                                file: {
-                                    __typename: "File";
-                                    url: string;
-                                    contentType: string | null;
-                                } | null;
-                            };
-                        }>;
-                    } | null;
-                };
-                values: Array<{
-                    __typename: "AttributeValue";
-                    richText: any | null;
-                    id: string;
-                    name: string | null;
-                    slug: string | null;
-                    reference: string | null;
-                    boolean: boolean | null;
-                    date: any | null;
-                    dateTime: any | null;
-                    value: string | null;
-                    file: { __typename: "File"; url: string; contentType: string | null } | null;
-                } | null>;
-            }>;
-            media: Array<{
-                __typename: "ProductMedia";
-                id: string;
-                url: string;
-                type: ProductMediaType;
-                oembedData: any;
-            }> | null;
-            product: {
-                __typename: "Product";
-                id: string;
-                name: string;
-                defaultVariant: { __typename: "ProductVariant"; id: string } | null;
-                media: Array<{
-                    __typename: "ProductMedia";
-                    id: string;
-                    alt: string;
-                    sortOrder: number | null;
-                    url: string;
-                    type: ProductMediaType;
-                    oembedData: any;
-                }> | null;
-                thumbnail: { __typename: "Image"; url: string } | null;
-                channelListings: Array<{
-                    __typename: "ProductChannelListing";
-                    publicationDate: any | null;
-                    isPublished: boolean;
-                    channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
-                }> | null;
-                variants: Array<{
-                    __typename: "ProductVariant";
-                    id: string;
-                    name: string;
-                    sku: string | null;
-                    media: Array<{
-                        __typename: "ProductMedia";
-                        id: string;
-                        url: string;
-                        type: ProductMediaType;
-                        oembedData: any;
-                    }> | null;
-                } | null> | null;
-            };
-            channelListings: Array<{
-                __typename: "ProductVariantChannelListing";
-                channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
-                price: { __typename: "Money"; amount: number; currency: string } | null;
-                costPrice: { __typename: "Money"; amount: number; currency: string } | null;
-                preorderThreshold: {
-                    __typename: "PreorderThreshold";
-                    quantity: number | null;
-                    soldUnits: number;
-                } | null;
-            }> | null;
             stocks: Array<{
                 __typename: "Stock";
                 id: string;
                 quantity: number;
                 quantityAllocated: number;
                 warehouse: { __typename: "Warehouse"; id: string; name: string };
-            } | null> | null;
-            preorder: {
-                __typename: "PreorderData";
-                globalThreshold: number | null;
-                globalSoldUnits: number;
-                endDate: any | null;
-            } | null;
-            weight: { __typename: "Weight"; unit: WeightUnitsEnum; value: number } | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            }> | null;
+        } | null;
+    } | null;
+    productVariantStocksCreate: {
+        __typename: "ProductVariantStocksCreate";
+        errors: Array<{
+            __typename: "BulkStockError";
+            code: ProductErrorCode;
+            field: string | null;
+            index: number | null;
+            message: string | null;
+        }>;
+        productVariant: {
+            __typename: "ProductVariant";
+            id: string;
+            stocks: Array<{
+                __typename: "Stock";
+                id: string;
+                quantity: number;
+                quantityAllocated: number;
+                warehouse: { __typename: "Warehouse"; id: string; name: string };
+            }> | null;
         } | null;
     } | null;
     productVariantStocksUpdate: {
@@ -23138,7 +24002,7 @@ export type VariantUpdateMutation = {
                     dateTime: any | null;
                     value: string | null;
                     file: { __typename: "File"; url: string; contentType: string | null } | null;
-                } | null>;
+                }>;
             }>;
             nonSelectionAttributes: Array<{
                 __typename: "SelectedAttribute";
@@ -23195,7 +24059,7 @@ export type VariantUpdateMutation = {
                     dateTime: any | null;
                     value: string | null;
                     file: { __typename: "File"; url: string; contentType: string | null } | null;
-                } | null>;
+                }>;
             }>;
             media: Array<{
                 __typename: "ProductMedia";
@@ -23221,6 +24085,7 @@ export type VariantUpdateMutation = {
                 thumbnail: { __typename: "Image"; url: string } | null;
                 channelListings: Array<{
                     __typename: "ProductChannelListing";
+                    id: string;
                     publicationDate: any | null;
                     isPublished: boolean;
                     channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
@@ -23237,7 +24102,7 @@ export type VariantUpdateMutation = {
                         type: ProductMediaType;
                         oembedData: any;
                     }> | null;
-                } | null> | null;
+                }> | null;
             };
             channelListings: Array<{
                 __typename: "ProductVariantChannelListing";
@@ -23256,7 +24121,7 @@ export type VariantUpdateMutation = {
                 quantity: number;
                 quantityAllocated: number;
                 warehouse: { __typename: "Warehouse"; id: string; name: string };
-            } | null> | null;
+            }> | null;
             preorder: {
                 __typename: "PreorderData";
                 globalThreshold: number | null;
@@ -23264,49 +24129,210 @@ export type VariantUpdateMutation = {
                 endDate: any | null;
             } | null;
             weight: { __typename: "Weight"; unit: WeightUnitsEnum; value: number } | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
-    productVariantStocksCreate: {
-        __typename: "ProductVariantStocksCreate";
+    productVariantUpdate: {
+        __typename: "ProductVariantUpdate";
         errors: Array<{
-            __typename: "BulkStockError";
+            __typename: "ProductError";
+            attributes: Array<string> | null;
             code: ProductErrorCode;
             field: string | null;
-            index: number | null;
             message: string | null;
         }>;
         productVariant: {
             __typename: "ProductVariant";
             id: string;
+            name: string;
+            sku: string | null;
+            trackInventory: boolean;
+            quantityLimitPerCustomer: number | null;
+            selectionAttributes: Array<{
+                __typename: "SelectedAttribute";
+                attribute: {
+                    __typename: "Attribute";
+                    id: string;
+                    name: string | null;
+                    slug: string | null;
+                    inputType: AttributeInputTypeEnum | null;
+                    entityType: AttributeEntityTypeEnum | null;
+                    valueRequired: boolean;
+                    unit: MeasurementUnitsEnum | null;
+                    choices: {
+                        __typename: "AttributeValueCountableConnection";
+                        pageInfo: {
+                            __typename: "PageInfo";
+                            endCursor: string | null;
+                            hasNextPage: boolean;
+                            hasPreviousPage: boolean;
+                            startCursor: string | null;
+                        };
+                        edges: Array<{
+                            __typename: "AttributeValueCountableEdge";
+                            cursor: string;
+                            node: {
+                                __typename: "AttributeValue";
+                                richText: any | null;
+                                id: string;
+                                name: string | null;
+                                slug: string | null;
+                                reference: string | null;
+                                boolean: boolean | null;
+                                date: any | null;
+                                dateTime: any | null;
+                                value: string | null;
+                                file: {
+                                    __typename: "File";
+                                    url: string;
+                                    contentType: string | null;
+                                } | null;
+                            };
+                        }>;
+                    } | null;
+                };
+                values: Array<{
+                    __typename: "AttributeValue";
+                    richText: any | null;
+                    id: string;
+                    name: string | null;
+                    slug: string | null;
+                    reference: string | null;
+                    boolean: boolean | null;
+                    date: any | null;
+                    dateTime: any | null;
+                    value: string | null;
+                    file: { __typename: "File"; url: string; contentType: string | null } | null;
+                }>;
+            }>;
+            nonSelectionAttributes: Array<{
+                __typename: "SelectedAttribute";
+                attribute: {
+                    __typename: "Attribute";
+                    id: string;
+                    name: string | null;
+                    slug: string | null;
+                    inputType: AttributeInputTypeEnum | null;
+                    entityType: AttributeEntityTypeEnum | null;
+                    valueRequired: boolean;
+                    unit: MeasurementUnitsEnum | null;
+                    choices: {
+                        __typename: "AttributeValueCountableConnection";
+                        pageInfo: {
+                            __typename: "PageInfo";
+                            endCursor: string | null;
+                            hasNextPage: boolean;
+                            hasPreviousPage: boolean;
+                            startCursor: string | null;
+                        };
+                        edges: Array<{
+                            __typename: "AttributeValueCountableEdge";
+                            cursor: string;
+                            node: {
+                                __typename: "AttributeValue";
+                                richText: any | null;
+                                id: string;
+                                name: string | null;
+                                slug: string | null;
+                                reference: string | null;
+                                boolean: boolean | null;
+                                date: any | null;
+                                dateTime: any | null;
+                                value: string | null;
+                                file: {
+                                    __typename: "File";
+                                    url: string;
+                                    contentType: string | null;
+                                } | null;
+                            };
+                        }>;
+                    } | null;
+                };
+                values: Array<{
+                    __typename: "AttributeValue";
+                    richText: any | null;
+                    id: string;
+                    name: string | null;
+                    slug: string | null;
+                    reference: string | null;
+                    boolean: boolean | null;
+                    date: any | null;
+                    dateTime: any | null;
+                    value: string | null;
+                    file: { __typename: "File"; url: string; contentType: string | null } | null;
+                }>;
+            }>;
+            media: Array<{
+                __typename: "ProductMedia";
+                id: string;
+                url: string;
+                type: ProductMediaType;
+                oembedData: any;
+            }> | null;
+            product: {
+                __typename: "Product";
+                id: string;
+                name: string;
+                defaultVariant: { __typename: "ProductVariant"; id: string } | null;
+                media: Array<{
+                    __typename: "ProductMedia";
+                    id: string;
+                    alt: string;
+                    sortOrder: number | null;
+                    url: string;
+                    type: ProductMediaType;
+                    oembedData: any;
+                }> | null;
+                thumbnail: { __typename: "Image"; url: string } | null;
+                channelListings: Array<{
+                    __typename: "ProductChannelListing";
+                    id: string;
+                    publicationDate: any | null;
+                    isPublished: boolean;
+                    channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
+                }> | null;
+                variants: Array<{
+                    __typename: "ProductVariant";
+                    id: string;
+                    name: string;
+                    sku: string | null;
+                    media: Array<{
+                        __typename: "ProductMedia";
+                        id: string;
+                        url: string;
+                        type: ProductMediaType;
+                        oembedData: any;
+                    }> | null;
+                }> | null;
+            };
+            channelListings: Array<{
+                __typename: "ProductVariantChannelListing";
+                channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
+                price: { __typename: "Money"; amount: number; currency: string } | null;
+                costPrice: { __typename: "Money"; amount: number; currency: string } | null;
+                preorderThreshold: {
+                    __typename: "PreorderThreshold";
+                    quantity: number | null;
+                    soldUnits: number;
+                } | null;
+            }> | null;
             stocks: Array<{
                 __typename: "Stock";
                 id: string;
                 quantity: number;
                 quantityAllocated: number;
                 warehouse: { __typename: "Warehouse"; id: string; name: string };
-            } | null> | null;
-        } | null;
-    } | null;
-    productVariantStocksDelete: {
-        __typename: "ProductVariantStocksDelete";
-        errors: Array<{
-            __typename: "StockError";
-            code: StockErrorCode;
-            field: string | null;
-            message: string | null;
-        }>;
-        productVariant: {
-            __typename: "ProductVariant";
-            id: string;
-            stocks: Array<{
-                __typename: "Stock";
-                id: string;
-                quantity: number;
-                quantityAllocated: number;
-                warehouse: { __typename: "Warehouse"; id: string; name: string };
-            } | null> | null;
+            }> | null;
+            preorder: {
+                __typename: "PreorderData";
+                globalThreshold: number | null;
+                globalSoldUnits: number;
+                endDate: any | null;
+            } | null;
+            weight: { __typename: "Weight"; unit: WeightUnitsEnum; value: number } | null;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -23392,7 +24418,7 @@ export type VariantCreateMutation = {
                     dateTime: any | null;
                     value: string | null;
                     file: { __typename: "File"; url: string; contentType: string | null } | null;
-                } | null>;
+                }>;
             }>;
             nonSelectionAttributes: Array<{
                 __typename: "SelectedAttribute";
@@ -23449,7 +24475,7 @@ export type VariantCreateMutation = {
                     dateTime: any | null;
                     value: string | null;
                     file: { __typename: "File"; url: string; contentType: string | null } | null;
-                } | null>;
+                }>;
             }>;
             media: Array<{
                 __typename: "ProductMedia";
@@ -23475,6 +24501,7 @@ export type VariantCreateMutation = {
                 thumbnail: { __typename: "Image"; url: string } | null;
                 channelListings: Array<{
                     __typename: "ProductChannelListing";
+                    id: string;
                     publicationDate: any | null;
                     isPublished: boolean;
                     channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
@@ -23491,7 +24518,7 @@ export type VariantCreateMutation = {
                         type: ProductMediaType;
                         oembedData: any;
                     }> | null;
-                } | null> | null;
+                }> | null;
             };
             channelListings: Array<{
                 __typename: "ProductVariantChannelListing";
@@ -23510,7 +24537,7 @@ export type VariantCreateMutation = {
                 quantity: number;
                 quantityAllocated: number;
                 warehouse: { __typename: "Warehouse"; id: string; name: string };
-            } | null> | null;
+            }> | null;
             preorder: {
                 __typename: "PreorderData";
                 globalThreshold: number | null;
@@ -23518,8 +24545,8 @@ export type VariantCreateMutation = {
                 endDate: any | null;
             } | null;
             weight: { __typename: "Weight"; unit: WeightUnitsEnum; value: number } | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -23630,7 +24657,7 @@ export type VariantMediaAssignMutation = {
                         type: ProductMediaType;
                         oembedData: any;
                     }> | null;
-                } | null> | null;
+                }> | null;
             };
         } | null;
     } | null;
@@ -23689,7 +24716,7 @@ export type VariantMediaUnassignMutation = {
                         type: ProductMediaType;
                         oembedData: any;
                     }> | null;
-                } | null> | null;
+                }> | null;
             };
         } | null;
     } | null;
@@ -23714,9 +24741,7 @@ export type ProductBulkDeleteMutation = {
 
 export type ProductVariantBulkCreateMutationVariables = Exact<{
     id: Scalars["ID"];
-    inputs:
-        | Array<InputMaybe<ProductVariantBulkCreateInput>>
-        | InputMaybe<ProductVariantBulkCreateInput>;
+    inputs: Array<ProductVariantBulkCreateInput> | ProductVariantBulkCreateInput;
 }>;
 
 export type ProductVariantBulkCreateMutation = {
@@ -23731,6 +24756,7 @@ export type ProductVariantBulkCreateMutation = {
             channels: Array<string> | null;
             message: string | null;
         }>;
+        productVariants: Array<{ __typename: "ProductVariant"; id: string }>;
     } | null;
 };
 
@@ -23783,34 +24809,6 @@ export type ProductChannelListingUpdateMutation = {
     __typename: "Mutation";
     productChannelListingUpdate: {
         __typename: "ProductChannelListingUpdate";
-        product: {
-            __typename: "Product";
-            id: string;
-            channelListings: Array<{
-                __typename: "ProductChannelListing";
-                isPublished: boolean;
-                publicationDate: any | null;
-                isAvailableForPurchase: boolean | null;
-                availableForPurchase: any | null;
-                visibleInListings: boolean;
-                channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
-            }> | null;
-            variants: Array<{
-                __typename: "ProductVariant";
-                id: string;
-                channelListings: Array<{
-                    __typename: "ProductVariantChannelListing";
-                    channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
-                    price: { __typename: "Money"; amount: number; currency: string } | null;
-                    costPrice: { __typename: "Money"; amount: number; currency: string } | null;
-                    preorderThreshold: {
-                        __typename: "PreorderThreshold";
-                        quantity: number | null;
-                        soldUnits: number;
-                    } | null;
-                }> | null;
-            } | null> | null;
-        } | null;
         errors: Array<{
             __typename: "ProductChannelListingError";
             code: ProductErrorCode;
@@ -23839,7 +24837,7 @@ export type ProductVariantReorderMutation = {
         product: {
             __typename: "Product";
             id: string;
-            variants: Array<{ __typename: "ProductVariant"; id: string } | null> | null;
+            variants: Array<{ __typename: "ProductVariant"; id: string }> | null;
         } | null;
     } | null;
 };
@@ -24003,7 +25001,7 @@ export type ProductListQuery = {
             __typename: "ProductCountableEdge";
             node: {
                 __typename: "Product";
-                updatedAt: any | null;
+                updatedAt: any;
                 id: string;
                 name: string;
                 attributes?: Array<{
@@ -24020,7 +25018,7 @@ export type ProductListQuery = {
                         dateTime: any | null;
                         value: string | null;
                         file: { __typename: "File"; url: string; contentType: string | null } | null;
-                    } | null>;
+                    }>;
                 }>;
                 thumbnail: { __typename: "Image"; url: string } | null;
                 productType: {
@@ -24098,7 +25096,7 @@ export type ProductDetailsQuery = {
         id: string;
         defaultVariant: { __typename: "ProductVariant"; id: string } | null;
         category: { __typename: "Category"; id: string; name: string } | null;
-        collections: Array<{ __typename: "Collection"; id: string; name: string } | null> | null;
+        collections: Array<{ __typename: "Collection"; id: string; name: string }> | null;
         channelListings: Array<{
             __typename: "ProductChannelListing";
             isPublished: boolean;
@@ -24122,9 +25120,13 @@ export type ProductDetailsQuery = {
             id: string;
             sku: string | null;
             name: string;
-            margin: number | null;
             trackInventory: boolean;
             quantityLimitPerCustomer: number | null;
+            attributes: Array<{
+                __typename: "SelectedAttribute";
+                attribute: { __typename: "Attribute"; id: string; name: string | null };
+                values: Array<{ __typename: "AttributeValue"; id: string; name: string | null }>;
+            }>;
             media: Array<{ __typename: "ProductMedia"; url: string }> | null;
             stocks: Array<{
                 __typename: "Stock";
@@ -24132,7 +25134,7 @@ export type ProductDetailsQuery = {
                 quantity: number;
                 quantityAllocated: number;
                 warehouse: { __typename: "Warehouse"; id: string; name: string };
-            } | null> | null;
+            }> | null;
             preorder: {
                 __typename: "PreorderData";
                 globalThreshold: number | null;
@@ -24150,7 +25152,7 @@ export type ProductDetailsQuery = {
                     soldUnits: number;
                 } | null;
             }> | null;
-        } | null> | null;
+        }> | null;
         productType: {
             __typename: "ProductType";
             id: string;
@@ -24199,7 +25201,7 @@ export type ProductDetailsQuery = {
                         };
                     }>;
                 } | null;
-            } | null> | null;
+            }> | null;
         };
         weight: { __typename: "Weight"; unit: WeightUnitsEnum; value: number } | null;
         taxType: { __typename: "TaxType"; description: string | null; taxCode: string | null } | null;
@@ -24258,16 +25260,16 @@ export type ProductDetailsQuery = {
                 dateTime: any | null;
                 value: string | null;
                 file: { __typename: "File"; url: string; contentType: string | null } | null;
-            } | null>;
+            }>;
         }>;
-        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
     } | null;
     taxTypes: Array<{
         __typename: "TaxType";
         description: string | null;
         taxCode: string | null;
-    } | null> | null;
+    }> | null;
 };
 
 export type ProductTypeQueryVariables = Exact<{
@@ -24321,7 +25323,7 @@ export type ProductTypeQuery = {
                     };
                 }>;
             } | null;
-        } | null> | null;
+        }> | null;
         taxType: { __typename: "TaxType"; description: string | null; taxCode: string | null } | null;
     } | null;
 };
@@ -24398,7 +25400,7 @@ export type ProductVariantDetailsQuery = {
                 dateTime: any | null;
                 value: string | null;
                 file: { __typename: "File"; url: string; contentType: string | null } | null;
-            } | null>;
+            }>;
         }>;
         nonSelectionAttributes: Array<{
             __typename: "SelectedAttribute";
@@ -24455,7 +25457,7 @@ export type ProductVariantDetailsQuery = {
                 dateTime: any | null;
                 value: string | null;
                 file: { __typename: "File"; url: string; contentType: string | null } | null;
-            } | null>;
+            }>;
         }>;
         media: Array<{
             __typename: "ProductMedia";
@@ -24481,6 +25483,7 @@ export type ProductVariantDetailsQuery = {
             thumbnail: { __typename: "Image"; url: string } | null;
             channelListings: Array<{
                 __typename: "ProductChannelListing";
+                id: string;
                 publicationDate: any | null;
                 isPublished: boolean;
                 channel: { __typename: "Channel"; id: string; name: string; currencyCode: string };
@@ -24497,7 +25500,7 @@ export type ProductVariantDetailsQuery = {
                     type: ProductMediaType;
                     oembedData: any;
                 }> | null;
-            } | null> | null;
+            }> | null;
         };
         channelListings: Array<{
             __typename: "ProductVariantChannelListing";
@@ -24516,7 +25519,7 @@ export type ProductVariantDetailsQuery = {
             quantity: number;
             quantityAllocated: number;
             warehouse: { __typename: "Warehouse"; id: string; name: string };
-        } | null> | null;
+        }> | null;
         preorder: {
             __typename: "PreorderData";
             globalThreshold: number | null;
@@ -24524,8 +25527,8 @@ export type ProductVariantDetailsQuery = {
             endDate: any | null;
         } | null;
         weight: { __typename: "Weight"; unit: WeightUnitsEnum; value: number } | null;
-        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
     } | null;
 };
 
@@ -24596,7 +25599,7 @@ export type ProductVariantCreateDataQuery = {
                         };
                     }>;
                 } | null;
-            } | null> | null;
+            }> | null;
             nonSelectionVariantAttributes: Array<{
                 __typename: "Attribute";
                 id: string;
@@ -24637,7 +25640,7 @@ export type ProductVariantCreateDataQuery = {
                         };
                     }>;
                 } | null;
-            } | null> | null;
+            }> | null;
         };
         thumbnail: { __typename: "Image"; url: string } | null;
         variants: Array<{
@@ -24651,7 +25654,7 @@ export type ProductVariantCreateDataQuery = {
                 url: string;
                 type: ProductMediaType;
             }> | null;
-        } | null> | null;
+        }> | null;
     } | null;
 };
 
@@ -24792,7 +25795,7 @@ export type CreateMultipleVariantsDataQuery = {
                 dateTime: any | null;
                 value: string | null;
                 file: { __typename: "File"; url: string; contentType: string | null } | null;
-            } | null>;
+            }>;
         }>;
         productType: {
             __typename: "ProductType";
@@ -24835,7 +25838,7 @@ export type CreateMultipleVariantsDataQuery = {
                         };
                     }>;
                 } | null;
-            } | null> | null;
+            }> | null;
         };
         channelListings: Array<{
             __typename: "ProductChannelListing";
@@ -24869,7 +25872,7 @@ export type DeleteShippingZoneMutation = {
 };
 
 export type BulkDeleteShippingZoneMutationVariables = Exact<{
-    ids: Array<InputMaybe<Scalars["ID"]>> | InputMaybe<Scalars["ID"]>;
+    ids: Array<Scalars["ID"]> | Scalars["ID"];
 }>;
 
 export type BulkDeleteShippingZoneMutation = {
@@ -24921,11 +25924,7 @@ export type CreateShippingZoneMutation = {
             __typename: "ShippingZone";
             id: string;
             name: string;
-            countries: Array<{
-                __typename: "CountryDisplay";
-                country: string;
-                code: string;
-            } | null> | null;
+            countries: Array<{ __typename: "CountryDisplay"; country: string; code: string }>;
         } | null;
     } | null;
 };
@@ -24949,11 +25948,7 @@ export type UpdateShippingZoneMutation = {
             __typename: "ShippingZone";
             id: string;
             name: string;
-            countries: Array<{
-                __typename: "CountryDisplay";
-                country: string;
-                code: string;
-            } | null> | null;
+            countries: Array<{ __typename: "CountryDisplay"; country: string; code: string }>;
         } | null;
     } | null;
 };
@@ -24997,9 +25992,9 @@ export type UpdateShippingRateMutation = {
                 inclusionType: PostalCodeRuleInclusionTypeEnum | null;
                 start: string | null;
                 end: string | null;
-            } | null> | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            }> | null;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -25055,22 +26050,14 @@ export type CreateShippingRateMutation = {
                     inclusionType: PostalCodeRuleInclusionTypeEnum | null;
                     start: string | null;
                     end: string | null;
-                } | null> | null;
-                metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                privateMetadata: Array<{
-                    __typename: "MetadataItem";
-                    key: string;
-                    value: string;
-                } | null>;
-            } | null> | null;
+                }> | null;
+                metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            }> | null;
             warehouses: Array<{ __typename: "Warehouse"; id: string; name: string }>;
-            countries: Array<{
-                __typename: "CountryDisplay";
-                code: string;
-                country: string;
-            } | null> | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            countries: Array<{ __typename: "CountryDisplay"; code: string; country: string }>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
         shippingMethod: {
             __typename: "ShippingMethodType";
@@ -25096,9 +26083,9 @@ export type CreateShippingRateMutation = {
                 inclusionType: PostalCodeRuleInclusionTypeEnum | null;
                 start: string | null;
                 end: string | null;
-            } | null> | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            }> | null;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
@@ -25154,28 +26141,20 @@ export type DeleteShippingRateMutation = {
                     inclusionType: PostalCodeRuleInclusionTypeEnum | null;
                     start: string | null;
                     end: string | null;
-                } | null> | null;
-                metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                privateMetadata: Array<{
-                    __typename: "MetadataItem";
-                    key: string;
-                    value: string;
-                } | null>;
-            } | null> | null;
+                }> | null;
+                metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            }> | null;
             warehouses: Array<{ __typename: "Warehouse"; id: string; name: string }>;
-            countries: Array<{
-                __typename: "CountryDisplay";
-                code: string;
-                country: string;
-            } | null> | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            countries: Array<{ __typename: "CountryDisplay"; code: string; country: string }>;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
     } | null;
 };
 
 export type BulkDeleteShippingRateMutationVariables = Exact<{
-    ids: Array<InputMaybe<Scalars["ID"]>> | InputMaybe<Scalars["ID"]>;
+    ids: Array<Scalars["ID"]> | Scalars["ID"];
 }>;
 
 export type BulkDeleteShippingRateMutation = {
@@ -25224,9 +26203,9 @@ export type ShippingMethodChannelListingUpdateMutation = {
                 inclusionType: PostalCodeRuleInclusionTypeEnum | null;
                 start: string | null;
                 end: string | null;
-            } | null> | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+            }> | null;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
         } | null;
         errors: Array<{
             __typename: "ShippingError";
@@ -25258,7 +26237,7 @@ export type ShippingPriceExcludeProductMutation = {
 
 export type ShippingPriceRemoveProductFromExcludeMutationVariables = Exact<{
     id: Scalars["ID"];
-    products: Array<InputMaybe<Scalars["ID"]>> | InputMaybe<Scalars["ID"]>;
+    products: Array<Scalars["ID"]> | Scalars["ID"];
 }>;
 
 export type ShippingPriceRemoveProductFromExcludeMutation = {
@@ -25292,17 +26271,9 @@ export type ShippingZonesQuery = {
                 id: string;
                 name: string;
                 description: string | null;
-                countries: Array<{
-                    __typename: "CountryDisplay";
-                    code: string;
-                    country: string;
-                } | null> | null;
-                metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                privateMetadata: Array<{
-                    __typename: "MetadataItem";
-                    key: string;
-                    value: string;
-                } | null>;
+                countries: Array<{ __typename: "CountryDisplay"; code: string; country: string }>;
+                metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
             };
         }>;
         pageInfo: {
@@ -25374,15 +26345,15 @@ export type ShippingZoneQuery = {
                 inclusionType: PostalCodeRuleInclusionTypeEnum | null;
                 start: string | null;
                 end: string | null;
-            } | null> | null;
-            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-        } | null> | null;
+            }> | null;
+            metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+            privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+        }> | null;
         channels: Array<{ __typename: "Channel"; id: string; name: string; currencyCode: string }>;
         warehouses: Array<{ __typename: "Warehouse"; id: string; name: string }>;
-        countries: Array<{ __typename: "CountryDisplay"; code: string; country: string } | null> | null;
-        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
+        countries: Array<{ __typename: "CountryDisplay"; code: string; country: string }>;
+        metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+        privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
     } | null;
 };
 
@@ -25562,12 +26533,12 @@ export type StaffMemberAddMutation = {
                 id: string;
                 name: string;
                 userCanManage: boolean;
-            } | null> | null;
+            }> | null;
             userPermissions: Array<{
                 __typename: "UserPermission";
                 code: PermissionEnum;
                 name: string;
-            } | null> | null;
+            }> | null;
             avatar: { __typename: "Image"; url: string } | null;
         } | null;
     } | null;
@@ -25600,12 +26571,12 @@ export type StaffMemberUpdateMutation = {
                 id: string;
                 name: string;
                 userCanManage: boolean;
-            } | null> | null;
+            }> | null;
             userPermissions: Array<{
                 __typename: "UserPermission";
                 code: PermissionEnum;
                 name: string;
-            } | null> | null;
+            }> | null;
             avatar: { __typename: "Image"; url: string } | null;
         } | null;
     } | null;
@@ -25745,12 +26716,12 @@ export type StaffMemberDetailsQuery = {
             id: string;
             name: string;
             userCanManage: boolean;
-        } | null> | null;
+        }> | null;
         userPermissions: Array<{
             __typename: "UserPermission";
             code: PermissionEnum;
             name: string;
-        } | null> | null;
+        }> | null;
         avatar: { __typename: "Image"; url: string } | null;
     } | null;
 };
@@ -25813,11 +26784,7 @@ export type CountryListQuery = {
             vat: {
                 __typename: "VAT";
                 standardRate: number | null;
-                reducedRates: Array<{
-                    __typename: "ReducedRate";
-                    rateType: string;
-                    rate: number;
-                } | null>;
+                reducedRates: Array<{ __typename: "ReducedRate"; rateType: string; rate: number }>;
             } | null;
         }>;
     };
@@ -25831,7 +26798,7 @@ export type TaxTypeListQuery = {
         __typename: "TaxType";
         description: string | null;
         taxCode: string | null;
-    } | null> | null;
+    }> | null;
 };
 
 export type UpdateProductTranslationsMutationVariables = Exact<{
@@ -26171,6 +27138,31 @@ export type UpdateShippingMethodTranslationsMutation = {
                 id: string;
                 name: string | null;
                 description: any | null;
+                language: { __typename: "LanguageDisplay"; language: string };
+            } | null;
+        } | null;
+    } | null;
+};
+
+export type UpdateMenuItemTranslationsMutationVariables = Exact<{
+    id: Scalars["ID"];
+    input: NameTranslationInput;
+    language: LanguageCodeEnum;
+}>;
+
+export type UpdateMenuItemTranslationsMutation = {
+    __typename: "Mutation";
+    menuItemTranslate: {
+        __typename: "MenuItemTranslate";
+        errors: Array<{ __typename: "TranslationError"; field: string | null; message: string | null }>;
+        menuItem: {
+            __typename: "MenuItem";
+            id: string;
+            name: string;
+            translation: {
+                __typename: "MenuItemTranslation";
+                id: string;
+                name: string;
                 language: { __typename: "LanguageDisplay"; language: string };
             } | null;
         } | null;
@@ -26652,6 +27644,52 @@ export type ShippingMethodTranslationsQuery = {
     } | null;
 };
 
+export type MenuItemTranslationsQueryVariables = Exact<{
+    language: LanguageCodeEnum;
+    first?: InputMaybe<Scalars["Int"]>;
+    after?: InputMaybe<Scalars["String"]>;
+    last?: InputMaybe<Scalars["Int"]>;
+    before?: InputMaybe<Scalars["String"]>;
+}>;
+
+export type MenuItemTranslationsQuery = {
+    __typename: "Query";
+    translations: {
+        __typename: "TranslatableItemConnection";
+        edges: Array<{
+            __typename: "TranslatableItemEdge";
+            node:
+                | { __typename: "AttributeTranslatableContent" }
+                | { __typename: "AttributeValueTranslatableContent" }
+                | { __typename: "CategoryTranslatableContent" }
+                | { __typename: "CollectionTranslatableContent" }
+                | {
+                      __typename: "MenuItemTranslatableContent";
+                      translation: {
+                          __typename: "MenuItemTranslation";
+                          id: string;
+                          name: string;
+                          language: { __typename: "LanguageDisplay"; language: string };
+                      } | null;
+                      menuItem: { __typename: "MenuItem"; id: string; name: string } | null;
+                  }
+                | { __typename: "PageTranslatableContent" }
+                | { __typename: "ProductTranslatableContent" }
+                | { __typename: "ProductVariantTranslatableContent" }
+                | { __typename: "SaleTranslatableContent" }
+                | { __typename: "ShippingMethodTranslatableContent" }
+                | { __typename: "VoucherTranslatableContent" };
+        }>;
+        pageInfo: {
+            __typename: "PageInfo";
+            endCursor: string | null;
+            hasNextPage: boolean;
+            hasPreviousPage: boolean;
+            startCursor: string | null;
+        };
+    } | null;
+};
+
 export type ProductTranslationDetailsQueryVariables = Exact<{
     id: Scalars["ID"];
     language: LanguageCodeEnum;
@@ -26725,7 +27763,7 @@ export type ProductVariantListQuery = {
             id: string;
             name: string;
             sku: string | null;
-        } | null> | null;
+        }> | null;
     } | null;
 };
 
@@ -27081,6 +28119,37 @@ export type ShippingMethodTranslationDetailsQuery = {
         | null;
 };
 
+export type MenuItemTranslationDetailsQueryVariables = Exact<{
+    id: Scalars["ID"];
+    language: LanguageCodeEnum;
+}>;
+
+export type MenuItemTranslationDetailsQuery = {
+    __typename: "Query";
+    translation:
+        | { __typename: "AttributeTranslatableContent" }
+        | { __typename: "AttributeValueTranslatableContent" }
+        | { __typename: "CategoryTranslatableContent" }
+        | { __typename: "CollectionTranslatableContent" }
+        | {
+              __typename: "MenuItemTranslatableContent";
+              translation: {
+                  __typename: "MenuItemTranslation";
+                  id: string;
+                  name: string;
+                  language: { __typename: "LanguageDisplay"; language: string };
+              } | null;
+              menuItem: { __typename: "MenuItem"; id: string; name: string } | null;
+          }
+        | { __typename: "PageTranslatableContent" }
+        | { __typename: "ProductTranslatableContent" }
+        | { __typename: "ProductVariantTranslatableContent" }
+        | { __typename: "SaleTranslatableContent" }
+        | { __typename: "ShippingMethodTranslatableContent" }
+        | { __typename: "VoucherTranslatableContent" }
+        | null;
+};
+
 export type WarehouseDeleteMutationVariables = Exact<{
     id: Scalars["ID"];
 }>;
@@ -27393,6 +28462,7 @@ export type SearchAttributeValuesQuery = {
                 __typename: "AttributeValueCountableEdge";
                 node: {
                     __typename: "AttributeValue";
+                    richText: any | null;
                     id: string;
                     name: string | null;
                     slug: string | null;
@@ -27412,6 +28482,31 @@ export type SearchAttributeValuesQuery = {
                 startCursor: string | null;
             };
         } | null;
+    } | null;
+};
+
+export type SearchAvailableInGridAttributesQueryVariables = Exact<{
+    first: Scalars["Int"];
+    after?: InputMaybe<Scalars["String"]>;
+    query: Scalars["String"];
+}>;
+
+export type SearchAvailableInGridAttributesQuery = {
+    __typename: "Query";
+    availableInGrid: {
+        __typename: "AttributeCountableConnection";
+        totalCount: number | null;
+        edges: Array<{
+            __typename: "AttributeCountableEdge";
+            node: { __typename: "Attribute"; id: string; name: string | null };
+        }>;
+        pageInfo: {
+            __typename: "PageInfo";
+            endCursor: string | null;
+            hasNextPage: boolean;
+            hasPreviousPage: boolean;
+            startCursor: string | null;
+        };
     } | null;
 };
 
@@ -27625,7 +28720,7 @@ export type SearchOrderVariantQuery = {
                         };
                         price: { __typename: "Money"; amount: number; currency: string } | null;
                     }> | null;
-                } | null> | null;
+                }> | null;
             };
         }>;
         pageInfo: {
@@ -27743,7 +28838,8 @@ export type SearchProductsQuery = {
                         };
                         price: { __typename: "Money"; amount: number; currency: string } | null;
                     }> | null;
-                } | null> | null;
+                }> | null;
+                collections: Array<{ __typename: "Collection"; id: string }> | null;
             };
         }>;
         pageInfo: {
@@ -27883,252 +28979,164 @@ export type UpdateMetadataMutation = {
             | {
                   __typename: "App";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Attribute";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Category";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Checkout";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Collection";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "DigitalContent";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Fulfillment";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "GiftCard";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Invoice";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Menu";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "MenuItem";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Order";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+              }
+            | {
+                  __typename: "OrderLine";
+                  id: string;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Page";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "PageType";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Payment";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Product";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "ProductType";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "ProductVariant";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Sale";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "ShippingMethod";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "ShippingMethodType";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "ShippingZone";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+              }
+            | {
+                  __typename: "TransactionItem";
+                  id: string;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "User";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Voucher";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Warehouse";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | null;
     } | null;
@@ -28144,252 +29152,164 @@ export type UpdateMetadataMutation = {
             | {
                   __typename: "App";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Attribute";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Category";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Checkout";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Collection";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "DigitalContent";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Fulfillment";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "GiftCard";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Invoice";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Menu";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "MenuItem";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Order";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+              }
+            | {
+                  __typename: "OrderLine";
+                  id: string;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Page";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "PageType";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Payment";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Product";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "ProductType";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "ProductVariant";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Sale";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "ShippingMethod";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "ShippingMethodType";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "ShippingZone";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+              }
+            | {
+                  __typename: "TransactionItem";
+                  id: string;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "User";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Voucher";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Warehouse";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | null;
     } | null;
@@ -28415,252 +29335,164 @@ export type UpdatePrivateMetadataMutation = {
             | {
                   __typename: "App";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Attribute";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Category";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Checkout";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Collection";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "DigitalContent";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Fulfillment";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "GiftCard";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Invoice";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Menu";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "MenuItem";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Order";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+              }
+            | {
+                  __typename: "OrderLine";
+                  id: string;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Page";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "PageType";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Payment";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Product";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "ProductType";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "ProductVariant";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Sale";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "ShippingMethod";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "ShippingMethodType";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "ShippingZone";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+              }
+            | {
+                  __typename: "TransactionItem";
+                  id: string;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "User";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Voucher";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Warehouse";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | null;
     } | null;
@@ -28676,252 +29508,164 @@ export type UpdatePrivateMetadataMutation = {
             | {
                   __typename: "App";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Attribute";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Category";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Checkout";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Collection";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "DigitalContent";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Fulfillment";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "GiftCard";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Invoice";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Menu";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "MenuItem";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Order";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+              }
+            | {
+                  __typename: "OrderLine";
+                  id: string;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Page";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "PageType";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Payment";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Product";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "ProductType";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "ProductVariant";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Sale";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "ShippingMethod";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "ShippingMethodType";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "ShippingZone";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+              }
+            | {
+                  __typename: "TransactionItem";
+                  id: string;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "User";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Voucher";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | {
                   __typename: "Warehouse";
                   id: string;
-                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string } | null>;
-                  privateMetadata: Array<{
-                      __typename: "MetadataItem";
-                      key: string;
-                      value: string;
-                  } | null>;
+                  metadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
+                  privateMetadata: Array<{ __typename: "MetadataItem"; key: string; value: string }>;
               }
             | null;
     } | null;

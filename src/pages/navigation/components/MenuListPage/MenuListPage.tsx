@@ -1,10 +1,12 @@
-import { Button } from "@material-ui/core";
+import { Backlink } from "@mzawadie/components/Backlink";
+import { Button } from "@mzawadie/components/Button";
 import Container from "@mzawadie/components/Container";
 import { PageHeader } from "@mzawadie/components/PageHeader";
-import { sectionNames, ListActions, PageListProps, SortPage } from "@mzawadie/core";
+import { sectionNames } from "@mzawadie/core";
+import { ListActions, PageListProps, SortPage } from "@mzawadie/core";
 import { MenuFragment } from "@mzawadie/graphql";
-import { MenuListUrlSortField } from "@mzawadie/pages/navigation/urls";
-import { Backlink } from "@saleor/macaw-ui";
+import { configurationMenuUrl } from "@mzawadie/pages/configuration";
+import { menuListUrl, MenuListUrlSortField } from "@mzawadie/pages/navigation/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -12,20 +14,28 @@ import { MenuList } from "../MenuList";
 
 export interface MenuListPageProps extends PageListProps, ListActions, SortPage<MenuListUrlSortField> {
     menus: MenuFragment[];
-    onBack: () => void;
     onDelete: (id: string) => void;
 }
 
-const MenuListPage: React.FC<MenuListPageProps> = ({ onAdd, onBack, ...listProps }) => {
+const MenuListPage: React.FC<MenuListPageProps> = ({ ...listProps }) => {
     const intl = useIntl();
+
+    const addUrl = menuListUrl({
+        action: "add",
+    });
+
     return (
         <Container>
-            <Backlink onClick={onBack}>{intl.formatMessage(sectionNames.configuration)}</Backlink>
+            <Backlink href={configurationMenuUrl}>
+                {intl.formatMessage(sectionNames.configuration)}
+            </Backlink>
+
             <PageHeader title={intl.formatMessage(sectionNames.navigation)}>
-                <Button color="primary" variant="contained" onClick={onAdd} data-test-id="addMenu">
-                    <FormattedMessage defaultMessage="Create Menu" description="button" id="JXRYQg" />
+                <Button variant="primary" href={addUrl} data-test-id="add-menu">
+                    <FormattedMessage id="JXRYQg" defaultMessage="Create Menu" description="button" />
                 </Button>
             </PageHeader>
+
             <MenuList {...listProps} />
         </Container>
     );

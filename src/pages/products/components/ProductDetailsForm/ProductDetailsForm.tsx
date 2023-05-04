@@ -1,4 +1,3 @@
-/* eslint-disable react/require-default-props */
 // @ts-nocheck
 import { OutputData } from "@editorjs/editorjs";
 import { Card, CardContent, TextField } from "@material-ui/core";
@@ -6,10 +5,12 @@ import { CardTitle } from "@mzawadie/components/CardTitle";
 import FormSpacer from "@mzawadie/components/FormSpacer";
 import { Grid } from "@mzawadie/components/Grid";
 import Hr from "@mzawadie/components/Hr";
-import { RichTextEditor, RichTextEditorChange } from "@mzawadie/components/RichTextEditor";
+import { RichTextEditor } from "@mzawadie/components/RichTextEditor";
+import { RichTextEditorLoading } from "@mzawadie/components/RichTextEditor/RichTextEditorLoading";
 import { commonMessages } from "@mzawadie/core";
 import { ProductErrorFragment } from "@mzawadie/graphql";
 import { getFormErrors, getProductErrorMessage } from "@mzawadie/utils/errors";
+import { useRichTextContext } from "@mzawadie/utils/richText/context";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -22,18 +23,18 @@ interface ProductDetailsFormProps {
     disabled?: boolean;
     errors: ProductErrorFragment[];
 
-    onDescriptionChange: RichTextEditorChange;
-    onChange: (event: any) => any;
+    onChange(event: any);
 }
 
 export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
     data,
     disabled,
     errors,
-    onDescriptionChange,
     onChange,
 }) => {
     const intl = useIntl();
+
+    const { editorRef, defaultValue, isReadyForMount, handleChange } = useRichTextContext();
 
     const formErrors = getFormErrors(["name", "description", "rating"], errors);
 
@@ -48,8 +49,8 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
                     disabled={disabled}
                     fullWidth
                     label={intl.formatMessage({
-                        defaultMessage: "Name",
                         id: "6AMFki",
+                        defaultMessage: "Name",
                         description: "product name",
                     })}
                     name="name"
@@ -59,15 +60,23 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
 
                 <FormSpacer />
 
-                <RichTextEditor
-                    data={data.description}
-                    disabled={disabled}
-                    error={!!formErrors.description}
-                    helperText={getProductErrorMessage(formErrors.description, intl)}
-                    label={intl.formatMessage(commonMessages.description)}
-                    name="description"
-                    onChange={onDescriptionChange}
-                />
+                {isReadyForMount ? (
+                    <RichTextEditor
+                        editorRef={editorRef}
+                        defaultValue={defaultValue}
+                        onChange={handleChange}
+                        disabled={disabled}
+                        error={!!formErrors.description}
+                        helperText={getProductErrorMessage(formErrors.description, intl)}
+                        label={intl.formatMessage(commonMessages.description)}
+                        name="description"
+                    />
+                ) : (
+                    <RichTextEditorLoading
+                        label={intl.formatMessage(commonMessages.description)}
+                        name="description"
+                    />
+                )}
 
                 <FormSpacer />
 
@@ -82,8 +91,8 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
                         helperText={getProductErrorMessage(formErrors.rating, intl)}
                         disabled={disabled}
                         label={intl.formatMessage({
-                            defaultMessage: "Product Rating",
                             id: "L7N+0y",
+                            defaultMessage: "Product Rating",
                             description: "product rating",
                         })}
                         name="rating"

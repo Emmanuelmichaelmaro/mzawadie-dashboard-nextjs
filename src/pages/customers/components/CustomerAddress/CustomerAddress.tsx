@@ -22,35 +22,35 @@ export interface CustomerAddressProps {
 
 const messages = defineMessages({
     defaultAddress: {
-        defaultMessage: "Default Address",
         id: "hMRP6J",
+        defaultMessage: "Default Address",
     },
     defaultBillingAddress: {
-        defaultMessage: "Default Billing Address",
         id: "VyzsWZ",
+        defaultMessage: "Default Billing Address",
     },
     defaultShippingAddress: {
-        defaultMessage: "Default Shipping Address",
         id: "nLML8Y",
+        defaultMessage: "Default Shipping Address",
     },
     deleteAddress: {
-        defaultMessage: "Delete Address",
         id: "puikeb",
+        defaultMessage: "Delete Address",
         description: "button",
     },
     editAddress: {
-        defaultMessage: "Edit Address",
         id: "w+8BfK",
+        defaultMessage: "Edit Address",
         description: "button",
     },
     setDefaultBilling: {
-        defaultMessage: "Set as default billing address",
         id: "hLOEeb",
+        defaultMessage: "Set as default billing address",
         description: "button",
     },
     setDefaultShipping: {
-        defaultMessage: "Set as default shipping address",
         id: "+7OsyM",
+        defaultMessage: "Set as default shipping address",
         description: "button",
     },
 });
@@ -73,6 +73,7 @@ const useStyles = makeStyles(
     },
     { name: "CustomerAddress" }
 );
+
 const CustomerAddress: React.FC<CustomerAddressProps> = (props) => {
     const {
         address,
@@ -83,6 +84,7 @@ const CustomerAddress: React.FC<CustomerAddressProps> = (props) => {
         onRemove,
         onSetAsDefault,
     } = props;
+
     const classes = useStyles(props);
 
     const intl = useIntl();
@@ -105,7 +107,6 @@ const CustomerAddress: React.FC<CustomerAddressProps> = (props) => {
                         <Skeleton />
                     )
                 }
-                height="const"
                 toolbar={
                     <CardMenu
                         disabled={disabled}
@@ -134,7 +135,6 @@ const CustomerAddress: React.FC<CustomerAddressProps> = (props) => {
                     />
                 }
             />
-
             <CardContent>
                 <AddressFormatter address={address} />
             </CardContent>

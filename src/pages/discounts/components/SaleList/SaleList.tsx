@@ -8,19 +8,14 @@ import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { TableCellHeader } from "@mzawadie/components/TableCellHeader";
 import { TableHead } from "@mzawadie/components/TableHead";
-import { TablePagination } from "@mzawadie/components/TablePagination";
+import { TablePaginationWithContext } from "@mzawadie/components/TablePagination";
+import { TableRowLink } from "@mzawadie/components/TableRowLink";
 import { TooltipTableCellHeader } from "@mzawadie/components/TooltipTableCellHeader";
 import { commonTooltipMessages } from "@mzawadie/components/TooltipTableCellHeader/messages";
-import {
-    maybe,
-    renderCollection,
-    ChannelProps,
-    ListActions,
-    ListProps,
-    SortPage,
-} from "@mzawadie/core";
+import { maybe, renderCollection } from "@mzawadie/core";
+import { ChannelProps, ListActions, ListProps, SortPage } from "@mzawadie/core";
 import { SaleFragment, SaleType } from "@mzawadie/graphql";
-import { SaleListUrlSortField } from "@mzawadie/pages/discounts/urls";
+import { SaleListUrlSortField, saleUrl } from "@mzawadie/pages/discounts/urls";
 import { canBeSorted } from "@mzawadie/pages/discounts/views/SaleList/sort";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -77,12 +72,8 @@ const SaleList: React.FC<SaleListProps> = (props) => {
     const {
         settings,
         disabled,
-        onNextPage,
-        onPreviousPage,
         onUpdateListSettings,
-        onRowClick,
         onSort,
-        pageInfo,
         sales,
         selectedChannelId,
         isChecked,
@@ -118,8 +109,9 @@ const SaleList: React.FC<SaleListProps> = (props) => {
                     onClick={() => onSort(SaleListUrlSortField.name)}
                     className={classes.colName}
                 >
-                    <FormattedMessage defaultMessage="Name" id="F56hOz" description="sale name" />
+                    <FormattedMessage id="F56hOz" defaultMessage="Name" description="sale name" />
                 </TableCellHeader>
+
                 <TableCellHeader
                     direction={
                         sort.sort === SaleListUrlSortField.startDate
@@ -131,11 +123,12 @@ const SaleList: React.FC<SaleListProps> = (props) => {
                     className={classes.colStart}
                 >
                     <FormattedMessage
-                        defaultMessage="Starts"
                         id="iBSq6l"
+                        defaultMessage="Starts"
                         description="sale start date"
                     />
                 </TableCellHeader>
+
                 <TableCellHeader
                     direction={
                         sort.sort === SaleListUrlSortField.endDate
@@ -146,8 +139,9 @@ const SaleList: React.FC<SaleListProps> = (props) => {
                     onClick={() => onSort(SaleListUrlSortField.endDate)}
                     className={classes.colEnd}
                 >
-                    <FormattedMessage defaultMessage="Ends" id="giF5UV" description="sale end date" />
+                    <FormattedMessage id="giF5UV" defaultMessage="Ends" description="sale end date" />
                 </TableCellHeader>
+
                 <TooltipTableCellHeader
                     direction={
                         sort.sort === SaleListUrlSortField.value
@@ -158,26 +152,24 @@ const SaleList: React.FC<SaleListProps> = (props) => {
                     onClick={() => onSort(SaleListUrlSortField.value)}
                     disabled={!canBeSorted(SaleListUrlSortField.value, !!selectedChannelId)}
                     tooltip={intl.formatMessage(commonTooltipMessages.noFilterSelected, {
-                        filterName: filterDependency?.label,
+                        filterName: filterDependency.label,
                     })}
                     className={classes.colValue}
                 >
-                    <FormattedMessage defaultMessage="Value" id="XZR590" description="sale value" />
+                    <FormattedMessage id="XZR590" defaultMessage="Value" description="sale value" />
                 </TooltipTableCellHeader>
             </TableHead>
+
             <TableFooter>
                 <TableRow>
-                    <TablePagination
+                    <TablePaginationWithContext
                         colSpan={numberOfColumns}
                         settings={settings}
-                        hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-                        onNextPage={onNextPage}
                         onUpdateListSettings={onUpdateListSettings}
-                        hasPreviousPage={pageInfo && !disabled ? pageInfo.hasPreviousPage : false}
-                        onPreviousPage={onPreviousPage}
                     />
                 </TableRow>
             </TableFooter>
+
             <TableBody>
                 {renderCollection(
                     sales,
@@ -187,11 +179,11 @@ const SaleList: React.FC<SaleListProps> = (props) => {
                             (lisiting) => lisiting.channel.id === selectedChannelId
                         );
                         return (
-                            <TableRow
+                            <TableRowLink
                                 className={!!sale ? classes.tableRow : undefined}
                                 hover={!!sale}
                                 key={sale ? sale.id : "skeleton"}
-                                onClick={sale ? onRowClick(sale.id) : undefined}
+                                href={sale && saleUrl(sale.id)}
                                 selected={isSelected}
                             >
                                 <TableCell padding="checkbox">
@@ -202,11 +194,13 @@ const SaleList: React.FC<SaleListProps> = (props) => {
                                         onChange={() => toggle(sale.id)}
                                     />
                                 </TableCell>
+
                                 <TableCell
                                     className={classNames(classes.colName, classes.textOverflow)}
                                 >
                                     {maybe<React.ReactNode>(() => sale.name, <Skeleton />)}
                                 </TableCell>
+
                                 <TableCell className={classes.colStart}>
                                     {sale && sale.startDate ? (
                                         <Date date={sale.startDate} />
@@ -214,6 +208,7 @@ const SaleList: React.FC<SaleListProps> = (props) => {
                                         <Skeleton />
                                     )}
                                 </TableCell>
+
                                 <TableCell className={classes.colEnd}>
                                     {sale && sale.endDate ? (
                                         <Date date={sale.endDate} />
@@ -223,10 +218,8 @@ const SaleList: React.FC<SaleListProps> = (props) => {
                                         <Skeleton />
                                     )}
                                 </TableCell>
-                                <TableCell
-                                    className={classes.colValue}
-                                    onClick={sale ? onRowClick(sale.id) : undefined}
-                                >
+
+                                <TableCell className={classes.colValue}>
                                     {sale?.type && channel?.discountValue ? (
                                         sale.type === SaleType.FIXED ? (
                                             <Money
@@ -246,13 +239,13 @@ const SaleList: React.FC<SaleListProps> = (props) => {
                                         <Skeleton />
                                     )}
                                 </TableCell>
-                            </TableRow>
+                            </TableRowLink>
                         );
                     },
                     () => (
                         <TableRow>
                             <TableCell colSpan={numberOfColumns}>
-                                <FormattedMessage defaultMessage="No sales found" id="51HE+Q" />
+                                <FormattedMessage id="51HE+Q" defaultMessage="No sales found" />
                             </TableCell>
                         </TableRow>
                     )

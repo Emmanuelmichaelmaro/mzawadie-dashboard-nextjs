@@ -489,3 +489,16 @@ export const combinedMultiAutocompleteChoices = (
     selected: MultiAutocompleteChoiceType[],
     choices: MultiAutocompleteChoiceType[]
 ) => uniqBy([...selected, ...choices], "value");
+
+export const isInDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV === "development";
+
+export interface SaleorMutationResult {
+    errors?: any[];
+}
+
+export const hasMutationErrors = (result: FetchResult): boolean => {
+    if (!result?.data) {
+        return false;
+    }
+    return Object.values(result.data).some(({ errors }: SaleorMutationResult) => errors.length > 0);
+};

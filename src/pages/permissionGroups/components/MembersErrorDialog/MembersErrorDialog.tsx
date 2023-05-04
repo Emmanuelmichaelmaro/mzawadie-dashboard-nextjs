@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { DialogContentText } from "@material-ui/core";
 import { ActionDialog } from "@mzawadie/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -27,16 +26,16 @@ const MembersErrorDialog: React.FC<MembersErrorDialogProps> = ({
             onClose={onClose}
             onConfirm={onConfirm}
             title={intl.formatMessage({
-                defaultMessage: "Unassign users",
                 id: "lT5MYM",
+                defaultMessage: "Unassign users",
                 description: "dialog title",
             })}
             variant="info"
         >
             <DialogContentText>
                 <FormattedMessage
-                    defaultMessage="You are not able to modify this group members. Solve this problem to continue with request."
                     id="H/o4Ex"
+                    defaultMessage="You are not able to modify this group members. Solve this problem to continue with request."
                     description="dialog content"
                 />
             </DialogContentText>

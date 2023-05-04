@@ -1,23 +1,28 @@
-/* eslint-disable import/no-cycle */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import { update } from "../../utils/lists";
-import { IFilter, IFilterElementMutableData } from "./types";
+import { update } from "@mzawadie/utils/lists";
+
+import { FieldType, IFilter, IFilterElementMutableDataGeneric } from "./types";
 
 export type FilterReducerActionType = "clear" | "merge" | "reset" | "set-property";
-export interface FilterReducerAction<T extends string> {
+
+export interface FilterReducerAction<K extends string, T extends FieldType> {
     type: FilterReducerActionType;
     payload: Partial<{
-        name: T;
-        update: Partial<IFilterElementMutableData>;
-        new: IFilter<T>;
+        name: K;
+        update: Partial<IFilterElementMutableDataGeneric<T>>;
+        new: IFilter<K, T>;
     }>;
 }
+
+export type UpdateStateFunction<K extends string = string> = <T extends FieldType>(
+    value: FilterReducerAction<K, T>
+) => void;
 
 function merge<T extends string>(prevState: IFilter<T>, newState: IFilter<T>): IFilter<T> {
     return newState.map((newFilter) => {
         const prevFilter = prevState.find((prevFilter) => prevFilter.name === newFilter.name);
-        if (prevFilter) {
+
+        if (!!prevFilter) {
             return {
                 ...newFilter,
                 active: prevFilter.active,
@@ -29,12 +34,13 @@ function merge<T extends string>(prevState: IFilter<T>, newState: IFilter<T>): I
     });
 }
 
-function setProperty<T extends string>(
-    prevState: IFilter<T>,
-    filter: T,
-    updateData: Partial<IFilterElementMutableData>
-): IFilter<T> {
+function setProperty<K extends string, T extends FieldType>(
+    prevState: IFilter<K, T>,
+    filter: K,
+    updateData: Partial<IFilterElementMutableDataGeneric<T>>
+): IFilter<K> {
     const field = prevState.find((f) => f.name === filter);
+
     const updatedField = {
         ...field,
         ...updateData,
@@ -43,13 +49,13 @@ function setProperty<T extends string>(
     return update(updatedField, prevState, (a, b) => a.name === b.name);
 }
 
-function reduceFilter<T extends string>(
-    prevState: IFilter<T>,
-    action: FilterReducerAction<T>
-): IFilter<T> {
+function reduceFilter<K extends string, T extends FieldType>(
+    prevState: IFilter<K, T>,
+    action: FilterReducerAction<K, T>
+): IFilter<K> {
     switch (action.type) {
         case "set-property":
-            return setProperty(prevState, action.payload.name, action.payload.update);
+            return setProperty<K, T>(prevState, action.payload.name, action.payload.update);
         case "merge":
             return merge(prevState, action.payload.new);
         case "reset":

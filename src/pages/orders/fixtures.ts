@@ -1,6 +1,8 @@
 // @ts-nocheck
-import { RelayToFlat, transformOrderStatus, transformPaymentStatus } from "@mzawadie/core";
+import { RelayToFlat } from "@mzawadie/core";
+import { transformOrderStatus, transformPaymentStatus } from "@mzawadie/core";
 import {
+    ChannelUsabilityDataQuery,
     CountryWithCodeFragment,
     FulfillmentStatus,
     InvoiceFragment,
@@ -10,12 +12,14 @@ import {
     OrderDetailsQuery,
     OrderEventsEmailsEnum,
     OrderEventsEnum,
+    OrderFulfillLineFragment,
     OrderListQuery,
     OrderSettingsFragment,
     OrderStatus,
     PaymentChargeStatusEnum,
     SearchCustomersQuery,
     SearchOrderVariantQuery,
+    SearchWarehousesQuery,
     ShopOrderSettingsFragment,
     WeightUnitsEnum,
 } from "@mzawadie/graphql";
@@ -39,28 +43,28 @@ export const shop: OrderDetailsQuery["shop"] = {
 
 export const clients: RelayToFlat<SearchCustomersQuery["search"]> = [
     {
-        __typename: "User" as const,
+        __typename: "User" as "User",
         email: "test.client1@example.com",
         firstName: "John",
         id: "c1",
         lastName: "Doe",
     },
     {
-        __typename: "User" as const,
+        __typename: "User" as "User",
         email: "test.client2@example.com",
         firstName: "Dough",
         id: "c2",
         lastName: "Jones",
     },
     {
-        __typename: "User" as const,
+        __typename: "User" as "User",
         email: "test.client3@example.com",
         firstName: "Jonas",
         id: "c3",
         lastName: "Dough",
     },
     {
-        __typename: "User" as const,
+        __typename: "User" as "User",
         email: "test.client4@example.com",
         firstName: "Bill",
         id: "c4",
@@ -1067,8 +1071,20 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
                         quantity: 2,
                         quantityFulfilled: 2,
                         quantityToFulfill: 0,
+                        allocations: [
+                            {
+                                id: "allocation_test_id",
+                                warehouse: {
+                                    name: "US Warehouse",
+                                    id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                                    __typename: "Warehouse",
+                                },
+                                quantity: 1,
+                                __typename: "Allocation",
+                            },
+                        ],
                         thumbnail: {
-                            __typename: "Image" as const,
+                            __typename: "Image" as "Image",
                             url: placeholder,
                         },
                         undiscountedUnitPrice: {
@@ -1111,6 +1127,35 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
                             id: "dsfsfuhb",
                             quantityAvailable: 10,
                             preorder: null,
+                            product: {
+                                __typename: "Product",
+                                id: "UHJvZHVjdDo1",
+                                isAvailableForPurchase: true,
+                            },
+                            stocks: [
+                                {
+                                    id: "stock_test_id1",
+                                    warehouse: {
+                                        name: "stock_warehouse1",
+                                        id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                                        __typename: "Warehouse",
+                                    },
+                                    quantity: 166,
+                                    quantityAllocated: 0,
+                                    __typename: "Stock",
+                                },
+                                {
+                                    id: "stock_test_id2",
+                                    warehouse: {
+                                        name: "stock_warehouse2",
+                                        id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                                        __typename: "Warehouse",
+                                    },
+                                    quantity: 166,
+                                    quantityAllocated: 0,
+                                    __typename: "Stock",
+                                },
+                            ],
                         },
                     },
                     quantity: 1,
@@ -1137,8 +1182,20 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
                         quantity: 2,
                         quantityFulfilled: 2,
                         quantityToFulfill: 0,
+                        allocations: [
+                            {
+                                id: "allocation_test_id",
+                                warehouse: {
+                                    name: "US Warehouse",
+                                    id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                                    __typename: "Warehouse",
+                                },
+                                quantity: 1,
+                                __typename: "Allocation",
+                            },
+                        ],
                         thumbnail: {
-                            __typename: "Image" as const,
+                            __typename: "Image" as "Image",
                             url: placeholder,
                         },
                         undiscountedUnitPrice: {
@@ -1181,6 +1238,35 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
                             id: "dsfsfuhb",
                             quantityAvailable: 10,
                             preorder: null,
+                            product: {
+                                __typename: "Product",
+                                id: "UHJvZHVjdDo1",
+                                isAvailableForPurchase: true,
+                            },
+                            stocks: [
+                                {
+                                    id: "stock_test_id1",
+                                    warehouse: {
+                                        name: "stock_warehouse1",
+                                        id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                                        __typename: "Warehouse",
+                                    },
+                                    quantity: 166,
+                                    quantityAllocated: 0,
+                                    __typename: "Stock",
+                                },
+                                {
+                                    id: "stock_test_id2",
+                                    warehouse: {
+                                        name: "stock_warehouse2",
+                                        id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                                        __typename: "Warehouse",
+                                    },
+                                    quantity: 166,
+                                    quantityAllocated: 0,
+                                    __typename: "Stock",
+                                },
+                            ],
                         },
                     },
                     quantity: 1,
@@ -1215,8 +1301,20 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
             quantity: 3,
             quantityFulfilled: 0,
             quantityToFulfill: 3,
+            allocations: [
+                {
+                    id: "allocation_test_id",
+                    warehouse: {
+                        name: "US Warehouse",
+                        id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                        __typename: "Warehouse",
+                    },
+                    quantity: 1,
+                    __typename: "Allocation",
+                },
+            ],
             thumbnail: {
-                __typename: "Image" as const,
+                __typename: "Image" as "Image",
                 url: placeholder,
             },
             undiscountedUnitPrice: {
@@ -1259,6 +1357,35 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
                 id: "dsfsfuhb",
                 quantityAvailable: 10,
                 preorder: null,
+                product: {
+                    __typename: "Product",
+                    id: "UHJvZHVjdDo1",
+                    isAvailableForPurchase: true,
+                },
+                stocks: [
+                    {
+                        id: "stock_test_id1",
+                        warehouse: {
+                            name: "stock_warehouse1",
+                            id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                            __typename: "Warehouse",
+                        },
+                        quantity: 166,
+                        quantityAllocated: 0,
+                        __typename: "Stock",
+                    },
+                    {
+                        id: "stock_test_id2",
+                        warehouse: {
+                            name: "stock_warehouse2",
+                            id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                            __typename: "Warehouse",
+                        },
+                        quantity: 166,
+                        quantityAllocated: 0,
+                        __typename: "Stock",
+                    },
+                ],
             },
         },
         {
@@ -1270,8 +1397,20 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
             quantity: 2,
             quantityFulfilled: 2,
             quantityToFulfill: 0,
+            allocations: [
+                {
+                    id: "allocation_test_id",
+                    warehouse: {
+                        name: "US Warehouse",
+                        id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                        __typename: "Warehouse",
+                    },
+                    quantity: 1,
+                    __typename: "Allocation",
+                },
+            ],
             thumbnail: {
-                __typename: "Image" as const,
+                __typename: "Image" as "Image",
                 url: placeholder,
             },
 
@@ -1315,6 +1454,35 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
                 id: "dsfsfuhb",
                 quantityAvailable: 10,
                 preorder: null,
+                product: {
+                    __typename: "Product",
+                    id: "UHJvZHVjdDo1",
+                    isAvailableForPurchase: true,
+                },
+                stocks: [
+                    {
+                        id: "stock_test_id1",
+                        warehouse: {
+                            name: "stock_warehouse1",
+                            id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                            __typename: "Warehouse",
+                        },
+                        quantity: 166,
+                        quantityAllocated: 0,
+                        __typename: "Stock",
+                    },
+                    {
+                        id: "stock_test_id2",
+                        warehouse: {
+                            name: "stock_warehouse2",
+                            id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                            __typename: "Warehouse",
+                        },
+                        quantity: 166,
+                        quantityAllocated: 0,
+                        __typename: "Stock",
+                    },
+                ],
             },
         },
     ],
@@ -1401,6 +1569,11 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         amount: 0,
         currency: "USD",
     },
+    totalBalance: {
+        __typename: "Money",
+        amount: 0,
+        currency: "USD",
+    },
     undiscountedTotal: {
         __typename: "TaxedMoney",
         gross: {
@@ -1418,10 +1591,10 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
     userEmail: "melissa.simon@example.com",
 });
 export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
-    __typename: "Order" as const,
+    __typename: "Order" as "Order",
     giftCards: [],
     actions: [OrderAction.CAPTURE],
-    shippingMethods: null,
+    shippingMethods: [],
     billingAddress: null,
     canFinalize: true,
     channel: {
@@ -1457,7 +1630,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
     isShippingRequired: false,
     lines: [
         {
-            __typename: "OrderLine" as const,
+            __typename: "OrderLine" as "OrderLine",
             id: "T3JkZXJMaW5lOjQ1",
             isShippingRequired: false,
             productName: "Davis Group (Hard)",
@@ -1465,8 +1638,20 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
             quantity: 2,
             quantityFulfilled: 0,
             quantityToFulfill: 2,
+            allocations: [
+                {
+                    id: "allocation_test_id",
+                    warehouse: {
+                        name: "US Warehouse",
+                        id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                        __typename: "Warehouse",
+                    },
+                    quantity: 1,
+                    __typename: "Allocation",
+                },
+            ],
             thumbnail: {
-                __typename: "Image" as const,
+                __typename: "Image" as "Image",
                 url: placeholder,
             },
             undiscountedUnitPrice: {
@@ -1492,14 +1677,14 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
             unitDiscountType: null,
             unitDiscountValue: 0,
             unitPrice: {
-                __typename: "TaxedMoney" as const,
+                __typename: "TaxedMoney" as "TaxedMoney",
                 gross: {
-                    __typename: "Money" as const,
+                    __typename: "Money" as "Money",
                     amount: 65.95,
                     currency: "USD",
                 },
                 net: {
-                    __typename: "Money" as const,
+                    __typename: "Money" as "Money",
                     amount: 65.95,
                     currency: "USD",
                 },
@@ -1509,10 +1694,39 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
                 id: "dsfsfuhb",
                 quantityAvailable: 10,
                 preorder: null,
+                product: {
+                    __typename: "Product",
+                    id: "UHJvZHVjdDo1",
+                    isAvailableForPurchase: true,
+                },
+                stocks: [
+                    {
+                        id: "stock_test_id1",
+                        warehouse: {
+                            name: "stock_warehouse1",
+                            id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                            __typename: "Warehouse",
+                        },
+                        quantity: 166,
+                        quantityAllocated: 0,
+                        __typename: "Stock",
+                    },
+                    {
+                        id: "stock_test_id2",
+                        warehouse: {
+                            name: "stock_warehouse2",
+                            id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                            __typename: "Warehouse",
+                        },
+                        quantity: 166,
+                        quantityAllocated: 0,
+                        __typename: "Stock",
+                    },
+                ],
             },
         },
         {
-            __typename: "OrderLine" as const,
+            __typename: "OrderLine" as "OrderLine",
             id: "T3JkZXJMaW5lOjQ2",
             isShippingRequired: false,
             productName: "Anderson PLC (15-1337)",
@@ -1520,8 +1734,20 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
             quantity: 2,
             quantityFulfilled: 0,
             quantityToFulfill: 2,
+            allocations: [
+                {
+                    id: "allocation_test_id",
+                    warehouse: {
+                        name: "US Warehouse",
+                        id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                        __typename: "Warehouse",
+                    },
+                    quantity: 1,
+                    __typename: "Allocation",
+                },
+            ],
             thumbnail: {
-                __typename: "Image" as const,
+                __typename: "Image" as "Image",
                 url: placeholder,
             },
             undiscountedUnitPrice: {
@@ -1547,14 +1773,14 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
             unitDiscountType: null,
             unitDiscountValue: 0,
             unitPrice: {
-                __typename: "TaxedMoney" as const,
+                __typename: "TaxedMoney" as "TaxedMoney",
                 gross: {
-                    __typename: "Money" as const,
+                    __typename: "Money" as "Money",
                     amount: 68.2,
                     currency: "USD",
                 },
                 net: {
-                    __typename: "Money" as const,
+                    __typename: "Money" as "Money",
                     amount: 68.2,
                     currency: "USD",
                 },
@@ -1564,6 +1790,35 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
                 id: "dsfsfuhb",
                 quantityAvailable: 10,
                 preorder: null,
+                product: {
+                    __typename: "Product",
+                    id: "UHJvZHVjdDo1",
+                    isAvailableForPurchase: true,
+                },
+                stocks: [
+                    {
+                        id: "stock_test_id1",
+                        warehouse: {
+                            name: "stock_warehouse1",
+                            id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                            __typename: "Warehouse",
+                        },
+                        quantity: 166,
+                        quantityAllocated: 0,
+                        __typename: "Stock",
+                    },
+                    {
+                        id: "stock_test_id2",
+                        warehouse: {
+                            name: "stock_warehouse2",
+                            id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                            __typename: "Warehouse",
+                        },
+                        quantity: 166,
+                        quantityAllocated: 0,
+                        __typename: "Stock",
+                    },
+                ],
             },
         },
     ],
@@ -1577,47 +1832,52 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
     collectionPointName: null,
     deliveryMethod: null,
     shippingPrice: {
-        __typename: "TaxedMoney" as const,
+        __typename: "TaxedMoney" as "TaxedMoney",
         gross: {
-            __typename: "Money" as const,
+            __typename: "Money" as "Money",
             amount: 0,
             currency: "USD",
         },
     },
     status: "DRAFT" as OrderStatus.DRAFT,
     subtotal: {
-        __typename: "TaxedMoney" as const,
+        __typename: "TaxedMoney" as "TaxedMoney",
         gross: {
-            __typename: "Money" as const,
+            __typename: "Money" as "Money",
             amount: 168.3,
             currency: "USD",
         },
         net: {
-            __typename: "Money" as const,
+            __typename: "Money" as "Money",
             amount: 168.3,
             currency: "USD",
         },
     },
     total: {
-        __typename: "TaxedMoney" as const,
+        __typename: "TaxedMoney" as "TaxedMoney",
         gross: {
-            __typename: "Money" as const,
+            __typename: "Money" as "Money",
             amount: 168.3,
             currency: "USD",
         },
         net: {
-            __typename: "Money" as const,
+            __typename: "Money" as "Money",
             amount: 100,
             currency: "USD",
         },
         tax: {
-            __typename: "Money" as const,
+            __typename: "Money" as "Money",
             amount: 68.3,
             currency: "USD",
         },
     },
     totalAuthorized: null,
     totalCaptured: null,
+    totalBalance: {
+        __typename: "Money" as "Money",
+        amount: 168.3,
+        currency: "USD",
+    },
     undiscountedTotal: {
         __typename: "TaxedMoney",
         gross: {
@@ -1634,6 +1894,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
     user: null,
     userEmail: null,
 });
+
 export const flatOrders = orders.map((order) => ({
     ...order,
     orderStatus: transformOrderStatus(order.status, {
@@ -1643,6 +1904,66 @@ export const flatOrders = orders.map((order) => ({
         formatMessage: (message: MessageDescriptor) => message.defaultMessage,
     } as any),
 }));
+
+export const fulfillOrderLine = (placeholderImage: string): OrderFulfillLineFragment => ({
+    __typename: "OrderLine",
+    id: "T3JkZXJMaW5lOjIz",
+    isShippingRequired: false,
+    productName: "Williams, Garcia and Walker (XS)",
+    quantity: 2,
+    quantityFulfilled: 2,
+    quantityToFulfill: 0,
+    allocations: [
+        {
+            id: "allocation_test_id",
+            warehouse: {
+                name: "US Warehouse",
+                id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                __typename: "Warehouse",
+            },
+            quantity: 1,
+            __typename: "Allocation",
+        },
+    ],
+    thumbnail: {
+        __typename: "Image" as "Image",
+        url: placeholderImage,
+    },
+    variant: {
+        __typename: "ProductVariant",
+        id: "dsfsfuhb",
+        name: "Williams, Garcia and Walker (XS)",
+        sku: "5-1337",
+        attributes: [],
+        trackInventory: true,
+        preorder: null,
+        stocks: [
+            {
+                id: "stock_test_id1",
+                warehouse: {
+                    name: "stock_warehouse1",
+                    id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                    __typename: "Warehouse",
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock",
+            },
+            {
+                id: "stock_test_id2",
+                warehouse: {
+                    name: "stock_warehouse2",
+                    id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                    __typename: "Warehouse",
+                },
+                quantity: 166,
+                quantityAllocated: 0,
+                __typename: "Stock",
+            },
+        ],
+    },
+});
+
 export const variants = [
     { id: "p1", name: "Product 1: variant 1", sku: "12345", stockQuantity: 3 },
     { id: "p2", name: "Product 1: variant 2", sku: "12346", stockQuantity: 1 },
@@ -1661,48 +1982,16 @@ export const orderLineSearch = (
     placeholderImage: string
 ): RelayToFlat<SearchOrderVariantQuery["search"]> => [
     {
-        __typename: "Product" as const,
+        __typename: "Product" as "Product",
         id: "UHJvZHVjdDo3Mg==",
         name: "Apple Juice",
         thumbnail: {
-            __typename: "Image" as const,
+            __typename: "Image" as "Image",
             url: placeholderImage,
         },
         variants: [
             {
-                __typename: "ProductVariant" as const,
-                channelListings: [
-                    {
-                        __typename: "ProductVariantChannelListing",
-                        channel: {
-                            __typename: "Channel",
-                            currencyCode: "USD",
-                            id: "123",
-                            isActive: true,
-                            name: "Channel1",
-                        },
-                        price: {
-                            __typename: "Money",
-                            amount: 1,
-                            currency: "USD",
-                        },
-                    },
-                    {
-                        __typename: "ProductVariantChannelListing",
-                        channel: {
-                            __typename: "Channel",
-                            currencyCode: "USD",
-                            id: "124",
-                            isActive: true,
-                            name: "Channel2",
-                        },
-                        price: {
-                            __typename: "Money",
-                            amount: 1,
-                            currency: "USD",
-                        },
-                    },
-                ],
+                __typename: "ProductVariant" as "ProductVariant",
                 id: "UHJvZHVjdFZhcmlhbnQ6MjAy",
                 name: "500ml",
                 sku: "93855755",
@@ -1728,39 +2017,7 @@ export const orderLineSearch = (
                 },
             },
             {
-                __typename: "ProductVariant" as const,
-                channelListings: [
-                    {
-                        __typename: "ProductVariantChannelListing",
-                        channel: {
-                            __typename: "Channel",
-                            currencyCode: "USD",
-                            id: "123",
-                            isActive: true,
-                            name: "Channel1",
-                        },
-                        price: {
-                            __typename: "Money",
-                            amount: 1,
-                            currency: "USD",
-                        },
-                    },
-                    {
-                        __typename: "ProductVariantChannelListing",
-                        channel: {
-                            __typename: "Channel",
-                            currencyCode: "USD",
-                            id: "124",
-                            isActive: true,
-                            name: "Channel2",
-                        },
-                        price: {
-                            __typename: "Money",
-                            amount: 1,
-                            currency: "USD",
-                        },
-                    },
-                ],
+                __typename: "ProductVariant" as "ProductVariant",
                 id: "UHJvZHVjdFZhcmlhbnQ6MjAz",
                 name: "1l",
                 sku: "43226647",
@@ -1786,39 +2043,7 @@ export const orderLineSearch = (
                 },
             },
             {
-                __typename: "ProductVariant" as const,
-                channelListings: [
-                    {
-                        __typename: "ProductVariantChannelListing",
-                        channel: {
-                            __typename: "Channel",
-                            currencyCode: "USD",
-                            id: "123",
-                            isActive: true,
-                            name: "Channel1",
-                        },
-                        price: {
-                            __typename: "Money",
-                            amount: 1,
-                            currency: "USD",
-                        },
-                    },
-                    {
-                        __typename: "ProductVariantChannelListing",
-                        channel: {
-                            __typename: "Channel",
-                            currencyCode: "USD",
-                            id: "124",
-                            isActive: true,
-                            name: "Channel2",
-                        },
-                        price: {
-                            __typename: "Money",
-                            amount: 1,
-                            currency: "USD",
-                        },
-                    },
-                ],
+                __typename: "ProductVariant" as "ProductVariant",
                 id: "UHJvZHVjdFZhcmlhbnQ6MjA0",
                 name: "2l",
                 sku: "80884671",
@@ -1846,48 +2071,16 @@ export const orderLineSearch = (
         ],
     },
     {
-        __typename: "Product" as const,
+        __typename: "Product" as "Product",
         id: "UHJvZHVjdDo3NQ==",
         name: "Pineapple Juice",
         thumbnail: {
-            __typename: "Image" as const,
+            __typename: "Image" as "Image",
             url: placeholderImage,
         },
         variants: [
             {
-                __typename: "ProductVariant" as const,
-                channelListings: [
-                    {
-                        __typename: "ProductVariantChannelListing",
-                        channel: {
-                            __typename: "Channel",
-                            currencyCode: "USD",
-                            id: "123",
-                            isActive: true,
-                            name: "Channel1",
-                        },
-                        price: {
-                            __typename: "Money",
-                            amount: 1,
-                            currency: "USD",
-                        },
-                    },
-                    {
-                        __typename: "ProductVariantChannelListing",
-                        channel: {
-                            __typename: "Channel",
-                            currencyCode: "USD",
-                            id: "124",
-                            isActive: true,
-                            name: "Channel2",
-                        },
-                        price: {
-                            __typename: "Money",
-                            amount: 1,
-                            currency: "USD",
-                        },
-                    },
-                ],
+                __typename: "ProductVariant" as "ProductVariant",
                 id: "UHJvZHVjdFZhcmlhbnQ6MjEx",
                 name: "500ml",
                 sku: "43200242",
@@ -1913,39 +2106,7 @@ export const orderLineSearch = (
                 },
             },
             {
-                __typename: "ProductVariant" as const,
-                channelListings: [
-                    {
-                        __typename: "ProductVariantChannelListing",
-                        channel: {
-                            __typename: "Channel",
-                            currencyCode: "USD",
-                            id: "123",
-                            isActive: true,
-                            name: "Channel1",
-                        },
-                        price: {
-                            __typename: "Money",
-                            amount: 1,
-                            currency: "USD",
-                        },
-                    },
-                    {
-                        __typename: "ProductVariantChannelListing",
-                        channel: {
-                            __typename: "Channel",
-                            currencyCode: "USD",
-                            id: "124",
-                            isActive: true,
-                            name: "Channel2",
-                        },
-                        price: {
-                            __typename: "Money",
-                            amount: 1,
-                            currency: "USD",
-                        },
-                    },
-                ],
+                __typename: "ProductVariant" as "ProductVariant",
                 id: "UHJvZHVjdFZhcmlhbnQ6MjEy",
                 name: "1l",
                 sku: "79129513",
@@ -1971,39 +2132,7 @@ export const orderLineSearch = (
                 },
             },
             {
-                __typename: "ProductVariant" as const,
-                channelListings: [
-                    {
-                        __typename: "ProductVariantChannelListing",
-                        channel: {
-                            __typename: "Channel",
-                            currencyCode: "USD",
-                            id: "123",
-                            isActive: true,
-                            name: "Channel1",
-                        },
-                        price: {
-                            __typename: "Money",
-                            amount: 1,
-                            currency: "USD",
-                        },
-                    },
-                    {
-                        __typename: "ProductVariantChannelListing",
-                        channel: {
-                            __typename: "Channel",
-                            currencyCode: "USD",
-                            id: "124",
-                            isActive: true,
-                            name: "Channel2",
-                        },
-                        price: {
-                            __typename: "Money",
-                            amount: 1,
-                            currency: "USD",
-                        },
-                    },
-                ],
+                __typename: "ProductVariant" as "ProductVariant",
                 id: "UHJvZHVjdFZhcmlhbnQ6MjEz",
                 name: "2l",
                 sku: "75799450",
@@ -2077,4 +2206,115 @@ export const shopOrderSettings: ShopOrderSettingsFragment = {
     __typename: "Shop",
     fulfillmentAutoApprove: true,
     fulfillmentAllowUnpaid: true,
+};
+
+export const warehouseSearch: SearchWarehousesQuery["search"] = {
+    totalCount: 20,
+    edges: [
+        {
+            node: {
+                id: "V2FyZWhvdXNlOmJiZTEwZjk1LTQyYjAtNDRlMS04Yjc5LWU5MjllMmViYTRjMQ==",
+                name: "CyVou-97803",
+                __typename: "Warehouse",
+            },
+            __typename: "WarehouseCountableEdge",
+        },
+        {
+            node: {
+                id: "V2FyZWhvdXNlOjdhOGViNThhLTYwN2QtNGMxNC04ODVmLTBiMWU3ZDcyMTIyNQ==",
+                name: "CyWarehouse72715",
+                __typename: "Warehouse",
+            },
+            __typename: "WarehouseCountableEdge",
+        },
+        {
+            node: {
+                id: "V2FyZWhvdXNlOjY2NWIxZWFmLTU5MDYtNGE0Mi1iYWVkLTc1ODQ3YWNhMWI1NQ==",
+                name: "CyWarehouseCheckout70441",
+                __typename: "Warehouse",
+            },
+            __typename: "WarehouseCountableEdge",
+        },
+        {
+            node: {
+                id: "V2FyZWhvdXNlOjdkNmVmNmFkLWY4NTMtNGVmNS1iMzQ5LTUyY2I2N2U3NmIwZQ==",
+                name: "CyWeightRates-78849",
+                __typename: "Warehouse",
+            },
+            __typename: "WarehouseCountableEdge",
+        },
+        {
+            node: {
+                id: "V2FyZWhvdXNlOjcwZjMyYTUyLWVlODQtNGExYi1iMjgzLTgwYjllMzgyNDlkNg==",
+                name: "EditShipping-82885",
+                __typename: "Warehouse",
+            },
+            __typename: "WarehouseCountableEdge",
+        },
+        {
+            node: {
+                id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                name: "Europe for click and collect",
+                __typename: "Warehouse",
+            },
+            __typename: "WarehouseCountableEdge",
+        },
+        {
+            node: {
+                id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                name: "Oceania",
+                __typename: "Warehouse",
+            },
+            __typename: "WarehouseCountableEdge",
+        },
+        {
+            node: {
+                id: "V2FyZWhvdXNlOjNiZDM0YjEyLTllNDktNDMwZC1iM2QyLTRkYmRhMjM1MGUyOQ==",
+                name: "ProductsWithoutSkuInOrder",
+                __typename: "Warehouse",
+            },
+            __typename: "WarehouseCountableEdge",
+        },
+        {
+            node: {
+                id: "V2FyZWhvdXNlOmU4M2U2NjQ2LTFhYjctNGNmNC05N2M4LTFiZjI2NGE2NjQ4Yw==",
+                name: "StocksThreshold",
+                __typename: "Warehouse",
+            },
+            __typename: "WarehouseCountableEdge",
+        },
+        {
+            node: {
+                id: "V2FyZWhvdXNlOmJkMmQ1NDFjLWQwMjMtNDAwNi05YmRjLWZhZTA4OWZlNzZiYg==",
+                name: "UpdateProductsSku59844",
+                __typename: "Warehouse",
+            },
+            __typename: "WarehouseCountableEdge",
+        },
+        {
+            node: {
+                id: "V2FyZWhvdXNlOjgzNDMwMzI4LTI2YWItNDNkZS1hNzdhLTVmNGNhMTljMDJhNg==",
+                name: "WithoutShipmentCheckout-4505",
+                __typename: "Warehouse",
+            },
+            __typename: "WarehouseCountableEdge",
+        },
+    ],
+    pageInfo: {
+        endCursor:
+            "WyJXaXRob3V0U2hpcG1lbnRDaGVja291dC00NTA1IiwgIldpdGhvdXRTaGlwbWVudENoZWNrb3V0LTQ1MDUiXQ==",
+        hasNextPage: false,
+        hasPreviousPage: true,
+        startCursor: "WyJDeVZvdS05NzgwMyIsICJDeVZvdS05NzgwMyJd",
+        __typename: "PageInfo",
+    },
+    __typename: "WarehouseCountableConnection",
+};
+
+export const channelUsabilityData: ChannelUsabilityDataQuery = {
+    __typename: "Query",
+    products: {
+        __typename: "ProductCountableConnection",
+        totalCount: 50,
+    },
 };

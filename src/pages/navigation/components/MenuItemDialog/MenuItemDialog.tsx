@@ -1,6 +1,5 @@
 // @ts-nocheck
 import {
-    Button,
     Dialog,
     DialogActions,
     DialogContent,
@@ -9,9 +8,11 @@ import {
     Typography,
 } from "@material-ui/core";
 import { AutocompleteSelectMenu } from "@mzawadie/components/AutocompleteSelectMenu";
-import { ConfirmButton, ConfirmButtonTransitionState } from "@mzawadie/components/ConfirmButton";
+import BackButton from "@mzawadie/components/BackButton";
+import { ConfirmButton } from "@mzawadie/components/ConfirmButton";
 import FormSpacer from "@mzawadie/components/FormSpacer";
-import { buttonMessages, RelayToFlat, sectionNames } from "@mzawadie/core";
+import { buttonMessages, sectionNames } from "@mzawadie/core";
+import { RelayToFlat } from "@mzawadie/core";
 import {
     MenuErrorFragment,
     SearchCategoriesQuery,
@@ -24,11 +25,13 @@ import useStateFromProps from "@mzawadie/hooks/useStateFromProps";
 import { getFieldError, getFormErrors } from "@mzawadie/utils/errors";
 import getMenuErrorMessage from "@mzawadie/utils/errors/menu";
 import { getMenuItemByValue, IMenu } from "@mzawadie/utils/menu";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import isUrl from "is-url";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export type MenuItemType = "category" | "collection" | "link" | "page";
+
 export interface MenuItemData {
     id: string;
     type: MenuItemType;
@@ -95,7 +98,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
     const errors = useModalDialogErrors(apiErrors, open);
     const [displayValue, setDisplayValue] = React.useState(initialDisplayValue || "");
     const [data, setData] = useStateFromProps<MenuItemDialogFormData>(initial || defaultInitial);
-    const [url, setUrl] = React.useState<string | undefined>(undefined);
+    const [url, setUrl] = React.useState<string>(undefined);
 
     // Reset input state after closing dialog
     useModalDialogOpen(open, {
@@ -126,7 +129,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
                     children: [],
                     data: {},
                     label: category.name,
-                    value: `category:${category.id}`,
+                    value: "category:" + category.id,
                 })),
                 data: {},
                 label: intl.formatMessage(sectionNames.categories),
@@ -142,7 +145,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
                     children: [],
                     data: {},
                     label: collection.name,
-                    value: `collection:${collection.id}`,
+                    value: "collection:" + collection.id,
                 })),
                 data: {},
                 label: intl.formatMessage(sectionNames.collections),
@@ -158,7 +161,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
                     children: [],
                     data: {},
                     label: page.title,
-                    value: `page:${page.id}`,
+                    value: "page:" + page.id,
                 })),
                 data: {},
                 label: intl.formatMessage(sectionNames.pages),
@@ -173,15 +176,15 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
                 data: {},
                 label: (
                     <FormattedMessage
+                        id="fzDI3A"
                         defaultMessage="Link to: {url}"
                         description="add link to navigation"
-                        id="fzDI3A"
                         values={{
                             url: <strong>{url}</strong>,
                         }}
                     />
                 ),
-                value: `link:${url}`,
+                value: "link:" + url,
             },
         ];
     }
@@ -189,8 +192,8 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
     const handleQueryChange = (query: string) => {
         if (isUrl(query)) {
             setUrl(query);
-        } else if (isUrl(`http://${query}`)) {
-            setUrl(`http://${query}`);
+        } else if (isUrl("http://" + query)) {
+            setUrl("http://" + query);
         } else if (url) {
             setUrl(undefined);
         }
@@ -198,7 +201,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
     };
 
     const handleSelectChange = (event: React.ChangeEvent<any>) => {
-        const { value } = event.target;
+        const value = event.target.value;
         const menuItemData = getMenuItemData(value);
 
         setData((value) => ({
@@ -221,25 +224,26 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
             }}
         >
             <DialogTitle>
-                {initial
+                {!!initial
                     ? intl.formatMessage({
+                          id: "KKQUMK",
                           defaultMessage: "Edit Item",
                           description: "edit menu item, header",
-                          id: "KKQUMK",
                       })
                     : intl.formatMessage({
+                          id: "H3Uirw",
                           defaultMessage: "Add Item",
                           description: "create new menu item, header",
-                          id: "H3Uirw",
                       })}
             </DialogTitle>
-            <DialogContent style={{ overflowY: "visible" }}>
+
+            <DialogContent style={{ overflow: "visible" }}>
                 <TextField
                     disabled={disabled}
                     label={intl.formatMessage({
+                        id: "0Vyr8h",
                         defaultMessage: "Name",
                         description: "menu item name",
-                        id: "0Vyr8h",
                     })}
                     fullWidth
                     value={data.name}
@@ -253,15 +257,17 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
                     error={!!formErrors.name}
                     helperText={getMenuErrorMessage(formErrors.name, intl)}
                 />
+
                 <FormSpacer />
+
                 <AutocompleteSelectMenu
                     disabled={disabled}
                     onChange={handleSelectChange}
                     name="id"
                     label={intl.formatMessage({
+                        id: "Urh2N3",
                         defaultMessage: "Link",
                         description: "label",
-                        id: "Urh2N3",
                     })}
                     displayValue={displayValue}
                     loading={loading}
@@ -270,14 +276,16 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
                     error={!!idError}
                     helperText={getMenuErrorMessage(idError, intl)}
                     placeholder={intl.formatMessage({
-                        defaultMessage: "Start typing to begin search...",
                         id: "28GZnc",
+                        defaultMessage: "Start typing to begin search...",
                     })}
                     onInputChange={handleQueryChange}
                 />
+
                 {mutationErrors.length > 0 && (
                     <>
                         <FormSpacer />
+
                         {mutationErrors.map((err) => (
                             <Typography key={err.code} color="error">
                                 {getMenuErrorMessage(err, intl)}
@@ -286,15 +294,13 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
                     </>
                 )}
             </DialogContent>
+
             <DialogActions>
-                <Button onClick={onClose}>
-                    <FormattedMessage {...buttonMessages.back} />
-                </Button>
+                <BackButton onClick={onClose} />
+
                 <ConfirmButton
-                    data-test="submit"
+                    data-test-id="submit"
                     transitionState={confirmButtonState}
-                    color="primary"
-                    variant="contained"
                     onClick={handleSubmit}
                 >
                     <FormattedMessage {...buttonMessages.confirm} />
@@ -303,5 +309,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
         </Dialog>
     );
 };
+
 MenuItemDialog.displayName = "MenuItemDialog";
+
 export default MenuItemDialog;

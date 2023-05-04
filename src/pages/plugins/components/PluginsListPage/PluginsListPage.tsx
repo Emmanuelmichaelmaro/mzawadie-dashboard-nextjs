@@ -1,12 +1,14 @@
 // @ts-nocheck
 import { Card } from "@material-ui/core";
+import { Backlink } from "@mzawadie/components/Backlink";
 import Container from "@mzawadie/components/Container";
 import { FilterBar } from "@mzawadie/components/FilterBar";
 import { PageHeader } from "@mzawadie/components/PageHeader";
-import { sectionNames, FilterPageProps, PageListProps, SortPage, TabPageProps } from "@mzawadie/core";
+import { sectionNames } from "@mzawadie/core";
+import { FilterPageProps, PageListProps, SortPage, TabPageProps } from "@mzawadie/core";
 import { PluginBaseFragment } from "@mzawadie/graphql";
+import { configurationMenuUrl } from "@mzawadie/pages/configuration";
 import { PluginListUrlSortField } from "@mzawadie/pages/plugins/urls";
-import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -20,7 +22,6 @@ export interface PluginsListPageProps
         SortPage<PluginListUrlSortField>,
         TabPageProps {
     plugins: PluginBaseFragment[];
-    onBack: () => void;
 }
 
 const PluginsListPage: React.FC<PluginsListPageProps> = ({
@@ -28,9 +29,7 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
     initialSearch,
     filterOpts,
     tabs,
-    onAdd,
     onAll,
-    onBack,
     onSearchChange,
     onFilterChange,
     onTabChange,
@@ -44,8 +43,12 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
 
     return (
         <Container>
-            <Backlink onClick={onBack}>{intl.formatMessage(sectionNames.configuration)}</Backlink>
+            <Backlink href={configurationMenuUrl}>
+                {intl.formatMessage(sectionNames.configuration)}
+            </Backlink>
+
             <PageHeader title={intl.formatMessage(sectionNames.plugins)} />
+
             <Card>
                 <FilterBar
                     errorMessages={pluginsFilterErrorMessages}
@@ -59,16 +62,17 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
                     onTabSave={onTabSave}
                     tabs={tabs}
                     allTabLabel={intl.formatMessage({
-                        defaultMessage: "All Plugins",
                         id: "aOelhW",
+                        defaultMessage: "All Plugins",
                         description: "tab name",
                     })}
                     filterStructure={filterStructure}
                     searchPlaceholder={intl.formatMessage({
-                        defaultMessage: "Search Plugins...",
                         id: "BtErCZ",
+                        defaultMessage: "Search Plugins...",
                     })}
                 />
+
                 <PluginsList {...listProps} />
             </Card>
         </Container>

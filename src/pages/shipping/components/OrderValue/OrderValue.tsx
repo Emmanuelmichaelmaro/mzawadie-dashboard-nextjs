@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { Card, CardContent, TableBody, TableCell, TableRow, Typography } from "@material-ui/core";
+import { Card, TableBody, TableCell, TableRow, Typography } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import ControlledCheckbox from "@mzawadie/components/ControlledCheckbox";
 import { PriceField } from "@mzawadie/components/PriceField";
@@ -7,6 +7,7 @@ import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import { TableHead } from "@mzawadie/components/TableHead";
 import { ShippingChannelsErrorFragment } from "@mzawadie/graphql";
 import { ChangeEvent } from "@mzawadie/hooks/useForm";
+import { VerticalSpacer } from "@mzawadie/pages/apps/components/VerticalSpacer";
 import { ChannelShippingData } from "@mzawadie/pages/channels/utils";
 import { getFormChannelError, getFormChannelErrors } from "@mzawadie/utils/errors";
 import getShippingErrorMessage from "@mzawadie/utils/errors/shipping";
@@ -19,11 +20,12 @@ interface Value {
     maxValue: string;
     minValue: string;
 }
+
 export interface OrderValueProps {
     channels: ChannelShippingData[];
     errors: ShippingChannelsErrorFragment[];
     disabled: boolean;
-    noLimits: boolean;
+    orderValueRestricted: boolean;
     onChange: (event: ChangeEvent) => void;
     onChannelsChange: (channelId: string, value: Value) => void;
 }
@@ -33,7 +35,7 @@ const numberOfColumns = 3;
 export const OrderValue: React.FC<OrderValueProps> = ({
     channels,
     errors,
-    noLimits,
+    orderValueRestricted,
     disabled,
     onChannelsChange,
     onChange,
@@ -46,81 +48,90 @@ export const OrderValue: React.FC<OrderValueProps> = ({
         <Card>
             <CardTitle
                 title={intl.formatMessage({
-                    defaultMessage: "Order Value",
                     id: "yatGsm",
+                    defaultMessage: "Order Value",
                     description: "card title",
                 })}
             />
-            <CardContent className={classes.content}>
+
+            <div className={classes.content}>
                 <div className={classes.subheader}>
                     <ControlledCheckbox
-                        name="noLimits"
+                        name="orderValueRestricted"
                         label={
                             <>
                                 <FormattedMessage
-                                    defaultMessage="There are no value limits"
-                                    id="WTAwlQ"
+                                    id="Dgp38J"
+                                    defaultMessage="Restrict order value"
                                     description="checkbox label"
                                 />
-                                <Typography variant="caption" className={classes.caption}>
+
+                                <Typography variant="caption">
                                     {intl.formatMessage({
-                                        defaultMessage:
-                                            "This rate will apply to all orders of all prices",
-                                        id: "cmrFJ2",
+                                        id: "aZDHYr",
+                                        defaultMessage: "This rate will apply to all orders",
                                         description: "price rates info",
                                     })}
                                 </Typography>
                             </>
                         }
-                        checked={noLimits}
+                        checked={orderValueRestricted}
                         onChange={onChange}
                         disabled={disabled}
                     />
-                    <Typography variant="caption" className={classes.info}>
-                        <FormattedMessage
-                            defaultMessage="Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
-                            id="u5c/tR"
-                            description="channels discount info"
-                        />
-                    </Typography>
+
+                    <VerticalSpacer />
+
+                    <FormattedMessage
+                        id="u5c/tR"
+                        defaultMessage="Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
+                        description="channels discount info"
+                    />
+
+                    <VerticalSpacer />
                 </div>
-                {!noLimits && (
+
+                {orderValueRestricted && (
                     <ResponsiveTable className={classes.table}>
                         <TableHead colSpan={numberOfColumns} disabled={disabled} items={[]}>
                             <TableCell className={classes.colName}>
                                 <span>
                                     <FormattedMessage
-                                        defaultMessage="Channel name"
                                         id="UymotP"
+                                        defaultMessage="Channel name"
                                         description="channel name"
                                     />
                                 </span>
                             </TableCell>
+
                             <TableCell className={classes.colType}>
                                 <span>
                                     <FormattedMessage
-                                        defaultMessage="Min. value"
                                         id="0FexL7"
+                                        defaultMessage="Min. value"
                                         description="min price in channel"
                                     />
                                 </span>
                             </TableCell>
+
                             <TableCell className={classes.colType}>
                                 <span>
                                     <FormattedMessage
-                                        defaultMessage="Max. value"
                                         id="ER/yBq"
+                                        defaultMessage="Max. value"
                                         description="max price in channel"
                                     />
                                 </span>
                             </TableCell>
                         </TableHead>
+
                         <TableBody>
                             {channels?.map((channel) => {
                                 const minError = getFormChannelError(
                                     formErrors.minimumOrderPrice,
                                     channel.id
                                 );
+
                                 const maxError = getFormChannelError(
                                     formErrors.maximumOrderPrice,
                                     channel.id
@@ -131,13 +142,14 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                                         <TableCell>
                                             <Typography>{channel.name}</Typography>
                                         </TableCell>
+
                                         <TableCell className={classes.price}>
                                             <PriceField
                                                 disabled={disabled}
                                                 error={!!minError}
                                                 label={intl.formatMessage({
-                                                    defaultMessage: "Min Value",
                                                     id: "kN6SLs",
+                                                    defaultMessage: "Min Value",
                                                 })}
                                                 name={`minValue:${channel.name}`}
                                                 value={channel.minValue}
@@ -153,19 +165,18 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                                                 }
                                             />
                                         </TableCell>
+
                                         <TableCell className={classes.price}>
                                             <PriceField
                                                 disabled={disabled}
                                                 error={!!maxError}
                                                 label={intl.formatMessage({
-                                                    defaultMessage: "Max Value",
                                                     id: "vjsfyn",
+                                                    defaultMessage: "Max Value",
                                                 })}
                                                 name={`maxValue:${channel.name}`}
                                                 value={channel.maxValue}
-                                                InputProps={{
-                                                    inputProps: { min: channel.minValue },
-                                                }}
+                                                InputProps={{ inputProps: { min: channel.minValue } }}
                                                 onChange={(e) =>
                                                     onChannelsChange(channel.id, {
                                                         ...channel,
@@ -184,7 +195,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                         </TableBody>
                     </ResponsiveTable>
                 )}
-            </CardContent>
+            </div>
         </Card>
     );
 };

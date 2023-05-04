@@ -14,7 +14,7 @@ import {
     PermissionGroupCreatePage,
     PermissionGroupCreateFormData,
 } from "../../components/PermissionGroupCreatePage";
-import { permissionGroupDetailsUrl, permissionGroupListUrl } from "../../urls";
+import { permissionGroupDetailsUrl } from "../../urls";
 
 const PermissionGroupCreateView: React.FC = () => {
     const navigate = useNavigator();
@@ -29,11 +29,11 @@ const PermissionGroupCreateView: React.FC = () => {
                 notify({
                     status: "success",
                     text: intl.formatMessage({
-                        defaultMessage: "Permission group created",
                         id: "eUjFjW",
+                        defaultMessage: "Permission group created",
                     }),
                 });
-                navigate(permissionGroupDetailsUrl(data.permissionGroupCreate.group.id));
+                navigate(permissionGroupDetailsUrl(data.permissionGroupCreate?.group?.id));
             }
         },
     });
@@ -55,7 +55,7 @@ const PermissionGroupCreateView: React.FC = () => {
             })
         );
 
-    const userPermissions = user?.user.userPermissions.map((p) => p.code) || [];
+    const userPermissions = user?.user?.userPermissions?.map((p) => p.code) || [];
 
     const permissions: PermissionData[] =
         shop?.permissions.map(
@@ -71,18 +71,18 @@ const PermissionGroupCreateView: React.FC = () => {
         <>
             <WindowTitle
                 title={intl.formatMessage({
-                    defaultMessage: "Create category",
                     id: "Irflxf",
+                    defaultMessage: "Create category",
                     description: "window title",
                 })}
             />
+
             <PermissionGroupCreatePage
                 errors={errors}
                 disabled={createPermissionGroupResult.loading}
                 permissions={permissions}
                 saveButtonBarState={createPermissionGroupResult.status}
                 onSubmit={onSubmit}
-                onBack={() => navigate(permissionGroupListUrl())}
             />
         </>
     );

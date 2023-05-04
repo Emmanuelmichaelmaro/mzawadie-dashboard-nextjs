@@ -18,20 +18,23 @@ const maxMenuItems = 5;
 const offset = 24;
 
 export type ChoiceValue = string;
+
 export interface SingleAutocompleteChoiceType<V extends ChoiceValue = ChoiceValue, L = string> {
     label: L;
     value: V;
 }
+
 export interface SingleAutocompleteActionType {
     label: string;
     onClick: () => void;
 }
+
 export interface SingleAutocompleteSelectFieldContentProps extends Partial<FetchMoreProps> {
     add?: SingleAutocompleteActionType;
     choices: Array<SingleAutocompleteChoiceType<string, string | JSX.Element>>;
     displayCustomValue: boolean;
     emptyOption: boolean;
-    getItemProps: (options: GetItemPropsOptions) => any;
+    getItemProps: (options: GetItemPropsOptions<string>) => any;
     highlightedIndex: number;
     inputValue: string;
     isCustomValueSelected: boolean;
@@ -57,13 +60,13 @@ const useStyles = makeStyles(
             background:
                 theme.palette.type === "light" ? theme.palette.grey[50] : theme.palette.grey[900],
             bottom: 0,
-            color: theme.palette.primary.main,
+            color: theme.palette.grey[500],
             display: "flex",
             height: 30,
             justifyContent: "center",
             opacity: 1,
             position: "absolute",
-            transition: `${theme.transitions.duration.short}ms`,
+            transition: theme.transitions.duration.short + "ms",
             width: "100%",
         },
         content: {
@@ -81,6 +84,9 @@ const useStyles = makeStyles(
         menuItem: {
             height: "auto",
             whiteSpace: "normal",
+            '&[aria-selected="true"]': {
+                backgroundColor: theme.palette.background.default,
+            },
         },
         progress: {},
         progressContainer: {
@@ -103,9 +109,11 @@ const useStyles = makeStyles(
 
 function getChoiceIndex(index: number, emptyValue: boolean, customValue: boolean, add: boolean) {
     let choiceIndex = index;
+
     if (emptyValue) {
         choiceIndex += 1;
     }
+
     if (customValue || add) {
         choiceIndex += 2;
     }
@@ -184,7 +192,12 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
     const choicesToDisplay = choices.slice(0, slice);
 
     return (
-        <Paper className={classes.root} elevation={8} style={style}>
+        <Paper
+            // click-outside-ignore is used by glide-datagrid
+            className={classNames("click-outside-ignore", classes.root)}
+            elevation={8}
+            style={style}
+        >
             <div className={classes.content} ref={anchor} data-test-id="autocomplete-dropdown">
                 {choices.length > 0 || displayCustomValue ? (
                     <>
@@ -197,7 +210,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                                 {...emptyOptionProps}
                             >
                                 <Typography color="textSecondary">
-                                    <FormattedMessage defaultMessage="None" id="450Fty" />
+                                    <FormattedMessage id="450Fty" defaultMessage="None" />
                                 </Typography>
                             </MenuItem>
                         )}
@@ -221,7 +234,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                         {displayCustomValue && (
                             <MenuItem
                                 className={classes.menuItem}
-                                key="customValue"
+                                key={"customValue"}
                                 selected={isCustomValueSelected}
                                 component="div"
                                 {...getItemProps({
@@ -231,8 +244,8 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                                 data-test-type="custom"
                             >
                                 <FormattedMessage
-                                    defaultMessage="Add new value: {value}"
                                     id="U2WgwW"
+                                    defaultMessage="Add new value: {value}"
                                     description="add custom select input option"
                                     values={{
                                         value: inputValue,
@@ -252,7 +265,6 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                                 displayCustomValue,
                                 !!add
                             );
-
                             const key = React.isValidElement(suggestion.label)
                                 ? `${index}${suggestion.value}${
                                       (suggestion as unknown as ReactElement).props
@@ -289,11 +301,11 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
                     </>
                 ) : (
                     <MenuItem
-                        disabled
+                        disabled={true}
                         component="div"
                         data-test-id="single-autocomplete-select-no-options"
                     >
-                        <FormattedMessage defaultMessage="No results found" id="hX5PAb" />
+                        <FormattedMessage id="hX5PAb" defaultMessage="No results found" />
                     </MenuItem>
                 )}
             </div>
@@ -316,4 +328,5 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
 };
 
 SingleAutocompleteSelectFieldContent.displayName = "SingleAutocompleteSelectFieldContent";
+
 export default SingleAutocompleteSelectFieldContent;

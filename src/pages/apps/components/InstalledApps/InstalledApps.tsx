@@ -1,103 +1,124 @@
-import { Card, TableBody, TableCell, TableFooter, TableRow, Typography } from "@material-ui/core";
+// @ts-nocheck
+import { Card, Switch, TableBody, TableCell, TableRow, Typography } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
-import { TablePagination } from "@mzawadie/components/TablePagination";
-import { renderCollection, stopPropagation, ListProps } from "@mzawadie/core";
-import { DeleteIcon, ResponsiveTable, Button, IconButton } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { IconButton } from "@mzawadie/components/IconButton";
+import { TableButtonWrapper } from "@mzawadie/components/TableButtonWrapper/TableButtonWrapper";
+import { TableRowLink } from "@mzawadie/components/TableRowLink";
+import { ListProps, renderCollection } from "@mzawadie/core";
+import { AppListItemFragment, AppsListQuery } from "@mzawadie/graphql";
+import useNavigator from "@mzawadie/hooks/useNavigator";
+import { useAppListContext } from "@mzawadie/pages/apps/context";
+import { appUrl, createAppInstallUrl } from "@mzawadie/pages/apps/urls";
+import { isAppInTunnel } from "@mzawadie/pages/apps/utils";
+import { DeleteIcon, ResponsiveTable } from "@saleor/macaw-ui";
+import React, { useCallback } from "react";
+import { FormattedMessage } from "react-intl";
 
 import { useStyles } from "../../styles";
-import { AppsList_apps_edges } from "../../types/AppsList";
+import { AppManifestTableDisplay } from "../AppManifestTableDisplay/AppManifestTableDisplay";
+import { AppPermissions } from "../AppPermissions/AppPermissions";
 import { AppsSkeleton } from "../AppsSkeleton";
-import { DeactivatedText } from "../DeactivatedText";
+import { InstallWithManifestFormButton } from "../InstallWithManifestFormButton";
 
 export interface InstalledAppsProps extends ListProps {
-    appsList: AppsList_apps_edges[];
+    appsList: AppsListQuery["apps"]["edges"];
     onRemove: (id: string) => void;
-    onRowAboutClick: (id: string) => () => void;
+    displayQuickManifestButton?: boolean;
+    title: string;
 }
-const numberOfColumns = 2;
 
 const InstalledApps: React.FC<InstalledAppsProps> = ({
     appsList,
     onRemove,
-    settings,
-    disabled,
-    onNextPage,
-    onPreviousPage,
-    onRowClick,
-    onRowAboutClick,
-    onUpdateListSettings,
-    pageInfo,
+    title,
+    displayQuickManifestButton = false,
     ...props
 }) => {
-    const intl = useIntl();
     const classes = useStyles(props);
+
+    const { activateApp, deactivateApp } = useAppListContext();
+
+    const navigate = useNavigator();
+
+    const navigateToAppInstallPage = useCallback(
+        (url: string) => {
+            navigate(createAppInstallUrl(url));
+        },
+        [navigate]
+    );
+
+    const getHandleToggle = (app: AppListItemFragment) => () => {
+        if (app.isActive) {
+            deactivateApp(app.id);
+        } else {
+            activateApp(app.id);
+        }
+    };
 
     return (
         <Card className={classes.apps}>
             <CardTitle
-                title={intl.formatMessage({
-                    defaultMessage: "Third-party Apps",
-                    id: "ZeD2TK",
-                    description: "section header",
-                })}
+                title={title}
+                toolbar={
+                    displayQuickManifestButton ? (
+                        <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
+                    ) : undefined
+                }
             />
 
             <ResponsiveTable>
-                <TableFooter>
-                    <TableRow>
-                        <TablePagination
-                            colSpan={numberOfColumns}
-                            settings={settings}
-                            hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-                            onNextPage={onNextPage}
-                            onUpdateListSettings={onUpdateListSettings}
-                            hasPreviousPage={pageInfo && !disabled ? pageInfo.hasPreviousPage : false}
-                            onPreviousPage={onPreviousPage}
-                        />
-                    </TableRow>
-                </TableFooter>
-
                 <TableBody>
                     {renderCollection(
                         appsList,
                         (app, index) =>
                             app ? (
-                                <TableRow
+                                <TableRowLink
                                     key={app.node.id}
                                     className={classes.tableRow}
-                                    onClick={onRowClick(app.node.id)}
+                                    href={appUrl(app.node.id)}
                                 >
                                     <TableCell className={classes.colName}>
                                         <span data-tc="name" className={classes.appName}>
                                             {app.node.name}
                                         </span>
-                                        {!app.node.isActive && (
-                                            <div className={classes.statusWrapper}>
-                                                <DeactivatedText />
-                                            </div>
-                                        )}
+
+                                        {app.node.manifestUrl && isAppInTunnel(app.node.manifestUrl) ? (
+                                            <Typography variant="caption">
+                                                <FormattedMessage
+                                                    defaultMessage="(TUNNEL - DEVELOPMENT)"
+                                                    id="QdQ9z7"
+                                                />
+                                            </Typography>
+                                        ) : null}
                                     </TableCell>
 
                                     <TableCell className={classes.colAction}>
-                                        <Button onClick={stopPropagation(onRowAboutClick(app.node.id))}>
-                                            <FormattedMessage
-                                                defaultMessage="About"
-                                                id="TBaMo2"
-                                                description="about app"
+                                        {app.node.manifestUrl && (
+                                            <AppManifestTableDisplay
+                                                manifestUrl={app.node.manifestUrl}
                                             />
-                                        </Button>
+                                        )}
 
-                                        <IconButton
-                                            variant="secondary"
-                                            color="primary"
-                                            onClick={stopPropagation(() => onRemove(app.node.id))}
-                                        >
-                                            <DeleteIcon />
-                                        </IconButton>
+                                        <TableButtonWrapper>
+                                            <Switch
+                                                checked={app.node.isActive}
+                                                onChange={getHandleToggle(app.node)}
+                                            />
+                                        </TableButtonWrapper>
+
+                                        <AppPermissions permissions={app.node.permissions} />
+
+                                        <TableButtonWrapper>
+                                            <IconButton
+                                                variant="secondary"
+                                                color="primary"
+                                                onClick={() => onRemove(app.node.id)}
+                                            >
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </TableButtonWrapper>
                                     </TableCell>
-                                </TableRow>
+                                </TableRowLink>
                             ) : (
                                 <AppsSkeleton key={index} />
                             ),
@@ -106,8 +127,8 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                                 <TableCell className={classes.colName}>
                                     <Typography className={classes.text} variant="body2">
                                         <FormattedMessage
-                                            defaultMessage="You don’t have any installed apps in your dashboard"
                                             id="9tgY4G"
+                                            defaultMessage="You don’t have any installed apps in your dashboard"
                                             description="apps content"
                                         />
                                     </Typography>

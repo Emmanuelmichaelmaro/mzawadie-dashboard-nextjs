@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { Typography } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@mzawadie/components/ConfirmButton";
+import { Backlink } from "@mzawadie/components/Backlink";
 import Container from "@mzawadie/components/Container";
 import { Form } from "@mzawadie/components/Form";
 import { Grid } from "@mzawadie/components/Grid";
@@ -10,11 +10,14 @@ import { MetadataFormData } from "@mzawadie/components/Metadata/types";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
-import { commonMessages, sectionNames, ListActions, ReorderEvent } from "@mzawadie/core";
-import { PageErrorFragment, PageTypeDetailsFragment, AttributeTypeEnum } from "@mzawadie/graphql";
+import { commonMessages, sectionNames } from "@mzawadie/core";
+import { ListActions, ReorderEvent } from "@mzawadie/core";
+import { AttributeTypeEnum, PageErrorFragment, PageTypeDetailsFragment } from "@mzawadie/graphql";
+import useNavigator from "@mzawadie/hooks/useNavigator";
+import { pageTypeListUrl } from "@mzawadie/pages/pageTypes/urls";
 import { mapMetadataItemToInput } from "@mzawadie/utils/maps";
 import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChangeTrigger";
-import { Backlink, makeStyles } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -34,10 +37,8 @@ export interface PageTypeDetailsPageProps {
     attributeList: ListActions;
     saveButtonBarState: ConfirmButtonTransitionState;
     onAttributeAdd: (type: AttributeTypeEnum) => void;
-    onAttributeClick: (id: string) => void;
     onAttributeReorder: (event: ReorderEvent, type: AttributeTypeEnum) => void;
     onAttributeUnassign: (id: string) => void;
-    onBack: () => void;
     onDelete: () => void;
     onSubmit: (data: PageTypeForm) => void;
 }
@@ -65,13 +66,16 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = (props) => {
         onAttributeAdd,
         onAttributeUnassign,
         onAttributeReorder,
-        onAttributeClick,
-        onBack,
         onDelete,
         onSubmit,
     } = props;
+
     const classes = useStyles(props);
+
     const intl = useIntl();
+
+    const navigate = useNavigator();
+
     const {
         isMetadataModified,
         isPrivateMetadataModified,
@@ -101,79 +105,89 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = (props) => {
     };
 
     return (
-        <Form initial={formInitialData} onSubmit={handleSubmit} confirmLeave>
-            {({ change, data, hasChanged, submit }) => {
+        <Form confirmLeave initial={formInitialData} onSubmit={handleSubmit} disabled={disabled}>
+            {({ change, data, isSaveDisabled, submit }) => {
                 const changeMetadata = makeMetadataChangeHandler(change);
 
                 return (
                     <Container>
-                        <Backlink onClick={onBack}>
+                        <Backlink href={pageTypeListUrl()}>
                             {intl.formatMessage(sectionNames.pageTypes)}
                         </Backlink>
+
                         <PageHeader title={pageTitle} />
+
                         <Grid variant="inverted">
                             <div>
                                 <Typography>
                                     {intl.formatMessage(commonMessages.generalInformations)}
                                 </Typography>
+
                                 <Typography variant="body2">
                                     <FormattedMessage
-                                        defaultMessage="These are general information about this Content Type."
                                         id="kZfIl/"
+                                        defaultMessage="These are general information about this Content Type."
                                     />
                                 </Typography>
                             </div>
+
                             <PageTypeDetails
                                 data={data}
                                 disabled={disabled}
                                 errors={errors}
                                 onChange={change}
                             />
+
                             <Hr className={classes.hr} />
+
                             <div>
                                 <Typography>
                                     <FormattedMessage
-                                        defaultMessage="Content Attributes"
                                         id="iQxjow"
+                                        defaultMessage="Content Attributes"
                                         description="section header"
                                     />
                                 </Typography>
                                 <Typography variant="body2">
                                     <FormattedMessage
-                                        defaultMessage="This list shows all attributes that will be assigned to pages that have this page type assigned."
                                         id="lct0qd"
+                                        defaultMessage="This list shows all attributes that will be assigned to pages that have this page type assigned."
                                     />
                                 </Typography>
                             </div>
+
                             <PageTypeAttributes
                                 attributes={pageType?.attributes}
                                 disabled={disabled}
                                 type={AttributeTypeEnum.PAGE_TYPE}
                                 onAttributeAssign={onAttributeAdd}
-                                onAttributeClick={onAttributeClick}
                                 onAttributeReorder={(event: ReorderEvent) =>
                                     onAttributeReorder(event, AttributeTypeEnum.PAGE_TYPE)
                                 }
                                 onAttributeUnassign={onAttributeUnassign}
                                 {...attributeList}
                             />
+
                             <Hr className={classes.hr} />
+
                             <div>
                                 <Typography>
                                     <FormattedMessage
-                                        defaultMessage="Metadata"
                                         id="OVOU1z"
+                                        defaultMessage="Metadata"
                                         description="section header"
                                     />
                                 </Typography>
                             </div>
+
                             <Metadata data={data} onChange={changeMetadata} />
                         </Grid>
+
                         <Savebar
-                            onCancel={onBack}
+                            onCancel={() => navigate(pageTypeListUrl())}
                             onDelete={onDelete}
                             onSubmit={submit}
-                            disabled={disabled || !hasChanged}
+                            disabled={isSaveDisabled}
                             state={saveButtonBarState}
                         />
                     </Container>

@@ -1,16 +1,21 @@
 // @ts-nocheck
 import { Card, TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
+import { Button } from "@mzawadie/components/Button";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { ChannelsAvailabilityDropdown } from "@mzawadie/components/ChannelsAvailabilityDropdown";
 import { Checkbox } from "@mzawadie/components/Checkbox";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
+import { TableButtonWrapper } from "@mzawadie/components/TableButtonWrapper/TableButtonWrapper";
 import { TableCellAvatar } from "@mzawadie/components/TableCellAvatar";
 import { TableHead } from "@mzawadie/components/TableHead";
-import { TablePagination } from "@mzawadie/components/TablePagination";
-import { maybe, renderCollection, ListActions, ListProps, RelayToFlat } from "@mzawadie/core";
+import { TablePaginationWithContext } from "@mzawadie/components/TablePagination";
+import { TableRowLink } from "@mzawadie/components/TableRowLink";
+import { maybe, renderCollection } from "@mzawadie/core";
+import { ListActions, ListProps, RelayToFlat } from "@mzawadie/core";
 import { SaleDetailsFragment, VoucherDetailsFragment } from "@mzawadie/graphql";
-import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { productUrl } from "@mzawadie/pages/products/urls";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -31,18 +36,15 @@ const DiscountProducts: React.FC<SaleProductsProps> = (props) => {
     const {
         products,
         disabled,
-        pageInfo,
-        onRowClick,
-        onPreviousPage,
         onProductAssign,
         onProductUnassign,
-        onNextPage,
         isChecked,
         selected,
         toggle,
         toggleAll,
         toolbar,
     } = props;
+
     const classes = useStyles(props);
 
     const intl = useIntl();
@@ -57,6 +59,7 @@ const DiscountProducts: React.FC<SaleProductsProps> = (props) => {
                     </Button>
                 }
             />
+
             <ResponsiveTable>
                 <colgroup>
                     <col />
@@ -65,6 +68,7 @@ const DiscountProducts: React.FC<SaleProductsProps> = (props) => {
                     <col className={classes.colPublished} />
                     <col className={classes.colActions} />
                 </colgroup>
+
                 <TableHead
                     colSpan={numberOfColumns}
                     selected={selected}
@@ -78,25 +82,24 @@ const DiscountProducts: React.FC<SaleProductsProps> = (props) => {
                             <FormattedMessage {...messages.discountProductsTableProductHeader} />
                         </span>
                     </TableCell>
+
                     <TableCell className={classes.colType}>
                         <FormattedMessage {...messages.discountProductsTableTypeHeader} />
                     </TableCell>
+
                     <TableCell className={classes.colPublished}>
                         <FormattedMessage {...messages.discountProductsTableAvailabilityHeader} />
                     </TableCell>
+
                     <TableCell className={classes.colActions} />
                 </TableHead>
+
                 <TableFooter>
                     <TableRow>
-                        <TablePagination
-                            colSpan={numberOfColumns}
-                            hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-                            onNextPage={onNextPage}
-                            hasPreviousPage={pageInfo && !disabled ? pageInfo.hasPreviousPage : false}
-                            onPreviousPage={onPreviousPage}
-                        />
+                        <TablePaginationWithContext colSpan={numberOfColumns} />
                     </TableRow>
                 </TableFooter>
+
                 <TableBody>
                     {renderCollection(
                         products,
@@ -104,10 +107,10 @@ const DiscountProducts: React.FC<SaleProductsProps> = (props) => {
                             const isSelected = product ? isChecked(product.id) : false;
 
                             return (
-                                <TableRow
+                                <TableRowLink
                                     hover={!!product}
                                     key={product ? product.id : "skeleton"}
-                                    onClick={product && onRowClick(product.id)}
+                                    href={product && productUrl(product.id)}
                                     className={classes.tableRow}
                                     selected={isSelected}
                                 >
@@ -119,18 +122,21 @@ const DiscountProducts: React.FC<SaleProductsProps> = (props) => {
                                             onChange={() => toggle(product.id)}
                                         />
                                     </TableCell>
+
                                     <TableCellAvatar
                                         className={classes.colName}
                                         thumbnail={maybe(() => product.thumbnail.url)}
                                     >
                                         {maybe<React.ReactNode>(() => product.name, <Skeleton />)}
                                     </TableCellAvatar>
+
                                     <TableCell className={classes.colType}>
                                         {maybe<React.ReactNode>(
                                             () => product.productType.name,
                                             <Skeleton />
                                         )}
                                     </TableCell>
+
                                     <TableCell className={classes.colType}>
                                         {product && !product?.channelListings?.length ? (
                                             "-"
@@ -142,19 +148,22 @@ const DiscountProducts: React.FC<SaleProductsProps> = (props) => {
                                             <Skeleton />
                                         )}
                                     </TableCell>
+
                                     <TableCell className={classes.colActions}>
-                                        <IconButton
-                                            variant="secondary"
-                                            disabled={!product || disabled}
-                                            onClick={(event) => {
-                                                event.stopPropagation();
-                                                onProductUnassign(product.id);
-                                            }}
-                                        >
-                                            <DeleteIcon />
-                                        </IconButton>
+                                        <TableButtonWrapper>
+                                            <IconButton
+                                                variant="secondary"
+                                                disabled={!product || disabled}
+                                                onClick={(event) => {
+                                                    event.stopPropagation();
+                                                    onProductUnassign(product.id);
+                                                }}
+                                            >
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </TableButtonWrapper>
                                     </TableCell>
-                                </TableRow>
+                                </TableRowLink>
                             );
                         },
                         () => (
@@ -170,5 +179,7 @@ const DiscountProducts: React.FC<SaleProductsProps> = (props) => {
         </Card>
     );
 };
+
 DiscountProducts.displayName = "DiscountProducts";
+
 export default DiscountProducts;

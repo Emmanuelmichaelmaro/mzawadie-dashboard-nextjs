@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Card, CardContent, TextField } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { commonMessages } from "@mzawadie/core";
@@ -31,8 +32,8 @@ const MenuProperties: React.FC<MenuPropertiesProps> = ({ data, disabled, errors,
                     name={"name" as keyof MenuDetailsFormData}
                     fullWidth
                     label={intl.formatMessage({
-                        defaultMessage: "Menu Title",
                         id: "jhh/D6",
+                        defaultMessage: "Menu Title",
                     })}
                     helperText={getMenuErrorMessage(formErrors.name, intl)}
                     value={data.name}

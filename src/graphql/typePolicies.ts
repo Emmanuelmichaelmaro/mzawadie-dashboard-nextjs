@@ -154,6 +154,21 @@ export type AddressCreateFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     user?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type AddressCreatedKeySpecifier = (
+    | "address"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | AddressCreatedKeySpecifier
+)[];
+export type AddressCreatedFieldPolicy = {
+    address?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type AddressDeleteKeySpecifier = (
     | "accountErrors"
     | "address"
@@ -166,6 +181,21 @@ export type AddressDeleteFieldPolicy = {
     address?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     user?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type AddressDeletedKeySpecifier = (
+    | "address"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | AddressDeletedKeySpecifier
+)[];
+export type AddressDeletedFieldPolicy = {
+    address?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type AddressSetDefaultKeySpecifier = (
     | "accountErrors"
@@ -190,6 +220,21 @@ export type AddressUpdateFieldPolicy = {
     address?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     user?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type AddressUpdatedKeySpecifier = (
+    | "address"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | AddressUpdatedKeySpecifier
+)[];
+export type AddressUpdatedFieldPolicy = {
+    address?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type AddressValidationDataKeySpecifier = (
     | "addressFormat"
@@ -248,10 +293,15 @@ export type AppKeySpecifier = (
     | "homepageUrl"
     | "id"
     | "isActive"
+    | "manifestUrl"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "name"
     | "permissions"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "supportUrl"
     | "tokens"
     | "type"
@@ -271,10 +321,15 @@ export type AppFieldPolicy = {
     homepageUrl?: FieldPolicy<any> | FieldReadFunction<any>;
     id?: FieldPolicy<any> | FieldReadFunction<any>;
     isActive?: FieldPolicy<any> | FieldReadFunction<any>;
+    manifestUrl?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     name?: FieldPolicy<any> | FieldReadFunction<any>;
     permissions?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     supportUrl?: FieldPolicy<any> | FieldReadFunction<any>;
     tokens?: FieldPolicy<any> | FieldReadFunction<any>;
     type?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -339,6 +394,21 @@ export type AppDeleteFailedInstallationFieldPolicy = {
     appInstallation?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type AppDeletedKeySpecifier = (
+    | "app"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | AppDeletedKeySpecifier
+)[];
+export type AppDeletedFieldPolicy = {
+    app?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type AppErrorKeySpecifier = (
     | "code"
     | "field"
@@ -360,9 +430,7 @@ export type AppExtensionKeySpecifier = (
     | "mount"
     | "permissions"
     | "target"
-    | "type"
     | "url"
-    | "view"
     | AppExtensionKeySpecifier
 )[];
 export type AppExtensionFieldPolicy = {
@@ -373,9 +441,7 @@ export type AppExtensionFieldPolicy = {
     mount?: FieldPolicy<any> | FieldReadFunction<any>;
     permissions?: FieldPolicy<any> | FieldReadFunction<any>;
     target?: FieldPolicy<any> | FieldReadFunction<any>;
-    type?: FieldPolicy<any> | FieldReadFunction<any>;
     url?: FieldPolicy<any> | FieldReadFunction<any>;
-    view?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type AppExtensionCountableConnectionKeySpecifier = (
     | "edges"
@@ -438,22 +504,50 @@ export type AppInstallationFieldPolicy = {
     status?: FieldPolicy<any> | FieldReadFunction<any>;
     updatedAt?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type AppInstalledKeySpecifier = (
+    | "app"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | AppInstalledKeySpecifier
+)[];
+export type AppInstalledFieldPolicy = {
+    app?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type AppManifestExtensionKeySpecifier = (
     | "label"
+    | "mount"
     | "permissions"
     | "target"
-    | "type"
     | "url"
-    | "view"
     | AppManifestExtensionKeySpecifier
 )[];
 export type AppManifestExtensionFieldPolicy = {
     label?: FieldPolicy<any> | FieldReadFunction<any>;
+    mount?: FieldPolicy<any> | FieldReadFunction<any>;
     permissions?: FieldPolicy<any> | FieldReadFunction<any>;
     target?: FieldPolicy<any> | FieldReadFunction<any>;
-    type?: FieldPolicy<any> | FieldReadFunction<any>;
     url?: FieldPolicy<any> | FieldReadFunction<any>;
-    view?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type AppManifestWebhookKeySpecifier = (
+    | "asyncEvents"
+    | "name"
+    | "query"
+    | "syncEvents"
+    | "targetUrl"
+    | AppManifestWebhookKeySpecifier
+)[];
+export type AppManifestWebhookFieldPolicy = {
+    asyncEvents?: FieldPolicy<any> | FieldReadFunction<any>;
+    name?: FieldPolicy<any> | FieldReadFunction<any>;
+    query?: FieldPolicy<any> | FieldReadFunction<any>;
+    syncEvents?: FieldPolicy<any> | FieldReadFunction<any>;
+    targetUrl?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type AppRetryInstallKeySpecifier = (
     | "appErrors"
@@ -465,6 +559,21 @@ export type AppRetryInstallFieldPolicy = {
     appErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     appInstallation?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type AppStatusChangedKeySpecifier = (
+    | "app"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | AppStatusChangedKeySpecifier
+)[];
+export type AppStatusChangedFieldPolicy = {
+    app?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type AppTokenKeySpecifier = ("authToken" | "id" | "name" | AppTokenKeySpecifier)[];
 export type AppTokenFieldPolicy = {
@@ -513,6 +622,21 @@ export type AppUpdateFieldPolicy = {
     appErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type AppUpdatedKeySpecifier = (
+    | "app"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | AppUpdatedKeySpecifier
+)[];
+export type AppUpdatedFieldPolicy = {
+    app?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type AssignNavigationKeySpecifier = (
     | "errors"
     | "menu"
@@ -542,8 +666,12 @@ export type AttributeKeySpecifier = (
     | "id"
     | "inputType"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "name"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "productTypes"
     | "productVariantTypes"
     | "slug"
@@ -565,8 +693,12 @@ export type AttributeFieldPolicy = {
     id?: FieldPolicy<any> | FieldReadFunction<any>;
     inputType?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     name?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     productTypes?: FieldPolicy<any> | FieldReadFunction<any>;
     productVariantTypes?: FieldPolicy<any> | FieldReadFunction<any>;
     slug?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -620,6 +752,21 @@ export type AttributeCreateFieldPolicy = {
     attributeErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type AttributeCreatedKeySpecifier = (
+    | "attribute"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | AttributeCreatedKeySpecifier
+)[];
+export type AttributeCreatedFieldPolicy = {
+    attribute?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type AttributeDeleteKeySpecifier = (
     | "attribute"
     | "attributeErrors"
@@ -630,6 +777,21 @@ export type AttributeDeleteFieldPolicy = {
     attribute?: FieldPolicy<any> | FieldReadFunction<any>;
     attributeErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type AttributeDeletedKeySpecifier = (
+    | "attribute"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | AttributeDeletedKeySpecifier
+)[];
+export type AttributeDeletedFieldPolicy = {
+    attribute?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type AttributeErrorKeySpecifier = ("code" | "field" | "message" | AttributeErrorKeySpecifier)[];
 export type AttributeErrorFieldPolicy = {
@@ -693,6 +855,21 @@ export type AttributeUpdateFieldPolicy = {
     attribute?: FieldPolicy<any> | FieldReadFunction<any>;
     attributeErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type AttributeUpdatedKeySpecifier = (
+    | "attribute"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | AttributeUpdatedKeySpecifier
+)[];
+export type AttributeUpdatedFieldPolicy = {
+    attribute?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type AttributeValueKeySpecifier = (
     | "boolean"
@@ -767,6 +944,21 @@ export type AttributeValueCreateFieldPolicy = {
     attributeValue?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type AttributeValueCreatedKeySpecifier = (
+    | "attributeValue"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | AttributeValueCreatedKeySpecifier
+)[];
+export type AttributeValueCreatedFieldPolicy = {
+    attributeValue?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type AttributeValueDeleteKeySpecifier = (
     | "attribute"
     | "attributeErrors"
@@ -779,6 +971,21 @@ export type AttributeValueDeleteFieldPolicy = {
     attributeErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     attributeValue?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type AttributeValueDeletedKeySpecifier = (
+    | "attributeValue"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | AttributeValueDeletedKeySpecifier
+)[];
+export type AttributeValueDeletedFieldPolicy = {
+    attributeValue?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type AttributeValueTranslatableContentKeySpecifier = (
     | "attributeValue"
@@ -832,6 +1039,21 @@ export type AttributeValueUpdateFieldPolicy = {
     attributeValue?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type AttributeValueUpdatedKeySpecifier = (
+    | "attributeValue"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | AttributeValueUpdatedKeySpecifier
+)[];
+export type AttributeValueUpdatedFieldPolicy = {
+    attributeValue?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type BulkProductErrorKeySpecifier = (
     | "attributes"
     | "channels"
@@ -870,6 +1092,21 @@ export type BulkStockErrorFieldPolicy = {
     message?: FieldPolicy<any> | FieldReadFunction<any>;
     values?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type CalculateTaxesKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "taxBase"
+    | "version"
+    | CalculateTaxesKeySpecifier
+)[];
+export type CalculateTaxesFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    taxBase?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type CategoryKeySpecifier = (
     | "ancestors"
     | "backgroundImage"
@@ -879,9 +1116,13 @@ export type CategoryKeySpecifier = (
     | "id"
     | "level"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "name"
     | "parent"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "products"
     | "seoDescription"
     | "seoTitle"
@@ -898,9 +1139,13 @@ export type CategoryFieldPolicy = {
     id?: FieldPolicy<any> | FieldReadFunction<any>;
     level?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     name?: FieldPolicy<any> | FieldReadFunction<any>;
     parent?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     products?: FieldPolicy<any> | FieldReadFunction<any>;
     seoDescription?: FieldPolicy<any> | FieldReadFunction<any>;
     seoTitle?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -949,6 +1194,21 @@ export type CategoryCreateFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     productErrors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type CategoryCreatedKeySpecifier = (
+    | "category"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | CategoryCreatedKeySpecifier
+)[];
+export type CategoryCreatedFieldPolicy = {
+    category?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type CategoryDeleteKeySpecifier = (
     | "category"
     | "errors"
@@ -959,6 +1219,21 @@ export type CategoryDeleteFieldPolicy = {
     category?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     productErrors?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type CategoryDeletedKeySpecifier = (
+    | "category"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | CategoryDeletedKeySpecifier
+)[];
+export type CategoryDeletedFieldPolicy = {
+    category?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type CategoryTranslatableContentKeySpecifier = (
     | "category"
@@ -1022,6 +1297,21 @@ export type CategoryUpdateFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     productErrors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type CategoryUpdatedKeySpecifier = (
+    | "category"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | CategoryUpdatedKeySpecifier
+)[];
+export type CategoryUpdatedFieldPolicy = {
+    category?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type ChannelKeySpecifier = (
     | "currencyCode"
     | "defaultCountry"
@@ -1063,6 +1353,21 @@ export type ChannelCreateFieldPolicy = {
     channelErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type ChannelCreatedKeySpecifier = (
+    | "channel"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | ChannelCreatedKeySpecifier
+)[];
+export type ChannelCreatedFieldPolicy = {
+    channel?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type ChannelDeactivateKeySpecifier = (
     | "channel"
     | "channelErrors"
@@ -1085,11 +1390,27 @@ export type ChannelDeleteFieldPolicy = {
     channelErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type ChannelDeletedKeySpecifier = (
+    | "channel"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | ChannelDeletedKeySpecifier
+)[];
+export type ChannelDeletedFieldPolicy = {
+    channel?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type ChannelErrorKeySpecifier = (
     | "code"
     | "field"
     | "message"
     | "shippingZones"
+    | "warehouses"
     | ChannelErrorKeySpecifier
 )[];
 export type ChannelErrorFieldPolicy = {
@@ -1097,6 +1418,22 @@ export type ChannelErrorFieldPolicy = {
     field?: FieldPolicy<any> | FieldReadFunction<any>;
     message?: FieldPolicy<any> | FieldReadFunction<any>;
     shippingZones?: FieldPolicy<any> | FieldReadFunction<any>;
+    warehouses?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type ChannelStatusChangedKeySpecifier = (
+    | "channel"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | ChannelStatusChangedKeySpecifier
+)[];
+export type ChannelStatusChangedFieldPolicy = {
+    channel?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type ChannelUpdateKeySpecifier = (
     | "channel"
@@ -1108,6 +1445,21 @@ export type ChannelUpdateFieldPolicy = {
     channel?: FieldPolicy<any> | FieldReadFunction<any>;
     channelErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type ChannelUpdatedKeySpecifier = (
+    | "channel"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | ChannelUpdatedKeySpecifier
+)[];
+export type ChannelUpdatedFieldPolicy = {
+    channel?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type CheckoutKeySpecifier = (
     | "availableCollectionPoints"
@@ -1127,8 +1479,12 @@ export type CheckoutKeySpecifier = (
     | "lastChange"
     | "lines"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "note"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "quantity"
     | "shippingAddress"
     | "shippingMethod"
@@ -1138,6 +1494,7 @@ export type CheckoutKeySpecifier = (
     | "subtotalPrice"
     | "token"
     | "totalPrice"
+    | "transactions"
     | "translatedDiscountName"
     | "user"
     | "voucherCode"
@@ -1161,8 +1518,12 @@ export type CheckoutFieldPolicy = {
     lastChange?: FieldPolicy<any> | FieldReadFunction<any>;
     lines?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     note?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     quantity?: FieldPolicy<any> | FieldReadFunction<any>;
     shippingAddress?: FieldPolicy<any> | FieldReadFunction<any>;
     shippingMethod?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -1172,6 +1533,7 @@ export type CheckoutFieldPolicy = {
     subtotalPrice?: FieldPolicy<any> | FieldReadFunction<any>;
     token?: FieldPolicy<any> | FieldReadFunction<any>;
     totalPrice?: FieldPolicy<any> | FieldReadFunction<any>;
+    transactions?: FieldPolicy<any> | FieldReadFunction<any>;
     translatedDiscountName?: FieldPolicy<any> | FieldReadFunction<any>;
     user?: FieldPolicy<any> | FieldReadFunction<any>;
     voucherCode?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -1246,6 +1608,21 @@ export type CheckoutCreateFieldPolicy = {
     created?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type CheckoutCreatedKeySpecifier = (
+    | "checkout"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | CheckoutCreatedKeySpecifier
+)[];
+export type CheckoutCreatedFieldPolicy = {
+    checkout?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type CheckoutCustomerAttachKeySpecifier = (
     | "checkout"
     | "checkoutErrors"
@@ -1292,6 +1669,7 @@ export type CheckoutErrorKeySpecifier = (
     | "addressType"
     | "code"
     | "field"
+    | "lines"
     | "message"
     | "variants"
     | CheckoutErrorKeySpecifier
@@ -1300,8 +1678,26 @@ export type CheckoutErrorFieldPolicy = {
     addressType?: FieldPolicy<any> | FieldReadFunction<any>;
     code?: FieldPolicy<any> | FieldReadFunction<any>;
     field?: FieldPolicy<any> | FieldReadFunction<any>;
+    lines?: FieldPolicy<any> | FieldReadFunction<any>;
     message?: FieldPolicy<any> | FieldReadFunction<any>;
     variants?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type CheckoutFilterShippingMethodsKeySpecifier = (
+    | "checkout"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "shippingMethods"
+    | "version"
+    | CheckoutFilterShippingMethodsKeySpecifier
+)[];
+export type CheckoutFilterShippingMethodsFieldPolicy = {
+    checkout?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    shippingMethods?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type CheckoutLanguageCodeUpdateKeySpecifier = (
     | "checkout"
@@ -1319,6 +1715,9 @@ export type CheckoutLineKeySpecifier = (
     | "quantity"
     | "requiresShipping"
     | "totalPrice"
+    | "undiscountedTotalPrice"
+    | "undiscountedUnitPrice"
+    | "unitPrice"
     | "variant"
     | CheckoutLineKeySpecifier
 )[];
@@ -1327,6 +1726,9 @@ export type CheckoutLineFieldPolicy = {
     quantity?: FieldPolicy<any> | FieldReadFunction<any>;
     requiresShipping?: FieldPolicy<any> | FieldReadFunction<any>;
     totalPrice?: FieldPolicy<any> | FieldReadFunction<any>;
+    undiscountedTotalPrice?: FieldPolicy<any> | FieldReadFunction<any>;
+    undiscountedUnitPrice?: FieldPolicy<any> | FieldReadFunction<any>;
+    unitPrice?: FieldPolicy<any> | FieldReadFunction<any>;
     variant?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type CheckoutLineCountableConnectionKeySpecifier = (
@@ -1437,6 +1839,21 @@ export type CheckoutShippingMethodUpdateFieldPolicy = {
     checkoutErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type CheckoutUpdatedKeySpecifier = (
+    | "checkout"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | CheckoutUpdatedKeySpecifier
+)[];
+export type CheckoutUpdatedFieldPolicy = {
+    checkout?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type ChoiceValueKeySpecifier = ("raw" | "verbose" | ChoiceValueKeySpecifier)[];
 export type ChoiceValueFieldPolicy = {
     raw?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -1450,8 +1867,12 @@ export type CollectionKeySpecifier = (
     | "descriptionJson"
     | "id"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "name"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "products"
     | "seoDescription"
     | "seoTitle"
@@ -1467,8 +1888,12 @@ export type CollectionFieldPolicy = {
     descriptionJson?: FieldPolicy<any> | FieldReadFunction<any>;
     id?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     name?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     products?: FieldPolicy<any> | FieldReadFunction<any>;
     seoDescription?: FieldPolicy<any> | FieldReadFunction<any>;
     seoTitle?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -1502,6 +1927,7 @@ export type CollectionChannelListingKeySpecifier = (
     | "id"
     | "isPublished"
     | "publicationDate"
+    | "publishedAt"
     | CollectionChannelListingKeySpecifier
 )[];
 export type CollectionChannelListingFieldPolicy = {
@@ -1509,6 +1935,7 @@ export type CollectionChannelListingFieldPolicy = {
     id?: FieldPolicy<any> | FieldReadFunction<any>;
     isPublished?: FieldPolicy<any> | FieldReadFunction<any>;
     publicationDate?: FieldPolicy<any> | FieldReadFunction<any>;
+    publishedAt?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type CollectionChannelListingErrorKeySpecifier = (
     | "attributes"
@@ -1569,6 +1996,21 @@ export type CollectionCreateFieldPolicy = {
     collectionErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type CollectionCreatedKeySpecifier = (
+    | "collection"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | CollectionCreatedKeySpecifier
+)[];
+export type CollectionCreatedFieldPolicy = {
+    collection?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type CollectionDeleteKeySpecifier = (
     | "collection"
     | "collectionErrors"
@@ -1579,6 +2021,21 @@ export type CollectionDeleteFieldPolicy = {
     collection?: FieldPolicy<any> | FieldReadFunction<any>;
     collectionErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type CollectionDeletedKeySpecifier = (
+    | "collection"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | CollectionDeletedKeySpecifier
+)[];
+export type CollectionDeletedFieldPolicy = {
+    collection?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type CollectionErrorKeySpecifier = (
     | "code"
@@ -1677,6 +2134,21 @@ export type CollectionUpdateFieldPolicy = {
     collectionErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type CollectionUpdatedKeySpecifier = (
+    | "collection"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | CollectionUpdatedKeySpecifier
+)[];
+export type CollectionUpdatedFieldPolicy = {
+    collection?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type ConfigurationItemKeySpecifier = (
     | "helpText"
     | "label"
@@ -1774,6 +2246,21 @@ export type CustomerCreateFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     user?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type CustomerCreatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "user"
+    | "version"
+    | CustomerCreatedKeySpecifier
+)[];
+export type CustomerCreatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    user?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type CustomerDeleteKeySpecifier = (
     | "accountErrors"
     | "errors"
@@ -1819,6 +2306,21 @@ export type CustomerUpdateFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     user?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type CustomerUpdatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "user"
+    | "version"
+    | CustomerUpdatedKeySpecifier
+)[];
+export type CustomerUpdatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    user?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type DeactivateAllUserTokensKeySpecifier = (
     | "accountErrors"
     | "errors"
@@ -1856,7 +2358,11 @@ export type DigitalContentKeySpecifier = (
     | "id"
     | "maxDownloads"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "productVariant"
     | "urlValidDays"
     | "urls"
@@ -1869,7 +2375,11 @@ export type DigitalContentFieldPolicy = {
     id?: FieldPolicy<any> | FieldReadFunction<any>;
     maxDownloads?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     productVariant?: FieldPolicy<any> | FieldReadFunction<any>;
     urlValidDays?: FieldPolicy<any> | FieldReadFunction<any>;
     urls?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -2014,6 +2524,21 @@ export type DraftOrderCreateFieldPolicy = {
     order?: FieldPolicy<any> | FieldReadFunction<any>;
     orderErrors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type DraftOrderCreatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "order"
+    | "recipient"
+    | "version"
+    | DraftOrderCreatedKeySpecifier
+)[];
+export type DraftOrderCreatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    order?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type DraftOrderDeleteKeySpecifier = (
     | "errors"
     | "order"
@@ -2024,6 +2549,21 @@ export type DraftOrderDeleteFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     order?: FieldPolicy<any> | FieldReadFunction<any>;
     orderErrors?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type DraftOrderDeletedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "order"
+    | "recipient"
+    | "version"
+    | DraftOrderDeletedKeySpecifier
+)[];
+export type DraftOrderDeletedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    order?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type DraftOrderLinesBulkDeleteKeySpecifier = (
     | "count"
@@ -2046,6 +2586,34 @@ export type DraftOrderUpdateFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     order?: FieldPolicy<any> | FieldReadFunction<any>;
     orderErrors?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type DraftOrderUpdatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "order"
+    | "recipient"
+    | "version"
+    | DraftOrderUpdatedKeySpecifier
+)[];
+export type DraftOrderUpdatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    order?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type EventKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | EventKeySpecifier
+)[];
+export type EventFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type EventDeliveryKeySpecifier = (
     | "attempts"
@@ -2071,6 +2639,7 @@ export type EventDeliveryAttemptKeySpecifier = (
     | "requestHeaders"
     | "response"
     | "responseHeaders"
+    | "responseStatusCode"
     | "status"
     | "taskId"
     | EventDeliveryAttemptKeySpecifier
@@ -2082,6 +2651,7 @@ export type EventDeliveryAttemptFieldPolicy = {
     requestHeaders?: FieldPolicy<any> | FieldReadFunction<any>;
     response?: FieldPolicy<any> | FieldReadFunction<any>;
     responseHeaders?: FieldPolicy<any> | FieldReadFunction<any>;
+    responseStatusCode?: FieldPolicy<any> | FieldReadFunction<any>;
     status?: FieldPolicy<any> | FieldReadFunction<any>;
     taskId?: FieldPolicy<any> | FieldReadFunction<any>;
 };
@@ -2328,7 +2898,11 @@ export type FulfillmentKeySpecifier = (
     | "id"
     | "lines"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "status"
     | "statusDisplay"
     | "trackingNumber"
@@ -2341,7 +2915,11 @@ export type FulfillmentFieldPolicy = {
     id?: FieldPolicy<any> | FieldReadFunction<any>;
     lines?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     status?: FieldPolicy<any> | FieldReadFunction<any>;
     statusDisplay?: FieldPolicy<any> | FieldReadFunction<any>;
     trackingNumber?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -2360,6 +2938,23 @@ export type FulfillmentApproveFieldPolicy = {
     order?: FieldPolicy<any> | FieldReadFunction<any>;
     orderErrors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type FulfillmentApprovedKeySpecifier = (
+    | "fulfillment"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "order"
+    | "recipient"
+    | "version"
+    | FulfillmentApprovedKeySpecifier
+)[];
+export type FulfillmentApprovedFieldPolicy = {
+    fulfillment?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    order?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type FulfillmentCancelKeySpecifier = (
     | "errors"
     | "fulfillment"
@@ -2372,6 +2967,40 @@ export type FulfillmentCancelFieldPolicy = {
     fulfillment?: FieldPolicy<any> | FieldReadFunction<any>;
     order?: FieldPolicy<any> | FieldReadFunction<any>;
     orderErrors?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type FulfillmentCanceledKeySpecifier = (
+    | "fulfillment"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "order"
+    | "recipient"
+    | "version"
+    | FulfillmentCanceledKeySpecifier
+)[];
+export type FulfillmentCanceledFieldPolicy = {
+    fulfillment?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    order?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type FulfillmentCreatedKeySpecifier = (
+    | "fulfillment"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "order"
+    | "recipient"
+    | "version"
+    | FulfillmentCreatedKeySpecifier
+)[];
+export type FulfillmentCreatedFieldPolicy = {
+    fulfillment?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    order?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type FulfillmentLineKeySpecifier = (
     | "id"
@@ -2440,6 +3069,7 @@ export type GiftCardKeySpecifier = (
     | "createdBy"
     | "createdByEmail"
     | "currentBalance"
+    | "displayCode"
     | "endDate"
     | "events"
     | "expiryDate"
@@ -2449,7 +3079,11 @@ export type GiftCardKeySpecifier = (
     | "last4CodeChars"
     | "lastUsedOn"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "product"
     | "startDate"
     | "tags"
@@ -2466,6 +3100,7 @@ export type GiftCardFieldPolicy = {
     createdBy?: FieldPolicy<any> | FieldReadFunction<any>;
     createdByEmail?: FieldPolicy<any> | FieldReadFunction<any>;
     currentBalance?: FieldPolicy<any> | FieldReadFunction<any>;
+    displayCode?: FieldPolicy<any> | FieldReadFunction<any>;
     endDate?: FieldPolicy<any> | FieldReadFunction<any>;
     events?: FieldPolicy<any> | FieldReadFunction<any>;
     expiryDate?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -2475,7 +3110,11 @@ export type GiftCardFieldPolicy = {
     last4CodeChars?: FieldPolicy<any> | FieldReadFunction<any>;
     lastUsedOn?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     product?: FieldPolicy<any> | FieldReadFunction<any>;
     startDate?: FieldPolicy<any> | FieldReadFunction<any>;
     tags?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -2570,6 +3209,21 @@ export type GiftCardCreateFieldPolicy = {
     giftCard?: FieldPolicy<any> | FieldReadFunction<any>;
     giftCardErrors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type GiftCardCreatedKeySpecifier = (
+    | "giftCard"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | GiftCardCreatedKeySpecifier
+)[];
+export type GiftCardCreatedFieldPolicy = {
+    giftCard?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type GiftCardDeactivateKeySpecifier = (
     | "errors"
     | "giftCard"
@@ -2591,6 +3245,21 @@ export type GiftCardDeleteFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     giftCard?: FieldPolicy<any> | FieldReadFunction<any>;
     giftCardErrors?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type GiftCardDeletedKeySpecifier = (
+    | "giftCard"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | GiftCardDeletedKeySpecifier
+)[];
+export type GiftCardDeletedFieldPolicy = {
+    giftCard?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type GiftCardErrorKeySpecifier = (
     | "code"
@@ -2685,6 +3354,21 @@ export type GiftCardSettingsUpdateFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     giftCardSettings?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type GiftCardStatusChangedKeySpecifier = (
+    | "giftCard"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | GiftCardStatusChangedKeySpecifier
+)[];
+export type GiftCardStatusChangedFieldPolicy = {
+    giftCard?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type GiftCardTagKeySpecifier = ("id" | "name" | GiftCardTagKeySpecifier)[];
 export type GiftCardTagFieldPolicy = {
     id?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -2720,6 +3404,21 @@ export type GiftCardUpdateFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     giftCard?: FieldPolicy<any> | FieldReadFunction<any>;
     giftCardErrors?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type GiftCardUpdatedKeySpecifier = (
+    | "giftCard"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | GiftCardUpdatedKeySpecifier
+)[];
+export type GiftCardUpdatedFieldPolicy = {
+    giftCard?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type GroupKeySpecifier = (
     | "id"
@@ -2763,8 +3462,12 @@ export type InvoiceKeySpecifier = (
     | "id"
     | "message"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "number"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "status"
     | "updatedAt"
     | "url"
@@ -2776,8 +3479,12 @@ export type InvoiceFieldPolicy = {
     id?: FieldPolicy<any> | FieldReadFunction<any>;
     message?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     number?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     status?: FieldPolicy<any> | FieldReadFunction<any>;
     updatedAt?: FieldPolicy<any> | FieldReadFunction<any>;
     url?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -2803,6 +3510,21 @@ export type InvoiceDeleteFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     invoice?: FieldPolicy<any> | FieldReadFunction<any>;
     invoiceErrors?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type InvoiceDeletedKeySpecifier = (
+    | "invoice"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | InvoiceDeletedKeySpecifier
+)[];
+export type InvoiceDeletedFieldPolicy = {
+    invoice?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type InvoiceErrorKeySpecifier = ("code" | "field" | "message" | InvoiceErrorKeySpecifier)[];
 export type InvoiceErrorFieldPolicy = {
@@ -2834,6 +3556,21 @@ export type InvoiceRequestDeleteFieldPolicy = {
     invoice?: FieldPolicy<any> | FieldReadFunction<any>;
     invoiceErrors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type InvoiceRequestedKeySpecifier = (
+    | "invoice"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | InvoiceRequestedKeySpecifier
+)[];
+export type InvoiceRequestedFieldPolicy = {
+    invoice?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type InvoiceSendNotificationKeySpecifier = (
     | "errors"
     | "invoice"
@@ -2844,6 +3581,21 @@ export type InvoiceSendNotificationFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     invoice?: FieldPolicy<any> | FieldReadFunction<any>;
     invoiceErrors?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type InvoiceSentKeySpecifier = (
+    | "invoice"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | InvoiceSentKeySpecifier
+)[];
+export type InvoiceSentFieldPolicy = {
+    invoice?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type InvoiceUpdateKeySpecifier = (
     | "errors"
@@ -2891,6 +3643,7 @@ export type LimitsFieldPolicy = {
 export type ManifestKeySpecifier = (
     | "about"
     | "appUrl"
+    | "audience"
     | "configurationUrl"
     | "dataPrivacy"
     | "dataPrivacyUrl"
@@ -2902,11 +3655,13 @@ export type ManifestKeySpecifier = (
     | "supportUrl"
     | "tokenTargetUrl"
     | "version"
+    | "webhooks"
     | ManifestKeySpecifier
 )[];
 export type ManifestFieldPolicy = {
     about?: FieldPolicy<any> | FieldReadFunction<any>;
     appUrl?: FieldPolicy<any> | FieldReadFunction<any>;
+    audience?: FieldPolicy<any> | FieldReadFunction<any>;
     configurationUrl?: FieldPolicy<any> | FieldReadFunction<any>;
     dataPrivacy?: FieldPolicy<any> | FieldReadFunction<any>;
     dataPrivacyUrl?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -2918,6 +3673,7 @@ export type ManifestFieldPolicy = {
     supportUrl?: FieldPolicy<any> | FieldReadFunction<any>;
     tokenTargetUrl?: FieldPolicy<any> | FieldReadFunction<any>;
     version?: FieldPolicy<any> | FieldReadFunction<any>;
+    webhooks?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type MarginKeySpecifier = ("start" | "stop" | MarginKeySpecifier)[];
 export type MarginFieldPolicy = {
@@ -2928,8 +3684,12 @@ export type MenuKeySpecifier = (
     | "id"
     | "items"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "name"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "slug"
     | MenuKeySpecifier
 )[];
@@ -2937,8 +3697,12 @@ export type MenuFieldPolicy = {
     id?: FieldPolicy<any> | FieldReadFunction<any>;
     items?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     name?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     slug?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type MenuBulkDeleteKeySpecifier = (
@@ -2974,11 +3738,41 @@ export type MenuCreateFieldPolicy = {
     menu?: FieldPolicy<any> | FieldReadFunction<any>;
     menuErrors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type MenuCreatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "menu"
+    | "recipient"
+    | "version"
+    | MenuCreatedKeySpecifier
+)[];
+export type MenuCreatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    menu?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type MenuDeleteKeySpecifier = ("errors" | "menu" | "menuErrors" | MenuDeleteKeySpecifier)[];
 export type MenuDeleteFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     menu?: FieldPolicy<any> | FieldReadFunction<any>;
     menuErrors?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type MenuDeletedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "menu"
+    | "recipient"
+    | "version"
+    | MenuDeletedKeySpecifier
+)[];
+export type MenuDeletedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    menu?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type MenuErrorKeySpecifier = ("code" | "field" | "message" | MenuErrorKeySpecifier)[];
 export type MenuErrorFieldPolicy = {
@@ -2994,10 +3788,14 @@ export type MenuItemKeySpecifier = (
     | "level"
     | "menu"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "name"
     | "page"
     | "parent"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "translation"
     | "url"
     | MenuItemKeySpecifier
@@ -3010,10 +3808,14 @@ export type MenuItemFieldPolicy = {
     level?: FieldPolicy<any> | FieldReadFunction<any>;
     menu?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     name?: FieldPolicy<any> | FieldReadFunction<any>;
     page?: FieldPolicy<any> | FieldReadFunction<any>;
     parent?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     translation?: FieldPolicy<any> | FieldReadFunction<any>;
     url?: FieldPolicy<any> | FieldReadFunction<any>;
 };
@@ -3059,6 +3861,21 @@ export type MenuItemCreateFieldPolicy = {
     menuErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     menuItem?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type MenuItemCreatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "menuItem"
+    | "recipient"
+    | "version"
+    | MenuItemCreatedKeySpecifier
+)[];
+export type MenuItemCreatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    menuItem?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type MenuItemDeleteKeySpecifier = (
     | "errors"
     | "menuErrors"
@@ -3069,6 +3886,21 @@ export type MenuItemDeleteFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     menuErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     menuItem?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type MenuItemDeletedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "menuItem"
+    | "recipient"
+    | "version"
+    | MenuItemDeletedKeySpecifier
+)[];
+export type MenuItemDeletedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    menuItem?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type MenuItemMoveKeySpecifier = ("errors" | "menu" | "menuErrors" | MenuItemMoveKeySpecifier)[];
 export type MenuItemMoveFieldPolicy = {
@@ -3122,11 +3954,41 @@ export type MenuItemUpdateFieldPolicy = {
     menuErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     menuItem?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type MenuItemUpdatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "menuItem"
+    | "recipient"
+    | "version"
+    | MenuItemUpdatedKeySpecifier
+)[];
+export type MenuItemUpdatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    menuItem?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type MenuUpdateKeySpecifier = ("errors" | "menu" | "menuErrors" | MenuUpdateKeySpecifier)[];
 export type MenuUpdateFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     menu?: FieldPolicy<any> | FieldReadFunction<any>;
     menuErrors?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type MenuUpdatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "menu"
+    | "recipient"
+    | "version"
+    | MenuUpdatedKeySpecifier
+)[];
+export type MenuUpdatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    menu?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type MetadataErrorKeySpecifier = ("code" | "field" | "message" | MetadataErrorKeySpecifier)[];
 export type MetadataErrorFieldPolicy = {
@@ -3286,6 +4148,7 @@ export type MutationKeySpecifier = (
     | "orderCancel"
     | "orderCapture"
     | "orderConfirm"
+    | "orderCreateFromCheckout"
     | "orderDiscountAdd"
     | "orderDiscountDelete"
     | "orderDiscountUpdate"
@@ -3399,10 +4262,14 @@ export type MutationKeySpecifier = (
     | "staffNotificationRecipientDelete"
     | "staffNotificationRecipientUpdate"
     | "staffUpdate"
+    | "taxExemptionManage"
     | "tokenCreate"
     | "tokenRefresh"
     | "tokenVerify"
     | "tokensDeactivateAll"
+    | "transactionCreate"
+    | "transactionRequestAction"
+    | "transactionUpdate"
     | "unassignWarehouseShippingZone"
     | "updateMetadata"
     | "updatePrivateMetadata"
@@ -3562,6 +4429,7 @@ export type MutationFieldPolicy = {
     orderCancel?: FieldPolicy<any> | FieldReadFunction<any>;
     orderCapture?: FieldPolicy<any> | FieldReadFunction<any>;
     orderConfirm?: FieldPolicy<any> | FieldReadFunction<any>;
+    orderCreateFromCheckout?: FieldPolicy<any> | FieldReadFunction<any>;
     orderDiscountAdd?: FieldPolicy<any> | FieldReadFunction<any>;
     orderDiscountDelete?: FieldPolicy<any> | FieldReadFunction<any>;
     orderDiscountUpdate?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -3675,10 +4543,14 @@ export type MutationFieldPolicy = {
     staffNotificationRecipientDelete?: FieldPolicy<any> | FieldReadFunction<any>;
     staffNotificationRecipientUpdate?: FieldPolicy<any> | FieldReadFunction<any>;
     staffUpdate?: FieldPolicy<any> | FieldReadFunction<any>;
+    taxExemptionManage?: FieldPolicy<any> | FieldReadFunction<any>;
     tokenCreate?: FieldPolicy<any> | FieldReadFunction<any>;
     tokenRefresh?: FieldPolicy<any> | FieldReadFunction<any>;
     tokenVerify?: FieldPolicy<any> | FieldReadFunction<any>;
     tokensDeactivateAll?: FieldPolicy<any> | FieldReadFunction<any>;
+    transactionCreate?: FieldPolicy<any> | FieldReadFunction<any>;
+    transactionRequestAction?: FieldPolicy<any> | FieldReadFunction<any>;
+    transactionUpdate?: FieldPolicy<any> | FieldReadFunction<any>;
     unassignWarehouseShippingZone?: FieldPolicy<any> | FieldReadFunction<any>;
     updateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
     updatePrivateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -3706,20 +4578,30 @@ export type NodeFieldPolicy = {
 };
 export type ObjectWithMetadataKeySpecifier = (
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | ObjectWithMetadataKeySpecifier
 )[];
 export type ObjectWithMetadataFieldPolicy = {
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type OrderKeySpecifier = (
     | "actions"
+    | "authorizeStatus"
     | "availableCollectionPoints"
     | "availableShippingMethods"
     | "billingAddress"
     | "canFinalize"
     | "channel"
+    | "chargeStatus"
     | "collectionPointName"
     | "created"
     | "customerNote"
@@ -3740,6 +4622,8 @@ export type OrderKeySpecifier = (
     | "languageCodeEnum"
     | "lines"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "number"
     | "origin"
     | "original"
@@ -3747,6 +4631,8 @@ export type OrderKeySpecifier = (
     | "paymentStatusDisplay"
     | "payments"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "redirectUrl"
     | "shippingAddress"
     | "shippingMethod"
@@ -3757,14 +4643,17 @@ export type OrderKeySpecifier = (
     | "status"
     | "statusDisplay"
     | "subtotal"
+    | "taxExemption"
     | "token"
     | "total"
     | "totalAuthorized"
     | "totalBalance"
     | "totalCaptured"
     | "trackingClientId"
+    | "transactions"
     | "translatedDiscountName"
     | "undiscountedTotal"
+    | "updatedAt"
     | "user"
     | "userEmail"
     | "voucher"
@@ -3773,11 +4662,13 @@ export type OrderKeySpecifier = (
 )[];
 export type OrderFieldPolicy = {
     actions?: FieldPolicy<any> | FieldReadFunction<any>;
+    authorizeStatus?: FieldPolicy<any> | FieldReadFunction<any>;
     availableCollectionPoints?: FieldPolicy<any> | FieldReadFunction<any>;
     availableShippingMethods?: FieldPolicy<any> | FieldReadFunction<any>;
     billingAddress?: FieldPolicy<any> | FieldReadFunction<any>;
     canFinalize?: FieldPolicy<any> | FieldReadFunction<any>;
     channel?: FieldPolicy<any> | FieldReadFunction<any>;
+    chargeStatus?: FieldPolicy<any> | FieldReadFunction<any>;
     collectionPointName?: FieldPolicy<any> | FieldReadFunction<any>;
     created?: FieldPolicy<any> | FieldReadFunction<any>;
     customerNote?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -3798,6 +4689,8 @@ export type OrderFieldPolicy = {
     languageCodeEnum?: FieldPolicy<any> | FieldReadFunction<any>;
     lines?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     number?: FieldPolicy<any> | FieldReadFunction<any>;
     origin?: FieldPolicy<any> | FieldReadFunction<any>;
     original?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -3805,6 +4698,8 @@ export type OrderFieldPolicy = {
     paymentStatusDisplay?: FieldPolicy<any> | FieldReadFunction<any>;
     payments?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     redirectUrl?: FieldPolicy<any> | FieldReadFunction<any>;
     shippingAddress?: FieldPolicy<any> | FieldReadFunction<any>;
     shippingMethod?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -3815,14 +4710,17 @@ export type OrderFieldPolicy = {
     status?: FieldPolicy<any> | FieldReadFunction<any>;
     statusDisplay?: FieldPolicy<any> | FieldReadFunction<any>;
     subtotal?: FieldPolicy<any> | FieldReadFunction<any>;
+    taxExemption?: FieldPolicy<any> | FieldReadFunction<any>;
     token?: FieldPolicy<any> | FieldReadFunction<any>;
     total?: FieldPolicy<any> | FieldReadFunction<any>;
     totalAuthorized?: FieldPolicy<any> | FieldReadFunction<any>;
     totalBalance?: FieldPolicy<any> | FieldReadFunction<any>;
     totalCaptured?: FieldPolicy<any> | FieldReadFunction<any>;
     trackingClientId?: FieldPolicy<any> | FieldReadFunction<any>;
+    transactions?: FieldPolicy<any> | FieldReadFunction<any>;
     translatedDiscountName?: FieldPolicy<any> | FieldReadFunction<any>;
     undiscountedTotal?: FieldPolicy<any> | FieldReadFunction<any>;
+    updatedAt?: FieldPolicy<any> | FieldReadFunction<any>;
     user?: FieldPolicy<any> | FieldReadFunction<any>;
     userEmail?: FieldPolicy<any> | FieldReadFunction<any>;
     voucher?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -3858,6 +4756,21 @@ export type OrderCancelFieldPolicy = {
     order?: FieldPolicy<any> | FieldReadFunction<any>;
     orderErrors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type OrderCancelledKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "order"
+    | "recipient"
+    | "version"
+    | OrderCancelledKeySpecifier
+)[];
+export type OrderCancelledFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    order?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type OrderCaptureKeySpecifier = (
     | "errors"
     | "order"
@@ -3880,6 +4793,21 @@ export type OrderConfirmFieldPolicy = {
     order?: FieldPolicy<any> | FieldReadFunction<any>;
     orderErrors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type OrderConfirmedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "order"
+    | "recipient"
+    | "version"
+    | OrderConfirmedKeySpecifier
+)[];
+export type OrderConfirmedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    order?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type OrderCountableConnectionKeySpecifier = (
     | "edges"
     | "pageInfo"
@@ -3895,6 +4823,45 @@ export type OrderCountableEdgeKeySpecifier = ("cursor" | "node" | OrderCountable
 export type OrderCountableEdgeFieldPolicy = {
     cursor?: FieldPolicy<any> | FieldReadFunction<any>;
     node?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type OrderCreateFromCheckoutKeySpecifier = (
+    | "errors"
+    | "order"
+    | OrderCreateFromCheckoutKeySpecifier
+)[];
+export type OrderCreateFromCheckoutFieldPolicy = {
+    errors?: FieldPolicy<any> | FieldReadFunction<any>;
+    order?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type OrderCreateFromCheckoutErrorKeySpecifier = (
+    | "code"
+    | "field"
+    | "lines"
+    | "message"
+    | "variants"
+    | OrderCreateFromCheckoutErrorKeySpecifier
+)[];
+export type OrderCreateFromCheckoutErrorFieldPolicy = {
+    code?: FieldPolicy<any> | FieldReadFunction<any>;
+    field?: FieldPolicy<any> | FieldReadFunction<any>;
+    lines?: FieldPolicy<any> | FieldReadFunction<any>;
+    message?: FieldPolicy<any> | FieldReadFunction<any>;
+    variants?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type OrderCreatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "order"
+    | "recipient"
+    | "version"
+    | OrderCreatedKeySpecifier
+)[];
+export type OrderCreatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    order?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type OrderDiscountKeySpecifier = (
     | "amount"
@@ -3987,8 +4954,10 @@ export type OrderEventKeySpecifier = (
     | "paymentGateway"
     | "paymentId"
     | "quantity"
+    | "reference"
     | "relatedOrder"
     | "shippingCostsIncluded"
+    | "status"
     | "transactionReference"
     | "type"
     | "user"
@@ -4013,8 +4982,10 @@ export type OrderEventFieldPolicy = {
     paymentGateway?: FieldPolicy<any> | FieldReadFunction<any>;
     paymentId?: FieldPolicy<any> | FieldReadFunction<any>;
     quantity?: FieldPolicy<any> | FieldReadFunction<any>;
+    reference?: FieldPolicy<any> | FieldReadFunction<any>;
     relatedOrder?: FieldPolicy<any> | FieldReadFunction<any>;
     shippingCostsIncluded?: FieldPolicy<any> | FieldReadFunction<any>;
+    status?: FieldPolicy<any> | FieldReadFunction<any>;
     transactionReference?: FieldPolicy<any> | FieldReadFunction<any>;
     type?: FieldPolicy<any> | FieldReadFunction<any>;
     user?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -4072,6 +5043,23 @@ export type OrderEventOrderLineObjectFieldPolicy = {
     orderLine?: FieldPolicy<any> | FieldReadFunction<any>;
     quantity?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type OrderFilterShippingMethodsKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "order"
+    | "recipient"
+    | "shippingMethods"
+    | "version"
+    | OrderFilterShippingMethodsKeySpecifier
+)[];
+export type OrderFilterShippingMethodsFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    order?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    shippingMethods?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type OrderFulfillKeySpecifier = (
     | "errors"
     | "fulfillments"
@@ -4085,11 +5073,47 @@ export type OrderFulfillFieldPolicy = {
     order?: FieldPolicy<any> | FieldReadFunction<any>;
     orderErrors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type OrderFulfilledKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "order"
+    | "recipient"
+    | "version"
+    | OrderFulfilledKeySpecifier
+)[];
+export type OrderFulfilledFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    order?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type OrderFullyPaidKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "order"
+    | "recipient"
+    | "version"
+    | OrderFullyPaidKeySpecifier
+)[];
+export type OrderFullyPaidFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    order?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type OrderLineKeySpecifier = (
     | "allocations"
     | "digitalContentUrl"
     | "id"
     | "isShippingRequired"
+    | "metadata"
+    | "metafield"
+    | "metafields"
+    | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "productName"
     | "productSku"
     | "productVariantId"
@@ -4116,6 +5140,12 @@ export type OrderLineFieldPolicy = {
     digitalContentUrl?: FieldPolicy<any> | FieldReadFunction<any>;
     id?: FieldPolicy<any> | FieldReadFunction<any>;
     isShippingRequired?: FieldPolicy<any> | FieldReadFunction<any>;
+    metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     productName?: FieldPolicy<any> | FieldReadFunction<any>;
     productSku?: FieldPolicy<any> | FieldReadFunction<any>;
     productVariantId?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -4266,6 +5296,21 @@ export type OrderUpdateShippingFieldPolicy = {
     order?: FieldPolicy<any> | FieldReadFunction<any>;
     orderErrors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type OrderUpdatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "order"
+    | "recipient"
+    | "version"
+    | OrderUpdatedKeySpecifier
+)[];
+export type OrderUpdatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    order?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type OrderVoidKeySpecifier = ("errors" | "order" | "orderErrors" | OrderVoidKeySpecifier)[];
 export type OrderVoidFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -4280,9 +5325,14 @@ export type PageKeySpecifier = (
     | "id"
     | "isPublished"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "pageType"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "publicationDate"
+    | "publishedAt"
     | "seoDescription"
     | "seoTitle"
     | "slug"
@@ -4298,9 +5348,14 @@ export type PageFieldPolicy = {
     id?: FieldPolicy<any> | FieldReadFunction<any>;
     isPublished?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     pageType?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     publicationDate?: FieldPolicy<any> | FieldReadFunction<any>;
+    publishedAt?: FieldPolicy<any> | FieldReadFunction<any>;
     seoDescription?: FieldPolicy<any> | FieldReadFunction<any>;
     seoTitle?: FieldPolicy<any> | FieldReadFunction<any>;
     slug?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -4373,11 +5428,41 @@ export type PageCreateFieldPolicy = {
     page?: FieldPolicy<any> | FieldReadFunction<any>;
     pageErrors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type PageCreatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "page"
+    | "recipient"
+    | "version"
+    | PageCreatedKeySpecifier
+)[];
+export type PageCreatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    page?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type PageDeleteKeySpecifier = ("errors" | "page" | "pageErrors" | PageDeleteKeySpecifier)[];
 export type PageDeleteFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     page?: FieldPolicy<any> | FieldReadFunction<any>;
     pageErrors?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type PageDeletedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "page"
+    | "recipient"
+    | "version"
+    | PageDeletedKeySpecifier
+)[];
+export type PageDeletedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    page?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type PageErrorKeySpecifier = (
     | "attributes"
@@ -4477,8 +5562,12 @@ export type PageTypeKeySpecifier = (
     | "hasPages"
     | "id"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "name"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "slug"
     | PageTypeKeySpecifier
 )[];
@@ -4488,8 +5577,12 @@ export type PageTypeFieldPolicy = {
     hasPages?: FieldPolicy<any> | FieldReadFunction<any>;
     id?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     name?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     slug?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type PageTypeBulkDeleteKeySpecifier = (
@@ -4534,6 +5627,21 @@ export type PageTypeCreateFieldPolicy = {
     pageErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     pageType?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type PageTypeCreatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "pageType"
+    | "recipient"
+    | "version"
+    | PageTypeCreatedKeySpecifier
+)[];
+export type PageTypeCreatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    pageType?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type PageTypeDeleteKeySpecifier = (
     | "errors"
     | "pageErrors"
@@ -4544,6 +5652,21 @@ export type PageTypeDeleteFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     pageErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     pageType?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type PageTypeDeletedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "pageType"
+    | "recipient"
+    | "version"
+    | PageTypeDeletedKeySpecifier
+)[];
+export type PageTypeDeletedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    pageType?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type PageTypeReorderAttributesKeySpecifier = (
     | "errors"
@@ -4567,11 +5690,41 @@ export type PageTypeUpdateFieldPolicy = {
     pageErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     pageType?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type PageTypeUpdatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "pageType"
+    | "recipient"
+    | "version"
+    | PageTypeUpdatedKeySpecifier
+)[];
+export type PageTypeUpdatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    pageType?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type PageUpdateKeySpecifier = ("errors" | "page" | "pageErrors" | PageUpdateKeySpecifier)[];
 export type PageUpdateFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     page?: FieldPolicy<any> | FieldReadFunction<any>;
     pageErrors?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type PageUpdatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "page"
+    | "recipient"
+    | "version"
+    | PageUpdatedKeySpecifier
+)[];
+export type PageUpdatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    page?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type PasswordChangeKeySpecifier = (
     | "accountErrors"
@@ -4598,10 +5751,14 @@ export type PaymentKeySpecifier = (
     | "id"
     | "isActive"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "modified"
     | "order"
     | "paymentMethodType"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "token"
     | "total"
     | "transactions"
@@ -4621,13 +5778,32 @@ export type PaymentFieldPolicy = {
     id?: FieldPolicy<any> | FieldReadFunction<any>;
     isActive?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     modified?: FieldPolicy<any> | FieldReadFunction<any>;
     order?: FieldPolicy<any> | FieldReadFunction<any>;
     paymentMethodType?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     token?: FieldPolicy<any> | FieldReadFunction<any>;
     total?: FieldPolicy<any> | FieldReadFunction<any>;
     transactions?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type PaymentAuthorizeKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "payment"
+    | "recipient"
+    | "version"
+    | PaymentAuthorizeKeySpecifier
+)[];
+export type PaymentAuthorizeFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    payment?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type PaymentCaptureKeySpecifier = (
     | "errors"
@@ -4640,6 +5816,21 @@ export type PaymentCaptureFieldPolicy = {
     payment?: FieldPolicy<any> | FieldReadFunction<any>;
     paymentErrors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type PaymentCaptureEventKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "payment"
+    | "recipient"
+    | "version"
+    | PaymentCaptureEventKeySpecifier
+)[];
+export type PaymentCaptureEventFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    payment?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type PaymentCheckBalanceKeySpecifier = (
     | "data"
     | "errors"
@@ -4650,6 +5841,21 @@ export type PaymentCheckBalanceFieldPolicy = {
     data?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     paymentErrors?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type PaymentConfirmEventKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "payment"
+    | "recipient"
+    | "version"
+    | PaymentConfirmEventKeySpecifier
+)[];
+export type PaymentConfirmEventFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    payment?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type PaymentCountableConnectionKeySpecifier = (
     | "edges"
@@ -4667,11 +5873,18 @@ export type PaymentCountableEdgeFieldPolicy = {
     cursor?: FieldPolicy<any> | FieldReadFunction<any>;
     node?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type PaymentErrorKeySpecifier = ("code" | "field" | "message" | PaymentErrorKeySpecifier)[];
+export type PaymentErrorKeySpecifier = (
+    | "code"
+    | "field"
+    | "message"
+    | "variants"
+    | PaymentErrorKeySpecifier
+)[];
 export type PaymentErrorFieldPolicy = {
     code?: FieldPolicy<any> | FieldReadFunction<any>;
     field?: FieldPolicy<any> | FieldReadFunction<any>;
     message?: FieldPolicy<any> | FieldReadFunction<any>;
+    variants?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type PaymentGatewayKeySpecifier = (
     | "config"
@@ -4708,6 +5921,36 @@ export type PaymentInitializedFieldPolicy = {
     gateway?: FieldPolicy<any> | FieldReadFunction<any>;
     name?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type PaymentListGatewaysKeySpecifier = (
+    | "checkout"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | PaymentListGatewaysKeySpecifier
+)[];
+export type PaymentListGatewaysFieldPolicy = {
+    checkout?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type PaymentProcessEventKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "payment"
+    | "recipient"
+    | "version"
+    | PaymentProcessEventKeySpecifier
+)[];
+export type PaymentProcessEventFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    payment?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type PaymentRefundKeySpecifier = (
     | "errors"
     | "payment"
@@ -4718,6 +5961,21 @@ export type PaymentRefundFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     payment?: FieldPolicy<any> | FieldReadFunction<any>;
     paymentErrors?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type PaymentRefundEventKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "payment"
+    | "recipient"
+    | "version"
+    | PaymentRefundEventKeySpecifier
+)[];
+export type PaymentRefundEventFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    payment?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type PaymentSourceKeySpecifier = (
     | "creditCardInfo"
@@ -4743,6 +6001,21 @@ export type PaymentVoidFieldPolicy = {
     payment?: FieldPolicy<any> | FieldReadFunction<any>;
     paymentErrors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type PaymentVoidEventKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "payment"
+    | "recipient"
+    | "version"
+    | PaymentVoidEventKeySpecifier
+)[];
+export type PaymentVoidEventFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    payment?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type PermissionKeySpecifier = ("code" | "name" | PermissionKeySpecifier)[];
 export type PermissionFieldPolicy = {
     code?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -4759,6 +6032,21 @@ export type PermissionGroupCreateFieldPolicy = {
     group?: FieldPolicy<any> | FieldReadFunction<any>;
     permissionGroupErrors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type PermissionGroupCreatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "permissionGroup"
+    | "recipient"
+    | "version"
+    | PermissionGroupCreatedKeySpecifier
+)[];
+export type PermissionGroupCreatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    permissionGroup?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type PermissionGroupDeleteKeySpecifier = (
     | "errors"
     | "group"
@@ -4769,6 +6057,21 @@ export type PermissionGroupDeleteFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     group?: FieldPolicy<any> | FieldReadFunction<any>;
     permissionGroupErrors?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type PermissionGroupDeletedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "permissionGroup"
+    | "recipient"
+    | "version"
+    | PermissionGroupDeletedKeySpecifier
+)[];
+export type PermissionGroupDeletedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    permissionGroup?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type PermissionGroupErrorKeySpecifier = (
     | "code"
@@ -4795,6 +6098,21 @@ export type PermissionGroupUpdateFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     group?: FieldPolicy<any> | FieldReadFunction<any>;
     permissionGroupErrors?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type PermissionGroupUpdatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "permissionGroup"
+    | "recipient"
+    | "version"
+    | PermissionGroupUpdatedKeySpecifier
+)[];
+export type PermissionGroupUpdatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    permissionGroup?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type PluginKeySpecifier = (
     | "channelConfigurations"
@@ -4878,11 +6196,13 @@ export type PreorderThresholdFieldPolicy = {
 export type ProductKeySpecifier = (
     | "attributes"
     | "availableForPurchase"
+    | "availableForPurchaseAt"
     | "category"
     | "channel"
     | "channelListings"
     | "chargeTaxes"
     | "collections"
+    | "created"
     | "defaultVariant"
     | "description"
     | "descriptionJson"
@@ -4894,9 +6214,13 @@ export type ProductKeySpecifier = (
     | "media"
     | "mediaById"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "name"
     | "pricing"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "productType"
     | "rating"
     | "seoDescription"
@@ -4913,11 +6237,13 @@ export type ProductKeySpecifier = (
 export type ProductFieldPolicy = {
     attributes?: FieldPolicy<any> | FieldReadFunction<any>;
     availableForPurchase?: FieldPolicy<any> | FieldReadFunction<any>;
+    availableForPurchaseAt?: FieldPolicy<any> | FieldReadFunction<any>;
     category?: FieldPolicy<any> | FieldReadFunction<any>;
     channel?: FieldPolicy<any> | FieldReadFunction<any>;
     channelListings?: FieldPolicy<any> | FieldReadFunction<any>;
     chargeTaxes?: FieldPolicy<any> | FieldReadFunction<any>;
     collections?: FieldPolicy<any> | FieldReadFunction<any>;
+    created?: FieldPolicy<any> | FieldReadFunction<any>;
     defaultVariant?: FieldPolicy<any> | FieldReadFunction<any>;
     description?: FieldPolicy<any> | FieldReadFunction<any>;
     descriptionJson?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -4929,9 +6255,13 @@ export type ProductFieldPolicy = {
     media?: FieldPolicy<any> | FieldReadFunction<any>;
     mediaById?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     name?: FieldPolicy<any> | FieldReadFunction<any>;
     pricing?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     productType?: FieldPolicy<any> | FieldReadFunction<any>;
     rating?: FieldPolicy<any> | FieldReadFunction<any>;
     seoDescription?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -4990,6 +6320,7 @@ export type ProductBulkDeleteFieldPolicy = {
 };
 export type ProductChannelListingKeySpecifier = (
     | "availableForPurchase"
+    | "availableForPurchaseAt"
     | "channel"
     | "discountedPrice"
     | "id"
@@ -4998,12 +6329,14 @@ export type ProductChannelListingKeySpecifier = (
     | "margin"
     | "pricing"
     | "publicationDate"
+    | "publishedAt"
     | "purchaseCost"
     | "visibleInListings"
     | ProductChannelListingKeySpecifier
 )[];
 export type ProductChannelListingFieldPolicy = {
     availableForPurchase?: FieldPolicy<any> | FieldReadFunction<any>;
+    availableForPurchaseAt?: FieldPolicy<any> | FieldReadFunction<any>;
     channel?: FieldPolicy<any> | FieldReadFunction<any>;
     discountedPrice?: FieldPolicy<any> | FieldReadFunction<any>;
     id?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -5012,6 +6345,7 @@ export type ProductChannelListingFieldPolicy = {
     margin?: FieldPolicy<any> | FieldReadFunction<any>;
     pricing?: FieldPolicy<any> | FieldReadFunction<any>;
     publicationDate?: FieldPolicy<any> | FieldReadFunction<any>;
+    publishedAt?: FieldPolicy<any> | FieldReadFunction<any>;
     purchaseCost?: FieldPolicy<any> | FieldReadFunction<any>;
     visibleInListings?: FieldPolicy<any> | FieldReadFunction<any>;
 };
@@ -5072,6 +6406,23 @@ export type ProductCreateFieldPolicy = {
     product?: FieldPolicy<any> | FieldReadFunction<any>;
     productErrors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type ProductCreatedKeySpecifier = (
+    | "category"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "product"
+    | "recipient"
+    | "version"
+    | ProductCreatedKeySpecifier
+)[];
+export type ProductCreatedFieldPolicy = {
+    category?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    product?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type ProductDeleteKeySpecifier = (
     | "errors"
     | "product"
@@ -5082,6 +6433,23 @@ export type ProductDeleteFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     product?: FieldPolicy<any> | FieldReadFunction<any>;
     productErrors?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type ProductDeletedKeySpecifier = (
+    | "category"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "product"
+    | "recipient"
+    | "version"
+    | ProductDeletedKeySpecifier
+)[];
+export type ProductDeletedFieldPolicy = {
+    category?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    product?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type ProductErrorKeySpecifier = (
     | "attributes"
@@ -5281,8 +6649,12 @@ export type ProductTypeKeySpecifier = (
     | "isShippingRequired"
     | "kind"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "name"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "productAttributes"
     | "products"
     | "slug"
@@ -5300,8 +6672,12 @@ export type ProductTypeFieldPolicy = {
     isShippingRequired?: FieldPolicy<any> | FieldReadFunction<any>;
     kind?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     name?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     productAttributes?: FieldPolicy<any> | FieldReadFunction<any>;
     products?: FieldPolicy<any> | FieldReadFunction<any>;
     slug?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -5395,20 +6771,42 @@ export type ProductUpdateFieldPolicy = {
     product?: FieldPolicy<any> | FieldReadFunction<any>;
     productErrors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type ProductUpdatedKeySpecifier = (
+    | "category"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "product"
+    | "recipient"
+    | "version"
+    | ProductUpdatedKeySpecifier
+)[];
+export type ProductUpdatedFieldPolicy = {
+    category?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    product?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type ProductVariantKeySpecifier = (
     | "attributes"
     | "channel"
     | "channelListings"
+    | "created"
     | "digitalContent"
     | "id"
     | "images"
     | "margin"
     | "media"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "name"
     | "preorder"
     | "pricing"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "product"
     | "quantityAvailable"
     | "quantityLimitPerCustomer"
@@ -5418,6 +6816,7 @@ export type ProductVariantKeySpecifier = (
     | "stocks"
     | "trackInventory"
     | "translation"
+    | "updatedAt"
     | "weight"
     | ProductVariantKeySpecifier
 )[];
@@ -5425,16 +6824,21 @@ export type ProductVariantFieldPolicy = {
     attributes?: FieldPolicy<any> | FieldReadFunction<any>;
     channel?: FieldPolicy<any> | FieldReadFunction<any>;
     channelListings?: FieldPolicy<any> | FieldReadFunction<any>;
+    created?: FieldPolicy<any> | FieldReadFunction<any>;
     digitalContent?: FieldPolicy<any> | FieldReadFunction<any>;
     id?: FieldPolicy<any> | FieldReadFunction<any>;
     images?: FieldPolicy<any> | FieldReadFunction<any>;
     margin?: FieldPolicy<any> | FieldReadFunction<any>;
     media?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     name?: FieldPolicy<any> | FieldReadFunction<any>;
     preorder?: FieldPolicy<any> | FieldReadFunction<any>;
     pricing?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     product?: FieldPolicy<any> | FieldReadFunction<any>;
     quantityAvailable?: FieldPolicy<any> | FieldReadFunction<any>;
     quantityLimitPerCustomer?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -5444,7 +6848,25 @@ export type ProductVariantFieldPolicy = {
     stocks?: FieldPolicy<any> | FieldReadFunction<any>;
     trackInventory?: FieldPolicy<any> | FieldReadFunction<any>;
     translation?: FieldPolicy<any> | FieldReadFunction<any>;
+    updatedAt?: FieldPolicy<any> | FieldReadFunction<any>;
     weight?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type ProductVariantBackInStockKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "productVariant"
+    | "recipient"
+    | "version"
+    | "warehouse"
+    | ProductVariantBackInStockKeySpecifier
+)[];
+export type ProductVariantBackInStockFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    productVariant?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+    warehouse?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type ProductVariantBulkCreateKeySpecifier = (
     | "bulkProductErrors"
@@ -5529,6 +6951,21 @@ export type ProductVariantCreateFieldPolicy = {
     productErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     productVariant?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type ProductVariantCreatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "productVariant"
+    | "recipient"
+    | "version"
+    | ProductVariantCreatedKeySpecifier
+)[];
+export type ProductVariantCreatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    productVariant?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type ProductVariantDeleteKeySpecifier = (
     | "errors"
     | "productErrors"
@@ -5539,6 +6976,38 @@ export type ProductVariantDeleteFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     productErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     productVariant?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type ProductVariantDeletedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "productVariant"
+    | "recipient"
+    | "version"
+    | ProductVariantDeletedKeySpecifier
+)[];
+export type ProductVariantDeletedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    productVariant?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type ProductVariantOutOfStockKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "productVariant"
+    | "recipient"
+    | "version"
+    | "warehouse"
+    | ProductVariantOutOfStockKeySpecifier
+)[];
+export type ProductVariantOutOfStockFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    productVariant?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+    warehouse?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type ProductVariantPreorderDeactivateKeySpecifier = (
     | "errors"
@@ -5662,6 +7131,21 @@ export type ProductVariantUpdateFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     productErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     productVariant?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type ProductVariantUpdatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "productVariant"
+    | "recipient"
+    | "version"
+    | ProductVariantUpdatedKeySpecifier
+)[];
+export type ProductVariantUpdatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    productVariant?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type QueryKeySpecifier = (
     | "_entities"
@@ -5866,17 +7350,23 @@ export type SaleKeySpecifier = (
     | "categories"
     | "channelListings"
     | "collections"
+    | "created"
     | "currency"
     | "discountValue"
     | "endDate"
     | "id"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "name"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "products"
     | "startDate"
     | "translation"
     | "type"
+    | "updatedAt"
     | "variants"
     | SaleKeySpecifier
 )[];
@@ -5884,17 +7374,23 @@ export type SaleFieldPolicy = {
     categories?: FieldPolicy<any> | FieldReadFunction<any>;
     channelListings?: FieldPolicy<any> | FieldReadFunction<any>;
     collections?: FieldPolicy<any> | FieldReadFunction<any>;
+    created?: FieldPolicy<any> | FieldReadFunction<any>;
     currency?: FieldPolicy<any> | FieldReadFunction<any>;
     discountValue?: FieldPolicy<any> | FieldReadFunction<any>;
     endDate?: FieldPolicy<any> | FieldReadFunction<any>;
     id?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     name?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     products?: FieldPolicy<any> | FieldReadFunction<any>;
     startDate?: FieldPolicy<any> | FieldReadFunction<any>;
     translation?: FieldPolicy<any> | FieldReadFunction<any>;
     type?: FieldPolicy<any> | FieldReadFunction<any>;
+    updatedAt?: FieldPolicy<any> | FieldReadFunction<any>;
     variants?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type SaleAddCataloguesKeySpecifier = (
@@ -5965,11 +7461,41 @@ export type SaleCreateFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     sale?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type SaleCreatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "sale"
+    | "version"
+    | SaleCreatedKeySpecifier
+)[];
+export type SaleCreatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    sale?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type SaleDeleteKeySpecifier = ("discountErrors" | "errors" | "sale" | SaleDeleteKeySpecifier)[];
 export type SaleDeleteFieldPolicy = {
     discountErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     sale?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type SaleDeletedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "sale"
+    | "version"
+    | SaleDeletedKeySpecifier
+)[];
+export type SaleDeletedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    sale?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type SaleRemoveCataloguesKeySpecifier = (
     | "discountErrors"
@@ -5981,6 +7507,21 @@ export type SaleRemoveCataloguesFieldPolicy = {
     discountErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     sale?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type SaleToggleKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "sale"
+    | "version"
+    | SaleToggleKeySpecifier
+)[];
+export type SaleToggleFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    sale?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type SaleTranslatableContentKeySpecifier = (
     | "id"
@@ -6017,6 +7558,21 @@ export type SaleUpdateFieldPolicy = {
     discountErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     sale?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type SaleUpdatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "sale"
+    | "version"
+    | SaleUpdatedKeySpecifier
+)[];
+export type SaleUpdatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    sale?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type SelectedAttributeKeySpecifier = ("attribute" | "values" | SelectedAttributeKeySpecifier)[];
 export type SelectedAttributeFieldPolicy = {
@@ -6055,6 +7611,23 @@ export type ShippingErrorFieldPolicy = {
     message?: FieldPolicy<any> | FieldReadFunction<any>;
     warehouses?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type ShippingListMethodsForCheckoutKeySpecifier = (
+    | "checkout"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "shippingMethods"
+    | "version"
+    | ShippingListMethodsForCheckoutKeySpecifier
+)[];
+export type ShippingListMethodsForCheckoutFieldPolicy = {
+    checkout?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    shippingMethods?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type ShippingMethodKeySpecifier = (
     | "active"
     | "description"
@@ -6064,12 +7637,16 @@ export type ShippingMethodKeySpecifier = (
     | "maximumOrderWeight"
     | "message"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "minimumDeliveryDays"
     | "minimumOrderPrice"
     | "minimumOrderWeight"
     | "name"
     | "price"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "translation"
     | "type"
     | ShippingMethodKeySpecifier
@@ -6083,12 +7660,16 @@ export type ShippingMethodFieldPolicy = {
     maximumOrderWeight?: FieldPolicy<any> | FieldReadFunction<any>;
     message?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     minimumDeliveryDays?: FieldPolicy<any> | FieldReadFunction<any>;
     minimumOrderPrice?: FieldPolicy<any> | FieldReadFunction<any>;
     minimumOrderWeight?: FieldPolicy<any> | FieldReadFunction<any>;
     name?: FieldPolicy<any> | FieldReadFunction<any>;
     price?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     translation?: FieldPolicy<any> | FieldReadFunction<any>;
     type?: FieldPolicy<any> | FieldReadFunction<any>;
 };
@@ -6168,12 +7749,16 @@ export type ShippingMethodTypeKeySpecifier = (
     | "maximumOrderPrice"
     | "maximumOrderWeight"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "minimumDeliveryDays"
     | "minimumOrderPrice"
     | "minimumOrderWeight"
     | "name"
     | "postalCodeRules"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "translation"
     | "type"
     | ShippingMethodTypeKeySpecifier
@@ -6187,12 +7772,16 @@ export type ShippingMethodTypeFieldPolicy = {
     maximumOrderPrice?: FieldPolicy<any> | FieldReadFunction<any>;
     maximumOrderWeight?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     minimumDeliveryDays?: FieldPolicy<any> | FieldReadFunction<any>;
     minimumOrderPrice?: FieldPolicy<any> | FieldReadFunction<any>;
     minimumOrderWeight?: FieldPolicy<any> | FieldReadFunction<any>;
     name?: FieldPolicy<any> | FieldReadFunction<any>;
     postalCodeRules?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     translation?: FieldPolicy<any> | FieldReadFunction<any>;
     type?: FieldPolicy<any> | FieldReadFunction<any>;
 };
@@ -6220,6 +7809,23 @@ export type ShippingPriceCreateFieldPolicy = {
     shippingMethod?: FieldPolicy<any> | FieldReadFunction<any>;
     shippingZone?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type ShippingPriceCreatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "shippingMethod"
+    | "shippingZone"
+    | "version"
+    | ShippingPriceCreatedKeySpecifier
+)[];
+export type ShippingPriceCreatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    shippingMethod?: FieldPolicy<any> | FieldReadFunction<any>;
+    shippingZone?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type ShippingPriceDeleteKeySpecifier = (
     | "errors"
     | "shippingErrors"
@@ -6232,6 +7838,23 @@ export type ShippingPriceDeleteFieldPolicy = {
     shippingErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     shippingMethod?: FieldPolicy<any> | FieldReadFunction<any>;
     shippingZone?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type ShippingPriceDeletedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "shippingMethod"
+    | "shippingZone"
+    | "version"
+    | ShippingPriceDeletedKeySpecifier
+)[];
+export type ShippingPriceDeletedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    shippingMethod?: FieldPolicy<any> | FieldReadFunction<any>;
+    shippingZone?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type ShippingPriceExcludeProductsKeySpecifier = (
     | "errors"
@@ -6279,6 +7902,23 @@ export type ShippingPriceUpdateFieldPolicy = {
     shippingMethod?: FieldPolicy<any> | FieldReadFunction<any>;
     shippingZone?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type ShippingPriceUpdatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "shippingMethod"
+    | "shippingZone"
+    | "version"
+    | ShippingPriceUpdatedKeySpecifier
+)[];
+export type ShippingPriceUpdatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    shippingMethod?: FieldPolicy<any> | FieldReadFunction<any>;
+    shippingZone?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type ShippingZoneKeySpecifier = (
     | "channels"
     | "countries"
@@ -6286,9 +7926,13 @@ export type ShippingZoneKeySpecifier = (
     | "description"
     | "id"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "name"
     | "priceRange"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "shippingMethods"
     | "warehouses"
     | ShippingZoneKeySpecifier
@@ -6300,9 +7944,13 @@ export type ShippingZoneFieldPolicy = {
     description?: FieldPolicy<any> | FieldReadFunction<any>;
     id?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     name?: FieldPolicy<any> | FieldReadFunction<any>;
     priceRange?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     shippingMethods?: FieldPolicy<any> | FieldReadFunction<any>;
     warehouses?: FieldPolicy<any> | FieldReadFunction<any>;
 };
@@ -6348,6 +7996,21 @@ export type ShippingZoneCreateFieldPolicy = {
     shippingErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     shippingZone?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type ShippingZoneCreatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "shippingZone"
+    | "version"
+    | ShippingZoneCreatedKeySpecifier
+)[];
+export type ShippingZoneCreatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    shippingZone?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type ShippingZoneDeleteKeySpecifier = (
     | "errors"
     | "shippingErrors"
@@ -6359,6 +8022,21 @@ export type ShippingZoneDeleteFieldPolicy = {
     shippingErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     shippingZone?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type ShippingZoneDeletedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "shippingZone"
+    | "version"
+    | ShippingZoneDeletedKeySpecifier
+)[];
+export type ShippingZoneDeletedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    shippingZone?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type ShippingZoneUpdateKeySpecifier = (
     | "errors"
     | "shippingErrors"
@@ -6369,6 +8047,21 @@ export type ShippingZoneUpdateFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     shippingErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     shippingZone?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type ShippingZoneUpdatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "shippingZone"
+    | "version"
+    | ShippingZoneUpdatedKeySpecifier
+)[];
+export type ShippingZoneUpdatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    shippingZone?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type ShopKeySpecifier = (
     | "automaticFulfillmentDigitalProducts"
@@ -6534,11 +8227,41 @@ export type StaffCreateFieldPolicy = {
     staffErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     user?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type StaffCreatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "user"
+    | "version"
+    | StaffCreatedKeySpecifier
+)[];
+export type StaffCreatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    user?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type StaffDeleteKeySpecifier = ("errors" | "staffErrors" | "user" | StaffDeleteKeySpecifier)[];
 export type StaffDeleteFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     staffErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     user?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type StaffDeletedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "user"
+    | "version"
+    | StaffDeletedKeySpecifier
+)[];
+export type StaffDeletedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    user?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type StaffErrorKeySpecifier = (
     | "addressType"
@@ -6611,6 +8334,21 @@ export type StaffUpdateFieldPolicy = {
     staffErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     user?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type StaffUpdatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "user"
+    | "version"
+    | StaffUpdatedKeySpecifier
+)[];
+export type StaffUpdatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    user?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type StockKeySpecifier = (
     | "id"
     | "productVariant"
@@ -6650,10 +8388,85 @@ export type StockErrorFieldPolicy = {
     field?: FieldPolicy<any> | FieldReadFunction<any>;
     message?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type SubscriptionKeySpecifier = ("event" | SubscriptionKeySpecifier)[];
+export type SubscriptionFieldPolicy = {
+    event?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type TaxExemptionManageKeySpecifier = (
+    | "errors"
+    | "taxableObject"
+    | TaxExemptionManageKeySpecifier
+)[];
+export type TaxExemptionManageFieldPolicy = {
+    errors?: FieldPolicy<any> | FieldReadFunction<any>;
+    taxableObject?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type TaxExemptionManageErrorKeySpecifier = (
+    | "code"
+    | "field"
+    | "message"
+    | TaxExemptionManageErrorKeySpecifier
+)[];
+export type TaxExemptionManageErrorFieldPolicy = {
+    code?: FieldPolicy<any> | FieldReadFunction<any>;
+    field?: FieldPolicy<any> | FieldReadFunction<any>;
+    message?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type TaxTypeKeySpecifier = ("description" | "taxCode" | TaxTypeKeySpecifier)[];
 export type TaxTypeFieldPolicy = {
     description?: FieldPolicy<any> | FieldReadFunction<any>;
     taxCode?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type TaxableObjectKeySpecifier = (
+    | "address"
+    | "channel"
+    | "currency"
+    | "discounts"
+    | "lines"
+    | "pricesEnteredWithTax"
+    | "shippingPrice"
+    | "sourceObject"
+    | TaxableObjectKeySpecifier
+)[];
+export type TaxableObjectFieldPolicy = {
+    address?: FieldPolicy<any> | FieldReadFunction<any>;
+    channel?: FieldPolicy<any> | FieldReadFunction<any>;
+    currency?: FieldPolicy<any> | FieldReadFunction<any>;
+    discounts?: FieldPolicy<any> | FieldReadFunction<any>;
+    lines?: FieldPolicy<any> | FieldReadFunction<any>;
+    pricesEnteredWithTax?: FieldPolicy<any> | FieldReadFunction<any>;
+    shippingPrice?: FieldPolicy<any> | FieldReadFunction<any>;
+    sourceObject?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type TaxableObjectDiscountKeySpecifier = (
+    | "amount"
+    | "name"
+    | TaxableObjectDiscountKeySpecifier
+)[];
+export type TaxableObjectDiscountFieldPolicy = {
+    amount?: FieldPolicy<any> | FieldReadFunction<any>;
+    name?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type TaxableObjectLineKeySpecifier = (
+    | "chargeTaxes"
+    | "productName"
+    | "productSku"
+    | "quantity"
+    | "sourceLine"
+    | "totalPrice"
+    | "unitPrice"
+    | "variantName"
+    | TaxableObjectLineKeySpecifier
+)[];
+export type TaxableObjectLineFieldPolicy = {
+    chargeTaxes?: FieldPolicy<any> | FieldReadFunction<any>;
+    productName?: FieldPolicy<any> | FieldReadFunction<any>;
+    productSku?: FieldPolicy<any> | FieldReadFunction<any>;
+    quantity?: FieldPolicy<any> | FieldReadFunction<any>;
+    sourceLine?: FieldPolicy<any> | FieldReadFunction<any>;
+    totalPrice?: FieldPolicy<any> | FieldReadFunction<any>;
+    unitPrice?: FieldPolicy<any> | FieldReadFunction<any>;
+    variantName?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type TaxedMoneyKeySpecifier = ("currency" | "gross" | "net" | "tax" | TaxedMoneyKeySpecifier)[];
 export type TaxedMoneyFieldPolicy = {
@@ -6695,6 +8508,144 @@ export type TransactionFieldPolicy = {
     payment?: FieldPolicy<any> | FieldReadFunction<any>;
     token?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type TransactionActionKeySpecifier = ("actionType" | "amount" | TransactionActionKeySpecifier)[];
+export type TransactionActionFieldPolicy = {
+    actionType?: FieldPolicy<any> | FieldReadFunction<any>;
+    amount?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type TransactionActionRequestKeySpecifier = (
+    | "action"
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "transaction"
+    | "version"
+    | TransactionActionRequestKeySpecifier
+)[];
+export type TransactionActionRequestFieldPolicy = {
+    action?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    transaction?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type TransactionCreateKeySpecifier = (
+    | "errors"
+    | "transaction"
+    | TransactionCreateKeySpecifier
+)[];
+export type TransactionCreateFieldPolicy = {
+    errors?: FieldPolicy<any> | FieldReadFunction<any>;
+    transaction?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type TransactionCreateErrorKeySpecifier = (
+    | "code"
+    | "field"
+    | "message"
+    | TransactionCreateErrorKeySpecifier
+)[];
+export type TransactionCreateErrorFieldPolicy = {
+    code?: FieldPolicy<any> | FieldReadFunction<any>;
+    field?: FieldPolicy<any> | FieldReadFunction<any>;
+    message?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type TransactionEventKeySpecifier = (
+    | "createdAt"
+    | "id"
+    | "name"
+    | "reference"
+    | "status"
+    | TransactionEventKeySpecifier
+)[];
+export type TransactionEventFieldPolicy = {
+    createdAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    id?: FieldPolicy<any> | FieldReadFunction<any>;
+    name?: FieldPolicy<any> | FieldReadFunction<any>;
+    reference?: FieldPolicy<any> | FieldReadFunction<any>;
+    status?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type TransactionItemKeySpecifier = (
+    | "actions"
+    | "authorizedAmount"
+    | "chargedAmount"
+    | "createdAt"
+    | "events"
+    | "id"
+    | "metadata"
+    | "metafield"
+    | "metafields"
+    | "modifiedAt"
+    | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
+    | "reference"
+    | "refundedAmount"
+    | "status"
+    | "type"
+    | "voidedAmount"
+    | TransactionItemKeySpecifier
+)[];
+export type TransactionItemFieldPolicy = {
+    actions?: FieldPolicy<any> | FieldReadFunction<any>;
+    authorizedAmount?: FieldPolicy<any> | FieldReadFunction<any>;
+    chargedAmount?: FieldPolicy<any> | FieldReadFunction<any>;
+    createdAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    events?: FieldPolicy<any> | FieldReadFunction<any>;
+    id?: FieldPolicy<any> | FieldReadFunction<any>;
+    metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
+    modifiedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
+    reference?: FieldPolicy<any> | FieldReadFunction<any>;
+    refundedAmount?: FieldPolicy<any> | FieldReadFunction<any>;
+    status?: FieldPolicy<any> | FieldReadFunction<any>;
+    type?: FieldPolicy<any> | FieldReadFunction<any>;
+    voidedAmount?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type TransactionRequestActionKeySpecifier = (
+    | "errors"
+    | "transaction"
+    | TransactionRequestActionKeySpecifier
+)[];
+export type TransactionRequestActionFieldPolicy = {
+    errors?: FieldPolicy<any> | FieldReadFunction<any>;
+    transaction?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type TransactionRequestActionErrorKeySpecifier = (
+    | "code"
+    | "field"
+    | "message"
+    | TransactionRequestActionErrorKeySpecifier
+)[];
+export type TransactionRequestActionErrorFieldPolicy = {
+    code?: FieldPolicy<any> | FieldReadFunction<any>;
+    field?: FieldPolicy<any> | FieldReadFunction<any>;
+    message?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type TransactionUpdateKeySpecifier = (
+    | "errors"
+    | "transaction"
+    | TransactionUpdateKeySpecifier
+)[];
+export type TransactionUpdateFieldPolicy = {
+    errors?: FieldPolicy<any> | FieldReadFunction<any>;
+    transaction?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type TransactionUpdateErrorKeySpecifier = (
+    | "code"
+    | "field"
+    | "message"
+    | TransactionUpdateErrorKeySpecifier
+)[];
+export type TransactionUpdateErrorFieldPolicy = {
+    code?: FieldPolicy<any> | FieldReadFunction<any>;
+    field?: FieldPolicy<any> | FieldReadFunction<any>;
+    message?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type TranslatableItemConnectionKeySpecifier = (
     | "edges"
     | "pageInfo"
@@ -6711,6 +8662,21 @@ export type TranslatableItemEdgeFieldPolicy = {
     cursor?: FieldPolicy<any> | FieldReadFunction<any>;
     node?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type TranslationCreatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "translation"
+    | "version"
+    | TranslationCreatedKeySpecifier
+)[];
+export type TranslationCreatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    translation?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type TranslationErrorKeySpecifier = (
     | "code"
     | "field"
@@ -6721,6 +8687,21 @@ export type TranslationErrorFieldPolicy = {
     code?: FieldPolicy<any> | FieldReadFunction<any>;
     field?: FieldPolicy<any> | FieldReadFunction<any>;
     message?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type TranslationUpdatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "translation"
+    | "version"
+    | TranslationUpdatedKeySpecifier
+)[];
+export type TranslationUpdatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    translation?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type UpdateMetadataKeySpecifier = (
     | "errors"
@@ -6754,7 +8735,9 @@ export type UserKeySpecifier = (
     | "addresses"
     | "avatar"
     | "checkout"
+    | "checkoutIds"
     | "checkoutTokens"
+    | "checkouts"
     | "dateJoined"
     | "defaultBillingAddress"
     | "defaultShippingAddress"
@@ -6770,11 +8753,16 @@ export type UserKeySpecifier = (
     | "lastLogin"
     | "lastName"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "note"
     | "orders"
     | "permissionGroups"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "storedPaymentSources"
+    | "updatedAt"
     | "userPermissions"
     | UserKeySpecifier
 )[];
@@ -6782,7 +8770,9 @@ export type UserFieldPolicy = {
     addresses?: FieldPolicy<any> | FieldReadFunction<any>;
     avatar?: FieldPolicy<any> | FieldReadFunction<any>;
     checkout?: FieldPolicy<any> | FieldReadFunction<any>;
+    checkoutIds?: FieldPolicy<any> | FieldReadFunction<any>;
     checkoutTokens?: FieldPolicy<any> | FieldReadFunction<any>;
+    checkouts?: FieldPolicy<any> | FieldReadFunction<any>;
     dateJoined?: FieldPolicy<any> | FieldReadFunction<any>;
     defaultBillingAddress?: FieldPolicy<any> | FieldReadFunction<any>;
     defaultShippingAddress?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -6798,11 +8788,16 @@ export type UserFieldPolicy = {
     lastLogin?: FieldPolicy<any> | FieldReadFunction<any>;
     lastName?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     note?: FieldPolicy<any> | FieldReadFunction<any>;
     orders?: FieldPolicy<any> | FieldReadFunction<any>;
     permissionGroups?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     storedPaymentSources?: FieldPolicy<any> | FieldReadFunction<any>;
+    updatedAt?: FieldPolicy<any> | FieldReadFunction<any>;
     userPermissions?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type UserAvatarDeleteKeySpecifier = (
@@ -6943,11 +8938,15 @@ export type VoucherKeySpecifier = (
     | "endDate"
     | "id"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "minCheckoutItemsQuantity"
     | "minSpent"
     | "name"
     | "onlyForStaff"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "products"
     | "startDate"
     | "translation"
@@ -6971,11 +8970,15 @@ export type VoucherFieldPolicy = {
     endDate?: FieldPolicy<any> | FieldReadFunction<any>;
     id?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     minCheckoutItemsQuantity?: FieldPolicy<any> | FieldReadFunction<any>;
     minSpent?: FieldPolicy<any> | FieldReadFunction<any>;
     name?: FieldPolicy<any> | FieldReadFunction<any>;
     onlyForStaff?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     products?: FieldPolicy<any> | FieldReadFunction<any>;
     startDate?: FieldPolicy<any> | FieldReadFunction<any>;
     translation?: FieldPolicy<any> | FieldReadFunction<any>;
@@ -7059,6 +9062,21 @@ export type VoucherCreateFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     voucher?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type VoucherCreatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | "voucher"
+    | VoucherCreatedKeySpecifier
+)[];
+export type VoucherCreatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+    voucher?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type VoucherDeleteKeySpecifier = (
     | "discountErrors"
     | "errors"
@@ -7068,6 +9086,21 @@ export type VoucherDeleteKeySpecifier = (
 export type VoucherDeleteFieldPolicy = {
     discountErrors?: FieldPolicy<any> | FieldReadFunction<any>;
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
+    voucher?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type VoucherDeletedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | "voucher"
+    | VoucherDeletedKeySpecifier
+)[];
+export type VoucherDeletedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
     voucher?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type VoucherRemoveCataloguesKeySpecifier = (
@@ -7127,6 +9160,21 @@ export type VoucherUpdateFieldPolicy = {
     errors?: FieldPolicy<any> | FieldReadFunction<any>;
     voucher?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type VoucherUpdatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | "voucher"
+    | VoucherUpdatedKeySpecifier
+)[];
+export type VoucherUpdatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+    voucher?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type WarehouseKeySpecifier = (
     | "address"
     | "clickAndCollectOption"
@@ -7135,8 +9183,12 @@ export type WarehouseKeySpecifier = (
     | "id"
     | "isPrivate"
     | "metadata"
+    | "metafield"
+    | "metafields"
     | "name"
     | "privateMetadata"
+    | "privateMetafield"
+    | "privateMetafields"
     | "shippingZones"
     | "slug"
     | WarehouseKeySpecifier
@@ -7149,8 +9201,12 @@ export type WarehouseFieldPolicy = {
     id?: FieldPolicy<any> | FieldReadFunction<any>;
     isPrivate?: FieldPolicy<any> | FieldReadFunction<any>;
     metadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    metafields?: FieldPolicy<any> | FieldReadFunction<any>;
     name?: FieldPolicy<any> | FieldReadFunction<any>;
     privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafield?: FieldPolicy<any> | FieldReadFunction<any>;
+    privateMetafields?: FieldPolicy<any> | FieldReadFunction<any>;
     shippingZones?: FieldPolicy<any> | FieldReadFunction<any>;
     slug?: FieldPolicy<any> | FieldReadFunction<any>;
 };
@@ -7185,6 +9241,21 @@ export type WarehouseCreateFieldPolicy = {
     warehouse?: FieldPolicy<any> | FieldReadFunction<any>;
     warehouseErrors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type WarehouseCreatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | "warehouse"
+    | WarehouseCreatedKeySpecifier
+)[];
+export type WarehouseCreatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+    warehouse?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type WarehouseDeleteKeySpecifier = (
     | "errors"
     | "warehouse"
@@ -7196,11 +9267,33 @@ export type WarehouseDeleteFieldPolicy = {
     warehouse?: FieldPolicy<any> | FieldReadFunction<any>;
     warehouseErrors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
-export type WarehouseErrorKeySpecifier = ("code" | "field" | "message" | WarehouseErrorKeySpecifier)[];
+export type WarehouseDeletedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | "warehouse"
+    | WarehouseDeletedKeySpecifier
+)[];
+export type WarehouseDeletedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+    warehouse?: FieldPolicy<any> | FieldReadFunction<any>;
+};
+export type WarehouseErrorKeySpecifier = (
+    | "code"
+    | "field"
+    | "message"
+    | "shippingZones"
+    | WarehouseErrorKeySpecifier
+)[];
 export type WarehouseErrorFieldPolicy = {
     code?: FieldPolicy<any> | FieldReadFunction<any>;
     field?: FieldPolicy<any> | FieldReadFunction<any>;
     message?: FieldPolicy<any> | FieldReadFunction<any>;
+    shippingZones?: FieldPolicy<any> | FieldReadFunction<any>;
 };
 export type WarehouseShippingZoneAssignKeySpecifier = (
     | "errors"
@@ -7235,6 +9328,21 @@ export type WarehouseUpdateFieldPolicy = {
     warehouse?: FieldPolicy<any> | FieldReadFunction<any>;
     warehouseErrors?: FieldPolicy<any> | FieldReadFunction<any>;
 };
+export type WarehouseUpdatedKeySpecifier = (
+    | "issuedAt"
+    | "issuingPrincipal"
+    | "recipient"
+    | "version"
+    | "warehouse"
+    | WarehouseUpdatedKeySpecifier
+)[];
+export type WarehouseUpdatedFieldPolicy = {
+    issuedAt?: FieldPolicy<any> | FieldReadFunction<any>;
+    issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>;
+    recipient?: FieldPolicy<any> | FieldReadFunction<any>;
+    version?: FieldPolicy<any> | FieldReadFunction<any>;
+    warehouse?: FieldPolicy<any> | FieldReadFunction<any>;
+};
 export type WebhookKeySpecifier = (
     | "app"
     | "asyncEvents"
@@ -7244,6 +9352,7 @@ export type WebhookKeySpecifier = (
     | "isActive"
     | "name"
     | "secretKey"
+    | "subscriptionQuery"
     | "syncEvents"
     | "targetUrl"
     | WebhookKeySpecifier
@@ -7257,6 +9366,7 @@ export type WebhookFieldPolicy = {
     isActive?: FieldPolicy<any> | FieldReadFunction<any>;
     name?: FieldPolicy<any> | FieldReadFunction<any>;
     secretKey?: FieldPolicy<any> | FieldReadFunction<any>;
+    subscriptionQuery?: FieldPolicy<any> | FieldReadFunction<any>;
     syncEvents?: FieldPolicy<any> | FieldReadFunction<any>;
     targetUrl?: FieldPolicy<any> | FieldReadFunction<any>;
 };
@@ -7386,9 +9496,17 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | AddressCreateKeySpecifier | (() => undefined | AddressCreateKeySpecifier);
         fields?: AddressCreateFieldPolicy;
     };
+    AddressCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | AddressCreatedKeySpecifier | (() => undefined | AddressCreatedKeySpecifier);
+        fields?: AddressCreatedFieldPolicy;
+    };
     AddressDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | AddressDeleteKeySpecifier | (() => undefined | AddressDeleteKeySpecifier);
         fields?: AddressDeleteFieldPolicy;
+    };
+    AddressDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | AddressDeletedKeySpecifier | (() => undefined | AddressDeletedKeySpecifier);
+        fields?: AddressDeletedFieldPolicy;
     };
     AddressSetDefault?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
@@ -7400,6 +9518,10 @@ export type StrictTypedTypePolicies = {
     AddressUpdate?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | AddressUpdateKeySpecifier | (() => undefined | AddressUpdateKeySpecifier);
         fields?: AddressUpdateFieldPolicy;
+    };
+    AddressUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | AddressUpdatedKeySpecifier | (() => undefined | AddressUpdatedKeySpecifier);
+        fields?: AddressUpdatedFieldPolicy;
     };
     AddressValidationData?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
@@ -7453,6 +9575,10 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | AppDeleteFailedInstallationKeySpecifier);
         fields?: AppDeleteFailedInstallationFieldPolicy;
     };
+    AppDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | AppDeletedKeySpecifier | (() => undefined | AppDeletedKeySpecifier);
+        fields?: AppDeletedFieldPolicy;
+    };
     AppError?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | AppErrorKeySpecifier | (() => undefined | AppErrorKeySpecifier);
         fields?: AppErrorFieldPolicy;
@@ -7493,6 +9619,10 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | AppInstallationKeySpecifier);
         fields?: AppInstallationFieldPolicy;
     };
+    AppInstalled?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | AppInstalledKeySpecifier | (() => undefined | AppInstalledKeySpecifier);
+        fields?: AppInstalledFieldPolicy;
+    };
     AppManifestExtension?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
             | false
@@ -7500,12 +9630,26 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | AppManifestExtensionKeySpecifier);
         fields?: AppManifestExtensionFieldPolicy;
     };
+    AppManifestWebhook?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | AppManifestWebhookKeySpecifier
+            | (() => undefined | AppManifestWebhookKeySpecifier);
+        fields?: AppManifestWebhookFieldPolicy;
+    };
     AppRetryInstall?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
             | false
             | AppRetryInstallKeySpecifier
             | (() => undefined | AppRetryInstallKeySpecifier);
         fields?: AppRetryInstallFieldPolicy;
+    };
+    AppStatusChanged?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | AppStatusChangedKeySpecifier
+            | (() => undefined | AppStatusChangedKeySpecifier);
+        fields?: AppStatusChangedFieldPolicy;
     };
     AppToken?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | AppTokenKeySpecifier | (() => undefined | AppTokenKeySpecifier);
@@ -7526,6 +9670,10 @@ export type StrictTypedTypePolicies = {
     AppUpdate?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | AppUpdateKeySpecifier | (() => undefined | AppUpdateKeySpecifier);
         fields?: AppUpdateFieldPolicy;
+    };
+    AppUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | AppUpdatedKeySpecifier | (() => undefined | AppUpdatedKeySpecifier);
+        fields?: AppUpdatedFieldPolicy;
     };
     AssignNavigation?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
@@ -7573,12 +9721,26 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | AttributeCreateKeySpecifier);
         fields?: AttributeCreateFieldPolicy;
     };
+    AttributeCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | AttributeCreatedKeySpecifier
+            | (() => undefined | AttributeCreatedKeySpecifier);
+        fields?: AttributeCreatedFieldPolicy;
+    };
     AttributeDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
             | false
             | AttributeDeleteKeySpecifier
             | (() => undefined | AttributeDeleteKeySpecifier);
         fields?: AttributeDeleteFieldPolicy;
+    };
+    AttributeDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | AttributeDeletedKeySpecifier
+            | (() => undefined | AttributeDeletedKeySpecifier);
+        fields?: AttributeDeletedFieldPolicy;
     };
     AttributeError?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | AttributeErrorKeySpecifier | (() => undefined | AttributeErrorKeySpecifier);
@@ -7619,6 +9781,13 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | AttributeUpdateKeySpecifier);
         fields?: AttributeUpdateFieldPolicy;
     };
+    AttributeUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | AttributeUpdatedKeySpecifier
+            | (() => undefined | AttributeUpdatedKeySpecifier);
+        fields?: AttributeUpdatedFieldPolicy;
+    };
     AttributeValue?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | AttributeValueKeySpecifier | (() => undefined | AttributeValueKeySpecifier);
         fields?: AttributeValueFieldPolicy;
@@ -7651,12 +9820,26 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | AttributeValueCreateKeySpecifier);
         fields?: AttributeValueCreateFieldPolicy;
     };
+    AttributeValueCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | AttributeValueCreatedKeySpecifier
+            | (() => undefined | AttributeValueCreatedKeySpecifier);
+        fields?: AttributeValueCreatedFieldPolicy;
+    };
     AttributeValueDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
             | false
             | AttributeValueDeleteKeySpecifier
             | (() => undefined | AttributeValueDeleteKeySpecifier);
         fields?: AttributeValueDeleteFieldPolicy;
+    };
+    AttributeValueDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | AttributeValueDeletedKeySpecifier
+            | (() => undefined | AttributeValueDeletedKeySpecifier);
+        fields?: AttributeValueDeletedFieldPolicy;
     };
     AttributeValueTranslatableContent?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
@@ -7686,6 +9869,13 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | AttributeValueUpdateKeySpecifier);
         fields?: AttributeValueUpdateFieldPolicy;
     };
+    AttributeValueUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | AttributeValueUpdatedKeySpecifier
+            | (() => undefined | AttributeValueUpdatedKeySpecifier);
+        fields?: AttributeValueUpdatedFieldPolicy;
+    };
     BulkProductError?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
             | false
@@ -7696,6 +9886,10 @@ export type StrictTypedTypePolicies = {
     BulkStockError?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | BulkStockErrorKeySpecifier | (() => undefined | BulkStockErrorKeySpecifier);
         fields?: BulkStockErrorFieldPolicy;
+    };
+    CalculateTaxes?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | CalculateTaxesKeySpecifier | (() => undefined | CalculateTaxesKeySpecifier);
+        fields?: CalculateTaxesFieldPolicy;
     };
     Category?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | CategoryKeySpecifier | (() => undefined | CategoryKeySpecifier);
@@ -7726,9 +9920,23 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | CategoryCreateKeySpecifier | (() => undefined | CategoryCreateKeySpecifier);
         fields?: CategoryCreateFieldPolicy;
     };
+    CategoryCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | CategoryCreatedKeySpecifier
+            | (() => undefined | CategoryCreatedKeySpecifier);
+        fields?: CategoryCreatedFieldPolicy;
+    };
     CategoryDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | CategoryDeleteKeySpecifier | (() => undefined | CategoryDeleteKeySpecifier);
         fields?: CategoryDeleteFieldPolicy;
+    };
+    CategoryDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | CategoryDeletedKeySpecifier
+            | (() => undefined | CategoryDeletedKeySpecifier);
+        fields?: CategoryDeletedFieldPolicy;
     };
     CategoryTranslatableContent?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
@@ -7755,6 +9963,13 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | CategoryUpdateKeySpecifier | (() => undefined | CategoryUpdateKeySpecifier);
         fields?: CategoryUpdateFieldPolicy;
     };
+    CategoryUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | CategoryUpdatedKeySpecifier
+            | (() => undefined | CategoryUpdatedKeySpecifier);
+        fields?: CategoryUpdatedFieldPolicy;
+    };
     Channel?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | ChannelKeySpecifier | (() => undefined | ChannelKeySpecifier);
         fields?: ChannelFieldPolicy;
@@ -7770,6 +9985,10 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | ChannelCreateKeySpecifier | (() => undefined | ChannelCreateKeySpecifier);
         fields?: ChannelCreateFieldPolicy;
     };
+    ChannelCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | ChannelCreatedKeySpecifier | (() => undefined | ChannelCreatedKeySpecifier);
+        fields?: ChannelCreatedFieldPolicy;
+    };
     ChannelDeactivate?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
             | false
@@ -7781,13 +10000,28 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | ChannelDeleteKeySpecifier | (() => undefined | ChannelDeleteKeySpecifier);
         fields?: ChannelDeleteFieldPolicy;
     };
+    ChannelDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | ChannelDeletedKeySpecifier | (() => undefined | ChannelDeletedKeySpecifier);
+        fields?: ChannelDeletedFieldPolicy;
+    };
     ChannelError?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | ChannelErrorKeySpecifier | (() => undefined | ChannelErrorKeySpecifier);
         fields?: ChannelErrorFieldPolicy;
     };
+    ChannelStatusChanged?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | ChannelStatusChangedKeySpecifier
+            | (() => undefined | ChannelStatusChangedKeySpecifier);
+        fields?: ChannelStatusChangedFieldPolicy;
+    };
     ChannelUpdate?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | ChannelUpdateKeySpecifier | (() => undefined | ChannelUpdateKeySpecifier);
         fields?: ChannelUpdateFieldPolicy;
+    };
+    ChannelUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | ChannelUpdatedKeySpecifier | (() => undefined | ChannelUpdatedKeySpecifier);
+        fields?: ChannelUpdatedFieldPolicy;
     };
     Checkout?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | CheckoutKeySpecifier | (() => undefined | CheckoutKeySpecifier);
@@ -7832,6 +10066,13 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | CheckoutCreateKeySpecifier | (() => undefined | CheckoutCreateKeySpecifier);
         fields?: CheckoutCreateFieldPolicy;
     };
+    CheckoutCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | CheckoutCreatedKeySpecifier
+            | (() => undefined | CheckoutCreatedKeySpecifier);
+        fields?: CheckoutCreatedFieldPolicy;
+    };
     CheckoutCustomerAttach?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
             | false
@@ -7863,6 +10104,13 @@ export type StrictTypedTypePolicies = {
     CheckoutError?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | CheckoutErrorKeySpecifier | (() => undefined | CheckoutErrorKeySpecifier);
         fields?: CheckoutErrorFieldPolicy;
+    };
+    CheckoutFilterShippingMethods?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | CheckoutFilterShippingMethodsKeySpecifier
+            | (() => undefined | CheckoutFilterShippingMethodsKeySpecifier);
+        fields?: CheckoutFilterShippingMethodsFieldPolicy;
     };
     CheckoutLanguageCodeUpdate?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
@@ -7945,6 +10193,13 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | CheckoutShippingMethodUpdateKeySpecifier);
         fields?: CheckoutShippingMethodUpdateFieldPolicy;
     };
+    CheckoutUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | CheckoutUpdatedKeySpecifier
+            | (() => undefined | CheckoutUpdatedKeySpecifier);
+        fields?: CheckoutUpdatedFieldPolicy;
+    };
     ChoiceValue?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | ChoiceValueKeySpecifier | (() => undefined | ChoiceValueKeySpecifier);
         fields?: ChoiceValueFieldPolicy;
@@ -8009,12 +10264,26 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | CollectionCreateKeySpecifier);
         fields?: CollectionCreateFieldPolicy;
     };
+    CollectionCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | CollectionCreatedKeySpecifier
+            | (() => undefined | CollectionCreatedKeySpecifier);
+        fields?: CollectionCreatedFieldPolicy;
+    };
     CollectionDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
             | false
             | CollectionDeleteKeySpecifier
             | (() => undefined | CollectionDeleteKeySpecifier);
         fields?: CollectionDeleteFieldPolicy;
+    };
+    CollectionDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | CollectionDeletedKeySpecifier
+            | (() => undefined | CollectionDeletedKeySpecifier);
+        fields?: CollectionDeletedFieldPolicy;
     };
     CollectionError?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
@@ -8065,6 +10334,13 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | CollectionUpdateKeySpecifier);
         fields?: CollectionUpdateFieldPolicy;
     };
+    CollectionUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | CollectionUpdatedKeySpecifier
+            | (() => undefined | CollectionUpdatedKeySpecifier);
+        fields?: CollectionUpdatedFieldPolicy;
+    };
     ConfigurationItem?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
             | false
@@ -8106,6 +10382,13 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | CustomerCreateKeySpecifier | (() => undefined | CustomerCreateKeySpecifier);
         fields?: CustomerCreateFieldPolicy;
     };
+    CustomerCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | CustomerCreatedKeySpecifier
+            | (() => undefined | CustomerCreatedKeySpecifier);
+        fields?: CustomerCreatedFieldPolicy;
+    };
     CustomerDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | CustomerDeleteKeySpecifier | (() => undefined | CustomerDeleteKeySpecifier);
         fields?: CustomerDeleteFieldPolicy;
@@ -8117,6 +10400,13 @@ export type StrictTypedTypePolicies = {
     CustomerUpdate?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | CustomerUpdateKeySpecifier | (() => undefined | CustomerUpdateKeySpecifier);
         fields?: CustomerUpdateFieldPolicy;
+    };
+    CustomerUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | CustomerUpdatedKeySpecifier
+            | (() => undefined | CustomerUpdatedKeySpecifier);
+        fields?: CustomerUpdatedFieldPolicy;
     };
     DeactivateAllUserTokens?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
@@ -8218,12 +10508,26 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | DraftOrderCreateKeySpecifier);
         fields?: DraftOrderCreateFieldPolicy;
     };
+    DraftOrderCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | DraftOrderCreatedKeySpecifier
+            | (() => undefined | DraftOrderCreatedKeySpecifier);
+        fields?: DraftOrderCreatedFieldPolicy;
+    };
     DraftOrderDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
             | false
             | DraftOrderDeleteKeySpecifier
             | (() => undefined | DraftOrderDeleteKeySpecifier);
         fields?: DraftOrderDeleteFieldPolicy;
+    };
+    DraftOrderDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | DraftOrderDeletedKeySpecifier
+            | (() => undefined | DraftOrderDeletedKeySpecifier);
+        fields?: DraftOrderDeletedFieldPolicy;
     };
     DraftOrderLinesBulkDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
@@ -8238,6 +10542,17 @@ export type StrictTypedTypePolicies = {
             | DraftOrderUpdateKeySpecifier
             | (() => undefined | DraftOrderUpdateKeySpecifier);
         fields?: DraftOrderUpdateFieldPolicy;
+    };
+    DraftOrderUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | DraftOrderUpdatedKeySpecifier
+            | (() => undefined | DraftOrderUpdatedKeySpecifier);
+        fields?: DraftOrderUpdatedFieldPolicy;
+    };
+    Event?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | EventKeySpecifier | (() => undefined | EventKeySpecifier);
+        fields?: EventFieldPolicy;
     };
     EventDelivery?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | EventDeliveryKeySpecifier | (() => undefined | EventDeliveryKeySpecifier);
@@ -8391,12 +10706,33 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | FulfillmentApproveKeySpecifier);
         fields?: FulfillmentApproveFieldPolicy;
     };
+    FulfillmentApproved?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | FulfillmentApprovedKeySpecifier
+            | (() => undefined | FulfillmentApprovedKeySpecifier);
+        fields?: FulfillmentApprovedFieldPolicy;
+    };
     FulfillmentCancel?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
             | false
             | FulfillmentCancelKeySpecifier
             | (() => undefined | FulfillmentCancelKeySpecifier);
         fields?: FulfillmentCancelFieldPolicy;
+    };
+    FulfillmentCanceled?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | FulfillmentCanceledKeySpecifier
+            | (() => undefined | FulfillmentCanceledKeySpecifier);
+        fields?: FulfillmentCanceledFieldPolicy;
+    };
+    FulfillmentCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | FulfillmentCreatedKeySpecifier
+            | (() => undefined | FulfillmentCreatedKeySpecifier);
+        fields?: FulfillmentCreatedFieldPolicy;
     };
     FulfillmentLine?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
@@ -8497,6 +10833,13 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | GiftCardCreateKeySpecifier | (() => undefined | GiftCardCreateKeySpecifier);
         fields?: GiftCardCreateFieldPolicy;
     };
+    GiftCardCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | GiftCardCreatedKeySpecifier
+            | (() => undefined | GiftCardCreatedKeySpecifier);
+        fields?: GiftCardCreatedFieldPolicy;
+    };
     GiftCardDeactivate?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
             | false
@@ -8507,6 +10850,13 @@ export type StrictTypedTypePolicies = {
     GiftCardDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | GiftCardDeleteKeySpecifier | (() => undefined | GiftCardDeleteKeySpecifier);
         fields?: GiftCardDeleteFieldPolicy;
+    };
+    GiftCardDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | GiftCardDeletedKeySpecifier
+            | (() => undefined | GiftCardDeletedKeySpecifier);
+        fields?: GiftCardDeletedFieldPolicy;
     };
     GiftCardError?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | GiftCardErrorKeySpecifier | (() => undefined | GiftCardErrorKeySpecifier);
@@ -8548,6 +10898,13 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | GiftCardSettingsUpdateKeySpecifier);
         fields?: GiftCardSettingsUpdateFieldPolicy;
     };
+    GiftCardStatusChanged?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | GiftCardStatusChangedKeySpecifier
+            | (() => undefined | GiftCardStatusChangedKeySpecifier);
+        fields?: GiftCardStatusChangedFieldPolicy;
+    };
     GiftCardTag?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | GiftCardTagKeySpecifier | (() => undefined | GiftCardTagKeySpecifier);
         fields?: GiftCardTagFieldPolicy;
@@ -8569,6 +10926,13 @@ export type StrictTypedTypePolicies = {
     GiftCardUpdate?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | GiftCardUpdateKeySpecifier | (() => undefined | GiftCardUpdateKeySpecifier);
         fields?: GiftCardUpdateFieldPolicy;
+    };
+    GiftCardUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | GiftCardUpdatedKeySpecifier
+            | (() => undefined | GiftCardUpdatedKeySpecifier);
+        fields?: GiftCardUpdatedFieldPolicy;
     };
     Group?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | GroupKeySpecifier | (() => undefined | GroupKeySpecifier);
@@ -8604,6 +10968,10 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | InvoiceDeleteKeySpecifier | (() => undefined | InvoiceDeleteKeySpecifier);
         fields?: InvoiceDeleteFieldPolicy;
     };
+    InvoiceDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | InvoiceDeletedKeySpecifier | (() => undefined | InvoiceDeletedKeySpecifier);
+        fields?: InvoiceDeletedFieldPolicy;
+    };
     InvoiceError?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | InvoiceErrorKeySpecifier | (() => undefined | InvoiceErrorKeySpecifier);
         fields?: InvoiceErrorFieldPolicy;
@@ -8619,12 +10987,23 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | InvoiceRequestDeleteKeySpecifier);
         fields?: InvoiceRequestDeleteFieldPolicy;
     };
+    InvoiceRequested?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | InvoiceRequestedKeySpecifier
+            | (() => undefined | InvoiceRequestedKeySpecifier);
+        fields?: InvoiceRequestedFieldPolicy;
+    };
     InvoiceSendNotification?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
             | false
             | InvoiceSendNotificationKeySpecifier
             | (() => undefined | InvoiceSendNotificationKeySpecifier);
         fields?: InvoiceSendNotificationFieldPolicy;
+    };
+    InvoiceSent?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | InvoiceSentKeySpecifier | (() => undefined | InvoiceSentKeySpecifier);
+        fields?: InvoiceSentFieldPolicy;
     };
     InvoiceUpdate?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | InvoiceUpdateKeySpecifier | (() => undefined | InvoiceUpdateKeySpecifier);
@@ -8683,9 +11062,17 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | MenuCreateKeySpecifier | (() => undefined | MenuCreateKeySpecifier);
         fields?: MenuCreateFieldPolicy;
     };
+    MenuCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | MenuCreatedKeySpecifier | (() => undefined | MenuCreatedKeySpecifier);
+        fields?: MenuCreatedFieldPolicy;
+    };
     MenuDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | MenuDeleteKeySpecifier | (() => undefined | MenuDeleteKeySpecifier);
         fields?: MenuDeleteFieldPolicy;
+    };
+    MenuDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | MenuDeletedKeySpecifier | (() => undefined | MenuDeletedKeySpecifier);
+        fields?: MenuDeletedFieldPolicy;
     };
     MenuError?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | MenuErrorKeySpecifier | (() => undefined | MenuErrorKeySpecifier);
@@ -8720,9 +11107,23 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | MenuItemCreateKeySpecifier | (() => undefined | MenuItemCreateKeySpecifier);
         fields?: MenuItemCreateFieldPolicy;
     };
+    MenuItemCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | MenuItemCreatedKeySpecifier
+            | (() => undefined | MenuItemCreatedKeySpecifier);
+        fields?: MenuItemCreatedFieldPolicy;
+    };
     MenuItemDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | MenuItemDeleteKeySpecifier | (() => undefined | MenuItemDeleteKeySpecifier);
         fields?: MenuItemDeleteFieldPolicy;
+    };
+    MenuItemDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | MenuItemDeletedKeySpecifier
+            | (() => undefined | MenuItemDeletedKeySpecifier);
+        fields?: MenuItemDeletedFieldPolicy;
     };
     MenuItemMove?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | MenuItemMoveKeySpecifier | (() => undefined | MenuItemMoveKeySpecifier);
@@ -8753,9 +11154,20 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | MenuItemUpdateKeySpecifier | (() => undefined | MenuItemUpdateKeySpecifier);
         fields?: MenuItemUpdateFieldPolicy;
     };
+    MenuItemUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | MenuItemUpdatedKeySpecifier
+            | (() => undefined | MenuItemUpdatedKeySpecifier);
+        fields?: MenuItemUpdatedFieldPolicy;
+    };
     MenuUpdate?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | MenuUpdateKeySpecifier | (() => undefined | MenuUpdateKeySpecifier);
         fields?: MenuUpdateFieldPolicy;
+    };
+    MenuUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | MenuUpdatedKeySpecifier | (() => undefined | MenuUpdatedKeySpecifier);
+        fields?: MenuUpdatedFieldPolicy;
     };
     MetadataError?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | MetadataErrorKeySpecifier | (() => undefined | MetadataErrorKeySpecifier);
@@ -8807,6 +11219,10 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | OrderCancelKeySpecifier | (() => undefined | OrderCancelKeySpecifier);
         fields?: OrderCancelFieldPolicy;
     };
+    OrderCancelled?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | OrderCancelledKeySpecifier | (() => undefined | OrderCancelledKeySpecifier);
+        fields?: OrderCancelledFieldPolicy;
+    };
     OrderCapture?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | OrderCaptureKeySpecifier | (() => undefined | OrderCaptureKeySpecifier);
         fields?: OrderCaptureFieldPolicy;
@@ -8814,6 +11230,10 @@ export type StrictTypedTypePolicies = {
     OrderConfirm?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | OrderConfirmKeySpecifier | (() => undefined | OrderConfirmKeySpecifier);
         fields?: OrderConfirmFieldPolicy;
+    };
+    OrderConfirmed?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | OrderConfirmedKeySpecifier | (() => undefined | OrderConfirmedKeySpecifier);
+        fields?: OrderConfirmedFieldPolicy;
     };
     OrderCountableConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
@@ -8828,6 +11248,24 @@ export type StrictTypedTypePolicies = {
             | OrderCountableEdgeKeySpecifier
             | (() => undefined | OrderCountableEdgeKeySpecifier);
         fields?: OrderCountableEdgeFieldPolicy;
+    };
+    OrderCreateFromCheckout?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | OrderCreateFromCheckoutKeySpecifier
+            | (() => undefined | OrderCreateFromCheckoutKeySpecifier);
+        fields?: OrderCreateFromCheckoutFieldPolicy;
+    };
+    OrderCreateFromCheckoutError?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | OrderCreateFromCheckoutErrorKeySpecifier
+            | (() => undefined | OrderCreateFromCheckoutErrorKeySpecifier);
+        fields?: OrderCreateFromCheckoutErrorFieldPolicy;
+    };
+    OrderCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | OrderCreatedKeySpecifier | (() => undefined | OrderCreatedKeySpecifier);
+        fields?: OrderCreatedFieldPolicy;
     };
     OrderDiscount?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | OrderDiscountKeySpecifier | (() => undefined | OrderDiscountKeySpecifier);
@@ -8890,9 +11328,24 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | OrderEventOrderLineObjectKeySpecifier);
         fields?: OrderEventOrderLineObjectFieldPolicy;
     };
+    OrderFilterShippingMethods?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | OrderFilterShippingMethodsKeySpecifier
+            | (() => undefined | OrderFilterShippingMethodsKeySpecifier);
+        fields?: OrderFilterShippingMethodsFieldPolicy;
+    };
     OrderFulfill?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | OrderFulfillKeySpecifier | (() => undefined | OrderFulfillKeySpecifier);
         fields?: OrderFulfillFieldPolicy;
+    };
+    OrderFulfilled?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | OrderFulfilledKeySpecifier | (() => undefined | OrderFulfilledKeySpecifier);
+        fields?: OrderFulfilledFieldPolicy;
+    };
+    OrderFullyPaid?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | OrderFullyPaidKeySpecifier | (() => undefined | OrderFullyPaidKeySpecifier);
+        fields?: OrderFullyPaidFieldPolicy;
     };
     OrderLine?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | OrderLineKeySpecifier | (() => undefined | OrderLineKeySpecifier);
@@ -8973,6 +11426,10 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | OrderUpdateShippingKeySpecifier);
         fields?: OrderUpdateShippingFieldPolicy;
     };
+    OrderUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | OrderUpdatedKeySpecifier | (() => undefined | OrderUpdatedKeySpecifier);
+        fields?: OrderUpdatedFieldPolicy;
+    };
     OrderVoid?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | OrderVoidKeySpecifier | (() => undefined | OrderVoidKeySpecifier);
         fields?: OrderVoidFieldPolicy;
@@ -9024,9 +11481,17 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | PageCreateKeySpecifier | (() => undefined | PageCreateKeySpecifier);
         fields?: PageCreateFieldPolicy;
     };
+    PageCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | PageCreatedKeySpecifier | (() => undefined | PageCreatedKeySpecifier);
+        fields?: PageCreatedFieldPolicy;
+    };
     PageDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | PageDeleteKeySpecifier | (() => undefined | PageDeleteKeySpecifier);
         fields?: PageDeleteFieldPolicy;
+    };
+    PageDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | PageDeletedKeySpecifier | (() => undefined | PageDeletedKeySpecifier);
+        fields?: PageDeletedFieldPolicy;
     };
     PageError?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | PageErrorKeySpecifier | (() => undefined | PageErrorKeySpecifier);
@@ -9090,9 +11555,23 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | PageTypeCreateKeySpecifier | (() => undefined | PageTypeCreateKeySpecifier);
         fields?: PageTypeCreateFieldPolicy;
     };
+    PageTypeCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | PageTypeCreatedKeySpecifier
+            | (() => undefined | PageTypeCreatedKeySpecifier);
+        fields?: PageTypeCreatedFieldPolicy;
+    };
     PageTypeDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | PageTypeDeleteKeySpecifier | (() => undefined | PageTypeDeleteKeySpecifier);
         fields?: PageTypeDeleteFieldPolicy;
+    };
+    PageTypeDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | PageTypeDeletedKeySpecifier
+            | (() => undefined | PageTypeDeletedKeySpecifier);
+        fields?: PageTypeDeletedFieldPolicy;
     };
     PageTypeReorderAttributes?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
@@ -9105,9 +11584,20 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | PageTypeUpdateKeySpecifier | (() => undefined | PageTypeUpdateKeySpecifier);
         fields?: PageTypeUpdateFieldPolicy;
     };
+    PageTypeUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | PageTypeUpdatedKeySpecifier
+            | (() => undefined | PageTypeUpdatedKeySpecifier);
+        fields?: PageTypeUpdatedFieldPolicy;
+    };
     PageUpdate?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | PageUpdateKeySpecifier | (() => undefined | PageUpdateKeySpecifier);
         fields?: PageUpdateFieldPolicy;
+    };
+    PageUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | PageUpdatedKeySpecifier | (() => undefined | PageUpdatedKeySpecifier);
+        fields?: PageUpdatedFieldPolicy;
     };
     PasswordChange?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | PasswordChangeKeySpecifier | (() => undefined | PasswordChangeKeySpecifier);
@@ -9117,9 +11607,23 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | PaymentKeySpecifier | (() => undefined | PaymentKeySpecifier);
         fields?: PaymentFieldPolicy;
     };
+    PaymentAuthorize?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | PaymentAuthorizeKeySpecifier
+            | (() => undefined | PaymentAuthorizeKeySpecifier);
+        fields?: PaymentAuthorizeFieldPolicy;
+    };
     PaymentCapture?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | PaymentCaptureKeySpecifier | (() => undefined | PaymentCaptureKeySpecifier);
         fields?: PaymentCaptureFieldPolicy;
+    };
+    PaymentCaptureEvent?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | PaymentCaptureEventKeySpecifier
+            | (() => undefined | PaymentCaptureEventKeySpecifier);
+        fields?: PaymentCaptureEventFieldPolicy;
     };
     PaymentCheckBalance?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
@@ -9127,6 +11631,13 @@ export type StrictTypedTypePolicies = {
             | PaymentCheckBalanceKeySpecifier
             | (() => undefined | PaymentCheckBalanceKeySpecifier);
         fields?: PaymentCheckBalanceFieldPolicy;
+    };
+    PaymentConfirmEvent?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | PaymentConfirmEventKeySpecifier
+            | (() => undefined | PaymentConfirmEventKeySpecifier);
+        fields?: PaymentConfirmEventFieldPolicy;
     };
     PaymentCountableConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
@@ -9164,9 +11675,30 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | PaymentInitializedKeySpecifier);
         fields?: PaymentInitializedFieldPolicy;
     };
+    PaymentListGateways?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | PaymentListGatewaysKeySpecifier
+            | (() => undefined | PaymentListGatewaysKeySpecifier);
+        fields?: PaymentListGatewaysFieldPolicy;
+    };
+    PaymentProcessEvent?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | PaymentProcessEventKeySpecifier
+            | (() => undefined | PaymentProcessEventKeySpecifier);
+        fields?: PaymentProcessEventFieldPolicy;
+    };
     PaymentRefund?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | PaymentRefundKeySpecifier | (() => undefined | PaymentRefundKeySpecifier);
         fields?: PaymentRefundFieldPolicy;
+    };
+    PaymentRefundEvent?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | PaymentRefundEventKeySpecifier
+            | (() => undefined | PaymentRefundEventKeySpecifier);
+        fields?: PaymentRefundEventFieldPolicy;
     };
     PaymentSource?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | PaymentSourceKeySpecifier | (() => undefined | PaymentSourceKeySpecifier);
@@ -9175,6 +11707,13 @@ export type StrictTypedTypePolicies = {
     PaymentVoid?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | PaymentVoidKeySpecifier | (() => undefined | PaymentVoidKeySpecifier);
         fields?: PaymentVoidFieldPolicy;
+    };
+    PaymentVoidEvent?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | PaymentVoidEventKeySpecifier
+            | (() => undefined | PaymentVoidEventKeySpecifier);
+        fields?: PaymentVoidEventFieldPolicy;
     };
     Permission?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | PermissionKeySpecifier | (() => undefined | PermissionKeySpecifier);
@@ -9187,12 +11726,26 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | PermissionGroupCreateKeySpecifier);
         fields?: PermissionGroupCreateFieldPolicy;
     };
+    PermissionGroupCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | PermissionGroupCreatedKeySpecifier
+            | (() => undefined | PermissionGroupCreatedKeySpecifier);
+        fields?: PermissionGroupCreatedFieldPolicy;
+    };
     PermissionGroupDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
             | false
             | PermissionGroupDeleteKeySpecifier
             | (() => undefined | PermissionGroupDeleteKeySpecifier);
         fields?: PermissionGroupDeleteFieldPolicy;
+    };
+    PermissionGroupDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | PermissionGroupDeletedKeySpecifier
+            | (() => undefined | PermissionGroupDeletedKeySpecifier);
+        fields?: PermissionGroupDeletedFieldPolicy;
     };
     PermissionGroupError?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
@@ -9207,6 +11760,13 @@ export type StrictTypedTypePolicies = {
             | PermissionGroupUpdateKeySpecifier
             | (() => undefined | PermissionGroupUpdateKeySpecifier);
         fields?: PermissionGroupUpdateFieldPolicy;
+    };
+    PermissionGroupUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | PermissionGroupUpdatedKeySpecifier
+            | (() => undefined | PermissionGroupUpdatedKeySpecifier);
+        fields?: PermissionGroupUpdatedFieldPolicy;
     };
     Plugin?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | PluginKeySpecifier | (() => undefined | PluginKeySpecifier);
@@ -9323,9 +11883,17 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | ProductCreateKeySpecifier | (() => undefined | ProductCreateKeySpecifier);
         fields?: ProductCreateFieldPolicy;
     };
+    ProductCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | ProductCreatedKeySpecifier | (() => undefined | ProductCreatedKeySpecifier);
+        fields?: ProductCreatedFieldPolicy;
+    };
     ProductDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | ProductDeleteKeySpecifier | (() => undefined | ProductDeleteKeySpecifier);
         fields?: ProductDeleteFieldPolicy;
+    };
+    ProductDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | ProductDeletedKeySpecifier | (() => undefined | ProductDeletedKeySpecifier);
+        fields?: ProductDeletedFieldPolicy;
     };
     ProductError?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | ProductErrorKeySpecifier | (() => undefined | ProductErrorKeySpecifier);
@@ -9466,9 +12034,20 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | ProductUpdateKeySpecifier | (() => undefined | ProductUpdateKeySpecifier);
         fields?: ProductUpdateFieldPolicy;
     };
+    ProductUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | ProductUpdatedKeySpecifier | (() => undefined | ProductUpdatedKeySpecifier);
+        fields?: ProductUpdatedFieldPolicy;
+    };
     ProductVariant?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | ProductVariantKeySpecifier | (() => undefined | ProductVariantKeySpecifier);
         fields?: ProductVariantFieldPolicy;
+    };
+    ProductVariantBackInStock?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | ProductVariantBackInStockKeySpecifier
+            | (() => undefined | ProductVariantBackInStockKeySpecifier);
+        fields?: ProductVariantBackInStockFieldPolicy;
     };
     ProductVariantBulkCreate?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
@@ -9519,12 +12098,33 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | ProductVariantCreateKeySpecifier);
         fields?: ProductVariantCreateFieldPolicy;
     };
+    ProductVariantCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | ProductVariantCreatedKeySpecifier
+            | (() => undefined | ProductVariantCreatedKeySpecifier);
+        fields?: ProductVariantCreatedFieldPolicy;
+    };
     ProductVariantDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
             | false
             | ProductVariantDeleteKeySpecifier
             | (() => undefined | ProductVariantDeleteKeySpecifier);
         fields?: ProductVariantDeleteFieldPolicy;
+    };
+    ProductVariantDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | ProductVariantDeletedKeySpecifier
+            | (() => undefined | ProductVariantDeletedKeySpecifier);
+        fields?: ProductVariantDeletedFieldPolicy;
+    };
+    ProductVariantOutOfStock?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | ProductVariantOutOfStockKeySpecifier
+            | (() => undefined | ProductVariantOutOfStockKeySpecifier);
+        fields?: ProductVariantOutOfStockFieldPolicy;
     };
     ProductVariantPreorderDeactivate?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
@@ -9603,6 +12203,13 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | ProductVariantUpdateKeySpecifier);
         fields?: ProductVariantUpdateFieldPolicy;
     };
+    ProductVariantUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | ProductVariantUpdatedKeySpecifier
+            | (() => undefined | ProductVariantUpdatedKeySpecifier);
+        fields?: ProductVariantUpdatedFieldPolicy;
+    };
     Query?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | QueryKeySpecifier | (() => undefined | QueryKeySpecifier);
         fields?: QueryFieldPolicy;
@@ -9676,9 +12283,17 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | SaleCreateKeySpecifier | (() => undefined | SaleCreateKeySpecifier);
         fields?: SaleCreateFieldPolicy;
     };
+    SaleCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | SaleCreatedKeySpecifier | (() => undefined | SaleCreatedKeySpecifier);
+        fields?: SaleCreatedFieldPolicy;
+    };
     SaleDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | SaleDeleteKeySpecifier | (() => undefined | SaleDeleteKeySpecifier);
         fields?: SaleDeleteFieldPolicy;
+    };
+    SaleDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | SaleDeletedKeySpecifier | (() => undefined | SaleDeletedKeySpecifier);
+        fields?: SaleDeletedFieldPolicy;
     };
     SaleRemoveCatalogues?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
@@ -9686,6 +12301,10 @@ export type StrictTypedTypePolicies = {
             | SaleRemoveCataloguesKeySpecifier
             | (() => undefined | SaleRemoveCataloguesKeySpecifier);
         fields?: SaleRemoveCataloguesFieldPolicy;
+    };
+    SaleToggle?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | SaleToggleKeySpecifier | (() => undefined | SaleToggleKeySpecifier);
+        fields?: SaleToggleFieldPolicy;
     };
     SaleTranslatableContent?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
@@ -9709,6 +12328,10 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | SaleUpdateKeySpecifier | (() => undefined | SaleUpdateKeySpecifier);
         fields?: SaleUpdateFieldPolicy;
     };
+    SaleUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | SaleUpdatedKeySpecifier | (() => undefined | SaleUpdatedKeySpecifier);
+        fields?: SaleUpdatedFieldPolicy;
+    };
     SelectedAttribute?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
             | false
@@ -9723,6 +12346,13 @@ export type StrictTypedTypePolicies = {
     ShippingError?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | ShippingErrorKeySpecifier | (() => undefined | ShippingErrorKeySpecifier);
         fields?: ShippingErrorFieldPolicy;
+    };
+    ShippingListMethodsForCheckout?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | ShippingListMethodsForCheckoutKeySpecifier
+            | (() => undefined | ShippingListMethodsForCheckoutKeySpecifier);
+        fields?: ShippingListMethodsForCheckoutFieldPolicy;
     };
     ShippingMethod?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | ShippingMethodKeySpecifier | (() => undefined | ShippingMethodKeySpecifier);
@@ -9784,12 +12414,26 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | ShippingPriceCreateKeySpecifier);
         fields?: ShippingPriceCreateFieldPolicy;
     };
+    ShippingPriceCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | ShippingPriceCreatedKeySpecifier
+            | (() => undefined | ShippingPriceCreatedKeySpecifier);
+        fields?: ShippingPriceCreatedFieldPolicy;
+    };
     ShippingPriceDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
             | false
             | ShippingPriceDeleteKeySpecifier
             | (() => undefined | ShippingPriceDeleteKeySpecifier);
         fields?: ShippingPriceDeleteFieldPolicy;
+    };
+    ShippingPriceDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | ShippingPriceDeletedKeySpecifier
+            | (() => undefined | ShippingPriceDeletedKeySpecifier);
+        fields?: ShippingPriceDeletedFieldPolicy;
     };
     ShippingPriceExcludeProducts?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
@@ -9818,6 +12462,13 @@ export type StrictTypedTypePolicies = {
             | ShippingPriceUpdateKeySpecifier
             | (() => undefined | ShippingPriceUpdateKeySpecifier);
         fields?: ShippingPriceUpdateFieldPolicy;
+    };
+    ShippingPriceUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | ShippingPriceUpdatedKeySpecifier
+            | (() => undefined | ShippingPriceUpdatedKeySpecifier);
+        fields?: ShippingPriceUpdatedFieldPolicy;
     };
     ShippingZone?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | ShippingZoneKeySpecifier | (() => undefined | ShippingZoneKeySpecifier);
@@ -9851,6 +12502,13 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | ShippingZoneCreateKeySpecifier);
         fields?: ShippingZoneCreateFieldPolicy;
     };
+    ShippingZoneCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | ShippingZoneCreatedKeySpecifier
+            | (() => undefined | ShippingZoneCreatedKeySpecifier);
+        fields?: ShippingZoneCreatedFieldPolicy;
+    };
     ShippingZoneDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
             | false
@@ -9858,12 +12516,26 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | ShippingZoneDeleteKeySpecifier);
         fields?: ShippingZoneDeleteFieldPolicy;
     };
+    ShippingZoneDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | ShippingZoneDeletedKeySpecifier
+            | (() => undefined | ShippingZoneDeletedKeySpecifier);
+        fields?: ShippingZoneDeletedFieldPolicy;
+    };
     ShippingZoneUpdate?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
             | false
             | ShippingZoneUpdateKeySpecifier
             | (() => undefined | ShippingZoneUpdateKeySpecifier);
         fields?: ShippingZoneUpdateFieldPolicy;
+    };
+    ShippingZoneUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | ShippingZoneUpdatedKeySpecifier
+            | (() => undefined | ShippingZoneUpdatedKeySpecifier);
+        fields?: ShippingZoneUpdatedFieldPolicy;
     };
     Shop?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | ShopKeySpecifier | (() => undefined | ShopKeySpecifier);
@@ -9926,9 +12598,17 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | StaffCreateKeySpecifier | (() => undefined | StaffCreateKeySpecifier);
         fields?: StaffCreateFieldPolicy;
     };
+    StaffCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | StaffCreatedKeySpecifier | (() => undefined | StaffCreatedKeySpecifier);
+        fields?: StaffCreatedFieldPolicy;
+    };
     StaffDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | StaffDeleteKeySpecifier | (() => undefined | StaffDeleteKeySpecifier);
         fields?: StaffDeleteFieldPolicy;
+    };
+    StaffDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | StaffDeletedKeySpecifier | (() => undefined | StaffDeletedKeySpecifier);
+        fields?: StaffDeletedFieldPolicy;
     };
     StaffError?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | StaffErrorKeySpecifier | (() => undefined | StaffErrorKeySpecifier);
@@ -9966,6 +12646,10 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | StaffUpdateKeySpecifier | (() => undefined | StaffUpdateKeySpecifier);
         fields?: StaffUpdateFieldPolicy;
     };
+    StaffUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | StaffUpdatedKeySpecifier | (() => undefined | StaffUpdatedKeySpecifier);
+        fields?: StaffUpdatedFieldPolicy;
+    };
     Stock?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | StockKeySpecifier | (() => undefined | StockKeySpecifier);
         fields?: StockFieldPolicy;
@@ -9988,9 +12672,45 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | StockErrorKeySpecifier | (() => undefined | StockErrorKeySpecifier);
         fields?: StockErrorFieldPolicy;
     };
+    Subscription?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | SubscriptionKeySpecifier | (() => undefined | SubscriptionKeySpecifier);
+        fields?: SubscriptionFieldPolicy;
+    };
+    TaxExemptionManage?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | TaxExemptionManageKeySpecifier
+            | (() => undefined | TaxExemptionManageKeySpecifier);
+        fields?: TaxExemptionManageFieldPolicy;
+    };
+    TaxExemptionManageError?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | TaxExemptionManageErrorKeySpecifier
+            | (() => undefined | TaxExemptionManageErrorKeySpecifier);
+        fields?: TaxExemptionManageErrorFieldPolicy;
+    };
     TaxType?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | TaxTypeKeySpecifier | (() => undefined | TaxTypeKeySpecifier);
         fields?: TaxTypeFieldPolicy;
+    };
+    TaxableObject?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | TaxableObjectKeySpecifier | (() => undefined | TaxableObjectKeySpecifier);
+        fields?: TaxableObjectFieldPolicy;
+    };
+    TaxableObjectDiscount?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | TaxableObjectDiscountKeySpecifier
+            | (() => undefined | TaxableObjectDiscountKeySpecifier);
+        fields?: TaxableObjectDiscountFieldPolicy;
+    };
+    TaxableObjectLine?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | TaxableObjectLineKeySpecifier
+            | (() => undefined | TaxableObjectLineKeySpecifier);
+        fields?: TaxableObjectLineFieldPolicy;
     };
     TaxedMoney?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | TaxedMoneyKeySpecifier | (() => undefined | TaxedMoneyKeySpecifier);
@@ -10011,6 +12731,76 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | TransactionKeySpecifier | (() => undefined | TransactionKeySpecifier);
         fields?: TransactionFieldPolicy;
     };
+    TransactionAction?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | TransactionActionKeySpecifier
+            | (() => undefined | TransactionActionKeySpecifier);
+        fields?: TransactionActionFieldPolicy;
+    };
+    TransactionActionRequest?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | TransactionActionRequestKeySpecifier
+            | (() => undefined | TransactionActionRequestKeySpecifier);
+        fields?: TransactionActionRequestFieldPolicy;
+    };
+    TransactionCreate?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | TransactionCreateKeySpecifier
+            | (() => undefined | TransactionCreateKeySpecifier);
+        fields?: TransactionCreateFieldPolicy;
+    };
+    TransactionCreateError?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | TransactionCreateErrorKeySpecifier
+            | (() => undefined | TransactionCreateErrorKeySpecifier);
+        fields?: TransactionCreateErrorFieldPolicy;
+    };
+    TransactionEvent?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | TransactionEventKeySpecifier
+            | (() => undefined | TransactionEventKeySpecifier);
+        fields?: TransactionEventFieldPolicy;
+    };
+    TransactionItem?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | TransactionItemKeySpecifier
+            | (() => undefined | TransactionItemKeySpecifier);
+        fields?: TransactionItemFieldPolicy;
+    };
+    TransactionRequestAction?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | TransactionRequestActionKeySpecifier
+            | (() => undefined | TransactionRequestActionKeySpecifier);
+        fields?: TransactionRequestActionFieldPolicy;
+    };
+    TransactionRequestActionError?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | TransactionRequestActionErrorKeySpecifier
+            | (() => undefined | TransactionRequestActionErrorKeySpecifier);
+        fields?: TransactionRequestActionErrorFieldPolicy;
+    };
+    TransactionUpdate?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | TransactionUpdateKeySpecifier
+            | (() => undefined | TransactionUpdateKeySpecifier);
+        fields?: TransactionUpdateFieldPolicy;
+    };
+    TransactionUpdateError?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | TransactionUpdateErrorKeySpecifier
+            | (() => undefined | TransactionUpdateErrorKeySpecifier);
+        fields?: TransactionUpdateErrorFieldPolicy;
+    };
     TranslatableItemConnection?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
             | false
@@ -10025,12 +12815,26 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | TranslatableItemEdgeKeySpecifier);
         fields?: TranslatableItemEdgeFieldPolicy;
     };
+    TranslationCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | TranslationCreatedKeySpecifier
+            | (() => undefined | TranslationCreatedKeySpecifier);
+        fields?: TranslationCreatedFieldPolicy;
+    };
     TranslationError?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
             | false
             | TranslationErrorKeySpecifier
             | (() => undefined | TranslationErrorKeySpecifier);
         fields?: TranslationErrorFieldPolicy;
+    };
+    TranslationUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | TranslationUpdatedKeySpecifier
+            | (() => undefined | TranslationUpdatedKeySpecifier);
+        fields?: TranslationUpdatedFieldPolicy;
     };
     UpdateMetadata?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | UpdateMetadataKeySpecifier | (() => undefined | UpdateMetadataKeySpecifier);
@@ -10169,9 +12973,17 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | VoucherCreateKeySpecifier | (() => undefined | VoucherCreateKeySpecifier);
         fields?: VoucherCreateFieldPolicy;
     };
+    VoucherCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | VoucherCreatedKeySpecifier | (() => undefined | VoucherCreatedKeySpecifier);
+        fields?: VoucherCreatedFieldPolicy;
+    };
     VoucherDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | VoucherDeleteKeySpecifier | (() => undefined | VoucherDeleteKeySpecifier);
         fields?: VoucherDeleteFieldPolicy;
+    };
+    VoucherDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | VoucherDeletedKeySpecifier | (() => undefined | VoucherDeletedKeySpecifier);
+        fields?: VoucherDeletedFieldPolicy;
     };
     VoucherRemoveCatalogues?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
@@ -10205,6 +13017,10 @@ export type StrictTypedTypePolicies = {
         keyFields?: false | VoucherUpdateKeySpecifier | (() => undefined | VoucherUpdateKeySpecifier);
         fields?: VoucherUpdateFieldPolicy;
     };
+    VoucherUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?: false | VoucherUpdatedKeySpecifier | (() => undefined | VoucherUpdatedKeySpecifier);
+        fields?: VoucherUpdatedFieldPolicy;
+    };
     Warehouse?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | WarehouseKeySpecifier | (() => undefined | WarehouseKeySpecifier);
         fields?: WarehouseFieldPolicy;
@@ -10230,12 +13046,26 @@ export type StrictTypedTypePolicies = {
             | (() => undefined | WarehouseCreateKeySpecifier);
         fields?: WarehouseCreateFieldPolicy;
     };
+    WarehouseCreated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | WarehouseCreatedKeySpecifier
+            | (() => undefined | WarehouseCreatedKeySpecifier);
+        fields?: WarehouseCreatedFieldPolicy;
+    };
     WarehouseDelete?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?:
             | false
             | WarehouseDeleteKeySpecifier
             | (() => undefined | WarehouseDeleteKeySpecifier);
         fields?: WarehouseDeleteFieldPolicy;
+    };
+    WarehouseDeleted?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | WarehouseDeletedKeySpecifier
+            | (() => undefined | WarehouseDeletedKeySpecifier);
+        fields?: WarehouseDeletedFieldPolicy;
     };
     WarehouseError?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | WarehouseErrorKeySpecifier | (() => undefined | WarehouseErrorKeySpecifier);
@@ -10261,6 +13091,13 @@ export type StrictTypedTypePolicies = {
             | WarehouseUpdateKeySpecifier
             | (() => undefined | WarehouseUpdateKeySpecifier);
         fields?: WarehouseUpdateFieldPolicy;
+    };
+    WarehouseUpdated?: Omit<TypePolicy, "fields" | "keyFields"> & {
+        keyFields?:
+            | false
+            | WarehouseUpdatedKeySpecifier
+            | (() => undefined | WarehouseUpdatedKeySpecifier);
+        fields?: WarehouseUpdatedFieldPolicy;
     };
     Webhook?: Omit<TypePolicy, "fields" | "keyFields"> & {
         keyFields?: false | WebhookKeySpecifier | (() => undefined | WebhookKeySpecifier);

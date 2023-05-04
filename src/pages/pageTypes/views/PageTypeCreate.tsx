@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
+import { getMutationErrors } from "@mzawadie/core";
 import {
-    PageTypeCreateMutation,
     usePageTypeCreateMutation,
     useUpdateMetadataMutation,
     useUpdatePrivateMetadataMutation,
@@ -13,27 +13,26 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { PageTypeCreatePage, PageTypeForm } from "../components/PageTypeCreatePage";
-import { pageTypeListUrl, pageTypeUrl } from "../urls";
+import { pageTypeUrl } from "../urls";
 
 export const PageTypeCreate: React.FC = () => {
     const navigate = useNavigator();
     const notify = useNotifier();
     const intl = useIntl();
-
     const [updateMetadata] = useUpdateMetadataMutation({});
     const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
     const [createPageType, createPageTypeOpts] = usePageTypeCreateMutation({
-        onCompleted: (updateData: PageTypeCreateMutation) => {
+        onCompleted: (updateData) => {
             if (updateData.pageTypeCreate?.errors.length === 0) {
                 notify({
                     status: "success",
                     text: intl.formatMessage({
-                        defaultMessage: "Successfully created page type",
                         id: "5bJ26s",
+                        defaultMessage: "Successfully created page type",
                     }),
                 });
-                navigate(pageTypeUrl(updateData.pageTypeCreate?.pageType?.id));
+                navigate(pageTypeUrl(updateData.pageTypeCreate.pageType.id));
             }
         },
     });
@@ -47,7 +46,10 @@ export const PageTypeCreate: React.FC = () => {
             },
         });
 
-        return result.data?.pageTypeCreate?.pageType?.id || null;
+        return {
+            id: result.data?.pageTypeCreate?.pageType?.id || null,
+            errors: getMutationErrors(result),
+        };
     };
 
     const handleSubmit = createMetadataCreateHandler(
@@ -60,17 +62,15 @@ export const PageTypeCreate: React.FC = () => {
         <>
             <WindowTitle
                 title={intl.formatMessage({
+                    id: "BftZHy",
                     defaultMessage: "Create Page Type",
                     description: "window title",
-                    id: "BftZHy",
                 })}
             />
-
             <PageTypeCreatePage
                 disabled={createPageTypeOpts.loading}
                 errors={createPageTypeOpts.data?.pageTypeCreate?.errors || []}
                 saveButtonBarState={createPageTypeOpts.status}
-                onBack={() => navigate(pageTypeListUrl())}
                 onSubmit={handleSubmit}
             />
         </>

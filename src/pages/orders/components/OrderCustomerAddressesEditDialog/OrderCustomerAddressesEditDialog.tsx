@@ -10,13 +10,15 @@ import {
 import { Checkbox } from "@mzawadie/components/Checkbox";
 import { ConfirmButton } from "@mzawadie/components/ConfirmButton";
 import FormSpacer from "@mzawadie/components/FormSpacer";
-import { buttonMessages, transformAddressToAddressInput } from "@mzawadie/core";
+import { buttonMessages } from "@mzawadie/core";
+import { transformAddressToAddressInput } from "@mzawadie/core";
 import {
     AddressFragment,
-    CountryWithCodeFragment,
-    OrderErrorFragment,
     AddressInput,
     AddressTypeEnum,
+    CountryWithCodeFragment,
+    Node,
+    OrderErrorFragment,
 } from "@mzawadie/graphql";
 import useAddressValidation from "@mzawadie/hooks/useAddressValidation";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
@@ -26,7 +28,7 @@ import { AddressTypeInput } from "@mzawadie/pages/customers/types";
 import { mapCountriesToChoices } from "@mzawadie/utils/maps";
 import { ConfirmButtonTransitionState, DialogHeader } from "@saleor/macaw-ui";
 import React from "react";
-import { MessageDescriptor, FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
 import { getById } from "../OrderReturnPage/utils";
 import OrderCustomerAddressEdit from "./OrderCustomerAddressEdit";
@@ -42,7 +44,7 @@ import {
     OrderCustomerAddressesEditDialogOutput,
     OrderCustomerSearchAddressState,
 } from "./types";
-import { getAddressEditProps, validateDefaultAddress } from "./utils";
+import { getAddressEditProps, hasPreSubmitErrors, validateDefaultAddress } from "./utils";
 
 export interface OrderCustomerAddressesEditDialogProps {
     open: boolean;
@@ -83,6 +85,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
     } = props;
 
     const classes = useStyles(props);
+    
     const intl = useIntl();
 
     const hasCustomerChanged = variant === AddressEditDialogVariant.CHANGE_CUSTOMER;
@@ -91,6 +94,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
         (address) => address,
         AddressTypeEnum.SHIPPING
     );
+    
     const { errors: billingValidationErrors, submit: handleBillingSubmit } = useAddressValidation(
         (address) => address,
         AddressTypeEnum.BILLING
@@ -105,30 +109,34 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
         if (hasCustomerChanged || addressSearchState.open) {
             return false;
         }
+    
         if (!customerAddresses.length) {
             return false;
         }
+    
         if (variant === AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS) {
             return data.shippingAddressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS;
         }
+    
         return data.billingAddressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS;
     };
 
     const getCustomerAddress = (selectedCustomerAddressID: string): AddressInput =>
-        transformAddressToAddressInput(customerAddresses.find(getById(selectedCustomerAddressID)));
-
-    const handleAddressesSubmit = (data: OrderCustomerAddressesEditFormData) => {
+        transformAddressToAddressInput(customerAddresses?.find(getById(selectedCustomerAddressID)));
+    
+    // async because handleShippingSubmit can return a promise
+    const handleAddressesSubmit = async (data: OrderCustomerAddressesEditFormData) => {
         const shippingAddress =
             customerAddresses.length > 0 &&
             data.shippingAddressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS
                 ? getCustomerAddress(data.customerShippingAddress.id)
-                : handleShippingSubmit(data.shippingAddress);
+                : await handleShippingSubmit(data.shippingAddress);
 
         const billingAddress =
             customerAddresses.length > 0 &&
             data.billingAddressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS
                 ? getCustomerAddress(data.customerBillingAddress.id)
-                : handleBillingSubmit(data.billingAddress);
+                : await handleBillingSubmit(data.billingAddress);
 
         if (variant === AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS) {
             return {
@@ -136,12 +144,14 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                 ...(data.cloneAddress && { billingAddress: shippingAddress }),
             };
         }
+        
         if (variant === AddressEditDialogVariant.CHANGE_BILLING_ADDRESS) {
             return {
                 ...(data.cloneAddress && { shippingAddress: billingAddress }),
                 billingAddress,
             };
         }
+        
         return {
             shippingAddress,
             billingAddress: data.cloneAddress ? shippingAddress : billingAddress,
@@ -165,6 +175,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
         }
         return dialogMessages.customerChangeTitle;
     };
+    
     const getDialogDescription = (): MessageDescriptor => {
         if (customerAddresses.length === 0) {
             return dialogMessages.noAddressDescription;
@@ -188,13 +199,15 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
         }
         handleSubmit(data);
     };
+    
     const handleSubmit = async (data: OrderCustomerAddressesEditFormData) => {
-        const addressesInput = handleAddressesSubmit(data);
-        if (addressesInput) {
+        const addressesInput = await handleAddressesSubmit(data);
+    
+        if (addressesInput && !hasPreSubmitErrors(addressesInput)) {
             await onConfirm(addressesInput as OrderCustomerAddressesEditDialogOutput);
             setAddressSearchState(defaultSearchState);
         }
-
+    
         return Promise.resolve([...shippingValidationErrors, ...billingValidationErrors]);
     };
 
@@ -207,6 +220,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
         defaultShippingAddress,
         customerAddresses
     );
+
     const validatedDefaultBillingAddress = validateDefaultAddress(
         defaultBillingAddress,
         customerAddresses
@@ -229,6 +243,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
             <DialogHeader onClose={exitModal}>
                 <FormattedMessage {...getDialogTitle()} />
             </DialogHeader>
+
             <OrderCustomerAddressesEditForm
                 countryChoices={countryChoices}
                 countries={countries}
@@ -251,6 +266,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                         setAddressSearchState,
                         addressEditCommonProps
                     );
+
                     const billingAddressEditProps = getAddressEditProps(
                         "billing",
                         data,
@@ -260,6 +276,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                         setAddressSearchState,
                         addressEditCommonProps
                     );
+
                     return (
                         <>
                             {addressSearchState.open ? (
@@ -295,7 +312,9 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                                         <Typography>
                                             <FormattedMessage {...getDialogDescription()} />
                                         </Typography>
+
                                         <VerticalSpacer />
+
                                         {hasCustomerChanged && (
                                             <>
                                                 <OrderCustomerAddressEdit
@@ -324,6 +343,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                                                         dialogMessages.billingSameAsShipping
                                                     )}
                                                 />
+
                                                 {!data.cloneAddress && (
                                                     <>
                                                         <FormSpacer />
@@ -346,12 +366,14 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                                                 )}
                                             </>
                                         )}
+
                                         {variant ===
                                             AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS && (
                                             <>
                                                 <OrderCustomerAddressEdit
                                                     {...shippingAddressEditProps}
                                                 />
+
                                                 {data.shippingAddressInputOption ===
                                                     AddressInputOptionEnum.NEW_ADDRESS && (
                                                     <>
@@ -381,12 +403,14 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                                                 )}
                                             </>
                                         )}
+
                                         {variant ===
                                             AddressEditDialogVariant.CHANGE_BILLING_ADDRESS && (
                                             <>
                                                 <OrderCustomerAddressEdit
                                                     {...billingAddressEditProps}
                                                 />
+
                                                 {data.shippingAddressInputOption ===
                                                     AddressInputOptionEnum.NEW_ADDRESS && (
                                                     <>
@@ -417,6 +441,7 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
                                             </>
                                         )}
                                     </DialogContent>
+
                                     <DialogActions>
                                         <ConfirmButton
                                             transitionState={confirmButtonState}
@@ -442,4 +467,5 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
 };
 
 OrderCustomerAddressesEditDialog.displayName = "OrderCustomerAddressesEditDialog";
+
 export default OrderCustomerAddressesEditDialog;

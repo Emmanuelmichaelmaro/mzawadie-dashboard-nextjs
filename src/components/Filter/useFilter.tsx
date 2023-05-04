@@ -1,14 +1,16 @@
-/* eslint-disable react-hooks/exhaustive-deps, import/no-cycle */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import { Dispatch, useEffect, useReducer } from "react";
+import { useEffect, useReducer } from "react";
 
 import reduceFilter, { FilterReducerAction } from "./reducer";
-import { IFilter, IFilterElement } from "./types";
+import { FieldType, FilterElement, IFilter } from "./types";
 
-export type UseFilter<T extends string> = [
-    Array<IFilterElement<T>>,
-    Dispatch<FilterReducerAction<T>>,
+export type FilterDispatchFunction<K extends string = string> = <T extends FieldType>(
+    value: FilterReducerAction<K, T>
+) => void;
+
+export type UseFilter<K extends string> = [
+    Array<FilterElement<K>>,
+    FilterDispatchFunction<K>,
     () => void
 ];
 
@@ -22,13 +24,12 @@ function getParsedInitialFilter<T extends string>(initialFilter: IFilter<T>): IF
     }, []);
 }
 
-function useFilter<T extends string>(initialFilter: IFilter<T>): UseFilter<T> {
+function useFilter<K extends string>(initialFilter: IFilter<K>): UseFilter<K> {
     const parsedInitialFilter = getParsedInitialFilter(initialFilter);
 
-    const [data, dispatchFilterAction] = useReducer<React.Reducer<IFilter<T>, FilterReducerAction<T>>>(
-        reduceFilter,
-        parsedInitialFilter
-    );
+    const [data, dispatchFilterAction] = useReducer<
+        React.Reducer<IFilter<K>, FilterReducerAction<K, FieldType>>
+    >(reduceFilter, parsedInitialFilter);
 
     const reset = () =>
         dispatchFilterAction({

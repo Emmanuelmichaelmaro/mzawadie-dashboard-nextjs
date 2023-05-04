@@ -1,5 +1,6 @@
 // @ts-nocheck
-import { commonMessages, extractMutationErrors } from "@mzawadie/core";
+import { commonMessages } from "@mzawadie/core";
+import { extractMutationErrors } from "@mzawadie/core";
 import { useCreateShippingZoneMutation, useShopCountriesQuery } from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
@@ -12,7 +13,7 @@ import {
     ShippingZoneCreatePage,
     ShippingZoneCreateFormData,
 } from "../components/ShippingZoneCreatePage";
-import { shippingZonesListUrl, shippingZoneUrl } from "../urls";
+import { shippingZoneUrl } from "../urls";
 
 const ShippingZoneCreate: React.FC<{}> = () => {
     const navigate = useNavigator();
@@ -30,7 +31,7 @@ const ShippingZoneCreate: React.FC<{}> = () => {
 
     const [createShippingZone, createShippingZoneOpts] = useCreateShippingZoneMutation({
         onCompleted: (data) => {
-            if (data.shippingZoneCreate.errors.length === 0) {
+            if (data.shippingZoneCreate?.errors.length === 0) {
                 notify({
                     status: "success",
                     text: intl.formatMessage(commonMessages.savedChanges),
@@ -54,8 +55,7 @@ const ShippingZoneCreate: React.FC<{}> = () => {
             countries={shop?.countries || []}
             restWorldCountries={mapCountriesToCountriesCodes(restWorldCountries?.shop?.countries) || []}
             disabled={createShippingZoneOpts.loading}
-            errors={createShippingZoneOpts.data?.shippingZoneCreate.errors || []}
-            onBack={() => navigate(shippingZonesListUrl())}
+            errors={createShippingZoneOpts.data?.shippingZoneCreate?.errors || []}
             onSubmit={handleSubmit}
             saveButtonBarState={createShippingZoneOpts.status}
         />

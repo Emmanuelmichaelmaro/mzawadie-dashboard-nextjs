@@ -1,24 +1,18 @@
 // @ts-nocheck
 import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
-import {
-    Checkbox,
-    ResponsiveTable,
-    Skeleton,
-    TableCellHeader,
-    TableHead,
-    TablePagination,
-} from "@mzawadie/components";
-import {
-    getUserName,
-    maybe,
-    renderCollection,
-    ListActions,
-    ListProps,
-    SortPage,
-    RelayToFlat,
-} from "@mzawadie/core";
-import { ListCustomersQuery } from "@mzawadie/graphql";
-import { CustomerListUrlSortField } from "@mzawadie/pages/customers/urls";
+import { Checkbox } from "@mzawadie/components/Checkbox";
+import RequirePermissions, { hasPermissions } from "@mzawadie/components/RequirePermissions";
+import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
+import Skeleton from "@mzawadie/components/Skeleton";
+import { TableCellHeader } from "@mzawadie/components/TableCellHeader";
+import { TableHead } from "@mzawadie/components/TableHead";
+import { TablePaginationWithContext } from "@mzawadie/components/TablePagination";
+import { TableRowLink } from "@mzawadie/components/TableRowLink";
+import { getUserName, renderCollection } from "@mzawadie/core";
+import { ListActions, ListProps, RelayToFlat, SortPage } from "@mzawadie/core";
+import { ListCustomersQuery, PermissionEnum } from "@mzawadie/graphql";
+import { useUserPermissions } from "@mzawadie/pages/auth/hooks/useUserPermissions";
+import { CustomerListUrlSortField, customerUrl } from "@mzawadie/pages/customers/urls";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -51,18 +45,12 @@ export interface CustomerListProps extends ListProps, ListActions, SortPage<Cust
     customers: RelayToFlat<ListCustomersQuery["customers"]>;
 }
 
-const numberOfColumns = 4;
-
 const CustomerList: React.FC<CustomerListProps> = (props) => {
     const {
         settings,
         disabled,
         customers,
-        pageInfo,
-        onNextPage,
-        onPreviousPage,
         onUpdateListSettings,
-        onRowClick,
         onSort,
         toolbar,
         toggle,
@@ -71,6 +59,10 @@ const CustomerList: React.FC<CustomerListProps> = (props) => {
         sort,
         isChecked,
     } = props;
+
+    const userPermissions = useUserPermissions();
+
+    const numberOfColumns = hasPermissions(userPermissions, [PermissionEnum.MANAGE_ORDERS]) ? 4 : 3;
 
     const classes = useStyles(props);
 
@@ -94,8 +86,9 @@ const CustomerList: React.FC<CustomerListProps> = (props) => {
                     onClick={() => onSort(CustomerListUrlSortField.name)}
                     className={classes.colName}
                 >
-                    <FormattedMessage defaultMessage="Customer Name" id="Gr1SAu" />
+                    <FormattedMessage id="Gr1SAu" defaultMessage="Customer Name" />
                 </TableCellHeader>
+        
                 <TableCellHeader
                     direction={
                         sort.sort === CustomerListUrlSortField.email
@@ -105,34 +98,35 @@ const CustomerList: React.FC<CustomerListProps> = (props) => {
                     onClick={() => onSort(CustomerListUrlSortField.email)}
                     className={classes.colEmail}
                 >
-                    <FormattedMessage defaultMessage="Customer Email" id="97l2MO" />
+                    <FormattedMessage id="97l2MO" defaultMessage="Customer Email" />
                 </TableCellHeader>
-                <TableCellHeader
-                    direction={
-                        sort.sort === CustomerListUrlSortField.orders
-                            ? getArrowDirection(sort.asc)
-                            : undefined
-                    }
-                    textAlign="center"
-                    onClick={() => onSort(CustomerListUrlSortField.orders)}
-                    className={classes.colOrders}
-                >
-                    <FormattedMessage defaultMessage="No. of Orders" id="E8VDeH" />
-                </TableCellHeader>
+        
+                <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
+                    <TableCellHeader
+                        direction={
+                            sort.sort === CustomerListUrlSortField.orders
+                                ? getArrowDirection(sort.asc)
+                                : undefined
+                        }
+                        textAlign="center"
+                        onClick={() => onSort(CustomerListUrlSortField.orders)}
+                        className={classes.colOrders}
+                    >
+                        <FormattedMessage id="E8VDeH" defaultMessage="No. of Orders" />
+                    </TableCellHeader>
+                </RequirePermissions>
             </TableHead>
+        
             <TableFooter>
                 <TableRow>
-                    <TablePagination
+                    <TablePaginationWithContext
                         colSpan={numberOfColumns}
                         settings={settings}
-                        hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-                        onNextPage={onNextPage}
                         onUpdateListSettings={onUpdateListSettings}
-                        hasPreviousPage={pageInfo && !disabled ? pageInfo.hasPreviousPage : false}
-                        onPreviousPage={onPreviousPage}
                     />
                 </TableRow>
             </TableFooter>
+        
             <TableBody>
                 {renderCollection(
                     customers,
@@ -140,12 +134,12 @@ const CustomerList: React.FC<CustomerListProps> = (props) => {
                         const isSelected = customer ? isChecked(customer.id) : false;
 
                         return (
-                            <TableRow
+                            <TableRowLink
                                 className={!!customer ? classes.tableRow : undefined}
                                 hover={!!customer}
                                 key={customer ? customer.id : "skeleton"}
                                 selected={isSelected}
-                                onClick={customer ? onRowClick(customer.id) : undefined}
+                                href={customer && customerUrl(customer.id)}
                             >
                                 <TableCell padding="checkbox">
                                     <Checkbox
@@ -155,25 +149,29 @@ const CustomerList: React.FC<CustomerListProps> = (props) => {
                                         onChange={() => toggle(customer.id)}
                                     />
                                 </TableCell>
+        
                                 <TableCell className={classes.colName}>
                                     {getUserName(customer)}
                                 </TableCell>
+        
                                 <TableCell className={classes.colEmail}>
-                                    {maybe<React.ReactNode>(() => customer.email, <Skeleton />)}
+                                    {customer?.email ?? <Skeleton />}
                                 </TableCell>
-                                <TableCell className={classes.colOrders}>
-                                    {maybe<React.ReactNode>(
-                                        () => customer.orders.totalCount,
-                                        <Skeleton />
-                                    )}
-                                </TableCell>
-                            </TableRow>
+        
+                                <RequirePermissions
+                                    requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
+                                >
+                                    <TableCell className={classes.colOrders}>
+                                        {customer?.orders?.totalCount ?? <Skeleton />}
+                                    </TableCell>
+                                </RequirePermissions>
+                            </TableRowLink>
                         );
                     },
                     () => (
                         <TableRow>
                             <TableCell colSpan={numberOfColumns}>
-                                <FormattedMessage defaultMessage="No customers found" id="FpIcp9" />
+                                <FormattedMessage id="FpIcp9" defaultMessage="No customers found" />
                             </TableCell>
                         </TableRow>
                     )

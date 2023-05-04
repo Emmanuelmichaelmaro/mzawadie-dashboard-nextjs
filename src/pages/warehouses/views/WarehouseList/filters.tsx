@@ -1,10 +1,11 @@
 import { WarehouseFilterInput } from "@mzawadie/graphql";
+import { createFilterTabUtils, createFilterUtils } from "@mzawadie/utils/filters";
+
 import {
     WarehouseListUrlFilters,
     WarehouseListUrlFiltersEnum,
     WarehouseListUrlQueryParams,
-} from "@mzawadie/pages/warehouses/urls";
-import { createFilterTabUtils, createFilterUtils } from "@mzawadie/utils/filters";
+} from "../../urls";
 
 export const WAREHOUSE_FILTERS_KEY = "warehouseFilters";
 
@@ -17,7 +18,7 @@ export function getFilterVariables(params: WarehouseListUrlFilters): WarehouseFi
 export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
     createFilterTabUtils<WarehouseListUrlFilters>(WAREHOUSE_FILTERS_KEY);
 
-export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
+export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
     WarehouseListUrlQueryParams,
     WarehouseListUrlFilters
 >(WarehouseListUrlFiltersEnum);

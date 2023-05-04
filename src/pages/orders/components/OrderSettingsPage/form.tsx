@@ -1,5 +1,6 @@
+// @ts-nocheck
 import { OrderSettingsFragment, ShopOrderSettingsFragment } from "@mzawadie/graphql";
-import useForm, { FormChange, SubmitPromise } from "@mzawadie/hooks/useForm";
+import useForm, { CommonUseFormResult, SubmitPromise } from "@mzawadie/hooks/useForm";
 import useHandleFormSubmit from "@mzawadie/hooks/useHandleFormSubmit";
 import React from "react";
 
@@ -10,21 +11,17 @@ export interface OrderSettingsFormData {
     automaticallyFulfillNonShippableGiftCard: boolean;
 }
 
-export interface UseOrderSettingsFormResult {
-    change: FormChange;
-    data: OrderSettingsFormData;
-    hasChanged: boolean;
-    submit: () => SubmitPromise<any[]>;
-}
+export type UseOrderSettingsFormResult = CommonUseFormResult<OrderSettingsFormData>;
 
 export interface OrderSettingsFormProps {
     children: (props: UseOrderSettingsFormResult) => React.ReactNode;
     orderSettings: OrderSettingsFragment;
     shop: ShopOrderSettingsFragment;
     onSubmit: (data: OrderSettingsFormData) => SubmitPromise;
+    disabled: boolean;
 }
 
-function getOrderSettingsFormData(
+function getOrderSeettingsFormData(
     orderSettings: OrderSettingsFragment,
     shop: ShopOrderSettingsFragment
 ): OrderSettingsFormData {
@@ -40,10 +37,11 @@ function getOrderSettingsFormData(
 function useOrderSettingsForm(
     orderSettings: OrderSettingsFragment,
     shop: ShopOrderSettingsFragment,
-    onSubmit: (data: OrderSettingsFormData) => SubmitPromise
+    onSubmit: (data: OrderSettingsFormData) => SubmitPromise,
+    disabled: boolean
 ): UseOrderSettingsFormResult {
-    const { data, handleChange, formId, hasChanged, setChanged } = useForm(
-        getOrderSettingsFormData(orderSettings, shop),
+    const { data, handleChange, formId, setIsSubmitDisabled } = useForm(
+        getOrderSeettingsFormData(orderSettings, shop),
         undefined,
         {
             confirmLeave: true,
@@ -53,16 +51,17 @@ function useOrderSettingsForm(
     const handleFormSubmit = useHandleFormSubmit({
         formId,
         onSubmit,
-        setChanged,
     });
 
     const submit = () => handleFormSubmit(data);
 
+    setIsSubmitDisabled(disabled);
+
     return {
         change: handleChange,
         data,
-        hasChanged,
         submit,
+        isSaveDisabled: disabled,
     };
 }
 
@@ -71,8 +70,9 @@ const OrderSettingsForm: React.FC<OrderSettingsFormProps> = ({
     orderSettings,
     shop,
     onSubmit,
+    disabled,
 }) => {
-    const props = useOrderSettingsForm(orderSettings, shop, onSubmit);
+    const props = useOrderSettingsForm(orderSettings, shop, onSubmit, disabled);
 
     return <form onSubmit={props.submit}>{children(props)}</form>;
 };

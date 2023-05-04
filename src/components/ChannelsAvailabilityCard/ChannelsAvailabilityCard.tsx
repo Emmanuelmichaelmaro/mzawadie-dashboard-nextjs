@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-redeclare, no-redeclare */
 // @ts-nocheck
 import { Typography } from "@material-ui/core";
 import Hr from "@mzawadie/components/Hr";
@@ -18,9 +17,10 @@ import { useStyles } from "./styles";
 import { ChannelOpts, ChannelsAvailabilityError, Messages } from "./types";
 import { getChannelsAvailabilityMessages } from "./utils";
 
-export interface ChannelsAvailabilityInterface
-    extends Omit<ChannelsAvailabilityWrapperProps, "children"> {
+export interface ChannelsAvailability
+    extends Omit<ChannelsAvailabilityWrapperProps, "children" | "selectedChannelsCount"> {
     channels: ChannelData[];
+    /** Channels that have no settings */
     channelsList: ChannelList[];
     errors?: ChannelsAvailabilityError[];
     disabled?: boolean;
@@ -30,7 +30,7 @@ export interface ChannelsAvailabilityInterface
 }
 
 export type ChannelsAvailabilityCardProps = RequireOnlyOne<
-    ChannelsAvailabilityInterface,
+    ChannelsAvailability,
     "channels" | "channelsList"
 >;
 
@@ -38,7 +38,6 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityCardProps> = (pr
     const {
         channelsList,
         errors = [],
-        selectedChannelsCount = 0,
         allChannelsCount = 0,
         channels,
         messages,
@@ -46,8 +45,11 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityCardProps> = (pr
         onChange,
         openModal,
     } = props;
+
     const intl = useIntl();
+
     const localizeDate = useDateLocalize();
+
     const classes = useStyles({});
 
     const channelsMessages = getChannelsAvailabilityMessages({
@@ -59,7 +61,7 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityCardProps> = (pr
 
     return (
         <ChannelsAvailabilityCardWrapper
-            selectedChannelsCount={selectedChannelsCount}
+            selectedChannelsCount={(channels ?? channelsList).length ?? 0}
             allChannelsCount={allChannelsCount}
             managePermissions={managePermissions}
             openModal={openModal}
@@ -70,12 +72,11 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityCardProps> = (pr
                           errors?.filter((error) => error.channels.includes(data.id)) || [];
 
                       return (
-                          // eslint-disable-next-line react/jsx-key
-                          <ChannelAvailabilityItemWrapper messages={messages} data={data}>
+                          <ChannelAvailabilityItemWrapper messages={messages} data={data} key={data.id}>
                               <ChannelAvailabilityItemContent
                                   data={data}
                                   onChange={onChange}
-                                  messages={channelsMessages[data.id]}
+                                  messages={channelsMessages[data?.id]}
                                   errors={channelErrors}
                               />
                           </ChannelAvailabilityItemWrapper>

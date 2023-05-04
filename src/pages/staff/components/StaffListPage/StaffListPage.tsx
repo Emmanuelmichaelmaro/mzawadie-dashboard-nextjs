@@ -1,25 +1,21 @@
 // @ts-nocheck
-import { Button, Card } from "@material-ui/core";
+import { Card } from "@material-ui/core";
+import { Backlink } from "@mzawadie/components/Backlink";
+import { Button } from "@mzawadie/components/Button";
 import { Container } from "@mzawadie/components/Container";
 import { FilterBar } from "@mzawadie/components/FilterBar";
 import LimitReachedAlert from "@mzawadie/components/LimitReachedAlert";
 import { PageHeader } from "@mzawadie/components/PageHeader";
-import {
-    sectionNames,
-    FilterPageProps,
-    ListProps,
-    SortPage,
-    TabPageProps,
-    RelayToFlat,
-} from "@mzawadie/core";
+import { sectionNames } from "@mzawadie/core";
+import { FilterPageProps, ListProps, RelayToFlat, SortPage, TabPageProps } from "@mzawadie/core";
 import { RefreshLimitsQuery, StaffListQuery } from "@mzawadie/graphql";
+import { configurationMenuUrl } from "@mzawadie/pages/configuration";
 import { StaffListUrlSortField } from "@mzawadie/pages/staff/urls";
 import { hasLimits, isLimitReached } from "@mzawadie/utils/limits";
-import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { StaffList } from "../StaffList";
+import StaffList from "../StaffList/StaffList";
 import { createFilterStructure, StaffFilterKeys, StaffListFilterOpts } from "./filters";
 
 export interface StaffListPageProps
@@ -30,7 +26,6 @@ export interface StaffListPageProps
     limits: RefreshLimitsQuery["shop"]["limits"];
     staffMembers: RelayToFlat<StaffListQuery["staffUsers"]>;
     onAdd: () => void;
-    onBack: () => void;
 }
 
 const StaffListPage: React.FC<StaffListPageProps> = ({
@@ -40,7 +35,6 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
     limits,
     onAdd,
     onAll,
-    onBack,
     onFilterChange,
     onSearchChange,
     onTabChange,
@@ -52,19 +46,23 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
     const intl = useIntl();
 
     const structure = createFilterStructure(intl, filterOpts);
+    
     const reachedLimit = isLimitReached(limits, "staffUsers");
 
     return (
         <Container>
-            <Backlink onClick={onBack}>{intl.formatMessage(sectionNames.configuration)}</Backlink>
+            <Backlink href={configurationMenuUrl}>
+                {intl.formatMessage(sectionNames.configuration)}
+            </Backlink>
+
             <PageHeader
                 title={intl.formatMessage(sectionNames.staff)}
                 limitText={
                     hasLimits(limits, "staffUsers") &&
                     intl.formatMessage(
                         {
-                            defaultMessage: "{count}/{max} members",
                             id: "9xlPgt",
+                            defaultMessage: "{count}/{max} members",
                             description: "used staff users counter",
                         },
                         {
@@ -81,8 +79,8 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
                     onClick={onAdd}
                 >
                     <FormattedMessage
-                        defaultMessage="Invite staff member"
                         id="4JcNaA"
+                        defaultMessage="Invite staff member"
                         description="button"
                     />
                 </Button>
@@ -91,14 +89,14 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
             {reachedLimit && (
                 <LimitReachedAlert
                     title={intl.formatMessage({
-                        defaultMessage: "Staff Member limit reached",
                         id: "pA8Mlv",
+                        defaultMessage: "Staff Member limit reached",
                         description: "alert",
                     })}
                 >
                     <FormattedMessage
-                        defaultMessage="You have reached your staff member limit, you will be no longer able to add staff members to your store. If you would like to up your limit, contact your administration staff about raising your limits."
                         id="OaA0f9"
+                        defaultMessage="You have reached your staff member limit, you will be no longer able to add staff members to your store. If you would like to up your limit, contact your administration staff about raising your limits."
                     />
                 </LimitReachedAlert>
             )}
@@ -106,16 +104,16 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
             <Card>
                 <FilterBar
                     allTabLabel={intl.formatMessage({
-                        defaultMessage: "All Staff Members",
                         id: "YJ4TXc",
+                        defaultMessage: "All Staff Members",
                         description: "tab name",
                     })}
                     currentTab={currentTab}
                     filterStructure={structure}
                     initialSearch={initialSearch}
                     searchPlaceholder={intl.formatMessage({
-                        defaultMessage: "Search Staff Member",
                         id: "aDbrOK",
+                        defaultMessage: "Search Staff Member",
                     })}
                     tabs={tabs}
                     onAll={onAll}
@@ -125,6 +123,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
                     onTabDelete={onTabDelete}
                     onTabSave={onTabSave}
                 />
+
                 <StaffList {...listProps} />
             </Card>
         </Container>

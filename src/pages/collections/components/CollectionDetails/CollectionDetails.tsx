@@ -3,10 +3,12 @@ import { OutputData } from "@editorjs/editorjs";
 import { Card, CardContent, TextField } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import FormSpacer from "@mzawadie/components/FormSpacer";
-import { RichTextEditor, RichTextEditorChange } from "@mzawadie/components/RichTextEditor";
+import { RichTextEditor } from "@mzawadie/components/RichTextEditor";
+import { RichTextEditorLoading } from "@mzawadie/components/RichTextEditor/RichTextEditorLoading";
 import { commonMessages } from "@mzawadie/core";
 import { CollectionErrorFragment } from "@mzawadie/graphql";
 import { getFormErrors, getProductErrorMessage } from "@mzawadie/utils/errors";
+import { useRichTextContext } from "@mzawadie/utils/richText/context";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -18,28 +20,24 @@ export interface CollectionDetailsProps {
     disabled: boolean;
     errors: CollectionErrorFragment[];
     onChange: (event: React.ChangeEvent<any>) => void;
-    onDescriptionChange: RichTextEditorChange;
 }
 
-const CollectionDetails: React.FC<CollectionDetailsProps> = ({
-    disabled,
-    data,
-    onChange,
-    onDescriptionChange,
-    errors,
-}) => {
+const CollectionDetails: React.FC<CollectionDetailsProps> = ({ disabled, data, onChange, errors }) => {
     const intl = useIntl();
+
+    const { defaultValue, editorRef, isReadyForMount, handleChange } = useRichTextContext();
 
     const formErrors = getFormErrors(["name", "description"], errors);
 
     return (
         <Card>
             <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
+
             <CardContent>
                 <TextField
                     label={intl.formatMessage({
-                        defaultMessage: "Name",
                         id: "/WXs6H",
+                        defaultMessage: "Name",
                         description: "collection name",
                     })}
                     name="name"
@@ -50,16 +48,26 @@ const CollectionDetails: React.FC<CollectionDetailsProps> = ({
                     helperText={getProductErrorMessage(formErrors.name, intl)}
                     fullWidth
                 />
+
                 <FormSpacer />
-                <RichTextEditor
-                    data={data.description}
-                    error={!!formErrors.description}
-                    helperText={getProductErrorMessage(formErrors.description, intl)}
-                    label={intl.formatMessage(commonMessages.description)}
-                    name="description"
-                    disabled={disabled}
-                    onChange={onDescriptionChange}
-                />
+
+                {isReadyForMount ? (
+                    <RichTextEditor
+                        defaultValue={defaultValue}
+                        editorRef={editorRef}
+                        onChange={handleChange}
+                        error={!!formErrors.description}
+                        helperText={getProductErrorMessage(formErrors.description, intl)}
+                        label={intl.formatMessage(commonMessages.description)}
+                        name="description"
+                        disabled={disabled}
+                    />
+                ) : (
+                    <RichTextEditorLoading
+                        label={intl.formatMessage(commonMessages.description)}
+                        name="description"
+                    />
+                )}
             </CardContent>
         </Card>
     );

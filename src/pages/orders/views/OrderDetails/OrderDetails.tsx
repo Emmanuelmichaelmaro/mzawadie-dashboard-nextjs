@@ -14,12 +14,6 @@ import {
 import useBackgroundTask from "@mzawadie/hooks/useBackgroundTask";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
-import {
-    orderListUrl,
-    orderUrl,
-    OrderUrlDialog,
-    OrderUrlQueryParams,
-} from "@mzawadie/pages/orders/urls";
 import getOrderErrorMessage from "@mzawadie/utils/errors/order";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@mzawadie/utils/handlers/metadataUpdateHandler";
@@ -27,6 +21,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import OrderOperations from "../../containers/OrderOperations";
+import { orderListUrl, orderUrl, OrderUrlDialog, OrderUrlQueryParams } from "../../urls";
 import { OrderDetailsMessages } from "./OrderDetailsMessages";
 import { OrderDraftDetails } from "./OrderDraftDetails";
 import { OrderNormalDetails } from "./OrderNormalDetails";
@@ -41,9 +36,12 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
     const navigate = useNavigator();
 
     const { queue } = useBackgroundTask();
+
     const intl = useIntl();
+
     const [updateMetadata, updateMetadataOpts] = useUpdateMetadataMutation({});
     const [updatePrivateMetadata, updatePrivateMetadataOpts] = useUpdatePrivateMetadataMutation({});
+
     const notify = useNotifier();
 
     const [openModal, closeModal] = createDialogActionHandlers<OrderUrlDialog, OrderUrlQueryParams>(
@@ -71,6 +69,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
     });
 
     const order = data?.order;
+
     if (order === null) {
         return <NotFoundPage onBack={handleBack} />;
     }
@@ -115,7 +114,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                     onDraftUpdate={orderMessages.handleDraftUpdate}
                     onShippingMethodUpdate={(data) => {
                         orderMessages.handleShippingMethodUpdate(data);
-                        order.total = data.orderUpdateShipping.order.total;
+                        order.total = data.orderUpdateShipping?.order?.total;
                     }}
                     onOrderLineDelete={orderMessages.handleOrderLineDelete}
                     onOrderLinesAdd={orderMessages.handleOrderLinesAdd}
@@ -127,13 +126,13 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                     onDraftCancel={orderMessages.handleDraftCancel}
                     onOrderMarkAsPaid={orderMessages.handleOrderMarkAsPaid}
                     onInvoiceRequest={(data) => {
-                        if (data.invoiceRequest.invoice.status === JobStatusEnum.SUCCESS) {
+                        if (data.invoiceRequest?.invoice?.status === JobStatusEnum.SUCCESS) {
                             orderMessages.handleInvoiceGenerateFinished(data);
                         } else {
                             orderMessages.handleInvoiceGeneratePending(data);
                             queue(Task.INVOICE_GENERATE, {
                                 generateInvoice: {
-                                    invoiceId: data.invoiceRequest.invoice.id,
+                                    invoiceId: data.invoiceRequest?.invoice?.id,
                                     orderId: id,
                                 },
                             });
@@ -185,6 +184,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                                     closeModal={closeModal}
                                 />
                             )}
+                            
                             {isOrderDraft && (
                                 <OrderDraftDetails
                                     id={id}
@@ -203,6 +203,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                                     closeModal={closeModal}
                                 />
                             )}
+                            
                             {isOrderUnconfirmed && (
                                 <OrderUnconfirmedDetails
                                     id={id}

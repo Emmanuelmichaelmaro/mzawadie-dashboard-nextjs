@@ -1,25 +1,19 @@
-/* eslint-disable jsx-a11y/alt-text */
 // @ts-nocheck
 import { Card, CardContent, TableBody, TableCell, TableRow, Typography } from "@material-ui/core";
+import { Button } from "@mzawadie/components/Button";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { Checkbox } from "@mzawadie/components/Checkbox";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { TableCellHeader } from "@mzawadie/components/TableCellHeader";
 import { TableHead } from "@mzawadie/components/TableHead";
-import {
-    getUserInitials,
-    getUserName,
-    renderCollection,
-    stopPropagation,
-    ListActions,
-    SortPage,
-} from "@mzawadie/core";
+import { getUserInitials, getUserName, renderCollection, stopPropagation } from "@mzawadie/core";
+import { ListActions, SortPage } from "@mzawadie/core";
 import { PermissionGroupMemberFragment } from "@mzawadie/graphql";
 import { sortMembers } from "@mzawadie/pages/permissionGroups/sort";
 import { MembersListUrlSortField } from "@mzawadie/pages/permissionGroups/urls";
 import { getArrowDirection } from "@mzawadie/utils/sort";
-import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -101,16 +95,17 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = (props) => {
     } = props;
 
     const classes = useStyles(props);
+
     const intl = useIntl();
 
-    const members = users?.sort(sortMembers(sort?.sort, sort?.asc));
+    const members = [...users].sort(sortMembers(sort?.sort, sort?.asc));
 
     return (
         <Card>
             <CardTitle
                 title={intl.formatMessage({
-                    defaultMessage: "Group members",
                     id: "lGlDEH",
+                    defaultMessage: "Group members",
                     description: "header",
                 })}
                 toolbar={
@@ -121,26 +116,28 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = (props) => {
                         disabled={disabled}
                     >
                         <FormattedMessage
-                            defaultMessage="Assign members"
                             id="OhFGpX"
+                            defaultMessage="Assign members"
                             description="button"
                         />
                     </Button>
                 }
             />
+
             {members?.length === 0 ? (
                 <CardContent className={classes.helperText}>
                     <Typography color="textSecondary">
                         <FormattedMessage
-                            defaultMessage="You haven’t assigned any member to this permission group yet."
                             id="gVD1os"
+                            defaultMessage="You haven’t assigned any member to this permission group yet."
                             description="empty list message"
                         />
                     </Typography>
+
                     <Typography color="textSecondary">
                         <FormattedMessage
-                            defaultMessage="Please use Assign Members button to do so."
                             id="zD7/M6"
+                            defaultMessage="Please use Assign Members button to do so."
                             description="empty list message"
                         />
                     </Typography>
@@ -166,11 +163,12 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = (props) => {
                             }
                         >
                             <FormattedMessage
-                                defaultMessage="Name"
                                 id="W32xfN"
+                                defaultMessage="Name"
                                 description="staff member full name"
                             />
                         </TableCellHeader>
+
                         <TableCellHeader
                             className={classes.colEmail}
                             arrowPosition="right"
@@ -181,12 +179,14 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = (props) => {
                                     : undefined
                             }
                         >
-                            <FormattedMessage defaultMessage="Email Address" id="xxQxLE" />
+                            <FormattedMessage id="xxQxLE" defaultMessage="Email Address" />
                         </TableCellHeader>
+
                         <TableCellHeader textAlign="right">
-                            <FormattedMessage defaultMessage="Actions" id="wL7VAE" />
+                            <FormattedMessage id="wL7VAE" defaultMessage="Actions" />
                         </TableCellHeader>
                     </TableHead>
+
                     <TableBody>
                         {renderCollection(
                             members,
@@ -210,6 +210,7 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = (props) => {
                                                 onChange={() => toggle(user.id)}
                                             />
                                         </TableCell>
+
                                         <TableCell className={classes.colName}>
                                             <div className={classes.avatar}>
                                                 {user?.avatar?.url ? (
@@ -223,31 +224,35 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = (props) => {
                                                     </div>
                                                 )}
                                             </div>
+
                                             <Typography>{getUserName(user) || <Skeleton />}</Typography>
+
                                             <Typography
-                                                variant="caption"
+                                                variant={"caption"}
                                                 className={classes.statusText}
                                             >
                                                 {!user ? (
                                                     <Skeleton />
                                                 ) : user.isActive ? (
                                                     intl.formatMessage({
-                                                        defaultMessage: "Active",
                                                         id: "9Zlogd",
+                                                        defaultMessage: "Active",
                                                         description: "staff member status",
                                                     })
                                                 ) : (
                                                     intl.formatMessage({
-                                                        defaultMessage: "Inactive",
                                                         id: "7WzUxn",
+                                                        defaultMessage: "Inactive",
                                                         description: "staff member status",
                                                     })
                                                 )}
                                             </Typography>
                                         </TableCell>
+
                                         <TableCell className={classes.colEmail}>
                                             {user?.email || <Skeleton />}
                                         </TableCell>
+
                                         <TableCell className={classes.colActions}>
                                             {user ? (
                                                 <>
@@ -274,8 +279,8 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = (props) => {
                                 <TableRow>
                                     <TableCell colSpan={numberOfColumns}>
                                         <FormattedMessage
-                                            defaultMessage="No members found"
                                             id="qrWOxx"
+                                            defaultMessage="No members found"
                                         />
                                     </TableCell>
                                 </TableRow>

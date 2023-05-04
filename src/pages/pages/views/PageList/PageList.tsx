@@ -1,7 +1,10 @@
 // @ts-nocheck
 import { DialogContentText } from "@material-ui/core";
 import { ActionDialog } from "@mzawadie/components/ActionDialog";
-import { maybe, ListViews } from "@mzawadie/core";
+import { Button } from "@mzawadie/components/Button";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@mzawadie/core";
+import { maybe } from "@mzawadie/core";
+import { ListViews } from "@mzawadie/core";
 import {
     usePageBulkPublishMutation,
     usePageBulkRemoveMutation,
@@ -12,24 +15,20 @@ import useListSettings from "@mzawadie/hooks/useListSettings";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { usePaginationReset } from "@mzawadie/hooks/usePaginationReset";
-import usePaginator, { createPaginationState } from "@mzawadie/hooks/usePaginator";
+import usePaginator, { createPaginationState, PaginatorContext } from "@mzawadie/hooks/usePaginator";
+import { PageTypePickerDialog } from "@mzawadie/pages/pages/components/PageTypePickerDialog";
+import usePageTypeSearch from "@mzawadie/searches/usePageTypeSearch";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@mzawadie/utils/handlers/sortHandler";
-import { mapEdgesToItems } from "@mzawadie/utils/maps";
+import { mapEdgesToItems, mapNodeToChoice } from "@mzawadie/utils/maps";
 import { getSortParams } from "@mzawadie/utils/sort";
-import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import PageListPage from "../../components/PageListPage/PageListPage";
-import {
-    pageCreateUrl,
-    pageListUrl,
-    PageListUrlDialog,
-    PageListUrlQueryParams,
-    pageUrl,
-} from "../../urls";
-import { getSortQueryVariables } from "./sort";
+import { pageCreateUrl, pageListUrl, PageListUrlDialog, PageListUrlQueryParams } from "../../urls";
+import { getFilterVariables, getSortQueryVariables } from "./sort";
 
 interface PageListProps {
     params: PageListUrlQueryParams;
@@ -38,7 +37,7 @@ interface PageListProps {
 export const PageList: React.FC<PageListProps> = ({ params }) => {
     const navigate = useNavigator();
     const notify = useNotifier();
-    const paginate = usePaginator();
+
     const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
     const { updateListSettings, settings } = useListSettings(ListViews.PAGES_LIST);
 
@@ -47,23 +46,26 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
     const intl = useIntl();
 
     const paginationState = createPaginationState(settings.rowNumber, params);
+
     const queryVariables = React.useMemo(
         () => ({
             ...paginationState,
+            filter: getFilterVariables(params),
             sort: getSortQueryVariables(params),
         }),
         [params, settings.rowNumber]
     );
+
     const { data, loading, refetch } = usePageListQuery({
         displayLoader: true,
         variables: queryVariables,
     });
 
-    const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-        maybe(() => data.pages.pageInfo),
+    const paginationValues = usePaginator({
+        pageInfo: maybe(() => data?.pages?.pageInfo),
         paginationState,
-        params
-    );
+        queryString: params,
+    });
 
     const [openModal, closeModal] = createDialogActionHandlers<
         PageListUrlDialog,
@@ -72,13 +74,13 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
 
     const [bulkPageRemove, bulkPageRemoveOpts] = usePageBulkRemoveMutation({
         onCompleted: (data) => {
-            if (data.pageBulkDelete.errors.length === 0) {
+            if (data.pageBulkDelete?.errors.length === 0) {
                 closeModal();
                 notify({
                     status: "success",
                     text: intl.formatMessage({
-                        defaultMessage: "Removed pages",
                         id: "41z2Qi",
+                        defaultMessage: "Removed pages",
                         description: "notification",
                     }),
                 });
@@ -90,13 +92,13 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
 
     const [bulkPagePublish, bulkPagePublishOpts] = usePageBulkPublishMutation({
         onCompleted: (data) => {
-            if (data.pageBulkPublish.errors.length === 0) {
+            if (data.pageBulkPublish?.errors.length === 0) {
                 closeModal();
                 notify({
                     status: "success",
                     text: intl.formatMessage({
-                        defaultMessage: "Published pages",
                         id: "AzshS2",
+                        defaultMessage: "Published pages",
                         description: "notification",
                     }),
                 });
@@ -108,19 +110,34 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
 
     const handleSort = createSortHandler(navigate, pageListUrl, params);
 
+    const {
+        loadMore: loadMoreDialogPageTypes,
+        search: searchDialogPageTypes,
+        result: searchDialogPageTypesOpts,
+    } = usePageTypeSearch({
+        variables: DEFAULT_INITIAL_SEARCH_DATA,
+    });
+
+    const fetchMoreDialogPageTypes = {
+        hasMore: searchDialogPageTypesOpts.data?.search?.pageInfo?.hasNextPage,
+        loading: searchDialogPageTypesOpts.loading,
+        onFetchMore: loadMoreDialogPageTypes,
+    };
+
     return (
-        <>
+        <PaginatorContext.Provider value={paginationValues}>
             <PageListPage
                 disabled={loading}
                 settings={settings}
                 pages={mapEdgesToItems(data?.pages)}
-                pageInfo={pageInfo}
-                onAdd={() => navigate(pageCreateUrl())}
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
                 onUpdateListSettings={updateListSettings}
-                onRowClick={(id) => () => navigate(pageUrl(id))}
+                onAdd={() => openModal("create-page")}
                 onSort={handleSort}
+                actionDialogOpts={{
+                    open: openModal,
+                    close: closeModal,
+                }}
+                params={params}
                 toolbar={
                     <>
                         <Button
@@ -131,11 +148,12 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                             }
                         >
                             <FormattedMessage
-                                defaultMessage="Unpublish"
                                 id="F8gsds"
+                                defaultMessage="Unpublish"
                                 description="unpublish page, button"
                             />
                         </Button>
+
                         <Button
                             onClick={() =>
                                 openModal("publish", {
@@ -144,11 +162,12 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                             }
                         >
                             <FormattedMessage
-                                defaultMessage="Publish"
                                 id="yEmwxD"
+                                defaultMessage="Publish"
                                 description="publish page, button"
                             />
                         </Button>
+
                         <IconButton
                             variant="secondary"
                             color="primary"
@@ -168,6 +187,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                 toggle={toggle}
                 toggleAll={toggleAll}
             />
+
             <ActionDialog
                 open={params.action === "publish"}
                 onClose={closeModal}
@@ -181,15 +201,15 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                     })
                 }
                 title={intl.formatMessage({
-                    defaultMessage: "Publish Pages",
                     id: "wyvzh9",
+                    defaultMessage: "Publish Pages",
                     description: "dialog header",
                 })}
             >
                 <DialogContentText>
                     <FormattedMessage
-                        defaultMessage="{counter,plural,one{Are you sure you want to publish this page?} other{Are you sure you want to publish {displayQuantity} pages?}}"
                         id="WRPQMM"
+                        defaultMessage="{counter,plural,one{Are you sure you want to publish this page?} other{Are you sure you want to publish {displayQuantity} pages?}}"
                         description="dialog content"
                         values={{
                             counter: maybe(() => params.ids.length),
@@ -198,6 +218,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                     />
                 </DialogContentText>
             </ActionDialog>
+
             <ActionDialog
                 open={params.action === "unpublish"}
                 onClose={closeModal}
@@ -211,14 +232,14 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                     })
                 }
                 title={intl.formatMessage({
-                    defaultMessage: "Unpublish Pages",
                     id: "yHQQMQ",
+                    defaultMessage: "Unpublish Pages",
                     description: "dialog header",
                 })}
             >
                 <FormattedMessage
-                    defaultMessage="{counter,plural,one{Are you sure you want to unpublish this page?} other{Are you sure you want to unpublish {displayQuantity} pages?}}"
                     id="Wd8vG7"
+                    defaultMessage="{counter,plural,one{Are you sure you want to unpublish this page?} other{Are you sure you want to unpublish {displayQuantity} pages?}}"
                     description="dialog content"
                     values={{
                         counter: maybe(() => params.ids.length),
@@ -226,6 +247,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                     }}
                 />
             </ActionDialog>
+
             <ActionDialog
                 open={params.action === "remove"}
                 onClose={closeModal}
@@ -239,14 +261,14 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                 }
                 variant="delete"
                 title={intl.formatMessage({
-                    defaultMessage: "Delete Pages",
                     id: "3Sz1/t",
+                    defaultMessage: "Delete Pages",
                     description: "dialog header",
                 })}
             >
                 <FormattedMessage
-                    defaultMessage="{counter,plural,one{Are you sure you want to delete this page?} other{Are you sure you want to delete {displayQuantity} pages?}}"
                     id="UNwG+4"
+                    defaultMessage="{counter,plural,one{Are you sure you want to delete this page?} other{Are you sure you want to delete {displayQuantity} pages?}}"
                     description="dialog content"
                     values={{
                         counter: maybe(() => params.ids.length),
@@ -254,7 +276,23 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
                     }}
                 />
             </ActionDialog>
-        </>
+
+            <PageTypePickerDialog
+                confirmButtonState="success"
+                open={params.action === "create-page"}
+                pageTypes={mapNodeToChoice(mapEdgesToItems(searchDialogPageTypesOpts?.data?.search))}
+                fetchPageTypes={searchDialogPageTypes}
+                fetchMorePageTypes={fetchMoreDialogPageTypes}
+                onClose={closeModal}
+                onConfirm={(pageTypeId) =>
+                    navigate(
+                        pageCreateUrl({
+                            "page-type-id": pageTypeId,
+                        })
+                    )
+                }
+            />
+        </PaginatorContext.Provider>
     );
 };
 

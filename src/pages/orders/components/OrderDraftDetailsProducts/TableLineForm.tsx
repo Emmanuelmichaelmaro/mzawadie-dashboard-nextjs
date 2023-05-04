@@ -2,7 +2,7 @@
 import { TextField } from "@material-ui/core";
 import DebounceForm from "@mzawadie/components/DebounceForm";
 import { Form } from "@mzawadie/components/Form";
-import { OrderLineFragment } from "@mzawadie/graphql";
+import { OrderLineFragment, OrderLineInput } from "@mzawadie/graphql";
 import createNonNegativeValueChangeHandler from "@mzawadie/utils/handlers/nonNegativeValueChangeHandler";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -20,30 +20,28 @@ const useStyles = makeStyles(
     { name: "TableLineForm" }
 );
 
-export interface FormData {
-    quantity: number;
-}
-
 interface TableLineFormProps {
     line: OrderLineFragment;
-    onOrderLineChange: (id: string, data: FormData) => void;
+    onOrderLineChange: (id: string, data: OrderLineInput) => void;
 }
 
 const TableLineForm: React.FC<TableLineFormProps> = ({ line, onOrderLineChange }) => {
     const classes = useStyles({});
+
     const { id, quantity } = line;
 
+    const handleSubmit = (id: string, data: OrderLineInput) => {
+        const quantity = data?.quantity >= 1 ? Math.floor(data.quantity) : 1;
+        onOrderLineChange(id, { quantity });
+    };
+
     return (
-        <Form initial={{ quantity }} onSubmit={(data) => onOrderLineChange(id, data)}>
-            {({ change, data, hasChanged, submit }) => {
+        <Form initial={{ quantity }} onSubmit={(data) => handleSubmit(id, data)}>
+            {({ change, data, submit, set }) => {
                 const handleQuantityChange = createNonNegativeValueChangeHandler(change);
 
                 return (
-                    <DebounceForm
-                        change={handleQuantityChange}
-                        submit={hasChanged ? submit : undefined}
-                        time={200}
-                    >
+                    <DebounceForm change={handleQuantityChange} submit={submit} time={200}>
                         {(debounce) => (
                             <TextField
                                 className={classes.quantityField}
@@ -52,10 +50,13 @@ const TableLineForm: React.FC<TableLineFormProps> = ({ line, onOrderLineChange }
                                 type="number"
                                 value={data.quantity}
                                 onChange={debounce}
-                                onBlur={submit}
-                                inputProps={{
-                                    min: 1,
+                                onBlur={() => {
+                                    if (data.quantity < 1) {
+                                        set({ quantity: 1 });
+                                    }
+                                    submit();
                                 }}
+                                inputProps={{ min: 1 }}
                             />
                         )}
                     </DebounceForm>

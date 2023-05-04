@@ -5,6 +5,7 @@ import { RelayToFlat } from "@mzawadie/core";
 import {
     AttributeEntityTypeEnum,
     AttributeErrorFragment,
+    AttributeFragment,
     AttributeInputTypeEnum,
     AttributeValueDeleteMutation,
     AttributeValueFragment,
@@ -21,10 +22,17 @@ import {
 } from "@mzawadie/graphql";
 import { FormsetData } from "@mzawadie/hooks/useFormset";
 import { mapEdgesToItems, mapNodeToChoice, mapPagesToChoices } from "@mzawadie/utils/maps";
+import { RichTextContextValues } from "@mzawadie/utils/richText/context";
+import { GetRichTextValues, RichTextGetters } from "@mzawadie/utils/richText/useMultipleRichText";
 
 import { AttributePageFormData } from "../components/AttributePage";
 
 type AtributesOfFiles = Pick<AttributeValueInput, "file" | "id" | "values" | "contentType">;
+
+export interface RichTextProps {
+    richText: RichTextContextValues;
+    attributeRichTextGetters: RichTextGetters<string>;
+}
 
 export const ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES = [
     AttributeInputTypeEnum.DROPDOWN,
@@ -41,6 +49,10 @@ export const ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION = [
     AttributeInputTypeEnum.NUMERIC,
     AttributeInputTypeEnum.SWATCH,
 ];
+
+export function filterable(attribute: Pick<AttributeFragment, "inputType">): boolean {
+    return ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION.includes(attribute.inputType);
+}
 
 export interface AttributeReference {
     label: string;
@@ -123,11 +135,11 @@ export function getAttributeData(
 ) {
     if (data.inputType === AttributeInputTypeEnum.SWATCH) {
         return getSwatchAttributeData(data, values);
-    }
-    if (ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType)) {
+    } else if (ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType)) {
         return getSimpleAttributeData(data, values);
+    } else {
+        return getFileOrReferenceAttributeData(data, values);
     }
-    return getFileOrReferenceAttributeData(data, values);
 }
 
 export function getDefaultAttributeValues(attribute: VariantAttributeFragment) {
@@ -149,6 +161,9 @@ export function getSelectedAttributeValues(
     switch (attribute.attribute.inputType) {
         case AttributeInputTypeEnum.REFERENCE:
             return attribute.values.map((value) => value.reference);
+
+        case AttributeInputTypeEnum.PLAIN_TEXT:
+            return [attribute.values[0]?.plainText];
 
         case AttributeInputTypeEnum.RICH_TEXT:
             return [attribute.values[0]?.richText];
@@ -180,6 +195,7 @@ export const isFileValueUnused = (
     if (existingAttribute.attribute.inputType !== AttributeInputTypeEnum.FILE) {
         return false;
     }
+
     if (existingAttribute.values.length === 0) {
         return false;
     }
@@ -220,6 +236,7 @@ export const mergeChoicesWithValues = (
         | SelectedVariantAttributeFragment
 ) => {
     const choices = mapEdgesToItems(attribute.attribute.choices) || [];
+
     const valuesToConcat = attribute.values.filter(
         (value) => !choices.some((choice) => choice.id === value.id)
     );
@@ -236,6 +253,34 @@ export const mergeAttributeValues = (
 
     return attribute.value ? [...attribute.value, ...attributeValues] : attributeValues;
 };
+
+export const mergeAttributes = (...attributeLists: AttributeInput[][]): AttributeInput[] =>
+    attributeLists.reduce((prev, attributes) => {
+        const newAttributeIds = new Set(attributes.map((attr) => attr.id));
+        return [...prev.filter((attr) => !newAttributeIds.has(attr.id)), ...attributes];
+    }, []);
+
+export function getRichTextAttributesFromMap(
+    attributes: AttributeInput[],
+    values: GetRichTextValues
+): AttributeInput[] {
+    return attributes
+        .filter(({ data }) => data.inputType === AttributeInputTypeEnum.RICH_TEXT)
+        .map((attribute) => ({
+            ...attribute,
+            value: [JSON.stringify(values[attribute.id])],
+        }));
+}
+
+export function getRichTextDataFromAttributes(
+    attributes: AttributeInput[] = []
+): Record<string, string> {
+    const keyValuePairs = attributes
+        .filter((attribute) => attribute.data.inputType === AttributeInputTypeEnum.RICH_TEXT)
+        .map((attribute) => [attribute.id, attribute.value[0]]);
+
+    return Object.fromEntries(keyValuePairs);
+}
 
 export const getFileValuesToUploadFromAttributes = (
     attributesWithNewFileValue: FormsetData<null, File>
@@ -297,6 +342,7 @@ export const getFileAttributeDisplayData = (
             value: attributeWithNewFileValue?.value?.name ? [attributeWithNewFileValue.value.name] : [],
         };
     }
+
     return attribute;
 };
 
@@ -347,8 +393,7 @@ export const getReferenceAttributeDisplayData = (
 ) => {
     if (attribute.data.entityType === AttributeEntityTypeEnum.PAGE) {
         return getPageReferenceAttributeDisplayData(attribute, referencePages);
-    }
-    if (attribute.data.entityType === AttributeEntityTypeEnum.PRODUCT) {
+    } else if (attribute.data.entityType === AttributeEntityTypeEnum.PRODUCT) {
         return getProductReferenceAttributeDisplayData(attribute, referenceProducts);
     }
 };
@@ -363,9 +408,11 @@ export const getAttributesDisplayData = (
         if (attribute.data.inputType === AttributeInputTypeEnum.REFERENCE) {
             return getReferenceAttributeDisplayData(attribute, referencePages, referenceProducts);
         }
+
         if (attribute.data.inputType === AttributeInputTypeEnum.FILE) {
             return getFileAttributeDisplayData(attribute, attributesWithNewFileValue);
         }
+
         return attribute;
     });
 
@@ -387,9 +434,9 @@ export const getAttributeValuesFromReferences = (
 
     if (attribute?.data?.entityType === AttributeEntityTypeEnum.PAGE) {
         return mapPagesToChoices(getSelectedReferencesFromAttribute(attribute, referencePages));
-    }
-    if (attribute?.data?.entityType === AttributeEntityTypeEnum.PRODUCT) {
+    } else if (attribute?.data?.entityType === AttributeEntityTypeEnum.PRODUCT) {
         return mapNodeToChoice(getSelectedReferencesFromAttribute(attribute, referenceProducts));
     }
+
     return [];
 };

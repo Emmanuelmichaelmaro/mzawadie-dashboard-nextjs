@@ -1,14 +1,11 @@
 // @ts-nocheck
 import { DialogContentText } from "@material-ui/core";
-import { ActionDialog, NotFoundPage, WindowTitle } from "@mzawadie/components";
-import {
-    DEFAULT_INITIAL_SEARCH_DATA,
-    commonMessages,
-    errorMessages,
-    extractMutationErrors,
-    getStringOrPlaceholder,
-    maybe,
-} from "@mzawadie/core";
+import { ActionDialog } from "@mzawadie/components/ActionDialog";
+import { NotFoundPage } from "@mzawadie/components/NotFoundPage";
+import { WindowTitle } from "@mzawadie/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@mzawadie/core";
+import { commonMessages, errorMessages } from "@mzawadie/core";
+import { extractMutationErrors, getStringOrPlaceholder, maybe } from "@mzawadie/core";
 import {
     useChangeStaffPasswordMutation,
     useStaffAvatarDeleteMutation,
@@ -17,23 +14,20 @@ import {
     useStaffMemberDetailsQuery,
     useStaffMemberUpdateMutation,
 } from "@mzawadie/graphql";
-import { useNavigator, useNotifier } from "@mzawadie/hooks";
+import useNavigator from "@mzawadie/hooks/useNavigator";
+import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { useUser } from "@mzawadie/pages/auth";
-import {
-    StaffDetailsFormData,
-    StaffDetailsPage,
-} from "@mzawadie/pages/staff/components/StaffDetailsPage";
-import { StaffPasswordResetDialog } from "@mzawadie/pages/staff/components/StaffPasswordResetDialog";
-import {
-    staffListUrl,
-    staffMemberDetailsUrl,
-    StaffMemberDetailsUrlQueryParams,
-} from "@mzawadie/pages/staff/urls";
-import { groupsDiff } from "@mzawadie/pages/staff/utils";
 import usePermissionGroupSearch from "@mzawadie/searches/usePermissionGroupSearch";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import StaffDetailsPage, {
+    StaffDetailsFormData,
+} from "../components/StaffDetailsPage/StaffDetailsPage";
+import { StaffPasswordResetDialog } from "../components/StaffPasswordResetDialog";
+import { staffListUrl, staffMemberDetailsUrl, StaffMemberDetailsUrlQueryParams } from "../urls";
+import { groupsDiff } from "../utils";
 
 interface OrderListProps {
     id: string;
@@ -53,8 +47,6 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                 action: undefined,
             })
         );
-
-    const handleBack = () => navigate(staffListUrl());
 
     const { data, loading, refetch } = useStaffMemberDetailsQuery({
         displayLoader: true,
@@ -138,7 +130,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
     });
 
     if (staffMember === null) {
-        return <NotFoundPage onBack={handleBack} />;
+        return <NotFoundPage backHref={staffListUrl()} />;
     }
 
     const handleUpdate = (formData: StaffDetailsFormData) =>
@@ -162,7 +154,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
     return (
         <>
             <WindowTitle title={getStringOrPlaceholder(staffMember?.email)} />
-
+            
             <StaffDetailsPage
                 errors={updateStaffMemberOpts?.data?.staffUpdate?.errors || []}
                 canEditAvatar={isUserSameAsViewer}
@@ -170,7 +162,6 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
                 canEditStatus={!isUserSameAsViewer}
                 canRemove={!isUserSameAsViewer}
                 disabled={loading}
-                onBack={handleBack}
                 initialSearch=""
                 onChangePassword={() =>
                     navigate(
@@ -215,19 +206,23 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
             <ActionDialog
                 open={params.action === "remove"}
                 title={intl.formatMessage({
-                    defaultMessage: "delete Staff User",
                     id: "GhXwO/",
+                    defaultMessage: "delete Staff User",
                     description: "dialog header",
                 })}
                 confirmButtonState={deleteResult.status}
                 variant="delete"
                 onClose={closeModal}
-                onConfirm={deleteStaffMember}
+                onConfirm={() =>
+                    deleteStaffMember({
+                        variables: { id },
+                    })
+                }
             >
                 <DialogContentText>
                     <FormattedMessage
-                        defaultMessage="Are you sure you want to delete {email} from staff members?"
                         id="gxPjIQ"
+                        defaultMessage="Are you sure you want to delete {email} from staff members?"
                         values={{
                             email: getStringOrPlaceholder(data?.user?.email),
                         }}
@@ -238,8 +233,8 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
             <ActionDialog
                 open={params.action === "remove-avatar"}
                 title={intl.formatMessage({
-                    defaultMessage: "Delete Staff User Avatar",
                     id: "VKWPBf",
+                    defaultMessage: "Delete Staff User Avatar",
                     description: "dialog header",
                 })}
                 confirmButtonState={deleteAvatarResult.status}
@@ -249,8 +244,8 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
             >
                 <DialogContentText>
                     <FormattedMessage
-                        defaultMessage="Are you sure you want to remove {email} avatar?"
                         id="fzpXvv"
+                        defaultMessage="Are you sure you want to remove {email} avatar?"
                         values={{
                             email: <strong>{getStringOrPlaceholder(data?.user?.email)}</strong>,
                         }}

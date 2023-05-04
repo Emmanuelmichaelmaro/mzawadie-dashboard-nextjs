@@ -1,18 +1,14 @@
-import { Button, Card } from "@material-ui/core";
-import { Container } from "@mzawadie/components/Container";
+import { Card } from "@material-ui/core";
+import { Backlink } from "@mzawadie/components/Backlink";
+import { Button } from "@mzawadie/components/Button";
+import Container from "@mzawadie/components/Container";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import { SearchBar } from "@mzawadie/components/SearchBar";
-import {
-    ListActions,
-    PageListProps,
-    SearchPageProps,
-    sectionNames,
-    SortPage,
-    TabPageProps,
-} from "@mzawadie/core";
+import { sectionNames } from "@mzawadie/core";
+import { ListActions, PageListProps, SearchPageProps, SortPage, TabPageProps } from "@mzawadie/core";
 import { PageTypeFragment } from "@mzawadie/graphql";
-import { PageTypeListUrlSortField } from "@mzawadie/pages/pageTypes/urls";
-import { Backlink } from "@saleor/macaw-ui";
+import { configurationMenuUrl } from "@mzawadie/pages/configuration";
+import { pageTypeAddUrl, PageTypeListUrlSortField } from "@mzawadie/pages/pageTypes/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -25,15 +21,12 @@ export interface PageTypeListPageProps
         SortPage<PageTypeListUrlSortField>,
         TabPageProps {
     pageTypes: PageTypeFragment[];
-    onBack: () => void;
 }
 
 const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
     currentTab,
     initialSearch,
-    onAdd,
     onAll,
-    onBack,
     onSearchChange,
     onTabChange,
     onTabDelete,
@@ -42,35 +35,35 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
     ...listProps
 }) => {
     const intl = useIntl();
+
     return (
         <Container>
-            <Backlink onClick={onBack}>{intl.formatMessage(sectionNames.configuration)}</Backlink>
+            <Backlink href={configurationMenuUrl}>
+                {intl.formatMessage(sectionNames.configuration)}
+            </Backlink>
+
             <PageHeader title={intl.formatMessage(sectionNames.pageTypes)}>
-                <Button
-                    color="primary"
-                    variant="contained"
-                    onClick={onAdd}
-                    data-test-id="createPageType"
-                >
+                <Button variant="primary" href={pageTypeAddUrl} data-test-id="create-page-type">
                     <FormattedMessage
-                        defaultMessage="create page type"
-                        id="wtKQiW"
+                        id="6JlXeD"
+                        defaultMessage="Create page type"
                         description="button"
                     />
                 </Button>
             </PageHeader>
+
             <Card>
                 <SearchBar
                     allTabLabel={intl.formatMessage({
-                        defaultMessage: "All Page Types",
                         id: "oVDZUb",
+                        defaultMessage: "All Page Types",
                         description: "tab name",
                     })}
                     currentTab={currentTab}
                     initialSearch={initialSearch}
                     searchPlaceholder={intl.formatMessage({
-                        defaultMessage: "Search Page Type",
                         id: "umsU70",
+                        defaultMessage: "Search Page Type",
                     })}
                     tabs={tabs}
                     onAll={onAll}

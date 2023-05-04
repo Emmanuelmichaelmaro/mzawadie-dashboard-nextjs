@@ -1,8 +1,9 @@
 // @ts-nocheck
 import activateIcon from "@assets/images/activate-icon.svg";
-import settingsIcon from "@assets/images/settings-icon.svg";
 import supportIcon from "@assets/images/support-icon.svg";
 import { ButtonBase, Card, CardContent, Typography } from "@material-ui/core";
+import { Backlink } from "@mzawadie/components/Backlink";
+import { Button } from "@mzawadie/components/Button";
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import Container from "@mzawadie/components/Container";
@@ -11,7 +12,7 @@ import { PageHeader } from "@mzawadie/components/PageHeader";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { sectionNames } from "@mzawadie/core";
 import { AppQuery } from "@mzawadie/graphql";
-import { Backlink, Button } from "@saleor/macaw-ui";
+import { appsListPath } from "@mzawadie/pages/apps/urls";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -24,27 +25,23 @@ export interface AppDetailsPageProps {
     loading: boolean;
     data: AppQuery["app"];
     navigateToApp: () => void;
-    navigateToAppSettings: () => void;
     onAppActivateOpen: () => void;
     onAppDeactivateOpen: () => void;
-    onBack: () => void;
 }
 
 export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
     data,
     loading,
     navigateToApp,
-    navigateToAppSettings,
     onAppActivateOpen,
     onAppDeactivateOpen,
-    onBack,
 }) => {
     const intl = useIntl();
     const classes = useStyles({});
 
     return (
         <Container>
-            <Backlink onClick={onBack}>{intl.formatMessage(sectionNames.apps)}</Backlink>
+            <Backlink href={appsListPath}>{intl.formatMessage(sectionNames.apps)}</Backlink>
 
             <PageHeader
                 title={
@@ -54,7 +51,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
                 }
             >
                 <Button onClick={navigateToApp} variant="primary" data-tc="open-app">
-                    <FormattedMessage defaultMessage="Open App" id="HtfL5/" description="button" />
+                    <FormattedMessage id="HtfL5/" defaultMessage="Open App" description="button" />
                 </Button>
             </PageHeader>
 
@@ -68,26 +65,11 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
                         >
                             <SVG src={supportIcon} />
                             <FormattedMessage
-                                defaultMessage="Get Support"
                                 id="Gjb6eq"
+                                defaultMessage="Get Support"
                                 description="link"
                             />
                         </ExternalLink>
-
-                        {data.configurationUrl && (
-                            <ButtonBase
-                                className={classes.headerLinkContainer}
-                                disableRipple
-                                onClick={navigateToAppSettings}
-                            >
-                                <SVG src={settingsIcon} />
-                                <FormattedMessage
-                                    defaultMessage="Edit settings"
-                                    id="89PSdB"
-                                    description="link"
-                                />
-                            </ButtonBase>
-                        )}
 
                         <ButtonBase
                             className={classes.headerLinkContainer}
@@ -98,14 +80,14 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
 
                             {data?.isActive ? (
                                 <FormattedMessage
-                                    defaultMessage="Deactivate"
                                     id="whTEcF"
+                                    defaultMessage="Deactivate"
                                     description="link"
                                 />
                             ) : (
                                 <FormattedMessage
-                                    defaultMessage="Activate"
                                     id="P5twxk"
+                                    defaultMessage="Activate"
                                     description="link"
                                 />
                             )}
@@ -120,11 +102,12 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
             <Card>
                 <CardTitle
                     title={intl.formatMessage({
-                        defaultMessage: "About this app",
                         id: "jDIRQV",
+                        defaultMessage: "About this app",
                         description: "section header",
                     })}
                 />
+
                 <CardContent>
                     {!loading ? <ReactMarkdown source={data?.aboutApp} /> : <Skeleton />}
                 </CardContent>
@@ -135,8 +118,8 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
             <Card>
                 <CardTitle
                     title={intl.formatMessage({
-                        defaultMessage: "App permissions",
                         id: "VsGcdP",
+                        defaultMessage: "App permissions",
                         description: "section header",
                     })}
                 />
@@ -146,8 +129,8 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
                         <>
                             <Typography>
                                 <FormattedMessage
-                                    defaultMessage="This app has permissions to:"
                                     id="7oQUMG"
+                                    defaultMessage="This app has permissions to:"
                                     description="apps about permissions"
                                 />
                             </Typography>
@@ -155,7 +138,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
                             {!!data?.permissions?.length && (
                                 <ul className={classes.permissionsContainer}>
                                     {data?.permissions?.map((perm) => (
-                                        <li key={perm.code}>{perm.name}</li>
+                                        <li key={perm?.code}>{perm?.name}</li>
                                     ))}
                                 </ul>
                             )}
@@ -168,36 +151,35 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
 
             <CardSpacer />
 
-            <Card>
-                <CardTitle
-                    title={intl.formatMessage({
-                        defaultMessage: "Data privacy",
-                        id: "a55zOn",
-                        description: "section header",
-                    })}
-                />
+            {(loading || data?.dataPrivacyUrl) && (
+                <Card>
+                    <CardTitle
+                        title={intl.formatMessage({
+                            id: "a55zOn",
+                            defaultMessage: "Data privacy",
+                            description: "section header",
+                        })}
+                    />
 
-                <CardContent>
-                    {!loading ? (
-                        <>
-                            <Typography>{data?.dataPrivacy}</Typography>
+                    <CardContent>
+                        {!loading ? (
                             <ExternalLink
                                 className={classes.linkContainer}
                                 href={data?.dataPrivacyUrl}
                                 target="_blank"
                             >
                                 <FormattedMessage
-                                    defaultMessage="View this app’s privacy policy"
                                     id="Go50v2"
+                                    defaultMessage="View this app’s privacy policy"
                                     description="app privacy policy link"
                                 />
                             </ExternalLink>
-                        </>
-                    ) : (
-                        <Skeleton />
-                    )}
-                </CardContent>
-            </Card>
+                        ) : (
+                            <Skeleton />
+                        )}
+                    </CardContent>
+                </Card>
+            )}
             <CardSpacer />
         </Container>
     );

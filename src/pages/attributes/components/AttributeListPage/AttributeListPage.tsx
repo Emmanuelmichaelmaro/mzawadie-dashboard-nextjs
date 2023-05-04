@@ -1,23 +1,19 @@
 // @ts-nocheck
-import { Button, Card } from "@material-ui/core";
+import { Card } from "@material-ui/core";
+import { attributeAddUrl, AttributeListUrlSortField } from "@mzawadie/pages/attributes/urls";
+import { Backlink } from "@mzawadie/components/Backlink";
+import { Button } from "@mzawadie/components/Button";
 import Container from "@mzawadie/components/Container";
-import { FilterBar } from "@mzawadie/components/FilterBar";
-import { PageHeader } from "@mzawadie/components/PageHeader";
-import {
-    FilterPageProps,
-    ListActions,
-    PageListProps,
-    SortPage,
-    TabPageProps,
-    sectionNames,
-} from "@mzawadie/core";
+import {FilterBar} from "@mzawadie/components/FilterBar";
+import {PageHeader} from "@mzawadie/components/PageHeader";
+import { configurationMenuUrl } from "@mzawadie/pages/configuration";
+import { sectionNames } from "@mzawadie/core";
+import { FilterPageProps, ListActions, PageListProps, SortPage, TabPageProps } from "@mzawadie/core";
 import { AttributeFragment } from "@mzawadie/graphql";
-import { AttributeListUrlSortField } from "@mzawadie/pages/attributes/urls";
-import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { AttributeList } from "../AttributeList";
+import AttributeList from "../AttributeList/AttributeList";
 import { AttributeFilterKeys, AttributeListFilterOpts, createFilterStructure } from "./filters";
 
 export interface AttributeListPageProps
@@ -27,14 +23,11 @@ export interface AttributeListPageProps
         SortPage<AttributeListUrlSortField>,
         TabPageProps {
     attributes: AttributeFragment[];
-    onBack: () => void;
 }
 
 const AttributeListPage: React.FC<AttributeListPageProps> = ({
     filterOpts,
     initialSearch,
-    onAdd,
-    onBack,
     onFilterChange,
     onSearchChange,
     currentTab,
@@ -51,36 +44,37 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
 
     return (
         <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={configurationMenuUrl}>
                 <FormattedMessage {...sectionNames.configuration} />
             </Backlink>
+
             <PageHeader title={intl.formatMessage(sectionNames.attributes)}>
                 <Button
-                    onClick={onAdd}
-                    color="primary"
-                    variant="contained"
-                    data-test-id="createAttributeButton"
+                    href={attributeAddUrl()}
+                    variant="primary"
+                    data-test-id="create-attribute-button"
                 >
                     <FormattedMessage
-                        defaultMessage="Create attribute"
                         id="IGvQ8k"
+                        defaultMessage="Create attribute"
                         description="button"
                     />
                 </Button>
             </PageHeader>
+
             <Card>
                 <FilterBar
                     allTabLabel={intl.formatMessage({
-                        defaultMessage: "All Attributes",
                         id: "dKPMyh",
+                        defaultMessage: "All Attributes",
                         description: "tab name",
                     })}
                     currentTab={currentTab}
                     filterStructure={structure}
                     initialSearch={initialSearch}
                     searchPlaceholder={intl.formatMessage({
-                        defaultMessage: "Search Attribute",
                         id: "1div9r",
+                        defaultMessage: "Search Attribute",
                     })}
                     tabs={tabs}
                     onAll={onAll}
@@ -95,5 +89,7 @@ const AttributeListPage: React.FC<AttributeListPageProps> = ({
         </Container>
     );
 };
+
 AttributeListPage.displayName = "AttributeListPage";
+
 export default AttributeListPage;

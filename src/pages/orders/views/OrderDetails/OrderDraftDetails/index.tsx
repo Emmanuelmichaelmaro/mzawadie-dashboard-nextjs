@@ -1,19 +1,23 @@
 // @ts-nocheck
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
-import {
-    DEFAULT_INITIAL_SEARCH_DATA,
-    PartialMutationProviderOutput,
-    extractMutationErrors,
-    getStringOrPlaceholder,
-} from "@mzawadie/core";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@mzawadie/core";
+import { PartialMutationProviderOutput } from "@mzawadie/core";
+import { extractMutationErrors, getStringOrPlaceholder } from "@mzawadie/core";
 import {
     OrderDetailsQuery,
+    OrderDraftCancelMutation,
+    OrderDraftCancelMutationVariables,
+    OrderDraftFinalizeMutation,
+    OrderDraftFinalizeMutationVariables,
     OrderDraftUpdateMutation,
     OrderDraftUpdateMutationVariables,
+    OrderLineUpdateMutation,
+    OrderLineUpdateMutationVariables,
+    StockAvailability,
+    useChannelUsabilityDataQuery,
     useCustomerAddressesQuery,
 } from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
-import { useUser } from "@mzawadie/pages/auth";
 import { customerUrl } from "@mzawadie/pages/customers/urls";
 import { CustomerEditData } from "@mzawadie/pages/orders/components/OrderCustomer";
 import { OrderCustomerAddressesEditDialogOutput } from "@mzawadie/pages/orders/components/OrderCustomerAddressesEditDialog/types";
@@ -22,7 +26,7 @@ import {
     CustomerChangeActionEnum,
     OrderCustomerChangeData,
 } from "@mzawadie/pages/orders/components/OrderCustomerChangeDialog/form";
-import { OrderUrlDialog, OrderUrlQueryParams, orderDraftListUrl } from "@mzawadie/pages/orders/urls";
+import { orderDraftListUrl, OrderUrlDialog, OrderUrlQueryParams } from "@mzawadie/pages/orders/urls";
 import { getVariantSearchAddress } from "@mzawadie/pages/orders/utils/data";
 import { OrderDiscountProvider } from "@mzawadie/pages/products/components/OrderDiscountProviders/OrderDiscountProviders";
 import { OrderLineDiscountProvider } from "@mzawadie/pages/products/components/OrderDiscountProviders/OrderLineDiscountProviders";
@@ -33,11 +37,11 @@ import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { OrderAddressFields } from "../../../components/OrderAddressFields";
-import { OrderDraftCancelDialog } from "../../../components/OrderDraftCancelDialog";
-import { OrderDraftPage } from "../../../components/OrderDraftPage";
-import { OrderProductAddDialog } from "../../../components/OrderProductAddDialog";
-import { OrderShippingMethodEditDialog } from "../../../components/OrderShippingMethodEditDialog";
+import OrderAddressFields from "../../../components/OrderAddressFields/OrderAddressFields";
+import OrderDraftCancelDialog from "../../../components/OrderDraftCancelDialog/OrderDraftCancelDialog";
+import OrderDraftPage from "../../../components/OrderDraftPage/OrderDraftPage";
+import OrderProductAddDialog from "../../../components/OrderProductAddDialog/OrderProductAddDialog";
+import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog/OrderShippingMethodEditDialog";
 
 interface OrderDraftDetailsProps {
     id: string;
@@ -45,7 +49,10 @@ interface OrderDraftDetailsProps {
     loading: any;
     data: OrderDetailsQuery;
     orderAddNote: any;
-    orderLineUpdate: any;
+    orderLineUpdate: PartialMutationProviderOutput<
+        OrderLineUpdateMutation,
+        OrderLineUpdateMutationVariables
+    >;
     orderLineDelete: any;
     orderShippingMethodUpdate: any;
     orderLinesAdd: any;
@@ -53,8 +60,14 @@ interface OrderDraftDetailsProps {
         OrderDraftUpdateMutation,
         OrderDraftUpdateMutationVariables
     >;
-    orderDraftCancel: any;
-    orderDraftFinalize: any;
+    orderDraftCancel: PartialMutationProviderOutput<
+        OrderDraftCancelMutation,
+        OrderDraftCancelMutationVariables
+    >;
+    orderDraftFinalize: PartialMutationProviderOutput<
+        OrderDraftFinalizeMutation,
+        OrderDraftFinalizeMutationVariables
+    >;
     openModal: (action: OrderUrlDialog, newParams?: OrderUrlQueryParams) => void;
     closeModal: any;
 }
@@ -78,9 +91,15 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     openModal,
     closeModal,
 }) => {
-    const { order } = data;
+    const order = data.order;
+    
     const navigate = useNavigator();
-    const { user } = useUser();
+
+    const { data: channelUsabilityData } = useChannelUsabilityDataQuery({
+        variables: {
+            channel: order?.channel.slug,
+        },
+    });
 
     const {
         loadMore,
@@ -91,6 +110,8 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             ...DEFAULT_INITIAL_SEARCH_DATA,
             channel: order?.channel.slug,
             address: getVariantSearchAddress(order),
+            isPublished: true,
+            stockAvailability: StockAvailability.IN_STOCK,
         },
     });
 
@@ -118,8 +139,9 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
         prevUserEmail,
     }: CustomerEditData) => {
         const sameUser = user && user === prevUser;
+        
         const sameUserEmail = userEmail && userEmail === prevUserEmail;
-
+        
         if (sameUser || sameUserEmail) {
             return;
         }
@@ -137,7 +159,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
         }
 
         const modalUri = prevUser ? "customer-change" : "edit-customer-addresses";
-
+        
         openModal(modalUri);
     };
 
@@ -157,13 +179,25 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             input: data,
         });
 
+    const handleOrderDraftCancel = async () => {
+        const errors = await extractMutationErrors(orderDraftCancel.mutate({ id }));
+        
+        if (!errors.length) {
+            navigate(orderDraftListUrl());
+        }
+        
+        return errors;
+    };
+
+    const errors = orderDraftFinalize.opts.data?.draftOrderComplete?.errors || [];
+
     return (
         <>
             <WindowTitle
                 title={intl.formatMessage(
                     {
-                        defaultMessage: "Draft Order #{orderNumber}",
                         id: "TLNf6K",
+                        defaultMessage: "Draft Order #{orderNumber}",
                         description: "window title",
                     },
                     {
@@ -176,6 +210,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
                 <OrderLineDiscountProvider order={order}>
                     <OrderDraftPage
                         disabled={loading}
+                        errors={errors}
                         onNoteAdd={(variables) =>
                             extractMutationErrors(
                                 orderAddNote.mutate({
@@ -194,8 +229,8 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
                         onDraftFinalize={() => orderDraftFinalize.mutate({ id })}
                         onDraftRemove={() => openModal("cancel")}
                         onOrderLineAdd={() => openModal("add-order-line")}
-                        onBack={() => navigate(orderDraftListUrl())}
                         order={order}
+                        channelUsabilityData={channelUsabilityData}
                         onProductClick={(id) => () => navigate(productUrl(encodeURIComponent(id)))}
                         onBillingAddressEdit={() => openModal("edit-billing-address")}
                         onShippingAddressEdit={() => openModal("edit-shipping-address")}
@@ -208,24 +243,23 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
                             })
                         }
                         saveButtonBarState="default"
-                        onProfileView={() => navigate(customerUrl(order.user.id))}
-                        userPermissions={user?.userPermissions || []}
+                        onProfileView={() => navigate(customerUrl(order?.user?.id))}
                     />
                 </OrderLineDiscountProvider>
             </OrderDiscountProvider>
-
+            
             <OrderDraftCancelDialog
                 confirmButtonState={orderDraftCancel.opts.status}
-                errors={orderDraftCancel.opts.data?.draftOrderDelete.errors || []}
+                errors={orderDraftCancel.opts.data?.draftOrderDelete?.errors || []}
                 onClose={closeModal}
-                onConfirm={() => orderDraftCancel.mutate({ id })}
+                onConfirm={handleOrderDraftCancel}
                 open={params.action === "cancel"}
                 orderNumber={getStringOrPlaceholder(order?.number)}
             />
-
+            
             <OrderShippingMethodEditDialog
                 confirmButtonState={orderShippingMethodUpdate.opts.status}
-                errors={orderShippingMethodUpdate.opts.data?.orderUpdateShipping.errors || []}
+                errors={orderShippingMethodUpdate.opts.data?.orderUpdateShipping?.errors || []}
                 open={params.action === "edit-shipping"}
                 shippingMethod={order?.shippingMethod?.id}
                 shippingMethods={order?.shippingMethods}
@@ -239,15 +273,14 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
                     })
                 }
             />
-
+            
             <OrderProductAddDialog
                 confirmButtonState={orderLinesAdd.opts.status}
                 errors={orderLinesAdd.opts.data?.orderLinesCreate.errors || []}
                 loading={variantSearchOpts.loading}
                 open={params.action === "add-order-line"}
-                hasMore={variantSearchOpts.data?.search.pageInfo.hasNextPage}
+                hasMore={variantSearchOpts.data?.search?.pageInfo.hasNextPage}
                 products={mapEdgesToItems(variantSearchOpts?.data?.search)}
-                selectedChannelId={order?.channel?.id}
                 onClose={closeModal}
                 onFetch={variantSearch}
                 onFetchMore={loadMore}
@@ -263,13 +296,13 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
                     )
                 }
             />
-
+            
             <OrderCustomerChangeDialog
                 open={params.action === "customer-change"}
                 onClose={closeModal}
                 onConfirm={handleCustomerChangeAction}
             />
-
+            
             <OrderAddressFields
                 action={params?.action}
                 orderShippingAddress={order?.shippingAddress}
@@ -281,7 +314,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
                 onClose={closeModal}
                 onConfirm={handleCustomerChangeAddresses}
                 confirmButtonState={orderDraftUpdate.opts.status}
-                errors={orderDraftUpdate.opts.data?.draftOrderUpdate.errors}
+                errors={orderDraftUpdate.opts.data?.draftOrderUpdate?.errors}
             />
         </>
     );

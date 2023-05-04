@@ -1,13 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 // @ts-nocheck
-import { Button, Card, CardActions, IconButton, Paper, Typography } from "@material-ui/core";
+import Draggable from "@icons/Draggable";
+import { Card, CardActions, Paper, Typography } from "@material-ui/core";
 import EditIcon from "@material-ui/icons/Edit";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { buttonMessages } from "@mzawadie/core";
 import { MenuDetailsFragment } from "@mzawadie/graphql";
-import Draggable from "@mzawadie/icons/Draggable";
-import { DeleteIcon, makeStyles, useTheme } from "@saleor/macaw-ui";
+import { Button, DeleteIcon, IconButton, makeStyles, useTheme } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -22,7 +21,7 @@ const NODE_MARGIN = 40;
 export interface MenuItemsProps {
     canUndo: boolean;
     items: MenuDetailsFragment["items"];
-    onChange: (operation: TreeOperation) => void;
+    onChange: (operations: TreeOperation[]) => void;
     onItemAdd: () => void;
     onItemClick: (id: string, type: MenuItemType) => void;
     onItemEdit: (id: string) => void;
@@ -32,6 +31,9 @@ export interface MenuItemsProps {
 const useStyles = makeStyles(
     (theme) => ({
         actions: {
+            "&&": {
+                padding: theme.spacing(2, 4),
+            },
             flexDirection: "row",
         },
         container: {
@@ -116,8 +118,8 @@ const Placeholder: React.FC = (props) => {
         <Paper className={classes.row} elevation={0}>
             <Typography>
                 <FormattedMessage
-                    defaultMessage="Add new menu item to begin creating menu"
                     id="WwZfNK"
+                    defaultMessage="Add new menu item to begin creating menu"
                 />
             </Typography>
         </Paper>
@@ -126,13 +128,17 @@ const Placeholder: React.FC = (props) => {
 
 const Node: React.FC<NodeRendererProps> = (props) => {
     const { node, path, connectDragPreview, connectDragSource, isDragging } = props;
+
     const classes = useStyles(props);
 
     const draggedClassName = classNames(classes.rowContainer, classes.rowContainerDragged);
+
     const defaultClassName = isDragging ? draggedClassName : classes.rowContainer;
+
     const placeholderClassName = classNames(classes.rowContainer, classes.rowContainerPlaceholder);
 
     const [className, setClassName] = React.useState(defaultClassName);
+
     React.useEffect(() => setClassName(defaultClassName), [isDragging]);
 
     const handleDragStart = () => {
@@ -153,24 +159,31 @@ const Node: React.FC<NodeRendererProps> = (props) => {
                         <Draggable className={classes.dragIcon} />
                     </div>
                 )}
+
                 <Typography className={classes.nodeTitle} onClick={node.onEdit}>
                     {node.title}
                 </Typography>
+
                 <div className={classes.spacer} />
-                <Button color="primary" onClick={node.onClick}>
+
+                <Button onClick={node.onClick}>
                     <FormattedMessage {...buttonMessages.show} />
                 </Button>
-                <IconButton color="primary" onClick={node.onEdit}>
+
+                <IconButton variant="secondary" onClick={node.onEdit}>
                     <EditIcon />
                 </IconButton>
+
                 <IconButton
                     className={classes.deleteButton}
-                    color="primary"
+                    variant="secondary"
                     onClick={() =>
-                        node.onChange({
-                            id: node.id,
-                            type: "remove",
-                        })
+                        node.onChange([
+                            {
+                                id: node.id,
+                                type: "remove",
+                            },
+                        ])
                     }
                 >
                     <DeleteIcon />
@@ -191,25 +204,28 @@ const MenuItems: React.FC<MenuItemsProps> = (props) => {
         onItemEdit,
         onUndo,
     } = props;
+
     const classes = useStyles(props);
 
     const intl = useIntl();
+
     const { themeType } = useTheme();
 
     return (
         <Card>
             <CardTitle
                 title={intl.formatMessage({
+                    id: "dEUZg2",
                     defaultMessage: "Menu Items",
                     description: "header",
-                    id: "dEUZg2",
                 })}
                 toolbar={
-                    <Button color="primary" disabled={!canUndo} onClick={onUndo}>
+                    <Button disabled={!canUndo} onClick={onUndo}>
                         <FormattedMessage {...buttonMessages.undo} />
                     </Button>
                 }
             />
+
             <div
                 className={classNames(classes.container, {
                     [classes.darkContainer]: themeType === "dark",
@@ -231,6 +247,7 @@ const MenuItems: React.FC<MenuItemsProps> = (props) => {
                                 marginLeft: NODE_MARGIN * (path.length - 1),
                             },
                         })}
+                        maxDepth={5}
                         isVirtualized={false}
                         rowHeight={NODE_HEIGHT}
                         treeData={items.map((item) =>
@@ -253,12 +270,13 @@ const MenuItems: React.FC<MenuItemsProps> = (props) => {
                     />
                 )}
             </div>
+
             <CardActions className={classes.actions}>
-                <Button color="primary" onClick={onItemAdd} data-test-id="createNewMenuItem">
+                <Button onClick={onItemAdd} data-test-id="create-new-menu-item">
                     <FormattedMessage
+                        id="Uf3oHA"
                         defaultMessage="Create new item"
                         description="add new menu item"
-                        id="Uf3oHA"
                     />
                 </Button>
             </CardActions>

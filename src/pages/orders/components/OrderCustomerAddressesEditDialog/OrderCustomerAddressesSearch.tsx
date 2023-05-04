@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
     Checkbox,
     DialogActions,
@@ -79,14 +80,16 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
 
     return (
         <>
-            <DialogContent>
+            <DialogContent className={classes.dialogContent}>
                 {intl.formatMessage(messages.searchInfo)}
+
                 <VerticalSpacer spacing={2} />
+
                 <TextField
                     value={query}
                     variant="outlined"
                     onChange={handleChange}
-                    placeholder="Search addresses"
+                    placeholder={"Search addresses"}
                     fullWidth
                     InputProps={{
                         startAdornment: (
@@ -97,7 +100,9 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
                     }}
                     inputProps={{ className: classes.searchInput }}
                 />
+
                 <VerticalSpacer spacing={2} />
+
                 <div className={classes.scrollableWrapper}>
                     {filteredCustomerAddresses.length === 0
                         ? intl.formatMessage(messages.noResultsFound)
@@ -112,6 +117,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
                               </React.Fragment>
                           ))}
                 </div>
+
                 {!openFromCustomerChange && filteredCustomerAddresses.length !== 0 && (
                     <FormControlLabel
                         control={
@@ -136,6 +142,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
                     />
                 )}
             </DialogContent>
+
             <DialogActions>
                 <Button onClick={exitSearch} variant="secondary">
                     <FormattedMessage {...buttonMessages.cancel} />
@@ -154,4 +161,5 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
 };
 
 OrderCustomerAddressesSearch.displayName = "OrderCustomerAddressesSearch";
+
 export default OrderCustomerAddressesSearch;

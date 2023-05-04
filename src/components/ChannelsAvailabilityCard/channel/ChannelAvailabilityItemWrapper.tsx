@@ -1,6 +1,8 @@
-import { ExpansionPanel, ExpansionPanelSummary, Typography } from "@material-ui/core";
-import IconChevronDown from "@mzawadie/icons/ChevronDown";
+// @ts-nocheck
+import IconChevronDown from "@icons/ChevronDown";
+import { Accordion, AccordionSummary, Typography } from "@material-ui/core";
 import { ChannelData } from "@mzawadie/pages/channels/utils";
+import Label from "@mzawadie/pages/orders/components/OrderHistory/Label";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
@@ -55,6 +57,16 @@ const useSummaryStyles = makeStyles(
     { name: "ChannelContentWrapperExpanderSummary" }
 );
 
+const useStyles = makeStyles(
+    () => ({
+        container: {
+            display: "flex",
+            flexDirection: "column",
+        },
+    }),
+    { name: "ChannelWithVariantAvailabilityItemWrapper" }
+);
+
 export interface ChannelContentWrapperProps {
     data: ChannelData;
     children: React.ReactNode;
@@ -62,19 +74,22 @@ export interface ChannelContentWrapperProps {
 }
 
 const ChannelContentWrapper: React.FC<ChannelContentWrapperProps> = ({ data, messages, children }) => {
-    const expanderClasses = useExpanderStyles({});
-    const summaryClasses = useSummaryStyles({});
+    const expanderClasses = useExpanderStyles();
+    const summaryClasses = useSummaryStyles();
+    const classes = useStyles();
 
     const { name } = data;
 
     return (
-        <ExpansionPanel classes={expanderClasses} data-test="channel-availability-item">
-            <ExpansionPanelSummary expandIcon={<IconChevronDown />} classes={summaryClasses}>
-                <Typography>{name}</Typography>
-                <Typography variant="caption">{messages.availableDateText}</Typography>
-            </ExpansionPanelSummary>
+        <Accordion classes={expanderClasses} data-test-id="channel-availability-item">
+            <AccordionSummary expandIcon={<IconChevronDown />} classes={summaryClasses}>
+                <div className={classes.container}>
+                    <Typography>{name}</Typography>
+                    <Label text={messages.availableDateText} />
+                </div>
+            </AccordionSummary>
             {children}
-        </ExpansionPanel>
+        </Accordion>
     );
 };
 

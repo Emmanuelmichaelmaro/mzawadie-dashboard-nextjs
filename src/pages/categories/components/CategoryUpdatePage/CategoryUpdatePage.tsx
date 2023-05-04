@@ -1,26 +1,29 @@
-/* eslint-disable @typescript-eslint/member-ordering */
 // @ts-nocheck
-import { Button, Card } from "@material-ui/core";
+import { Card } from "@material-ui/core";
+import { categoryAddUrl, categoryListUrl, categoryUrl } from "@mzawadie/pages/categories/urls";
+import { Backlink } from "@mzawadie/components/Backlink";
+import { Button } from "@mzawadie/components/Button";
 import { CardSpacer } from "@mzawadie/components/CardSpacer";
-import { CardTitle } from "@mzawadie/components/CardTitle";
-import { ConfirmButtonTransitionState } from "@mzawadie/components/ConfirmButton";
+import {CardTitle} from "@mzawadie/components/CardTitle";
 import Container from "@mzawadie/components/Container";
 import Metadata from "@mzawadie/components/Metadata/Metadata";
-import { PageHeader } from "@mzawadie/components/PageHeader";
+import {PageHeader} from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
-import { SeoForm } from "@mzawadie/components/SeoForm";
-import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
+import {SeoForm} from "@mzawadie/components/SeoForm";
 import { Tab, TabContainer } from "@mzawadie/components/Tab";
-import { ChannelProps, TabListActions, sectionNames, maybe, RelayToFlat } from "@mzawadie/core";
+import { maybe } from "@mzawadie/core";
+import { RelayToFlat, TabListActions } from "@mzawadie/core";
 import { CategoryDetailsQuery, ProductErrorFragment } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
-import { Backlink } from "@saleor/macaw-ui";
+import useNavigator from "@mzawadie/hooks/useNavigator";
+import { sectionNames } from "@mzawadie/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { CategoryDetailsForm } from "../../components/CategoryDetailsForm";
+import { CategoryList } from "../../components/CategoryList";
 import { CategoryBackground } from "../CategoryBackground";
-import { CategoryDetailsForm } from "../CategoryDetailsForm";
-import { CategoryList } from "../CategoryList";
 import { CategoryProducts } from "../CategoryProducts";
 import CategoryUpdateForm, { CategoryUpdateData } from "./form";
 
@@ -30,8 +33,8 @@ export enum CategoryPageTab {
 }
 
 export interface CategoryUpdatePageProps
-    extends TabListActions<"productListToolbar" | "subcategoryListToolbar">,
-        ChannelProps {
+    extends TabListActions<"productListToolbar" | "subcategoryListToolbar"> {
+    categoryId: string;
     changeTab: (index: CategoryPageTab) => void;
     currentTab: CategoryPageTab;
     errors: ProductErrorFragment[];
@@ -39,95 +42,76 @@ export interface CategoryUpdatePageProps
     category: CategoryDetailsQuery["category"];
     products: RelayToFlat<CategoryDetailsQuery["category"]["products"]>;
     subcategories: RelayToFlat<CategoryDetailsQuery["category"]["children"]>;
-    pageInfo: {
-        hasNextPage: boolean;
-        hasPreviousPage: boolean;
-    };
     saveButtonBarState: ConfirmButtonTransitionState;
-    channelChoices: SingleAutocompleteChoiceType[];
-    channelsCount: number;
+    addProductHref: string;
     onImageDelete: () => void;
     onSubmit: (data: CategoryUpdateData) => SubmitPromise;
-    onImageUpload: (file: File) => void;
-    onNextPage: () => void;
-    onPreviousPage: () => void;
-    onProductClick(id: string): () => void;
-    onAddProduct: () => void;
-    onBack: () => void;
-    onDelete: () => void;
-    onAddCategory: () => void;
-    onCategoryClick(id: string): () => void;
+    onImageUpload(file: File);
+    onDelete();
 }
 
 const CategoriesTab = Tab(CategoryPageTab.categories);
 const ProductsTab = Tab(CategoryPageTab.products);
 
 export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
+    categoryId,
     changeTab,
-    channelChoices,
-    channelsCount,
     currentTab,
     category,
     disabled,
     errors,
-    pageInfo,
     products,
     saveButtonBarState,
     subcategories,
-    onAddCategory,
-    onAddProduct,
-    onBack,
-    onCategoryClick,
     onDelete,
-    onNextPage,
-    onPreviousPage,
-    onProductClick,
     onSubmit,
     onImageDelete,
     onImageUpload,
     isChecked,
     productListToolbar,
     selected,
-    selectedChannelId,
     subcategoryListToolbar,
     toggle,
     toggleAll,
 }: CategoryUpdatePageProps) => {
     const intl = useIntl();
+    
+    const navigate = useNavigator();
+
+    const backHref = category?.parent?.id ? categoryUrl(category?.parent?.id) : categoryListUrl();
 
     return (
-        <CategoryUpdateForm category={category} onSubmit={onSubmit}>
-            {({ data, change, handlers, submit, hasChanged }) => (
+        <CategoryUpdateForm category={category} onSubmit={onSubmit} disabled={disabled}>
+            {({ data, change, handlers, submit, isSaveDisabled }) => (
                 <Container>
-                    <Backlink onClick={onBack}>{intl.formatMessage(sectionNames.categories)}</Backlink>
-
+                    <Backlink href={backHref}>{intl.formatMessage(sectionNames.categories)}</Backlink>
+    
                     <PageHeader title={category?.name} />
-
+    
                     <CategoryDetailsForm
                         data={data}
                         disabled={disabled}
                         errors={errors}
                         onChange={change}
-                        onDescriptionChange={handlers.changeDescription}
                     />
-
+    
                     <CardSpacer />
-
+    
                     <CategoryBackground
                         data={data}
                         onImageUpload={onImageUpload}
                         onImageDelete={onImageDelete}
-                        image={maybe(() => category.backgroundImage)}
+                        image={maybe(() => category?.backgroundImage)}
                         onChange={change}
                     />
-
+    
                     <CardSpacer />
-
+    
                     <SeoForm
                         helperText={intl.formatMessage({
+                            id: "wQdR8M",
                             defaultMessage:
                                 "Add search engine title and description to make this category easier to find",
-                            id: "wQdR8M",
                         })}
                         errors={errors}
                         title={data.seoTitle}
@@ -140,110 +124,98 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                         onChange={change}
                         disabled={disabled}
                     />
-
+                    
                     <CardSpacer />
-
+                    
                     <Metadata data={data} onChange={handlers.changeMetadata} />
-
+                    
                     <CardSpacer />
-
+                    
                     <TabContainer>
                         <CategoriesTab
                             isActive={currentTab === CategoryPageTab.categories}
                             changeTab={changeTab}
                         >
                             <FormattedMessage
-                                defaultMessage="Subcategories"
                                 id="JDz5h8"
+                                defaultMessage="Subcategories"
                                 description="number of subcategories in category"
                             />
                         </CategoriesTab>
-
+                    
                         <ProductsTab
-                            testId="productsTab"
+                            testId="products-tab"
                             isActive={currentTab === CategoryPageTab.products}
                             changeTab={changeTab}
                         >
                             <FormattedMessage
-                                defaultMessage="Products"
                                 id="V+fkAO"
+                                defaultMessage="Products"
                                 description="number of products in category"
                             />
                         </ProductsTab>
                     </TabContainer>
-
+                    
                     <CardSpacer />
-
+                    
                     {currentTab === CategoryPageTab.categories && (
                         <Card>
                             <CardTitle
                                 title={intl.formatMessage({
-                                    defaultMessage: "All Subcategories",
                                     id: "NivJal",
+                                    defaultMessage: "All Subcategories",
                                     description: "section header",
                                 })}
                                 toolbar={
                                     <Button
-                                        color="primary"
-                                        variant="text"
-                                        onClick={onAddCategory}
-                                        data-test-id="createSubcategory"
+                                        variant="tertiary"
+                                        href={categoryAddUrl(categoryId)}
+                                        data-test-id="create-subcategory"
                                     >
                                         <FormattedMessage
-                                            defaultMessage="Create subcategory"
                                             id="UycVMp"
+                                            defaultMessage="Create subcategory"
                                             description="button"
                                         />
                                     </Button>
                                 }
                             />
-
+                    
                             <CategoryList
                                 categories={subcategories}
                                 disabled={disabled}
                                 isChecked={isChecked}
                                 isRoot={false}
-                                pageInfo={pageInfo}
                                 selected={selected}
                                 sort={undefined}
                                 toggle={toggle}
                                 toggleAll={toggleAll}
                                 toolbar={subcategoryListToolbar}
-                                onNextPage={onNextPage}
-                                onPreviousPage={onPreviousPage}
-                                onRowClick={onCategoryClick}
                                 onSort={() => undefined}
                             />
                         </Card>
                     )}
-
+                    
                     {currentTab === CategoryPageTab.products && (
                         <CategoryProducts
-                            channelsCount={channelsCount}
-                            channelChoices={channelChoices}
+                            categoryId={category?.id}
                             categoryName={category?.name}
                             products={products}
                             disabled={disabled}
-                            pageInfo={pageInfo}
-                            onNextPage={onNextPage}
-                            onPreviousPage={onPreviousPage}
-                            onRowClick={onProductClick}
-                            onAdd={onAddProduct}
                             toggle={toggle}
                             toggleAll={toggleAll}
                             selected={selected}
-                            selectedChannelId={selectedChannelId}
                             isChecked={isChecked}
                             toolbar={productListToolbar}
                         />
                     )}
-
+                    
                     <Savebar
-                        onCancel={onBack}
+                        onCancel={() => navigate(backHref)}
                         onDelete={onDelete}
                         onSubmit={submit}
                         state={saveButtonBarState}
-                        disabled={disabled || !hasChanged}
+                        disabled={isSaveDisabled}
                     />
                 </Container>
             )}

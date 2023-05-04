@@ -1,14 +1,17 @@
 // @ts-nocheck
-import { Button, Card } from "@material-ui/core";
+import { Card } from "@material-ui/core";
+import { Backlink } from "@mzawadie/components/Backlink";
+import { Button } from "@mzawadie/components/Button";
 import Container from "@mzawadie/components/Container";
 import LimitReachedAlert from "@mzawadie/components/LimitReachedAlert";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import { SearchBar } from "@mzawadie/components/SearchBar";
-import { PageListProps, SearchPageProps, SortPage, TabPageProps, sectionNames } from "@mzawadie/core";
+import { sectionNames } from "@mzawadie/core";
+import { PageListProps, SearchPageProps, SortPage, TabPageProps } from "@mzawadie/core";
 import { RefreshLimitsQuery, WarehouseWithShippingFragment } from "@mzawadie/graphql";
-import { WarehouseListUrlSortField } from "@mzawadie/pages/warehouses/urls";
+import { configurationMenuUrl } from "@mzawadie/pages/configuration";
+import { warehouseAddUrl, WarehouseListUrlSortField } from "@mzawadie/pages/warehouses/urls";
 import { hasLimits, isLimitReached } from "@mzawadie/utils/limits";
-import { Backlink } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -21,7 +24,6 @@ export interface WarehouseListPageProps
         TabPageProps {
     limits: RefreshLimitsQuery["shop"]["limits"];
     warehouses: WarehouseWithShippingFragment[];
-    onBack: () => void;
     onRemove: (id: string) => void;
 }
 
@@ -31,16 +33,10 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
     disabled,
     limits,
     initialSearch,
-    pageInfo,
     settings,
     tabs,
-    onAdd,
     onAll,
-    onBack,
-    onNextPage,
-    onPreviousPage,
     onRemove,
-    onRowClick,
     onSearchChange,
     onTabChange,
     onTabDelete,
@@ -54,7 +50,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
 
     return (
         <Container>
-            <Backlink onClick={onBack}>
+            <Backlink href={configurationMenuUrl}>
                 <FormattedMessage {...sectionNames.configuration} />
             </Backlink>
 
@@ -64,8 +60,8 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
                     hasLimits(limits, "warehouses") &&
                     intl.formatMessage(
                         {
-                            defaultMessage: "{count}/{max} warehouses used",
                             id: "YkOzse",
+                            defaultMessage: "{count}/{max} warehouses used",
                             description: "used warehouses counter",
                         },
                         {
@@ -76,15 +72,14 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
                 }
             >
                 <Button
-                    data-test-id="createWarehouse"
-                    color="primary"
+                    data-test-id="create-warehouse"
                     disabled={limitReached}
-                    variant="contained"
-                    onClick={onAdd}
+                    variant="primary"
+                    href={warehouseAddUrl}
                 >
                     <FormattedMessage
-                        defaultMessage="Create Warehouse"
                         id="wmdHhD"
+                        defaultMessage="Create Warehouse"
                         description="button"
                     />
                 </Button>
@@ -93,14 +88,14 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
             {limitReached && (
                 <LimitReachedAlert
                     title={intl.formatMessage({
-                        defaultMessage: "Warehouse limit reached",
                         id: "5HwLx9",
+                        defaultMessage: "Warehouse limit reached",
                         description: "alert",
                     })}
                 >
                     <FormattedMessage
-                        defaultMessage="You have reached your warehouse limit, you will be no longer able to add warehouses to your store. If you would like to up your limit, contact your administration staff about raising your limits."
                         id="kFQvXv"
+                        defaultMessage="You have reached your warehouse limit, you will be no longer able to add warehouses to your store. If you would like to up your limit, contact your administration staff about raising your limits."
                     />
                 </LimitReachedAlert>
             )}
@@ -108,15 +103,15 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
             <Card>
                 <SearchBar
                     allTabLabel={intl.formatMessage({
-                        defaultMessage: "All Warehouses",
                         id: "2yU+q9",
+                        defaultMessage: "All Warehouses",
                         description: "tab name",
                     })}
                     currentTab={currentTab}
                     initialSearch={initialSearch}
                     searchPlaceholder={intl.formatMessage({
-                        defaultMessage: "Search Warehouse",
                         id: "caMMWN",
+                        defaultMessage: "Search Warehouse",
                     })}
                     tabs={tabs}
                     onAll={onAll}
@@ -129,13 +124,8 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
                 <WarehouseList
                     warehouses={warehouses}
                     disabled={disabled}
-                    pageInfo={pageInfo}
                     settings={settings}
-                    onAdd={onAdd}
-                    onNextPage={onNextPage}
-                    onPreviousPage={onPreviousPage}
                     onRemove={onRemove}
-                    onRowClick={onRowClick}
                     onUpdateListSettings={onUpdateListSettings}
                     {...listProps}
                 />

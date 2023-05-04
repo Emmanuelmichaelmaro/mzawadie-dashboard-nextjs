@@ -1,6 +1,7 @@
+// @ts-nocheck
+import { Backlink } from "@mzawadie/components/Backlink";
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import { CompanyAddressInput } from "@mzawadie/components/CompanyAddressInput";
-import { ConfirmButtonTransitionState } from "@mzawadie/components/ConfirmButton";
 import Container from "@mzawadie/components/Container";
 import { Form } from "@mzawadie/components/Form";
 import { Grid } from "@mzawadie/components/Grid";
@@ -9,11 +10,14 @@ import Savebar from "@mzawadie/components/Savebar";
 import { sectionNames } from "@mzawadie/core";
 import { CountryWithCodeFragment, WarehouseErrorFragment } from "@mzawadie/graphql";
 import useAddressValidation from "@mzawadie/hooks/useAddressValidation";
+import { SubmitPromise } from "@mzawadie/hooks/useForm";
+import useNavigator from "@mzawadie/hooks/useNavigator";
 import useStateFromProps from "@mzawadie/hooks/useStateFromProps";
 import { AddressTypeInput } from "@mzawadie/pages/customers/types";
+import { warehouseListUrl } from "@mzawadie/pages/warehouses/urls";
 import createSingleAutocompleteSelectHandler from "@mzawadie/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@mzawadie/utils/maps";
-import { Backlink } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -24,12 +28,11 @@ export interface WarehouseCreatePageFormData extends AddressTypeInput {
 }
 
 export interface WarehouseCreatePageProps {
-    countries: CountryWithCodeFragment;
+    countries: CountryWithCodeFragment[];
     disabled: boolean;
     errors: WarehouseErrorFragment[];
     saveButtonBarState: ConfirmButtonTransitionState;
-    onBack: () => void;
-    onSubmit: (data: WarehouseCreatePageFormData) => void;
+    onSubmit: (data: WarehouseCreatePageFormData) => SubmitPromise;
 }
 
 const initialForm: WarehouseCreatePageFormData = {
@@ -49,17 +52,18 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
     disabled,
     errors,
     saveButtonBarState,
-    onBack,
     onSubmit,
 }) => {
     const intl = useIntl();
+
+    const navigate = useNavigator();
 
     const [displayCountry, setDisplayCountry] = useStateFromProps("");
 
     const { errors: validationErrors, submit: handleSubmit } = useAddressValidation(onSubmit);
 
     return (
-        <Form initial={initialForm} onSubmit={handleSubmit}>
+        <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
             {({ change, data, submit }) => {
                 const countryChoices = mapCountriesToChoices(countries);
 
@@ -71,14 +75,14 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
 
                 return (
                     <Container>
-                        <Backlink onClick={onBack}>
+                        <Backlink href={warehouseListUrl()}>
                             <FormattedMessage {...sectionNames.warehouses} />
                         </Backlink>
 
                         <PageHeader
                             title={intl.formatMessage({
-                                defaultMessage: "Create Warehouse",
                                 id: "GhcypC",
+                                defaultMessage: "Create Warehouse",
                                 description: "header",
                             })}
                         />
@@ -101,8 +105,8 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
                                     displayCountry={displayCountry}
                                     errors={[...errors, ...validationErrors]}
                                     header={intl.formatMessage({
-                                        defaultMessage: "Address Information",
                                         id: "43Nlay",
+                                        defaultMessage: "Address Information",
                                         description: "warehouse",
                                     })}
                                     onChange={change}
@@ -113,7 +117,7 @@ const WarehouseCreatePage: React.FC<WarehouseCreatePageProps> = ({
 
                         <Savebar
                             disabled={disabled}
-                            onCancel={onBack}
+                            onCancel={() => navigate(warehouseListUrl())}
                             onSubmit={submit}
                             state={saveButtonBarState}
                         />

@@ -34,12 +34,14 @@ const CollectionDetails: React.FC<RouteComponentProps<CollectionDetailsRouteProp
     location,
     match,
 }) => {
-    const params: CollectionUrlQueryParams = parseQs(location.search.substr(1));
+    const qs = parseQs(location.search.substr(1));
+    const params: CollectionUrlQueryParams = qs;
     return <CollectionDetailsView id={decodeURIComponent(match.params.id)} params={params} />;
 };
 
 const CollectionCreate: React.FC<RouteComponentProps> = ({ location }) => {
-    const params: CollectionCreateUrlQueryParams = parseQs(location.search.substr(1));
+    const qs = parseQs(location.search.substr(1));
+    const params: CollectionCreateUrlQueryParams = qs;
     return <CollectionCreateView params={params} />;
 };
 

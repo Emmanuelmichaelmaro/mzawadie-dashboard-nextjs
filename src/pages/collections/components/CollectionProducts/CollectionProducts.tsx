@@ -1,18 +1,23 @@
 // @ts-nocheck
 import { Card, TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
+import { Button } from "@mzawadie/components/Button";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { ChannelsAvailabilityDropdown } from "@mzawadie/components/ChannelsAvailabilityDropdown";
 import { Checkbox } from "@mzawadie/components/Checkbox";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
+import { TableButtonWrapper } from "@mzawadie/components/TableButtonWrapper/TableButtonWrapper";
 import { TableCellAvatar } from "@mzawadie/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@mzawadie/components/TableCellAvatar/Avatar";
 import { TableHead } from "@mzawadie/components/TableHead";
-import { TablePagination } from "@mzawadie/components/TablePagination";
-import { maybe, renderCollection, ListActions, PageListProps } from "@mzawadie/core";
+import { TablePaginationWithContext } from "@mzawadie/components/TablePagination";
+import { TableRowLink } from "@mzawadie/components/TableRowLink";
+import { maybe, renderCollection } from "@mzawadie/core";
+import { ListActions, PageListProps } from "@mzawadie/core";
 import { CollectionDetailsQuery } from "@mzawadie/graphql";
+import { productUrl } from "@mzawadie/pages/products/urls";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
-import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -48,6 +53,7 @@ const useStyles = makeStyles(
 export interface CollectionProductsProps extends PageListProps, ListActions {
     collection: CollectionDetailsQuery["collection"];
     onProductUnassign: (id: string, event: React.MouseEvent<any>) => void;
+    onAdd: () => void;
 }
 
 const CollectionProducts: React.FC<CollectionProductsProps> = (props) => {
@@ -55,11 +61,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = (props) => {
         collection,
         disabled,
         onAdd,
-        onNextPage,
-        onPreviousPage,
         onProductUnassign,
-        onRowClick,
-        pageInfo,
         isChecked,
         selected,
         toggle,
@@ -80,8 +82,8 @@ const CollectionProducts: React.FC<CollectionProductsProps> = (props) => {
                     !!collection ? (
                         intl.formatMessage(
                             {
-                                defaultMessage: "Products in {name}",
                                 id: "/dnWE8",
+                                defaultMessage: "Products in {name}",
                                 description: "products in collection",
                             },
                             {
@@ -100,13 +102,14 @@ const CollectionProducts: React.FC<CollectionProductsProps> = (props) => {
                         onClick={onAdd}
                     >
                         <FormattedMessage
-                            defaultMessage="Assign product"
                             id="scHVdW"
+                            defaultMessage="Assign product"
                             description="button"
                         />
                     </Button>
                 }
             />
+
             <ResponsiveTable className={classes.table}>
                 <TableHead
                     colSpan={numberOfColumns}
@@ -119,39 +122,38 @@ const CollectionProducts: React.FC<CollectionProductsProps> = (props) => {
                     <TableCell className={classes.colName}>
                         <span className={classes.colNameLabel}>
                             <FormattedMessage
-                                defaultMessage="Name"
                                 id="6AMFki"
+                                defaultMessage="Name"
                                 description="product name"
                             />
                         </span>
                     </TableCell>
+
                     <TableCell className={classes.colType}>
                         <FormattedMessage
-                            defaultMessage="Type"
                             id="k+HcTv"
+                            defaultMessage="Type"
                             description="product type"
                         />
                     </TableCell>
+
                     <TableCell className={classes.colPublished}>
                         <FormattedMessage
-                            defaultMessage="Availability"
                             id="Oe62bR"
+                            defaultMessage="Availability"
                             description="product availability"
                         />
                     </TableCell>
+
                     <TableCell className={classes.colActions} />
                 </TableHead>
+
                 <TableFooter>
                     <TableRow>
-                        <TablePagination
-                            colSpan={numberOfColumns}
-                            hasNextPage={pageInfo?.hasNextPage}
-                            onNextPage={onNextPage}
-                            hasPreviousPage={pageInfo?.hasPreviousPage}
-                            onPreviousPage={onPreviousPage}
-                        />
+                        <TablePaginationWithContext colSpan={numberOfColumns} />
                     </TableRow>
                 </TableFooter>
+
                 <TableBody>
                     {renderCollection(
                         products,
@@ -159,10 +161,10 @@ const CollectionProducts: React.FC<CollectionProductsProps> = (props) => {
                             const isSelected = product ? isChecked(product.id) : false;
 
                             return (
-                                <TableRow
+                                <TableRowLink
                                     className={classes.tableRow}
                                     hover={!!product}
-                                    onClick={!!product ? onRowClick(product.id) : undefined}
+                                    href={product && productUrl(product.id)}
                                     key={product ? product.id : "skeleton"}
                                     selected={isSelected}
                                 >
@@ -174,18 +176,21 @@ const CollectionProducts: React.FC<CollectionProductsProps> = (props) => {
                                             onChange={() => toggle(product.id)}
                                         />
                                     </TableCell>
+
                                     <TableCellAvatar
                                         className={classes.colName}
                                         thumbnail={maybe(() => product.thumbnail.url)}
                                     >
                                         {maybe<React.ReactNode>(() => product.name, <Skeleton />)}
                                     </TableCellAvatar>
+
                                     <TableCell className={classes.colType}>
                                         {maybe<React.ReactNode>(
                                             () => product.productType.name,
                                             <Skeleton />
                                         )}
                                     </TableCell>
+
                                     <TableCell className={classes.colType}>
                                         {product && !product?.channelListings?.length ? (
                                             "-"
@@ -197,22 +202,28 @@ const CollectionProducts: React.FC<CollectionProductsProps> = (props) => {
                                             <Skeleton />
                                         )}
                                     </TableCell>
+
                                     <TableCell className={classes.colActions}>
-                                        <IconButton
-                                            variant="secondary"
-                                            disabled={!product}
-                                            onClick={(event) => onProductUnassign(product.id, event)}
-                                        >
-                                            <DeleteIcon />
-                                        </IconButton>
+                                        <TableButtonWrapper>
+                                            <IconButton
+                                                data-test-id="delete-icon"
+                                                variant="secondary"
+                                                disabled={!product}
+                                                onClick={(event) =>
+                                                    onProductUnassign(product.id, event)
+                                                }
+                                            >
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </TableButtonWrapper>
                                     </TableCell>
-                                </TableRow>
+                                </TableRowLink>
                             );
                         },
                         () => (
                             <TableRow>
                                 <TableCell colSpan={numberOfColumns}>
-                                    <FormattedMessage defaultMessage="No products found" id="Q1Uzbb" />
+                                    <FormattedMessage id="Q1Uzbb" defaultMessage="No products found" />
                                 </TableCell>
                             </TableRow>
                         )

@@ -8,7 +8,7 @@ const messages = defineMessages({
     },
     newVersionContent: {
         defaultMessage:
-            "You need to update Saleor to the newest version. Before doing so - save all changes to prevent loss of data. To update use the button below.",
+            "You need to update Mzawadie to the newest version. Before doing so - save all changes to prevent loss of data. To update use the button below.",
         id: "8aV98y",
         description: "new version notification content",
     },

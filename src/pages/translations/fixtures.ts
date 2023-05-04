@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { LanguageCodeEnum, LanguageFragment } from "@mzawadie/graphql";
 
 export const languages: LanguageFragment[] = [

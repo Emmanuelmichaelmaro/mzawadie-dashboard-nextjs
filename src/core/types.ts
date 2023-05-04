@@ -1,5 +1,6 @@
-import { FetchResult, MutationResult, ServerError } from "@apollo/client";
-import { IFilter, IFilterElement, MultiAutocompleteChoiceType } from "@mzawadie/components";
+import { FetchResult, MutationResult } from "@apollo/client";
+import { FilterElement, IFilter } from "@mzawadie/components/Filter";
+import { MultiAutocompleteChoiceType } from "@mzawadie/components/MultiAutocompleteSelectField";
 import { UserPermissionFragment } from "@mzawadie/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 
@@ -46,20 +47,22 @@ export enum ListViews {
 
 export interface ListProps<TColumns extends string = string> {
     disabled: boolean;
-    pageInfo?: {
-        hasNextPage: boolean;
-        hasPreviousPage: boolean;
-    };
     settings?: ListSettings<TColumns>;
-    onNextPage: () => void;
-    onPreviousPage: () => void;
-    onRowClick: (id: string) => () => void;
     onUpdateListSettings?: <T extends keyof ListSettings<TColumns>>(
         key: T,
         value: ListSettings<TColumns>[T]
     ) => void;
     onListSettingsReset?: () => void;
-    filterDependency?: IFilterElement;
+    filterDependency?: FilterElement;
+}
+
+export interface PaginateListProps {
+    pageInfo?: {
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+    };
+    onNextPage: () => void;
+    onPreviousPage: () => void;
 }
 
 export interface SortPage<TSortKey extends string> {
@@ -86,7 +89,6 @@ export interface ListActions extends ListActionsWithoutToolbar {
 }
 export interface PageListProps<TColumns extends string = string> extends ListProps<TColumns> {
     defaultSettings?: ListSettings<TColumns>;
-    onAdd: () => void;
 }
 
 export interface SearchProps {
@@ -145,24 +147,34 @@ export type Pagination = Partial<{
 export type Dialog<TDialog extends string> = Partial<{
     action: TDialog;
 }>;
+
 export type ActiveTab<TTab extends string = string> = Partial<{
     activeTab: TTab;
 }>;
+
 export type Filters<TFilters extends string> = Partial<Record<TFilters, string>>;
+
 export type FiltersWithMultipleValues<TFilters extends string> = Partial<Record<TFilters, string[]>>;
+
 export type FiltersAsDictWithMultipleValues<TFilters extends string> = Partial<
     Record<TFilters, Record<string, string[]>>
 >;
+
+export type FiltersWithKeyValueValues<TFilters extends string> = Partial<Record<TFilters, KeyValue[]>>;
+
 export type Search = Partial<{
     query: string;
 }>;
+
 export type SingleAction = Partial<{
     id: string;
 }>;
+
 export type Sort<TSort extends string = string> = Partial<{
     asc: boolean;
     sort: TSort;
 }>;
+
 export type BulkAction = Partial<{
     ids: string[];
 }>;
@@ -171,6 +183,7 @@ export interface ReorderEvent {
     oldIndex: number;
     newIndex: number;
 }
+
 export type ReorderAction = (event: ReorderEvent) => void;
 
 export interface FetchMoreProps {
@@ -188,6 +201,11 @@ export interface UserPermissionProps {
 
 export interface MutationResultAdditionalProps {
     status: ConfirmButtonTransitionState;
+}
+
+export interface KeyValue {
+    key: string;
+    value?: string;
 }
 
 export type MinMax = Record<"min" | "max", string>;
@@ -212,5 +230,3 @@ export enum StatusType {
 }
 
 export type RelayToFlat<T extends { edges: Array<{ node: any }> }> = Array<T["edges"][0]["node"]>;
-
-export type ServerErrorWithName = ServerError & { operationName: string };

@@ -1,17 +1,19 @@
 // @ts-nocheck
 import { IMoney, subtractMoney } from "@mzawadie/components/Money";
-import { addressToAddressInput } from "@mzawadie/core";
+import { findInEnum } from "@mzawadie/core";
 import {
-    WarehouseFragment,
+    AddressFragment,
     AddressInput,
     CountryCode,
+    FulfillmentFragment,
     FulfillmentStatus,
-    OrderErrorCode,
-    OrderFulfillDataQuery,
-    FulfillOrderMutation,
-    OrderRefundDataQuery,
     OrderDetailsFragment,
+    OrderFulfillLineFragment,
     OrderLineFragment,
+    OrderLineStockDataFragment,
+    OrderRefundDataQuery,
+    StockFragment,
+    WarehouseFragment,
 } from "@mzawadie/graphql";
 import { FormsetData } from "@mzawadie/hooks/useFormset";
 
@@ -33,7 +35,7 @@ export interface OrderLineWithStockWarehouses {
     };
 }
 
-export function getToFulfillOrderLines(lines?: OrderFulfillDataQuery["order"]["lines"]) {
+export function getToFulfillOrderLines(lines?: OrderLineStockDataFragment[]) {
     return lines?.filter((line) => line.quantityToFulfill > 0) || [];
 }
 
@@ -256,30 +258,14 @@ export function mergeRepeatedOrderLines(
     }, Array<OrderDetailsFragment["fulfillments"][0]["lines"][0]>());
 }
 
-export const isStockError = (
-    overfulfill: boolean,
-    formsetStock: { quantity: number },
-    availableQuantity: number,
-    warehouse: WarehouseFragment,
-    line: OrderFulfillDataQuery["order"]["lines"][0],
-    errors: FulfillOrderMutation["orderFulfill"]["errors"]
-) => {
-    if (overfulfill) {
-        return true;
-    }
-
-    const isQuantityLargerThanAvailable =
-        line.variant.trackInventory && formsetStock.quantity > availableQuantity;
-
-    const isError = !!errors?.find(
-        (err) =>
-            err.warehouse === warehouse.id &&
-            err.orderLines.find((id: string) => id === line.id) &&
-            err.code === OrderErrorCode.INSUFFICIENT_STOCK
-    );
-
-    return isQuantityLargerThanAvailable || isError;
-};
+export function addressToAddressInput<T>(address: T & AddressFragment): AddressInput {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, __typename, ...rest } = address;
+    return {
+        ...rest,
+        country: findInEnum(address.country.code, CountryCode),
+    };
+}
 
 export const getVariantSearchAddress = (order: OrderDetailsFragment): AddressInput => {
     if (order.shippingAddress) {
@@ -292,3 +278,119 @@ export const getVariantSearchAddress = (order: OrderDetailsFragment): AddressInp
 
     return { country: order.channel.defaultCountry.code as CountryCode };
 };
+
+export const getAllocatedQuantityForLine = (line: OrderLineStockDataFragment, warehouseId: string) => {
+    const warehouseAllocation = line.allocations.find(
+        (allocation) => allocation.warehouse.id === warehouseId
+    );
+    return warehouseAllocation?.quantity || 0;
+};
+
+export const getOrderLineAvailableQuantity = (
+    line: OrderLineStockDataFragment,
+    stock: StockFragment
+) => {
+    if (!stock) {
+        return 0;
+    }
+    const allocatedQuantityForLine = getAllocatedQuantityForLine(line, stock.warehouse.id);
+
+    const availableQuantity = stock.quantity - stock.quantityAllocated + allocatedQuantityForLine;
+
+    return availableQuantity;
+};
+
+export interface OrderFulfillLineFormData {
+    quantity: number;
+    warehouse: WarehouseFragment;
+}
+
+export type OrderFulfillStockFormsetData = Array<
+    Pick<FormsetData<null, OrderFulfillLineFormData[]>[0], "id" | "value">
+>;
+
+export const getFulfillmentFormsetQuantity = (
+    formsetData: OrderFulfillStockFormsetData,
+    line: OrderLineStockDataFragment
+) => formsetData?.find(getById(line.id))?.value?.[0]?.quantity;
+
+export const getWarehouseStock = (stocks: StockFragment[], warehouseId: string) =>
+    stocks?.find((stock) => stock.warehouse.id === warehouseId);
+
+export const isLineAvailableInWarehouse = (
+    line: OrderFulfillLineFragment | OrderLineStockDataFragment,
+    warehouse: WarehouseFragment
+): boolean => {
+    if (!line?.variant?.stocks) {
+        return false;
+    }
+    const stock = getWarehouseStock(line.variant.stocks, warehouse.id);
+    if (stock) {
+        return line.quantityToFulfill <= getOrderLineAvailableQuantity(line, stock);
+    }
+    return false;
+};
+
+export const getLineAvailableQuantityInWarehouse = (
+    line: OrderFulfillLineFragment,
+    warehouse: WarehouseFragment
+): number => {
+    if (!line?.variant?.stocks) {
+        return 0;
+    }
+    const stock = getWarehouseStock(line.variant.stocks, warehouse.id);
+    if (stock) {
+        return getOrderLineAvailableQuantity(line, stock);
+    }
+    return 0;
+};
+
+export const getLineAllocationWithHighestQuantity = (
+    line: OrderFulfillLineFragment
+): OrderFulfillLineFragment["allocations"][number] | undefined =>
+    line.allocations.reduce((prevAllocation, allocation) => {
+        if (!prevAllocation || prevAllocation.quantity < allocation.quantity) {
+            return allocation;
+        }
+        return prevAllocation;
+    }, null);
+
+export const getWarehouseWithHighestAvailableQuantity = (
+    lines?: OrderLineFragment[]
+): WarehouseFragment | undefined => {
+    let highestAvailableQuantity = 0;
+
+    return lines?.reduce(
+        (selectedWarehouse, line) =>
+            line.allocations.reduce((warehouse, allocation) => {
+                if (allocation.quantity > highestAvailableQuantity) {
+                    highestAvailableQuantity = allocation.quantity;
+                    return allocation.warehouse;
+                }
+                return warehouse;
+            }, selectedWarehouse),
+        null as WarehouseFragment
+    );
+};
+
+export const transformFuflillmentLinesToStockFormsetData = (
+    lines: FulfillmentFragment["lines"],
+    warehouse: WarehouseFragment
+): OrderFulfillStockFormsetData =>
+    lines?.map((line) => ({
+        data: null,
+        id: line.orderLine.id,
+        value: [
+            {
+                quantity: line.quantity,
+                warehouse,
+            },
+        ],
+    }));
+
+export const getAttributesCaption = (
+    attributes: OrderFulfillLineFragment["variant"]["attributes"] | undefined
+): string | undefined =>
+    attributes
+        ?.map((attribute) => attribute.values.map((attributeValue) => attributeValue.name).join(", "))
+        .join(" / ");

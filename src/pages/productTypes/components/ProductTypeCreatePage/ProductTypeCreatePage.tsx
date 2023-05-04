@@ -1,21 +1,22 @@
 // @ts-nocheck
-import {
-    CardSpacer,
-    Container,
-    Form,
-    Grid,
-    Metadata,
-    MetadataFormData,
-    PageHeader,
-    Savebar,
-} from "@mzawadie/components";
-import { sectionNames, UserError } from "@mzawadie/core";
+import { Backlink } from "@mzawadie/components/Backlink";
+import CardSpacer from "@mzawadie/components/CardSpacer";
+import Container from "@mzawadie/components/Container";
+import { Form } from "@mzawadie/components/Form";
+import { Grid } from "@mzawadie/components/Grid";
+import { Metadata, MetadataFormData } from "@mzawadie/components/Metadata";
+import { PageHeader } from "@mzawadie/components/PageHeader";
+import Savebar from "@mzawadie/components/Savebar";
+import { sectionNames } from "@mzawadie/core";
+import { UserError } from "@mzawadie/core";
 import { ProductTypeDetailsQuery, ProductTypeKindEnum, WeightUnitsEnum } from "@mzawadie/graphql";
 import { ChangeEvent, FormChange, SubmitPromise } from "@mzawadie/hooks/useForm";
+import useNavigator from "@mzawadie/hooks/useNavigator";
 import useStateFromProps from "@mzawadie/hooks/useStateFromProps";
 import { makeProductTypeKindChangeHandler } from "@mzawadie/pages/productTypes/handlers";
+import { productTypeListUrl } from "@mzawadie/pages/productTypes/urls";
 import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChangeTrigger";
-import { ConfirmButtonTransitionState, Backlink } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -40,7 +41,6 @@ export interface ProductTypeCreatePageProps {
     taxTypes: ProductTypeDetailsQuery["taxTypes"];
     kind: ProductTypeKindEnum;
     onChangeKind: (kind: ProductTypeKindEnum) => void;
-    onBack: () => void;
     onSubmit: (data: ProductTypeForm) => SubmitPromise<any[]>;
 }
 
@@ -73,10 +73,11 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
     taxTypes,
     kind,
     onChangeKind,
-    onBack,
     onSubmit,
 }: ProductTypeCreatePageProps) => {
     const intl = useIntl();
+    const navigate = useNavigator();
+
     const [taxTypeDisplayName, setTaxTypeDisplayName] = useStateFromProps("");
     const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
 
@@ -86,18 +87,20 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
     };
 
     return (
-        <Form confirmLeave initial={initialData} onSubmit={onSubmit}>
-            {({ change, data, hasChanged, submit }) => {
+        <Form confirmLeave initial={initialData} onSubmit={onSubmit} disabled={disabled}>
+            {({ change, data, isSaveDisabled, submit }) => {
                 const changeMetadata = makeMetadataChangeHandler(change);
 
                 const changeKind = makeProductTypeKindChangeHandler(change, onChangeKind);
 
                 return (
                     <Container>
-                        <Backlink onClick={onBack}>
+                        <Backlink href={productTypeListUrl()}>
                             {intl.formatMessage(sectionNames.productTypes)}
                         </Backlink>
+
                         <PageHeader title={pageTitle} />
+
                         <Grid>
                             <div>
                                 <ProductTypeDetails
@@ -107,7 +110,9 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
                                     onChange={change}
                                     onKindChange={changeKind}
                                 />
+
                                 <CardSpacer />
+
                                 <ProductTypeTaxes
                                     disabled={disabled}
                                     data={data}
@@ -122,9 +127,12 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
                                         )
                                     }
                                 />
+
                                 <CardSpacer />
+
                                 <Metadata data={data} onChange={changeMetadata} />
                             </div>
+
                             <div>
                                 <ProductTypeShipping
                                     disabled={disabled}
@@ -134,10 +142,11 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
                                 />
                             </div>
                         </Grid>
+
                         <Savebar
-                            onCancel={onBack}
+                            onCancel={() => navigate(productTypeListUrl())}
                             onSubmit={submit}
-                            disabled={disabled || !hasChanged}
+                            disabled={isSaveDisabled}
                             state={saveButtonBarState}
                         />
                     </Container>

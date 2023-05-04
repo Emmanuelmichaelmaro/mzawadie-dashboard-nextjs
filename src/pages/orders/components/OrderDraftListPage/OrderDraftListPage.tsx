@@ -1,21 +1,21 @@
 // @ts-nocheck
 import { Card } from "@material-ui/core";
+import { Button } from "@mzawadie/components/Button";
 import Container from "@mzawadie/components/Container";
 import { FilterBar } from "@mzawadie/components/FilterBar";
 import { PageHeader } from "@mzawadie/components/PageHeader";
+import { sectionNames } from "@mzawadie/core";
 import {
-    sectionNames,
     FilterPageProps,
     ListActions,
     PageListProps,
+    RelayToFlat,
     SortPage,
     TabPageProps,
-    RelayToFlat,
 } from "@mzawadie/core";
 import { OrderDraftListQuery, RefreshLimitsQuery } from "@mzawadie/graphql";
 import { OrderDraftListUrlSortField } from "@mzawadie/pages/orders/urls";
 import { hasLimits, isLimitReached } from "@mzawadie/utils/limits";
-import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -31,6 +31,7 @@ export interface OrderDraftListPageProps
         TabPageProps {
     limits: RefreshLimitsQuery["shop"]["limits"];
     orders: RelayToFlat<OrderDraftListQuery["draftOrders"]>;
+    onAdd: () => void;
 }
 
 const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
@@ -61,8 +62,8 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
                     hasLimits(limits, "orders") &&
                     intl.formatMessage(
                         {
-                            defaultMessage: "{count}/{max} orders",
                             id: "w2eTzO",
+                            defaultMessage: "{count}/{max} orders",
                             description: "placed orders counter",
                         },
                         {
@@ -73,25 +74,25 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
                 }
             >
                 <Button variant="primary" disabled={disabled || limitsReached} onClick={onAdd}>
-                    <FormattedMessage defaultMessage="Create order" id="LshEVn" description="button" />
+                    <FormattedMessage id="LshEVn" defaultMessage="Create order" description="button" />
                 </Button>
             </PageHeader>
-
+    
             {limitsReached && <OrderLimitReached />}
-
+    
             <Card>
                 <FilterBar
                     allTabLabel={intl.formatMessage({
-                        defaultMessage: "All Drafts",
                         id: "7a1S4K",
+                        defaultMessage: "All Drafts",
                         description: "tab name",
                     })}
                     currentTab={currentTab}
                     filterStructure={structure}
                     initialSearch={initialSearch}
                     searchPlaceholder={intl.formatMessage({
-                        defaultMessage: "Search Draft",
                         id: "NJEe12",
+                        defaultMessage: "Search Draft",
                     })}
                     tabs={tabs}
                     onAll={onAll}
@@ -101,6 +102,7 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
                     onTabDelete={onTabDelete}
                     onTabSave={onTabSave}
                 />
+    
                 <OrderDraftList disabled={disabled} {...listProps} />
             </Card>
         </Container>

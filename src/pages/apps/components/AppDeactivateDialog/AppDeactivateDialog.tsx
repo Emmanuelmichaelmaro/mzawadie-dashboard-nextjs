@@ -29,8 +29,8 @@ const AppDeactivateDialog: React.FC<AppDeactivateDialogProps> = ({
     return (
         <ActionDialog
             confirmButtonLabel={intl.formatMessage({
-                defaultMessage: "Deactivate",
                 id: "W+AFZY",
+                defaultMessage: "Deactivate",
                 description: "button label",
             })}
             confirmButtonState={confirmButtonState}
@@ -38,8 +38,8 @@ const AppDeactivateDialog: React.FC<AppDeactivateDialogProps> = ({
             onClose={onClose}
             onConfirm={onConfirm}
             title={intl.formatMessage({
-                defaultMessage: "Dectivate App",
                 id: "yMi8I8",
+                defaultMessage: "Deactivate App",
                 description: "dialog header",
             })}
             variant="delete"

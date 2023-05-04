@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { DialogContentText } from "@material-ui/core";
 import { ActionDialog } from "@mzawadie/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -28,16 +29,16 @@ const UnassignMembersDialog: React.FC<UnassignMembersDialogProps> = ({
             onClose={onClose}
             onConfirm={onConfirm}
             title={intl.formatMessage({
-                defaultMessage: "Unassign users",
                 id: "lT5MYM",
+                defaultMessage: "Unassign users",
                 description: "dialog title",
             })}
             variant="delete"
         >
             <DialogContentText>
                 <FormattedMessage
-                    defaultMessage="Are you sure you want to unassign {counter,plural,one{this member} other{{displayQuantity} members}}?"
                     id="XGBsoK"
+                    defaultMessage="Are you sure you want to unassign {counter,plural,one{this member} other{{displayQuantity} members}}?"
                     description="dialog content"
                     values={{
                         counter: quantity,

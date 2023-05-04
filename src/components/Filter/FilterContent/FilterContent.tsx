@@ -1,29 +1,26 @@
-/* eslint-disable react/jsx-no-bind */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import IconChevronDown from "@icons/ChevronDown";
-import {
-    ExpansionPanel,
-    ExpansionPanelSummary,
-    makeStyles,
-    Paper,
-    Typography,
-} from "@material-ui/core";
+import { Accordion, AccordionSummary, makeStyles, Paper, Typography } from "@material-ui/core";
+import { CollectionWithDividers } from "@mzawadie/components/CollectionWithDividers";
+import Hr from "@mzawadie/components/Hr";
 import useStateFromProps from "@mzawadie/hooks/useStateFromProps";
 import React, { useState } from "react";
 
-import { CollectionWithDividers } from "../../CollectionWithDividers";
-import Hr from "../../Hr";
 import { FilterAutocompleteDisplayValues } from "../FilterAutocompleteField";
 import { FilterReducerAction } from "../reducer";
-import { FieldType, FilterErrorMessages, IFilter, IFilterElement, InvalidFilters } from "../types";
+import { FieldType, FilterElement, FilterErrorMessages, IFilter, InvalidFilters } from "../types";
 import FilterContentBody, { FilterContentBodyProps } from "./FilterContentBody";
 import FilterContentBodyNameField from "./FilterContentBodyNameField";
 import FilterContentHeader from "./FilterContentHeader";
 import FilterErrorsList from "./FilterErrorsList";
 
 const useExpanderStyles = makeStyles(
-    () => ({
+    (theme) => ({
+        btn: {
+            border: "none",
+            marginRight: theme.spacing(1),
+        },
+
         expanded: {},
         root: {
             boxShadow: "none",
@@ -69,16 +66,16 @@ const useSummaryStyles = makeStyles(
     { name: "FilterContentExpanderSummary" }
 );
 
-export interface FilterContentProps<T extends string = string> {
-    filters: IFilter<T>;
-    onFilterPropertyChange: React.Dispatch<FilterReducerAction<T>>;
+export interface FilterContentProps<K extends string = string> {
+    filters: IFilter<K>;
+    onFilterPropertyChange: <T extends FieldType>(value: FilterReducerAction<K, T>) => void;
     onFilterAttributeFocus?: (id?: string) => void;
     onClear: () => void;
     onSubmit: () => void;
     currencySymbol?: string;
-    dataStructure: IFilter<T>;
-    errors?: InvalidFilters<T>;
-    errorMessages?: FilterErrorMessages<T>;
+    dataStructure: IFilter<K>;
+    errors?: InvalidFilters<K>;
+    errorMessages?: FilterErrorMessages<K>;
 }
 
 const FilterContent: React.FC<FilterContentProps> = ({
@@ -93,13 +90,14 @@ const FilterContent: React.FC<FilterContentProps> = ({
     dataStructure,
 }) => {
     const expanderClasses = useExpanderStyles({});
+
     const summaryClasses = useSummaryStyles({});
 
-    const [openedFilter, setOpenedFilter] = useState<IFilterElement<string>>();
+    const [openedFilter, setOpenedFilter] = useState<FilterElement<string>>();
 
     const getAutocompleteValuesWithNewValues = (
         autocompleteDisplayValues: FilterAutocompleteDisplayValues,
-        filterField: IFilterElement<string>
+        filterField: FilterElement<string>
     ) => {
         if (filterField.type === FieldType.autocomplete) {
             return {
@@ -113,7 +111,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
 
     const initialAutocompleteDisplayValues = filters.reduce((acc, filterField) => {
         if (filterField.multipleFields) {
-            return filterField.multipleFields.reduce(getAutocompleteValuesWithNewValues, {});
+            return filterField.multipleFields.reduce(getAutocompleteValuesWithNewValues, acc);
         }
 
         return getAutocompleteValuesWithNewValues(acc, filterField);
@@ -122,21 +120,24 @@ const FilterContent: React.FC<FilterContentProps> = ({
     const [autocompleteDisplayValues, setAutocompleteDisplayValues] =
         useStateFromProps<FilterAutocompleteDisplayValues>(initialAutocompleteDisplayValues);
 
-    const commonFilterBodyProps: Omit<FilterContentBodyProps, "filter" | "onFilterPropertyChange"> = {
+    const commonFilterBodyProps: Omit<
+        FilterContentBodyProps<string>,
+        "filter" | "onFilterPropertyChange"
+    > = {
         currencySymbol,
         autocompleteDisplayValues,
         setAutocompleteDisplayValues,
         initialAutocompleteDisplayValues,
     };
 
-    const handleFilterAttributeFocus = (filter?: IFilterElement<string>) => {
+    const handleFilterAttributeFocus = (filter?: FilterElement<string>) => {
         setOpenedFilter(filter);
         if (onFilterAttributeFocus) {
             onFilterAttributeFocus(filter?.id);
         }
     };
 
-    const handleFilterOpen = (filter: IFilterElement<string>) => {
+    const handleFilterOpen = (filter: FilterElement<string>) => {
         if (filter.name !== openedFilter?.name) {
             handleFilterAttributeFocus(filter);
         } else {
@@ -144,24 +145,27 @@ const FilterContent: React.FC<FilterContentProps> = ({
         }
     };
 
-    const handleFilterPropertyGroupChange = function <T extends string>(
-        action: FilterReducerAction<T>,
-        filter: IFilterElement<string>
+    const handleFilterPropertyGroupChange = function <K extends string, T extends FieldType>(
+        action: FilterReducerAction<K, T>,
+        filter: FilterElement<string>
     ) {
         const switchToActive = action.payload.update.active;
+
         if (switchToActive && filter.name !== openedFilter?.name) {
             handleFilterAttributeFocus(filter);
         } else if (!switchToActive && filter.name === openedFilter?.name) {
             handleFilterAttributeFocus(undefined);
         }
+
         if (!switchToActive) {
             action.payload.update.value = [];
         }
+
         onFilterPropertyChange(action);
     };
 
-    const handleMultipleFieldPropertyChange = function <T extends string>(
-        action: FilterReducerAction<T>
+    const handleMultipleFieldPropertyChange = function <K extends string, T extends FieldType>(
+        action: FilterReducerAction<K, T>
     ) {
         const { update } = action.payload;
         onFilterPropertyChange({
@@ -170,12 +174,12 @@ const FilterContent: React.FC<FilterContentProps> = ({
         });
     };
 
-    const getFilterFromCurrentData = function <T extends string>(filter: IFilterElement<T>) {
+    const getFilterFromCurrentData = function <T extends string>(filter: FilterElement<T>) {
         return filters.find(({ name }) => filter.name === name);
     };
 
     return (
-        <Paper>
+        <Paper elevation={8}>
             <form
                 onSubmit={(event) => {
                     event.preventDefault();
@@ -183,38 +187,50 @@ const FilterContent: React.FC<FilterContentProps> = ({
                 }}
             >
                 <FilterContentHeader onClear={onClear} />
+
                 <Hr />
+
                 {dataStructure
                     .sort((a, b) => (a.name > b.name ? 1 : -1))
                     .map((filter) => {
                         const currentFilter = getFilterFromCurrentData(filter);
 
                         return (
-                            <ExpansionPanel
+                            <Accordion
                                 key={filter.name}
                                 classes={expanderClasses}
-                                data-test="channel-availability-item"
+                                data-test-id={"channel-availability-item-" + filter.name}
                                 expanded={filter.name === openedFilter?.name}
                             >
-                                <ExpansionPanelSummary
+                                <AccordionSummary
+                                    IconButtonProps={{
+                                        classes: {
+                                            root: expanderClasses.btn,
+                                        },
+                                        disableRipple: true,
+                                    }}
                                     expandIcon={<IconChevronDown />}
                                     classes={summaryClasses}
                                     onClick={() => handleFilterOpen(filter)}
                                 >
-                                    <FilterContentBodyNameField
-                                        filter={currentFilter}
-                                        onFilterPropertyChange={(action) =>
-                                            handleFilterPropertyGroupChange(action, filter)
-                                        }
-                                    />
-                                </ExpansionPanelSummary>
-                                {currentFilter.active && (
+                                    {currentFilter && (
+                                        <FilterContentBodyNameField
+                                            filter={currentFilter}
+                                            onFilterPropertyChange={(action) =>
+                                                handleFilterPropertyGroupChange(action, filter)
+                                            }
+                                        />
+                                    )}
+                                </AccordionSummary>
+
+                                {currentFilter?.active && (
                                     <FilterErrorsList
                                         errors={errors?.[filter.name]}
                                         errorMessages={errorMessages}
                                         filter={filter}
                                     />
                                 )}
+
                                 {filter.multipleFields ? (
                                     <CollectionWithDividers
                                         collection={filter.multipleFields}
@@ -226,7 +242,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                                                 }
                                                 filter={{
                                                     ...getFilterFromCurrentData(filterField),
-                                                    active: currentFilter.active,
+                                                    active: currentFilter?.active,
                                                 }}
                                             >
                                                 <Typography>{filterField.label}</Typography>
@@ -240,7 +256,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                                         filter={currentFilter}
                                     />
                                 )}
-                            </ExpansionPanel>
+                            </Accordion>
                         );
                     })}
             </form>

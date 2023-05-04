@@ -1,13 +1,13 @@
-/* eslint-disable no-restricted-globals */
 // @ts-nocheck
 import { OutputData } from "@editorjs/editorjs";
+import { useExitFormDialog } from "@mzawadie/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@mzawadie/components/Metadata";
-import { RichTextEditorChange } from "@mzawadie/components/RichTextEditor";
-import useForm, { FormChange } from "@mzawadie/hooks/useForm";
-import handleFormSubmit from "@mzawadie/utils/handlers/handleFormSubmit";
+import useForm, { CommonUseFormResult, FormChange } from "@mzawadie/hooks/useForm";
+import useHandleFormSubmit from "@mzawadie/hooks/useHandleFormSubmit";
 import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChangeTrigger";
+import { RichTextContext, RichTextContextValues } from "@mzawadie/utils/richText/context";
 import useRichText from "@mzawadie/utils/richText/useRichText";
-import React from "react";
+import React, { useEffect } from "react";
 
 export interface CategoryCreateFormData extends MetadataFormData {
     name: string;
@@ -21,74 +21,96 @@ export interface CategoryCreateData extends CategoryCreateFormData {
 
 interface CategoryCreateHandlers {
     changeMetadata: FormChange;
-    changeDescription: RichTextEditorChange;
 }
-export interface UseCategoryCreateFormResult {
-    change: FormChange;
-    data: CategoryCreateData;
+
+export interface UseCategoryCreateFormResult extends CommonUseFormResult<CategoryCreateData> {
     handlers: CategoryCreateHandlers;
-    hasChanged: boolean;
-    submit: () => Promise<boolean>;
 }
 
 export interface CategoryCreateFormProps {
     children: (props: UseCategoryCreateFormResult) => React.ReactNode;
     onSubmit: (data: CategoryCreateData) => Promise<any[]>;
+    disabled: boolean;
 }
 
-function useCategoryCreateForm(
-    onSubmit: (data: CategoryCreateData) => Promise<any[]>
-): UseCategoryCreateFormResult {
-    const [changed, setChanged] = React.useState(false);
-    const triggerChange = () => setChanged(true);
+const initialData: CategoryCreateFormData = {
+    metadata: [],
+    name: "",
+    privateMetadata: [],
+    seoDescription: "",
+    seoTitle: "",
+    slug: "",
+};
 
-    const form = useForm<CategoryCreateFormData>({
-        metadata: [],
-        name: "",
-        privateMetadata: [],
-        seoDescription: "",
-        seoTitle: "",
-        slug: "",
+function useCategoryCreateForm(
+    onSubmit: (data: CategoryCreateData) => Promise<any[]>,
+    disabled: boolean
+): UseCategoryCreateFormResult & { richText: RichTextContextValues } {
+    const {
+        handleChange,
+        data: formData,
+        triggerChange,
+        formId,
+        setIsSubmitDisabled,
+    } = useForm(initialData, undefined, { confirmLeave: true });
+
+    const handleFormSubmit = useHandleFormSubmit({
+        formId,
+        onSubmit,
     });
-    const [description, changeDescription] = useRichText({
+
+    const { setExitDialogSubmitRef } = useExitFormDialog({
+        formId,
+    });
+
+    const richText = useRichText({
         initial: null,
         triggerChange,
     });
 
     const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
 
-    const handleChange: FormChange = (event, cb) => {
-        form.change(event, cb);
-        triggerChange();
-    };
     const changeMetadata = makeMetadataChangeHandler(handleChange);
 
-    // Need to make it function to always have description.current up to date
-    const getData = (): CategoryCreateData =>
-        ({
-            ...form.data,
-            description: description.current,
-        } as CategoryCreateData);
+    const data: CategoryCreateData = {
+        ...formData,
+        description: null,
+    };
 
-    const submit = () => handleFormSubmit(getData(), onSubmit, setChanged, event);
+    // Need to make it function to always have description.current up to date
+    const getData = async (): Promise<CategoryCreateData> => ({
+        ...formData,
+        description: await richText.getValue(),
+    });
+
+    const submit = async () => handleFormSubmit(await getData());
+
+    useEffect(() => setExitDialogSubmitRef(submit), [submit]);
+
+    setIsSubmitDisabled(disabled);
 
     return {
         change: handleChange,
-        data: getData(),
+        data,
         handlers: {
-            changeDescription,
             changeMetadata,
         },
-        hasChanged: changed,
         submit,
+        isSaveDisabled: disabled,
+        richText,
     };
 }
 
-const CategoryCreateForm: React.FC<CategoryCreateFormProps> = ({ children, onSubmit }) => {
-    const props = useCategoryCreateForm(onSubmit);
+const CategoryCreateForm: React.FC<CategoryCreateFormProps> = ({ children, onSubmit, disabled }) => {
+    const { richText, ...props } = useCategoryCreateForm(onSubmit, disabled);
 
-    return <form onSubmit={props.submit}>{children(props)}</form>;
+    return (
+        <form onSubmit={props.submit}>
+            <RichTextContext.Provider value={richText}>{children(props)}</RichTextContext.Provider>
+        </form>
+    );
 };
 
 CategoryCreateForm.displayName = "CategoryCreateForm";
+
 export default CategoryCreateForm;

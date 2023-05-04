@@ -1,71 +1,81 @@
 // @ts-nocheck
-import { Button, Card } from "@material-ui/core";
+import { Card } from "@material-ui/core";
+import { Button } from "@mzawadie/components/Button";
 import { CardTitle } from "@mzawadie/components/CardTitle";
-import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
-import { ChannelProps, ListActions, PageListProps, RelayToFlat } from "@mzawadie/core";
+import { InternalLink } from "@mzawadie/components/InternalLink";
+import { ListActions, PageListProps, RelayToFlat } from "@mzawadie/core";
 import { CategoryDetailsQuery } from "@mzawadie/graphql";
+import { HorizontalSpacer } from "@mzawadie/pages/apps/components/HorizontalSpacer";
+import { productAddUrl, productListUrl } from "@mzawadie/pages/products/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CategoryProductList } from "../CategoryProductList";
+import { useStyles } from "./styles";
 
-interface CategoryProductsProps extends PageListProps, ListActions, ChannelProps {
+interface CategoryProductsProps extends PageListProps, ListActions {
     products: RelayToFlat<CategoryDetailsQuery["category"]["products"]>;
-    channelChoices: SingleAutocompleteChoiceType[];
-    channelsCount: number;
     categoryName: string;
+    categoryId: string;
 }
 
 export const CategoryProducts: React.FC<CategoryProductsProps> = ({
-    channelsCount,
     products,
     disabled,
-    pageInfo,
-    onAdd,
-    onNextPage,
-    onPreviousPage,
-    onRowClick,
+    categoryId,
     categoryName,
     isChecked,
     selected,
-    selectedChannelId,
     toggle,
     toggleAll,
     toolbar,
 }) => {
     const intl = useIntl();
+    const classes = useStyles();
 
     return (
         <Card>
             <CardTitle
                 title={intl.formatMessage(
                     {
-                        defaultMessage: "Products in {categoryName}",
                         id: "+43JV5",
+                        defaultMessage: "Products in {categoryName}",
                         description: "header",
                     },
                     { categoryName }
                 )}
                 toolbar={
-                    <Button color="primary" variant="text" onClick={onAdd} data-test-id="addProducts">
-                        <FormattedMessage
-                            defaultMessage="Add product"
-                            id="x/pIZ9"
-                            description="button"
-                        />
-                    </Button>
+                    <div className={classes.toolbar}>
+                        <InternalLink
+                            to={productListUrl({
+                                categories: [categoryId],
+                            })}
+                        >
+                            <Button variant="tertiary" data-test-id="view-products">
+                                <FormattedMessage
+                                    id="z8jo8h"
+                                    defaultMessage="View products"
+                                    description="button"
+                                />
+                            </Button>
+                        </InternalLink>
+
+                        <HorizontalSpacer />
+
+                        <Button variant="tertiary" href={productAddUrl()} data-test-id="add-products">
+                            <FormattedMessage
+                                id="x/pIZ9"
+                                defaultMessage="Add product"
+                                description="button"
+                            />
+                        </Button>
+                    </div>
                 }
             />
 
             <CategoryProductList
-                channelsCount={channelsCount}
-                selectedChannelId={selectedChannelId}
                 products={products}
                 disabled={disabled}
-                pageInfo={pageInfo}
-                onNextPage={onNextPage}
-                onPreviousPage={onPreviousPage}
-                onRowClick={onRowClick}
                 selected={selected}
                 isChecked={isChecked}
                 toggle={toggle}

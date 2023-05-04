@@ -1,7 +1,8 @@
 // @ts-nocheck
 import { DialogContentText } from "@material-ui/core";
 import { ActionDialog } from "@mzawadie/components/ActionDialog";
-import { DEFAULT_INITIAL_SEARCH_DATA, extractMutationErrors, maybe } from "@mzawadie/core";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@mzawadie/core";
+import { extractMutationErrors, maybe } from "@mzawadie/core";
 import {
     useMenuDeleteMutation,
     useMenuDetailsQuery,
@@ -13,7 +14,6 @@ import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { categoryUrl } from "@mzawadie/pages/categories/urls";
 import { collectionUrl } from "@mzawadie/pages/collections/urls";
-import { MenuUrlQueryParams } from "@mzawadie/pages/navigation/urls";
 import { pageUrl } from "@mzawadie/pages/pages/urls";
 import useCategorySearch from "@mzawadie/searches/useCategorySearch";
 import useCollectionSearch from "@mzawadie/searches/useCollectionSearch";
@@ -22,10 +22,11 @@ import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { MenuDetailsPage, MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
+import { MenuDetailsSubmitData, MenuDetailsPage } from "../../components/MenuDetailsPage";
 import { findNode, getNode } from "../../components/MenuDetailsPage/tree";
 import { MenuItemDialog, MenuItemDialogFormData, MenuItemType } from "../../components/MenuItemDialog";
 import { getItemId, getItemType, unknownTypeError } from "../../components/MenuItems";
+import { menuUrl, MenuUrlQueryParams } from "../../urls";
 import { handleDelete, handleItemCreate, handleItemUpdate, handleUpdate } from "./successHandlers";
 import {
     getInitialDisplayValue,
@@ -44,12 +45,15 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
     const navigate = useNavigator();
     const notify = useNotifier();
     const intl = useIntl();
+
     const categorySearch = useCategorySearch({
         variables: DEFAULT_INITIAL_SEARCH_DATA,
     });
+
     const collectionSearch = useCollectionSearch({
         variables: DEFAULT_INITIAL_SEARCH_DATA,
     });
+
     const pageSearch = usePageSearch({
         variables: DEFAULT_INITIAL_SEARCH_DATA,
     });
@@ -139,7 +143,7 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
             })
         );
 
-    const menuItem = maybe(() => getNode(data.menu.items, findNode(data.menu.items, params.id)));
+    const menuItem = maybe(() => getNode(data?.menu?.items, findNode(data?.menu?.items, params.id)));
 
     const initialMenuItemUpdateFormData: MenuItemDialogFormData = {
         id: maybe(() => getItemId(menuItem)),
@@ -161,9 +165,9 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
         });
 
         return [
-            ...result.data.menuItemBulkDelete.errors,
-            ...result.data.menuItemMove.errors,
-            ...result.data.menuUpdate.errors,
+            ...result.data?.menuItemBulkDelete?.errors,
+            ...result.data?.menuItemMove?.errors,
+            ...result.data?.menuUpdate?.errors,
         ];
     };
 
@@ -172,12 +176,11 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
             <MenuDetailsPage
                 disabled={loading}
                 errors={[
-                    ...(menuUpdateOpts.data?.menuUpdate.errors || []),
-                    ...(menuUpdateOpts.data?.menuItemMove.errors || []),
-                    ...(menuUpdateOpts.data?.menuUpdate.errors || []),
+                    ...(menuUpdateOpts.data?.menuUpdate?.errors || []),
+                    ...(menuUpdateOpts.data?.menuItemMove?.errors || []),
+                    ...(menuUpdateOpts.data?.menuUpdate?.errors || []),
                 ]}
                 menu={maybe(() => data.menu)}
-                onBack={() => navigate(menuListUrl())}
                 onDelete={() =>
                     navigate(
                         menuUrl(id, {
@@ -204,6 +207,7 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                 onSubmit={handleSubmit}
                 saveButtonState={menuUpdateOpts.status}
             />
+
             <ActionDialog
                 open={params.action === "remove"}
                 onClose={closeModal}
@@ -211,17 +215,17 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                 onConfirm={() => extractMutationErrors(menuDelete({ variables: { id } }))}
                 variant="delete"
                 title={intl.formatMessage({
+                    id: "QzseV7",
                     defaultMessage: "Delete Menu",
                     description: "dialog header",
-                    id: "QzseV7",
                 })}
             >
                 <DialogContentText>
                     <FormattedMessage
-                        defaultMessage="Are you sure you want to delete menu {menuName}?"
                         id="G/SYtU"
+                        defaultMessage="Are you sure you want to delete menu {menuName}?"
                         values={{
-                            menuName: <strong>{maybe(() => data.menu.name, "...")}</strong>,
+                            menuName: <strong>{maybe(() => data?.menu?.name, "...")}</strong>,
                         }}
                     />
                 </DialogContentText>
@@ -231,7 +235,7 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                 open={params.action === "add-item"}
                 categories={categories}
                 collections={collections}
-                errors={maybe(() => menuItemCreateOpts.data.menuItemCreate.errors, [])}
+                errors={maybe(() => menuItemCreateOpts.data?.menuItemCreate?.errors, [])}
                 pages={pages}
                 loading={categorySearch.result.loading || collectionSearch.result.loading}
                 confirmButtonState={menuItemCreateOpts.status}
@@ -240,11 +244,12 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
                 onSubmit={handleMenuItemCreate}
                 onQueryChange={handleQueryChange}
             />
+
             <MenuItemDialog
                 open={params.action === "edit-item"}
                 categories={categories}
                 collections={collections}
-                errors={maybe(() => menuItemUpdateOpts.data.menuItemUpdate.errors, [])}
+                errors={maybe(() => menuItemUpdateOpts.data?.menuItemUpdate?.errors, [])}
                 pages={pages}
                 initial={initialMenuItemUpdateFormData}
                 initialDisplayValue={getInitialDisplayValue(menuItem)}

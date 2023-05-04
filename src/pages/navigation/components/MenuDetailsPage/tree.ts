@@ -33,6 +33,7 @@ function removeNode(tree: MenuDetailsFragment["items"], path: number[]): MenuDet
     }
 
     const newTree = [...tree];
+
     newTree[removeIndex] = {
         ...tree[path[0]],
         children: removeNode(tree[path[0]].children, path.slice(1)),
@@ -54,8 +55,14 @@ function insertNode({ tree, path, node, position }: InsertNodeInput): MenuDetail
     }
 
     if (path[0] in tree) {
-        tree[path[0]].children = insertNode(tree[path[0]].children, path.slice(1), node, position);
+        tree[path[0]].children = insertNode({
+            tree: tree[path[0]].children,
+            path: path.slice(1),
+            node,
+            position,
+        });
     }
+
     return tree;
 }
 
@@ -82,35 +89,44 @@ function removeNodeAndChildren(
     return removeNode(tree, sourcePath);
 }
 
-function permuteNode(
+function permuteRelativeNode(
     tree: MenuDetailsFragment["items"],
     permutation: TreeOperation
 ): MenuDetailsFragment["items"] {
     const sourcePath = findNode(tree, permutation.id);
+
     const node = getNode(tree, sourcePath);
+
+    const hasParent = !!permutation.parentId;
 
     const treeAfterRemoval = removeNode(tree, sourcePath);
 
-    const targetPath = permutation.parentId ? findNode(treeAfterRemoval, permutation.parentId) : [];
+    const targetPath = hasParent ? findNode(treeAfterRemoval, permutation.parentId) : [];
 
-    const treeAfterInsertion = insertNode(treeAfterRemoval, targetPath, node, permutation.sortOrder);
+    const position = sourcePath[sourcePath.length - 1];
+
+    const treeAfterInsertion = insertNode({
+        tree: treeAfterRemoval,
+        path: targetPath,
+        node,
+        position: position + permutation.sortOrder,
+    });
 
     return treeAfterInsertion;
 }
 
-function executeOperation(
+function executeRelativeOperation(
     tree: MenuDetailsFragment["items"],
     operation: TreeOperation
 ): MenuDetailsFragment["items"] {
     return operation.type === "move"
-        ? permuteNode(tree, operation)
+        ? permuteRelativeNode(tree, operation)
         : removeNodeAndChildren(tree, operation);
 }
 
-export function computeTree(tree: MenuDetailsFragment["items"], operations: TreeOperation[]) {
+export function computeRelativeTree(tree: MenuDetailsFragment["items"], operations: TreeOperation[]) {
     const newTree = operations.reduce(
-        (acc, operation) => executeOperation(acc, operation),
-        // FIXME: 😡
+        (acc, operation) => executeRelativeOperation(acc, operation),
         JSON.parse(JSON.stringify(tree))
     );
     return newTree;

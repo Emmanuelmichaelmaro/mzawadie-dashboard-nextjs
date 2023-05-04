@@ -1,4 +1,6 @@
+// @ts-nocheck
 import { Typography } from "@material-ui/core";
+import { Backlink } from "@mzawadie/components/Backlink";
 import Container from "@mzawadie/components/Container";
 import { Grid } from "@mzawadie/components/Grid";
 import { PageHeader } from "@mzawadie/components/PageHeader";
@@ -6,12 +8,14 @@ import Savebar from "@mzawadie/components/Savebar";
 import { sectionNames } from "@mzawadie/core";
 import { OrderSettingsFragment, ShopOrderSettingsFragment } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
-import { ConfirmButtonTransitionState, Backlink } from "@saleor/macaw-ui";
+import useNavigator from "@mzawadie/hooks/useNavigator";
+import { orderListUrl } from "@mzawadie/pages/orders/urls";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { OrderFulfillmentSettings } from "../OrderFulfillmentSettings";
-import { OrderSettings } from "../OrderSettings";
+import OrderSettings from "../OrderSettings/OrderSettings";
 import OrderSettingsForm from "./form";
 import { OrderSettingsFormData } from "./types";
 
@@ -20,34 +24,40 @@ export interface OrderSettingsPageProps {
     shop: ShopOrderSettingsFragment;
     disabled: boolean;
     saveButtonBarState: ConfirmButtonTransitionState;
-    onBack: () => void;
     onSubmit: (data: OrderSettingsFormData) => SubmitPromise;
 }
 
 const OrderSettingsPage: React.FC<OrderSettingsPageProps> = (props) => {
-    const { orderSettings, shop, disabled, saveButtonBarState, onBack, onSubmit } = props;
+    const { orderSettings, shop, disabled, saveButtonBarState, onSubmit } = props;
 
     const intl = useIntl();
 
+    const navigate = useNavigator();
+
     return (
-        <OrderSettingsForm orderSettings={orderSettings} shop={shop} onSubmit={onSubmit}>
-            {({ data, submit, hasChanged, change }) => (
+        <OrderSettingsForm
+            orderSettings={orderSettings}
+            shop={shop}
+            onSubmit={onSubmit}
+            disabled={disabled}
+        >
+            {({ data, submit, change, isSaveDisabled }) => (
                 <Container>
-                    <Backlink onClick={onBack}>{intl.formatMessage(sectionNames.orders)}</Backlink>
+                    <Backlink href={orderListUrl()}>{intl.formatMessage(sectionNames.orders)}</Backlink>
 
                     <PageHeader
                         title={intl.formatMessage({
-                            defaultMessage: "Order settings",
                             id: "Vu9nol",
+                            defaultMessage: "Order settings",
                             description: "header",
                         })}
-                        underline
+                        underline={true}
                     />
 
                     <Grid variant="inverted">
                         <div>
                             <Typography>
-                                <FormattedMessage defaultMessage="General Settings" id="yuiyES" />
+                                <FormattedMessage id="yuiyES" defaultMessage="General Settings" />
                             </Typography>
                         </div>
 
@@ -59,9 +69,9 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = (props) => {
                     </Grid>
 
                     <Savebar
-                        onCancel={onBack}
+                        onCancel={() => navigate(orderListUrl())}
                         onSubmit={submit}
-                        disabled={disabled || !hasChanged}
+                        disabled={isSaveDisabled}
                         state={saveButtonBarState}
                     />
                 </Container>

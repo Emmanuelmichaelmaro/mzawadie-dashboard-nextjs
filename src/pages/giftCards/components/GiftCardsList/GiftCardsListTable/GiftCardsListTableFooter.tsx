@@ -2,12 +2,11 @@
 import { TableFooter, TableRow } from "@material-ui/core";
 import { TablePagination } from "@mzawadie/components/TablePagination";
 import usePaginator from "@mzawadie/hooks/usePaginator";
-import { useGiftCardList } from "@mzawadie/pages/giftCards/components/GiftCardsList/providers/GiftCardListProvider";
 import React from "react";
 
-const GiftCardsListTableFooter: React.FC = () => {
-    const paginate = usePaginator();
+import { useGiftCardList } from "../providers/GiftCardListProvider";
 
+const GiftCardsListTableFooter: React.FC = () => {
     const {
         settings,
         updateListSettings,
@@ -17,19 +16,20 @@ const GiftCardsListTableFooter: React.FC = () => {
         numberOfColumns,
     } = useGiftCardList();
 
-    const { loadNextPage, loadPreviousPage, pageInfo } = paginate(apiPageInfo, paginationState, params);
+    const paginationValues = usePaginator({
+        pageInfo: apiPageInfo,
+        paginationState,
+        queryString: params,
+    });
 
     return (
         <TableFooter>
             <TableRow>
                 <TablePagination
+                    {...paginationValues}
                     settings={settings}
                     colSpan={numberOfColumns}
-                    hasNextPage={pageInfo ? pageInfo.hasNextPage : false}
-                    onNextPage={loadNextPage}
                     onUpdateListSettings={updateListSettings}
-                    onPreviousPage={loadPreviousPage}
-                    hasPreviousPage={pageInfo ? pageInfo.hasPreviousPage : false}
                 />
             </TableRow>
         </TableFooter>

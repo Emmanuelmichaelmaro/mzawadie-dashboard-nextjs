@@ -1,23 +1,25 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-import { alpha } from "@material-ui/core/styles";
+import { fade } from "@material-ui/core/styles/colorManipulator";
 import { makeStyles } from "@saleor/macaw-ui";
 
 const useStyles = makeStyles(
     (theme) => {
         const hover = {
             "&:hover": {
-                background: alpha(theme.palette.primary.main, 0.1),
+                background: fade(theme.palette.primary.main, 0.1),
             },
         };
 
         return {
             editor: {
+                "& .codex-editor": {
+                    zIndex: 2,
+                },
                 "& .cdx-quote__text": {
                     minHeight: 24,
                 },
                 "& .ce-block--selected .ce-block__content": {
-                    background: `${alpha(theme.palette.primary.main, 0.2)} !important`,
+                    background: `${fade(theme.palette.primary.main, 0.2)} !important`,
                 },
                 "& .ce-block__content": {
                     margin: 0,
@@ -27,7 +29,7 @@ const useStyles = makeStyles(
                     ...hover,
                 },
                 "& .ce-conversion-tool--focused": {
-                    background: `${alpha(theme.palette.primary.main, 0.1)} !important`,
+                    background: `${fade(theme.palette.primary.main, 0.1)} !important`,
                 },
                 "& .ce-conversion-tool__icon": {
                     background: "none",
@@ -43,7 +45,7 @@ const useStyles = makeStyles(
                     ...hover,
                     color: theme.palette.text.primary,
                     height: 32,
-                    transition: `${theme.transitions.duration.short}ms`,
+                    transition: theme.transitions.duration.short + "ms",
                     width: 32,
                 },
                 "& .ce-inline-toolbar": {
@@ -86,7 +88,7 @@ const useStyles = makeStyles(
                 },
             },
             root: {
-                border: `1px solid ${alpha(theme.palette.text.secondary, 0.4)}`,
+                border: `1px solid ${fade(theme.palette.text.secondary, 0.4)}`,
                 borderRadius: 4,
                 boxShadow: `inset 0 0 0 0 ${theme.palette.primary.main}`,
                 fontSize: theme.typography.body1.fontSize,
@@ -95,16 +97,21 @@ const useStyles = makeStyles(
                 paddingBottom: theme.spacing(),
                 paddingLeft: 10,
                 position: "relative",
-                transition: `${theme.transitions.duration.short}ms`,
+                transition: theme.transitions.duration.short + "ms",
             },
             rootActive: {
                 boxShadow: `inset 0px 0px 0 2px ${theme.palette.primary.main}`,
             },
             rootDisabled: {
                 ...theme.overrides.MuiOutlinedInput.root["&$disabled"]["& fieldset"],
+                background: theme.palette.background.default,
+                color: theme.palette.saleor.main[4],
             },
             rootError: {
                 borderColor: theme.palette.error.main,
+            },
+            rootStatic: {
+                fontSize: theme.typography.body1.fontSize,
             },
         };
     },

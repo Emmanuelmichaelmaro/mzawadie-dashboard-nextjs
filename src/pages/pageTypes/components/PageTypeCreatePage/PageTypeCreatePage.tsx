@@ -1,6 +1,7 @@
+// @ts-nocheck
 import { Typography } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@mzawadie/components/ConfirmButton";
-import { Container } from "@mzawadie/components/Container";
+import { Backlink } from "@mzawadie/components/Backlink";
+import Container from "@mzawadie/components/Container";
 import { Form } from "@mzawadie/components/Form";
 import { Grid } from "@mzawadie/components/Grid";
 import Hr from "@mzawadie/components/Hr";
@@ -9,8 +10,10 @@ import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { commonMessages, sectionNames } from "@mzawadie/core";
 import { PageErrorFragment } from "@mzawadie/graphql";
+import useNavigator from "@mzawadie/hooks/useNavigator";
+import { pageTypeListUrl } from "@mzawadie/pages/pageTypes/urls";
 import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChangeTrigger";
-import { Backlink, makeStyles } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -24,7 +27,6 @@ export interface PageTypeCreatePageProps {
     errors: PageErrorFragment[];
     disabled: boolean;
     saveButtonBarState: ConfirmButtonTransitionState;
-    onBack: () => void;
     onSubmit: (data: PageTypeForm) => void;
 }
 
@@ -47,28 +49,33 @@ const useStyles = makeStyles(
 );
 
 const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = (props) => {
-    const { disabled, errors, saveButtonBarState, onBack, onSubmit } = props;
+    const { disabled, errors, saveButtonBarState, onSubmit } = props;
+
     const classes = useStyles(props);
     const intl = useIntl();
+    const navigate = useNavigator();
+
     const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
 
     return (
-        <Form initial={formInitialData} onSubmit={onSubmit} confirmLeave>
-            {({ change, data, hasChanged, submit }) => {
+        <Form confirmLeave initial={formInitialData} onSubmit={onSubmit} disabled={disabled}>
+            {({ change, data, submit, isSaveDisabled }) => {
                 const changeMetadata = makeMetadataChangeHandler(change);
 
                 return (
                     <Container>
-                        <Backlink onClick={onBack}>
+                        <Backlink href={pageTypeListUrl()}>
                             {intl.formatMessage(sectionNames.pageTypes)}
                         </Backlink>
+
                         <PageHeader
                             title={intl.formatMessage({
-                                defaultMessage: "Create Page Type",
                                 id: "caqRmN",
+                                defaultMessage: "Create Page Type",
                                 description: "header",
                             })}
                         />
+
                         <Grid variant="inverted">
                             <div>
                                 <Typography>
@@ -76,34 +83,40 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = (props) => {
                                 </Typography>
                                 <Typography variant="body2">
                                     <FormattedMessage
-                                        defaultMessage="These are general information about this Content Type."
                                         id="kZfIl/"
+                                        defaultMessage="These are general information about this Content Type."
                                     />
                                 </Typography>
                             </div>
+
                             <PageTypeDetails
                                 data={data}
                                 disabled={disabled}
                                 errors={errors}
                                 onChange={change}
                             />
+
                             <Hr className={classes.hr} />
+
                             <div>
                                 <Typography>
                                     <FormattedMessage
-                                        defaultMessage="Metadata"
                                         id="OVOU1z"
+                                        defaultMessage="Metadata"
                                         description="section header"
                                     />
                                 </Typography>
                             </div>
+
                             <Metadata data={data} onChange={changeMetadata} />
-                            <div />
+
+                            <div></div>
                         </Grid>
+
                         <Savebar
-                            onCancel={onBack}
+                            onCancel={() => navigate(pageTypeListUrl())}
                             onSubmit={submit}
-                            disabled={disabled || !hasChanged}
+                            disabled={isSaveDisabled}
                             state={saveButtonBarState}
                         />
                     </Container>

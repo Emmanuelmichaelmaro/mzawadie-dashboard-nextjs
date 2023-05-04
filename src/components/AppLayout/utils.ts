@@ -1,9 +1,9 @@
 // @ts-nocheck
-import { AppExtensionMountEnum } from "@mzawadie/graphql";
 import { getDashboardUrFromAppCompleteUrl } from "@mzawadie/pages/apps/urls";
 import { Extension } from "@mzawadie/pages/apps/useExtensions";
-import { orderDraftListUrl, orderListUrl } from "@mzawadie/pages/orders/urls";
+import { AppExtensionMountEnum } from "@mzawadie/graphql";
 import { SidebarMenuItem } from "@saleor/macaw-ui";
+import { orderDraftListUrl, orderListUrl } from "@mzawadie/pages/orders/urls";
 import { matchPath } from "react-router";
 
 import { FilterableMenuItem } from "./menuStructure";
@@ -51,9 +51,11 @@ export const mapToExtensionsItems = (extensions: Extension[], header: Filterable
             permissions,
         })
     );
+
     if (items.length) {
         items.unshift(header);
     }
+
     return items;
 };
 
@@ -67,6 +69,8 @@ export const getMenuItemExtension = (
         (list, extensions) => list.concat(extensions),
         []
     );
+
     const extension = extensionsList.find((extension) => menuItem.id === `extension-${extension.id}`);
+
     return extension;
 };

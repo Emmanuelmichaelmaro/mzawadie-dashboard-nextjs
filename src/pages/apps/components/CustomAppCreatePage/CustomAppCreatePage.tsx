@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { AccountPermissions } from "@mzawadie/components/AccountPermissions";
+import { Backlink } from "@mzawadie/components/Backlink";
 import Container from "@mzawadie/components/Container";
 import { Form } from "@mzawadie/components/Form";
 import { Grid } from "@mzawadie/components/Grid";
@@ -8,9 +9,11 @@ import Savebar from "@mzawadie/components/Savebar";
 import { sectionNames } from "@mzawadie/core";
 import { AppErrorFragment, PermissionEnum, PermissionFragment } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
+import useNavigator from "@mzawadie/hooks/useNavigator";
+import { appsListUrl } from "@mzawadie/pages/apps/urls";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getAppErrorMessage from "@mzawadie/utils/errors/app";
-import { ConfirmButtonTransitionState, Backlink } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -21,18 +24,21 @@ export interface CustomAppCreatePageFormData {
     name: string;
     permissions: PermissionEnum[];
 }
+
 export interface CustomAppCreatePageProps {
     disabled: boolean;
     errors: AppErrorFragment[];
     permissions: PermissionFragment[];
     saveButtonBarState: ConfirmButtonTransitionState;
-    onBack: () => void;
     onSubmit: (data: CustomAppCreatePageFormData) => SubmitPromise<AppErrorFragment[]>;
 }
 
 const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = (props) => {
-    const { disabled, errors, permissions, saveButtonBarState, onBack, onSubmit } = props;
+    const { disabled, errors, permissions, saveButtonBarState, onSubmit } = props;
+
     const intl = useIntl();
+
+    const navigate = useNavigator();
 
     const initialForm: CustomAppCreatePageFormData = {
         hasFullAccess: false,
@@ -41,20 +47,23 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = (props) => {
     };
 
     const formErrors = getFormErrors(["permissions"], errors || []);
+
     const permissionsError = getAppErrorMessage(formErrors.permissions, intl);
 
     return (
-        <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-            {({ data, change, hasChanged, submit }) => (
+        <Form confirmLeave initial={initialForm} onSubmit={onSubmit} disabled={disabled}>
+            {({ data, change, submit, isSaveDisabled }) => (
                 <Container>
-                    <Backlink onClick={onBack}>{intl.formatMessage(sectionNames.apps)}</Backlink>
+                    <Backlink href={appsListUrl()}>{intl.formatMessage(sectionNames.apps)}</Backlink>
+
                     <PageHeader
                         title={intl.formatMessage({
-                            defaultMessage: "Create New App",
                             id: "GjH9uy",
+                            defaultMessage: "Create New App",
                             description: "header",
                         })}
                     />
+
                     <Grid>
                         <div>
                             <CustomAppInformation
@@ -64,6 +73,7 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = (props) => {
                                 onChange={change}
                             />
                         </div>
+
                         <AccountPermissions
                             data={data}
                             errorMessage={permissionsError}
@@ -72,22 +82,23 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = (props) => {
                             permissionsExceeded={false}
                             onChange={change}
                             fullAccessLabel={intl.formatMessage({
-                                defaultMessage: "Grant this app full access to the store",
                                 id: "D4nzdD",
+                                defaultMessage: "Grant this app full access to the store",
                                 description: "checkbox label",
                             })}
                             description={intl.formatMessage({
+                                id: "flP8Hj",
                                 defaultMessage:
                                     "Expand or restrict app permissions to access certain part of Saleor system.",
-                                id: "flP8Hj",
                                 description: "card description",
                             })}
                         />
                     </Grid>
+
                     <Savebar
-                        disabled={disabled || !hasChanged}
+                        disabled={isSaveDisabled}
                         state={saveButtonBarState}
-                        onCancel={onBack}
+                        onCancel={() => navigate(appsListUrl())}
                         onSubmit={submit}
                     />
                 </Container>

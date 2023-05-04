@@ -4,8 +4,8 @@ import { ActionDialog } from "@mzawadie/components/ActionDialog";
 import useAppChannel from "@mzawadie/components/AppLayout/AppChannelContext";
 import { DeleteFilterTabDialog } from "@mzawadie/components/DeleteFilterTabDialog";
 import {
-    SaveFilterTabDialog,
     SaveFilterTabDialogFormData,
+    SaveFilterTabDialog,
 } from "@mzawadie/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@mzawadie/components/Shop/queries";
 import { Task } from "@mzawadie/containers/BackgroundTasks/types";
@@ -14,13 +14,12 @@ import {
     DEFAULT_INITIAL_SEARCH_DATA,
     defaultListSettings,
     ProductListColumns,
-    commonMessages,
-    maybe,
-    ListViews,
 } from "@mzawadie/core";
+import { commonMessages } from "@mzawadie/core";
+import { maybe } from "@mzawadie/core";
+import { ListViews } from "@mzawadie/core";
 import {
     ProductListQueryVariables,
-    useAvailableInGridAttributesQuery,
     useGridAttributesQuery,
     useInitialProductFilterAttributesQuery,
     useInitialProductFilterCategoriesQuery,
@@ -38,17 +37,19 @@ import useListSettings from "@mzawadie/hooks/useListSettings";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { usePaginationReset } from "@mzawadie/hooks/usePaginationReset";
-import usePaginator, { createPaginationState } from "@mzawadie/hooks/usePaginator";
+import usePaginator, { createPaginationState, PaginatorContext } from "@mzawadie/hooks/usePaginator";
+import { useSortRedirects } from "@mzawadie/hooks/useSortRedirects";
+import { filterable } from "@mzawadie/pages/attributes/utils/data";
 import {
     productAddUrl,
     productListUrl,
     ProductListUrlDialog,
     ProductListUrlQueryParams,
     ProductListUrlSortField,
-    productUrl,
 } from "@mzawadie/pages/products/urls";
 import useAttributeSearch from "@mzawadie/searches/useAttributeSearch";
 import useAttributeValueSearch from "@mzawadie/searches/useAttributeValueSearch";
+import useAvailableInGridAttributesSearch from "@mzawadie/searches/useAvailableInGridAttributesSearch";
 import useCategorySearch from "@mzawadie/searches/useCategorySearch";
 import useCollectionSearch from "@mzawadie/searches/useCollectionSearch";
 import useProductTypeSearch from "@mzawadie/searches/useProductTypeSearch";
@@ -57,7 +58,7 @@ import createFilterHandlers from "@mzawadie/utils/handlers/filterHandlers";
 import { mapEdgesToItems, mapNodeToChoice } from "@mzawadie/utils/maps";
 import { getSortUrlVariables } from "@mzawadie/utils/sort";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductExportDialog } from "../../components/ProductExportDialog";
@@ -66,6 +67,7 @@ import {
     getAttributeIdFromColumnValue,
     isAttributeColumnValue,
 } from "../../components/ProductListPage/utils";
+import { ProductTypePickerDialog } from "../../components/ProductTypePickerDialog";
 import {
     deleteFilterTab,
     getActiveFilters,
@@ -86,12 +88,9 @@ interface ProductListProps {
 export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     const navigate = useNavigator();
     const notify = useNotifier();
-    const paginate = usePaginator();
 
     const { queue } = useBackgroundTask();
-
     const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
-
     const { updateListSettings, settings } = useListSettings<ProductListColumns>(
         ListViews.PRODUCT_LIST
     );
@@ -100,9 +99,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
     const intl = useIntl();
 
-    const { data: initialFilterAttributes } = useInitialProductFilterAttributesQuery({
-        skip: !params.attributes?.length,
-    });
+    const { data: initialFilterAttributes } = useInitialProductFilterAttributesQuery();
 
     const { data: initialFilterCategories } = useInitialProductFilterCategoriesQuery({
         variables: {
@@ -183,6 +180,13 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
     const selectedChannel = availableChannels.find((channel) => channel.slug === params.channel);
 
+    useSortRedirects<ProductListUrlSortField>({
+        params,
+        defaultSortField: DEFAULT_SORT_KEY,
+        urlFunc: productListUrl,
+        resetToDefault: !canBeSorted(params.sort, !!selectedChannel),
+    });
+
     const [openModal, closeModal] = createDialogActionHandlers<
         ProductListUrlDialog,
         ProductListUrlQueryParams
@@ -198,21 +202,21 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
     const [exportProducts, exportProductsOpts] = useProductExportMutation({
         onCompleted: (data) => {
-            if (data.exportProducts.errors.length === 0) {
+            if (data.exportProducts?.errors.length === 0) {
                 notify({
                     text: intl.formatMessage({
+                        id: "dPYqy0",
                         defaultMessage:
                             "We are currently exporting your requested CSV. As soon as it is available it will be sent to your email address",
-                        id: "dPYqy0",
                     }),
                     title: intl.formatMessage({
-                        defaultMessage: "Exporting CSV",
                         id: "5QKsu+",
+                        defaultMessage: "Exporting CSV",
                         description: "waiting for export to end, header",
                     }),
                 });
                 queue(Task.EXPORT, {
-                    id: data.exportProducts.exportFile.id,
+                    id: data?.exportProducts?.exportFile?.id,
                 });
                 closeModal();
                 reset();
@@ -227,30 +231,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         navigate,
         params,
     });
-
-    useEffect(() => {
-        const sortWithQuery = ProductListUrlSortField.rank;
-        const sortWithoutQuery =
-            params.sort === ProductListUrlSortField.rank ? DEFAULT_SORT_KEY : params.sort;
-        navigate(
-            productListUrl({
-                ...params,
-                asc: params.query ? undefined : params.asc,
-                sort: params.query ? sortWithQuery : sortWithoutQuery,
-            })
-        );
-    }, [params.query]);
-
-    useEffect(() => {
-        if (!canBeSorted(params.sort, !!selectedChannel)) {
-            navigate(
-                productListUrl({
-                    ...params,
-                    sort: DEFAULT_SORT_KEY,
-                })
-            );
-        }
-    }, [params]);
 
     const handleTabChange = (tab: number) => {
         reset();
@@ -284,14 +264,20 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         );
 
     const kindOpts = getProductKindOpts(availableProductKinds, intl);
+    
     const paginationState = createPaginationState(settings.rowNumber, params);
+    
     const channelOpts = availableChannels
         ? mapNodeToChoice(availableChannels, (channel) => channel.slug)
         : null;
+    
     const filter = getFilterVariables(params, !!selectedChannel);
+    
     const sort = getSortQueryVariables(params, !!selectedChannel);
-
-    const queryVariables = React.useMemo<ProductListQueryVariables>(
+    
+    const queryVariables = React.useMemo<
+        Omit<ProductListQueryVariables, "hasChannel" | "hasSelectedAttributes">
+    >(
         () => ({
             ...paginationState,
             filter,
@@ -301,27 +287,34 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         [params, settings.rowNumber]
     );
 
-    // TODO: When channel is undefined we should skip detailed pricing listings
+    const filteredColumnIds = settings.columns
+        .filter(isAttributeColumnValue)
+        .map(getAttributeIdFromColumnValue);
+
     const { data, loading, refetch } = useProductListQuery({
         displayLoader: true,
-        variables: queryVariables,
+        variables: {
+            ...queryVariables,
+            hasChannel: !!selectedChannel,
+            hasSelectedAttributes: filteredColumnIds.length > 0,
+        },
     });
 
-    function filterColumnIds(columns: ProductListColumns[]) {
-        return columns.filter(isAttributeColumnValue).map(getAttributeIdFromColumnValue);
-    }
-
-    const availableInGridAttributes = useAvailableInGridAttributesQuery({
-        variables: { first: 24 },
+    const availableInGridAttributesOpts = useAvailableInGridAttributesSearch({
+        variables: {
+            ...DEFAULT_INITIAL_SEARCH_DATA,
+            first: 5,
+        },
     });
-
+    
     const gridAttributes = useGridAttributesQuery({
-        variables: { ids: filterColumnIds(settings.columns) },
+        variables: { ids: filteredColumnIds },
+        skip: filteredColumnIds.length === 0,
     });
 
     const [productBulkDelete, productBulkDeleteOpts] = useProductBulkDeleteMutation({
         onCompleted: (data) => {
-            if (data.productBulkDelete.errors.length === 0) {
+            if (data.productBulkDelete?.errors.length === 0) {
                 closeModal();
                 notify({
                     status: "success",
@@ -334,9 +327,23 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         },
     });
 
+    const {
+        loadMore: loadMoreDialogProductTypes,
+        search: searchDialogProductTypes,
+        result: searchDialogProductTypesOpts,
+    } = useProductTypeSearch({
+        variables: DEFAULT_INITIAL_SEARCH_DATA,
+    });
+
+    const fetchMoreDialogProductTypes = {
+        hasMore: searchDialogProductTypesOpts.data?.search?.pageInfo?.hasNextPage,
+        loading: searchDialogProductTypesOpts.loading,
+        onFetchMore: loadMoreDialogProductTypes,
+    };
+
     const filterOpts = getFilterOpts(
         params,
-        mapEdgesToItems(initialFilterAttributes?.attributes) || [],
+        (mapEdgesToItems(initialFilterAttributes?.attributes) || []).filter(filterable),
         searchAttributeValues,
         {
             initial: mapEdgesToItems(initialFilterCategories?.categories) || [],
@@ -354,14 +361,14 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         channelOpts
     );
 
-    const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-        data?.products?.pageInfo,
+    const paginationValues = usePaginator({
+        pageInfo: data?.products?.pageInfo,
         paginationState,
-        params
-    );
+        queryString: params,
+    });
 
     return (
-        <>
+        <PaginatorContext.Provider value={paginationValues}>
             <ProductListPage
                 activeAttributeSortId={params.attributeId}
                 sort={{
@@ -370,58 +377,27 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                 }}
                 onSort={handleSort}
                 availableInGridAttributes={
-                    mapEdgesToItems(availableInGridAttributes?.data?.availableInGrid) || []
+                    mapEdgesToItems(availableInGridAttributesOpts.result?.data?.availableInGrid) || []
                 }
                 currencySymbol={selectedChannel?.currencyCode || ""}
                 currentTab={currentTab}
                 defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
                 filterOpts={filterOpts}
                 gridAttributes={mapEdgesToItems(gridAttributes?.data?.grid) || []}
-                totalGridAttributes={maybe(
-                    () => availableInGridAttributes.data.availableInGrid.totalCount,
-                    0
-                )}
                 settings={settings}
-                loading={availableInGridAttributes.loading || gridAttributes.loading}
+                loading={availableInGridAttributesOpts.result.loading || gridAttributes.loading}
                 hasMore={maybe(
-                    () => availableInGridAttributes.data.availableInGrid.pageInfo.hasNextPage,
+                    () =>
+                        availableInGridAttributesOpts.result.data.availableInGrid.pageInfo.hasNextPage,
                     false
                 )}
-                onAdd={() => navigate(productAddUrl())}
                 disabled={loading}
                 limits={limitOpts.data?.shop.limits}
                 products={mapEdgesToItems(data?.products)}
-                onFetchMore={() =>
-                    availableInGridAttributes.loadMore(
-                        (prev, next) => {
-                            if (
-                                prev.availableInGrid.pageInfo.endCursor ===
-                                next.availableInGrid.pageInfo.endCursor
-                            ) {
-                                return prev;
-                            }
-                            return {
-                                ...prev,
-                                availableInGrid: {
-                                    ...prev.availableInGrid,
-                                    edges: [
-                                        ...prev.availableInGrid.edges,
-                                        ...next.availableInGrid.edges,
-                                    ],
-                                    pageInfo: next.availableInGrid.pageInfo,
-                                },
-                            };
-                        },
-                        {
-                            after: availableInGridAttributes.data.availableInGrid.pageInfo.endCursor,
-                        }
-                    )
-                }
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
+                onColumnQueryChange={availableInGridAttributesOpts.search}
+                onFetchMore={availableInGridAttributesOpts.loadMore}
                 onUpdateListSettings={updateListSettings}
-                pageInfo={pageInfo}
-                onRowClick={(id) => () => navigate(productUrl(id))}
+                onAdd={() => openModal("create-product")}
                 onAll={resetFilters}
                 toolbar={
                     <IconButton
@@ -449,10 +425,10 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                 initialSearch={params.query || ""}
                 tabs={getFilterTabs().map((tab) => tab.name)}
                 onExport={() => openModal("export")}
-                channelsCount={availableChannels?.length}
                 selectedChannelId={selectedChannel?.id}
+                columnQuery={availableInGridAttributesOpts.query}
             />
-
+    
             <ActionDialog
                 open={params.action === "delete"}
                 confirmButtonState={productBulkDeleteOpts.status}
@@ -463,16 +439,16 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                     })
                 }
                 title={intl.formatMessage({
-                    defaultMessage: "Delete Products",
                     id: "F4WdSO",
+                    defaultMessage: "Delete Products",
                     description: "dialog header",
                 })}
                 variant="delete"
             >
                 <DialogContentText>
                     <FormattedMessage
-                        defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
                         id="yDkmX7"
+                        defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
                         description="dialog content"
                         values={{
                             counter: params?.ids?.length,
@@ -481,10 +457,10 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                     />
                 </DialogContentText>
             </ActionDialog>
-
+    
             <ProductExportDialog
                 attributes={mapEdgesToItems(searchAttributes?.result?.data?.search) || []}
-                hasMore={searchAttributes.result.data?.search.pageInfo.hasNextPage}
+                hasMore={searchAttributes.result.data?.search?.pageInfo.hasNextPage}
                 loading={
                     searchAttributes.result.loading || countAllProducts.loading || warehouses.loading
                 }
@@ -492,10 +468,10 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                 onFetchMore={searchAttributes.loadMore}
                 open={params.action === "export"}
                 confirmButtonState={exportProductsOpts.status}
-                errors={exportProductsOpts.data?.exportProducts.errors || []}
+                errors={exportProductsOpts.data?.exportProducts?.errors || []}
                 productQuantity={{
-                    all: countAllProducts.data?.products.totalCount,
-                    filter: data?.products.totalCount,
+                    all: countAllProducts.data?.products?.totalCount,
+                    filter: data?.products?.totalCount,
                 }}
                 selectedProducts={listElements.length}
                 warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
@@ -513,14 +489,14 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                     })
                 }
             />
-
+    
             <SaveFilterTabDialog
                 open={params.action === "save-search"}
                 confirmButtonState="default"
                 onClose={closeModal}
                 onSubmit={handleFilterTabSave}
             />
-
+    
             <DeleteFilterTabDialog
                 open={params.action === "delete-search"}
                 confirmButtonState="default"
@@ -528,7 +504,25 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
                 onSubmit={handleFilterTabDelete}
                 tabName={maybe(() => tabs[currentTab - 1].name, "...")}
             />
-        </>
+    
+            <ProductTypePickerDialog
+                confirmButtonState="success"
+                open={params.action === "create-product"}
+                productTypes={mapNodeToChoice(
+                    mapEdgesToItems(searchDialogProductTypesOpts?.data?.search)
+                )}
+                fetchProductTypes={searchDialogProductTypes}
+                fetchMoreProductTypes={fetchMoreDialogProductTypes}
+                onClose={closeModal}
+                onConfirm={(productTypeId) =>
+                    navigate(
+                        productAddUrl({
+                            "product-type-id": productTypeId,
+                        })
+                    )
+                }
+            />
+        </PaginatorContext.Provider>
     );
 };
 

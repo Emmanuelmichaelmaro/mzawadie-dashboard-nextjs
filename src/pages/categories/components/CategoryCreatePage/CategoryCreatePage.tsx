@@ -1,6 +1,6 @@
 // @ts-nocheck
+import { Backlink } from "@mzawadie/components/Backlink";
 import { CardSpacer } from "@mzawadie/components/CardSpacer";
-import { ConfirmButtonTransitionState } from "@mzawadie/components/ConfirmButton";
 import Container from "@mzawadie/components/Container";
 import { Metadata } from "@mzawadie/components/Metadata";
 import { PageHeader } from "@mzawadie/components/PageHeader";
@@ -8,40 +8,42 @@ import Savebar from "@mzawadie/components/Savebar";
 import { SeoForm } from "@mzawadie/components/SeoForm";
 import { sectionNames } from "@mzawadie/core";
 import { ProductErrorFragment } from "@mzawadie/graphql";
-import { Backlink } from "@saleor/macaw-ui";
+import useNavigator from "@mzawadie/hooks/useNavigator";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { CategoryDetailsForm } from "../CategoryDetailsForm";
+import { CategoryDetailsForm } from "../../components/CategoryDetailsForm";
 import CategoryCreateForm, { CategoryCreateData } from "./form";
 
 export interface CategoryCreatePageProps {
     errors: ProductErrorFragment[];
     disabled: boolean;
     saveButtonBarState: ConfirmButtonTransitionState;
-    onSubmit: (data: CategoryCreateData) => any;
-    onBack: () => void;
+    backUrl: string;
+    onSubmit(data: CategoryCreateData);
 }
 
 export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
     disabled,
     onSubmit,
-    onBack,
     errors,
     saveButtonBarState,
+    backUrl,
 }) => {
     const intl = useIntl();
+    const navigate = useNavigator();
 
     return (
-        <CategoryCreateForm onSubmit={onSubmit}>
-            {({ data, change, handlers, submit, hasChanged }) => (
+        <CategoryCreateForm onSubmit={onSubmit} disabled={disabled}>
+            {({ data, change, handlers, submit, isSaveDisabled }) => (
                 <Container>
-                    <Backlink onClick={onBack}>{intl.formatMessage(sectionNames.categories)}</Backlink>
+                    <Backlink href={backUrl}>{intl.formatMessage(sectionNames.categories)}</Backlink>
 
                     <PageHeader
                         title={intl.formatMessage({
-                            defaultMessage: "Create New Category",
                             id: "cgsY/X",
+                            defaultMessage: "Create New Category",
                             description: "page header",
                         })}
                     />
@@ -52,17 +54,16 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
                             disabled={disabled}
                             errors={errors}
                             onChange={change}
-                            onDescriptionChange={handlers.changeDescription}
                         />
 
                         <CardSpacer />
 
                         <SeoForm
-                            allowEmptySlug
+                            allowEmptySlug={true}
                             helperText={intl.formatMessage({
+                                id: "wQdR8M",
                                 defaultMessage:
                                     "Add search engine title and description to make this category easier to find",
-                                id: "wQdR8M",
                             })}
                             slug={data.slug}
                             slugPlaceholder={data.name}
@@ -80,10 +81,10 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
                         <Metadata data={data} onChange={handlers.changeMetadata} />
 
                         <Savebar
-                            onCancel={onBack}
+                            onCancel={() => navigate(backUrl)}
                             onSubmit={submit}
                             state={saveButtonBarState}
-                            disabled={disabled || !hasChanged}
+                            disabled={isSaveDisabled}
                         />
                     </div>
                 </Container>

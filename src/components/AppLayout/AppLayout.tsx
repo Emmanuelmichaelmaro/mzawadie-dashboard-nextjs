@@ -1,11 +1,9 @@
 // @ts-nocheck
-import logo from "@assets/images/mzawadie-logo-light.svg";
 import { LinearProgress, useMediaQuery } from "@material-ui/core";
 import { isDarkTheme } from "@mzawadie/core";
 import useAppState from "@mzawadie/hooks/useAppState";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useUser } from "@mzawadie/pages/auth";
-import { staffMemberDetailsUrl } from "@mzawadie/pages/staff/urls";
 import {
     makeStyles,
     SaleorTheme,
@@ -20,13 +18,14 @@ import React from "react";
 import { useIntl } from "react-intl";
 import useRouter from "use-react-router";
 
-import { Container } from "../Container";
+import Container from "../Container";
 import { ErrorPage } from "../ErrorPage";
 import { Navigator } from "../Navigator";
-import { NavigatorButton } from "../NavigatorButton";
+import NavigatorButton from "../NavigatorButton/NavigatorButton";
 import { UserChip } from "../UserChip";
 import useAppChannel from "./AppChannelContext";
 import AppChannelSelect from "./AppChannelSelect";
+import { SidebarLink } from "./SidebarLink";
 import { appLoaderHeight } from "./consts";
 import useMenuStructure from "./menuStructure";
 import { isMenuActive } from "./utils";
@@ -42,9 +41,6 @@ const useStyles = makeStyles(
             gridColumn: 2,
             position: "sticky",
             zIndex: 10,
-        },
-        appActionDocked: {
-            position: "static",
         },
         appLoader: {
             height: appLoaderHeight,
@@ -72,7 +68,7 @@ const useStyles = makeStyles(
             display: "grid",
             gridTemplateAreas: `"headerAnchor headerToolbar"`,
             [theme.breakpoints.down("sm")]: {
-                gridTemplateAreas: `"headerToolbar"
+                gridTemplateAreas: `"headerToolbar" 
         "headerAnchor"`,
             },
             marginBottom: theme.spacing(6),
@@ -89,6 +85,7 @@ const useStyles = makeStyles(
             },
         },
         root: {
+            isolation: "isolate",
             [theme.breakpoints.up("md")]: {
                 display: "flex",
             },
@@ -104,6 +101,8 @@ const useStyles = makeStyles(
 
         view: {
             marginLeft: 0,
+        },
+        viewMargins: {
             paddingBottom: theme.spacing(),
             [theme.breakpoints.up("sm")]: {
                 paddingBottom: theme.spacing(3),
@@ -120,19 +119,30 @@ const useStyles = makeStyles(
 
 interface AppLayoutProps {
     children: React.ReactNode;
+    fullSize?: boolean;
 }
 
-const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
-    const classes = useStyles({});
+const AppLayout: React.FC<AppLayoutProps> = ({ children, fullSize = false }) => {
+    const classes = useStyles();
+
     const { themeType, setTheme } = useTheme();
-    const { anchor: appActionAnchor, docked } = useActionBar();
+
+    const { anchor: appActionAnchor } = useActionBar();
+
     const appHeaderAnchor = useBacklink();
+
     const { logout, user } = useUser();
+
     const navigate = useNavigator();
+
     const intl = useIntl();
+
     const [appState, dispatchAppState] = useAppState();
+
     const { location } = useRouter();
+
     const [isNavigatorVisible, setNavigatorVisibility] = React.useState(false);
+
     const isMdUp = useMediaQuery((theme: SaleorTheme) => theme.breakpoints.up("md"));
 
     const { availableChannels, channel, isPickerActive, setChannel } = useAppChannel(false);
@@ -163,12 +173,13 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             <Navigator visible={isNavigatorVisible} setVisibility={setNavigatorVisibility} />
 
             <div className={classes.root}>
-                {isMdUp && (user?.userPermissions !== null || []) && (
+                {isMdUp && (
                     <Sidebar
                         activeId={activeMenu}
                         menuItems={menuStructure}
                         onMenuItemClick={handleMenuItemClick}
-                        logoHref={logo}
+                        logoHref="/"
+                        linkComponent={SidebarLink}
                     />
                 )}
 
@@ -184,17 +195,16 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                             <Container>
                                 <div className={classes.header}>
                                     <div className={classes.headerAnchor} ref={appHeaderAnchor} />
-
                                     <div className={classes.headerToolbar}>
                                         {!isMdUp && (
                                             <SidebarDrawer
                                                 menuItems={menuStructure}
+                                                logoHref="/"
                                                 onMenuItemClick={handleMenuItemClick}
+                                                linkComponent={SidebarLink}
                                             />
                                         )}
-
                                         <div className={classes.spacer} />
-
                                         <div className={classes.userBar}>
                                             <NavigatorButton
                                                 isMac={navigator.platform.toLowerCase().includes("mac")}
@@ -213,9 +223,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                                                 isDarkThemeEnabled={isDarkTheme(themeType)}
                                                 user={user}
                                                 onLogout={logout}
-                                                onProfileClick={() =>
-                                                    navigate(staffMemberDetailsUrl(user?.id))
-                                                }
                                                 onThemeToggle={toggleTheme}
                                             />
                                         </div>
@@ -224,7 +231,11 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                             </Container>
                         </div>
 
-                        <main className={classes.view}>
+                        <main
+                            className={classNames(classes.view, {
+                                [classes.viewMargins]: !fullSize,
+                            })}
+                        >
                             {appState.error
                                 ? appState.error.type === "unhandled" && (
                                       <ErrorPage
@@ -237,12 +248,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                         </main>
                     </div>
 
-                    <div
-                        className={classNames(classes.appAction, {
-                            [classes.appActionDocked]: docked,
-                        })}
-                        ref={appActionAnchor}
-                    />
+                    <div className={classes.appAction} ref={appActionAnchor} />
                 </div>
             </div>
         </>

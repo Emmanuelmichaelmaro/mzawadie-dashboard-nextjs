@@ -30,13 +30,13 @@ const PermissionGroupInfo: React.FC<PermissionGroupInfoProps> = ({
 
     return (
         <Card>
-            <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
+            <CardTitle title={intl.formatMessage(commonMessages.generalInformations)}></CardTitle>
             <CardContent>
                 <TextField
                     name="name"
                     label={intl.formatMessage({
-                        defaultMessage: "Group name",
                         id: "rs815i",
+                        defaultMessage: "Group name",
                         description: "text field label",
                     })}
                     value={data.name}

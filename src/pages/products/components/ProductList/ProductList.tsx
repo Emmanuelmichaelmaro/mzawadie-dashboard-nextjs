@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { TableBody, TableCell, TableFooter, TableRow, Typography } from "@material-ui/core";
+import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
 import { ChannelsAvailabilityDropdown } from "@mzawadie/components/ChannelsAvailabilityDropdown";
 import {
     getChannelAvailabilityColor,
@@ -14,25 +14,19 @@ import { TableCellAvatar } from "@mzawadie/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@mzawadie/components/TableCellAvatar/Avatar";
 import { TableCellHeader } from "@mzawadie/components/TableCellHeader";
 import { TableHead } from "@mzawadie/components/TableHead";
-import { TablePagination } from "@mzawadie/components/TablePagination";
+import { TablePaginationWithContext } from "@mzawadie/components/TablePagination";
+import { TableRowLink } from "@mzawadie/components/TableRowLink";
 import { TooltipTableCellHeader } from "@mzawadie/components/TooltipTableCellHeader";
 import { commonTooltipMessages } from "@mzawadie/components/TooltipTableCellHeader/messages";
-import {
-    ProductListColumns,
-    maybe,
-    renderCollection,
-    ChannelProps,
-    ListActions,
-    ListProps,
-    SortPage,
-    RelayToFlat,
-} from "@mzawadie/core";
+import { ProductListColumns } from "@mzawadie/core";
+import { maybe, renderCollection } from "@mzawadie/core";
+import { ChannelProps, ListActions, ListProps, RelayToFlat, SortPage } from "@mzawadie/core";
 import { GridAttributesQuery, ProductListQuery } from "@mzawadie/graphql";
 import {
     getAttributeIdFromColumnValue,
     isAttributeColumnValue,
 } from "@mzawadie/pages/products/components/ProductListPage/utils";
-import { ProductListUrlSortField } from "@mzawadie/pages/products/urls";
+import { ProductListUrlSortField, productUrl } from "@mzawadie/pages/products/urls";
 import { canBeSorted } from "@mzawadie/pages/products/views/ProductList/sort";
 import TDisplayColumn, { DisplayColumnProps } from "@mzawadie/utils/columns/DisplayColumn";
 import { getArrowDirection } from "@mzawadie/utils/sort";
@@ -41,6 +35,7 @@ import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import ProductListAttribute from "./ProductListAttribute";
 import { columnsMessages } from "./messages";
 
 const useStyles = makeStyles(
@@ -63,7 +58,10 @@ const useStyles = makeStyles(
             },
         },
         colAttribute: {
-            width: 150,
+            width: 200,
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
         },
         colFill: {
             padding: 0,
@@ -115,7 +113,6 @@ interface ProductListProps
     activeAttributeSortId: string;
     gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
     products: RelayToFlat<ProductListQuery["products"]>;
-    loading: boolean;
 }
 
 export const ProductList: React.FC<ProductListProps> = (props) => {
@@ -125,25 +122,24 @@ export const ProductList: React.FC<ProductListProps> = (props) => {
         disabled,
         isChecked,
         gridAttributes,
-        pageInfo,
         products,
         selected,
         sort,
         toggle,
         toggleAll,
         toolbar,
-        onNextPage,
-        onPreviousPage,
         onUpdateListSettings,
-        onRowClick,
         onSort,
         selectedChannelId,
         filterDependency,
     } = props;
 
     const classes = useStyles(props);
+
     const intl = useIntl();
+
     const gridAttributesFromSettings = settings.columns.filter(isAttributeColumnValue);
+
     const numberOfColumns = (products?.length === 0 ? 1 : 2) + settings.columns.length;
 
     return (
@@ -197,7 +193,7 @@ export const ProductList: React.FC<ProductListProps> = (props) => {
                         onClick={() => onSort(ProductListUrlSortField.name)}
                     >
                         <span className={classes.colNameHeader}>
-                            <FormattedMessage defaultMessage="Name" id="VQLIXd" description="product" />
+                            <FormattedMessage id="VQLIXd" defaultMessage="Name" description="product" />
                         </span>
                     </TableCellHeader>
 
@@ -299,14 +295,10 @@ export const ProductList: React.FC<ProductListProps> = (props) => {
 
                 <TableFooter>
                     <TableRow>
-                        <TablePagination
+                        <TablePaginationWithContext
                             colSpan={numberOfColumns}
                             settings={settings}
-                            hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-                            onNextPage={onNextPage}
                             onUpdateListSettings={onUpdateListSettings}
-                            hasPreviousPage={pageInfo && !disabled ? pageInfo.hasPreviousPage : false}
-                            onPreviousPage={onPreviousPage}
                         />
                     </TableRow>
                 </TableFooter>
@@ -316,18 +308,18 @@ export const ProductList: React.FC<ProductListProps> = (props) => {
                         products,
                         (product) => {
                             const isSelected = product ? isChecked(product.id) : false;
-                            const channel = product?.channelListings.find(
+                            const channel = product?.channelListings?.find(
                                 (listing) => listing.channel.id === selectedChannelId
                             );
 
                             return (
-                                <TableRow
+                                <TableRowLink
                                     selected={isSelected}
                                     hover={!!product}
                                     key={product ? product.id : "skeleton"}
-                                    onClick={product && onRowClick(product.id)}
+                                    href={product && productUrl(product.id)}
                                     className={classes.link}
-                                    data-test-id={`id-${product ? product?.id : "skeleton"}`}
+                                    data-test-id={"id-" + (product ? product?.id : "skeleton")}
                                 >
                                     <TableCell padding="checkbox">
                                         <Checkbox
@@ -339,27 +331,8 @@ export const ProductList: React.FC<ProductListProps> = (props) => {
                                     </TableCell>
 
                                     <TableCellAvatar thumbnail={maybe(() => product.thumbnail.url)}>
-                                        {product?.productType ? (
-                                            <div className={classes.colNameWrapper}>
-                                                <span data-test-id="name">{product.name}</span>
-                                                {product?.productType && (
-                                                    <Typography variant="caption">
-                                                        {product.productType.hasVariants ? (
-                                                            <FormattedMessage
-                                                                defaultMessage="Configurable"
-                                                                id="X90t9n"
-                                                                description="product type"
-                                                            />
-                                                        ) : (
-                                                            <FormattedMessage
-                                                                defaultMessage="Simple"
-                                                                id="Jz/Cb+"
-                                                                description="product type"
-                                                            />
-                                                        )}
-                                                    </Typography>
-                                                )}
-                                            </div>
+                                        {product?.name ? (
+                                            <span data-test-id="name">{product.name}</span>
                                         ) : (
                                             <Skeleton />
                                         )}
@@ -411,19 +384,10 @@ export const ProductList: React.FC<ProductListProps> = (props) => {
                                                 gridAttribute
                                             )}
                                         >
-                                            {maybe<React.ReactNode>(() => {
-                                                const attribute = product.attributes.find(
-                                                    (attribute) =>
-                                                        attribute.attribute.id ===
-                                                        getAttributeIdFromColumnValue(gridAttribute)
-                                                );
-                                                if (attribute) {
-                                                    return attribute.values
-                                                        .map((value) => value.name)
-                                                        .join(", ");
-                                                }
-                                                return "-";
-                                            }, <Skeleton />)}
+                                            <ProductListAttribute
+                                                attribute={gridAttribute}
+                                                productAttributes={product?.attributes}
+                                            />
                                         </TableCell>
                                     ))}
 
@@ -449,13 +413,13 @@ export const ProductList: React.FC<ProductListProps> = (props) => {
                                             )}
                                         </TableCell>
                                     </DisplayColumn>
-                                </TableRow>
+                                </TableRowLink>
                             );
                         },
                         () => (
                             <TableRow>
                                 <TableCell colSpan={numberOfColumns}>
-                                    <FormattedMessage defaultMessage="No products found" id="Q1Uzbb" />
+                                    <FormattedMessage id="Q1Uzbb" defaultMessage="No products found" />
                                 </TableCell>
                             </TableRow>
                         )

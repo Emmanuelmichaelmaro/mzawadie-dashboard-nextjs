@@ -1,6 +1,6 @@
 // @ts-nocheck
+import { Backlink } from "@mzawadie/components/Backlink";
 import CardSpacer from "@mzawadie/components/CardSpacer";
-import { ConfirmButtonTransitionState } from "@mzawadie/components/ConfirmButton";
 import Container from "@mzawadie/components/Container";
 import { CountryList } from "@mzawadie/components/CountryList";
 import { Form } from "@mzawadie/components/Form";
@@ -10,47 +10,45 @@ import { MultiAutocompleteChoiceType } from "@mzawadie/components/MultiAutocompl
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
-import { ChannelProps, FetchMoreProps, SearchProps, getStringOrPlaceholder } from "@mzawadie/core";
+import { getStringOrPlaceholder } from "@mzawadie/core";
+import { ChannelProps, FetchMoreProps, SearchProps } from "@mzawadie/core";
 import {
     ChannelFragment,
     ShippingErrorFragment,
+    ShippingMethodTypeEnum,
     ShippingZoneDetailsFragment,
     ShippingZoneQuery,
-    ShippingMethodTypeEnum,
 } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
+import useNavigator from "@mzawadie/hooks/useNavigator";
 import useStateFromProps from "@mzawadie/hooks/useStateFromProps";
+import { shippingZonesListUrl } from "@mzawadie/pages/shipping/urls";
 import createMultiAutocompleteSelectHandler from "@mzawadie/utils/handlers/multiAutocompleteSelectChangeHandler";
 import { mapNodeToChoice } from "@mzawadie/utils/maps";
 import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChangeTrigger";
-import { Backlink } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
+import { ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";
 import { ShippingZoneInfo } from "../ShippingZoneInfo";
 import { ShippingZoneRates } from "../ShippingZoneRates";
 import { ShippingZoneSettingsCard } from "../ShippingZoneSettingsCard";
-import { ShippingZoneUpdateFormData } from "./types";
 import { getInitialFormData } from "./utils";
 
 const messages = defineMessages({
     countries: {
-        defaultMessage: "Countries",
         id: "55LMJv",
+        defaultMessage: "Countries",
         description: "country list header",
     },
-    defaultZone: {
-        defaultMessage:
-            "This is default shipping zone, which means that it covers all of the countries which are not assigned to other shipping zones",
-        id: "ddWFtA",
-    },
     noCountriesAssigned: {
-        defaultMessage: "Currently, there are no countries assigned to this shipping zone",
         id: "y7mfbl",
+        defaultMessage: "Currently, there are no countries assigned to this shipping zone",
     },
     shipping: {
-        defaultMessage: "Shipping",
         id: "G0+gAp",
+        defaultMessage: "Shipping",
         description: "shipping section header",
     },
 });
@@ -61,17 +59,16 @@ export interface ShippingZoneDetailsPageProps extends FetchMoreProps, SearchProp
     saveButtonBarState: ConfirmButtonTransitionState;
     shippingZone: ShippingZoneQuery["shippingZone"];
     warehouses: ShippingZoneDetailsFragment["warehouses"];
-    onBack: () => void;
     onCountryAdd: () => void;
     onCountryRemove: (code: string) => void;
     onDelete: () => void;
     onPriceRateAdd: () => void;
-    onPriceRateEdit: (id: string) => void;
+    getPriceRateEditHref: (id: string) => string;
     onRateRemove: (rateId: string) => void;
     onSubmit: (data: ShippingZoneUpdateFormData) => SubmitPromise;
     onWarehouseAdd: () => void;
     onWeightRateAdd: () => void;
-    onWeightRateEdit: (id: string) => void;
+    getWeightRateEditHref: (id: string) => string;
     allChannels?: ChannelFragment[];
 }
 
@@ -87,19 +84,18 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
     errors,
     hasMore,
     loading,
-    onBack,
     onCountryAdd,
     onCountryRemove,
     onDelete,
     onFetchMore,
     onPriceRateAdd,
-    onPriceRateEdit,
+    getPriceRateEditHref,
     onRateRemove,
     onSearchChange,
     onSubmit,
     onWarehouseAdd,
     onWeightRateAdd,
-    onWeightRateEdit,
+    getWeightRateEditHref,
     saveButtonBarState,
     selectedChannelId,
     shippingZone,
@@ -107,6 +103,8 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
     allChannels,
 }) => {
     const intl = useIntl();
+
+    const navigate = useNavigator();
 
     const initialForm = getInitialFormData(shippingZone);
 
@@ -125,8 +123,8 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
     const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
 
     return (
-        <Form initial={initialForm} onSubmit={onSubmit}>
-            {({ change, data, hasChanged, submit, toggleValue }) => {
+        <Form initial={initialForm} onSubmit={onSubmit} confirmLeave disabled={disabled}>
+            {({ change, data, isSaveDisabled, submit, toggleValue }) => {
                 const handleWarehouseChange = createMultiAutocompleteSelectHandler(
                     toggleValue,
                     setWarehouseDisplayValues,
@@ -145,10 +143,12 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
 
                 return (
                     <Container>
-                        <Backlink onClick={onBack}>
+                        <Backlink href={shippingZonesListUrl()}>
                             <FormattedMessage {...messages.shipping} />
                         </Backlink>
+
                         <PageHeader title={shippingZone?.name} />
+
                         <Grid>
                             <div>
                                 <ShippingZoneInfo
@@ -157,26 +157,26 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                                     errors={errors}
                                     onChange={change}
                                 />
+
                                 <CardSpacer />
+
                                 <CountryList
                                     countries={shippingZone?.countries}
                                     disabled={disabled}
                                     emptyText={getStringOrPlaceholder(
-                                        shippingZone?.default === undefined
-                                            ? undefined
-                                            : shippingZone.default
-                                            ? intl.formatMessage(messages.defaultZone)
-                                            : intl.formatMessage(messages.noCountriesAssigned)
+                                        shippingZone && intl.formatMessage(messages.noCountriesAssigned)
                                     )}
                                     onCountryAssign={onCountryAdd}
                                     onCountryUnassign={onCountryRemove}
                                     title={intl.formatMessage(messages.countries)}
                                 />
+
                                 <CardSpacer />
+
                                 <ShippingZoneRates
                                     disabled={disabled}
                                     onRateAdd={onPriceRateAdd}
-                                    onRateEdit={onPriceRateEdit}
+                                    getRateEditHref={getPriceRateEditHref}
                                     onRateRemove={onRateRemove}
                                     rates={shippingZone?.shippingMethods?.filter(
                                         (method) => method.type === ShippingMethodTypeEnum.PRICE
@@ -185,11 +185,13 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                                     selectedChannelId={selectedChannelId}
                                     testId="add-price-rate"
                                 />
+
                                 <CardSpacer />
+
                                 <ShippingZoneRates
                                     disabled={disabled}
                                     onRateAdd={onWeightRateAdd}
-                                    onRateEdit={onWeightRateEdit}
+                                    getRateEditHref={getWeightRateEditHref}
                                     onRateRemove={onRateRemove}
                                     rates={shippingZone?.shippingMethods?.filter(
                                         (method) => method.type === ShippingMethodTypeEnum.WEIGHT
@@ -198,9 +200,12 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                                     selectedChannelId={selectedChannelId}
                                     testId="add-weight-rate"
                                 />
+
                                 <CardSpacer />
+
                                 <Metadata data={data} onChange={changeMetadata} />
                             </div>
+
                             <div>
                                 <ShippingZoneSettingsCard
                                     formData={data}
@@ -218,9 +223,10 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                                 />
                             </div>
                         </Grid>
+
                         <Savebar
-                            disabled={disabled || !hasChanged}
-                            onCancel={onBack}
+                            disabled={isSaveDisabled}
+                            onCancel={() => navigate(shippingZonesListUrl())}
                             onDelete={onDelete}
                             onSubmit={submit}
                             state={saveButtonBarState}
@@ -231,5 +237,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
         </Form>
     );
 };
+
 ShippingZoneDetailsPage.displayName = "ShippingZoneDetailsPage";
+
 export default ShippingZoneDetailsPage;

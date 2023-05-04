@@ -6,23 +6,25 @@ import Link from "@mzawadie/components/Link";
 import { Money } from "@mzawadie/components/Money";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
+import { TableButtonWrapper } from "@mzawadie/components/TableButtonWrapper/TableButtonWrapper";
+import { TableRowLink } from "@mzawadie/components/TableRowLink";
 import { renderCollection } from "@mzawadie/core";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { HorizontalSpacer } from "@mzawadie/pages/apps/components/HorizontalSpacer";
 import { customerUrl } from "@mzawadie/pages/customers/urls";
-import { useGiftCardListDialogs } from "@mzawadie/pages/giftCards/components/GiftCardsList/providers/GiftCardListDialogsProvider";
-import { useGiftCardList } from "@mzawadie/pages/giftCards/components/GiftCardsList/providers/GiftCardListProvider";
+import GiftCardStatusChip from "@mzawadie/pages/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
+import { PLACEHOLDER } from "@mzawadie/pages/giftCards/components/GiftCardUpdate/types";
+import { giftCardListUrl, giftCardUrl } from "@mzawadie/pages/giftCards/urls";
 import { productUrl } from "@mzawadie/pages/products/urls";
 import { PillLink } from "@saleor/macaw-ui";
 import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Link as RouterLink } from "react-router-dom";
 
-import { giftCardListUrl, giftCardUrl } from "../../../urls";
-import GiftCardStatusChip from "../../GiftCardStatusChip/GiftCardStatusChip";
-import { PLACEHOLDER } from "../../GiftCardUpdate/types";
 import { GiftCardListSearchAndFilters } from "../GiftCardListSearchAndFilters";
 import { giftCardsListTableMessages as messages } from "../messages";
+import { useGiftCardListDialogs } from "../providers/GiftCardListDialogsProvider";
+import { useGiftCardList } from "../providers/GiftCardListProvider";
 import { canBeSorted } from "../sort";
 import { useTableStyles as useStyles } from "../styles";
 import { GiftCardUrlSortField } from "../types";
@@ -51,18 +53,15 @@ const GiftCardsListTable: React.FC = () => {
         }
     });
 
-    const redirectToGiftCardUpdate = (id: string) => () => navigate(giftCardUrl(id));
-
-    const onLinkClick: React.MouseEventHandler = (event) => {
-        event.stopPropagation();
-    };
-
     return (
         <Card>
             <GiftCardListSearchAndFilters />
+            
             <ResponsiveTable>
                 <GiftCardsListTableHeader isCurrencySelected={isCurrencySelected} />
+
                 <GiftCardsListTableFooter />
+
                 <TableBody>
                     {renderCollection(
                         giftCards,
@@ -73,9 +72,11 @@ const GiftCardsListTable: React.FC = () => {
                                         <TableCell padding="checkbox">
                                             <Checkbox />
                                         </TableCell>
+
                                         <TableCell className={classes.skeleton} colSpan={5}>
                                             <Skeleton />
                                         </TableCell>
+
                                         <TableCell className={classes.colDelete}>
                                             <DeleteIconButton />
                                         </TableCell>
@@ -94,12 +95,12 @@ const GiftCardsListTable: React.FC = () => {
                             } = giftCard;
 
                             return (
-                                <TableRow
-                                    onClick={redirectToGiftCardUpdate(id)}
+                                <TableRowLink
+                                    href={giftCardUrl(id)}
                                     className={classes.row}
                                     key={id}
                                     hover={!!giftCard}
-                                    data-test-id={`gift-card-row-${id}`}
+                                    data-test-id={"gift-card-row-" + id}
                                 >
                                     <TableCell padding="checkbox">
                                         <Checkbox
@@ -110,6 +111,7 @@ const GiftCardsListTable: React.FC = () => {
                                             onChange={() => toggle(id)}
                                         />
                                     </TableCell>
+
                                     <TableCell className={classes.colCardCode}>
                                         <div className={classes.cardCodeContainer}>
                                             <Typography>
@@ -117,40 +119,54 @@ const GiftCardsListTable: React.FC = () => {
                                                     last4CodeChars,
                                                 })}
                                             </Typography>
+
                                             <>
                                                 <HorizontalSpacer spacing={2} />
                                                 <GiftCardStatusChip giftCard={giftCard} />
                                             </>
                                         </div>
                                     </TableCell>
+
                                     <TableCell>
                                         <Typography>{getTagCellText(tags)}</Typography>
                                     </TableCell>
+
                                     <TableCell>
                                         {product ? (
-                                            <PillLink
-                                                component={RouterLink}
-                                                to={productUrl(product?.id)}
-                                                onClick={onLinkClick}
-                                            >
-                                                {product?.name}
-                                            </PillLink>
+                                            <TableButtonWrapper>
+                                                <PillLink
+                                                    className={classes.pill}
+                                                    component={RouterLink}
+                                                    to={productUrl(product?.id)}
+                                                    onClick={(event) => {
+                                                        event.stopPropagation();
+                                                        navigate(productUrl(product?.id));
+                                                    }}
+                                                >
+                                                    {product?.name}
+                                                </PillLink>
+                                            </TableButtonWrapper>
                                         ) : (
                                             PLACEHOLDER
                                         )}
                                     </TableCell>
+
                                     <TableCell>
                                         {usedBy ? (
-                                            <Link href={customerUrl(usedBy?.id)}>
-                                                {`${usedBy?.firstName} ${usedBy?.lastName}`}
-                                            </Link>
+                                            <TableButtonWrapper>
+                                                <Link href={customerUrl(usedBy?.id)}>
+                                                    {`${usedBy?.firstName} ${usedBy?.lastName}`}
+                                                </Link>
+                                            </TableButtonWrapper>
                                         ) : (
                                             <Typography noWrap>{usedByEmail || PLACEHOLDER}</Typography>
                                         )}
                                     </TableCell>
+
                                     <TableCell align="right" className={classes.colBalance}>
                                         <Money money={currentBalance} />
                                     </TableCell>
+
                                     <TableCell className={classes.colDelete}>
                                         <DeleteIconButton
                                             onClick={(event) => {
@@ -159,7 +175,7 @@ const GiftCardsListTable: React.FC = () => {
                                             }}
                                         />
                                     </TableCell>
-                                </TableRow>
+                                </TableRowLink>
                             );
                         },
                         () => (

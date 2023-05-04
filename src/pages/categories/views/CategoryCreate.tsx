@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
+import { getMutationErrors } from "@mzawadie/core";
 import {
     CategoryCreateMutation,
     useCategoryCreateMutation,
@@ -34,11 +35,11 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({ parentId
             notify({
                 status: "success",
                 text: intl.formatMessage({
-                    defaultMessage: "Category created",
                     id: "xl7Fag",
+                    defaultMessage: "Category created",
                 }),
             });
-            navigate(categoryUrl(data?.categoryCreate?.category?.id));
+            navigate(categoryUrl(data.categoryCreate.category.id));
         }
     };
 
@@ -46,7 +47,7 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({ parentId
         onCompleted: handleSuccess,
     });
 
-    const handleCreate = async (formData: CategoryCreateData): Promise<string | null> => {
+    const handleCreate = async (formData: CategoryCreateData) => {
         const result = await createCategory({
             variables: {
                 input: {
@@ -62,7 +63,10 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({ parentId
             },
         });
 
-        return result.data?.categoryCreate?.category?.id || null;
+        return {
+            id: result.data?.categoryCreate?.category?.id || null,
+            errors: getMutationErrors(result),
+        };
     };
 
     const handleSubmit = createMetadataCreateHandler(
@@ -75,16 +79,17 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({ parentId
         <>
             <WindowTitle
                 title={intl.formatMessage({
-                    defaultMessage: "Create category",
                     id: "Irflxf",
+                    defaultMessage: "Create category",
                     description: "window title",
                 })}
             />
+            
             <CategoryCreatePage
                 saveButtonBarState={createCategoryResult.status}
                 errors={createCategoryResult.data?.categoryCreate?.errors || []}
                 disabled={createCategoryResult.loading}
-                onBack={() => navigate(parentId ? categoryUrl(parentId) : categoryListUrl())}
+                backUrl={parentId ? categoryUrl(parentId) : categoryListUrl()}
                 onSubmit={handleSubmit}
             />
         </>

@@ -33,14 +33,11 @@ interface AddressEditProps {
     data: AddressTypeInput;
     disabled?: boolean;
     errors: Array<AccountErrorFragment | OrderErrorFragment>;
-    onChange: (event: React.ChangeEvent<any>) => any;
-    onCountryChange: (event: React.ChangeEvent<any>) => any;
+    onChange(event: React.ChangeEvent<any>);
+    onCountryChange(event: React.ChangeEvent<any>);
 }
 
-function getErrorMessage(
-    err: AccountErrorFragment | OrderErrorFragment,
-    intl: IntlShape
-): string | undefined {
+function getErrorMessage(err: AccountErrorFragment | OrderErrorFragment, intl: IntlShape): string {
     if (err?.__typename === "AccountError") {
         return getAccountErrorMessage(err, intl);
     }
@@ -87,10 +84,13 @@ const AddressEdit: React.FC<AddressEditProps> = (props) => {
                         value={data.firstName}
                         fullWidth
                         InputProps={{
-                            autoComplete: "given-name",
+                            // Setting 'autoComplete: "new-password"' is the only way to
+                            // disable Chrome's autofill on forms as of early 2022
+                            autoComplete: "new-password",
                         }}
                     />
                 </div>
+
                 <div>
                     <TextField
                         disabled={disabled}
@@ -102,12 +102,14 @@ const AddressEdit: React.FC<AddressEditProps> = (props) => {
                         value={data.lastName}
                         fullWidth
                         InputProps={{
-                            autoComplete: "family-name",
+                            autoComplete: "new-password",
                         }}
                     />
                 </div>
             </div>
+
             <FormSpacer />
+
             <div className={classes.root}>
                 <div>
                     <TextField
@@ -115,18 +117,19 @@ const AddressEdit: React.FC<AddressEditProps> = (props) => {
                         error={!!formErrors.companyName}
                         helperText={getErrorMessage(formErrors.companyName, intl)}
                         label={intl.formatMessage({
-                            defaultMessage: "Company",
                             id: "9YazHG",
+                            defaultMessage: "Company",
                         })}
                         name="companyName"
                         onChange={onChange}
                         value={data.companyName}
                         fullWidth
                         InputProps={{
-                            autoComplete: "organization",
+                            autoComplete: "new-password",
                         }}
                     />
                 </div>
+
                 <div>
                     <TextField
                         disabled={disabled}
@@ -134,53 +137,59 @@ const AddressEdit: React.FC<AddressEditProps> = (props) => {
                         fullWidth
                         helperText={getErrorMessage(formErrors.phone, intl)}
                         label={intl.formatMessage({
-                            defaultMessage: "Phone",
                             id: "O95R3Z",
+                            defaultMessage: "Phone",
                         })}
                         name="phone"
                         value={data.phone}
                         onChange={onChange}
                         InputProps={{
-                            autoComplete: "tel",
+                            autoComplete: "new-password",
                         }}
                     />
                 </div>
             </div>
+
             <FormSpacer />
+
             <TextField
                 disabled={disabled}
                 error={!!formErrors.streetAddress1}
                 helperText={getErrorMessage(formErrors.streetAddress1, intl)}
                 label={intl.formatMessage({
-                    defaultMessage: "Address line 1",
                     id: "B52Em/",
+                    defaultMessage: "Address line 1",
                 })}
                 name="streetAddress1"
                 onChange={onChange}
                 value={data.streetAddress1}
                 fullWidth
                 InputProps={{
-                    autoComplete: "address-line1",
+                    autoComplete: "new-password",
                 }}
             />
+
             <FormSpacer />
+
             <TextField
                 disabled={disabled}
                 error={!!formErrors.streetAddress2}
                 helperText={getErrorMessage(formErrors.streetAddress2, intl)}
                 label={intl.formatMessage({
-                    defaultMessage: "Address line 2",
                     id: "oQY0a2",
+                    defaultMessage: "Address line 2",
                 })}
                 name="streetAddress2"
                 onChange={onChange}
                 value={data.streetAddress2}
                 fullWidth
                 InputProps={{
-                    autoComplete: "address-line2",
+                    autoComplete: "new-password",
                 }}
             />
+
             <FormSpacer />
+
             <div className={classes.root}>
                 <div>
                     <TextField
@@ -188,39 +197,41 @@ const AddressEdit: React.FC<AddressEditProps> = (props) => {
                         error={!!formErrors.city}
                         helperText={getErrorMessage(formErrors.city, intl)}
                         label={intl.formatMessage({
-                            defaultMessage: "City",
                             id: "TE4fIS",
+                            defaultMessage: "City",
                         })}
                         name="city"
                         onChange={onChange}
                         value={data.city}
                         fullWidth
                         InputProps={{
-                            autoComplete: "address-level2",
+                            autoComplete: "new-password",
                         }}
                     />
                 </div>
+
                 <div>
                     <TextField
                         disabled={disabled}
                         error={!!formErrors.postalCode}
                         helperText={getErrorMessage(formErrors.postalCode, intl)}
                         label={intl.formatMessage({
-                            defaultMessage: "ZIP / Postal code",
                             id: "oYGfnY",
+                            defaultMessage: "ZIP / Postal code",
                         })}
                         name="postalCode"
                         onChange={onChange}
                         value={data.postalCode}
                         fullWidth
                         InputProps={{
-                            autoComplete: "postal-code",
+                            autoComplete: "new-password",
                         }}
                     />
                 </div>
             </div>
 
             <FormSpacer />
+
             <div className={classes.root}>
                 <div>
                     <SingleAutocompleteSelectField
@@ -230,35 +241,31 @@ const AddressEdit: React.FC<AddressEditProps> = (props) => {
                         error={!!formErrors.country}
                         helperText={getErrorMessage(formErrors.country, intl)}
                         label={intl.formatMessage({
-                            defaultMessage: "Country",
                             id: "vONi+O",
+                            defaultMessage: "Country",
                         })}
                         name="country"
                         onChange={onCountryChange}
                         value={data.country}
                         choices={countries}
-                        InputProps={{
-                            inputProps: {
-                                autoComplete: "none",
-                            },
-                        }}
                     />
                 </div>
+
                 <div>
                     <TextField
                         disabled={disabled}
                         error={!!formErrors.countryArea}
                         helperText={getErrorMessage(formErrors.countryArea, intl)}
                         label={intl.formatMessage({
-                            defaultMessage: "Country area",
                             id: "AuwpCm",
+                            defaultMessage: "Country area",
                         })}
                         name="countryArea"
                         onChange={onChange}
                         value={data.countryArea}
                         fullWidth
                         InputProps={{
-                            autoComplete: "address-level1",
+                            autoComplete: "new-password",
                         }}
                     />
                 </div>
@@ -266,5 +273,7 @@ const AddressEdit: React.FC<AddressEditProps> = (props) => {
         </>
     );
 };
+
 AddressEdit.displayName = "AddressEdit";
+
 export default AddressEdit;

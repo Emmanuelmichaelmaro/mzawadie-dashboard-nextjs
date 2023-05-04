@@ -9,13 +9,14 @@ import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import {
     productTypeAddPath,
+    ProductTypeAddUrlQueryParams,
     productTypeListPath,
     ProductTypeListUrlQueryParams,
     ProductTypeListUrlSortField,
     productTypePath,
     ProductTypeUrlQueryParams,
 } from "./urls";
-import ProductTypeCreate from "./views/ProductTypeCreate";
+import ProductTypeCreateComponent from "./views/ProductTypeCreate";
 import { ProductTypeListComponent } from "./views/ProductTypeList";
 import ProductTypeUpdateComponent from "./views/ProductTypeUpdate";
 
@@ -25,12 +26,26 @@ const ProductTypeList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
     return <ProductTypeListComponent params={params} />;
 };
 
+interface ProductTypeCreateRouteParams {
+    id: string;
+}
+
+const ProductTypeCreate: React.FC<RouteComponentProps<ProductTypeCreateRouteParams>> = ({
+    location,
+}) => {
+    const qs = parseQs(location.search.substr(1));
+    const params: ProductTypeAddUrlQueryParams = qs;
+
+    return <ProductTypeCreateComponent params={params} />;
+};
+
 interface ProductTypeUpdateRouteParams {
     id: string;
 }
 
 const ProductTypeUpdate: React.FC<RouteComponentProps<ProductTypeUpdateRouteParams>> = ({ match }) => {
-    const params: ProductTypeUrlQueryParams = parseQs(location.search.substr(1));
+    const qs = parseQs(location.search.substr(1));
+    const params: ProductTypeUrlQueryParams = qs;
 
     return <ProductTypeUpdateComponent id={decodeURIComponent(match.params.id)} params={params} />;
 };
@@ -41,7 +56,6 @@ export const ProductTypeRouter: React.FC = () => {
     return (
         <>
             <WindowTitle title={intl.formatMessage(sectionNames.productTypes)} />
-
             <Switch>
                 <Route exact path={productTypeListPath} component={ProductTypeList} />
                 <Route exact path={productTypeAddPath} component={ProductTypeCreate} />

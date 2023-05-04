@@ -1,16 +1,17 @@
 // @ts-nocheck
-import { TableBody, TableCell, TableHead, TableRow } from "@material-ui/core";
+import { TableBody, TableCell, TableHead, TableRow, Typography } from "@material-ui/core";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
-import { AVATAR_MARGIN } from "@mzawadie/components/TableCellAvatar/Avatar";
-import { maybe, renderCollection } from "@mzawadie/core";
-import { OrderLineFragment } from "@mzawadie/graphql";
+import Skeleton from "@mzawadie/components/Skeleton";
+import { renderCollection } from "@mzawadie/core";
+import { OrderDetailsFragment, OrderErrorFragment } from "@mzawadie/graphql";
 import {
     OrderLineDiscountConsumer,
     OrderLineDiscountContextConsumerProps,
 } from "@mzawadie/pages/products/components/OrderDiscountProviders/OrderLineDiscountProviders";
+import getOrderErrorMessage from "@mzawadie/utils/errors/order";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import TableLine from "./TableLine";
 
@@ -21,97 +22,112 @@ export interface FormData {
 const useStyles = makeStyles(
     (theme) => ({
         colAction: {
-            "&:last-child": {
-                paddingRight: 0,
-            },
             width: theme.spacing(10),
         },
         colName: {
             width: "auto",
         },
-        colNameLabel: {
-            marginLeft: AVATAR_MARGIN,
-        },
-        colPrice: {
-            textAlign: "right",
-        },
-        colQuantity: {
-            textAlign: "right",
-        },
-        colTotal: {
-            textAlign: "right",
+        colNameLabel: {},
+        colPrice: {},
+        colQuantity: {},
+        colTotal: {},
+        skeleton: {
+            margin: theme.spacing(0, 4),
         },
         errorInfo: {
             color: theme.palette.error.main,
+            marginLeft: theme.spacing(1.5),
+            display: "inline",
         },
         quantityField: {
             "& input": {
                 padding: "12px 12px 10px",
-                textAlign: "right",
             },
             width: 60,
         },
         table: {
-            tableLayout: "fixed",
+            [theme.breakpoints.up("md")]: {
+                tableLayout: "auto",
+            },
+            tableLayout: "auto",
         },
     }),
     { name: "OrderDraftDetailsProducts" }
 );
 
 interface OrderDraftDetailsProductsProps {
-    lines: OrderLineFragment[];
+    order?: OrderDetailsFragment;
+    errors: OrderErrorFragment[];
     onOrderLineChange: (id: string, data: FormData) => void;
     onOrderLineRemove: (id: string) => void;
 }
 
 const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = (props) => {
-    const { lines, onOrderLineChange, onOrderLineRemove } = props;
+    const { order, errors, onOrderLineChange, onOrderLineRemove } = props;
+
+    const lines = order?.lines ?? [];
+
+    const intl = useIntl();
 
     const classes = useStyles(props);
 
+    const formErrors = errors.filter((error) => error.field === "lines");
+
+    if (order === undefined) {
+        return <Skeleton className={classes.skeleton} />;
+    }
+
     return (
         <ResponsiveTable className={classes.table}>
-            {maybe(() => !!lines.length) && (
+            {!!lines.length && (
                 <TableHead>
                     <TableRow>
-                        <TableCell className={classes.colName}>
+                        <TableCell className={classes.colName} colSpan={2}>
                             <span className={classes.colNameLabel}>
-                                <FormattedMessage defaultMessage="Product" id="x/ZVlU" />
+                                <FormattedMessage id="x/ZVlU" defaultMessage="Product" />
                             </span>
                         </TableCell>
+
                         <TableCell className={classes.colQuantity}>
                             <FormattedMessage
-                                defaultMessage="Quantity"
                                 id="nEWp+k"
+                                defaultMessage="Quantity"
                                 description="quantity of ordered products"
                             />
                         </TableCell>
+
                         <TableCell className={classes.colPrice}>
                             <FormattedMessage
-                                defaultMessage="Price"
                                 id="32dfzI"
+                                defaultMessage="Price"
                                 description="price or ordered products"
                             />
                         </TableCell>
+
                         <TableCell className={classes.colTotal}>
                             <FormattedMessage
-                                defaultMessage="Total"
                                 id="lVwmf5"
+                                defaultMessage="Total"
                                 description="total price of ordered products"
                             />
                         </TableCell>
+
                         <TableCell className={classes.colAction} />
                     </TableRow>
                 </TableHead>
             )}
+
             <TableBody>
-                {!!lines?.length ? (
+                {!!lines.length ? (
                     renderCollection(lines, (line) => (
                         <OrderLineDiscountConsumer key={line.id} orderLineId={line.id}>
                             {(orderLineDiscountProps: OrderLineDiscountContextConsumerProps) => (
                                 <TableLine
                                     {...orderLineDiscountProps}
                                     line={line}
+                                    error={formErrors.find((error) =>
+                                        error.orderLines?.some((id) => id === line.id)
+                                    )}
                                     onOrderLineChange={onOrderLineChange}
                                     onOrderLineRemove={onOrderLineRemove}
                                 />
@@ -119,11 +135,22 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = (pro
                         </OrderLineDiscountConsumer>
                     ))
                 ) : (
-                    <TableRow>
-                        <TableCell colSpan={5}>
-                            <FormattedMessage defaultMessage="No Products added to Order" id="UD7/q8" />
-                        </TableCell>
-                    </TableRow>
+                    <>
+                        <TableRow>
+                            <TableCell colSpan={5}>
+                                <FormattedMessage
+                                    id="UD7/q8"
+                                    defaultMessage="No Products added to Order"
+                                />
+
+                                {!!formErrors.length && (
+                                    <Typography variant="body2" className={classes.errorInfo}>
+                                        {getOrderErrorMessage(formErrors[0], intl)}
+                                    </Typography>
+                                )}
+                            </TableCell>
+                        </TableRow>
+                    </>
                 )}
             </TableBody>
         </ResponsiveTable>

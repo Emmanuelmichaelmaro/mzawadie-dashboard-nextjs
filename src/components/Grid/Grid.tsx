@@ -1,13 +1,14 @@
-/* eslint-disable react/prop-types */
 import { makeStyles } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 
 export type GridVariant = "default" | "inverted" | "uniform";
+
 export interface GridProps {
     children: React.ReactNodeArray | React.ReactNode;
     className?: string;
     variant?: GridVariant;
+    richText?: boolean;
 }
 
 const useStyles = makeStyles(
@@ -19,6 +20,9 @@ const useStyles = makeStyles(
             gridTemplateColumns: "4fr 9fr",
         },
         root: {
+            "& > div": {
+                minWidth: 0,
+            },
             display: "grid",
             gridColumnGap: theme.spacing(3),
             gridRowGap: theme.spacing(3),
@@ -30,12 +34,14 @@ const useStyles = makeStyles(
         uniform: {
             gridTemplateColumns: "1fr 1fr",
         },
+        // TODO: Remove me
+        richText: {},
     }),
     { name: "Grid" }
 );
 
 export const Grid: React.FC<GridProps> = (props) => {
-    const { className, children, variant } = props;
+    const { className, children, variant, richText } = props;
 
     const classes = useStyles(props);
 
@@ -45,6 +51,7 @@ export const Grid: React.FC<GridProps> = (props) => {
                 [classes.default]: variant === "default",
                 [classes.inverted]: variant === "inverted",
                 [classes.uniform]: variant === "uniform",
+                [classes.richText]: richText,
             })}
         >
             {children}
@@ -55,7 +62,6 @@ export const Grid: React.FC<GridProps> = (props) => {
 Grid.displayName = "Grid";
 
 Grid.defaultProps = {
-    // eslint-disable-next-line react/default-props-match-prop-types
     variant: "default",
 };
 

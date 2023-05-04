@@ -1,11 +1,14 @@
-// @ts-nocheck
+import { Backlink } from "@mzawadie/components/Backlink";
+import { Button } from "@mzawadie/components/Button";
 import { PageHeader } from "@mzawadie/components/PageHeader";
-import { sectionNames, getStringOrPlaceholder } from "@mzawadie/core";
-import { Backlink, Button } from "@saleor/macaw-ui";
+import { sectionNames } from "@mzawadie/core";
+import { getStringOrPlaceholder } from "@mzawadie/core";
+import { HorizontalSpacer } from "@mzawadie/pages/apps/components/HorizontalSpacer";
+import GiftCardStatusChip from "@mzawadie/pages/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
+import { giftCardsListPath } from "@mzawadie/pages/giftCards/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import GiftCardStatusChip from "../../GiftCardStatusChip/GiftCardStatusChip";
 import { giftCardsListTableMessages as tableMessages } from "../../GiftCardsList/messages";
 import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import useGiftCardUpdateDialogs from "../providers/GiftCardUpdateDialogsProvider/hooks/useGiftCardUpdateDialogs";
@@ -15,9 +18,10 @@ import useStyles from "./styles";
 
 const GiftCardUpdatePageHeader: React.FC = () => {
     const classes = useStyles();
+
     const intl = useIntl();
+
     const { giftCard } = useGiftCardDetails();
-    const { navigateBack } = useGiftCardUpdateDialogs();
 
     const { openResendCodeDialog } = useGiftCardUpdateDialogs();
 
@@ -33,7 +37,8 @@ const GiftCardUpdatePageHeader: React.FC = () => {
 
     return (
         <>
-            <Backlink onClick={navigateBack}>{intl.formatMessage(sectionNames.giftCards)}</Backlink>
+            <Backlink href={giftCardsListPath}>{intl.formatMessage(sectionNames.giftCards)}</Backlink>
+
             <PageHeader
                 preview
                 inline
@@ -46,7 +51,9 @@ const GiftCardUpdatePageHeader: React.FC = () => {
                 }
             >
                 <GiftCardEnableDisableSection />
+
                 <HorizontalSpacer />
+
                 {!isExpired && (
                     <Button variant="primary" onClick={openResendCodeDialog}>
                         {intl.formatMessage(messages.resendButtonLabel)}

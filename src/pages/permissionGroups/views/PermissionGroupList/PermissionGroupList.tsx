@@ -1,5 +1,6 @@
 // @ts-nocheck
-import { getStringOrPlaceholder, ListViews } from "@mzawadie/core";
+import { getStringOrPlaceholder } from "@mzawadie/core";
+import { ListViews } from "@mzawadie/core";
 import {
     PermissionGroupErrorFragment,
     usePermissionGroupDeleteMutation,
@@ -9,9 +10,7 @@ import useListSettings from "@mzawadie/hooks/useListSettings";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { usePaginationReset } from "@mzawadie/hooks/usePaginationReset";
-import usePaginator, { createPaginationState } from "@mzawadie/hooks/usePaginator";
-import { configurationMenuUrl } from "@mzawadie/pages/configuration";
-import { PermissionGroupDeleteDialog } from "@mzawadie/pages/permissionGroups/components/PermissionGroupDeleteDialog";
+import usePaginator, { createPaginationState, PaginatorContext } from "@mzawadie/hooks/usePaginator";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@mzawadie/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
@@ -19,10 +18,9 @@ import { getSortParams } from "@mzawadie/utils/sort";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { PermissionGroupDeleteDialog } from "../../components/PermissionGroupDeleteDialog";
 import { PermissionGroupListPage } from "../../components/PermissionGroupListPage";
 import {
-    permissionGroupAddUrl,
-    permissionGroupDetailsUrl,
     permissionGroupListUrl,
     PermissionGroupListUrlDialog,
     PermissionGroupListUrlQueryParams,
@@ -35,16 +33,15 @@ interface PermissionGroupListProps {
 
 export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({ params }) => {
     const navigate = useNavigator();
-    const paginate = usePaginator();
     const notify = useNotifier();
     const intl = useIntl();
-
+    
     const { updateListSettings, settings } = useListSettings(ListViews.STAFF_MEMBERS_LIST);
 
     usePaginationReset(permissionGroupListUrl, params, settings.rowNumber);
 
     const paginationState = createPaginationState(settings.rowNumber, params);
-
+    
     const queryVariables = React.useMemo(
         () => ({
             ...paginationState,
@@ -52,17 +49,17 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({ params
         }),
         [params, settings.rowNumber]
     );
-
+    
     const { data, loading, refetch } = usePermissionGroupListQuery({
         displayLoader: true,
         variables: queryVariables,
     });
 
-    const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-        data?.permissionGroups.pageInfo,
+    const paginationValues = usePaginator({
+        pageInfo: data?.permissionGroups?.pageInfo,
         paginationState,
-        params
-    );
+        queryString: params,
+    });
 
     const handleSort = createSortHandler(navigate, permissionGroupListUrl, params);
 
@@ -72,43 +69,37 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({ params
     >(navigate, permissionGroupListUrl, params);
 
     const permissionGroups = mapEdgesToItems(data?.permissionGroups);
-
+    
     const [deleteError, setDeleteError] = React.useState<PermissionGroupErrorFragment>();
 
     const [permissionGroupDelete] = usePermissionGroupDeleteMutation({
         onCompleted: (data) => {
-            if (data.permissionGroupDelete.errors.length === 0) {
+            if (data.permissionGroupDelete?.errors.length === 0) {
                 notify({
                     status: "success",
                     text: intl.formatMessage({
-                        defaultMessage: "Permission Group Deleted",
                         id: "DovGIa",
+                        defaultMessage: "Permission Group Deleted",
                     }),
                 });
                 refetch();
                 setDeleteError(undefined);
                 closeModal();
             } else {
-                setDeleteError(data.permissionGroupDelete.errors[0]);
+                setDeleteError(data.permissionGroupDelete?.errors[0]);
             }
         },
     });
 
     return (
-        <>
+        <PaginatorContext.Provider value={paginationValues}>
             <PermissionGroupListPage
                 disabled={loading}
                 settings={settings}
-                pageInfo={pageInfo}
                 sort={getSortParams(params)}
                 permissionGroups={permissionGroups}
-                onAdd={() => navigate(permissionGroupAddUrl)}
-                onBack={() => navigate(configurationMenuUrl)}
                 onDelete={(id) => openModal("remove", { id })}
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
                 onUpdateListSettings={updateListSettings}
-                onRowClick={(id) => () => navigate(permissionGroupDetailsUrl(id))}
                 onSort={handleSort}
             />
 
@@ -124,11 +115,11 @@ export const PermissionGroupList: React.FC<PermissionGroupListProps> = ({ params
                 name={getStringOrPlaceholder(
                     permissionGroups?.find((group) => group.id === params.id)?.name
                 )}
-                confirmButtonState="default"
+                confirmButtonState={"default"}
                 open={params.action === "remove"}
                 onClose={closeModal}
             />
-        </>
+        </PaginatorContext.Provider>
     );
 };
 

@@ -1,11 +1,11 @@
 // @ts-nocheck
 import { DialogContentText } from "@material-ui/core";
 import { ActionDialog } from "@mzawadie/components/ActionDialog";
-import useAppChannel from "@mzawadie/components/AppLayout/AppChannelContext";
 import { NotFoundPage } from "@mzawadie/components/NotFoundPage";
-import Skeleton from "@mzawadie/components/Skeleton";
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
-import { PAGINATE_BY, commonMessages, errorMessages, maybe } from "@mzawadie/core";
+import { commonMessages, errorMessages } from "@mzawadie/core";
+import { PAGINATE_BY } from "@mzawadie/core";
+import { extractMutationErrors, maybe } from "@mzawadie/core";
 import {
     CategoryBulkDeleteMutation,
     CategoryDeleteMutation,
@@ -20,30 +20,25 @@ import {
     useUpdatePrivateMetadataMutation,
 } from "@mzawadie/graphql";
 import useBulkActions from "@mzawadie/hooks/useBulkActions";
+import useLocalPaginator, { useSectionLocalPaginationState } from "@mzawadie/hooks/useLocalPaginator";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
-import usePaginator, { createPaginationState } from "@mzawadie/hooks/usePaginator";
+import { PaginatorContext } from "@mzawadie/hooks/usePaginator";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@mzawadie/utils/handlers/metadataUpdateHandler";
-import { mapEdgesToItems, mapNodeToChoice } from "@mzawadie/utils/maps";
+import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import { getParsedDataForJsonStringField } from "@mzawadie/utils/richText/misc";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import React from "react";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { productAddUrl, productUrl } from "../../products/urls";
+import { productAddUrl } from "../../products/urls";
 import {
     CategoryPageTab,
     CategoryUpdatePage,
 } from "../components/CategoryUpdatePage/CategoryUpdatePage";
 import { CategoryUpdateData } from "../components/CategoryUpdatePage/form";
-import {
-    categoryAddUrl,
-    categoryListUrl,
-    categoryUrl,
-    CategoryUrlDialog,
-    CategoryUrlQueryParams,
-} from "../urls";
+import { categoryListUrl, categoryUrl, CategoryUrlDialog, CategoryUrlQueryParams } from "../urls";
 
 export interface CategoryDetailsProps {
     params: CategoryUrlQueryParams;
@@ -57,38 +52,40 @@ export function getActiveTab(tabName: string): CategoryPageTab {
 export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) => {
     const navigate = useNavigator();
     const notify = useNotifier();
-    const intl = useIntl();
-    const paginate = usePaginator();
-
     const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
+    const intl = useIntl();
 
     const [updateMetadata] = useUpdateMetadataMutation({});
     const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
-    const paginationState = createPaginationState(PAGINATE_BY, params);
+    const [activeTab, setActiveTab] = useState<CategoryPageTab>(CategoryPageTab.categories);
+
+    const [paginationState, setPaginationState] = useSectionLocalPaginationState(
+        PAGINATE_BY,
+        activeTab
+    );
+
+    const paginate = useLocalPaginator(setPaginationState);
+
+    const changeTab = (tab: CategoryPageTab) => {
+        reset();
+        setActiveTab(tab);
+    };
 
     const { data, loading, refetch } = useCategoryDetailsQuery({
         displayLoader: true,
         variables: { ...paginationState, id },
     });
 
-    const { availableChannels, channel } = useAppChannel(false);
-
-    const channelChoices = mapNodeToChoice(availableChannels);
-
     const category = data?.category;
-
-    if (category === null) {
-        return <NotFoundPage onBack={() => navigate(categoryListUrl())} />;
-    }
 
     const handleCategoryDelete = (data: CategoryDeleteMutation) => {
         if (data.categoryDelete?.errors.length === 0) {
             notify({
                 status: "success",
                 text: intl.formatMessage({
-                    defaultMessage: "Category deleted",
                     id: "HvJPcU",
+                    defaultMessage: "Category deleted",
                 }),
             });
             navigate(categoryListUrl());
@@ -100,17 +97,22 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
     });
 
     const handleCategoryUpdate = (data: CategoryUpdateMutation) => {
-        if (data.categoryUpdate?.errors?.length > 0) {
+        if (data.categoryUpdate?.errors.length > 0) {
             const backgroundImageError = data.categoryUpdate?.errors.find(
                 (error) => error.field === ("backgroundImage" as keyof CategoryInput)
             );
             if (backgroundImageError) {
                 notify({
                     status: "error",
-                    title: intl.formatMessage(errorMessages.imageUploadErrorTitle),
+                    title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
                     text: intl.formatMessage(errorMessages.imageUploadErrorText),
                 });
             }
+        } else {
+            notify({
+                status: "success",
+                text: intl.formatMessage(commonMessages.savedChanges),
+            });
         }
     };
 
@@ -147,47 +149,36 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
         },
     });
 
-    const changeTab = (tabName: CategoryPageTab) => {
-        reset();
-        navigate(
-            categoryUrl(id, {
-                activeTab: tabName,
-            })
-        );
-    };
-
     const [openModal, closeModal] = createDialogActionHandlers<
         CategoryUrlDialog,
         CategoryUrlQueryParams
     >(navigate, (params) => categoryUrl(id, params), params);
 
-    const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-        params.activeTab === CategoryPageTab.categories
+    const { pageInfo, ...paginationFunctions } = paginate(
+        activeTab === CategoryPageTab.categories
             ? maybe(() => data.category.children.pageInfo)
             : maybe(() => data.category.products.pageInfo),
-        paginationState,
-        params
+        paginationState
     );
 
-    const handleUpdate = async (formData: CategoryUpdateData) => {
-        const result = await updateCategory({
-            variables: {
-                id,
-                input: {
-                    backgroundImageAlt: formData.backgroundImageAlt,
-                    description: getParsedDataForJsonStringField(formData.description),
-                    name: formData.name,
-                    seo: {
-                        description: formData.seoDescription,
-                        title: formData.seoTitle,
+    const handleUpdate = async (formData: CategoryUpdateData) =>
+        extractMutationErrors(
+            updateCategory({
+                variables: {
+                    id,
+                    input: {
+                        backgroundImageAlt: formData.backgroundImageAlt,
+                        description: getParsedDataForJsonStringField(formData.description),
+                        name: formData.name,
+                        seo: {
+                            description: formData.seoDescription,
+                            title: formData.seoTitle,
+                        },
+                        slug: formData.slug,
                     },
-                    slug: formData.slug,
                 },
-            },
-        });
-
-        return result.data?.categoryUpdate?.errors;
-    };
+            })
+        );
 
     const handleSubmit = createMetadataUpdateHandler(
         data?.category,
@@ -196,28 +187,22 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
         (variables) => updatePrivateMetadata({ variables })
     );
 
-    if (typeof channel === "undefined") {
-        return <Skeleton />;
+    if (category === null) {
+        return <NotFoundPage onBack={() => navigate(categoryListUrl())} />;
     }
 
     return (
-        <>
+        <PaginatorContext.Provider value={{ ...pageInfo, ...paginationFunctions }}>
             <WindowTitle title={maybe(() => data?.category?.name)} />
 
             <CategoryUpdatePage
-                channelsCount={availableChannels.length}
-                channelChoices={channelChoices}
+                categoryId={id}
                 changeTab={changeTab}
-                currentTab={params.activeTab}
-                category={maybe(() => data?.category)}
+                currentTab={activeTab}
+                category={maybe(() => data.category)}
                 disabled={loading}
                 errors={updateResult.data?.categoryUpdate?.errors || []}
-                onAddCategory={() => navigate(categoryAddUrl(id))}
-                onAddProduct={() => navigate(productAddUrl())}
-                onBack={() =>
-                    navigate(maybe(() => categoryUrl(data?.category?.parent?.id), categoryListUrl()))
-                }
-                onCategoryClick={(id) => () => navigate(categoryUrl(id))}
+                addProductHref={productAddUrl()}
                 onDelete={() => openModal("delete")}
                 onImageDelete={() =>
                     updateCategory({
@@ -239,17 +224,14 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
                         },
                     })
                 }
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
-                pageInfo={pageInfo}
-                onProductClick={(id) => () => navigate(productUrl(id))}
                 onSubmit={handleSubmit}
                 products={mapEdgesToItems(data?.category?.products)}
                 saveButtonBarState={updateResult.status}
-                selectedChannelId={channel?.id}
                 subcategories={mapEdgesToItems(data?.category?.children)}
                 subcategoryListToolbar={
                     <IconButton
+                        data-test-id="delete-icon"
+                        variant="secondary"
                         color="primary"
                         onClick={() =>
                             openModal("delete-categories", {
@@ -262,7 +244,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
                 }
                 productListToolbar={
                     <IconButton
-                        data-test-id="deleteIcon"
+                        data-test-id="delete-icon"
                         color="primary"
                         onClick={() =>
                             openModal("delete-products", {
@@ -285,16 +267,16 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
                 onConfirm={() => deleteCategory({ variables: { id } })}
                 open={params.action === "delete"}
                 title={intl.formatMessage({
-                    defaultMessage: "Delete category",
                     id: "xo5UIb",
+                    defaultMessage: "Delete category",
                     description: "dialog title",
                 })}
                 variant="delete"
             >
                 <DialogContentText>
                     <FormattedMessage
-                        defaultMessage="Are you sure you want to delete {categoryName}?"
                         id="xRkj2h"
+                        defaultMessage="Are you sure you want to delete {categoryName}?"
                         values={{
                             categoryName: <strong>{maybe(() => data?.category?.name, "...")}</strong>,
                         }}
@@ -303,14 +285,14 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
 
                 <DialogContentText>
                     <FormattedMessage
-                        defaultMessage="Remember this will also unpin all products assigned to this category, making them unavailable in storefront."
                         id="3DGvA/"
+                        defaultMessage="Remember this will also unpin all products assigned to this category, making them unavailable in storefront."
                     />
                 </DialogContentText>
             </ActionDialog>
 
             <ActionDialog
-                open={params.action === "delete-categories" && maybe(() => params.ids?.length > 0)}
+                open={params.action === "delete-categories" && maybe(() => params.ids.length > 0)}
                 confirmButtonState={categoryBulkDeleteOpts.status}
                 onClose={closeModal}
                 onConfirm={() =>
@@ -319,27 +301,27 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
                     }).then(() => refetch())
                 }
                 title={intl.formatMessage({
-                    defaultMessage: "Delete categories",
                     id: "sG0w22",
+                    defaultMessage: "Delete categories",
                     description: "dialog title",
                 })}
                 variant="delete"
             >
                 <DialogContentText>
                     <FormattedMessage
-                        defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
                         id="Pp/7T7"
+                        defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
                         values={{
-                            counter: maybe(() => params.ids?.length),
-                            displayQuantity: <strong>{maybe(() => params.ids?.length)}</strong>,
+                            counter: maybe(() => params.ids.length),
+                            displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>,
                         }}
                     />
                 </DialogContentText>
 
                 <DialogContentText>
                     <FormattedMessage
-                        defaultMessage="Remember this will also delete all products assigned to this category."
                         id="e+L+q3"
+                        defaultMessage="Remember this will also delete all products assigned to this category."
                     />
                 </DialogContentText>
             </ActionDialog>
@@ -354,24 +336,24 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
                     }).then(() => refetch())
                 }
                 title={intl.formatMessage({
-                    defaultMessage: "Delete products",
                     id: "KCjd1o",
+                    defaultMessage: "Delete products",
                     description: "dialog title",
                 })}
                 variant="delete"
             >
                 <DialogContentText>
                     <FormattedMessage
-                        defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
                         id="7l5Bh9"
+                        defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
                         values={{
-                            counter: maybe(() => params.ids?.length),
-                            displayQuantity: <strong>{maybe(() => params.ids?.length)}</strong>,
+                            counter: maybe(() => params.ids.length),
+                            displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>,
                         }}
                     />
                 </DialogContentText>
             </ActionDialog>
-        </>
+        </PaginatorContext.Provider>
     );
 };
 

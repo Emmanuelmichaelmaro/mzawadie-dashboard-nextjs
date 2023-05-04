@@ -1,6 +1,6 @@
 // @ts-nocheck
+import { Backlink } from "@mzawadie/components/Backlink";
 import CardSpacer from "@mzawadie/components/CardSpacer";
-import { ConfirmButtonTransitionState } from "@mzawadie/components/ConfirmButton";
 import Container from "@mzawadie/components/Container";
 import { Form } from "@mzawadie/components/Form";
 import { Grid } from "@mzawadie/components/Grid";
@@ -9,20 +9,25 @@ import { MetadataFormData } from "@mzawadie/components/Metadata/types";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { ListSettingsUpdate } from "@mzawadie/components/TablePagination";
-import { sectionNames, maybe, ListSettings, ReorderAction } from "@mzawadie/core";
+import { sectionNames } from "@mzawadie/core";
+import { maybe } from "@mzawadie/core";
+import { ListSettings, ReorderAction } from "@mzawadie/core";
 import {
     AttributeDetailsFragment,
-    AttributeErrorFragment,
     AttributeDetailsQuery,
     AttributeEntityTypeEnum,
+    AttributeErrorFragment,
     AttributeInputTypeEnum,
     AttributeTypeEnum,
     MeasurementUnitsEnum,
 } from "@mzawadie/graphql";
+import { SubmitPromise } from "@mzawadie/hooks/useForm";
+import useNavigator from "@mzawadie/hooks/useNavigator";
+import { attributeListUrl } from "@mzawadie/pages/attributes/urls";
 import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@mzawadie/pages/attributes/utils/data";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@mzawadie/utils/maps";
 import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChangeTrigger";
-import { Backlink } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
@@ -38,9 +43,8 @@ export interface AttributePageProps {
     errors: AttributeErrorFragment[];
     saveButtonBarState: ConfirmButtonTransitionState;
     values: AttributeDetailsQuery["attribute"]["choices"];
-    onBack: () => void;
     onDelete: () => void;
-    onSubmit: (data: AttributePageFormData) => void;
+    onSubmit: (data: AttributePageFormData) => SubmitPromise;
     onValueAdd: () => void;
     onValueDelete: (id: string) => void;
     onValueReorder: ReorderAction;
@@ -53,6 +57,7 @@ export interface AttributePageProps {
     };
     onNextPage: () => void;
     onPreviousPage: () => void;
+    children: (data: AttributePageFormData) => React.ReactNode;
 }
 
 export interface AttributePageFormData extends MetadataFormData {
@@ -76,7 +81,6 @@ const AttributePage: React.FC<AttributePageProps> = ({
     errors: apiErrors,
     saveButtonBarState,
     values,
-    onBack,
     onDelete,
     onSubmit,
     onValueAdd,
@@ -88,8 +92,11 @@ const AttributePage: React.FC<AttributePageProps> = ({
     pageInfo,
     onNextPage,
     onPreviousPage,
+    children,
 }) => {
     const intl = useIntl();
+    const navigate = useNavigator();
+
     const {
         isMetadataModified,
         isPrivateMetadataModified,
@@ -147,93 +154,98 @@ const AttributePage: React.FC<AttributePageProps> = ({
     };
 
     return (
-        <Form initial={initialForm} onSubmit={handleSubmit}>
-            {({ change, set, data, hasChanged, submit, errors, setError, clearErrors }) => {
+        <Form confirmLeave initial={initialForm} onSubmit={handleSubmit} disabled={disabled}>
+            {({ change, set, data, isSaveDisabled, submit, errors, setError, clearErrors }) => {
                 const changeMetadata = makeMetadataChangeHandler(change);
 
                 return (
-                    <Container>
-                        <Backlink onClick={onBack}>
-                            {intl.formatMessage(sectionNames.attributes)}
-                        </Backlink>
+                    <>
+                        <Container>
+                            <Backlink href={attributeListUrl()}>
+                                {intl.formatMessage(sectionNames.attributes)}
+                            </Backlink>
 
-                        <PageHeader
-                            title={
-                                attribute === null
-                                    ? intl.formatMessage({
-                                          defaultMessage: "Create New Attribute",
-                                          id: "8cUEPV",
-                                          description: "page title",
-                                      })
-                                    : maybe(() => attribute.name)
-                            }
-                        />
+                            <PageHeader
+                                title={
+                                    attribute === null
+                                        ? intl.formatMessage({
+                                              id: "8cUEPV",
+                                              defaultMessage: "Create New Attribute",
+                                              description: "page title",
+                                          })
+                                        : maybe(() => attribute.name)
+                                }
+                            />
 
-                        <Grid>
-                            <div>
-                                <AttributeDetails
-                                    canChangeType={attribute === null}
-                                    data={data}
-                                    disabled={disabled}
-                                    apiErrors={apiErrors}
-                                    onChange={change}
-                                    set={set}
-                                    errors={errors}
-                                    setError={setError}
-                                    clearErrors={clearErrors}
-                                />
+                            <Grid>
+                                <div>
+                                    <AttributeDetails
+                                        canChangeType={attribute === null}
+                                        data={data}
+                                        disabled={disabled}
+                                        apiErrors={apiErrors}
+                                        onChange={change}
+                                        set={set}
+                                        errors={errors}
+                                        setError={setError}
+                                        clearErrors={clearErrors}
+                                    />
 
-                                {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType) && (
-                                    <>
-                                        <CardSpacer />
-                                        <AttributeValues
-                                            disabled={disabled}
-                                            values={mapEdgesToItems(values)}
-                                            onValueAdd={onValueAdd}
-                                            onValueDelete={onValueDelete}
-                                            onValueReorder={onValueReorder}
-                                            onValueUpdate={onValueUpdate}
-                                            settings={settings}
-                                            onUpdateListSettings={onUpdateListSettings}
-                                            pageInfo={pageInfo}
-                                            onNextPage={onNextPage}
-                                            onPreviousPage={onPreviousPage}
-                                        />
-                                    </>
-                                )}
+                                    {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType) && (
+                                        <>
+                                            <CardSpacer />
+                                            <AttributeValues
+                                                inputType={data.inputType}
+                                                disabled={disabled}
+                                                values={mapEdgesToItems(values)}
+                                                onValueAdd={onValueAdd}
+                                                onValueDelete={onValueDelete}
+                                                onValueReorder={onValueReorder}
+                                                onValueUpdate={onValueUpdate}
+                                                settings={settings}
+                                                onUpdateListSettings={onUpdateListSettings}
+                                                pageInfo={pageInfo}
+                                                onNextPage={onNextPage}
+                                                onPreviousPage={onPreviousPage}
+                                            />
+                                        </>
+                                    )}
 
-                                <CardSpacer />
+                                    <CardSpacer />
 
-                                <Metadata data={data} onChange={changeMetadata} />
-                            </div>
+                                    <Metadata data={data} onChange={changeMetadata} />
+                                </div>
 
-                            <div>
-                                <AttributeOrganization
-                                    canChangeType={attribute === null}
-                                    data={data}
-                                    disabled={disabled}
-                                    onChange={change}
-                                />
+                                <div>
+                                    <AttributeOrganization
+                                        canChangeType={attribute === null}
+                                        data={data}
+                                        disabled={disabled}
+                                        onChange={change}
+                                    />
 
-                                <CardSpacer />
+                                    <CardSpacer />
 
-                                <AttributeProperties
-                                    data={data}
-                                    errors={apiErrors}
-                                    disabled={disabled}
-                                    onChange={change}
-                                />
-                            </div>
-                        </Grid>
+                                    <AttributeProperties
+                                        data={data}
+                                        errors={apiErrors}
+                                        disabled={disabled}
+                                        onChange={change}
+                                    />
+                                </div>
+                            </Grid>
 
-                        <Savebar
-                            disabled={disabled || !hasChanged}
-                            state={saveButtonBarState}
-                            onCancel={onBack}
-                            onSubmit={submit}
-                            onDelete={attribute === null ? undefined : onDelete}
-                        />
-                    </Container>
+                            <Savebar
+                                disabled={isSaveDisabled}
+                                state={saveButtonBarState}
+                                onCancel={() => navigate(attributeListUrl())}
+                                onSubmit={submit}
+                                onDelete={attribute === null ? undefined : onDelete}
+                            />
+                        </Container>
+
+                        {children(data)}
+                    </>
                 );
             }}
         </Form>

@@ -15,7 +15,7 @@ export const APP_MOUNT_URI = process.env.APP_MOUNT_URI || "/";
 
 export const APP_DEFAULT_URI = "/";
 
-export const API_URI = "http://localhost:8000/graphql/";
+export const API_URI = process.env.API_URI;
 
 export const APP_VERSION = packageInfo.version;
 
@@ -26,6 +26,10 @@ export const CHANNEL_SLUG = process.env.MZAWADIE_CHANNEL_SLUG;
 export const IS_CLOUD_INSTANCE = process.env.IS_CLOUD_INSTANCE === "true";
 
 export const DEMO_MODE = process.env.DEMO_MODE === "true";
+
+export const MARKETPLACE_URL = process.env.MARKETPLACE_URL;
+
+export const SALEOR_APPS_ENDPOINT = process.env.SALEOR_APPS_ENDPOINT;
 
 export const GTM_ID = process.env.GTM_ID;
 

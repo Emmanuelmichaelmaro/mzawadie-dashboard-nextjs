@@ -2,17 +2,15 @@
 import useAppChannel from "@mzawadie/components/AppLayout/AppChannelContext";
 import { getDatePeriod, getUserName } from "@mzawadie/core";
 import { OrderStatusFilter, StockAvailability, useHomeQuery } from "@mzawadie/graphql";
-import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useUser } from "@mzawadie/pages/auth";
 import { channelsListUrl } from "@mzawadie/pages/channels/urls";
 import { HomePage } from "@mzawadie/pages/home/components/HomePage";
 import { orderListUrl } from "@mzawadie/pages/orders/urls";
-import { productListUrl, productVariantEditUrl } from "@mzawadie/pages/products/urls";
+import { productListUrl } from "@mzawadie/pages/products/urls";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
 import React from "react";
 
 const HomeSection = () => {
-    const navigate = useNavigator();
     const { user } = useUser();
     const { channel } = useAppChannel();
 
@@ -30,41 +28,23 @@ const HomeSection = () => {
             orders={data?.ordersToday?.totalCount}
             sales={data?.salesToday?.gross}
             topProducts={mapEdgesToItems(data?.productTopToday)}
-            onProductClick={(productId, variantId) =>
-                navigate(productVariantEditUrl(productId, variantId))
-            }
-            onCreateNewChannelClick={() => {
-                navigate(channelsListUrl());
-            }}
-            onOrdersToCaptureClick={() =>
-                navigate(
-                    orderListUrl({
-                        status: [OrderStatusFilter.READY_TO_CAPTURE],
-                        channel: [channel?.id],
-                    })
-                )
-            }
-            onOrdersToFulfillClick={() =>
-                navigate(
-                    orderListUrl({
-                        status: [OrderStatusFilter.READY_TO_FULFILL],
-                        channel: [channel?.id],
-                    })
-                )
-            }
-            onProductsOutOfStockClick={() =>
-                navigate(
-                    productListUrl({
-                        stockStatus: StockAvailability.OUT_OF_STOCK,
-                        channel: channel?.slug,
-                    })
-                )
-            }
+            createNewChannelHref={channelsListUrl()}
+            ordersToCaptureHref={orderListUrl({
+                status: [OrderStatusFilter.READY_TO_CAPTURE],
+                channel: [channel?.id],
+            })}
+            ordersToFulfillHref={orderListUrl({
+                status: [OrderStatusFilter.READY_TO_FULFILL],
+                channel: [channel?.id],
+            })}
+            productsOutOfStockHref={productListUrl({
+                stockStatus: StockAvailability.OUT_OF_STOCK,
+                channel: channel?.slug,
+            })}
             ordersToCapture={data?.ordersToCapture?.totalCount}
             ordersToFulfill={data?.ordersToFulfill?.totalCount}
-            productsOutOfStock={data?.productsOutOfStock.totalCount}
+            productsOutOfStock={data?.productsOutOfStock?.totalCount}
             userName={getUserName(user, true)}
-            userPermissions={user?.userPermissions}
             noChannel={noChannel}
         />
     );

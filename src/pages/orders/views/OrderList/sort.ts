@@ -3,6 +3,8 @@ import { OrderSortField } from "@mzawadie/graphql";
 import { OrderListUrlSortField } from "@mzawadie/pages/orders/urls";
 import { createGetSortQueryVariables } from "@mzawadie/utils/sort";
 
+export const DEFAULT_SORT_KEY = OrderListUrlSortField.number;
+
 export function getSortQueryField(sort: OrderListUrlSortField): OrderSortField {
     switch (sort) {
         case OrderListUrlSortField.number:

@@ -38,6 +38,7 @@ import CustomerPage from "@mzawadie/pages/customers";
 import DiscountPage from "@mzawadie/pages/discounts";
 import GiftCardPage from "@mzawadie/pages/giftCards";
 import HomePage from "@mzawadie/pages/home";
+import MarketplacePage, { marketplaceUrl } from "@mzawadie/pages/marketplace";
 import NavigationPage from "@mzawadie/pages/navigation";
 import OrdersPage from "@mzawadie/pages/orders";
 import PageTypesSection from "@mzawadie/pages/pageTypes";
@@ -61,6 +62,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { useIntl } from "react-intl";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
+import { ServiceWorker } from "./containers/ServiceWorker";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 errorTracker.init();
@@ -308,6 +310,12 @@ const Routes: React.FC = () => {
                                 component={AppsPage}
                             />
 
+                            <SectionRoute
+                                permissions={[PermissionEnum.MANAGE_APPS]}
+                                path={marketplaceUrl}
+                                component={MarketplacePage}
+                            />
+
                             <Route component={NotFoundPage} />
                         </Switch>
                     </ErrorBoundary>
@@ -329,6 +337,7 @@ const App: React.FC = () => (
                     <DateProvider>
                         <LocaleProvider>
                             <MessageManagerProvider>
+                                <ServiceWorker />
                                 <BackgroundTasksProvider>
                                     <AppStateProvider>
                                         <AuthProvider>
@@ -358,4 +367,4 @@ render(<App />, document.querySelector("#dashboard-app"));
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://cra.link/PWA
-serviceWorkerRegistration.register();
+// serviceWorkerRegistration.register();

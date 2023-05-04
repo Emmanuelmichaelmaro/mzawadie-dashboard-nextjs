@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
     Dialog,
     DialogActions,
@@ -76,6 +77,7 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
         onClose,
         onSubmit,
     } = props;
+
     const classes = useStyles(props);
     const errors = useModalDialogErrors(apiErrors, open);
     const intl = useIntl();
@@ -106,6 +108,7 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
               }))
               .sort((x, y) => (x.disabled === y.disabled ? 0 : x.disabled ? 1 : -1))
         : [];
+
     const initialForm: FormData = {
         shippingMethod,
     };
@@ -114,11 +117,12 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
         <Dialog onClose={onClose} open={open} classes={{ paper: classes.dialog }}>
             <DialogTitle>
                 <FormattedMessage
-                    defaultMessage="Edit Shipping Method"
                     id="V/YxJa"
+                    defaultMessage="Edit Shipping Method"
                     description="dialog header"
                 />
             </DialogTitle>
+
             <Form initial={initialForm} onSubmit={onSubmit}>
                 {({ change, data }) => (
                     <>
@@ -131,9 +135,11 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
                                 value={data.shippingMethod}
                                 onChange={change}
                             />
+
                             {nonFieldErrors.length > 0 && (
                                 <>
                                     <FormSpacer />
+                                    
                                     {nonFieldErrors.map((err, index) => (
                                         <DialogContentText color="error" key={index}>
                                             {getOrderErrorMessage(err, intl)}
@@ -142,6 +148,7 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
                                 </>
                             )}
                         </DialogContent>
+
                         <DialogActions>
                             <BackButton onClick={onClose} />
                             <ConfirmButton
@@ -158,5 +165,7 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
         </Dialog>
     );
 };
+
 OrderShippingMethodEditDialog.displayName = "OrderShippingMethodEditDialog";
+
 export default OrderShippingMethodEditDialog;

@@ -5,7 +5,7 @@ import {
     SearchProductsQuery,
     SearchProductsQueryVariables,
 } from "@mzawadie/graphql";
-import { makeTopLevelSearch } from "@mzawadie/hooks";
+import { makeTopLevelSearch } from "@mzawadie/hooks/makeTopLevelSearch";
 
 export const searchProducts = gql`
     query SearchProducts($after: String, $first: Int!, $query: String!) {
@@ -33,6 +33,9 @@ export const searchProducts = gql`
                                 currency
                             }
                         }
+                    }
+                    collections {
+                        id
                     }
                 }
             }

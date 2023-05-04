@@ -5,10 +5,12 @@ import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { TableCellHeader } from "@mzawadie/components/TableCellHeader";
 import { TableHead } from "@mzawadie/components/TableHead";
-import { TablePagination } from "@mzawadie/components/TablePagination";
-import { renderCollection, ListActions, ListProps, SortPage } from "@mzawadie/core";
+import { TablePaginationWithContext } from "@mzawadie/components/TablePagination";
+import { TableRowLink } from "@mzawadie/components/TableRowLink";
+import { renderCollection } from "@mzawadie/core";
+import { ListActions, ListProps, SortPage } from "@mzawadie/core";
 import { PageTypeFragment } from "@mzawadie/graphql";
-import { PageTypeListUrlSortField } from "@mzawadie/pages/pageTypes/urls";
+import { PageTypeListUrlSortField, pageTypeUrl } from "@mzawadie/pages/pageTypes/urls";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -30,25 +32,11 @@ interface PageTypeListProps extends ListProps, ListActions, SortPage<PageTypeLis
     pageTypes: PageTypeFragment[];
 }
 
-const numberOfColumns = 2;
-
 const PageTypeList: React.FC<PageTypeListProps> = (props) => {
-    const {
-        disabled,
-        pageTypes,
-        pageInfo,
-        onNextPage,
-        onPreviousPage,
-        onRowClick,
-        onSort,
-        isChecked,
-        selected,
-        sort,
-        toggle,
-        toggleAll,
-        toolbar,
-    } = props;
+    const { disabled, pageTypes, onSort, isChecked, selected, sort, toggle, toggleAll, toolbar } =
+        props;
     const classes = useStyles(props);
+    const numberOfColumns = pageTypes?.length === 0 ? 1 : 2;
 
     return (
         <ResponsiveTable>
@@ -71,8 +59,8 @@ const PageTypeList: React.FC<PageTypeListProps> = (props) => {
                     className={classes.colName}
                 >
                     <FormattedMessage
-                        defaultMessage="Content Type Name"
                         id="BQ2NVl"
+                        defaultMessage="Content Type Name"
                         description="page type name"
                     />
                 </TableCellHeader>
@@ -80,13 +68,7 @@ const PageTypeList: React.FC<PageTypeListProps> = (props) => {
 
             <TableFooter>
                 <TableRow>
-                    <TablePagination
-                        colSpan={numberOfColumns}
-                        hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-                        onNextPage={onNextPage}
-                        hasPreviousPage={pageInfo && !disabled ? pageInfo.hasPreviousPage : false}
-                        onPreviousPage={onPreviousPage}
-                    />
+                    <TablePaginationWithContext colSpan={numberOfColumns} disabled={disabled} />
                 </TableRow>
             </TableFooter>
 
@@ -96,37 +78,37 @@ const PageTypeList: React.FC<PageTypeListProps> = (props) => {
                     (pageType) => {
                         const isSelected = pageType ? isChecked(pageType.id) : false;
                         return (
-                            <TableRow
-                                className={pageType ? classes.link : undefined}
+                            <TableRowLink
+                                className={!!pageType ? classes.link : undefined}
                                 hover={!!pageType}
                                 key={pageType ? pageType.id : "skeleton"}
-                                onClick={pageType ? onRowClick(pageType.id) : undefined}
+                                href={pageType && pageTypeUrl(pageType.id)}
                                 selected={isSelected}
-                                data-test="id"
-                                data-test-id={pageType?.id}
+                                data-test-id={"id-" + pageType?.id}
                             >
                                 <TableCell padding="checkbox">
                                     <Checkbox
                                         checked={isSelected}
                                         disabled={disabled}
                                         disableClickPropagation
-                                        onChange={() => toggle(pageType?.id)}
+                                        onChange={() => toggle(pageType.id)}
                                     />
                                 </TableCell>
+
                                 <TableCell className={classes.colName}>
                                     {pageType ? (
-                                        <span data-test="name">{pageType?.name}</span>
+                                        <span data-test-id="name">{pageType.name}</span>
                                     ) : (
                                         <Skeleton />
                                     )}
                                 </TableCell>
-                            </TableRow>
+                            </TableRowLink>
                         );
                     },
                     () => (
                         <TableRow>
                             <TableCell colSpan={numberOfColumns}>
-                                <FormattedMessage defaultMessage="No page types found" id="6fORLY" />
+                                <FormattedMessage id="6fORLY" defaultMessage="No page types found" />
                             </TableCell>
                         </TableRow>
                     )

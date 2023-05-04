@@ -1,11 +1,12 @@
 // @ts-nocheck
-import { gql } from "@apollo/client";
+import { gql, useApolloClient } from "@apollo/client";
 import {
     SearchAttributeValuesDocument,
     SearchAttributeValuesQuery,
     SearchAttributeValuesQueryVariables,
 } from "@mzawadie/graphql";
 import makeSearch from "@mzawadie/hooks/makeSearch";
+import { mapEdgesToItems } from "@mzawadie/utils/maps";
 
 export const searchAttributeValues = gql`
     query SearchAttributeValues($id: ID, $after: String, $first: Int!, $query: String!) {
@@ -14,7 +15,7 @@ export const searchAttributeValues = gql`
             choices(after: $after, first: $first, filter: { search: $query }) {
                 edges {
                     node {
-                        ...AttributeValue
+                        ...AttributeValueDetails
                     }
                 }
                 pageInfo {
@@ -25,15 +26,36 @@ export const searchAttributeValues = gql`
     }
 `;
 
+export function useSearchAttributeValuesSuggestions() {
+    const client = useApolloClient();
+
+    return (id: string, query: string) =>
+        client
+            .query<SearchAttributeValuesQuery, SearchAttributeValuesQueryVariables>({
+                query: SearchAttributeValuesDocument,
+                variables: {
+                    id,
+                    first: 10,
+                    query,
+                },
+            })
+            .then(({ data }) =>
+                mapEdgesToItems(data?.attribute?.choices).map(({ name, slug }) => ({
+                    label: name,
+                    value: slug,
+                }))
+            );
+}
+
 export default makeSearch<SearchAttributeValuesQuery, SearchAttributeValuesQueryVariables>(
     SearchAttributeValuesDocument,
     (result) => {
-        if (result.data?.attribute.choices.pageInfo.hasNextPage) {
+        if (result.data?.attribute?.choices?.pageInfo.hasNextPage) {
             result.loadMore(
                 (prev, next) => {
                     if (
-                        prev.attribute.choices.pageInfo.endCursor ===
-                        next.attribute.choices.pageInfo.endCursor
+                        prev.attribute?.choices?.pageInfo.endCursor ===
+                        next.attribute?.choices?.pageInfo.endCursor
                     ) {
                         return prev;
                     }
@@ -43,12 +65,12 @@ export default makeSearch<SearchAttributeValuesQuery, SearchAttributeValuesQuery
                         attribute: {
                             ...prev.attribute,
                             choices: {
-                                ...prev.attribute.choices,
+                                ...prev.attribute?.choices,
                                 edges: [
-                                    ...prev.attribute.choices.edges,
-                                    ...next.attribute.choices.edges,
+                                    ...prev?.attribute?.choices?.edges,
+                                    ...next?.attribute?.choices?.edges,
                                 ],
-                                pageInfo: next.attribute.choices.pageInfo,
+                                pageInfo: next.attribute?.choices?.pageInfo,
                             },
                         },
                     };

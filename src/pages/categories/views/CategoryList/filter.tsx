@@ -18,7 +18,7 @@ export function getFilterVariables(params: CategoryListUrlFilters): CategoryFilt
 export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
     createFilterTabUtils<CategoryListUrlFilters>(CATEGORY_FILTERS_KEY);
 
-export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
+export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
     CategoryListUrlQueryParams,
     CategoryListUrlFilters
 >(CategoryListUrlFiltersEnum);

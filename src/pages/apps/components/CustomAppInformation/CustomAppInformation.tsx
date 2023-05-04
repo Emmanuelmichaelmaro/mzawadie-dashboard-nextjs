@@ -26,18 +26,19 @@ const CustomAppInformation: React.FC<CustomAppInfoProps> = ({ data, disabled, er
         <Card>
             <CardTitle
                 title={intl.formatMessage({
-                    defaultMessage: "App Information",
                     id: "imYxM9",
+                    defaultMessage: "App Information",
                     description: "header",
                 })}
             />
+
             <CardContent>
                 <TextField
                     disabled={disabled}
                     error={!!formErrors.name}
                     label={intl.formatMessage({
-                        defaultMessage: "App Name",
                         id: "foNlhn",
+                        defaultMessage: "App Name",
                         description: "custom app name",
                     })}
                     helperText={getAppErrorMessage(formErrors.name, intl)}

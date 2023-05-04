@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { ButtonBase, ClickAwayListener, Grow, Popper, Typography } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
@@ -8,7 +7,7 @@ import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { FilterContent } from ".";
-import { FilterErrorMessages, IFilter, IFilterElement, InvalidFilters } from "./types";
+import { FilterElement, FilterErrorMessages, IFilter, InvalidFilters } from "./types";
 import useFilter from "./useFilter";
 import { extractInvalidFilters } from "./utils";
 
@@ -16,7 +15,7 @@ export interface FilterProps<TFilterKeys extends string = string> {
     currencySymbol?: string;
     errorMessages?: FilterErrorMessages<TFilterKeys>;
     menu: IFilter<TFilterKeys>;
-    onFilterAdd: (filter: Array<IFilterElement<string>>) => void;
+    onFilterAdd: (filter: Array<FilterElement<string>>) => void;
     onFilterAttributeFocus?: (id?: string) => void;
 }
 
@@ -33,7 +32,7 @@ const useStyles = makeStyles(
                 marginBottom: 0,
                 marginRight: theme.spacing(2),
                 marginTop: 0,
-                transition: `${theme.transitions.duration.short}ms`,
+                transition: theme.transitions.duration.short + "ms",
             },
         },
         addFilterButtonActive: {
@@ -42,12 +41,12 @@ const useStyles = makeStyles(
             },
         },
         addFilterIcon: {
-            transition: `${theme.transitions.duration.short}ms`,
+            transition: theme.transitions.duration.short + "ms",
         },
         addFilterText: {
             color: theme.palette.primary.main,
             fontSize: 14,
-            fontWeight: 600 as const,
+            fontWeight: 600 as 600,
             textTransform: "uppercase",
         },
         filterButton: {
@@ -139,7 +138,7 @@ const Filter: React.FC<FilterProps> = (props) => {
                     data-test-id="show-filters-button"
                 >
                     <Typography className={classes.addFilterText}>
-                        <FormattedMessage defaultMessage="Filters" id="FNpv6K" description="button" />
+                        <FormattedMessage id="FNpv6K" defaultMessage="Filters" description="button" />
                     </Typography>
 
                     {isFilterActive && (

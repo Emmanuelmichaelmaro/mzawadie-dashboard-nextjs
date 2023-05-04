@@ -8,8 +8,10 @@ import Hr from "@mzawadie/components/Hr";
 import { Money } from "@mzawadie/components/Money";
 import { Percent } from "@mzawadie/components/Percent";
 import Skeleton from "@mzawadie/components/Skeleton";
-import { commonMessages, ChannelProps, maybe } from "@mzawadie/core";
-import { SaleDetailsFragment } from "@mzawadie/graphql";
+import { commonMessages } from "@mzawadie/core";
+import { ChannelProps } from "@mzawadie/core";
+import { maybe } from "@mzawadie/core";
+import { SaleDetailsFragment, SaleType } from "@mzawadie/graphql";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -31,7 +33,7 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannelId, sale }) =>
             <CardTitle title={intl.formatMessage(commonMessages.summary)} />
             <CardContent>
                 <Typography variant="caption">
-                    <FormattedMessage defaultMessage="Name" id="F56hOz" description="sale name" />
+                    <FormattedMessage id="F56hOz" defaultMessage="Name" description="sale name" />
                 </Typography>
 
                 <Typography className={classes.ellipsis}>
@@ -41,7 +43,7 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannelId, sale }) =>
                 <FormSpacer />
 
                 <Typography variant="caption">
-                    <FormattedMessage defaultMessage="Value" id="XZR590" description="sale value" />
+                    <FormattedMessage id="XZR590" defaultMessage="Value" description="sale value" />
                 </Typography>
 
                 <Typography>
@@ -64,7 +66,9 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannelId, sale }) =>
                 </Typography>
 
                 <CardSpacer />
+
                 <Hr />
+
                 <CardSpacer />
 
                 <Typography variant="caption">

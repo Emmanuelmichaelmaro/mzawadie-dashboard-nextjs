@@ -1,9 +1,9 @@
-// @ts-nocheck
 import { InputAdornment, TextField } from "@material-ui/core";
 import { InputProps } from "@material-ui/core/Input";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+
+import { usePriceField } from "./usePriceField";
 
 const useStyles = makeStyles(
     (theme) => ({
@@ -37,11 +37,11 @@ interface PriceFieldProps {
     hint?: string;
     label?: string;
     name?: string;
-    value?: string | number;
+    value?: string;
     InputProps?: InputProps;
     inputProps?: InputProps["inputProps"];
     required?: boolean;
-    onChange: (event: any) => any;
+    onChange(event: any);
 }
 
 export const PriceField: React.FC<PriceFieldProps> = (props) => {
@@ -53,7 +53,7 @@ export const PriceField: React.FC<PriceFieldProps> = (props) => {
         hint = "",
         currencySymbol,
         name,
-        onChange,
+        onChange: onChangeBase,
         required,
         value,
         InputProps,
@@ -61,19 +61,14 @@ export const PriceField: React.FC<PriceFieldProps> = (props) => {
     } = props;
 
     const classes = useStyles(props);
-    const minValue = 0;
+    
+    const { onChange, onKeyDown, minValue, step } = usePriceField(currencySymbol, onChangeBase);
+
     return (
         <TextField
             className={className}
-            error={error || value < minValue}
-            helperText={
-                hint ||
-                (value < minValue ? (
-                    <FormattedMessage defaultMessage="Price cannot be lower than 0" id="WHkx+F" />
-                ) : (
-                    ""
-                ))
-            }
+            error={error}
+            helperText={hint}
             label={label}
             fullWidth
             value={value}
@@ -88,6 +83,7 @@ export const PriceField: React.FC<PriceFieldProps> = (props) => {
                 ),
                 inputProps: {
                     min: 0,
+                    step,
                     ...InputProps?.inputProps,
                 },
                 type: "number",
@@ -101,9 +97,11 @@ export const PriceField: React.FC<PriceFieldProps> = (props) => {
             disabled={disabled}
             required={required}
             onChange={onChange}
+            onKeyDown={onKeyDown}
         />
     );
 };
+
 PriceField.defaultProps = {
     name: "price",
 };

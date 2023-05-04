@@ -1,6 +1,8 @@
 // @ts-nocheck
 import { Card, List, ListItem, ListItemText, Typography } from "@material-ui/core";
-import { CardTitle, DateTime, Skeleton } from "@mzawadie/components";
+import { CardTitle } from "@mzawadie/components/CardTitle";
+import { DateTime } from "@mzawadie/components/Date";
+import Skeleton from "@mzawadie/components/Skeleton";
 import { RelayToFlat, renderCollection } from "@mzawadie/core";
 import { HomeQuery } from "@mzawadie/graphql";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -30,6 +32,7 @@ interface HomeActivityCardProps {
 
 const HomeActivityCard: React.FC<HomeActivityCardProps> = (props) => {
     const { activities, testId } = props;
+
     const classes = useStyles(props);
 
     const intl = useIntl();
@@ -38,12 +41,13 @@ const HomeActivityCard: React.FC<HomeActivityCardProps> = (props) => {
         <Card data-test-id={testId}>
             <CardTitle
                 title={intl.formatMessage({
+                    id: "BXkF8Z",
                     defaultMessage: "Activity",
                     description: "header",
-                    id: "BXkF8Z",
                 })}
             />
-            <List dense>
+
+            <List dense={true}>
                 {renderCollection(
                     activities,
                     (activity, activityId) => (
@@ -70,8 +74,8 @@ const HomeActivityCard: React.FC<HomeActivityCardProps> = (props) => {
                                 primary={
                                     <Typography>
                                         <FormattedMessage
-                                            defaultMessage="No activities found"
                                             id="wWTUrM"
+                                            defaultMessage="No activities found"
                                         />
                                     </Typography>
                                 }

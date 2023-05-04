@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { Backlink } from "@mzawadie/components/Backlink";
 import { CardSpacer } from "@mzawadie/components/CardSpacer";
 import { ChannelsAvailabilityCard } from "@mzawadie/components/ChannelsAvailabilityCard";
 import { Container } from "@mzawadie/components/Container";
@@ -14,8 +15,10 @@ import {
     PermissionEnum,
 } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
+import useNavigator from "@mzawadie/hooks/useNavigator";
 import { ChannelCollectionData } from "@mzawadie/pages/channels/utils";
-import { ConfirmButtonTransitionState, Backlink } from "@saleor/macaw-ui";
+import { collectionListUrl } from "@mzawadie/pages/collections/urls";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -30,7 +33,6 @@ export interface CollectionCreatePageProps {
     disabled: boolean;
     errors: CollectionErrorFragment[];
     saveButtonBarState: ConfirmButtonTransitionState;
-    onBack: () => void;
     onSubmit: (data: CollectionCreateData) => SubmitPromise;
     onChannelsChange: (data: ChannelCollectionData[]) => void;
     openChannelsModal: () => void;
@@ -43,29 +45,34 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
     disabled,
     errors,
     saveButtonBarState,
-    onBack,
     onChannelsChange,
     openChannelsModal,
     onSubmit,
 }: CollectionCreatePageProps) => {
     const intl = useIntl();
+    const navigate = useNavigator();
 
     return (
         <CollectionCreateForm
             onSubmit={onSubmit}
             currentChannels={currentChannels}
             setChannels={onChannelsChange}
+            disabled={disabled}
         >
-            {({ change, data, handlers, hasChanged, submit }) => (
+            {({ change, data, handlers, submit, isSaveDisabled }) => (
                 <Container>
-                    <Backlink onClick={onBack}>{intl.formatMessage(sectionNames.collections)}</Backlink>
+                    <Backlink href={collectionListUrl()}>
+                        {intl.formatMessage(sectionNames.collections)}
+                    </Backlink>
+
                     <PageHeader
                         title={intl.formatMessage({
-                            defaultMessage: "Add Collection",
                             id: "Fxa6xp",
+                            defaultMessage: "Add Collection",
                             description: "page header",
                         })}
                     />
+
                     <Grid>
                         <div>
                             <CollectionDetails
@@ -73,9 +80,10 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
                                 disabled={disabled}
                                 errors={errors}
                                 onChange={change}
-                                onDescriptionChange={handlers.changeDescription}
                             />
+
                             <CardSpacer />
+
                             <CollectionImage
                                 image={
                                     data.backgroundImage.url
@@ -111,16 +119,18 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
                                 onChange={change}
                                 data={data}
                             />
+
                             <CardSpacer />
+
                             <SeoForm
-                                allowEmptySlug
+                                allowEmptySlug={true}
                                 description={data.seoDescription}
                                 disabled={disabled}
                                 descriptionPlaceholder=""
                                 helperText={intl.formatMessage({
+                                    id: "Rj8LxK",
                                     defaultMessage:
                                         "Add search engine title and description to make this collection easier to find",
-                                    id: "Rj8LxK",
                                 })}
                                 slug={data.slug}
                                 slugPlaceholder={data.name}
@@ -128,27 +138,29 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
                                 titlePlaceholder={data.name}
                                 onChange={change}
                             />
+
                             <CardSpacer />
+
                             <Metadata data={data} onChange={handlers.changeMetadata} />
                         </div>
+
                         <div>
                             <ChannelsAvailabilityCard
                                 messages={{
                                     hiddenLabel: intl.formatMessage({
-                                        defaultMessage: "Hidden",
                                         id: "V8FhTt",
+                                        defaultMessage: "Hidden",
                                         description: "collection label",
                                     }),
 
                                     visibleLabel: intl.formatMessage({
-                                        defaultMessage: "Visible",
                                         id: "9vQR6c",
+                                        defaultMessage: "Visible",
                                         description: "collection label",
                                     }),
                                 }}
                                 managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
                                 errors={channelsErrors}
-                                selectedChannelsCount={data.channelListings.length}
                                 allChannelsCount={channelsCount}
                                 channels={data.channelListings}
                                 disabled={disabled}
@@ -157,10 +169,11 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
                             />
                         </div>
                     </Grid>
+
                     <Savebar
                         state={saveButtonBarState}
-                        disabled={disabled || !hasChanged}
-                        onCancel={onBack}
+                        disabled={isSaveDisabled}
+                        onCancel={() => navigate(collectionListUrl())}
                         onSubmit={submit}
                     />
                 </Container>

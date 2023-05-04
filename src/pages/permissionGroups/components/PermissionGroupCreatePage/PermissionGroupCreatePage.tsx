@@ -1,15 +1,18 @@
 // @ts-nocheck
 import { AccountPermissions } from "@mzawadie/components/AccountPermissions";
+import { Backlink } from "@mzawadie/components/Backlink";
 import Container from "@mzawadie/components/Container";
 import { Form } from "@mzawadie/components/Form";
 import { Grid } from "@mzawadie/components/Grid";
 import Savebar from "@mzawadie/components/Savebar";
 import { sectionNames } from "@mzawadie/core";
-import { PermissionGroupErrorFragment, PermissionEnum } from "@mzawadie/graphql";
+import { PermissionEnum, PermissionGroupErrorFragment } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
+import useNavigator from "@mzawadie/hooks/useNavigator";
+import { permissionGroupListUrl } from "@mzawadie/pages/permissionGroups/urls";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getPermissionGroupErrorMessage from "@mzawadie/utils/errors/permissionGroups";
-import { ConfirmButtonTransitionState, Backlink } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -35,30 +38,30 @@ export interface PermissionGroupCreatePageProps {
     errors: PermissionGroupErrorFragment[];
     permissions: PermissionData[];
     saveButtonBarState: ConfirmButtonTransitionState;
-    onBack: () => void;
     onSubmit: (data: PermissionGroupCreateFormData) => SubmitPromise;
 }
 
 const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
     disabled,
     permissions,
-    onBack,
     onSubmit,
     saveButtonBarState,
     errors,
 }) => {
     const intl = useIntl();
+    const navigate = useNavigator();
 
     const formErrors = getFormErrors(["addPermissions"], errors || []);
     const permissionsError = getPermissionGroupErrorMessage(formErrors.addPermissions, intl);
 
     return (
-        <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-            {({ data, change, submit, hasChanged }) => (
+        <Form confirmLeave initial={initialForm} onSubmit={onSubmit} disabled={disabled}>
+            {({ data, change, submit, isSaveDisabled }) => (
                 <Container>
-                    <Backlink onClick={onBack}>
+                    <Backlink href={permissionGroupListUrl()}>
                         {intl.formatMessage(sectionNames.permissionGroups)}
                     </Backlink>
+
                     <Grid>
                         <div>
                             <PermissionGroupInfo
@@ -68,6 +71,7 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
                                 disabled={disabled}
                             />
                         </div>
+
                         <div>
                             <AccountPermissions
                                 permissionsExceeded={false}
@@ -77,25 +81,26 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
                                 permissions={permissions}
                                 onChange={change}
                                 fullAccessLabel={intl.formatMessage({
-                                    defaultMessage: "Group has full access to the store",
                                     id: "mAabef",
+                                    defaultMessage: "Group has full access to the store",
                                     description: "checkbox label",
                                 })}
                                 description={intl.formatMessage({
+                                    id: "CYZse9",
                                     defaultMessage:
-                                        "Expand or restrict group's permissions to access certain part of mzawadie system.",
-                                    id: "YjwDaY",
+                                        "Expand or restrict group's permissions to access certain part of saleor system.",
                                     description: "card description",
                                 })}
                             />
                         </div>
                     </Grid>
+
                     <div>
                         <Savebar
-                            onCancel={onBack}
+                            onCancel={() => navigate(permissionGroupListUrl())}
                             onSubmit={submit}
                             state={saveButtonBarState}
-                            disabled={disabled || !hasChanged}
+                            disabled={isSaveDisabled}
                         />
                     </div>
                 </Container>
@@ -103,5 +108,7 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
         </Form>
     );
 };
+
 PermissionGroupCreatePage.displayName = "PermissionGroupCreatePage";
+
 export default PermissionGroupCreatePage;

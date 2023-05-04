@@ -1,6 +1,5 @@
 // @ts-nocheck
 import { AttributeInput, VariantAttributeScope } from "@mzawadie/components/Attributes";
-import { MetadataFormData } from "@mzawadie/components/Metadata/types";
 import { SingleAutocompleteChoiceType } from "@mzawadie/components/SingleAutocompleteSelectField";
 import { maybe } from "@mzawadie/core";
 import {
@@ -19,12 +18,11 @@ import {
     getSelectedAttributeValues,
     mergeChoicesWithValues,
 } from "@mzawadie/pages/attributes/utils/data";
-import { ChannelData } from "@mzawadie/pages/channels/utils";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@mzawadie/utils/maps";
 import moment from "moment";
 
 import { ProductStockInput } from "../components/ProductStocks";
-import { ChannelsWithVariantsData } from "../views/ProductUpdate/types";
+import { ProductUpdateFormData } from "../components/ProductUpdatePage/types";
 
 export interface Collection {
     id: string;
@@ -120,6 +118,7 @@ export function getAttributeInputFromVariant(variant: ProductVariantFragment): A
         variant?.selectionAttributes,
         VariantAttributeScope.VARIANT_SELECTION
     );
+
     const nonSelectionAttributeInput = getAttributeInputFromSelectedAttributes(
         variant?.nonSelectionAttributes,
         VariantAttributeScope.NOT_VARIANT_SELECTION
@@ -157,17 +156,6 @@ export function getStockInputFromVariant(variant: ProductVariantFragment): Produ
     );
 }
 
-export function getStockInputFromProduct(product: ProductFragment): ProductStockInput[] {
-    return product?.variants[0]?.stocks.map((stock) => ({
-        data: {
-            quantityAllocated: stock?.quantityAllocated,
-        },
-        id: stock.warehouse.id,
-        label: stock.warehouse.name,
-        value: stock.quantity.toString(),
-    }));
-}
-
 export function getCollectionInput(productCollections: ProductFragment["collections"]): Collection[] {
     return maybe(
         () =>
@@ -190,47 +178,17 @@ export function getChoices(nodes: Node[]): SingleAutocompleteChoiceType[] {
     );
 }
 
-export interface ProductUpdatePageFormData extends MetadataFormData {
-    category: string | null;
-    changeTaxCode: boolean;
-    channelsWithVariants: ChannelsWithVariantsData;
-    channelListings: ChannelData[];
-    channelsData: ChannelData[];
-    chargeTaxes: boolean;
-    collections: string[];
-    isAvailable: boolean;
-    name: string;
-    slug: string;
-    rating: number;
-    seoDescription: string;
-    seoTitle: string;
-    sku: string;
-    taxCode: string;
-    trackInventory: boolean;
-    weight: string;
-    isPreorder: boolean;
-    globalThreshold: string;
-    globalSoldUnits: number;
-    hasPreorderEndDate: boolean;
-    preorderEndDateTime?: string;
-}
-
 export function getProductUpdatePageFormData(
     product: ProductFragment,
-    variants: ProductDetailsVariantFragment[],
-    currentChannels: ChannelData[],
-    channelsData: ChannelData[],
-    channelsWithVariants: ChannelsWithVariantsData
-): ProductUpdatePageFormData {
+    variants: ProductDetailsVariantFragment[]
+): ProductUpdateFormData {
     const variant = product?.variants[0];
+
     return {
-        channelsWithVariants,
-        channelsData,
         category: maybe(() => product.category.id, ""),
         changeTaxCode: !!product?.taxType.taxCode,
         chargeTaxes: maybe(() => product.chargeTaxes, false),
         collections: maybe(() => product.collections.map((collection) => collection.id), []),
-        channelListings: currentChannels.map((listing) => ({ ...listing })),
         isAvailable: !!product?.isAvailable,
         metadata: product?.metadata?.map(mapMetadataItemToInput),
         name: maybe(() => product.name, ""),

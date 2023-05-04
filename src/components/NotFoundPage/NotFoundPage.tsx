@@ -1,6 +1,7 @@
 // @ts-nocheck
 import notFoundImage from "@assets/images/not-found-404.svg";
-import { Button, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
+import { Button } from "@mzawadie/components/Button";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import SVG from "react-inlinesvg";
@@ -21,11 +22,10 @@ const useStyles = makeStyles(
             display: "grid",
             gridTemplateColumns: "1fr 487px",
             margin: "0 auto",
-            padding: "4rem",
             width: 830,
         },
         header: {
-            fontWeight: 600 as const,
+            fontWeight: 600 as 600,
         },
         innerContainer: {
             [theme.breakpoints.down("sm")]: {
@@ -50,12 +50,18 @@ const useStyles = makeStyles(
     { name: "NotFoundPage" }
 );
 
-interface NotFoundPageProps {
-    onBack: () => void;
-}
+type NotFoundPageProps =
+    | {
+          onBack: () => void;
+          backHref?: never;
+      }
+    | {
+          onBack?: never;
+          backHref: string;
+      };
 
 const NotFoundPage: React.FC<NotFoundPageProps> = (props) => {
-    const { onBack } = props;
+    const { onBack, backHref } = props;
 
     const classes = useStyles(props);
 
@@ -65,15 +71,17 @@ const NotFoundPage: React.FC<NotFoundPageProps> = (props) => {
                 <div className={classes.innerContainer}>
                     <div>
                         <Typography className={classes.header} variant="h3">
-                            <FormattedMessage defaultMessage="Ooops!..." id="yH56V+" />
+                            <FormattedMessage id="yH56V+" defaultMessage="Ooops!..." />
                         </Typography>
+
                         <Typography className={classes.header} variant="h4">
-                            <FormattedMessage defaultMessage="Something's missing" id="bj6pTd" />
+                            <FormattedMessage id="bj6pTd" defaultMessage="Something's missing" />
                         </Typography>
+
                         <Typography>
                             <FormattedMessage
-                                defaultMessage="Sorry, the page was not found"
                                 id="nRiOg+"
+                                defaultMessage="Sorry, the page was not found"
                             />
                         </Typography>
                     </div>
@@ -81,13 +89,13 @@ const NotFoundPage: React.FC<NotFoundPageProps> = (props) => {
                     <div>
                         <Button
                             className={classes.button}
-                            color="primary"
-                            variant="contained"
+                            variant="primary"
                             onClick={onBack}
+                            href={backHref}
                         >
                             <FormattedMessage
-                                defaultMessage="Go back to dashboard"
                                 id="95oJ5d"
+                                defaultMessage="Go back to dashboard"
                                 description="button"
                             />
                         </Button>

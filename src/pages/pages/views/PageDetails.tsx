@@ -3,16 +3,13 @@ import { DialogContentText } from "@material-ui/core";
 import { ActionDialog } from "@mzawadie/components/ActionDialog";
 import { AttributeInput } from "@mzawadie/components/Attributes";
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
-import {
-    DEFAULT_INITIAL_SEARCH_DATA,
-    VALUES_PAGINATE_BY,
-    commonMessages,
-    getStringOrPlaceholder,
-    maybe,
-} from "@mzawadie/core";
+import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@mzawadie/core";
+import { commonMessages } from "@mzawadie/core";
+import { getStringOrPlaceholder, maybe } from "@mzawadie/core";
 import {
     AttributeErrorFragment,
     AttributeValueInput,
+    PageDetailsFragment,
     PageErrorFragment,
     PageInput,
     UploadErrorFragment,
@@ -48,15 +45,21 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { PageDetailsPage } from "../components/PageDetailsPage";
 import { PageData, PageSubmitData } from "../components/PageDetailsPage/form";
 import { pageListUrl, pageUrl, PageUrlQueryParams } from "../urls";
+import { getAttributeInputFromPage } from "../utils/data";
 
 export interface PageDetailsProps {
     id: string;
     params: PageUrlQueryParams;
 }
 
-const createPageInput = (data: PageData, updatedFileAttributes: AttributeValueInput[]): PageInput => ({
+const createPageInput = (
+    data: PageData,
+    page: PageDetailsFragment,
+    updatedFileAttributes: AttributeValueInput[]
+): PageInput => ({
     attributes: prepareAttributesInput({
         attributes: data.attributes,
+        prevAttributes: getAttributeInputFromPage(page),
         updatedFileAttributes,
     }),
     content: getParsedDataForJsonStringField(data.content),
@@ -74,7 +77,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     const navigate = useNavigator();
     const notify = useNotifier();
     const intl = useIntl();
-
+    
     const [updateMetadata] = useUpdateMetadataMutation({});
     const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
@@ -93,7 +96,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
 
     const [pageRemove, pageRemoveOpts] = usePageRemoveMutation({
         onCompleted: (data) => {
-            if (data.pageDelete.errors.length === 0) {
+            if (data.pageDelete?.errors.length === 0) {
                 notify({
                     status: "success",
                     text: intl.formatMessage(commonMessages.savedChanges),
@@ -133,7 +136,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
         const updateResult = await pageUpdate({
             variables: {
                 id,
-                input: createPageInput(data, updatedFileAttributes),
+                input: createPageInput(data, pageDetails?.data?.page, updatedFileAttributes),
                 firstValues: VALUES_PAGINATE_BY,
             },
         });
@@ -142,14 +145,14 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
             ...errors,
             ...mergeFileUploadErrors(uploadFilesResult),
             ...mergeAttributeValueDeleteErrors(deleteAttributeValuesResult),
-            ...updateResult.data.pageUpdate.errors,
+            ...updateResult?.data?.pageUpdate?.errors,
         ];
 
         return errors;
     };
 
     const handleSubmit = createMetadataUpdateHandler(
-        pageDetails.data?.page,
+        pageDetails?.data?.page,
         handleUpdate,
         (variables) => updateMetadata({ variables }),
         (variables) => updatePrivateMetadata({ variables })
@@ -178,7 +181,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
         reset: searchAttributeReset,
     } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
-    const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
+    const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute?.choices) || [];
 
     const fetchMoreReferencePages = {
         hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
@@ -200,7 +203,8 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
 
     return (
         <>
-            <WindowTitle title={maybe(() => pageDetails.data.page.title)} />
+            <WindowTitle title={maybe(() => pageDetails?.data?.page?.title)} />
+
             <PageDetailsPage
                 loading={
                     pageDetails.loading ||
@@ -208,11 +212,10 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
                     uploadFileOpts.loading ||
                     deleteAttributeValueOpts.loading
                 }
-                errors={pageUpdateOpts.data?.pageUpdate.errors || []}
+                errors={pageUpdateOpts.data?.pageUpdate?.errors || []}
                 saveButtonBarState={pageUpdateOpts.status}
                 page={pageDetails.data?.page}
                 attributeValues={attributeValues}
-                onBack={() => navigate(pageListUrl())}
                 onRemove={() =>
                     navigate(
                         pageUrl(id, {
@@ -239,8 +242,8 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
                 open={params.action === "remove"}
                 confirmButtonState={pageRemoveOpts.status}
                 title={intl.formatMessage({
-                    defaultMessage: "Delete Page",
                     id: "C1luwg",
+                    defaultMessage: "Delete Page",
                     description: "dialog header",
                 })}
                 onClose={() => navigate(pageUrl(id))}
@@ -249,8 +252,8 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
             >
                 <DialogContentText>
                     <FormattedMessage
-                        defaultMessage="Are you sure you want to delete {title}?"
                         id="4B32Ba"
+                        defaultMessage="Are you sure you want to delete {title}?"
                         description="delete page"
                         values={{
                             title: (

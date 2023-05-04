@@ -1,4 +1,7 @@
 schema: http://127.0.0.1:8000/graphql/
+hooks:
+    afterAllFileWrite:
+        - prettier --write
 generates:
     ./introspection.json:
         plugins:

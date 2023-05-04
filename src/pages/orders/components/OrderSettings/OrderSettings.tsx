@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Card, CardContent, Typography } from "@material-ui/core";
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import { CardTitle } from "@mzawadie/components/CardTitle";
@@ -20,8 +21,8 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({ data, disabled, onChange 
         <Card data-test-id="order-settings">
             <CardTitle
                 title={intl.formatMessage({
-                    defaultMessage: "Settings",
                     id: "CLYlsu",
+                    defaultMessage: "Settings",
                     description: "section header",
                 })}
             />
@@ -32,14 +33,15 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({ data, disabled, onChange 
                     label={
                         <>
                             <FormattedMessage
-                                defaultMessage="Automatically confirm all orders"
                                 id="RLYfMF"
+                                defaultMessage="Automatically confirm all orders"
                                 description="checkbox label"
                             />
+
                             <Typography variant="caption">
                                 <FormattedMessage
-                                    defaultMessage="All orders will be automatically confirmed and all payments will be captured."
                                     id="wpAXKX"
+                                    defaultMessage="All orders will be automatically confirmed and all payments will be captured."
                                     description="checkbox label description"
                                 />
                             </Typography>
@@ -58,14 +60,15 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({ data, disabled, onChange 
                     label={
                         <>
                             <FormattedMessage
-                                defaultMessage="Automatically fulfill non shippable gift cards"
                                 id="7UG1Lx"
+                                defaultMessage="Automatically fulfill non shippable gift cards"
                                 description="checkbox gift cards label"
                             />
+
                             <Typography variant="caption">
                                 <FormattedMessage
-                                    defaultMessage="when activated non-shippable gift cards will be automatically set as fulfilled and sent to customer"
                                     id="Nfh9QM"
+                                    defaultMessage="when activated non-shippable gift cards will be automatically set as fulfilled and sent to customer"
                                     description="checkbox gift cards label description"
                                 />
                             </Typography>

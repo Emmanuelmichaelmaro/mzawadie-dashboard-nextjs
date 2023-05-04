@@ -6,18 +6,12 @@ import { Money } from "@mzawadie/components/Money";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { TableCellHeader } from "@mzawadie/components/TableCellHeader";
-import { TablePagination } from "@mzawadie/components/TablePagination";
-import {
-    maybe,
-    renderCollection,
-    transformOrderStatus,
-    transformPaymentStatus,
-    ListProps,
-    SortPage,
-    RelayToFlat,
-} from "@mzawadie/core";
+import { TablePaginationWithContext } from "@mzawadie/components/TablePagination";
+import { TableRowLink } from "@mzawadie/components/TableRowLink";
+import { maybe, renderCollection, transformOrderStatus, transformPaymentStatus } from "@mzawadie/core";
+import { ListProps, RelayToFlat, SortPage } from "@mzawadie/core";
 import { OrderListQuery } from "@mzawadie/graphql";
-import { OrderListUrlSortField } from "@mzawadie/pages/orders/urls";
+import { OrderListUrlSortField, orderUrl } from "@mzawadie/pages/orders/urls";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import { makeStyles, Pill } from "@saleor/macaw-ui";
 import React from "react";
@@ -74,18 +68,7 @@ interface OrderListProps extends ListProps, SortPage<OrderListUrlSortField> {
 const numberOfColumns = 6;
 
 export const OrderList: React.FC<OrderListProps> = (props) => {
-    const {
-        disabled,
-        settings,
-        orders,
-        pageInfo,
-        onPreviousPage,
-        onNextPage,
-        onUpdateListSettings,
-        onRowClick,
-        onSort,
-        sort,
-    } = props;
+    const { disabled, settings, orders, onUpdateListSettings, onSort, sort } = props;
 
     const classes = useStyles(props);
 
@@ -113,7 +96,7 @@ export const OrderList: React.FC<OrderListProps> = (props) => {
                         onClick={() => onSort(OrderListUrlSortField.number)}
                         className={classes.colNumber}
                     >
-                        <FormattedMessage defaultMessage="No. of Order" id="ps0WUQ" />
+                        <FormattedMessage id="ps0WUQ" defaultMessage="No. of Order" />
                     </TableCellHeader>
 
                     <TableCellHeader
@@ -126,8 +109,8 @@ export const OrderList: React.FC<OrderListProps> = (props) => {
                         className={classes.colDate}
                     >
                         <FormattedMessage
-                            defaultMessage="Date"
                             id="PHUcrU"
+                            defaultMessage="Date"
                             description="date when order was placed"
                         />
                     </TableCellHeader>
@@ -142,8 +125,8 @@ export const OrderList: React.FC<OrderListProps> = (props) => {
                         className={classes.colCustomer}
                     >
                         <FormattedMessage
-                            defaultMessage="Customer"
                             id="5blVMu"
+                            defaultMessage="Customer"
                             description="e-mail or full name"
                         />
                     </TableCellHeader>
@@ -158,8 +141,8 @@ export const OrderList: React.FC<OrderListProps> = (props) => {
                         className={classes.colPayment}
                     >
                         <FormattedMessage
-                            defaultMessage="Payment"
                             id="p+UDec"
+                            defaultMessage="Payment"
                             description="payment status"
                         />
                     </TableCellHeader>
@@ -173,13 +156,13 @@ export const OrderList: React.FC<OrderListProps> = (props) => {
                         onClick={() => onSort(OrderListUrlSortField.fulfillment)}
                         className={classes.colFulfillment}
                     >
-                        <FormattedMessage defaultMessage="Fulfillment status" id="NWxomz" />
+                        <FormattedMessage id="NWxomz" defaultMessage="Fulfillment status" />
                     </TableCellHeader>
 
                     <TableCellHeader textAlign="right" className={classes.colTotal}>
                         <FormattedMessage
-                            defaultMessage="Total"
                             id="k9hf7F"
+                            defaultMessage="Total"
                             description="total order price"
                         />
                     </TableCellHeader>
@@ -188,14 +171,11 @@ export const OrderList: React.FC<OrderListProps> = (props) => {
 
             <TableFooter>
                 <TableRow>
-                    <TablePagination
+                    <TablePaginationWithContext
                         colSpan={numberOfColumns}
                         settings={settings}
-                        hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-                        onNextPage={onNextPage}
+                        disabled={disabled}
                         onUpdateListSettings={onUpdateListSettings}
-                        hasPreviousPage={pageInfo && !disabled ? pageInfo.hasPreviousPage : false}
-                        onPreviousPage={onPreviousPage}
                     />
                 </TableRow>
             </TableFooter>
@@ -204,15 +184,15 @@ export const OrderList: React.FC<OrderListProps> = (props) => {
                 {renderCollection(
                     orderList,
                     (order) => (
-                        <TableRow
+                        <TableRowLink
                             data-test-id="order-table-row"
                             hover={!!order}
                             className={!!order ? classes.link : undefined}
-                            onClick={order ? onRowClick(order.id) : undefined}
+                            href={order && orderUrl(order.id)}
                             key={order ? order.id : "skeleton"}
                         >
                             <TableCell className={classes.colNumber}>
-                                {maybe(() => order.number) ? `#${order.number}` : <Skeleton />}
+                                {maybe(() => order.number) ? "#" + order.number : <Skeleton />}
                             </TableCell>
 
                             <TableCell className={classes.colDate}>
@@ -270,12 +250,12 @@ export const OrderList: React.FC<OrderListProps> = (props) => {
                                     <Skeleton />
                                 )}
                             </TableCell>
-                        </TableRow>
+                        </TableRowLink>
                     ),
                     () => (
                         <TableRow>
                             <TableCell colSpan={numberOfColumns}>
-                                <FormattedMessage defaultMessage="No orders found" id="RlfqSV" />
+                                <FormattedMessage id="RlfqSV" defaultMessage="No orders found" />
                             </TableCell>
                         </TableRow>
                     )

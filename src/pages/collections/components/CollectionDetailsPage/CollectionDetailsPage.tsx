@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { Backlink } from "@mzawadie/components/Backlink";
 import { CardSpacer } from "@mzawadie/components/CardSpacer";
 import { ChannelsAvailabilityCard } from "@mzawadie/components/ChannelsAvailabilityCard";
 import { Container } from "@mzawadie/components/Container";
@@ -7,16 +8,19 @@ import Metadata from "@mzawadie/components/Metadata/Metadata";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { SeoForm } from "@mzawadie/components/SeoForm";
-import { sectionNames, ChannelProps, ListActions, PageListProps } from "@mzawadie/core";
+import { sectionNames } from "@mzawadie/core";
+import { ChannelProps, ListActions, PageListProps } from "@mzawadie/core";
 import {
     CollectionChannelListingErrorFragment,
-    CollectionErrorFragment,
     CollectionDetailsQuery,
+    CollectionErrorFragment,
     PermissionEnum,
 } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
+import useNavigator from "@mzawadie/hooks/useNavigator";
 import { ChannelCollectionData } from "@mzawadie/pages/channels/utils";
-import { ConfirmButtonTransitionState, Backlink } from "@saleor/macaw-ui";
+import { collectionListUrl } from "@mzawadie/pages/collections/urls";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -26,14 +30,13 @@ import CollectionProducts from "../CollectionProducts/CollectionProducts";
 import CollectionUpdateForm, { CollectionUpdateData } from "./form";
 
 export interface CollectionDetailsPageProps extends PageListProps, ListActions, ChannelProps {
+    onAdd: () => void;
     channelsCount: number;
     channelsErrors: CollectionChannelListingErrorFragment[];
     collection: CollectionDetailsQuery["collection"];
     currentChannels: ChannelCollectionData[];
     errors: CollectionErrorFragment[];
-    hasChannelChanged: boolean;
     saveButtonBarState: ConfirmButtonTransitionState;
-    onBack: () => void;
     onCollectionRemove: () => void;
     onImageDelete: () => void;
     onImageUpload: (file: File) => void;
@@ -50,10 +53,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
     currentChannels = [],
     disabled,
     errors,
-    hasChannelChanged,
     saveButtonBarState,
-    selectedChannelId,
-    onBack,
     onCollectionRemove,
     onImageDelete,
     onImageUpload,
@@ -63,6 +63,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
     ...collectionProductsProps
 }: CollectionDetailsPageProps) => {
     const intl = useIntl();
+    const navigate = useNavigator();
 
     return (
         <CollectionUpdateForm
@@ -70,11 +71,16 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
             currentChannels={currentChannels}
             setChannels={onChannelsChange}
             onSubmit={onSubmit}
+            disabled={disabled}
         >
-            {({ change, data, handlers, hasChanged, submit }) => (
+            {({ change, data, handlers, submit, isSaveDisabled }) => (
                 <Container>
-                    <Backlink onClick={onBack}>{intl.formatMessage(sectionNames.collections)}</Backlink>
+                    <Backlink href={collectionListUrl()}>
+                        {intl.formatMessage(sectionNames.collections)}
+                    </Backlink>
+
                     <PageHeader title={collection?.name} />
+
                     <Grid>
                         <div>
                             <CollectionDetails
@@ -82,9 +88,10 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                                 disabled={disabled}
                                 errors={errors}
                                 onChange={change}
-                                onDescriptionChange={handlers.changeDescription}
                             />
+
                             <CardSpacer />
+
                             <CollectionImage
                                 data={data}
                                 image={collection?.backgroundImage}
@@ -92,23 +99,29 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                                 onImageUpload={onImageUpload}
                                 onChange={change}
                             />
+
                             <CardSpacer />
+
                             <Metadata data={data} onChange={handlers.changeMetadata} />
+
                             <CardSpacer />
+
                             <CollectionProducts
                                 disabled={disabled}
                                 collection={collection}
                                 {...collectionProductsProps}
                             />
+
                             <CardSpacer />
+
                             <SeoForm
                                 description={data.seoDescription}
                                 disabled={disabled}
                                 descriptionPlaceholder=""
                                 helperText={intl.formatMessage({
+                                    id: "Rj8LxK",
                                     defaultMessage:
                                         "Add search engine title and description to make this collection easier to find",
-                                    id: "Rj8LxK",
                                 })}
                                 errors={errors}
                                 slug={data.slug}
@@ -118,25 +131,25 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                                 onChange={change}
                             />
                         </div>
+
                         <div>
                             <div>
                                 <ChannelsAvailabilityCard
                                     managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
                                     messages={{
                                         hiddenLabel: intl.formatMessage({
-                                            defaultMessage: "Hidden",
                                             id: "V8FhTt",
+                                            defaultMessage: "Hidden",
                                             description: "collection label",
                                         }),
 
                                         visibleLabel: intl.formatMessage({
-                                            defaultMessage: "Visible",
                                             id: "9vQR6c",
+                                            defaultMessage: "Visible",
                                             description: "collection label",
                                         }),
                                     }}
                                     errors={channelsErrors}
-                                    selectedChannelsCount={data.channelListings.length}
                                     allChannelsCount={channelsCount}
                                     channels={data.channelListings}
                                     disabled={disabled}
@@ -146,10 +159,11 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                             </div>
                         </div>
                     </Grid>
+
                     <Savebar
                         state={saveButtonBarState}
-                        disabled={disabled || (!hasChanged && !hasChannelChanged)}
-                        onCancel={onBack}
+                        disabled={isSaveDisabled}
+                        onCancel={() => navigate(collectionListUrl())}
                         onDelete={onCollectionRemove}
                         onSubmit={submit}
                     />

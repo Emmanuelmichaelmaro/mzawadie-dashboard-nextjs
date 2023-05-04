@@ -1,23 +1,18 @@
 // @ts-nocheck
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { AccountPermissionGroups } from "@mzawadie/components/AccountPermissionGroups";
-import { AppStatus } from "@mzawadie/components/AppStatus";
+import { Backlink } from "@mzawadie/components/Backlink";
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import { CardTitle } from "@mzawadie/components/CardTitle";
-import { ConfirmButtonTransitionState } from "@mzawadie/components/ConfirmButton";
 import Container from "@mzawadie/components/Container";
 import { Form } from "@mzawadie/components/Form";
 import { Grid } from "@mzawadie/components/Grid";
 import { MultiAutocompleteChoiceType } from "@mzawadie/components/MultiAutocompleteSelectField";
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
-import {
-    sectionNames,
-    getUserName,
-    FetchMoreProps,
-    SearchPageProps,
-    RelayToFlat,
-} from "@mzawadie/core";
+import { sectionNames } from "@mzawadie/core";
+import { getUserName } from "@mzawadie/core";
+import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@mzawadie/core";
 import {
     SearchPermissionGroupsQuery,
     StaffErrorFragment,
@@ -25,15 +20,20 @@ import {
 } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import useLocale from "@mzawadie/hooks/useLocale";
+import useNavigator from "@mzawadie/hooks/useNavigator";
 import useStateFromProps from "@mzawadie/hooks/useStateFromProps";
+import { staffListUrl } from "@mzawadie/pages/staff/urls";
 import createMultiAutocompleteSelectHandler from "@mzawadie/utils/handlers/multiAutocompleteSelectChangeHandler";
-import { Backlink } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import StaffPassword from "../StaffPassword/StaffPassword";
-import { StaffPreferences } from "../StaffPreferences";
+import StaffPreferences from "../StaffPreferences/StaffPreferences";
 import StaffProperties from "../StaffProperties/StaffProperties";
+import UserStatus from "../UserStatus/UserStatus";
+import { staffDetailsPageMessages as messages } from "./messages";
+import useStyles from "./styles";
 
 export interface StaffDetailsFormData {
     email: string;
@@ -54,7 +54,6 @@ export interface StaffDetailsPageProps extends SearchPageProps {
     saveButtonBarState: ConfirmButtonTransitionState;
     staffMember: StaffMemberDetailsFragment;
     errors: StaffErrorFragment[];
-    onBack: () => void;
     onChangePassword: () => void;
     onDelete: () => void;
     onImageDelete: () => void;
@@ -72,7 +71,6 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
     errors,
     fetchMorePermissionGroups,
     initialSearch,
-    onBack,
     onChangePassword,
     onDelete,
     onImageDelete,
@@ -83,7 +81,11 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
     staffMember,
 }: StaffDetailsPageProps) => {
     const intl = useIntl();
+    const classes = useStyles();
+    const navigate = useNavigator();
+
     const { locale, setLocale } = useLocale();
+
     const [permissionGroupsDisplayValues, setPermissionGroupsDisplayValues] = useStateFromProps<
         MultiAutocompleteChoiceType[]
     >(
@@ -99,12 +101,12 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
         firstName: staffMember?.firstName || "",
         isActive: !!staffMember?.isActive,
         lastName: staffMember?.lastName || "",
-        permissionGroups: staffMember?.permissionGroups?.map((pg) => pg.id) || [],
+        permissionGroups: staffMember?.permissionGroups.map((pg) => pg.id) || [],
     };
 
     return (
-        <Form initial={initialForm} onSubmit={onSubmit} confirmLeave>
-            {({ data: formData, change, hasChanged, submit, toggleValue }) => {
+        <Form confirmLeave initial={initialForm} onSubmit={onSubmit} disabled={disabled}>
+            {({ data: formData, change, isSaveDisabled, submit, toggleValue }) => {
                 const permissionGroupsChange = createMultiAutocompleteSelectHandler(
                     toggleValue,
                     setPermissionGroupsDisplayValues,
@@ -117,8 +119,12 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
 
                 return (
                     <Container>
-                        <Backlink onClick={onBack}>{intl.formatMessage(sectionNames.staff)}</Backlink>
+                        <Backlink href={staffListUrl()}>
+                            {intl.formatMessage(sectionNames.staff)}
+                        </Backlink>
+
                         <PageHeader title={getUserName(staffMember)} />
+
                         <Grid>
                             <div>
                                 <StaffProperties
@@ -131,6 +137,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                                     onImageUpload={onImageUpload}
                                     onImageDelete={onImageDelete}
                                 />
+
                                 {canEditPreferences && (
                                     <>
                                         <CardSpacer />
@@ -138,25 +145,37 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                                     </>
                                 )}
                             </div>
-                            <div>
+
+                            <div className={classes.noOverflow}>
                                 {canEditPreferences && (
                                     <StaffPreferences locale={locale} onLocaleChange={setLocale} />
                                 )}
+
                                 {canEditStatus && (
                                     <>
+                                        <UserStatus
+                                            data={formData}
+                                            disabled={disabled}
+                                            label={intl.formatMessage(messages.userStatusActive)}
+                                            onChange={change}
+                                        />
+
+                                        <CardSpacer />
+
                                         <Card>
                                             <CardTitle
                                                 title={intl.formatMessage({
-                                                    defaultMessage: "Permissions",
                                                     id: "Fbr4Vp",
+                                                    defaultMessage: "Permissions",
                                                     description: "dialog header",
                                                 })}
                                             />
+
                                             <CardContent>
                                                 <Typography>
                                                     {intl.formatMessage({
-                                                        defaultMessage: "User is assigned to:",
                                                         id: "P+kVxW",
+                                                        defaultMessage: "User is assigned to:",
                                                         description: "card description",
                                                     })}
                                                 </Typography>
@@ -176,25 +195,15 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                                                 />
                                             </CardContent>
                                         </Card>
-                                        <CardSpacer />
-                                        <AppStatus
-                                            data={formData}
-                                            disabled={disabled}
-                                            label={intl.formatMessage({
-                                                defaultMessage: "User is active",
-                                                id: "XMrYaA",
-                                                description: "checkbox label",
-                                            })}
-                                            onChange={change}
-                                        />
                                     </>
                                 )}
                             </div>
                         </Grid>
+
                         <Savebar
-                            disabled={disabled || !hasChanged}
+                            disabled={isSaveDisabled}
                             state={saveButtonBarState}
-                            onCancel={onBack}
+                            onCancel={() => navigate(staffListUrl())}
                             onSubmit={submit}
                             onDelete={canRemove ? onDelete : undefined}
                         />

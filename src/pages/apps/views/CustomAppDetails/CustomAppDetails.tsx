@@ -1,19 +1,21 @@
 // @ts-nocheck
 import { NotFoundPage } from "@mzawadie/components/NotFoundPage";
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
-import { API_URI, commonMessages, extractMutationErrors, getStringOrPlaceholder } from "@mzawadie/core";
+import { API_URI } from "@mzawadie/core";
+import { commonMessages } from "@mzawadie/core";
+import { extractMutationErrors, getStringOrPlaceholder } from "@mzawadie/core";
 import {
     AppTokenCreateMutation,
     AppTokenDeleteMutation,
     AppUpdateMutation,
-    useAppQuery,
-    useWebhookDeleteMutation,
-    WebhookDeleteMutation,
     useAppActivateMutation,
     useAppDeactivateMutation,
+    useAppQuery,
     useAppTokenCreateMutation,
     useAppTokenDeleteMutation,
     useAppUpdateMutation,
+    useWebhookDeleteMutation,
+    WebhookDeleteMutation,
 } from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
@@ -23,23 +25,18 @@ import { AppDeactivateDialog } from "@mzawadie/pages/apps/components/AppDeactiva
 import { TokenCreateDialog } from "@mzawadie/pages/apps/components/TokenCreateDialog";
 import { TokenDeleteDialog } from "@mzawadie/pages/apps/components/TokenDeleteDialog";
 import { appMessages } from "@mzawadie/pages/apps/messages";
-import {
-    appsListUrl,
-    customAppUrl,
-    CustomAppUrlDialog,
-    CustomAppUrlQueryParams,
-} from "@mzawadie/pages/apps/urls";
 import { WebhookDeleteDialog } from "@mzawadie/pages/webhooks/components/WebhookDeleteDialog";
-import { webhookAddPath, webhookPath } from "@mzawadie/pages/webhooks/urls";
+import { webhookAddPath } from "@mzawadie/pages/webhooks/urls";
 import getAppErrorMessage from "@mzawadie/utils/errors/app";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import {
-    CustomAppDetailsPage,
     CustomAppDetailsPageFormData,
+    CustomAppDetailsPage,
 } from "../../components/CustomAppDetailsPage";
+import { appsListUrl, customAppUrl, CustomAppUrlDialog, CustomAppUrlQueryParams } from "../../urls";
 
 interface OrderListProps {
     id: string;
@@ -65,11 +62,11 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({ id, params, token, 
         displayLoader: true,
         variables: { id },
     });
-
+    
     const [activateApp, activateAppResult] = useAppActivateMutation({
         onCompleted: (data) => {
             const errors = data?.appActivate?.errors;
-
+    
             if (errors?.length === 0) {
                 notify({
                     status: "success",
@@ -78,7 +75,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({ id, params, token, 
                 refetch();
                 closeModal();
             } else {
-                errors.forEach((error) =>
+                errors?.forEach((error) =>
                     notify({
                         status: "error",
                         text: getAppErrorMessage(error, intl),
@@ -87,12 +84,12 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({ id, params, token, 
             }
         },
     });
-
+    
     const [deactivateApp, deactivateAppResult] = useAppDeactivateMutation({
         onCompleted: (data) => {
             const errors = data?.appDeactivate?.errors;
-
-            if (errors.length === 0) {
+    
+            if (errors?.length === 0) {
                 notify({
                     status: "success",
                     text: intl.formatMessage(appMessages.appDeactivated),
@@ -100,7 +97,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({ id, params, token, 
                 refetch();
                 closeModal();
             } else {
-                errors.forEach((error) =>
+                errors?.forEach((error) =>
                     notify({
                         status: "error",
                         text: getAppErrorMessage(error, intl),
@@ -142,21 +139,15 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({ id, params, token, 
             });
         }
     };
-
-    const handleBack = () => navigate(appsListUrl());
-
+    
     const customApp = data?.app;
-
-    if (customApp === null) {
-        return <NotFoundPage onBack={handleBack} />;
-    }
 
     const onTokenCreate = (data: AppTokenCreateMutation) => {
         if (data?.appTokenCreate?.errors.length === 0) {
             refetch();
         }
     };
-
+    
     const onTokenDelete = (data: AppTokenDeleteMutation) => {
         if (data?.appTokenDelete?.errors.length === 0) {
             notify({
@@ -171,11 +162,11 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({ id, params, token, 
     const [updateApp, updateAppOpts] = useAppUpdateMutation({
         onCompleted: onAppUpdate,
     });
-
+    
     const [createToken, createTokenOpts] = useAppTokenCreateMutation({
         onCompleted: onTokenCreate,
     });
-
+    
     const [deleteToken, deleteTokenOpts] = useAppTokenDeleteMutation({
         onCompleted: onTokenDelete,
     });
@@ -188,7 +179,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({ id, params, token, 
                     input: {
                         name: data.name,
                         permissions: data.hasFullAccess
-                            ? shop.permissions.map((permission) => permission.code)
+                            ? shop?.permissions.map((permission) => permission?.code)
                             : data.permissions,
                     },
                 },
@@ -215,25 +206,27 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({ id, params, token, 
     const handleActivateConfirm = () => {
         activateApp({ variables: { id } });
     };
-
+    
     const handleDeactivateConfirm = () => {
         deactivateApp({ variables: { id } });
     };
 
     const currentToken = data?.app?.tokens?.find((token) => token.id === params.id);
 
+    if (customApp === null) {
+        return <NotFoundPage backHref={appsListUrl()} />;
+    }
+
     return (
         <>
             <WindowTitle title={getStringOrPlaceholder(customApp?.name)} />
-
+            
             <CustomAppDetailsPage
                 apiUri={API_URI}
                 disabled={loading}
                 errors={updateAppOpts.data?.appUpdate?.errors || []}
                 token={token}
-                navigateToWebhookDetails={(id) => () => navigate(webhookPath(id))}
                 onApiUriClick={() => open(API_URI, "blank")}
-                onBack={handleBack}
                 onSubmit={handleSubmit}
                 onTokenClose={onTokenClose}
                 onTokenCreate={() => openModal("create-token")}
@@ -242,7 +235,7 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({ id, params, token, 
                         id,
                     })
                 }
-                onWebhookCreate={() => navigate(webhookAddPath(id))}
+                webhookCreateHref={webhookAddPath(id)}
                 onWebhookRemove={(id) =>
                     openModal("remove-webhook", {
                         id,
@@ -254,15 +247,15 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({ id, params, token, 
                 app={data?.app}
                 saveButtonBarState={updateAppOpts.status}
             />
-
+            
             <TokenCreateDialog
                 confirmButtonState={createTokenOpts.status}
                 onClose={closeModal}
                 onCreate={handleTokenCreate}
                 open={params.action === "create-token"}
-                token={createTokenOpts.data?.appTokenCreate.authToken}
+                token={createTokenOpts.data?.appTokenCreate?.authToken}
             />
-
+            
             <TokenDeleteDialog
                 confirmButtonState={deleteTokenOpts.status}
                 name={
@@ -274,10 +267,10 @@ export const CustomAppDetails: React.FC<OrderListProps> = ({ id, params, token, 
                 onConfirm={handleTokenDelete}
                 open={params.action === "remove-token"}
             />
-
+            
             <WebhookDeleteDialog
                 confirmButtonState={webhookDeleteOpts.status}
-                name={data?.app?.webhooks.find((webhook) => webhook.id === params.id)?.name}
+                name={data?.app?.webhooks?.find((webhook) => webhook?.id === params.id)?.name}
                 onClose={closeModal}
                 onConfirm={handleRemoveWebhookConfirm}
                 open={params.action === "remove-webhook"}

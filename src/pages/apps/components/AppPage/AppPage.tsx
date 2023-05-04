@@ -1,12 +1,14 @@
 // @ts-nocheck
 import { Typography } from "@material-ui/core";
+import { Backlink } from "@mzawadie/components/Backlink";
+import { Button } from "@mzawadie/components/Button";
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import Container from "@mzawadie/components/Container";
 import { Grid } from "@mzawadie/components/Grid";
 import Hr from "@mzawadie/components/Hr";
 import { sectionNames } from "@mzawadie/core";
 import { AppQuery } from "@mzawadie/graphql";
-import { Backlink, Button } from "@saleor/macaw-ui";
+import { appsListPath } from "@mzawadie/pages/apps/urls";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -18,19 +20,19 @@ import useSettingsBreadcrumbs from "./useSettingsBreadcrumbs";
 export interface AppPageProps {
     data: AppQuery["app"];
     url: string;
-    navigateToAbout: () => void;
-    onBack: () => void;
     onError: () => void;
+    aboutHref: string;
+    refetch?: () => void;
 }
 
-export const AppPage: React.FC<AppPageProps> = ({ data, url, navigateToAbout, onBack, onError }) => {
+export const AppPage: React.FC<AppPageProps> = ({ data, url, aboutHref, onError, refetch }) => {
     const intl = useIntl();
     const classes = useStyles({});
     const [breadcrumbs, onBreadcrumbClick] = useSettingsBreadcrumbs();
 
     return (
         <Container>
-            <Backlink onClick={onBack}>{intl.formatMessage(sectionNames.apps)}</Backlink>
+            <Backlink href={appsListPath}>{intl.formatMessage(sectionNames.apps)}</Backlink>
 
             <Grid variant="uniform">
                 <div className={classes.breadcrumbContainer}>
@@ -56,36 +58,8 @@ export const AppPage: React.FC<AppPageProps> = ({ data, url, navigateToAbout, on
                 </div>
 
                 <div className={classes.appSettingsHeader}>
-                    <Button onClick={navigateToAbout} variant="primary">
-                        <FormattedMessage defaultMessage="About" id="UCHtG6" description="button" />
-                    </Button>
-
-                    <Button
-                        component="a"
-                        href={data?.homepageUrl}
-                        variant="primary"
-                        data-tc="open-app"
-                        target="_blank"
-                    >
-                        <FormattedMessage
-                            defaultMessage="App home page"
-                            id="llC1q8"
-                            description="button"
-                        />
-                    </Button>
-
-                    <Button
-                        component="a"
-                        href={data?.supportUrl}
-                        variant="primary"
-                        data-tc="open-support"
-                        target="_blank"
-                    >
-                        <FormattedMessage
-                            defaultMessage="Support/FAQ"
-                            id="hdcGSJ"
-                            description="button"
-                        />
+                    <Button href={aboutHref} variant="primary">
+                        <FormattedMessage id="UCHtG6" defaultMessage="About" description="button" />
                     </Button>
                 </div>
             </Grid>
@@ -97,10 +71,16 @@ export const AppPage: React.FC<AppPageProps> = ({ data, url, navigateToAbout, on
             <CardSpacer />
 
             <div className={classes.iframeContainer}>
-                {url && <AppFrame src={url} appToken={data?.accessToken} onError={onError} />}
+                {url && (
+                    <AppFrame
+                        src={url}
+                        appToken={data?.accessToken}
+                        onError={onError}
+                        appId={data?.id}
+                        refetch={refetch}
+                    />
+                )}
             </div>
-
-            <CardSpacer />
         </Container>
     );
 };

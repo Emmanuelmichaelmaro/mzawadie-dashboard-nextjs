@@ -1,8 +1,10 @@
 // @ts-nocheck
 import { AttributeInput } from "@mzawadie/components/Attributes";
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY, getMutationErrors } from "@mzawadie/core";
+import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@mzawadie/core";
+import { getMutationErrors } from "@mzawadie/core";
 import {
+    PageErrorWithAttributesFragment,
     useFileUploadMutation,
     usePageCreateMutation,
     usePageTypeQuery,
@@ -28,11 +30,11 @@ import { useIntl } from "react-intl";
 
 import { PageDetailsPage } from "../components/PageDetailsPage";
 import { PageSubmitData } from "../components/PageDetailsPage/form";
-import { pageCreateUrl, pageListUrl, pageUrl, PageUrlQueryParams } from "../urls";
+import { pageCreateUrl, PageCreateUrlQueryParams, pageUrl } from "../urls";
 
 export interface PageCreateProps {
     id: string;
-    params: PageUrlQueryParams;
+    params: PageCreateUrlQueryParams;
 }
 
 export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
@@ -43,7 +45,15 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
     const [updateMetadata] = useUpdateMetadataMutation({});
     const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
-    const [selectedPageTypeId, setSelectedPageTypeId] = React.useState<string>();
+    const selectedPageTypeId = params["page-type-id"];
+
+    const handleSelectPageTypeId = (pageTypeId: string) =>
+        navigate(
+            pageCreateUrl({
+                ...params,
+                "page-type-id": pageTypeId,
+            })
+        );
 
     const {
         loadMore: loadMorePageTypes,
@@ -52,6 +62,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
     } = usePageTypeSearch({
         variables: DEFAULT_INITIAL_SEARCH_DATA,
     });
+
     const {
         loadMore: loadMorePages,
         search: searchPages,
@@ -59,6 +70,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
     } = usePageSearch({
         variables: DEFAULT_INITIAL_SEARCH_DATA,
     });
+
     const {
         loadMore: loadMoreProducts,
         search: searchProducts,
@@ -66,6 +78,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
     } = useProductSearch({
         variables: DEFAULT_INITIAL_SEARCH_DATA,
     });
+
     const {
         loadMore: loadMoreAttributeValues,
         search: searchAttributeValues,
@@ -81,18 +94,18 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
         skip: !selectedPageTypeId,
     });
 
-    const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
+    const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute?.choices) || [];
 
     const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
 
     const [pageCreate, pageCreateOpts] = usePageCreateMutation({
         onCompleted: (data) => {
-            if (data.pageCreate.errors.length === 0) {
+            if (data.pageCreate?.errors.length === 0) {
                 notify({
                     status: "success",
                     text: intl.formatMessage({
-                        defaultMessage: "Successfully created new page",
                         id: "JMbFNo",
+                        defaultMessage: "Successfully created new page",
                     }),
                 });
                 navigate(pageUrl(data.pageCreate.page.id));
@@ -116,6 +129,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
                 input: {
                     attributes: prepareAttributesInput({
                         attributes: formData.attributes,
+                        prevAttributes: null,
                         updatedFileAttributes,
                     }),
                     content: getParsedDataForJsonStringField(formData.content),
@@ -133,7 +147,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
         });
 
         return {
-            id: result.data.pageCreate.page?.id || null,
+            id: result.data?.pageCreate?.page?.id || null,
             errors: getMutationErrors(result),
         };
     };
@@ -157,39 +171,44 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
         loading: searchPageTypesOpts.loading,
         onFetchMore: loadMorePageTypes,
     };
+
     const fetchMoreReferencePages = {
         hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
         loading: searchPagesOpts.loading,
         onFetchMore: loadMorePages,
     };
+
     const fetchMoreReferenceProducts = {
         hasMore: searchProductsOpts.data?.search?.pageInfo?.hasNextPage,
         loading: searchProductsOpts.loading,
         onFetchMore: loadMoreProducts,
     };
+
     const fetchMoreAttributeValues = {
         hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
         loading: !!searchAttributeValuesOpts.loading,
         onFetchMore: loadMoreAttributeValues,
     };
 
+    const errors = getMutationErrors(pageCreateOpts) as PageErrorWithAttributesFragment[];
+
     return (
         <>
             <WindowTitle
                 title={intl.formatMessage({
-                    defaultMessage: "Create Page",
                     id: "mX7zJJ",
+                    defaultMessage: "Create Page",
                     description: "header",
                 })}
             />
+
             <PageDetailsPage
                 loading={pageCreateOpts.loading || uploadFileOpts.loading}
-                errors={pageCreateOpts.data?.pageCreate.errors || []}
+                errors={errors}
                 saveButtonBarState={pageCreateOpts.status}
                 page={null}
                 attributeValues={attributeValues}
                 pageTypes={mapEdgesToItems(searchPageTypesOpts?.data?.search) || []}
-                onBack={() => navigate(pageListUrl())}
                 onRemove={() => undefined}
                 onSubmit={handleSubmit}
                 fetchPageTypes={searchPageTypes}
@@ -206,7 +225,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
                 fetchMoreAttributeValues={fetchMoreAttributeValues}
                 onCloseDialog={() => navigate(pageCreateUrl())}
                 selectedPageType={selectedPageType?.pageType}
-                onSelectPageType={(id) => setSelectedPageTypeId(id)}
+                onSelectPageType={handleSelectPageTypeId}
                 onAttributeSelectBlur={searchAttributeReset}
             />
         </>

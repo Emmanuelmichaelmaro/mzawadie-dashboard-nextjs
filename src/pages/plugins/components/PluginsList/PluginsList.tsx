@@ -2,10 +2,12 @@
 import { TableBody, TableCell, TableFooter, TableRow } from "@material-ui/core";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
-import { TablePagination } from "@mzawadie/components/TablePagination";
-import { renderCollection, ListProps, SortPage } from "@mzawadie/core";
+import { TablePaginationWithContext } from "@mzawadie/components/TablePagination";
+import { renderCollection } from "@mzawadie/core";
+import { ListProps, SortPage } from "@mzawadie/core";
 import { PluginBaseFragment } from "@mzawadie/graphql";
-import { PluginListUrlSortField } from "@mzawadie/pages/plugins/urls";
+import useNavigator from "@mzawadie/hooks/useNavigator";
+import { PluginListUrlSortField, pluginUrl } from "@mzawadie/pages/plugins/urls";
 import { EditIcon, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -30,37 +32,27 @@ export interface PluginListProps extends ListProps, SortPage<PluginListUrlSortFi
 const totalColSpan = 10;
 
 const PluginList: React.FC<PluginListProps> = (props) => {
-    const {
-        settings,
-        plugins,
-        disabled,
-        onNextPage,
-        pageInfo,
-        sort,
-        onRowClick,
-        onSort,
-        onUpdateListSettings,
-        onPreviousPage,
-    } = props;
+    const { settings, plugins, disabled, sort, onSort, onUpdateListSettings } = props;
+
     const classes = useStyles(props);
+    const navigate = useNavigator();
     const intl = useIntl();
 
     return (
         <ResponsiveTable>
             <PluginListTableHead sort={sort} onSort={onSort} />
+
             <TableFooter>
                 <TableRow>
-                    <TablePagination
+                    <TablePaginationWithContext
                         colSpan={totalColSpan}
-                        settings={settings}
-                        hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-                        onNextPage={onNextPage}
                         onUpdateListSettings={onUpdateListSettings}
-                        hasPreviousPage={pageInfo && !disabled ? pageInfo.hasPreviousPage : false}
-                        onPreviousPage={onPreviousPage}
+                        settings={settings}
+                        disabled={disabled}
                     />
                 </TableRow>
             </TableFooter>
+
             <TableBody>
                 {renderCollection(
                     plugins,
@@ -70,16 +62,16 @@ const PluginList: React.FC<PluginListProps> = (props) => {
                                 data-test-id="plugin"
                                 hover={!!plugin}
                                 className={!!plugin ? classes.link : undefined}
-                                onClick={plugin ? onRowClick(plugin.id) : undefined}
+                                // FIXME: middle click doesn't work - issues with deployments
+                                // shows 404 not found
+                                onClick={() => plugin && navigate(pluginUrl(plugin.id))}
                                 key={plugin ? plugin.id : "skeleton"}
                             >
                                 <TableCell colSpan={5}>{plugin.name}</TableCell>
                                 <PluginChannelConfigurationCell plugin={plugin} />
                                 <PluginChannelAvailabilityCell plugin={plugin} />
                                 <TableCell align="right">
-                                    <div onClick={plugin ? onRowClick(plugin.id) : undefined}>
-                                        <EditIcon />
-                                    </div>
+                                    <EditIcon />
                                 </TableCell>
                             </TableRow>
                         ) : (
@@ -93,8 +85,8 @@ const PluginList: React.FC<PluginListProps> = (props) => {
                         <TableRow>
                             <TableCell colSpan={totalColSpan}>
                                 {intl.formatMessage({
-                                    defaultMessage: "No plugins found",
                                     id: "Co2U4u",
+                                    defaultMessage: "No plugins found",
                                 })}
                             </TableCell>
                         </TableRow>

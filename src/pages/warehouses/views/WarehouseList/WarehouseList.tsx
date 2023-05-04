@@ -1,28 +1,27 @@
-/* eslint-disable @typescript-eslint/no-floating-promises,radix */
 // @ts-nocheck
 import { DeleteFilterTabDialog } from "@mzawadie/components/DeleteFilterTabDialog";
 import {
-    SaveFilterTabDialog,
     SaveFilterTabDialogFormData,
+    SaveFilterTabDialog,
 } from "@mzawadie/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@mzawadie/components/Shop/queries";
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
-import { commonMessages, getMutationStatus, maybe, sectionNames, ListViews } from "@mzawadie/core";
+import { commonMessages, sectionNames } from "@mzawadie/core";
+import { getMutationStatus, maybe } from "@mzawadie/core";
+import { ListViews } from "@mzawadie/core";
 import { useWarehouseDeleteMutation, useWarehouseListQuery } from "@mzawadie/graphql";
 import useListSettings from "@mzawadie/hooks/useListSettings";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
-import usePaginator, { createPaginationState } from "@mzawadie/hooks/usePaginator";
-import { configurationMenuUrl } from "@mzawadie/pages/configuration";
+import { usePaginationReset } from "@mzawadie/hooks/usePaginationReset";
+import usePaginator, { createPaginationState, PaginatorContext } from "@mzawadie/hooks/usePaginator";
 import { getById } from "@mzawadie/pages/orders/components/OrderReturnPage/utils";
 import { WarehouseDeleteDialog } from "@mzawadie/pages/warehouses/components/WarehouseDeleteDialog";
 import { WarehouseListPage } from "@mzawadie/pages/warehouses/components/WarehouseListPage";
 import {
-    warehouseAddUrl,
     warehouseListUrl,
     WarehouseListUrlDialog,
     WarehouseListUrlQueryParams,
-    warehouseUrl,
 } from "@mzawadie/pages/warehouses/urls";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@mzawadie/utils/handlers/filterHandlers";
@@ -33,9 +32,9 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import {
-    areFiltersApplied,
     deleteFilterTab,
     getActiveFilters,
+    getFiltersCurrentTab,
     getFilterTabs,
     getFilterVariables,
     saveFilterTab,
@@ -49,10 +48,10 @@ export interface WarehouseListProps {
 const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
     const navigate = useNavigator();
     const notify = useNotifier();
-    const paginate = usePaginator();
+    const { updateListSettings, settings } = useListSettings(ListViews.SALES_LIST);
     const intl = useIntl();
 
-    const { updateListSettings, settings } = useListSettings(ListViews.SALES_LIST);
+    usePaginationReset(warehouseListUrl, params, settings.rowNumber);
 
     const paginationState = createPaginationState(settings.rowNumber, params);
 
@@ -62,7 +61,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
             filter: getFilterVariables(params),
             sort: getSortQueryVariables(params),
         }),
-        [paginationState, params]
+        [params, settings.rowNumber]
     );
 
     const { data, loading, refetch } = useWarehouseListQuery({
@@ -92,12 +91,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
 
     const tabs = getFilterTabs();
 
-    const currentTab =
-        params.activeTab === undefined
-            ? areFiltersApplied(params)
-                ? tabs.length + 1
-                : 0
-            : parseInt(params.activeTab, 0);
+    const currentTab = getFiltersCurrentTab(params, tabs);
 
     const [, resetFilters, handleSearchChange] = createFilterHandlers({
         createUrl: warehouseListUrl,
@@ -129,25 +123,25 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
         handleTabChange(tabs.length + 1);
     };
 
-    const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-        maybe(() => data?.warehouses?.pageInfo),
+    const paginationValues = usePaginator({
+        pageInfo: maybe(() => data?.warehouses?.pageInfo),
         paginationState,
-        params
-    );
+        queryString: params,
+    });
 
     const handleSort = createSortHandler(navigate, warehouseListUrl, params);
 
     const deleteTransitionState = getMutationStatus(deleteWarehouseOpts);
 
     return (
-        <>
+        <PaginatorContext.Provider value={paginationValues}>
             <WindowTitle title={intl.formatMessage(sectionNames.warehouses)} />
+
             <WarehouseListPage
                 currentTab={currentTab}
                 initialSearch={params.query || ""}
                 onSearchChange={handleSearchChange}
                 onAll={resetFilters}
-                onBack={() => navigate(configurationMenuUrl)}
                 onTabChange={handleTabChange}
                 onTabDelete={() => openModal("delete-search")}
                 onTabSave={() => openModal("save-search")}
@@ -156,14 +150,9 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
                 warehouses={mapEdgesToItems(data?.warehouses)}
                 settings={settings}
                 disabled={loading}
-                pageInfo={pageInfo}
-                onAdd={() => navigate(warehouseAddUrl)}
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
                 onRemove={(id) => openModal("delete", { id })}
                 onSort={handleSort}
                 onUpdateListSettings={updateListSettings}
-                onRowClick={(id) => () => navigate(warehouseUrl(id))}
                 sort={getSortParams(params)}
             />
 
@@ -195,7 +184,7 @@ const WarehouseList: React.FC<WarehouseListProps> = ({ params }) => {
                 onSubmit={handleTabDelete}
                 tabName={maybe(() => tabs[currentTab - 1].name, "...")}
             />
-        </>
+        </PaginatorContext.Provider>
     );
 };
 

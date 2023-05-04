@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { AppExtensionTargetEnum } from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
-import { appDeepUrl } from "@mzawadie/pages/apps/urls";
+import { appDeepUrl, AppDetailsUrlMountQueryParams } from "@mzawadie/pages/apps/urls";
 import React from "react";
 
 import { AppDialog } from "../AppDialog";
@@ -13,6 +13,7 @@ export interface AppData {
     src: string;
     label: string;
     target: AppExtensionTargetEnum;
+    params?: AppDetailsUrlMountQueryParams;
 }
 
 const ExternalAppContext = React.createContext<{
@@ -24,6 +25,7 @@ const ExternalAppContext = React.createContext<{
 
 export const ExternalAppProvider: React.FC = ({ children }) => {
     const [open, setOpen] = React.useState(false);
+
     const [appData, setAppData] = React.useState<AppData | undefined>();
 
     const handleClose = () => {
@@ -35,7 +37,9 @@ export const ExternalAppProvider: React.FC = ({ children }) => {
         <ExternalAppContext.Provider value={{ open, appData, setOpen, setAppData }}>
             {children}
             <AppDialog open={open} onClose={handleClose} title={appData?.label}>
-                {open && appData && <AppFrame src={appData.src} appToken={appData.appToken} />}
+                {open && appData && (
+                    <AppFrame src={appData.src} appToken={appData.appToken} appId={appData.id} />
+                )}
             </AppDialog>
         </ExternalAppContext.Provider>
     );
@@ -43,6 +47,7 @@ export const ExternalAppProvider: React.FC = ({ children }) => {
 
 export const useExternalApp = () => {
     const { open, setOpen, setAppData } = React.useContext(ExternalAppContext);
+
     const navigate = useNavigator();
 
     const openApp = (appData: AppData) => {
@@ -50,7 +55,9 @@ export const useExternalApp = () => {
             setOpen(true);
             setAppData(appData);
         } else {
-            navigate(appDeepUrl(appData.id, appData.src), { resetScroll: true });
+            navigate(appDeepUrl(appData.id, appData.src, appData.params), {
+                resetScroll: true,
+            });
         }
     };
 

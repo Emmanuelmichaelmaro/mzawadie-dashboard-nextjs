@@ -4,7 +4,10 @@ import { AttributeInput } from "@mzawadie/components/Attributes";
 import { ChannelsAvailabilityDialog } from "@mzawadie/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@mzawadie/core";
+import { getMutationErrors } from "@mzawadie/core";
 import {
+    ProductChannelListingErrorFragment,
+    ProductErrorWithAttributesFragment,
     useFileUploadMutation,
     useProductChannelListingUpdateMutation,
     useProductCreateMutation,
@@ -30,7 +33,6 @@ import {
     productAddUrl,
     ProductCreateUrlDialog,
     ProductCreateUrlQueryParams,
-    productListUrl,
     productUrl,
 } from "@mzawadie/pages/products/urls";
 import { warehouseAddPath } from "@mzawadie/pages/warehouses/urls";
@@ -62,7 +64,15 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
 
     const [productCreateComplete, setProductCreateComplete] = React.useState(false);
 
-    const [selectedProductTypeId, setSelectedProductTypeId] = React.useState<string>();
+    const selectedProductTypeId = params["product-type-id"];
+
+    const handleSelectProductType = (productTypeId: string) =>
+        navigate(
+            productAddUrl({
+                ...params,
+                "product-type-id": productTypeId,
+            })
+        );
 
     const [openModal, closeModal] = createDialogActionHandlers<
         ProductCreateUrlDialog,
@@ -116,14 +126,8 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         reset: searchAttributeReset,
     } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
-    const warehouses = useWarehouseListQuery({
-        displayLoader: true,
-        variables: {
-            first: 50,
-        },
-    });
-
     const [updateMetadata] = useUpdateMetadataMutation({});
+
     const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
     const taxTypes = useTaxTypeListQuery({});
@@ -165,12 +169,22 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         }
     );
 
+    const warehouses = useWarehouseListQuery({
+        displayLoader: true,
+        variables: {
+            first: 50,
+            filter: {
+                channels: currentChannels?.map((channel) => channel.id),
+            },
+        },
+    });
+
     const handleSuccess = (productId: string) => {
         notify({
             status: "success",
             text: intl.formatMessage({
-                defaultMessage: "Product created",
                 id: "DO8+uV",
+                defaultMessage: "Product created",
             }),
         });
         navigate(productUrl(productId));
@@ -183,16 +197,15 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     const [updateVariantChannels, updateVariantChannelsOpts] =
         useProductVariantChannelListingUpdateMutation({});
 
-    const handleBack = () => navigate(productListUrl());
-
     const [productCreate, productCreateOpts] = useProductCreateMutation({});
 
     const [deleteProduct] = useProductDeleteMutation({});
 
     const [productVariantCreate, productVariantCreateOpts] = useVariantCreateMutation({
         onCompleted: (data) => {
-            const { errors } = data.productVariantCreate;
-            if (errors.length) {
+            const errors = data.productVariantCreate?.errors;
+
+            if (errors?.length) {
                 errors.map((error) =>
                     notify({
                         status: "error",
@@ -246,31 +259,31 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         loading: searchProductTypesOpts.loading,
         onFetchMore: loadMoreProductTypes,
     };
-
+    
     const fetchMoreCollections = {
         hasMore: searchCollectionOpts.data?.search?.pageInfo?.hasNextPage,
         loading: searchCollectionOpts.loading,
         onFetchMore: loadMoreCollections,
     };
-
+    
     const fetchMoreCategories = {
         hasMore: searchCategoryOpts.data?.search?.pageInfo?.hasNextPage,
         loading: searchCategoryOpts.loading,
         onFetchMore: loadMoreCategories,
     };
-
+    
     const fetchMoreReferencePages = {
         hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
         loading: searchPagesOpts.loading,
         onFetchMore: loadMorePages,
     };
-
+    
     const fetchMoreReferenceProducts = {
         hasMore: searchProductsOpts.data?.search?.pageInfo?.hasNextPage,
         loading: searchProductsOpts.loading,
         onFetchMore: loadMoreProducts,
     };
-
+    
     const fetchMoreAttributeValues = {
         hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
         loading: !!searchAttributeValuesOpts.loading,
@@ -284,16 +297,26 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         updateChannelsOpts.loading ||
         updateVariantChannelsOpts.loading;
 
+    const channelsErrors = [
+        ...getMutationErrors(updateVariantChannelsOpts),
+        ...getMutationErrors(updateChannelsOpts),
+    ] as ProductChannelListingErrorFragment[];
+    
+    const errors = [
+        ...getMutationErrors(productCreateOpts),
+        ...getMutationErrors(productVariantCreateOpts),
+    ] as ProductErrorWithAttributesFragment[];
+
     return (
         <>
             <WindowTitle
                 title={intl.formatMessage({
-                    defaultMessage: "Create Product",
                     id: "PXx4Jk",
+                    defaultMessage: "Create Product",
                     description: "window title",
                 })}
             />
-
+    
             {!!allChannels?.length && (
                 <ChannelsAvailabilityDialog
                     isSelected={isChannelSelected}
@@ -302,8 +325,8 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
                     onClose={handleChannelsModalClose}
                     open={isChannelsModalOpen}
                     title={intl.formatMessage({
-                        defaultMessage: "Manage Products Channel Availability",
                         id: "Eau5AV",
+                        defaultMessage: "Manage Products Channel Availability",
                     })}
                     confirmButtonState="default"
                     selected={channelListElements.length}
@@ -311,7 +334,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
                     toggleAll={toggleAllChannels}
                 />
             )}
-
+    
             <ProductCreatePage
                 allChannelsCount={allChannels?.length}
                 currentChannels={currentChannels}
@@ -321,24 +344,18 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
                     mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute?.choices) || []
                 }
                 loading={loading}
-                channelsErrors={
-                    updateVariantChannelsOpts.data?.productVariantChannelListingUpdate?.errors
-                }
-                errors={[
-                    ...(productCreateOpts.data?.productCreate?.errors || []),
-                    ...(productVariantCreateOpts.data?.productVariantCreate?.errors || []),
-                ]}
+                channelsErrors={channelsErrors}
+                errors={errors}
                 fetchCategories={searchCategory}
                 fetchCollections={searchCollection}
                 fetchProductTypes={searchProductTypes}
                 fetchAttributeValues={searchAttributeValues}
                 header={intl.formatMessage({
-                    defaultMessage: "New Product",
                     id: "NBP8uu",
+                    defaultMessage: "New Product",
                     description: "page header",
                 })}
                 productTypes={productTypes}
-                onBack={handleBack}
                 onSubmit={handleSubmit}
                 onWarehouseConfigure={() => navigate(warehouseAddPath)}
                 saveButtonBarState={productCreateOpts.status}
@@ -361,7 +378,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
                 fetchMoreAttributeValues={fetchMoreAttributeValues}
                 onCloseDialog={() => navigate(productAddUrl())}
                 selectedProductType={selectedProductType?.productType}
-                onSelectProductType={(id) => setSelectedProductTypeId(id)}
+                onSelectProductType={handleSelectProductType}
                 onAttributeSelectBlur={searchAttributeReset}
             />
         </>

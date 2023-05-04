@@ -5,17 +5,13 @@ import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { TableCellHeader } from "@mzawadie/components/TableCellHeader";
 import { TableHead } from "@mzawadie/components/TableHead";
-import { TablePagination } from "@mzawadie/components/TablePagination";
-import {
-    translateBoolean,
-    maybe,
-    renderCollection,
-    ListActions,
-    ListProps,
-    SortPage,
-} from "@mzawadie/core";
+import { TablePaginationWithContext } from "@mzawadie/components/TablePagination";
+import { TableRowLink } from "@mzawadie/components/TableRowLink";
+import { maybe, renderCollection } from "@mzawadie/core";
+import { ListActions, ListProps, SortPage } from "@mzawadie/core";
+import { translateBoolean } from "@mzawadie/core";
 import { AttributeFragment } from "@mzawadie/graphql";
-import { AttributeListUrlSortField } from "@mzawadie/pages/attributes/urls";
+import { AttributeListUrlSortField, attributeUrl } from "@mzawadie/pages/attributes/urls";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -73,10 +69,6 @@ const AttributeList: React.FC<AttributeListProps> = ({
     attributes,
     disabled,
     isChecked,
-    onNextPage,
-    onPreviousPage,
-    onRowClick,
-    pageInfo,
     selected,
     sort,
     toggle,
@@ -107,8 +99,9 @@ const AttributeList: React.FC<AttributeListProps> = ({
                     arrowPosition="right"
                     onClick={() => onSort(AttributeListUrlSortField.slug)}
                 >
-                    <FormattedMessage defaultMessage="Attribute Code" id="oJkeS6" />
+                    <FormattedMessage id="oJkeS6" defaultMessage="Attribute Code" />
                 </TableCellHeader>
+
                 <TableCellHeader
                     className={classes.colName}
                     direction={
@@ -119,11 +112,12 @@ const AttributeList: React.FC<AttributeListProps> = ({
                     onClick={() => onSort(AttributeListUrlSortField.name)}
                 >
                     <FormattedMessage
-                        defaultMessage="Default Label"
                         id="HjUoHK"
+                        defaultMessage="Default Label"
                         description="attribute's label'"
                     />
                 </TableCellHeader>
+
                 <TableCellHeader
                     className={classes.colVisible}
                     direction={
@@ -135,11 +129,12 @@ const AttributeList: React.FC<AttributeListProps> = ({
                     onClick={() => onSort(AttributeListUrlSortField.visible)}
                 >
                     <FormattedMessage
-                        defaultMessage="Visible"
                         id="k6WDZl"
+                        defaultMessage="Visible"
                         description="attribute is visible"
                     />
                 </TableCellHeader>
+
                 <TableCellHeader
                     className={classes.colSearchable}
                     direction={
@@ -151,11 +146,12 @@ const AttributeList: React.FC<AttributeListProps> = ({
                     onClick={() => onSort(AttributeListUrlSortField.searchable)}
                 >
                     <FormattedMessage
-                        defaultMessage="Searchable"
                         id="yKuba7"
+                        defaultMessage="Searchable"
                         description="attribute can be searched in dashboard"
                     />
                 </TableCellHeader>
+
                 <TableCellHeader
                     className={classes.colFaceted}
                     direction={
@@ -167,23 +163,19 @@ const AttributeList: React.FC<AttributeListProps> = ({
                     onClick={() => onSort(AttributeListUrlSortField.useInFacetedSearch)}
                 >
                     <FormattedMessage
-                        defaultMessage="Use in faceted search"
-                        id="cbPfB1"
+                        defaultMessage="Use as filter"
+                        id="Y3pCRX"
                         description="attribute can be searched in storefront"
                     />
                 </TableCellHeader>
             </TableHead>
+
             <TableFooter>
                 <TableRow>
-                    <TablePagination
-                        colSpan={numberOfColumns}
-                        hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-                        onNextPage={onNextPage}
-                        hasPreviousPage={pageInfo && !disabled ? pageInfo.hasPreviousPage : false}
-                        onPreviousPage={onPreviousPage}
-                    />
+                    <TablePaginationWithContext colSpan={numberOfColumns} />
                 </TableRow>
             </TableFooter>
+
             <TableBody>
                 {renderCollection(
                     attributes,
@@ -191,32 +183,34 @@ const AttributeList: React.FC<AttributeListProps> = ({
                         const isSelected = attribute ? isChecked(attribute.id) : false;
 
                         return (
-                            <TableRow
+                            <TableRowLink
                                 selected={isSelected}
                                 hover={!!attribute}
                                 key={attribute ? attribute.id : "skeleton"}
-                                onClick={attribute && onRowClick(attribute.id)}
+                                href={attribute && attributeUrl(attribute.id)}
                                 className={classes.link}
-                                data-test="id"
-                                data-test-id={maybe(() => attribute?.id)}
+                                data-test-id={"id-" + maybe(() => attribute.id)}
                             >
                                 <TableCell padding="checkbox">
                                     <Checkbox
                                         checked={isSelected}
                                         disabled={disabled}
                                         disableClickPropagation
-                                        onChange={() => toggle(attribute?.id)}
+                                        onChange={() => toggle(attribute.id)}
                                     />
                                 </TableCell>
-                                <TableCell className={classes.colSlug} data-test="slug">
+
+                                <TableCell className={classes.colSlug} data-test-id="slug">
                                     {attribute ? attribute.slug : <Skeleton />}
                                 </TableCell>
-                                <TableCell className={classes.colName} data-test="name">
+
+                                <TableCell className={classes.colName} data-test-id="name">
                                     {attribute ? attribute.name : <Skeleton />}
                                 </TableCell>
+
                                 <TableCell
                                     className={classes.colVisible}
-                                    data-test="visible"
+                                    data-test-id="visible"
                                     data-test-visible={maybe(() => attribute?.visibleInStorefront)}
                                 >
                                     {attribute ? (
@@ -225,9 +219,10 @@ const AttributeList: React.FC<AttributeListProps> = ({
                                         <Skeleton />
                                     )}
                                 </TableCell>
+
                                 <TableCell
                                     className={classes.colSearchable}
-                                    data-test="searchable"
+                                    data-test-id="searchable"
                                     data-test-searchable={maybe(() => attribute?.filterableInDashboard)}
                                 >
                                     {attribute ? (
@@ -236,9 +231,10 @@ const AttributeList: React.FC<AttributeListProps> = ({
                                         <Skeleton />
                                     )}
                                 </TableCell>
+
                                 <TableCell
                                     className={classes.colFaceted}
-                                    data-test="use-in-faceted-search"
+                                    data-test-id="use-in-faceted-search"
                                     data-test-use-in-faceted-search={maybe(
                                         () => attribute?.filterableInStorefront
                                     )}
@@ -249,13 +245,13 @@ const AttributeList: React.FC<AttributeListProps> = ({
                                         <Skeleton />
                                     )}
                                 </TableCell>
-                            </TableRow>
+                            </TableRowLink>
                         );
                     },
                     () => (
                         <TableRow>
                             <TableCell colSpan={numberOfColumns}>
-                                <FormattedMessage defaultMessage="No attributes found" id="ztQgD8" />
+                                <FormattedMessage id="ztQgD8" defaultMessage="No attributes found" />
                             </TableCell>
                         </TableRow>
                     )

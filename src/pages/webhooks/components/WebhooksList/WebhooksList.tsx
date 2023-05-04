@@ -1,47 +1,44 @@
 // @ts-nocheck
 import { Card, TableBody, TableCell, TableHead, TableRow } from "@material-ui/core";
+import { Button } from "@mzawadie/components/Button";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
+import { TableButtonWrapper } from "@mzawadie/components/TableButtonWrapper/TableButtonWrapper";
 import { TableCellHeader } from "@mzawadie/components/TableCellHeader";
+import { TableRowLink } from "@mzawadie/components/TableRowLink";
+import { commonMessages, sectionNames } from "@mzawadie/core";
 import { renderCollection, stopPropagation } from "@mzawadie/core";
-import { App_app_webhooks } from "@mzawadie/pages/apps/types/App";
+import { AppQuery } from "@mzawadie/graphql";
+import { webhookPath } from "@mzawadie/pages/webhooks/urls";
 import { isUnnamed } from "@mzawadie/pages/webhooks/utils";
-import { Button, DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton, Pill } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { messages } from "./messages";
 import { useStyles } from "./styles";
 
 export interface WebhooksListProps {
-    webhooks: App_app_webhooks[];
+    webhooks: AppQuery["app"]["webhooks"];
     onRemove: (id: string) => void;
-    onRowClick: (id: string) => () => void;
-    onCreate?: () => void;
+    createHref?: string;
 }
 
-const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, onCreate, onRowClick, onRemove }) => {
+const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref, onRemove }) => {
     const intl = useIntl();
-    const classes = useStyles({});
+    const classes = useStyles();
     const numberOfColumns = webhooks?.length === 0 ? 2 : 3;
 
     return (
         <Card>
             <CardTitle
-                title={intl.formatMessage({
-                    defaultMessage: "Webhooks",
-                    id: "jqnwW9",
-                    description: "header",
-                })}
+                title={intl.formatMessage(sectionNames.webhooks)}
                 toolbar={
-                    !!onCreate && (
-                        <Button variant="secondary" onClick={onCreate} data-test-id="create-webhook">
-                            <FormattedMessage
-                                defaultMessage="Create Webhook"
-                                id="wlr0Si"
-                                description="button"
-                            />
+                    !!createHref && (
+                        <Button variant="secondary" href={createHref} data-test-id="create-webhook">
+                            <FormattedMessage {...messages.createWebhook} />
                         </Button>
                     )
                 }
@@ -50,20 +47,10 @@ const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, onCreate, onRowCl
             <ResponsiveTable className={classes.table}>
                 <TableHead>
                     <TableRow>
-                        <TableCellHeader>
-                            {intl.formatMessage({
-                                defaultMessage: "Name",
-                                id: "OTpV1t",
-                                description: "webhook name",
-                            })}
-                        </TableCellHeader>
-
+                        <TableCellHeader>{intl.formatMessage(commonMessages.name)}</TableCellHeader>
+                        <TableCellHeader>{intl.formatMessage(commonMessages.status)}</TableCellHeader>
                         <TableCell className={classNames(classes.colAction, classes.colRight)}>
-                            {intl.formatMessage({
-                                defaultMessage: "Action",
-                                id: "a/QJBx",
-                                description: "user action bar",
-                            })}
+                            <FormattedMessage {...messages.action} />
                         </TableCell>
                     </TableRow>
                 </TableHead>
@@ -72,10 +59,10 @@ const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, onCreate, onRowCl
                     {renderCollection(
                         webhooks,
                         (webhook) => (
-                            <TableRow
+                            <TableRowLink
                                 hover={!!webhook}
                                 className={!!webhook ? classes.tableRow : undefined}
-                                onClick={webhook ? onRowClick(webhook.id) : undefined}
+                                href={webhook && webhookPath(webhook.id)}
                                 key={webhook ? webhook.id : "skeleton"}
                             >
                                 <TableCell
@@ -84,37 +71,48 @@ const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, onCreate, onRowCl
                                     })}
                                 >
                                     {isUnnamed(webhook) ? (
-                                        <FormattedMessage
-                                            defaultMessage="Unnamed webhook"
-                                            id="1eCau/"
-                                        />
+                                        <FormattedMessage {...messages.unnamedWebhook} />
                                     ) : (
                                         webhook?.name || <Skeleton />
                                     )}
                                 </TableCell>
 
-                                <TableCell className={classNames(classes.colAction, classes.colRight)}>
-                                    <IconButton
-                                        variant="secondary"
-                                        color="primary"
-                                        onClick={
-                                            webhook
-                                                ? stopPropagation(() => onRemove(webhook.id))
-                                                : undefined
-                                        }
-                                    >
-                                        <DeleteIcon />
-                                    </IconButton>
+                                <TableCell>
+                                    {webhook ? (
+                                        <Pill
+                                            label={
+                                                webhook.isActive
+                                                    ? intl.formatMessage(commonMessages.active)
+                                                    : intl.formatMessage(commonMessages.notActive)
+                                            }
+                                            color={webhook.isActive ? "success" : "error"}
+                                        />
+                                    ) : (
+                                        <Skeleton />
+                                    )}
                                 </TableCell>
-                            </TableRow>
+
+                                <TableCell className={classNames(classes.colAction, classes.colRight)}>
+                                    <TableButtonWrapper>
+                                        <IconButton
+                                            variant="secondary"
+                                            color="primary"
+                                            onClick={
+                                                webhook
+                                                    ? stopPropagation(() => onRemove(webhook.id))
+                                                    : undefined
+                                            }
+                                        >
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </TableButtonWrapper>
+                                </TableCell>
+                            </TableRowLink>
                         ),
                         () => (
                             <TableRow>
                                 <TableCell colSpan={numberOfColumns}>
-                                    {intl.formatMessage({
-                                        defaultMessage: "No webhooks found",
-                                        id: "wbjuR4",
-                                    })}
+                                    {intl.formatMessage(messages.noWebhooks)}
                                 </TableCell>
                             </TableRow>
                         )

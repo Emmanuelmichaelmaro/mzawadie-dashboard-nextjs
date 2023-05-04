@@ -1,10 +1,12 @@
 // @ts-nocheck
-import { Button, Card } from "@material-ui/core";
+import { Card } from "@material-ui/core";
+import { Button } from "@mzawadie/components/Button";
 import Container from "@mzawadie/components/Container";
+import { getByName } from "@mzawadie/components/Filter/utils";
 import { FilterBar } from "@mzawadie/components/FilterBar";
 import { PageHeader } from "@mzawadie/components/PageHeader";
+import { sectionNames } from "@mzawadie/core";
 import {
-    sectionNames,
     ChannelProps,
     FilterPageProps,
     ListActions,
@@ -13,7 +15,7 @@ import {
     TabPageProps,
 } from "@mzawadie/core";
 import { SaleFragment } from "@mzawadie/graphql";
-import { SaleListUrlSortField } from "@mzawadie/pages/discounts/urls";
+import { saleAddUrl, SaleListUrlSortField } from "@mzawadie/pages/discounts/urls";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -34,7 +36,6 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
     currentTab,
     filterOpts,
     initialSearch,
-    onAdd,
     onAll,
     onFilterChange,
     onSearchChange,
@@ -45,28 +46,32 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
     ...listProps
 }) => {
     const intl = useIntl();
+
     const structure = createFilterStructure(intl, filterOpts);
+
+    const filterDependency = structure.find(getByName("channel"));
 
     return (
         <Container>
             <PageHeader title={intl.formatMessage(sectionNames.sales)}>
-                <Button onClick={onAdd} variant="contained" color="primary" data-test-id="create-sale">
-                    <FormattedMessage defaultMessage="Create Sale" id="JHfbXR" description="button" />
+                <Button href={saleAddUrl()} variant="primary" data-test-id="create-sale">
+                    <FormattedMessage id="JHfbXR" defaultMessage="Create Sale" description="button" />
                 </Button>
             </PageHeader>
+
             <Card>
                 <FilterBar
                     allTabLabel={intl.formatMessage({
-                        defaultMessage: "All Sales",
                         id: "Yjhgle",
+                        defaultMessage: "All Sales",
                         description: "tab name",
                     })}
                     currentTab={currentTab}
                     filterStructure={structure}
                     initialSearch={initialSearch}
                     searchPlaceholder={intl.formatMessage({
-                        defaultMessage: "Search Sale",
                         id: "MSD3A/",
+                        defaultMessage: "Search Sale",
                     })}
                     tabs={tabs}
                     onAll={onAll}
@@ -76,7 +81,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
                     onTabDelete={onTabDelete}
                     onTabSave={onTabSave}
                 />
-                <SaleList {...listProps} />
+                <SaleList filterDependency={filterDependency} {...listProps} />
             </Card>
         </Container>
     );

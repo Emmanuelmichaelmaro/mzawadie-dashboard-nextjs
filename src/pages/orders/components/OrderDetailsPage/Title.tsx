@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { transformOrderStatus } from "@mzawadie/core";
 import { OrderDetailsFragment } from "@mzawadie/graphql";
 import { makeStyles, Pill } from "@saleor/macaw-ui";
@@ -38,6 +39,7 @@ const Title: React.FC<TitleProps> = (props) => {
                 { defaultMessage: "Order #{orderNumber}", id: "AqXzM2" },
                 { orderNumber: order?.number }
             )}
+            
             <div className={classes.statusContainer}>
                 <Pill label={localized} color={status} css={undefined} />
             </div>

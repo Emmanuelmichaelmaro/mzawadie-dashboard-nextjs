@@ -1,5 +1,7 @@
 import { Card, CardContent, Typography } from "@material-ui/core";
-import { CardTitle, Container, PageHeader } from "@mzawadie/components";
+import { CardTitle } from "@mzawadie/components/CardTitle";
+import Container from "@mzawadie/components/Container";
+import { PageHeader } from "@mzawadie/components/PageHeader";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -17,32 +19,35 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ user }) => {
             <PageHeader
                 title={intl.formatMessage(
                     {
+                        id: "By5ZBp",
                         defaultMessage: "Hello there, {userName}",
                         description: "header",
-                        id: "By5ZBp",
                     },
                     { userName: user.email }
                 )}
             />
+
             <Card>
                 <CardTitle
                     title={intl.formatMessage({
+                        id: "6L6Fy2",
                         defaultMessage: "Disclaimer",
                         description: "header",
-                        id: "6L6Fy2",
                     })}
                 />
+
                 <CardContent>
                     <Typography>
                         <FormattedMessage
-                            defaultMessage="The new dashboard and the GraphQL API are preview-quality software."
                             id="5LRkEs"
+                            defaultMessage="The new dashboard and the GraphQL API are preview-quality software."
                         />
                     </Typography>
+
                     <Typography>
                         <FormattedMessage
-                            defaultMessage="The GraphQL API is beta quality. It is not fully optimized and some mutations or queries may be missing."
                             id="G7mu0y"
+                            defaultMessage="The GraphQL API is beta quality. It is not fully optimized and some mutations or queries may be missing."
                         />
                     </Typography>
                 </CardContent>

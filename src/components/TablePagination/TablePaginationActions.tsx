@@ -1,9 +1,9 @@
-import { IconButton } from "@material-ui/core";
+// @ts-nocheck
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import ArrowLeft from "@material-ui/icons/ArrowLeft";
 import ArrowRight from "@material-ui/icons/ArrowRight";
 import { isDarkTheme } from "@mzawadie/core";
-import { makeStyles, useTheme } from "@saleor/macaw-ui";
+import { IconButton, makeStyles, useTheme } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 
@@ -29,7 +29,7 @@ const useStyles = makeStyles(
             "& > span:first-of-type": {
                 backgroundColor: theme.palette.background.default,
                 borderRadius: "100%",
-                transition: `${theme.transitions.duration.standard}ms`,
+                transition: theme.transitions.duration.standard + "ms",
             },
             "& svg": {
                 border: `solid 1px #BDBDBD`,
@@ -58,12 +58,11 @@ export interface TablePaginationActionsProps {
     hasNextPage: boolean;
     hasPreviousPage: boolean;
     nextIconButtonProps?: any;
-    onNextPage(event: any): any;
-    onPreviousPage(event: any): any;
+    onNextPage(event);
+    onPreviousPage(event);
 }
 
 export const TablePaginationActions: React.FC<TablePaginationActionsProps> = (props) => {
-    // eslint-disable-next-line @typescript-eslint/unbound-method
     const {
         backIconButtonProps,
         className,
@@ -74,6 +73,7 @@ export const TablePaginationActions: React.FC<TablePaginationActionsProps> = (pr
         onPreviousPage,
         ...other
     } = props;
+
     const classes = useStyles(props);
 
     const { direction, themeType } = useTheme();
@@ -83,17 +83,19 @@ export const TablePaginationActions: React.FC<TablePaginationActionsProps> = (pr
     return (
         <div className={classNames(classes.root, className)} {...other}>
             <IconButton
+                variant="secondary"
                 className={classNames(classes.iconButton, {
                     [classes.dark]: isDark,
                     [classes.disabled]: !hasPreviousPage,
                 })}
                 onClick={onPreviousPage}
                 disabled={!hasPreviousPage}
-                data-test="button-pagination-back"
+                data-test-id="button-pagination-back"
                 {...backIconButtonProps}
             >
                 {direction === "rtl" ? <ArrowRight /> : <ArrowLeft />}
             </IconButton>
+
             <IconButton
                 className={classNames(classes.iconButton, {
                     [classes.dark]: isDark,
@@ -101,7 +103,7 @@ export const TablePaginationActions: React.FC<TablePaginationActionsProps> = (pr
                 })}
                 onClick={onNextPage}
                 disabled={!hasNextPage}
-                data-test="button-pagination-next"
+                data-test-id="button-pagination-next"
                 {...nextIconButtonProps}
             >
                 {direction === "rtl" ? <ArrowLeft /> : <ArrowRight />}

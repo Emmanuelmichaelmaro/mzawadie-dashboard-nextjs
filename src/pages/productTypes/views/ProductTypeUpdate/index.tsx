@@ -1,22 +1,19 @@
 // @ts-nocheck
-import {
-    AssignAttributeDialog,
-    AttributeUnassignDialog,
-    BulkAttributeUnassignDialog,
-    NotFoundPage,
-    TypeDeleteWarningDialog,
-    WindowTitle,
-} from "@mzawadie/components";
-import {
-    DEFAULT_INITIAL_SEARCH_DATA,
-    commonMessages,
-    getStringOrPlaceholder,
-    maybe,
-    ReorderEvent,
-} from "@mzawadie/core";
+import { AssignAttributeDialog } from "@mzawadie/components/AssignAttributeDialog";
+import { AttributeUnassignDialog } from "@mzawadie/components/AttributeUnassignDialog";
+import { BulkAttributeUnassignDialog } from "@mzawadie/components/BulkAttributeUnassignDialog";
+import { Button } from "@mzawadie/components/Button";
+import { NotFoundPage } from "@mzawadie/components/NotFoundPage";
+import { TypeDeleteWarningDialog } from "@mzawadie/components/TypeDeleteWarningDialog";
+import { WindowTitle } from "@mzawadie/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@mzawadie/core";
+import { commonMessages } from "@mzawadie/core";
+import { ReorderEvent } from "@mzawadie/core";
+import { getStringOrPlaceholder, maybe } from "@mzawadie/core";
 import {
     AssignProductAttributeMutation,
     ProductAttributeType,
+    ProductTypeAttributeReorderMutation,
     ProductTypeDeleteMutation,
     UnassignProductAttributeMutation,
     useProductAttributeAssignmentUpdateMutation,
@@ -25,23 +22,19 @@ import {
     useUpdateMetadataMutation,
     useUpdatePrivateMetadataMutation,
 } from "@mzawadie/graphql";
-import { useBulkActions, useNavigator, useNotifier } from "@mzawadie/hooks";
-import { attributeUrl } from "@mzawadie/pages/attributes/urls";
-import { ProductTypeForm } from "@mzawadie/pages/productTypes/components/ProductTypeCreatePage";
-import { ProductTypeDetailsPage } from "@mzawadie/pages/productTypes/components/ProductTypeDetailsPage";
-import useAvailableProductAttributeSearch from "@mzawadie/searches/useAvailableProductAttributeSearch";
+import useBulkActions from "@mzawadie/hooks/useBulkActions";
+import useNavigator from "@mzawadie/hooks/useNavigator";
+import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { useProductTypeDelete } from "@mzawadie/pages/productTypes/hooks/useProductTypeDelete";
 import useProductTypeOperations from "@mzawadie/pages/productTypes/hooks/useProductTypeOperations";
-import {
-    productTypeListUrl,
-    productTypeUrl,
-    ProductTypeUrlQueryParams,
-} from "@mzawadie/pages/productTypes/urls";
+import useAvailableProductAttributeSearch from "@mzawadie/searches/useAvailableProductAttributeSearch";
 import createMetadataUpdateHandler from "@mzawadie/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@mzawadie/utils/maps";
-import { Button } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { ProductTypeDetailsPage, ProductTypeForm } from "../../components/ProductTypeDetailsPage";
+import { productTypeListUrl, productTypeUrl, ProductTypeUrlQueryParams } from "../../urls";
 
 interface ProductTypeUpdateProps {
     id: string;
@@ -72,20 +65,20 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
     const [updateProductType, updateProductTypeOpts] = useProductTypeUpdateMutation({
         onCompleted: (updateData) => {
             if (
-                !updateData.productTypeUpdate.errors ||
-                updateData.productTypeUpdate.errors.length === 0
+                !updateData?.productTypeUpdate?.errors ||
+                updateData?.productTypeUpdate?.errors.length === 0
             ) {
                 notify({
                     status: "success",
                     text: intl.formatMessage(commonMessages.savedChanges),
                 });
             } else if (
-                updateData.productTypeUpdate.errors !== null &&
-                updateData.productTypeUpdate.errors.length > 0
+                updateData?.productTypeUpdate?.errors !== null &&
+                updateData?.productTypeUpdate?.errors.length > 0
             ) {
                 setErrors((prevErrors) => ({
                     ...prevErrors,
-                    formErrors: updateData.productTypeUpdate.errors,
+                    formErrors: updateData?.productTypeUpdate?.errors,
                 }));
             }
         },
@@ -95,12 +88,12 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
         useProductAttributeAssignmentUpdateMutation({
             onCompleted: (updateData) => {
                 if (
-                    updateData.productAttributeAssignmentUpdate.errors !== null &&
-                    updateData.productAttributeAssignmentUpdate.errors.length > 0
+                    updateData?.productAttributeAssignmentUpdate?.errors !== null &&
+                    updateData?.productAttributeAssignmentUpdate?.errors.length > 0
                 ) {
                     setErrors((prevErrors) => ({
                         ...prevErrors,
-                        formErrors: updateData.productAttributeAssignmentUpdate.errors,
+                        formErrors: updateData?.productAttributeAssignmentUpdate?.errors,
                     }));
                 }
             },
@@ -109,8 +102,6 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
     const [updateMetadata] = useUpdateMetadataMutation({});
 
     const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
-
-    const handleBack = () => navigate(productTypeListUrl());
 
     const [selectedVariantAttributes, setSelectedVariantAttributes] = React.useState<string[]>([]);
 
@@ -144,8 +135,8 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
         });
 
         return [
-            ...result.data?.productTypeUpdate?.errors,
-            ...productAttributeUpdateResult.data?.productAttributeAssignmentUpdate?.errors,
+            ...result.data.productTypeUpdate.errors,
+            ...productAttributeUpdateResult.data.productAttributeAssignmentUpdate.errors,
         ];
     };
 
@@ -171,12 +162,12 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
             });
             closeModal();
         } else if (
-            data.productAttributeAssign?.errors !== null &&
-            data.productAttributeAssign?.errors.length > 0
+            data?.productAttributeAssign?.errors !== null &&
+            data?.productAttributeAssign?.errors.length > 0
         ) {
             setErrors((prevErrors) => ({
                 ...prevErrors,
-                addAttributeErrors: data.productAttributeAssign?.errors,
+                addAttributeErrors: data?.productAttributeAssign?.errors,
             }));
         }
     };
@@ -194,22 +185,31 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
     };
 
     const handleProductTypeDeleteSuccess = (deleteData: ProductTypeDeleteMutation) => {
-        if (deleteData?.productTypeDelete?.errors.length === 0) {
+        if (deleteData.productTypeDelete?.errors.length === 0) {
             notify({
                 status: "success",
                 text: intl.formatMessage({
-                    defaultMessage: "Product type deleted",
                     id: "F3Upht",
+                    defaultMessage: "Product type deleted",
                 }),
             });
             navigate(productTypeListUrl(), { replace: true });
         }
     };
 
+    const handleAttributeReorderSuccess = (data: ProductTypeAttributeReorderMutation) => {
+        if (data.productTypeReorderAttributes?.errors.length === 0) {
+            notify({
+                status: "success",
+                text: intl.formatMessage(commonMessages.savedChanges),
+            });
+        }
+    };
+
     const { assignAttribute, deleteProductType, unassignAttribute, reorderAttribute } =
         useProductTypeOperations({
             onAssignAttribute: handleAttributeAssignSuccess,
-            onProductTypeAttributeReorder: () => undefined,
+            onProductTypeAttributeReorder: handleAttributeReorderSuccess,
             onProductTypeDelete: handleProductTypeDeleteSuccess,
             onUnassignAttribute: handleAttributeUnassignSuccess,
             productType: data?.productType,
@@ -233,7 +233,6 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
                 },
             },
         });
-
     const handleAssignAttribute = () =>
         assignAttribute.mutate({
             id,
@@ -274,7 +273,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
     };
 
     if (productType === null) {
-        return <NotFoundPage onBack={handleBack} />;
+        return <NotFoundPage backHref={productTypeListUrl()} />;
     }
 
     return (
@@ -299,7 +298,6 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
                         })
                     )
                 }
-                onAttributeClick={(attributeId) => navigate(attributeUrl(attributeId))}
                 onAttributeReorder={handleAttributeReorder}
                 onAttributeUnassign={(attributeId) =>
                     navigate(
@@ -309,7 +307,6 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
                         })
                     )
                 }
-                onBack={handleBack}
                 onDelete={() =>
                     navigate(
                         productTypeUrl(id, {
@@ -336,8 +333,8 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
                             }
                         >
                             <FormattedMessage
-                                defaultMessage="Unassign"
                                 id="S7j+Wf"
+                                defaultMessage="Unassign"
                                 description="unassign attribute from product type, button"
                             />
                         </Button>
@@ -360,8 +357,8 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
                             }
                         >
                             <FormattedMessage
-                                defaultMessage="Unassign"
                                 id="S7j+Wf"
+                                defaultMessage="Unassign"
                                 description="unassign attribute from product type, button"
                             />
                         </Button>
@@ -377,7 +374,7 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
                             confirmButtonState={assignAttribute.opts.status}
                             errors={maybe(
                                 () =>
-                                    assignAttribute.opts.data?.productAttributeAssign?.errors.map(
+                                    assignAttribute.opts?.data?.productAttributeAssign?.errors.map(
                                         (err) => err.message
                                     ),
                                 []
@@ -389,7 +386,8 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
                             onFetchMore={loadMore}
                             onOpen={result.refetch}
                             hasMore={maybe(
-                                () => result.data?.productType.availableAttributes.pageInfo.hasNextPage,
+                                () =>
+                                    result.data?.productType?.availableAttributes?.pageInfo.hasNextPage,
                                 false
                             )}
                             open={
@@ -429,8 +427,8 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
 
             <BulkAttributeUnassignDialog
                 title={intl.formatMessage({
-                    defaultMessage: "Unassign Attribute from Product Type",
                     id: "r1aQ2f",
+                    defaultMessage: "Unassign Attribute from Product Type",
                     description: "dialog header",
                 })}
                 attributeQuantity={maybe(() => params.ids.length)}
@@ -443,8 +441,8 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({ id, params
 
             <AttributeUnassignDialog
                 title={intl.formatMessage({
-                    defaultMessage: "Unassign Attribute From Product Type",
                     id: "UJnqdm",
+                    defaultMessage: "Unassign Attribute From Product Type",
                     description: "dialog header",
                 })}
                 attributeName={maybe(

@@ -1,8 +1,10 @@
-/* eslint-disable radix */
 // @ts-nocheck
-import { ListViews, ReorderEvent, commonMessages, maybe } from "@mzawadie/core";
+import { commonMessages } from "@mzawadie/core";
+import { extractMutationErrors, getStringOrPlaceholder } from "@mzawadie/core";
+import { ListViews, ReorderEvent } from "@mzawadie/core";
 import {
     useAttributeDeleteMutation,
+    useAttributeDetailsQuery,
     useAttributeUpdateMutation,
     useAttributeValueCreateMutation,
     useAttributeValueDeleteMutation,
@@ -10,21 +12,22 @@ import {
     useAttributeValueUpdateMutation,
     useUpdateMetadataMutation,
     useUpdatePrivateMetadataMutation,
-    useAttributeDetailsQuery,
 } from "@mzawadie/graphql";
 import useListSettings from "@mzawadie/hooks/useListSettings";
 import useLocalPaginator, { useLocalPaginationState } from "@mzawadie/hooks/useLocalPaginator";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
+import { attributeValueFragmentToFormData } from "@mzawadie/pages/attributes/utils/data";
 import getAttributeErrorMessage from "@mzawadie/utils/errors/attribute";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@mzawadie/utils/handlers/metadataUpdateHandler";
 import { move } from "@mzawadie/utils/lists";
+import omit from "lodash/omit";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { AttributeDeleteDialog } from "../../components/AttributeDeleteDialog";
-import { AttributePage, AttributePageFormData } from "../../components/AttributePage";
+import { AttributePageFormData, AttributePage } from "../../components/AttributePage";
 import { AttributeValueDeleteDialog } from "../../components/AttributeValueDeleteDialog";
 import { AttributeValueEditDialog } from "../../components/AttributeValueEditDialog";
 import {
@@ -76,14 +79,20 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
         valuesPaginationState
     );
 
+    const notifySaved = () =>
+        notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+        });
+
     const [attributeDelete, attributeDeleteOpts] = useAttributeDeleteMutation({
         onCompleted: (data) => {
-            if (data.attributeDelete.errors.length === 0) {
+            if (data?.attributeDelete?.errors.length === 0) {
                 notify({
                     status: "success",
                     text: intl.formatMessage({
-                        defaultMessage: "Attribute deleted",
                         id: "V/VAHG",
+                        defaultMessage: "Attribute deleted",
                     }),
                 });
                 navigate(attributeListUrl());
@@ -93,12 +102,12 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
 
     const [attributeValueDelete, attributeValueDeleteOpts] = useAttributeValueDeleteMutation({
         onCompleted: (data) => {
-            if (data.attributeValueDelete.errors.length === 0) {
+            if (data?.attributeValueDelete?.errors.length === 0) {
                 notify({
                     status: "success",
                     text: intl.formatMessage({
-                        defaultMessage: "Value deleted",
                         id: "7H2D5m",
+                        defaultMessage: "Value deleted",
                         description: "attribute value deleted",
                     }),
                 });
@@ -109,11 +118,8 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
 
     const [attributeValueUpdate, attributeValueUpdateOpts] = useAttributeValueUpdateMutation({
         onCompleted: (data) => {
-            if (data.attributeValueUpdate.errors.length === 0) {
-                notify({
-                    status: "success",
-                    text: intl.formatMessage(commonMessages.savedChanges),
-                });
+            if (data?.attributeValueUpdate?.errors.length === 0) {
+                notifySaved();
                 closeModal();
             }
         },
@@ -121,23 +127,20 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
 
     const [attributeUpdate, attributeUpdateOpts] = useAttributeUpdateMutation({
         onCompleted: (data) => {
-            if (data.attributeUpdate.errors.length === 0) {
-                notify({
-                    status: "success",
-                    text: intl.formatMessage(commonMessages.savedChanges),
-                });
+            if (data?.attributeUpdate?.errors.length === 0) {
+                notifySaved();
             }
         },
     });
 
     const [attributeValueCreate, attributeValueCreateOpts] = useAttributeValueCreateMutation({
         onCompleted: (data) => {
-            if (data.attributeValueCreate.errors.length === 0) {
+            if (data?.attributeValueCreate?.errors.length === 0) {
                 notify({
                     status: "success",
                     text: intl.formatMessage({
-                        defaultMessage: "Added new value",
                         id: "xVn5B0",
+                        defaultMessage: "Added new value",
                         description: "added new attribute value",
                     }),
                 });
@@ -148,11 +151,13 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
 
     const [attributeValueReorder] = useAttributeValueReorderMutation({
         onCompleted: (data) => {
-            if (data.attributeReorderValues.errors.length !== 0) {
+            if (data?.attributeReorderValues?.errors.length !== 0) {
                 notify({
                     status: "error",
-                    text: getAttributeErrorMessage(data.attributeReorderValues.errors[0], intl),
+                    text: getAttributeErrorMessage(data?.attributeReorderValues?.errors[0], intl),
                 });
+            } else {
+                notifySaved();
             }
         },
     });
@@ -164,15 +169,15 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
                 attributeReorderValues: {
                     __typename: "AttributeReorderValues",
                     attribute: {
-                        ...data.attribute,
+                        ...data?.attribute,
                         choices: {
                             __typename: "AttributeValueCountableConnection",
                             pageInfo: {
-                                ...data.attribute.choices.pageInfo,
+                                ...data?.attribute?.choices?.pageInfo,
                             },
                             edges: move(
-                                data.attribute.choices.edges[oldIndex],
-                                data.attribute.choices.edges,
+                                data?.attribute?.choices?.edges[oldIndex],
+                                data?.attribute?.choices?.edges,
                                 (a, b) => a.node.id === b.node.id,
                                 newIndex
                             ),
@@ -184,7 +189,7 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
             variables: {
                 id,
                 move: {
-                    id: data.attribute.choices.edges[oldIndex].node.id,
+                    id: data?.attribute?.choices?.edges[oldIndex].node.id,
                     sortOrder: newIndex - oldIndex,
                 },
                 firstValues: valuesPaginationState.first,
@@ -194,25 +199,18 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
             },
         });
 
-    const handleUpdate = async (data: AttributePageFormData) => {
-        const input = {
-            ...data,
-            entityType: undefined,
-            inputType: undefined,
-            metadata: undefined,
-            privateMetadata: undefined,
-            storefrontSearchPosition: parseInt(data.storefrontSearchPosition, 0),
-        };
-
-        const result = await attributeUpdate({
-            variables: {
-                id,
-                input,
-            },
-        });
-
-        return result.data.attributeUpdate.errors;
-    };
+    const handleUpdate = async (data: AttributePageFormData) =>
+        extractMutationErrors(
+            attributeUpdate({
+                variables: {
+                    id,
+                    input: {
+                        ...omit(data, ["entityType", "inputType", "metadata", "privateMetadata"]),
+                        storefrontSearchPosition: parseInt(data.storefrontSearchPosition, 10),
+                    },
+                },
+            })
+        );
 
     const handleSubmit = createMetadataUpdateHandler(
         data?.attribute,
@@ -222,118 +220,127 @@ const AttributeDetails: React.FC<AttributeDetailsProps> = ({ id, params }) => {
     );
 
     return (
-        <>
-            <AttributePage
-                attribute={maybe(() => data.attribute)}
-                disabled={loading}
-                errors={attributeUpdateOpts.data?.attributeUpdate.errors || []}
-                onBack={() => navigate(attributeListUrl())}
-                onDelete={() => openModal("remove")}
-                onSubmit={handleSubmit}
-                onValueAdd={() => openModal("add-value")}
-                onValueDelete={(id) =>
-                    openModal("remove-value", {
-                        id,
-                    })
-                }
-                onValueReorder={handleValueReorder}
-                onValueUpdate={(id) =>
-                    openModal("edit-value", {
-                        id,
-                    })
-                }
-                saveButtonBarState={attributeUpdateOpts.status}
-                values={maybe(() => data.attribute.choices)}
-                settings={settings}
-                onUpdateListSettings={updateListSettings}
-                pageInfo={pageInfo}
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
-            />
-            <AttributeDeleteDialog
-                open={params.action === "remove"}
-                name={maybe(() => data.attribute.name, "...")}
-                confirmButtonState={attributeDeleteOpts.status}
-                onClose={closeModal}
-                onConfirm={() =>
-                    attributeDelete({
-                        variables: {
-                            id,
-                        },
-                    })
-                }
-            />
-            <AttributeValueDeleteDialog
-                attributeName={maybe(() => data.attribute.name, "...")}
-                open={params.action === "remove-value"}
-                name={maybe(
-                    () =>
-                        data.attribute.choices.edges.find((value) => params.id === value.node.id).node
-                            .name,
-                    "..."
-                )}
-                useName
-                confirmButtonState={attributeValueDeleteOpts.status}
-                onClose={closeModal}
-                onConfirm={() =>
-                    attributeValueDelete({
-                        variables: {
-                            id: params.id,
-                            firstValues: valuesPaginationState.first,
-                            lastValues: valuesPaginationState.last,
-                            afterValues: valuesPaginationState.after,
-                            beforeValues: valuesPaginationState.before,
-                        },
-                    })
-                }
-            />
-            <AttributeValueEditDialog
-                attributeValue={null}
-                confirmButtonState={attributeValueCreateOpts.status}
-                disabled={loading}
-                errors={attributeValueCreateOpts.data?.attributeValueCreate.errors || []}
-                open={params.action === "add-value"}
-                onClose={closeModal}
-                onSubmit={(input) =>
-                    attributeValueCreate({
-                        variables: {
-                            id,
-                            input,
-                            firstValues: valuesPaginationState.first,
-                            lastValues: valuesPaginationState.last,
-                            afterValues: valuesPaginationState.after,
-                            beforeValues: valuesPaginationState.before,
-                        },
-                    })
-                }
-            />
-            <AttributeValueEditDialog
-                attributeValue={maybe(
-                    () => data.attribute.choices.edges.find((value) => params.id === value.node.id).node
-                )}
-                confirmButtonState={attributeValueUpdateOpts.status}
-                disabled={loading}
-                errors={attributeValueUpdateOpts.data?.attributeValueUpdate.errors || []}
-                open={params.action === "edit-value"}
-                onClose={closeModal}
-                onSubmit={(input) =>
-                    attributeValueUpdate({
-                        variables: {
-                            id: data.attribute.choices.edges.find(
+        <AttributePage
+            attribute={data?.attribute}
+            disabled={loading}
+            errors={attributeUpdateOpts.data?.attributeUpdate?.errors || []}
+            onDelete={() => openModal("remove")}
+            onSubmit={handleSubmit}
+            onValueAdd={() => openModal("add-value")}
+            onValueDelete={(id) =>
+                openModal("remove-value", {
+                    id,
+                })
+            }
+            onValueReorder={handleValueReorder}
+            onValueUpdate={(id) =>
+                openModal("edit-value", {
+                    id,
+                })
+            }
+            saveButtonBarState={attributeUpdateOpts.status}
+            values={data?.attribute?.choices}
+            settings={settings}
+            onUpdateListSettings={updateListSettings}
+            pageInfo={pageInfo}
+            onNextPage={loadNextPage}
+            onPreviousPage={loadPreviousPage}
+        >
+            {(attributeFormData) => (
+                <>
+                    <AttributeDeleteDialog
+                        open={params.action === "remove"}
+                        name={data?.attribute?.name ?? "..."}
+                        confirmButtonState={attributeDeleteOpts.status}
+                        onClose={closeModal}
+                        onConfirm={() =>
+                            attributeDelete({
+                                variables: {
+                                    id,
+                                },
+                            })
+                        }
+                    />
+                    
+                    <AttributeValueDeleteDialog
+                        attributeName={data?.attribute?.name ?? "..."}
+                        open={params.action === "remove-value"}
+                        name={getStringOrPlaceholder(
+                            data?.attribute?.choices?.edges?.find(
                                 (value) => params.id === value.node.id
-                            ).node.id,
-                            input,
-                            firstValues: valuesPaginationState.first,
-                            lastValues: valuesPaginationState.last,
-                            afterValues: valuesPaginationState.after,
-                            beforeValues: valuesPaginationState.before,
-                        },
-                    })
-                }
-            />
-        </>
+                            )?.node.name
+                        )}
+                        useName={true}
+                        confirmButtonState={attributeValueDeleteOpts.status}
+                        onClose={closeModal}
+                        onConfirm={() =>
+                            attributeValueDelete({
+                                variables: {
+                                    id: params.id,
+                                    firstValues: valuesPaginationState.first,
+                                    lastValues: valuesPaginationState.last,
+                                    afterValues: valuesPaginationState.after,
+                                    beforeValues: valuesPaginationState.before,
+                                },
+                            })
+                        }
+                    />
+                    
+                    <AttributeValueEditDialog
+                        inputType={attributeFormData.inputType}
+                        attributeValue={null}
+                        confirmButtonState={attributeValueCreateOpts.status}
+                        disabled={loading}
+                        errors={attributeValueCreateOpts.data?.attributeValueCreate?.errors || []}
+                        open={params.action === "add-value"}
+                        onClose={closeModal}
+                        onSubmit={(input) =>
+                            attributeValueCreate({
+                                variables: {
+                                    id,
+                                    input,
+                                    firstValues: valuesPaginationState.first,
+                                    lastValues: valuesPaginationState.last,
+                                    afterValues: valuesPaginationState.after,
+                                    beforeValues: valuesPaginationState.before,
+                                },
+                            })
+                        }
+                    />
+                    
+                    <AttributeValueEditDialog
+                        inputType={attributeFormData.inputType}
+                        attributeValue={attributeValueFragmentToFormData(
+                            data?.attribute?.choices?.edges?.find(
+                                (value) => params.id === value.node.id
+                            )?.node
+                        )}
+                        confirmButtonState={attributeValueUpdateOpts.status}
+                        disabled={loading}
+                        errors={attributeValueUpdateOpts.data?.attributeValueUpdate?.errors || []}
+                        open={params.action === "edit-value"}
+                        onClose={closeModal}
+                        onSubmit={(input) =>
+                            attributeValueUpdate({
+                                variables: {
+                                    id: data?.attribute.choices.edges.find(
+                                        (value) => params.id === value.node.id
+                                    ).node.id,
+                                    input,
+                                    firstValues: valuesPaginationState.first,
+                                    lastValues: valuesPaginationState.last,
+                                    afterValues: valuesPaginationState.after,
+                                    beforeValues: valuesPaginationState.before,
+                                },
+                            })
+                        }
+                    />
+                </>
+            )}
+        </AttributePage>
     );
 };
+
 AttributeDetails.displayName = "AttributeDetails";
 
 export default AttributeDetails;

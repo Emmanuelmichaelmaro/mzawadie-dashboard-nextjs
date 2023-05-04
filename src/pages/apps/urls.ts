@@ -5,13 +5,25 @@ import urlJoin from "url-join";
 
 export const MANIFEST_ATTR = "manifestUrl";
 
-export type AppListUrlDialog = "remove" | "remove-app" | "remove-custom-app";
+export type AppListUrlDialog =
+    | "remove"
+    | "remove-app"
+    | "remove-custom-app"
+    | "app-activate"
+    | "app-deactivate";
 
 export type AppDetailsUrlDialog = "app-activate" | "app-deactivate";
 
 export type AppListUrlQueryParams = ActiveTab & Dialog<AppListUrlDialog> & SingleAction & Pagination;
 
-export type AppDetailsUrlQueryParams = Dialog<AppDetailsUrlDialog> & SingleAction;
+export interface AppDetailsUrlMountQueryParams {
+    productId?: string;
+    orderId?: string;
+}
+
+export type AppDetailsUrlQueryParams = Dialog<AppDetailsUrlDialog> &
+    SingleAction &
+    AppDetailsUrlMountQueryParams;
 
 export type AppInstallUrlQueryParams = Partial<{ [MANIFEST_ATTR]: string }>;
 
@@ -26,6 +38,7 @@ export type CustomAppUrlDialog =
     | "remove-token"
     | "app-activate"
     | "app-deactivate";
+
 export type CustomAppUrlQueryParams = Dialog<CustomAppUrlDialog> & SingleAction;
 
 export const appsSection = "/apps/";
@@ -34,23 +47,29 @@ export const appsListPath = appsSection;
 export const customAppListPath = "/apps/custom/";
 
 export const appDetailsPath = (id: string) => urlJoin(appsSection, id);
-export const appSettingsPath = (id: string) => urlJoin(appsSection, id, "settings");
 export const appPath = (id: string) => urlJoin(appsSection, id, "app");
 export const appDeepPath = (id: string, subPath: string) => urlJoin(appPath(id), subPath);
+
 export const customAppPath = (id: string) => urlJoin(customAppListPath, id);
+
 export const appInstallPath = urlJoin(appsSection, "install");
-export const appInstallUrl = appInstallPath;
+
+export const createAppInstallUrl = (manifestUrl: string) =>
+    `${appInstallPath}?manifestUrl=${manifestUrl}`;
 
 export const appDetailsUrl = (id: string, params?: AppDetailsUrlQueryParams) =>
-    `${appDetailsPath(encodeURIComponent(id))}?${stringifyQs(params)}`;
-
-export const appSettingsUrl = (id: string, params?: AppDetailsUrlQueryParams) =>
-    `${appSettingsPath(encodeURIComponent(id))}?${stringifyQs(params)}`;
+    appDetailsPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
 export const appUrl = (id: string, params?: AppDetailsUrlQueryParams) =>
-    `${appPath(encodeURIComponent(id))}?${stringifyQs(params)}`;
+    appPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+
 export const appDeepUrl = (id: string, subPath: string, params?: AppDetailsUrlQueryParams) =>
-    `${appDeepPath(encodeURIComponent(id), subPath)}?${stringifyQs(params)}`;
+    appDeepPath(encodeURIComponent(id), subPath) + "?" + stringifyQs(params);
+
+export const getAppDeepPathFromDashboardUrl = (dashboardUrl: string, appId: string) => {
+    const deepSubPath = dashboardUrl.replace(appPath(encodeURIComponent(appId)), "");
+    return deepSubPath || "/";
+};
 
 export const getAppCompleteUrlFromDashboardUrl = (
     dashboardUrl: string,
@@ -60,10 +79,12 @@ export const getAppCompleteUrlFromDashboardUrl = (
     if (!appUrl || !appId) {
         return appUrl;
     }
+
     const deepSubPath = dashboardUrl.replace(appPath(encodeURIComponent(appId)), "");
-    const appCompleteUrl = urlJoin(appUrl, deepSubPath);
-    return appCompleteUrl;
+
+    return aurlJoin(appUrl, deepSubPath);
 };
+
 export const getDashboardUrFromAppCompleteUrl = (
     appCompleteUrl: string,
     appUrl?: string,
@@ -72,14 +93,17 @@ export const getDashboardUrFromAppCompleteUrl = (
     if (!appUrl || !appId) {
         return appUrl;
     }
+
     const deepSubPath = appCompleteUrl.replace(appUrl, "");
-    const dashboardUrl = urlJoin(appPath(encodeURIComponent(appId)), deepSubPath);
-    return dashboardUrl;
+
+    return urlJoin(appPath(encodeURIComponent(appId)), deepSubPath);
 };
 
 export const customAppUrl = (id: string, params?: CustomAppUrlQueryParams) =>
-    `${customAppPath(encodeURIComponent(id))}?${stringifyQs(params)}`;
-export const customAppAddPath = urlJoin(customAppListPath, "add");
+    customAppPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+
+    export const customAppAddPath = urlJoin(customAppListPath, "add");
+
 export const customAppAddUrl = customAppAddPath;
 
-export const appsListUrl = (params?: AppListUrlQueryParams) => `${appsListPath}?${stringifyQs(params)}`;
+export const appsListUrl = (params?: AppListUrlQueryParams) => appsListPath + "?" + stringifyQs(params);

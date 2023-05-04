@@ -1,18 +1,17 @@
 // @ts-nocheck
-import { commonMessages, extractMutationErrors, getMutationState } from "@mzawadie/core";
+import { commonMessages } from "@mzawadie/core";
+import { extractMutationErrors, getMutationState } from "@mzawadie/core";
 import { useOrderSettingsQuery, useOrderSettingsUpdateMutation } from "@mzawadie/graphql";
-import { useNavigator, useNotifier } from "@mzawadie/hooks";
-import {
-    OrderSettingsPage,
-    OrderSettingsFormData,
-} from "@mzawadie/pages/orders/components/OrderSettingsPage";
-import { orderListUrl } from "@mzawadie/pages/orders/urls";
+import { useNotifier } from "@mzawadie/hooks/useNotifier";
+import { OrderSettingsPage } from "@mzawadie/pages/orders/components/OrderSettingsPage";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { OrderSettingsFormData } from "../components/OrderSettingsPage/types";
+
 export const OrderSettings: React.FC = () => {
     const intl = useIntl();
-    const navigate = useNavigator();
+
     const notify = useNotifier();
 
     const { data, loading } = useOrderSettingsQuery({});
@@ -33,8 +32,6 @@ export const OrderSettings: React.FC = () => {
             });
         },
     });
-
-    const handleBack = () => navigate(orderListUrl());
 
     const handleSubmit = async ({
         automaticallyConfirmAllNewOrders,
@@ -63,7 +60,6 @@ export const OrderSettings: React.FC = () => {
             shop={data?.shop}
             disabled={loading || orderSettingsUpdateOpts.loading}
             onSubmit={handleSubmit}
-            onBack={handleBack}
             saveButtonBarState={getMutationState(
                 orderSettingsUpdateOpts.called,
                 orderSettingsUpdateOpts.loading,

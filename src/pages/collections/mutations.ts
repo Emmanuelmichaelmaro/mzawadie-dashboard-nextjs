@@ -72,7 +72,7 @@ export const removeCollection = gql`
 export const unassignCollectionProduct = gql`
     mutation UnassignCollectionProduct(
         $collectionId: ID!
-        $productIds: [ID]!
+        $productIds: [ID!]!
         $first: Int
         $after: String
         $last: Int
@@ -111,7 +111,7 @@ export const unassignCollectionProduct = gql`
 `;
 
 export const collectionBulkDelete = gql`
-    mutation CollectionBulkDelete($ids: [ID]!) {
+    mutation CollectionBulkDelete($ids: [ID!]!) {
         collectionBulkDelete(ids: $ids) {
             errors {
                 ...CollectionError

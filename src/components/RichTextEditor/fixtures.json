@@ -2,13 +2,7 @@
     "richTextEditor": {
         "time": 1603898483525,
         "blocks": [
-            {
-                "type": "header",
-                "data": {
-                    "text": "Lorem ipsum&nbsp;",
-                    "level": 1
-                }
-            },
+            { "type": "header", "data": { "text": "Lorem ipsum&nbsp;", "level": 1 } },
             {
                 "type": "paragraph",
                 "data": {
@@ -32,26 +26,14 @@
                     "text": "Nulla sit amet cursus augue, in maximus tellus. <a href=\"http://lipsum.com\">Donec sit amet mollis neque</a>, eget commodo odio."
                 }
             },
-            {
-                "type": "header",
-                "data": {
-                    "text": "Morbi aliquam",
-                    "level": 2
-                }
-            },
+            { "type": "header", "data": { "text": "Morbi aliquam", "level": 2 } },
             {
                 "type": "paragraph",
                 "data": {
                     "text": "Aliquam posuere nisi et ante malesuada egestas. Phasellus auctor risus a erat aliquam, tempus volutpat arcu rutrum. Duis bibendum id justo ut commodo. Suspendisse imperdiet tincidunt blandit."
                 }
             },
-            {
-                "type": "header",
-                "data": {
-                    "text": "Nam ipsum purus",
-                    "level": 3
-                }
-            },
+            { "type": "header", "data": { "text": "Nam ipsum purus", "level": 3 } },
             {
                 "type": "paragraph",
                 "data": {
@@ -68,10 +50,7 @@
             },
             {
                 "type": "header",
-                "data": {
-                    "text": "Tempor ac posuere nec",
-                    "level": 3
-                }
+                "data": { "text": "Tempor ac posuere nec", "level": 3 }
             },
             {
                 "type": "paragraph",

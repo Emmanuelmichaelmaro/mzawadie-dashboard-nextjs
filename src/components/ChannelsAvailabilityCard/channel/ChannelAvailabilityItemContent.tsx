@@ -1,10 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 import { TextField, Typography } from "@material-ui/core";
 import ControlledCheckbox from "@mzawadie/components/ControlledCheckbox";
-import { DateContext } from "@mzawadie/components/Date/DateContext";
 import Hr from "@mzawadie/components/Hr";
 import { RadioSwitchField } from "@mzawadie/components/RadioSwitchField";
+import useCurrentDate from "@mzawadie/hooks/useCurrentDate";
 import useDateLocalize from "@mzawadie/hooks/useDateLocalize";
 import { ChannelData } from "@mzawadie/pages/channels/utils";
 import { getFormErrors, getProductErrorMessage } from "@mzawadie/utils/errors";
@@ -14,6 +13,7 @@ import { useIntl } from "react-intl";
 
 import { useStyles } from "../styles";
 import { ChannelOpts, ChannelsAvailabilityError, Messages } from "../types";
+import { availabilityItemMessages } from "./messages";
 
 export interface ChannelContentProps {
     disabled?: boolean;
@@ -38,6 +38,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
         visibleInListings,
         id,
     } = data;
+
     const formData = {
         ...(availableForPurchase !== undefined ? { availableForPurchase } : {}),
         ...(isAvailable !== undefined ? { isAvailableForPurchase: isAvailable } : {}),
@@ -45,31 +46,35 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
         publicationDate,
         ...(visibleInListings !== undefined ? { visibleInListings } : {}),
     };
-    const dateNow = React.useContext(DateContext);
+
+    const dateNow = useCurrentDate();
+
     const localizeDate = useDateLocalize();
+
     const hasAvailableProps = isAvailable !== undefined && availableForPurchase !== undefined;
+
     const [isPublicationDate, setPublicationDate] = useState(publicationDate === null);
     const [isAvailableDate, setAvailableDate] = useState(false);
+
     const intl = useIntl();
     const classes = useStyles({});
 
-    const todayDate = localizeDate(new Date(dateNow).toISOString(), "YYYY-MM-DD");
+    const parsedDate = new Date(dateNow);
+    const todayDateUTC = parsedDate.toISOString().slice(0, 10);
 
     const visibleMessage = (date: string) =>
-        intl.formatMessage(
-            {
-                defaultMessage: "since {date}",
-                id: "UjsI4o",
-                description: "date",
-            },
-            {
-                date: localizeDate(date, "L"),
-            }
-        );
+        intl.formatMessage(availabilityItemMessages.sinceDate, {
+            date: localizeDate(date),
+        });
+
     const formErrors = getFormErrors(["availableForPurchaseDate", "publicationDate"], errors);
+
     return (
         <div className={classes.container}>
             <RadioSwitchField
+                classes={{
+                    radioLabel: classes.radioLabel,
+                }}
                 className={classes.radioField}
                 disabled={disabled}
                 firstOptionLabel={
@@ -96,33 +101,29 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
                     onChange(id, {
                         ...formData,
                         isPublished: !isPublished,
-                        publicationDate: !isPublished && !publicationDate ? todayDate : publicationDate,
+                        publicationDate:
+                            !isPublished && !publicationDate ? todayDateUTC : publicationDate,
                     });
                 }}
             />
+
             {!isPublished && (
                 <>
                     <Typography
                         className={classes.setPublicationDate}
                         onClick={() => setPublicationDate(!isPublicationDate)}
                     >
-                        {intl.formatMessage({
-                            defaultMessage: "Set publication date",
-                            id: "U3BQKA",
-                        })}
+                        {intl.formatMessage(availabilityItemMessages.setPublicationDate)}
                     </Typography>
+
                     {isPublicationDate && (
                         <TextField
                             error={!!formErrors.publicationDate}
                             disabled={disabled}
-                            label={intl.formatMessage({
-                                defaultMessage: "Publish on",
-                                id: "Jt3DwJ",
-                                description: "publish on date",
-                            })}
+                            label={intl.formatMessage(availabilityItemMessages.publishOn)}
                             name={`channel:publicationDate:${id}`}
                             type="date"
-                            fullWidth
+                            fullWidth={true}
                             helperText={
                                 formErrors.publicationDate
                                     ? getProductErrorMessage(formErrors.publicationDate, intl)
@@ -143,10 +144,15 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
                     )}
                 </>
             )}
+
             {hasAvailableProps && (
                 <>
                     <Hr />
+
                     <RadioSwitchField
+                        classes={{
+                            radioLabel: classes.radioLabel,
+                        }}
                         className={classes.radioField}
                         disabled={disabled}
                         firstOptionLabel={
@@ -182,6 +188,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
                             });
                         }}
                     />
+
                     {!isAvailable && (
                         <>
                             <Typography
@@ -190,18 +197,15 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
                             >
                                 {messages.setAvailabilityDateLabel}
                             </Typography>
+
                             {isAvailableDate && (
                                 <TextField
                                     error={!!formErrors.availableForPurchaseDate}
                                     disabled={disabled}
-                                    label={intl.formatMessage({
-                                        defaultMessage: "Set available on",
-                                        id: "Y7Vy19",
-                                        description: "available on date",
-                                    })}
+                                    label={intl.formatMessage(availabilityItemMessages.setAvailableOn)}
                                     name={`channel:availableForPurchase:${id}`}
                                     type="date"
-                                    fullWidth
+                                    fullWidth={true}
                                     helperText={
                                         formErrors.availableForPurchaseDate
                                             ? getProductErrorMessage(
@@ -210,7 +214,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
                                               )
                                             : ""
                                     }
-                                    value={availableForPurchase || ""}
+                                    value={availableForPurchase ? availableForPurchase : ""}
                                     onChange={(e) =>
                                         onChange(id, {
                                             ...formData,
@@ -227,35 +231,32 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
                     )}
                 </>
             )}
+
             {visibleInListings !== undefined && (
                 <>
                     <Hr />
+
                     <ControlledCheckbox
                         className={classes.checkbox}
                         name={`channel:visibleInListings:${id}`}
-                        checked={visibleInListings}
+                        checked={!visibleInListings}
                         disabled={disabled}
                         label={
                             <>
                                 <p className={classNames(classes.label, classes.listingLabel)}>
-                                    {intl.formatMessage({
-                                        defaultMessage: "Show in product listings",
-                                        id: "0cVk9I",
-                                    })}
+                                    {intl.formatMessage(availabilityItemMessages.hideInListings)}
                                 </p>
                                 <span className={classes.secondLabel}>
-                                    {intl.formatMessage({
-                                        defaultMessage:
-                                            "Disabling this checkbox will remove product from search and category pages. It will be available on collection pages.",
-                                        id: "5ukAFZ",
-                                    })}
+                                    {intl.formatMessage(
+                                        availabilityItemMessages.hideInListingsDescription
+                                    )}
                                 </span>
                             </>
                         }
                         onChange={(e) =>
                             onChange(id, {
                                 ...formData,
-                                visibleInListings: e.target.value,
+                                visibleInListings: !e.target.value,
                             })
                         }
                     />

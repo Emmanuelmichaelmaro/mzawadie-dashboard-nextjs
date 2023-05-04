@@ -1,13 +1,13 @@
 {
     "compilerOptions": {
         "baseUrl": ".",
-        "jsx": "preserve", // Support JSX in .tsx files
+        "jsx": "react", // Support JSX in .tsx files
         "sourceMap": true, // *** Generate corresponding .map file ***
         "declaration": true, // *** Generate corresponding .d.ts file ***
         "noUnusedLocals": true, // *** Report errors on unused locals ***
         "noUnusedParameters": true, // *** Report errors on unused parameters ***
         "target": "es5", // Specify ECMAScript target version
-        "lib": ["es6", "dom", "dom.iterable", "esnext", "esnext.intl", "es2017.intl", "es2018.intl"], // List of library files to be included in the compilation
+        "lib": ["es2017", "dom", "esnext"], // List of library files to be included in the compilation
         "noImplicitAny": true,
         "noImplicitThis": true,
         "strictNullChecks": true,
@@ -20,7 +20,7 @@
         "module": "esnext", // Specify module code generation
         "moduleResolution": "node", // Resolve modules using Node.js style
         "resolveJsonModule": true, // Include modules imported with .json extension
-        "isolatedModules": true, // Transpile each file as a separate module
+        "isolatedModules": false, // Transpile each file as a separate module
         "outDir": "./build/typings", // All emitted typings location, if any present in src use; rimraf ./src/**/*.d.ts
         "paths": {
             "@assets/*": ["public/assets/*"],
@@ -42,6 +42,7 @@
     "include": ["next-env.d.ts", "editorjs.d.ts", "src/**/*.ts", "src/**/*.tsx"],
     "exclude": [
         "node_modules",
+        "cypress",
         "build",
         "dist",
         "scripts",

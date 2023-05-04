@@ -1,21 +1,31 @@
 // @ts-nocheck
 import compact from "lodash/compact";
 
-import { FieldType, IFilterElement, InvalidFilters, ValidationErrorCode } from "./types";
+import { FieldType, FilterElement, InvalidFilters, ValidationErrorCode } from "./types";
 
 export const getByName = (nameToCompare: string) => (obj: { name: string }) =>
     obj.name === nameToCompare;
 
-export const isAutocompleteFilterFieldValid = function <T extends string>({
-    value,
-}: IFilterElement<T>) {
+export const isAutocompleteFilterFieldValid = function <T extends string>({ value }: FilterElement<T>) {
     return !!compact(value).length;
 };
 
-export const isFilterFieldValid = function <T extends string>(filter: IFilterElement<T>) {
+export const isNumberFilterFieldValid = function <T extends string>({ value }: FilterElement<T>) {
+    const [min, max] = value;
+
+    if (!min && !max) {
+        return false;
+    }
+
+    return true;
+};
+
+export const isFilterFieldValid = function <T extends string>(filter: FilterElement<T>) {
     const { type } = filter;
 
     switch (type) {
+        case FieldType.number:
+            return isNumberFilterFieldValid(filter);
         case FieldType.boolean:
         case FieldType.autocomplete:
             return isAutocompleteFilterFieldValid(filter);
@@ -27,7 +37,7 @@ export const isFilterFieldValid = function <T extends string>(filter: IFilterEle
     }
 };
 
-export const isFilterValid = function <T extends string>(filter: IFilterElement<T>) {
+export const isFilterValid = function <T extends string>(filter: FilterElement<T>) {
     const { required, active } = filter;
 
     if (!required && !active) {
@@ -38,11 +48,12 @@ export const isFilterValid = function <T extends string>(filter: IFilterElement<
 };
 
 export const extractInvalidFilters = function <T extends string>(
-    filtersData: Array<IFilterElement<T>>,
-    filtersDataStructure: Array<IFilterElement<T>>
+    filtersData: Array<FilterElement<T>>,
+    filtersDataStructure: Array<FilterElement<T>>
 ): InvalidFilters<T> {
     return filtersDataStructure.reduce((invalidFilters, { name, multipleFields, dependencies }) => {
         const filter = filtersData.find(getByName(name));
+        
         let errors: string[] = [];
 
         const shouldExtractChildrenFields = filter.active && !!multipleFields?.length;

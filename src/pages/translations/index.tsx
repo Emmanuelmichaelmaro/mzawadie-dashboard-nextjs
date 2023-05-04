@@ -24,6 +24,7 @@ import TranslationsCollectionsComponent, {
 } from "./views/TranslationsCollections";
 import TranslationsEntitiesComponent from "./views/TranslationsEntities";
 import TranslationsLanguageList from "./views/TranslationsLanguageList";
+import TranslationsMenuItemComponent from "./views/TranslationsMenuItem";
 import TranslationsPagesComponent, { TranslationsPagesQueryParams } from "./views/TranslationsPages";
 import TranslationsProductVariantsComponent, {
     TranslationsProductVariantsQueryParams,
@@ -190,6 +191,20 @@ const TranslationsShippingMethod: React.FC<TranslationsEntityRouteProps> = ({ lo
     );
 };
 
+const TranslationsMenuItem: React.FC<TranslationsEntityRouteProps> = ({ location, match }) => {
+    const qs = parseQs(location.search.substr(1));
+    const params: TranslationsShippingMethodQueryParams = {
+        activeField: qs.activeField,
+    };
+    return (
+        <TranslationsMenuItemComponent
+            id={decodeURIComponent(match.params.id)}
+            languageCode={LanguageCodeEnum[match.params.languageCode]}
+            params={params}
+        />
+    );
+};
+
 const TranslationsRouter: React.FC = () => {
     const intl = useIntl();
 
@@ -198,16 +213,19 @@ const TranslationsRouter: React.FC = () => {
             <WindowTitle title={intl.formatMessage(sectionNames.translations)} />
             <Switch>
                 <Route exact path={languageListPath} component={TranslationsLanguageList} />
+
                 <Route
                     exact
                     path={languageEntitiesPath(":languageCode")}
                     component={TranslationsEntities}
                 />
+
                 <Route
                     exact
                     path={languageEntityPath(":languageCode", TranslatableEntities.products, ":id")}
                     component={TranslationsProducts}
                 />
+
                 <Route
                     exact
                     path={languageEntityPath(
@@ -219,36 +237,43 @@ const TranslationsRouter: React.FC = () => {
                     )}
                     component={TranslationsProductVariants}
                 />
+
                 <Route
                     exact
                     path={languageEntityPath(":languageCode", TranslatableEntities.categories, ":id")}
                     component={TranslationsCategories}
                 />
+
                 <Route
                     exact
                     path={languageEntityPath(":languageCode", TranslatableEntities.collections, ":id")}
                     component={TranslationsCollections}
                 />
+
                 <Route
                     exact
                     path={languageEntityPath(":languageCode", TranslatableEntities.sales, ":id")}
                     component={TranslationsSales}
                 />
+
                 <Route
                     exact
                     path={languageEntityPath(":languageCode", TranslatableEntities.vouchers, ":id")}
                     component={TranslationsVouchers}
                 />
+
                 <Route
                     exact
                     path={languageEntityPath(":languageCode", TranslatableEntities.pages, ":id")}
                     component={TranslationsPages}
                 />
+
                 <Route
                     exact
                     path={languageEntityPath(":languageCode", TranslatableEntities.attributes, ":id")}
                     component={TranslationsAttributes}
                 />
+
                 <Route
                     exact
                     path={languageEntityPath(
@@ -257,6 +282,12 @@ const TranslationsRouter: React.FC = () => {
                         ":id"
                     )}
                     component={TranslationsShippingMethod}
+                />
+
+                <Route
+                    exact
+                    path={languageEntityPath(":languageCode", TranslatableEntities.menuItems, ":id")}
+                    component={TranslationsMenuItem}
                 />
             </Switch>
         </>

@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { AssignAttributeValueDialog } from "@mzawadie/components/AssignAttributeValueDialog";
 import { Attributes, AttributeInput } from "@mzawadie/components/Attributes";
+import { Backlink } from "@mzawadie/components/Backlink";
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import { ChannelsAvailabilityCard } from "@mzawadie/components/ChannelsAvailabilityCard";
 import Container from "@mzawadie/components/Container";
@@ -10,12 +11,12 @@ import { MultiAutocompleteChoiceType } from "@mzawadie/components/MultiAutocompl
 import { PageHeader } from "@mzawadie/components/PageHeader";
 import Savebar from "@mzawadie/components/Savebar";
 import { SeoForm } from "@mzawadie/components/SeoForm";
-import { sectionNames, FetchMoreProps, RelayToFlat } from "@mzawadie/core";
+import { sectionNames } from "@mzawadie/core";
+import { FetchMoreProps, RelayToFlat } from "@mzawadie/core";
 import {
+    PermissionEnum,
     ProductChannelListingErrorFragment,
     ProductErrorWithAttributesFragment,
-    TaxTypeFragment,
-    PermissionEnum,
     ProductTypeQuery,
     SearchAttributeValuesQuery,
     SearchCategoriesQuery,
@@ -24,7 +25,9 @@ import {
     SearchProductsQuery,
     SearchProductTypesQuery,
     SearchWarehousesQuery,
+    TaxTypeFragment,
 } from "@mzawadie/graphql";
+import useNavigator from "@mzawadie/hooks/useNavigator";
 import useStateFromProps from "@mzawadie/hooks/useStateFromProps";
 import {
     getAttributeValuesFromReferences,
@@ -32,8 +35,9 @@ import {
 } from "@mzawadie/pages/attributes/utils/data";
 import CannotDefineChannelsAvailabilityCard from "@mzawadie/pages/channels/components/CannotDefineChannelsAvailabilityCard/CannotDefineChannelsAvailabilityCard";
 import { ChannelData } from "@mzawadie/pages/channels/utils";
+import { productListUrl } from "@mzawadie/pages/products/urls";
 import { getChoices } from "@mzawadie/pages/products/utils/data";
-import { ConfirmButtonTransitionState, Backlink } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -88,7 +92,6 @@ interface ProductCreatePageProps {
     onAttributeSelectBlur: () => void;
     onCloseDialog: () => void;
     onSelectProductType: (productTypeId: string) => void;
-    onBack?();
     onSubmit?(data: ProductCreateData);
 }
 
@@ -100,7 +103,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     categories: categoryChoiceList,
     collections: collectionChoiceList,
     attributeValues,
-    errors,
+    errors: apiErrors,
     fetchCategories,
     fetchCollections,
     fetchMoreCategories,
@@ -115,7 +118,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     warehouses,
     taxTypes,
     selectedProductType,
-    onBack,
     fetchProductTypes,
     weightUnit,
     onSubmit,
@@ -135,6 +137,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     onAttributeSelectBlur,
 }: ProductCreatePageProps) => {
     const intl = useIntl();
+    
+    const navigate = useNavigator();
 
     // Display values
     const [selectedCategory, setSelectedCategory] = useStateFromProps(initial?.category || "");
@@ -148,7 +152,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     const categories = getChoices(categoryChoiceList);
     const collections = getChoices(collectionChoiceList);
     const productTypes = getChoices(productTypeChoiceList);
-
+    
     const taxTypeChoices =
         taxTypes?.map((taxType) => ({
             label: taxType.description,
@@ -193,19 +197,31 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
             fetchReferenceProducts={fetchReferenceProducts}
             fetchMoreReferenceProducts={fetchMoreReferenceProducts}
             assignReferencesAttributeId={assignReferencesAttributeId}
+            loading={loading}
         >
-            {({ change, data, formErrors, disabled: formDisabled, handlers, hasChanged, submit }) => {
+            {({
+                change,
+                data,
+                formErrors,
+                validationErrors,
+                handlers,
+                submit,
+                isSaveDisabled,
+                attributeRichTextGetters,
+            }) => {
                 // Comparing explicitly to false because `hasVariants` can be undefined
                 const isSimpleProduct = data.productType?.hasVariants === false;
 
+                const errors = [...apiErrors, ...validationErrors];
+
                 return (
                     <Container>
-                        <Backlink onClick={onBack}>
+                        <Backlink href={productListUrl()}>
                             {intl.formatMessage(sectionNames.products)}
                         </Backlink>
-
+    
                         <PageHeader title={header} />
-
+    
                         <Grid>
                             <div>
                                 <ProductDetailsForm
@@ -213,11 +229,10 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                                     disabled={loading}
                                     errors={errors}
                                     onChange={change}
-                                    onDescriptionChange={handlers.changeDescription}
                                 />
-
+    
                                 <CardSpacer />
-
+    
                                 {data.attributes.length > 0 && (
                                     <Attributes
                                         attributes={data.attributes}
@@ -234,11 +249,12 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                                         fetchAttributeValues={fetchAttributeValues}
                                         fetchMoreAttributeValues={fetchMoreAttributeValues}
                                         onAttributeSelectBlur={onAttributeSelectBlur}
+                                        richTextGetters={attributeRichTextGetters}
                                     />
                                 )}
-
+    
                                 <CardSpacer />
-
+    
                                 {isSimpleProduct && (
                                     <>
                                         <ProductShipping
@@ -248,16 +264,18 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                                             weightUnit={weightUnit}
                                             onChange={change}
                                         />
+    
                                         <CardSpacer />
-
+    
                                         <ProductVariantPrice
                                             ProductVariantChannelListings={data.channelListings}
                                             errors={channelsErrors}
                                             loading={loading}
                                             onChange={handlers.changeChannelPrice}
                                         />
+    
                                         <CardSpacer />
-
+    
                                         <ProductStocks
                                             data={data}
                                             disabled={loading}
@@ -273,16 +291,17 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                                             onWarehouseStockDelete={handlers.deleteStock}
                                             onWarehouseConfigure={onWarehouseConfigure}
                                         />
+    
                                         <CardSpacer />
                                     </>
                                 )}
-
+    
                                 <SeoForm
-                                    allowEmptySlug
+                                    allowEmptySlug={true}
                                     helperText={intl.formatMessage({
+                                        id: "LKoIB1",
                                         defaultMessage:
                                             "Add search engine title and description to make this product easier to find",
-                                        id: "LKoIB1",
                                     })}
                                     title={data.seoTitle}
                                     slug={data.slug}
@@ -293,21 +312,21 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                                     loading={loading}
                                     onChange={change}
                                 />
-
+    
                                 <CardSpacer />
-
+    
                                 <Metadata data={data} onChange={handlers.changeMetadata} />
                             </div>
-
+    
                             <div>
                                 <ProductOrganization
-                                    canChangeType
+                                    canChangeType={true}
                                     categories={categories}
                                     categoryInputDisplayValue={selectedCategory}
                                     collections={collections}
                                     data={data}
                                     disabled={loading}
-                                    errors={errors}
+                                    errors={[...errors, ...channelsErrors]}
                                     fetchCategories={fetchCategories}
                                     fetchCollections={fetchCollections}
                                     fetchMoreCategories={fetchMoreCategories}
@@ -322,27 +341,26 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                                     onProductTypeChange={handlers.selectProductType}
                                     collectionsInputDisplayValue={selectedCollections}
                                 />
-
+    
                                 <CardSpacer />
-
+    
                                 {isSimpleProduct ? (
                                     <ChannelsAvailabilityCard
                                         managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
                                         messages={{
                                             hiddenLabel: intl.formatMessage({
-                                                defaultMessage: "Not published",
                                                 id: "saKXY3",
+                                                defaultMessage: "Not published",
                                                 description: "product label",
                                             }),
 
                                             visibleLabel: intl.formatMessage({
-                                                defaultMessage: "Published",
                                                 id: "qJedl0",
+                                                defaultMessage: "Published",
                                                 description: "product label",
                                             }),
                                         }}
                                         errors={channelsErrors}
-                                        selectedChannelsCount={data.channelListings?.length || 0}
                                         allChannelsCount={allChannelsCount}
                                         channels={data.channelListings || []}
                                         disabled={loading}
@@ -352,9 +370,9 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                                 ) : (
                                     <CannotDefineChannelsAvailabilityCard />
                                 )}
-
+    
                                 <CardSpacer />
-
+    
                                 <ProductTaxes
                                     data={data}
                                     disabled={loading}
@@ -365,14 +383,14 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                                 />
                             </div>
                         </Grid>
-
+    
                         <Savebar
-                            onCancel={onBack}
+                            onCancel={() => navigate(productListUrl())}
                             onSubmit={submit}
                             state={saveButtonBarState}
-                            disabled={loading || !onSubmit || formDisabled || !hasChanged}
+                            disabled={isSaveDisabled}
                         />
-
+    
                         {canOpenAssignReferencesAttributeDialog && (
                             <AssignAttributeValueDialog
                                 attributeValues={getAttributeValuesFromReferences(
@@ -398,6 +416,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
         </ProductCreateForm>
     );
 };
+
 ProductCreatePage.displayName = "ProductCreatePage";
 
 export default ProductCreatePage;

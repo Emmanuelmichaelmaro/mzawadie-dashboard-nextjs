@@ -1,7 +1,10 @@
 // @ts-nocheck
-import { FormId } from "@mzawadie/components";
-import { SubmitPromise, UseFormResult, useForm } from "@mzawadie/hooks";
+import useForm, { SubmitPromise, UseFormResult } from "@mzawadie/hooks/useForm";
 import React from "react";
+
+import { FormId } from "./ExitFormDialogProvider";
+
+export type CheckIfSaveIsDisabledFnType<T> = (data: T) => boolean;
 
 export interface FormProps<TData, TErrors> extends Omit<React.HTMLProps<HTMLFormElement>, "onSubmit"> {
     children: (props: UseFormResult<TData>) => React.ReactNode;
@@ -10,6 +13,7 @@ export interface FormProps<TData, TErrors> extends Omit<React.HTMLProps<HTMLForm
     resetOnSubmit?: boolean;
     onSubmit?: (data: TData) => SubmitPromise<TErrors[]> | void;
     formId?: FormId;
+    checkIfSaveIsDisabled?: CheckIfSaveIsDisabledFnType<TData>;
 }
 
 function Form<TData, Terrors>({
@@ -19,9 +23,16 @@ function Form<TData, Terrors>({
     onSubmit,
     confirmLeave = false,
     formId,
+    checkIfSaveIsDisabled,
+    disabled,
     ...rest
 }: FormProps<TData, Terrors>) {
-    const renderProps = useForm(initial, onSubmit, { confirmLeave, formId });
+    const renderProps = useForm(initial, onSubmit, {
+        confirmLeave,
+        formId,
+        checkIfSaveIsDisabled,
+        disabled,
+    });
 
     function handleSubmit(event?: React.FormEvent<any>, cb?: () => void) {
         const { reset, submit } = renderProps;

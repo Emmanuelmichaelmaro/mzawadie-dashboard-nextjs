@@ -1,9 +1,9 @@
 // @ts-nocheck
-import { PageSortField } from "@mzawadie/graphql";
-import { PageListUrlSortField } from "@mzawadie/pages/pages/urls";
+import { PageFilterInput, PageSortField } from "@mzawadie/graphql";
+import { PageListUrlFilters, PageListUrlSortField } from "@mzawadie/pages/pages/urls";
 import { createGetSortQueryVariables } from "@mzawadie/utils/sort";
 
-export function getSortQueryField(sort: PageListUrlSortField): PageSortField | undefined {
+export function getSortQueryField(sort: PageListUrlSortField): PageSortField {
     switch (sort) {
         case PageListUrlSortField.title:
             return PageSortField.TITLE;
@@ -14,6 +14,13 @@ export function getSortQueryField(sort: PageListUrlSortField): PageSortField | u
         default:
             return undefined;
     }
+}
+
+export function getFilterVariables(params: PageListUrlFilters): PageFilterInput {
+    return {
+        search: params.query,
+        pageTypes: params.pageTypes,
+    };
 }
 
 export const getSortQueryVariables = createGetSortQueryVariables(getSortQueryField);

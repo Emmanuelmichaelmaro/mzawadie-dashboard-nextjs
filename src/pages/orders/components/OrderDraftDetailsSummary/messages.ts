@@ -2,43 +2,43 @@ import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
     addShippingAddressInfo: {
-        defaultMessage: "add shipping address first",
         id: "BjxQ3u",
+        defaultMessage: "add shipping address first",
         description: "add shipping address first label",
     },
     subtotal: {
-        defaultMessage: "Subtotal",
         id: "xUvWaP",
+        defaultMessage: "Subtotal",
         description: "subtotal price",
     },
     addDiscount: {
-        defaultMessage: "Add Discount",
         id: "Myx1Qp",
+        defaultMessage: "Add Discount",
         description: "add discount button",
     },
     discount: {
-        defaultMessage: "Discount",
         id: "+8v1ny",
+        defaultMessage: "Discount",
         description: "discount button",
     },
     addShippingCarrier: {
-        defaultMessage: "Add shipping carrier",
         id: "Jb1/3V",
+        defaultMessage: "Add shipping carrier",
         description: "add shipping carrier button",
     },
     noShippingCarriers: {
-        defaultMessage: "No applicable shipping carriers",
         id: "M9LXb5",
+        defaultMessage: "No applicable shipping carriers",
         description: "no shipping carriers title",
     },
     total: {
-        defaultMessage: "Total",
         id: "S/yAtJ",
+        defaultMessage: "Total",
         description: "total price",
     },
     taxes: {
-        defaultMessage: "Taxes (VAT included)",
         id: "mQtoRO",
+        defaultMessage: "Taxes (VAT included)",
         description: "taxes title",
     },
 });

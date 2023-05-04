@@ -1,18 +1,13 @@
 // @ts-nocheck
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    TextField,
-} from "@material-ui/core";
-import { ConfirmButton, ConfirmButtonTransitionState } from "@mzawadie/components/ConfirmButton";
+import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
+import BackButton from "@mzawadie/components/BackButton";
+import { ConfirmButton } from "@mzawadie/components/ConfirmButton";
 import { Form } from "@mzawadie/components/Form";
 import { buttonMessages } from "@mzawadie/core";
 import { MenuErrorFragment } from "@mzawadie/graphql";
 import { getFormErrors } from "@mzawadie/utils/errors";
 import getMenuErrorMessage from "@mzawadie/utils/errors/menu";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -49,9 +44,9 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
         <Dialog onClose={onClose} maxWidth="sm" fullWidth open={open}>
             <DialogTitle>
                 <FormattedMessage
+                    id="0OtaXa"
                     defaultMessage="Create Menu"
                     description="dialog header"
-                    id="0OtaXa"
                 />
             </DialogTitle>
 
@@ -65,8 +60,8 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
                                 fullWidth
                                 helperText={getMenuErrorMessage(formErrors.name, intl)}
                                 label={intl.formatMessage({
-                                    defaultMessage: "Menu Title",
                                     id: "jhh/D6",
+                                    defaultMessage: "Menu Title",
                                 })}
                                 name={"name" as keyof MenuCreateDialogFormData}
                                 value={data.name}
@@ -75,16 +70,11 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
                         </DialogContent>
 
                         <DialogActions>
-                            <Button onClick={onClose}>
-                                <FormattedMessage {...buttonMessages.back} />
-                            </Button>
-
+                            <BackButton onClick={onClose} />
                             <ConfirmButton
                                 transitionState={confirmButtonState}
-                                color="primary"
-                                variant="contained"
                                 onClick={submit}
-                                data-test="submit"
+                                data-test-id="submit"
                             >
                                 <FormattedMessage {...buttonMessages.save} />
                             </ConfirmButton>

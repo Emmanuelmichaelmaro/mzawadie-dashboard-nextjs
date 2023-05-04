@@ -4,11 +4,12 @@ import { flatten } from "@mzawadie/core";
 import {
     AccountErrorFragment,
     AddressFragment,
-    OrderErrorFragment,
+    AddressInput,
     AddressTypeEnum,
+    Node,
+    OrderErrorFragment,
 } from "@mzawadie/graphql";
 import { FormChange } from "@mzawadie/hooks/useForm";
-import React from "react";
 
 import { getById } from "../OrderReturnPage/utils";
 import { OrderCustomerAddressEditProps } from "./OrderCustomerAddressEdit";
@@ -23,6 +24,7 @@ interface AddressEditCommonProps {
 }
 
 export const stringifyAddress = (address: Partial<AddressFragment>): string => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { id, ...addressWithoutId } = address;
     return Object.values(flatten(addressWithoutId)).join(" ");
 };
@@ -45,6 +47,21 @@ export function validateDefaultAddress<T extends AddressFragment>(
     return defaultAddress;
 }
 
+const filterAddressErrors = (
+    dialogErrors: Array<OrderErrorFragment | AccountErrorFragment>,
+    addressType: AddressTypeEnum
+) => dialogErrors.filter((error) => error.addressType === addressType);
+
+interface ShippingAddresses {
+    shippingAddress: AccountErrorFragment[] | AddressInput;
+    billingAddress: AccountErrorFragment[] | AddressInput;
+}
+
+export const hasPreSubmitErrors = (input: ShippingAddresses) =>
+    Object.values(input)
+        .flat()
+        .some((el) => "code" in el);
+
 export const getAddressEditProps = (
     variant: "shipping" | "billing",
     data: OrderCustomerAddressesEditData,
@@ -58,7 +75,7 @@ export const getAddressEditProps = (
         return {
             ...addressEditCommonProps,
             addressInputName: "shippingAddressInputOption",
-            formErrors: dialogErrors.filter((error) => error.addressType === AddressTypeEnum.SHIPPING),
+            formErrors: filterAddressErrors(dialogErrors, AddressTypeEnum.SHIPPING),
             onEdit: () =>
                 setAddressSearchState({
                     open: true,
@@ -73,10 +90,11 @@ export const getAddressEditProps = (
             onChangeFormAddressCountry: handlers.selectShippingCountry,
         };
     }
+
     return {
         ...addressEditCommonProps,
         addressInputName: "billingAddressInputOption",
-        formErrors: dialogErrors.filter((error) => error.addressType === AddressTypeEnum.BILLING),
+        formErrors: filterAddressErrors(dialogErrors, AddressTypeEnum.BILLING),
         onEdit: () =>
             setAddressSearchState({
                 open: true,

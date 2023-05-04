@@ -1,7 +1,6 @@
 // @ts-nocheck
 import { NotFoundPage } from "@mzawadie/components/NotFoundPage";
 import { useAppQuery } from "@mzawadie/graphql";
-import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { appMessages } from "@mzawadie/pages/apps/messages";
 import React from "react";
@@ -15,27 +14,27 @@ interface AppSettingsProps {
 }
 
 export const AppSettings: React.FC<AppSettingsProps> = ({ id }) => {
-    const { data } = useAppQuery({
+    const { data, refetch } = useAppQuery({
         displayLoader: true,
         variables: { id },
     });
 
     const appExists = data?.app !== null;
 
-    const navigate = useNavigator();
     const notify = useNotifier();
+
     const intl = useIntl();
 
     if (!appExists) {
-        return <NotFoundPage onBack={() => navigate(appsListPath)} />;
+        return <NotFoundPage backHref={appsListPath} />;
     }
 
     return (
         <AppPage
             data={data?.app}
             url={data?.app?.configurationUrl}
-            navigateToAbout={() => navigate(appDetailsUrl(id))}
-            onBack={() => navigate(appsListPath)}
+            aboutHref={appDetailsUrl(id)}
+            refetch={refetch}
             onError={() =>
                 notify({
                     status: "error",

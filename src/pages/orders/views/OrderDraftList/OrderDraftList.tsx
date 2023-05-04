@@ -8,7 +8,8 @@ import {
     SaveFilterTabDialog,
 } from "@mzawadie/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@mzawadie/components/Shop/queries";
-import { maybe, ListViews } from "@mzawadie/core";
+import { maybe } from "@mzawadie/core";
+import { ListViews } from "@mzawadie/core";
 import {
     useOrderDraftBulkCancelMutation,
     useOrderDraftCreateMutation,
@@ -19,15 +20,8 @@ import useListSettings from "@mzawadie/hooks/useListSettings";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { usePaginationReset } from "@mzawadie/hooks/usePaginationReset";
-import usePaginator, { createPaginationState } from "@mzawadie/hooks/usePaginator";
+import usePaginator, { createPaginationState, PaginatorContext } from "@mzawadie/hooks/usePaginator";
 import { ChannelPickerDialog } from "@mzawadie/pages/channels/components/ChannelPickerDialog";
-import { OrderDraftListPage } from "@mzawadie/pages/orders/components/OrderDraftListPage";
-import {
-    orderDraftListUrl,
-    OrderDraftListUrlDialog,
-    OrderDraftListUrlQueryParams,
-    orderUrl,
-} from "@mzawadie/pages/orders/urls";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@mzawadie/utils/handlers/filterHandlers";
 import createSortHandler from "@mzawadie/utils/handlers/sortHandler";
@@ -37,6 +31,13 @@ import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { OrderDraftListPage } from "../../components/OrderDraftListPage";
+import {
+    orderDraftListUrl,
+    OrderDraftListUrlDialog,
+    OrderDraftListUrlQueryParams,
+    orderUrl,
+} from "../../urls";
 import {
     deleteFilterTab,
     getActiveFilters,
@@ -56,7 +57,7 @@ interface OrderDraftListProps {
 export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     const navigate = useNavigator();
     const notify = useNotifier();
-    const paginate = usePaginator();
+    
     const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
     const { updateListSettings, settings } = useListSettings(ListViews.DRAFT_LIST);
 
@@ -66,12 +67,12 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
 
     const [orderDraftBulkDelete, orderDraftBulkDeleteOpts] = useOrderDraftBulkCancelMutation({
         onCompleted: (data) => {
-            if (data.draftOrderBulkDelete.errors.length === 0) {
+            if (data.draftOrderBulkDelete?.errors.length === 0) {
                 notify({
                     status: "success",
                     text: intl.formatMessage({
-                        defaultMessage: "Deleted draft orders",
                         id: "ra2O4j",
+                        defaultMessage: "Deleted draft orders",
                     }),
                 });
                 refetch();
@@ -86,8 +87,8 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
             notify({
                 status: "success",
                 text: intl.formatMessage({
-                    defaultMessage: "Order draft successfully created",
                     id: "6udlH+",
+                    defaultMessage: "Order draft successfully created",
                 }),
             });
             navigate(orderUrl(data.draftOrderCreate.order.id));
@@ -95,6 +96,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     });
 
     const { channel, availableChannels } = useAppChannel(false);
+    
     const limitOpts = useShopLimitsQuery({
         variables: {
             orders: true,
@@ -140,6 +142,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     };
 
     const paginationState = createPaginationState(settings.rowNumber, params);
+    
     const queryVariables = React.useMemo(
         () => ({
             ...paginationState,
@@ -148,16 +151,17 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         }),
         [params, settings.rowNumber]
     );
+    
     const { data, loading, refetch } = useOrderDraftListQuery({
         displayLoader: true,
         variables: queryVariables,
     });
 
-    const { loadNextPage, loadPreviousPage, pageInfo } = paginate(
-        maybe(() => data.draftOrders.pageInfo),
+    const paginationValues = usePaginator({
+        pageInfo: maybe(() => data?.draftOrders?.pageInfo),
         paginationState,
-        params
-    );
+        queryString: params,
+    });
 
     const handleSort = createSortHandler(navigate, orderDraftListUrl, params);
 
@@ -169,7 +173,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         });
 
     return (
-        <>
+        <PaginatorContext.Provider value={paginationValues}>
             <OrderDraftListPage
                 currentTab={currentTab}
                 filterOpts={getFilterOpts(params)}
@@ -185,11 +189,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
                 disabled={loading}
                 settings={settings}
                 orders={mapEdgesToItems(data?.draftOrders)}
-                pageInfo={pageInfo}
                 onAdd={() => openModal("create-order")}
-                onNextPage={loadNextPage}
-                onPreviousPage={loadPreviousPage}
-                onRowClick={(id) => () => navigate(orderUrl(id))}
                 onSort={handleSort}
                 onUpdateListSettings={updateListSettings}
                 isChecked={isSelected}
@@ -211,22 +211,23 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
                     </IconButton>
                 }
             />
+            
             <ActionDialog
                 confirmButtonState={orderDraftBulkDeleteOpts.status}
                 onClose={closeModal}
                 onConfirm={onOrderDraftBulkDelete}
                 open={params.action === "remove"}
                 title={intl.formatMessage({
-                    defaultMessage: "Delete Order Drafts",
                     id: "qbmeUI",
+                    defaultMessage: "Delete Order Drafts",
                     description: "dialog header",
                 })}
                 variant="delete"
             >
                 <DialogContentText>
                     <FormattedMessage
-                        defaultMessage="{counter,plural,one{Are you sure you want to delete this order draft?} other{Are you sure you want to delete {displayQuantity} order drafts?}}"
                         id="Q6VRrE"
+                        defaultMessage="{counter,plural,one{Are you sure you want to delete this order draft?} other{Are you sure you want to delete {displayQuantity} order drafts?}}"
                         description="dialog content"
                         values={{
                             counter: maybe(() => params.ids.length),
@@ -235,12 +236,14 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
                     />
                 </DialogContentText>
             </ActionDialog>
+            
             <SaveFilterTabDialog
                 open={params.action === "save-search"}
                 confirmButtonState="default"
                 onClose={closeModal}
                 onSubmit={handleTabSave}
             />
+            
             <DeleteFilterTabDialog
                 open={params.action === "delete-search"}
                 confirmButtonState="default"
@@ -248,6 +251,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
                 onSubmit={handleTabDelete}
                 tabName={maybe(() => tabs[currentTab - 1].name, "...")}
             />
+            
             <ChannelPickerDialog
                 channelsChoices={mapNodeToChoice(availableChannels)}
                 confirmButtonState="success"
@@ -262,7 +266,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
                     })
                 }
             />
-        </>
+        </PaginatorContext.Provider>
     );
 };
 

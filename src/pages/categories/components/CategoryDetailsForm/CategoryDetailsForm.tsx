@@ -3,10 +3,12 @@ import { OutputData } from "@editorjs/editorjs";
 import { Card, CardContent, TextField } from "@material-ui/core";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import FormSpacer from "@mzawadie/components/FormSpacer";
-import { RichTextEditor, RichTextEditorChange } from "@mzawadie/components/RichTextEditor";
+import { RichTextEditor } from "@mzawadie/components/RichTextEditor";
+import { RichTextEditorLoading } from "@mzawadie/components/RichTextEditor/RichTextEditorLoading";
 import { commonMessages } from "@mzawadie/core";
 import { ProductErrorFragment } from "@mzawadie/graphql";
 import { getFormErrors, getProductErrorMessage } from "@mzawadie/utils/errors";
+import { useRichTextContext } from "@mzawadie/utils/richText/context";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -18,17 +20,17 @@ interface CategoryDetailsFormProps {
     disabled: boolean;
     errors: ProductErrorFragment[];
     onChange: (event: React.ChangeEvent<any>) => void;
-    onDescriptionChange: RichTextEditorChange;
 }
 
 export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
     disabled,
     data,
     onChange,
-    onDescriptionChange,
     errors,
 }) => {
     const intl = useIntl();
+
+    const { defaultValue, editorRef, isReadyForMount, handleChange } = useRichTextContext();
 
     const formErrors = getFormErrors(["name", "description"], errors);
 
@@ -40,8 +42,8 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
                 <div>
                     <TextField
                         label={intl.formatMessage({
-                            defaultMessage: "Category Name",
                             id: "vEYtiq",
+                            defaultMessage: "Category Name",
                         })}
                         name="name"
                         disabled={disabled}
@@ -55,18 +57,29 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
 
                 <FormSpacer />
 
-                <RichTextEditor
-                    data={data.description}
-                    disabled={disabled}
-                    error={!!formErrors.description}
-                    helperText={getProductErrorMessage(formErrors.description, intl)}
-                    label={intl.formatMessage({
-                        defaultMessage: "Category Description",
-                        id: "8HRy+U",
-                    })}
-                    name="description"
-                    onChange={onDescriptionChange}
-                />
+                {isReadyForMount ? (
+                    <RichTextEditor
+                        defaultValue={defaultValue}
+                        editorRef={editorRef}
+                        onChange={handleChange}
+                        disabled={disabled}
+                        error={!!formErrors.description}
+                        helperText={getProductErrorMessage(formErrors.description, intl)}
+                        label={intl.formatMessage({
+                            id: "8HRy+U",
+                            defaultMessage: "Category Description",
+                        })}
+                        name="description"
+                    />
+                ) : (
+                    <RichTextEditorLoading
+                        label={intl.formatMessage({
+                            id: "8HRy+U",
+                            defaultMessage: "Category Description",
+                        })}
+                        name="description"
+                    />
+                )}
             </CardContent>
         </Card>
     );

@@ -10,20 +10,14 @@ import { ResponsiveTable } from "@mzawadie/components/ResponsiveTable";
 import Skeleton from "@mzawadie/components/Skeleton";
 import { TableCellHeader } from "@mzawadie/components/TableCellHeader";
 import { TableHead } from "@mzawadie/components/TableHead";
-import { TablePagination } from "@mzawadie/components/TablePagination";
+import { TablePaginationWithContext } from "@mzawadie/components/TablePagination";
+import { TableRowLink } from "@mzawadie/components/TableRowLink";
 import { TooltipTableCellHeader } from "@mzawadie/components/TooltipTableCellHeader";
 import { commonTooltipMessages } from "@mzawadie/components/TooltipTableCellHeader/messages";
-import {
-    maybe,
-    renderCollection,
-    ChannelProps,
-    ListActions,
-    ListProps,
-    SortPage,
-    RelayToFlat,
-} from "@mzawadie/core";
+import { maybe, renderCollection } from "@mzawadie/core";
+import { ChannelProps, ListActions, ListProps, RelayToFlat, SortPage } from "@mzawadie/core";
 import { CollectionListQuery } from "@mzawadie/graphql";
-import { CollectionListUrlSortField } from "@mzawadie/pages/collections/urls";
+import { CollectionListUrlSortField, collectionUrl } from "@mzawadie/pages/collections/urls";
 import { canBeSorted } from "@mzawadie/pages/collections/views/CollectionList/sort";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import { makeStyles, Pill } from "@saleor/macaw-ui";
@@ -49,7 +43,7 @@ const useStyles = makeStyles(
             textAlign: "center",
         },
         tableRow: {
-            cursor: "pointer" as const,
+            cursor: "pointer" as "pointer",
         },
     }),
     { name: "CollectionList" }
@@ -71,12 +65,8 @@ const CollectionList: React.FC<CollectionListProps> = (props) => {
         disabled,
         settings,
         sort,
-        onNextPage,
-        onPreviousPage,
         onUpdateListSettings,
-        onRowClick,
         onSort,
-        pageInfo,
         isChecked,
         selected,
         selectedChannelId,
@@ -109,8 +99,9 @@ const CollectionList: React.FC<CollectionListProps> = (props) => {
                     onClick={() => onSort(CollectionListUrlSortField.name)}
                     className={classes.colName}
                 >
-                    <FormattedMessage defaultMessage="Collection Name" id="VZsE96" />
+                    <FormattedMessage id="VZsE96" defaultMessage="Collection Name" />
                 </TableCellHeader>
+            
                 <TableCellHeader
                     direction={
                         sort.sort === CollectionListUrlSortField.productCount
@@ -120,8 +111,9 @@ const CollectionList: React.FC<CollectionListProps> = (props) => {
                     onClick={() => onSort(CollectionListUrlSortField.productCount)}
                     className={classes.colProducts}
                 >
-                    <FormattedMessage defaultMessage="No. of Products" id="mWQt3s" />
+                    <FormattedMessage id="mWQt3s" defaultMessage="No. of Products" />
                 </TableCellHeader>
+            
                 <TooltipTableCellHeader
                     direction={
                         sort.sort === CollectionListUrlSortField.available
@@ -136,25 +128,23 @@ const CollectionList: React.FC<CollectionListProps> = (props) => {
                     })}
                 >
                     <FormattedMessage
-                        defaultMessage="Availability"
                         id="UxdBmI"
+                        defaultMessage="Availability"
                         description="collection availability"
                     />
                 </TooltipTableCellHeader>
             </TableHead>
+            
             <TableFooter>
                 <TableRow>
-                    <TablePagination
+                    <TablePaginationWithContext
                         colSpan={numberOfColumns}
                         settings={settings}
-                        hasNextPage={pageInfo && !disabled ? pageInfo.hasNextPage : false}
-                        onNextPage={onNextPage}
                         onUpdateListSettings={onUpdateListSettings}
-                        hasPreviousPage={pageInfo && !disabled ? pageInfo.hasPreviousPage : false}
-                        onPreviousPage={onPreviousPage}
                     />
                 </TableRow>
             </TableFooter>
+            
             <TableBody>
                 {renderCollection(
                     collections,
@@ -164,13 +154,13 @@ const CollectionList: React.FC<CollectionListProps> = (props) => {
                             (listing) => listing?.channel?.id === selectedChannelId
                         );
                         return (
-                            <TableRow
+                            <TableRowLink
                                 className={classes.tableRow}
                                 hover={!!collection}
-                                onClick={collection ? onRowClick(collection.id) : undefined}
+                                href={collection && collectionUrl(collection.id)}
                                 key={collection ? collection.id : "skeleton"}
                                 selected={isSelected}
-                                data-test-id={`id-${maybe(() => collection.id)}`}
+                                data-test-id={"id-" + maybe(() => collection.id)}
                             >
                                 <TableCell padding="checkbox">
                                     <Checkbox
@@ -180,15 +170,18 @@ const CollectionList: React.FC<CollectionListProps> = (props) => {
                                         onChange={() => toggle(collection.id)}
                                     />
                                 </TableCell>
+
                                 <TableCell className={classes.colName} data-test-id="name">
-                                    {maybe<React.ReactNode>(() => collection.name, <Skeleton />)}
+                                    {maybe<React.ReactNode>(() => collection?.name, <Skeleton />)}
                                 </TableCell>
+
                                 <TableCell className={classes.colProducts}>
                                     {maybe<React.ReactNode>(
-                                        () => collection.products.totalCount,
+                                        () => collection?.products?.totalCount,
                                         <Skeleton />
                                     )}
                                 </TableCell>
+
                                 <TableCell
                                     className={classes.colAvailability}
                                     data-test-id="availability"
@@ -208,13 +201,13 @@ const CollectionList: React.FC<CollectionListProps> = (props) => {
                                             />
                                         ))}
                                 </TableCell>
-                            </TableRow>
+                            </TableRowLink>
                         );
                     },
                     () => (
                         <TableRow>
                             <TableCell colSpan={numberOfColumns}>
-                                <FormattedMessage defaultMessage="No collections found" id="Yw+9F7" />
+                                <FormattedMessage id="Yw+9F7" defaultMessage="No collections found" />
                             </TableCell>
                         </TableRow>
                     )

@@ -1,6 +1,5 @@
-/* eslint-disable radix */
 // @ts-nocheck
-import { IFilterElement } from "@mzawadie/components/Filter";
+import { FilterElement } from "@mzawadie/components/Filter";
 import { maybe } from "@mzawadie/core";
 import { CustomerFilterInput } from "@mzawadie/graphql";
 import {
@@ -8,17 +7,16 @@ import {
     CustomerListFilterOpts,
 } from "@mzawadie/pages/customers/components/CustomerListPage";
 import {
+    CustomerListUrlFilters,
+    CustomerListUrlFiltersEnum,
+    CustomerListUrlQueryParams,
+} from "@mzawadie/pages/customers/urls";
+import {
     createFilterTabUtils,
     createFilterUtils,
     getGteLteVariables,
     getMinMaxQueryParam,
 } from "@mzawadie/utils/filters";
-
-import {
-    CustomerListUrlFilters,
-    CustomerListUrlFiltersEnum,
-    CustomerListUrlQueryParams,
-} from "../../urls";
 
 export const CUSTOMER_FILTERS_KEY = "customerFilters";
 
@@ -57,16 +55,14 @@ export function getFilterVariables(params: CustomerListUrlFilters): CustomerFilt
             lte: params.joinedTo,
         }),
         numberOfOrders: getGteLteVariables({
-            gte: parseInt(params.numberOfOrdersFrom, 0),
-            lte: parseInt(params.numberOfOrdersTo, 0),
+            gte: parseInt(params.numberOfOrdersFrom, 10),
+            lte: parseInt(params.numberOfOrdersTo, 10),
         }),
         search: params.query,
     };
 }
 
-export function getFilterQueryParam(
-    filter: IFilterElement<CustomerFilterKeys>
-): CustomerListUrlFilters {
+export function getFilterQueryParam(filter: FilterElement<CustomerFilterKeys>): CustomerListUrlFilters {
     const { name } = filter;
 
     switch (name) {

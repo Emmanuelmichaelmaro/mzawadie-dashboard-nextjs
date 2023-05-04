@@ -1,11 +1,10 @@
 import { IFilter } from "@mzawadie/components/Filter";
-import { FilterOpts, commonMessages } from "@mzawadie/core";
+import { commonMessages } from "@mzawadie/core";
+import { FilterOpts } from "@mzawadie/core";
 import { createBooleanField } from "@mzawadie/utils/filters/fields";
 import { defineMessages, IntlShape } from "react-intl";
 
 export enum AttributeFilterKeys {
-    availableInGrid = "availableInGrid",
-    filterableInDashboard = "filterableInDashboard",
     filterableInStorefront = "filterableInStorefront",
     isVariantOnly = "isVariantOnly",
     valueRequired = "valueRequired",
@@ -13,8 +12,6 @@ export enum AttributeFilterKeys {
 }
 
 export interface AttributeListFilterOpts {
-    availableInGrid: FilterOpts<boolean>;
-    filterableInDashboard: FilterOpts<boolean>;
     filterableInStorefront: FilterOpts<boolean>;
     isVariantOnly: FilterOpts<boolean>;
     valueRequired: FilterOpts<boolean>;
@@ -22,34 +19,24 @@ export interface AttributeListFilterOpts {
 }
 
 const messages = defineMessages({
-    availableInGrid: {
-        defaultMessage: "Can be used as column",
-        id: "15IqlZ",
-        description: "attribute can be column in product list table",
-    },
-    filterableInDashboard: {
-        defaultMessage: "Filterable in Dashboard",
-        id: "kaC4SV",
-        description: "use attribute in filtering",
-    },
     filterableInStorefront: {
-        defaultMessage: "Filterable in Storefront",
         id: "PsRG+v",
+        defaultMessage: "Filterable in Storefront",
         description: "use attribute in filtering",
     },
     isVariantOnly: {
-        defaultMessage: "Variant Only",
         id: "rvk9ls",
+        defaultMessage: "Variant Only",
         description: "attribute can be used only in variants",
     },
     valueRequired: {
-        defaultMessage: "Value Required",
         id: "HQR2y0",
+        defaultMessage: "Value Required",
         description: "attribute value is required",
     },
     visibleInStorefront: {
-        defaultMessage: "Visible on Product Page in Storefront",
         id: "cvbqJu",
+        defaultMessage: "Visible on Product Page in Storefront",
         description: "attribute",
     },
 });
@@ -59,30 +46,6 @@ export function createFilterStructure(
     opts: AttributeListFilterOpts
 ): IFilter<AttributeFilterKeys> {
     return [
-        {
-            ...createBooleanField(
-                AttributeFilterKeys.availableInGrid,
-                intl.formatMessage(messages.availableInGrid),
-                opts.availableInGrid.value,
-                {
-                    negative: intl.formatMessage(commonMessages.no),
-                    positive: intl.formatMessage(commonMessages.yes),
-                }
-            ),
-            active: opts.availableInGrid.active,
-        },
-        {
-            ...createBooleanField(
-                AttributeFilterKeys.filterableInDashboard,
-                intl.formatMessage(messages.filterableInDashboard),
-                opts.filterableInDashboard.value,
-                {
-                    negative: intl.formatMessage(commonMessages.no),
-                    positive: intl.formatMessage(commonMessages.yes),
-                }
-            ),
-            active: opts.filterableInDashboard.active,
-        },
         {
             ...createBooleanField(
                 AttributeFilterKeys.filterableInStorefront,

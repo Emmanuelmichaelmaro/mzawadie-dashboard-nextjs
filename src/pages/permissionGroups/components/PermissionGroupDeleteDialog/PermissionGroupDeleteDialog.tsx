@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { DialogContentText, Typography } from "@material-ui/core";
 import { ActionDialog } from "@mzawadie/components/ActionDialog";
-import { PermissionGroupErrorFragment, PermissionGroupErrorCode } from "@mzawadie/graphql";
+import { PermissionGroupErrorCode, PermissionGroupErrorFragment } from "@mzawadie/graphql";
 import getPermissionGroupErrorMessage from "@mzawadie/utils/errors/permissionGroups";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
@@ -27,10 +27,11 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
     const intl = useIntl();
 
     let errorMessage;
+
     if (error?.code === PermissionGroupErrorCode.OUT_OF_SCOPE_PERMISSION) {
         errorMessage = intl.formatMessage({
-            defaultMessage: "Cant's delete group which is out of your permission scope",
             id: "O22NIZ",
+            defaultMessage: "Cant's delete group which is out of your permission scope",
             description: "deletion error message",
         });
     } else if (!!error) {
@@ -44,22 +45,23 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
             onClose={onClose}
             onConfirm={onConfirm}
             title={intl.formatMessage({
-                defaultMessage: "Delete permission group",
                 id: "L6+p8a",
+                defaultMessage: "Delete permission group",
                 description: "dialog title",
             })}
             variant="delete"
         >
             <DialogContentText>
                 <FormattedMessage
-                    defaultMessage="Are you sure you want to delete {name}?"
                     id="sR0urA"
+                    defaultMessage="Are you sure you want to delete {name}?"
                     description="dialog content"
                     values={{
                         name: <strong>{name}</strong>,
                     }}
                 />
             </DialogContentText>
+
             {!!errorMessage && <Typography color="error">{errorMessage}</Typography>}
         </ActionDialog>
     );

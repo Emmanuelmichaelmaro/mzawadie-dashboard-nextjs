@@ -1,27 +1,16 @@
 // @ts-nocheck
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    TextField,
-} from "@material-ui/core";
-import { ConfirmButton, ConfirmButtonTransitionState } from "@mzawadie/components/ConfirmButton";
+import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
+import BackButton from "@mzawadie/components/BackButton";
+import { ConfirmButton } from "@mzawadie/components/ConfirmButton";
 import { Form } from "@mzawadie/components/Form";
 import FormSpacer from "@mzawadie/components/FormSpacer";
-import {
-    buttonMessages,
-    commonMessages,
-    FetchMoreProps,
-    RelayToFlat,
-    SearchPageProps,
-} from "@mzawadie/core";
+import { commonMessages } from "@mzawadie/core";
+import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@mzawadie/core";
 import { SearchPermissionGroupsQuery, StaffErrorFragment } from "@mzawadie/graphql";
+import { SubmitPromise } from "@mzawadie/hooks/useForm";
 import { useModalDialogErrors } from "@mzawadie/hooks/useModalDialogErrors";
 import { getFormErrors } from "@mzawadie/utils/errors";
-import getStaffErrorMessage from "@mzawadie/utils/errors/staff";
-import { makeStyles } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -48,7 +37,7 @@ const useStyles = makeStyles(
             marginBottom: 0,
         },
         sectionTitle: {
-            fontWeight: 600 as const,
+            fontWeight: 600 as 600,
             marginBottom: theme.spacing(),
             marginTop: theme.spacing(2),
         },
@@ -69,7 +58,7 @@ interface StaffAddMemberDialogProps extends SearchPageProps {
     fetchMorePermissionGroups: FetchMoreProps;
     open: boolean;
     onClose: () => void;
-    onConfirm: (data: AddMemberFormData) => void;
+    onConfirm: (data: AddMemberFormData) => SubmitPromise;
 }
 
 const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = (props) => {
@@ -80,75 +69,67 @@ const StaffAddMemberDialog: React.FC<StaffAddMemberDialogProps> = (props) => {
     const intl = useIntl();
     const formErrors = getFormErrors(["firstName", "lastName", "email"], dialogErrors);
 
+    const getFieldProps = (name: string) => ({
+        disabled: props.disabled,
+        error: !!formErrors[name],
+        helperText: formErrors[name]?.message,
+        label: intl.formatMessage(commonMessages[name]),
+        name,
+    });
+
     return (
         <Dialog onClose={onClose} open={open}>
             <Form initial={initialForm} onSubmit={onConfirm}>
-                {({ change, data: formData, hasChanged }) => (
+                {({ change, data: formData }) => (
                     <>
                         <DialogTitle>
                             <FormattedMessage
-                                defaultMessage="Invite Staff Member"
                                 id="23g7PY"
+                                defaultMessage="Invite Staff Member"
                                 description="dialog header"
                             />
                         </DialogTitle>
+
                         <DialogContent>
                             <div className={classes.textFieldGrid}>
                                 <TextField
-                                    error={!!formErrors.firstName}
-                                    helperText={
-                                        !!formErrors.firstName &&
-                                        getStaffErrorMessage(formErrors.firstName, intl)
-                                    }
-                                    label={intl.formatMessage(commonMessages.firstName)}
-                                    name="firstName"
+                                    {...getFieldProps("firstName")}
                                     type="text"
                                     value={formData.firstName}
                                     onChange={change}
                                 />
+
                                 <TextField
-                                    error={!!formErrors.lastName}
-                                    helperText={
-                                        !!formErrors.lastName &&
-                                        getStaffErrorMessage(formErrors.lastName, intl)
-                                    }
-                                    label={intl.formatMessage(commonMessages.lastName)}
-                                    name="lastName"
+                                    {...getFieldProps("lastName")}
                                     type="text"
                                     value={formData.lastName}
                                     onChange={change}
                                 />
                             </div>
+
                             <FormSpacer />
+
                             <TextField
-                                error={!!formErrors.email}
                                 fullWidth
-                                helperText={
-                                    !!formErrors.email && getStaffErrorMessage(formErrors.email, intl)
-                                }
-                                label={intl.formatMessage(commonMessages.email)}
-                                name="email"
+                                {...getFieldProps("email")}
                                 type="email"
                                 value={formData.email}
                                 onChange={change}
                             />
                         </DialogContent>
+
                         <hr className={classes.hr} />
+
                         <DialogActions>
-                            <Button onClick={onClose}>
-                                <FormattedMessage {...buttonMessages.back} />
-                            </Button>
+                            <BackButton onClick={onClose} />
                             <ConfirmButton
-                                data-test="submit"
-                                color="primary"
-                                disabled={!hasChanged}
-                                variant="contained"
+                                data-test-id="submit"
                                 type="submit"
                                 transitionState={confirmButtonState}
                             >
                                 <FormattedMessage
-                                    defaultMessage="Send invite"
                                     id="hw9Fah"
+                                    defaultMessage="Send invite"
                                     description="button"
                                 />
                             </ConfirmButton>

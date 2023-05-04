@@ -2,6 +2,7 @@
 import saleorDarkLogoSmall from "@assets/images/logo-dark-small.svg";
 import plusIcon from "@assets/images/plus-icon.svg";
 import { Card, CardContent, Grid, Typography } from "@material-ui/core";
+import { Button } from "@mzawadie/components/Button";
 import CardSpacer from "@mzawadie/components/CardSpacer";
 import { CardTitle } from "@mzawadie/components/CardTitle";
 import Container from "@mzawadie/components/Container";
@@ -10,7 +11,6 @@ import Skeleton from "@mzawadie/components/Skeleton";
 import { buttonMessages } from "@mzawadie/core";
 import { AppFetchMutation, AppInstallMutation } from "@mzawadie/graphql";
 import { SubmitPromise } from "@mzawadie/hooks/useForm";
-import { Button } from "@saleor/macaw-ui";
 import classNames from "classnames";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -31,6 +31,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
     onSubmit,
 }) => {
     const intl = useIntl();
+
     const classes = useStyles({});
 
     const name = data?.name || "";
@@ -38,6 +39,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
     return (
         <Container>
             <CardSpacer />
+
             <Card>
                 <CardTitle
                     title={
@@ -46,8 +48,8 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
                         ) : (
                             intl.formatMessage(
                                 {
-                                    defaultMessage: "You are about to install {name}",
                                     id: "Id7C0X",
+                                    defaultMessage: `You are about to install {name}`,
                                     description: "section header",
                                 },
                                 { name }
@@ -78,8 +80,8 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
             <Card>
                 <CardTitle
                     title={intl.formatMessage({
-                        defaultMessage: "App permissions",
                         id: "VsGcdP",
+                        defaultMessage: "App permissions",
                         description: "section header",
                     })}
                 />
@@ -91,8 +93,8 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
                         <>
                             <Typography className={classes.installPermissionTitle}>
                                 <FormattedMessage
-                                    defaultMessage="Installing this app will give it following permissions:"
                                     id="BL/Lbk"
+                                    defaultMessage="Installing this app will give it following permissions:"
                                     description="install app permissions"
                                 />
                             </Typography>
@@ -109,22 +111,25 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
 
                             <Typography variant="body2" className={classes.installPrivacyText}>
                                 <FormattedMessage
-                                    defaultMessage="Uninstalling the app will remove all your customer’s personal data stored by {name}. "
                                     id="t1UYU6"
+                                    defaultMessage="Uninstalling the app will remove all your customer’s personal data stored by {name}. "
                                     description="install app privacy"
                                     values={{ name }}
                                 />
-                                <a
-                                    href={data?.dataPrivacyUrl}
-                                    rel="noopener noreferrer"
-                                    target="_blank"
-                                >
-                                    <FormattedMessage
-                                        defaultMessage="Learn more about data privacy"
-                                        id="k5lHFp"
-                                        description="app data privacy link"
-                                    />
-                                </a>
+
+                                {!!data?.dataPrivacyUrl && (
+                                    <a
+                                        href={data?.dataPrivacyUrl}
+                                        rel="noopener noreferrer"
+                                        target="_blank"
+                                    >
+                                        <FormattedMessage
+                                            id="k5lHFp"
+                                            defaultMessage="Learn more about data privacy"
+                                            description="app data privacy link"
+                                        />
+                                    </a>
+                                )}
                             </Typography>
                         </>
                     )}
@@ -143,8 +148,8 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
                 <Grid xs={6} item className={classes.alignRight}>
                     <Button variant="primary" onClick={onSubmit}>
                         <FormattedMessage
-                            defaultMessage="Install App"
                             id="PkCmGU"
+                            defaultMessage="Install App"
                             description="install button"
                         />
                     </Button>

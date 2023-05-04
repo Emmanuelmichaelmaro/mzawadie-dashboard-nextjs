@@ -4,16 +4,12 @@ import { useAppQuery } from "@mzawadie/graphql";
 import useNavigator from "@mzawadie/hooks/useNavigator";
 import { useNotifier } from "@mzawadie/hooks/useNotifier";
 import { appMessages } from "@mzawadie/pages/apps/messages";
-import {
-    appDetailsUrl,
-    appsListPath,
-    getAppCompleteUrlFromDashboardUrl,
-} from "@mzawadie/pages/apps/urls";
 import React from "react";
 import { useIntl } from "react-intl";
 import { useLocation } from "react-router";
 
 import { AppPage } from "../../components/AppPage";
+import { appDetailsUrl, appsListPath, getAppCompleteUrlFromDashboardUrl } from "../../urls";
 
 interface AppProps {
     id: string;
@@ -22,7 +18,7 @@ interface AppProps {
 export const App: React.FC<AppProps> = ({ id }) => {
     const location = useLocation();
 
-    const { data } = useAppQuery({
+    const { data, refetch } = useAppQuery({
         displayLoader: true,
         variables: { id },
     });
@@ -37,14 +33,14 @@ export const App: React.FC<AppProps> = ({ id }) => {
         return <NotFoundPage onBack={() => navigate(appsListPath)} />;
     }
 
-    const appCompleteUrl = getAppCompleteUrlFromDashboardUrl(location.pathname, data?.app?.appUrl, id);
+    const appCompleteUrl = getAppCompleteUrlFromDashboardUrl(location.pathname, data?.app.appUrl, id);
 
     return (
         <AppPage
             data={data?.app}
             url={appCompleteUrl}
-            navigateToAbout={() => navigate(appDetailsUrl(id))}
-            onBack={() => navigate(appsListPath)}
+            aboutHref={appDetailsUrl(id)}
+            refetch={refetch}
             onError={() =>
                 notify({
                     status: "error",

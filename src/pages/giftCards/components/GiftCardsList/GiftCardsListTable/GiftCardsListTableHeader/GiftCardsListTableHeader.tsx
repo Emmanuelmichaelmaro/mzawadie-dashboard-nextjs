@@ -2,15 +2,13 @@
 import { TableCell } from "@material-ui/core";
 import { DeleteIconButton } from "@mzawadie/components/DeleteIconButton";
 import {
-    TableCellHeader,
     TableCellHeaderArrowDirection,
     TableCellHeaderProps,
+    TableCellHeader,
 } from "@mzawadie/components/TableCellHeader";
 import { TableHead } from "@mzawadie/components/TableHead";
 import { TooltipTableCellHeader } from "@mzawadie/components/TooltipTableCellHeader";
 import { commonTooltipMessages } from "@mzawadie/components/TooltipTableCellHeader/messages";
-import { useGiftCardListDialogs } from "@mzawadie/pages/giftCards/components/GiftCardsList/providers/GiftCardListDialogsProvider";
-import { useGiftCardList } from "@mzawadie/pages/giftCards/components/GiftCardsList/providers/GiftCardListProvider";
 import Label, { LabelSizes } from "@mzawadie/pages/orders/components/OrderHistory/Label";
 import { getArrowDirection } from "@mzawadie/utils/sort";
 import React from "react";
@@ -18,6 +16,8 @@ import { MessageDescriptor, useIntl } from "react-intl";
 
 import { messages as filterLabels } from "../../GiftCardListSearchAndFilters/filters";
 import { giftCardsListTableMessages as messages } from "../../messages";
+import { useGiftCardListDialogs } from "../../providers/GiftCardListDialogsProvider";
+import { useGiftCardList } from "../../providers/GiftCardListProvider";
 import { canBeSorted } from "../../sort";
 import { useTableStyles as useStyles } from "../../styles";
 import { GiftCardUrlSortField } from "../../types";
@@ -85,6 +85,7 @@ const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({ isC
         }),
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { title, ...headerTooltipItemProps } = headerTooltipItem;
 
     return (
@@ -93,11 +94,12 @@ const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({ isC
                 <col />
                 <col className={classes.colCardCode} />
                 <col className={classes.colBase} />
-                <col className={classes.colBase} />
+                <col className={classes.colProduct} />
                 <col className={classes.colBase} />
                 <col className={classes.colBalance} />
                 <col className={classes.colDelete} />
             </colgroup>
+
             <TableHead
                 disabled={loading}
                 colSpan={numberOfColumns}
@@ -121,9 +123,11 @@ const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({ isC
                         <Label text={intl.formatMessage(title)} size={LabelSizes.md} />
                     </TableCellHeader>
                 ))}
+
                 <TooltipTableCellHeader {...headerTooltipItemProps}>
                     <Label text={intl.formatMessage(headerTooltipItem.title)} size={LabelSizes.md} />
                 </TooltipTableCellHeader>
+
                 <TableCell className={classes.colDelete} />
             </TableHead>
         </>

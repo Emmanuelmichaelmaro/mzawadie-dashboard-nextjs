@@ -1,6 +1,6 @@
 import { DialogContentText } from "@material-ui/core";
 import { ActionDialog } from "@mzawadie/components/ActionDialog";
-import { ConfirmButtonTransitionState } from "@mzawadie/components/ConfirmButton";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -29,15 +29,15 @@ const WarehouseDeleteDialog: React.FC<WarehouseDeleteDialogProps> = ({
             onConfirm={onConfirm}
             variant="delete"
             title={intl.formatMessage({
-                defaultMessage: "Delete Warehouse",
                 id: "ny4zrH",
+                defaultMessage: "Delete Warehouse",
                 description: "dialog title",
             })}
         >
             <DialogContentText>
                 <FormattedMessage
-                    defaultMessage="Are you sure you want to delete {warehouseName}?"
                     id="DTL7sE"
+                    defaultMessage="Are you sure you want to delete {warehouseName}?"
                     description="dialog content"
                     values={{
                         warehouseName: <strong>{name}</strong>,
@@ -49,4 +49,5 @@ const WarehouseDeleteDialog: React.FC<WarehouseDeleteDialogProps> = ({
 };
 
 WarehouseDeleteDialog.displayName = "WarehouseDeleteDialog";
+
 export default WarehouseDeleteDialog;

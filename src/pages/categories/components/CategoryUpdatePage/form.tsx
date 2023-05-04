@@ -1,15 +1,16 @@
 // @ts-nocheck
 import { OutputData } from "@editorjs/editorjs";
+import { useExitFormDialog } from "@mzawadie/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@mzawadie/components/Metadata";
-import { RichTextEditorChange } from "@mzawadie/components/RichTextEditor";
 import { CategoryDetailsFragment } from "@mzawadie/graphql";
-import useForm, { FormChange } from "@mzawadie/hooks/useForm";
-import handleFormSubmit from "@mzawadie/utils/handlers/handleFormSubmit";
+import useForm, { CommonUseFormResult, FormChange } from "@mzawadie/hooks/useForm";
+import useHandleFormSubmit from "@mzawadie/hooks/useHandleFormSubmit";
 import { mapMetadataItemToInput } from "@mzawadie/utils/maps";
 import getMetadata from "@mzawadie/utils/metadata/getMetadata";
 import useMetadataChangeTrigger from "@mzawadie/utils/metadata/useMetadataChangeTrigger";
+import { RichTextContext, RichTextContextValues } from "@mzawadie/utils/richText/context";
 import useRichText from "@mzawadie/utils/richText/useRichText";
-import React from "react";
+import React, { useEffect } from "react";
 
 export interface CategoryUpdateFormData extends MetadataFormData {
     backgroundImageAlt: string;
@@ -25,42 +26,54 @@ export interface CategoryUpdateData extends CategoryUpdateFormData {
 
 interface CategoryUpdateHandlers {
     changeMetadata: FormChange;
-    changeDescription: RichTextEditorChange;
 }
-export interface UseCategoryUpdateFormResult {
-    change: FormChange;
-    data: CategoryUpdateData;
+
+export interface UseCategoryUpdateFormResult extends CommonUseFormResult<CategoryUpdateData> {
     handlers: CategoryUpdateHandlers;
-    hasChanged: boolean;
-    submit: () => Promise<boolean>;
 }
 
 export interface CategoryUpdateFormProps {
     children: (props: UseCategoryUpdateFormResult) => React.ReactNode;
     category: CategoryDetailsFragment;
     onSubmit: (data: CategoryUpdateData) => Promise<any[]>;
+    disabled: boolean;
 }
+
+const getInitialData = (category?: CategoryDetailsFragment) => ({
+    backgroundImageAlt: category?.backgroundImage?.alt || "",
+    metadata: category?.metadata?.map(mapMetadataItemToInput),
+    name: category?.name || "",
+    privateMetadata: category?.privateMetadata?.map(mapMetadataItemToInput),
+    seoDescription: category?.seoDescription || "",
+    seoTitle: category?.seoTitle || "",
+    slug: category?.slug || "",
+});
 
 function useCategoryUpdateForm(
     category: CategoryDetailsFragment,
-    onSubmit: (data: CategoryUpdateData) => Promise<any[]>
-): UseCategoryUpdateFormResult {
-    const [changed, setChanged] = React.useState(false);
+    onSubmit: (data: CategoryUpdateData) => Promise<any[]>,
+    disabled: boolean
+): UseCategoryUpdateFormResult & { richText: RichTextContextValues } {
+    const {
+        handleChange,
+        data: formData,
+        triggerChange,
+        formId,
+        setIsSubmitDisabled,
+    } = useForm(getInitialData(category), undefined, { confirmLeave: true });
 
-    const triggerChange = () => setChanged(true);
-
-    const form = useForm<CategoryUpdateFormData>({
-        backgroundImageAlt: category?.backgroundImage?.alt || "",
-        metadata: category?.metadata?.map(mapMetadataItemToInput),
-        name: category?.name || "",
-        privateMetadata: category?.privateMetadata?.map(mapMetadataItemToInput),
-        seoDescription: category?.seoDescription || "",
-        seoTitle: category?.seoTitle || "",
-        slug: category?.slug || "",
+    const handleFormSubmit = useHandleFormSubmit({
+        formId,
+        onSubmit,
     });
 
-    const [description, changeDescription] = useRichText({
+    const { setExitDialogSubmitRef } = useExitFormDialog({
+        formId,
+    });
+
+    const richText = useRichText({
         initial: category?.description,
+        loading: !category,
         triggerChange,
     });
 
@@ -70,43 +83,55 @@ function useCategoryUpdateForm(
         makeChangeHandler: makeMetadataChangeHandler,
     } = useMetadataChangeTrigger();
 
-    const handleChange: FormChange = (event, cb) => {
-        form.change(event, cb);
-        triggerChange();
-    };
-
     const changeMetadata = makeMetadataChangeHandler(handleChange);
 
-    // Need to make it function to always have description.current up to date
-    const getData = (): CategoryUpdateData =>
-        ({
-            ...form.data,
-            description: description.current,
-        } as CategoryUpdateData);
+    const data: CategoryUpdateData = {
+        ...formData,
+        description: null,
+    };
 
-    const getSubmitData = (): CategoryUpdateData => ({
-        ...getData(),
-        ...getMetadata(form.data, isMetadataModified, isPrivateMetadataModified),
+    // Need to make it function to always have description.current up to date
+    const getData = async (): Promise<CategoryUpdateData> => ({
+        ...formData,
+        description: await richText.getValue(),
     });
 
-    const submit = () => handleFormSubmit(getSubmitData(), onSubmit, setChanged);
+    const getSubmitData = async (): Promise<CategoryUpdateData> => ({
+        ...(await getData()),
+        ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
+    });
+
+    const submit = async () => handleFormSubmit(await getSubmitData());
+
+    useEffect(() => setExitDialogSubmitRef(submit), [submit]);
+
+    setIsSubmitDisabled(disabled);
 
     return {
         change: handleChange,
-        data: getData(),
+        data,
         handlers: {
-            changeDescription,
             changeMetadata,
         },
-        hasChanged: changed,
         submit,
+        isSaveDisabled: disabled,
+        richText,
     };
 }
 
-const CategoryUpdateForm: React.FC<CategoryUpdateFormProps> = ({ children, category, onSubmit }) => {
-    const props = useCategoryUpdateForm(category, onSubmit);
+const CategoryUpdateForm: React.FC<CategoryUpdateFormProps> = ({
+    children,
+    category,
+    onSubmit,
+    disabled,
+}) => {
+    const { richText, ...props } = useCategoryUpdateForm(category, onSubmit, disabled);
 
-    return <form onSubmit={props.submit}>{children(props)}</form>;
+    return (
+        <form onSubmit={props.submit}>
+            <RichTextContext.Provider value={richText}>{children(props)}</RichTextContext.Provider>
+        </form>
+    );
 };
 
 CategoryUpdateForm.displayName = "CategoryUpdateForm";

@@ -1,11 +1,18 @@
 // @ts-nocheck
-import { WindowTitle } from "@mzawadie/components";
+import { WindowTitle } from "@mzawadie/components/WindowTitle";
 import { sectionNames } from "@mzawadie/core";
+import { asSortParams } from "@mzawadie/utils/sort";
+import { parse as parseQs } from "qs";
+import React from "react";
+import { useIntl } from "react-intl";
+import { Route, RouteComponentProps, Switch } from "react-router-dom";
+
 import {
     orderDraftListPath,
     OrderDraftListUrlQueryParams,
     OrderDraftListUrlSortField,
     orderFulfillPath,
+    OrderFulfillUrlQueryParams,
     orderListPath,
     OrderListUrlQueryParams,
     OrderListUrlSortField,
@@ -14,13 +21,7 @@ import {
     orderReturnPath,
     orderSettingsPath,
     OrderUrlQueryParams,
-} from "@mzawadie/pages/orders/urls";
-import { asSortParams } from "@mzawadie/utils/sort";
-import { parse as parseQs } from "qs";
-import React from "react";
-import { useIntl } from "react-intl";
-import { Route, RouteComponentProps, Switch } from "react-router-dom";
-
+} from "./urls";
 import { OrderDetailsComponent } from "./views/OrderDetails";
 import { OrderDraftListComponent } from "./views/OrderDraftList";
 import { OrderFulfillComponent } from "./views/OrderFulfill";
@@ -28,25 +29,6 @@ import { OrderListComponent } from "./views/OrderList";
 import { OrderRefundComponent } from "./views/OrderRefund";
 import { OrderReturnComponent } from "./views/OrderReturn";
 import OrderSettings from "./views/OrderSettings";
-
-const OrderDetails: React.FC<RouteComponentProps<any>> = ({ location, match }) => {
-    const params: OrderUrlQueryParams = parseQs(location.search.substr(1));
-    const { id } = match.params;
-
-    return <OrderDetailsComponent id={decodeURIComponent(id)} params={params} />;
-};
-
-const OrderReturn: React.FC<RouteComponentProps<any>> = ({ match }) => (
-    <OrderReturnComponent orderId={decodeURIComponent(match.params.id)} />
-);
-
-const OrderRefund: React.FC<RouteComponentProps<any>> = ({ match }) => (
-    <OrderRefundComponent orderId={decodeURIComponent(match.params.id)} />
-);
-
-const OrderFulfill: React.FC<RouteComponentProps<any>> = ({ match }) => (
-    <OrderFulfillComponent orderId={decodeURIComponent(match.params.id)} />
-);
 
 const OrderList: React.FC<RouteComponentProps<any>> = ({ location }) => {
     const qs = parseQs(location.search.substr(1));
@@ -70,6 +52,28 @@ const OrderDraftList: React.FC<RouteComponentProps<any>> = ({ location }) => {
 
     return <OrderDraftListComponent params={params} />;
 };
+
+const OrderDetails: React.FC<RouteComponentProps<any>> = ({ location, match }) => {
+    const qs = parseQs(location.search.substr(1));
+    const params: OrderUrlQueryParams = qs;
+    const id = match.params.id;
+
+    return <OrderDetailsComponent id={decodeURIComponent(id)} params={params} />;
+};
+
+const OrderFulfill: React.FC<RouteComponentProps<any>> = ({ location, match }) => {
+    const qs = parseQs(location.search.substr(1));
+    const params: OrderFulfillUrlQueryParams = qs;
+    return <OrderFulfillComponent orderId={decodeURIComponent(match.params.id)} params={params} />;
+};
+
+const OrderRefund: React.FC<RouteComponentProps<any>> = ({ match }) => (
+    <OrderRefundComponent orderId={decodeURIComponent(match.params.id)} />
+);
+
+const OrderReturn: React.FC<RouteComponentProps<any>> = ({ match }) => (
+    <OrderReturnComponent orderId={decodeURIComponent(match.params.id)} />
+);
 
 const Component = () => {
     const intl = useIntl();

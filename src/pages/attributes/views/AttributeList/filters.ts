@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { IFilterElement } from "@mzawadie/components/Filter";
+import { FilterElement } from "@mzawadie/components/Filter";
 import { maybe, parseBoolean } from "@mzawadie/core";
 import { AttributeFilterInput } from "@mzawadie/graphql";
 import {
@@ -22,14 +22,6 @@ export const ATTRIBUTE_FILTERS_KEY = "attributeFilters";
 
 export function getFilterOpts(params: AttributeListUrlFilters): AttributeListFilterOpts {
     return {
-        availableInGrid: {
-            active: params.availableInGrid !== undefined,
-            value: maybe(() => parseBoolean(params.availableInGrid, true)),
-        },
-        filterableInDashboard: {
-            active: params.filterableInDashboard !== undefined,
-            value: maybe(() => parseBoolean(params.filterableInDashboard, true)),
-        },
         filterableInStorefront: {
             active: params.filterableInStorefront !== undefined,
             value: maybe(() => parseBoolean(params.filterableInStorefront, true)),
@@ -51,14 +43,6 @@ export function getFilterOpts(params: AttributeListUrlFilters): AttributeListFil
 
 export function getFilterVariables(params: AttributeListUrlFilters): AttributeFilterInput {
     return {
-        availableInGrid:
-            params.availableInGrid !== undefined
-                ? parseBoolean(params.availableInGrid, false)
-                : undefined,
-        filterableInDashboard:
-            params.filterableInDashboard !== undefined
-                ? parseBoolean(params.filterableInDashboard, false)
-                : undefined,
         filterableInStorefront:
             params.filterableInStorefront !== undefined
                 ? parseBoolean(params.filterableInStorefront, false)
@@ -75,20 +59,12 @@ export function getFilterVariables(params: AttributeListUrlFilters): AttributeFi
     };
 }
 
-// eslint-disable-next-line consistent-return
 export function getFilterQueryParam(
-    filter: IFilterElement<AttributeFilterKeys>
-): AttributeListUrlFilters {
+    filter: FilterElement<AttributeFilterKeys>
+): AttributeListUrlFilters | undefined {
     const { name } = filter;
 
-    // eslint-disable-next-line default-case
     switch (name) {
-        case AttributeFilterKeys.availableInGrid:
-            return getSingleValueQueryParam(filter, AttributeListUrlFiltersEnum.availableInGrid);
-
-        case AttributeFilterKeys.filterableInDashboard:
-            return getSingleValueQueryParam(filter, AttributeListUrlFiltersEnum.filterableInDashboard);
-
         case AttributeFilterKeys.filterableInStorefront:
             return getSingleValueQueryParam(filter, AttributeListUrlFiltersEnum.filterableInStorefront);
 
@@ -106,7 +82,7 @@ export function getFilterQueryParam(
 export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
     createFilterTabUtils<AttributeListUrlFilters>(ATTRIBUTE_FILTERS_KEY);
 
-export const { areFiltersApplied, getActiveFilters } = createFilterUtils<
+export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
     AttributeListUrlQueryParams,
     AttributeListUrlFilters
 >(AttributeListUrlFiltersEnum);

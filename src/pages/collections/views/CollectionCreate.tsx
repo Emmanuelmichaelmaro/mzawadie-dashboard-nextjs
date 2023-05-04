@@ -2,7 +2,8 @@
 import useAppChannel from "@mzawadie/components/AppLayout/AppChannelContext";
 import { ChannelsAvailabilityDialog } from "@mzawadie/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@mzawadie/components/WindowTitle";
-import { commonMessages, getMutationErrors } from "@mzawadie/core";
+import { commonMessages } from "@mzawadie/core";
+import { getMutationErrors } from "@mzawadie/core";
 import {
     CollectionCreateInput,
     useCollectionChannelListingUpdateMutation,
@@ -17,20 +18,13 @@ import { ChannelsAction } from "@mzawadie/pages/channels/urls";
 import { createCollectionChannels } from "@mzawadie/pages/channels/utils";
 import createDialogActionHandlers from "@mzawadie/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@mzawadie/utils/handlers/metadataCreateHandler";
-import { useMetadataUpdate, usePrivateMetadataUpdate } from "@mzawadie/utils/metadata/updateMetadata";
 import { getParsedDataForJsonStringField } from "@mzawadie/utils/richText/misc";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import CollectionCreatePage from "../components/CollectionCreatePage/CollectionCreatePage";
 import { CollectionCreateData } from "../components/CollectionCreatePage/form";
-import { useCollectionChannelListingUpdate, useCollectionCreateMutation } from "../mutations";
-import {
-    collectionAddUrl,
-    CollectionCreateUrlQueryParams,
-    collectionListUrl,
-    collectionUrl,
-} from "../urls";
+import { collectionAddUrl, CollectionCreateUrlQueryParams, collectionUrl } from "../urls";
 import { COLLECTION_CREATE_FORM_ID } from "./consts";
 
 interface CollectionCreateProps {
@@ -44,12 +38,13 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) =>
 
     const [updateMetadata] = useUpdateMetadataMutation({});
     const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
-    const [updateChannels, updateChannelsOpts] = useCollectionChannelListingUpdateMutation({});
 
     const [openModal, closeModal] = createDialogActionHandlers<
         ChannelsAction,
         CollectionCreateUrlQueryParams
     >(navigate, (params) => collectionAddUrl(params), params);
+
+    const [updateChannels, updateChannelsOpts] = useCollectionChannelListingUpdateMutation({});
 
     const { availableChannels } = useAppChannel(false);
 
@@ -77,16 +72,17 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) =>
 
     const [createCollection, createCollectionOpts] = useCreateCollectionMutation({
         onCompleted: (data) => {
-            if (data.collectionCreate.errors.length === 0) {
+            if (data.collectionCreate?.errors.length === 0) {
                 notify({
                     status: "success",
                     text: intl.formatMessage(commonMessages.savedChanges),
                 });
                 navigate(collectionUrl(data.collectionCreate.collection.id));
             } else {
-                const backgroundImageError = data.collectionCreate.errors.find(
+                const backgroundImageError = data.collectionCreate?.errors.find(
                     (error) => error.field === ("backgroundImage" as keyof CollectionCreateInput)
                 );
+                
                 if (backgroundImageError) {
                     notify({
                         status: "error",
@@ -113,7 +109,7 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) =>
             },
         });
 
-        const id = result.data?.collectionCreate.collection?.id || null;
+        const id = result.data?.collectionCreate?.collection?.id || null;
 
         if (id) {
             updateChannels({
@@ -144,8 +140,8 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) =>
         <>
             <WindowTitle
                 title={intl.formatMessage({
-                    defaultMessage: "Create collection",
                     id: "ttMauu",
+                    defaultMessage: "Create collection",
                     description: "window title",
                 })}
             />
@@ -159,8 +155,8 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) =>
                     onClose={handleChannelsModalClose}
                     open={isChannelsModalOpen}
                     title={intl.formatMessage({
-                        defaultMessage: "Manage Collection Channel Availability",
                         id: "I1Mz7h",
+                        defaultMessage: "Manage Collection Channel Availability",
                     })}
                     confirmButtonState="default"
                     selected={channelListElements.length}
@@ -170,13 +166,12 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) =>
             )}
 
             <CollectionCreatePage
-                errors={createCollectionOpts.data?.collectionCreate.errors || []}
-                channelsErrors={updateChannelsOpts?.data?.collectionChannelListingUpdate.errors || []}
+                errors={createCollectionOpts.data?.collectionCreate?.errors || []}
+                channelsErrors={updateChannelsOpts?.data?.collectionChannelListingUpdate?.errors || []}
                 currentChannels={currentChannels}
                 channelsCount={availableChannels.length}
                 openChannelsModal={handleChannelsModalOpen}
                 onChannelsChange={setCurrentChannels}
-                onBack={() => navigate(collectionListUrl())}
                 disabled={createCollectionOpts.loading || updateChannelsOpts.loading}
                 onSubmit={handleSubmit}
                 saveButtonBarState={createCollectionOpts.status}
